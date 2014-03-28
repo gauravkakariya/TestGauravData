@@ -1,3 +1,3135 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Active_Recommendation_Count__c</fullName>
+        <externalId>false</externalId>
+        <label>Active Recommendation Count</label>
+        <summaryFilterItems>
+            <field>Product_Recommendation_Master__c.CurrentActiveRecommnedation__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>1</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Product_Recommendation_Master__c.Product_Code__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Asset_Class__c</fullName>
+        <externalId>false</externalId>
+        <label>Asset Class</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Loans</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Service</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Base_Product_Weightage__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Base Product Weightage</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Current_NAV__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Current NAV</label>
+        <precision>7</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Currently_Recommended__c</fullName>
+        <externalId>false</externalId>
+        <label>Currently Recommended</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>CustomUniqueKey__c</fullName>
+        <description>ProductName + Product Type + PM Name</description>
+        <externalId>false</externalId>
+        <label>CustomUniqueKey</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Collection_Analysis_Control__c</fullName>
+        <externalId>false</externalId>
+        <label>Data Collection Analysis Control</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Portfolio Summary</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Networth</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash Flow</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Asset Allocation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Emergency Planning</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Life Insurance Planning</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Insurance Planning</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Succession Planning</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Global Assumptions</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Earn_One_Time_Fees__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If you check this field, For New Price Book creation &quot;One Time Layout&quot; should be selected.</inlineHelpText>
+        <label>Earn One Time Fees</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Earn_Trail_Fees__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If you check this field, For New Price Book creation &quot;Upfront/Trail Layout&quot; should be selected.</inlineHelpText>
+        <label>Earn Trail Fees</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Earn_Upfront_Fees__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If you check this field, For New Price Book creation &quot;Upfront/Trail Layout&quot; should be selected.</inlineHelpText>
+        <label>Earn Upfront Fees</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Fees__c</fullName>
+        <externalId>false</externalId>
+        <label>Fees</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fees_in_Advance_or_On_Service_Delivery__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Put an &quot;Advance Value&quot; in Price Book if this filled is checked for Price Category &quot;One Time&quot;.</inlineHelpText>
+        <label>Fees in Advance or On Service Delivery</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Financial_Planing_Output_Report__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial Planing Output Report</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Introduction</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Disclosure Statement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Goal Summary</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Financial Statements</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Emergency Planning</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Individual Goal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Life Insurance Analysis</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Insurance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Estate Planning</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Summary Action Plan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Annexure 1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Financial Plan Review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Investment Risk</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delivery Acknowledgement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Goals_Allowed_List__c</fullName>
+        <externalId>false</externalId>
+        <label>Goals Allowed List</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Marriage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>House</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Car</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vacation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Parental Responsibility</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Emergency Fund</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Retirement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Money to Heirs</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Investment_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Investment Type</label>
+        <picklist>
+            <controllingField>Asset_Class__c</controllingField>
+            <picklistValues>
+                <fullName>SIP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lumpsum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity MF</fullName>
+                <controllingFieldValues>Equity</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ULIP</fullName>
+                <controllingFieldValues>Equity</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Direct Stock</fullName>
+                <controllingFieldValues>Equity</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt MF</fullName>
+                <controllingFieldValues>Debt</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fixed Deposit</fullName>
+                <controllingFieldValues>Debt</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NCD</fullName>
+                <controllingFieldValues>Debt</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bonds</fullName>
+                <controllingFieldValues>Debt</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FMP</fullName>
+                <controllingFieldValues>Debt</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Traditional Insurance Plan</fullName>
+                <controllingFieldValues>Debt</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Savings</fullName>
+                <controllingFieldValues>Debt</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gold ETF</fullName>
+                <controllingFieldValues>Gold</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gold MF</fullName>
+                <controllingFieldValues>Gold</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gold Scheme</fullName>
+                <controllingFieldValues>Gold</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Physical Gold</fullName>
+                <controllingFieldValues>Gold</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Property</fullName>
+                <controllingFieldValues>Real Estate</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Land</fullName>
+                <controllingFieldValues>Real Estate</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>REIT</fullName>
+                <controllingFieldValues>Real Estate</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Home Loan</fullName>
+                <controllingFieldValues>Loans</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Personal Loan</fullName>
+                <controllingFieldValues>Loans</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Business Loan</fullName>
+                <controllingFieldValues>Loans</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Car Loan</fullName>
+                <controllingFieldValues>Loans</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mortgage Loan</fullName>
+                <controllingFieldValues>Loans</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Home Loan Transfer</fullName>
+                <controllingFieldValues>Loans</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Commercial purchase</fullName>
+                <controllingFieldValues>Loans</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Life Insurance</fullName>
+                <controllingFieldValues>Insurance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Health Insurance</fullName>
+                <controllingFieldValues>Insurance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Critical Illness</fullName>
+                <controllingFieldValues>Insurance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Insurance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Accident benefit</fullName>
+                <controllingFieldValues>Insurance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit Rating Report</fullName>
+                <controllingFieldValues>Service</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tax Planning &amp; filing</fullName>
+                <controllingFieldValues>Service</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Will Writing</fullName>
+                <controllingFieldValues>Service</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Trust Formation</fullName>
+                <controllingFieldValues>Service</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Top Up</fullName>
+                <controllingFieldValues>Insurance</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>IsRenewalAllowed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Renewal Allowed</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IsRenewalDateUpdate__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>IsRenewalDateUpdate</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IsTopupService__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Topup Service</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>For Product Master object</description>
+        <externalId>false</externalId>
+        <label>Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Recommended__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Recommended</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>No_of_Goals_Allowed__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>No of Goals Allowed</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Policy_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Policy Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Medical</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Critical Illness</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Personal Accident</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Disability</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Top Up</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Term Life</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vehicle</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Householder&apos;s</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Whole Life</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Endowment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ULIP - Debt</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pension Plan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Money-Back</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Children&apos;s</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ULIP - Equity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ProductType__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Mutual Fund</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Exchange-Traded Fund</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Life Insurance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Insurance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FFreedom Service</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Base Product</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Value Added Services</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Loan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bond</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Product_Manufacturer__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Manufacturer</label>
+        <referenceTo>Product_Manufacturer_Master__c</referenceTo>
+        <relationshipLabel>Products</relationshipLabel>
+        <relationshipName>Product_Master</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Product_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recommended_Image__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF (
+     ISPICKVAL(Currently_Recommended__c, &apos;Yes&apos;), IMAGE(&quot;/img/samples/color_green.gif&quot;, &quot;green&quot;, 10, 20) ,
+ 
+IF(ISPICKVAL(Currently_Recommended__c, &apos;No&apos;), IMAGE(&quot;/img/samples/color_yellow.gif&quot;, &quot;yellow&quot;, 10, 20),
+IMAGE(&quot;/s.gif&quot;, &quot;yellow&quot;, 1, 1)))</formula>
+        <label>&lt;font color=&quot;white&quot;&gt;Recommended</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Renewal_Grace_Days__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Renewal Grace Days</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Renewal_Period_In_Days__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Renewal Period In Days</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SIP_Allowed__c</fullName>
+        <externalId>false</externalId>
+        <label>SIP Allowed</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Period_In_Days__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Subscription Period In Days</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Product</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Product_Name__c</columns>
+        <columns>Product_Manufacturer__c</columns>
+        <columns>ProductType__c</columns>
+        <columns>Currently_Recommended__c</columns>
+        <columns>SIP_Allowed__c</columns>
+        <columns>Is_Active__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>PRD-{000000}</displayFormat>
+        <label>Product Code</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <namedFilters>
+        <fullName>nf_01IW00000008qtxMAA_00NW0000000itScMAI</fullName>
+        <active>true</active>
+        <field>Product_Default_Allocation__c.Product__c</field>
+        <filterItems>
+            <field>Product_Master__c.Asset_Class__c</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </filterItems>
+        <filterItems>
+            <field>Product_Master__c.Investment_Type__c</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </filterItems>
+        <isOptional>false</isOptional>
+        <name>Product Default Allocation_Product</name>
+    </namedFilters>
+    <pluralLabel>Products</pluralLabel>
+    <recordTypes>
+        <fullName>Ffreedom_Product_Services</fullName>
+        <active>true</active>
+        <description>Select Ffredom Base product and value added services</description>
+        <label>Ffreedom Product Services</label>
+        <picklistValues>
+            <picklist>Asset_Class__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loans</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Currently_Recommended__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Data_Collection_Analysis_Control__c</picklist>
+            <values>
+                <fullName>Asset Allocation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash Flow</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Assumptions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Networth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portfolio Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Succession Planning</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Financial_Planing_Output_Report__c</picklist>
+            <values>
+                <fullName>Annexure 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivery Acknowledgement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Disclosure Statement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estate Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Plan Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Statements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Goal Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Individual Goal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Introduction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Investment Risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Summary Action Plan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Goals_Allowed_List__c</picklist>
+            <values>
+                <fullName>Car</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Fund</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>House</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marriage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Money to Heirs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Parental Responsibility</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retirement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacation</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Investment_Type__c</picklist>
+            <values>
+                <fullName>Accident benefit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bonds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Car Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial purchase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Rating Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Critical Illness</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Stock</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FMP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold ETF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold Scheme</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Home Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Home Loan Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mortgage Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NCD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Physical Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Property</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Savings</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tax Planning %26 filing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Top Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Traditional Insurance Plan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Formation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Will Writing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Policy_Type__c</picklist>
+            <values>
+                <fullName>Critical Illness</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Disability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal Accident</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Top Up</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ProductType__c</picklist>
+            <values>
+                <fullName>Base Product</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIP_Allowed__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>General_Insurance</fullName>
+        <active>true</active>
+        <label>General Insurance</label>
+        <picklistValues>
+            <picklist>Asset_Class__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loans</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Currently_Recommended__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Data_Collection_Analysis_Control__c</picklist>
+            <values>
+                <fullName>Asset Allocation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash Flow</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Assumptions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Networth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portfolio Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Succession Planning</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Financial_Planing_Output_Report__c</picklist>
+            <values>
+                <fullName>Annexure 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivery Acknowledgement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Disclosure Statement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estate Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Plan Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Statements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Goal Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Individual Goal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Introduction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Investment Risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Summary Action Plan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Goals_Allowed_List__c</picklist>
+            <values>
+                <fullName>Car</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Fund</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>House</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marriage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Money to Heirs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Parental Responsibility</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retirement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacation</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Investment_Type__c</picklist>
+            <values>
+                <fullName>Accident benefit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bonds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Car Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial purchase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Rating Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Critical Illness</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Stock</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FMP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold ETF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold Scheme</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Home Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Home Loan Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mortgage Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NCD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Physical Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Property</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Savings</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tax Planning %26 filing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Top Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Traditional Insurance Plan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Formation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Will Writing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Policy_Type__c</picklist>
+            <values>
+                <fullName>Critical Illness</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Disability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Householder%27s</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal Accident</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Top Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vehicle</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ProductType__c</picklist>
+            <values>
+                <fullName>General Insurance</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIP_Allowed__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Life_Insurance</fullName>
+        <active>true</active>
+        <label>Life Insurance</label>
+        <picklistValues>
+            <picklist>Asset_Class__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loans</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Currently_Recommended__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Data_Collection_Analysis_Control__c</picklist>
+            <values>
+                <fullName>Asset Allocation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash Flow</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Assumptions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Networth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portfolio Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Succession Planning</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Financial_Planing_Output_Report__c</picklist>
+            <values>
+                <fullName>Annexure 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivery Acknowledgement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Disclosure Statement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estate Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Plan Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Statements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Goal Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Individual Goal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Introduction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Investment Risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Summary Action Plan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Goals_Allowed_List__c</picklist>
+            <values>
+                <fullName>Car</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Fund</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>House</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marriage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Money to Heirs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Parental Responsibility</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retirement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacation</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Investment_Type__c</picklist>
+            <values>
+                <fullName>Accident benefit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bonds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Car Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial purchase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Rating Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Critical Illness</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Stock</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FMP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold ETF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold Scheme</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Home Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Home Loan Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mortgage Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NCD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Physical Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Property</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Savings</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tax Planning %26 filing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Top Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Traditional Insurance Plan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Formation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Will Writing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Policy_Type__c</picklist>
+            <values>
+                <fullName>Children%27s</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Endowment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Money-Back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pension Plan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Term Life</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULIP - Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULIP - Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Whole Life</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ProductType__c</picklist>
+            <values>
+                <fullName>Life Insurance</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIP_Allowed__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Mutual_Fund</fullName>
+        <active>true</active>
+        <label>Mutual Fund</label>
+        <picklistValues>
+            <picklist>Asset_Class__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loans</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Currently_Recommended__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Data_Collection_Analysis_Control__c</picklist>
+            <values>
+                <fullName>Asset Allocation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash Flow</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Assumptions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Networth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portfolio Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Succession Planning</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Financial_Planing_Output_Report__c</picklist>
+            <values>
+                <fullName>Annexure 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivery Acknowledgement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Disclosure Statement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estate Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Plan Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Statements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Goal Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Individual Goal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Introduction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Investment Risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Summary Action Plan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Goals_Allowed_List__c</picklist>
+            <values>
+                <fullName>Car</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Fund</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>House</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marriage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Money to Heirs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Parental Responsibility</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retirement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacation</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Investment_Type__c</picklist>
+            <values>
+                <fullName>Accident benefit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bonds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Car Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial purchase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Rating Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Critical Illness</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Stock</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FMP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold ETF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold Scheme</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Home Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Home Loan Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mortgage Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NCD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Physical Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Property</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Savings</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tax Planning %26 filing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Top Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Traditional Insurance Plan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Formation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Will Writing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Policy_Type__c</picklist>
+            <values>
+                <fullName>Critical Illness</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Disability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal Accident</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Top Up</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ProductType__c</picklist>
+            <values>
+                <fullName>Mutual Fund</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIP_Allowed__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Other_Products</fullName>
+        <active>true</active>
+        <description>Loans,Fixed Deposits and Bond related Products</description>
+        <label>Other Products</label>
+        <picklistValues>
+            <picklist>Asset_Class__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loans</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Currently_Recommended__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Data_Collection_Analysis_Control__c</picklist>
+            <values>
+                <fullName>Asset Allocation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash Flow</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Assumptions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Networth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portfolio Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Succession Planning</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Financial_Planing_Output_Report__c</picklist>
+            <values>
+                <fullName>Annexure 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivery Acknowledgement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Disclosure Statement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estate Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Plan Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Statements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Goal Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Individual Goal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Introduction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Investment Risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Summary Action Plan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Goals_Allowed_List__c</picklist>
+            <values>
+                <fullName>Car</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Fund</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>House</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marriage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Money to Heirs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Parental Responsibility</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retirement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacation</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Investment_Type__c</picklist>
+            <values>
+                <fullName>Bonds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Car Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial purchase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Home Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Home Loan Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mortgage Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal Loan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Policy_Type__c</picklist>
+            <values>
+                <fullName>Critical Illness</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Disability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Householder%27s</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal Accident</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Top Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vehicle</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ProductType__c</picklist>
+            <values>
+                <fullName>Bond</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIP_Allowed__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Value_Added_Services</fullName>
+        <active>true</active>
+        <description>Product Type picklist contain only Value Added Services.</description>
+        <label>Value Added Services</label>
+        <picklistValues>
+            <picklist>Asset_Class__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loans</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Service</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Currently_Recommended__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Data_Collection_Analysis_Control__c</picklist>
+            <values>
+                <fullName>Asset Allocation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash Flow</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Assumptions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Networth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portfolio Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Succession Planning</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Financial_Planing_Output_Report__c</picklist>
+            <values>
+                <fullName>Annexure 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivery Acknowledgement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Disclosure Statement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estate Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Plan Review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Statements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Goal Summary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Individual Goal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Introduction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Investment Risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Summary Action Plan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Goals_Allowed_List__c</picklist>
+            <values>
+                <fullName>Car</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Emergency Fund</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>House</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marriage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Money to Heirs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Parental Responsibility</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retirement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacation</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Investment_Type__c</picklist>
+            <values>
+                <fullName>Accident benefit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bonds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Car Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial purchase</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Rating Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Critical Illness</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Stock</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FMP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold ETF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold MF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold Scheme</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Home Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Home Loan Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Life Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mortgage Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NCD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal Loan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Physical Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Property</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Savings</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tax Planning %26 filing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Top Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Traditional Insurance Plan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Formation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Will Writing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Policy_Type__c</picklist>
+            <values>
+                <fullName>Critical Illness</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Disability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal Accident</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Top Up</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ProductType__c</picklist>
+            <values>
+                <fullName>Value Added Services</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIP_Allowed__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Product_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Asset_Class__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Investment_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Product_Manufacturer__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ProductType__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Currently_Recommended__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>SIP_Allowed__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Is_Active__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Product_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Asset_Class__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Investment_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Product_Manufacturer__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ProductType__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Currently_Recommended__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Is_Active__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Product_Name__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Asset_Class__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Investment_Type__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Product_Manufacturer__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ProductType__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Currently_Recommended__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>SIP_Allowed__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Is_Active__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Fees_in_Advance_or_On_Service_Delivery__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Product_Name__c</searchFilterFields>
+        <searchFilterFields>Asset_Class__c</searchFilterFields>
+        <searchFilterFields>Investment_Type__c</searchFilterFields>
+        <searchFilterFields>Product_Manufacturer__c</searchFilterFields>
+        <searchFilterFields>ProductType__c</searchFilterFields>
+        <searchFilterFields>Is_Active__c</searchFilterFields>
+        <searchFilterFields>SIP_Allowed__c</searchFilterFields>
+        <searchFilterFields>Currently_Recommended__c</searchFilterFields>
+        <searchFilterFields>Fees_in_Advance_or_On_Service_Delivery__c</searchFilterFields>
+        <searchResultsAdditionalFields>Product_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Asset_Class__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Investment_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Product_Manufacturer__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ProductType__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Is_Active__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Currently_Recommended__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>SIP_Allowed__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Fees_in_Advance_or_On_Service_Delivery__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Earn_Fees_Selection</fullName>
+        <active>false</active>
+        <description>You can select &quot;Earn One TIme Fees&quot; OR &quot;Earn Trail Fees&quot; OR &quot;Earn Upfront Fees&quot; OR  &quot;Earn Trail Fees AND Earn Upfront Fees&quot; at a time.</description>
+        <errorConditionFormula>AND(
+ Earn_One_Time_Fees__c  == True,
+ OR( Earn_Trail_Fees__c == True,  Earn_Upfront_Fees__c == True))</errorConditionFormula>
+        <errorMessage>Earn One Time Fees and Earn Trail or Upfront Fees cannot be selected at a time.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Recommandation_Record_should_be_present</fullName>
+        <active>false</active>
+        <description>Atleast 1 Active Product Recommendation needs to exist for the current Product in order to mark it as recommended.</description>
+        <errorConditionFormula>IF(
+AND(
+ISPICKVAL( Currently_Recommended__c , &quot;Yes&quot;),
+Active_Recommendation_Count__c &lt; 1),
+TRUE,FALSE)</errorConditionFormula>
+        <errorDisplayField>Currently_Recommended__c</errorDisplayField>
+        <errorMessage>Atleast 1 Active Product Recommendation needs to exist for the current Product in order to mark it as recommended.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Update_Currently_Recommended_value_to_NO</fullName>
+        <active>false</active>
+        <description>If all Product Recommendation records have status as &apos;Expired&apos; then Currently Recommended fields should be set to &apos;No&apos;.</description>
+        <errorConditionFormula>IF(
+     AND(
+             ISPICKVAL( Currently_Recommended__c , &quot;No&quot;), 
+             Active_Recommendation_Count__c  &lt; 1),
+TRUE,FALSE)</errorConditionFormula>
+        <errorDisplayField>Currently_Recommended__c</errorDisplayField>
+        <errorMessage>If all Product Recommendation records have status as &apos;Expired&apos; then Currently Recommended fields should be set to &apos;No&apos;.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Edit_All</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Edit All</masterLabel>
+        <openType>noSidebar</openType>
+        <page>EditProducts</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

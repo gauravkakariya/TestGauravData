@@ -1,4 +1,1591 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
     <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Action__c</fullName>
+        <externalId>false</externalId>
+        <label>Action</label>
+        <picklist>
+            <picklistValues>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Liquidate (Align to goal)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Liquidate (sell)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Active_Status__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Active Status</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Agent_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Agent Code</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agent_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Agent Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Allocated_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Allocated Amount</label>
+        <summarizedField>GoalInsuranceAssociation__c.Allocation__c</summarizedField>
+        <summaryForeignKey>GoalInsuranceAssociation__c.Insurance__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Annual_Premium__c</fullName>
+        <externalId>false</externalId>
+        <label>Annual Premium</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Annual_Premium_amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(  
+     Premium_Frequency__c ,
+      &apos;Annually&apos;,  Premium_Amount_Rs__c ,
+     &apos;Semi Annual&apos;, (Premium_Amount_Rs__c  * 2), 
+     &apos;Quarterly&apos;,( Premium_Amount_Rs__c  * 4), 
+     &apos;Monthly&apos;,(Premium_Amount_Rs__c   * 12),
+    0
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Annual_Premium_amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Annualized_Premium_In_Rs__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+ CONTAINS($RecordType.Name , &apos;Life Insurance&apos;),
+  CASE(  Premium_Frequency__c ,&apos;Annually&apos;, Death_Benefit_Rs__c ,
+     &apos;Semi Annual&apos;, (Death_Benefit_Rs__c  * 2), 
+     &apos;Quarterly&apos;,( Death_Benefit_Rs__c  * 4), 
+     &apos;One Time Premium&apos;,(Death_Benefit_Rs__c  * 12),
+     &apos;Monthly&apos;,(Death_Benefit_Rs__c  * 12),
+     0
+  ),
+ IF(CONTAINS($RecordType.Name , &apos;General Insurance&apos;), 
+  CASE( 
+  Premium_Frequency__c ,&apos;Annually&apos;, Sum_Assured_Rs__c ,
+     &apos;Semi Annual&apos;, (Sum_Assured_Rs__c  * 2), 
+     &apos;Quarterly&apos;,( Sum_Assured_Rs__c * 4), 
+     &apos;One Time Premium&apos;,(Sum_Assured_Rs__c * 12),
+     &apos;Monthly&apos;,(Sum_Assured_Rs__c  * 12),
+     0
+   ),0
+  )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Annualized Premium (Rs.)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Annualized_Premium_Rs__c</fullName>
+        <externalId>false</externalId>
+        <label>Annualized Premium (Rs.)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Categories__c</fullName>
+        <externalId>false</externalId>
+        <label>Categories</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Commencement_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Please Enter Date In Format : DD/MM/YY</inlineHelpText>
+        <label>Commencement Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Company_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Company Name</label>
+        <length>200</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Current_Amount__c</fullName>
+        <description>This field is used only for binding purpose.When we are displaying current value of insurance,every time we need to calculate current value (As it varies for different time Span).When we need to temporarily store that value we can make use of this field.</description>
+        <externalId>false</externalId>
+        <label>Current Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Death_Benefit_Rs__c</fullName>
+        <externalId>false</externalId>
+        <label>Death Benefit (Rs.)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>EmergencyFundAction__c</fullName>
+        <externalId>false</externalId>
+        <label>EmergencyFundAction</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>End_Year__c</fullName>
+        <externalId>false</externalId>
+        <label>End Year</label>
+        <length>4</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Entity_Name__c</fullName>
+        <description>Dont delete this field, Its being used in Approved action plan for internal purpose only</description>
+        <externalId>false</externalId>
+        <label>Entity Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Entity__c</fullName>
+        <externalId>false</externalId>
+        <label>Entity</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Insurances</relationshipLabel>
+        <relationshipName>Insurances</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Flag__c</fullName>
+        <externalId>false</externalId>
+        <label>Flag</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Data Entry</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Analysis</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>From_Portal__c</fullName>
+        <externalId>false</externalId>
+        <label>From_Portal</label>
+        <precision>1</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>General_Insurance_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>General Insurance Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Householder&apos;s Policy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Theft Insurance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fire Insurance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Medical Insurance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Disability Insurance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vehicle Insurance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Insurance_Company__c</fullName>
+        <externalId>false</externalId>
+        <label>Insurance Company</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>IsSynched__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>IsSynched</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Life_Insurance_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Life Insurance Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Term Life</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Whole Life</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Endowment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ULIPS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Money-Back</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Children Policy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Maturity_Amount__c</fullName>
+        <description>It will contain matury amount of Insurance</description>
+        <externalId>false</externalId>
+        <label>Maturity Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Maximum_Benefit__c</fullName>
+        <externalId>false</externalId>
+        <label>Maximum Benefit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Monthly_Benefit__c</fullName>
+        <externalId>false</externalId>
+        <label>Monthly Benefit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Next_Premium_Due_Date__c</fullName>
+        <description>Next Premium Due Date</description>
+        <externalId>false</externalId>
+        <label>Next Premium Due Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Nominee__c</fullName>
+        <externalId>false</externalId>
+        <label>Nominee</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Premium_Left__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Premium Left</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Premiums_Left__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Premiums Left</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Years_Left__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Years Left</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Percent_of_Income__c</fullName>
+        <externalId>false</externalId>
+        <label>Percent of Income</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Policy_Holder__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Policy Holder</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Insurance</relationshipLabel>
+        <relationshipName>Insurance</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Policy_Issued_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Policy Issued Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Policy_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Policy Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Policy_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Policy Number</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Policy_Number_or_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Policy Number or Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Policy_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Policy Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>In-force</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lapse</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Postponed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Declined</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Policy_Term__c</fullName>
+        <externalId>false</externalId>
+        <label>Policy Term(in Years)</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Policy_Term_in_Years__c</fullName>
+        <externalId>false</externalId>
+        <label>Policy Term(in Years)</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Policy_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Policy Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Term Life</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Whole Life</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Endowment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ULIP - Debt</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pension Plan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Money-Back</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Children&apos;s</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Medical</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vehicle</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Householder&apos;s</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Term</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guarnteed Renewable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ULIP - Equity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Critical Illness</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Personal Accident</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ULIP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Top Up</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Portal_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Portal Id</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Portal_Parent_Entity__c</fullName>
+        <externalId>false</externalId>
+        <label>Portal Parent Entity</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Premium_Amount_Rs__c</fullName>
+        <externalId>false</externalId>
+        <label>Premium Amount (Rs.)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Premium_Due_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Premium Due date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Premium_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Premium End Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Premium_Frequency__c</fullName>
+        <externalId>false</externalId>
+        <label>Premium Payment Frequency</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Annually</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Semi Annual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Quarterly</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>One Time Premium</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Premium_Paying_Term__c</fullName>
+        <description>Added new field.This is because many times the Premium Paying term is less than the Tenure</description>
+        <externalId>false</externalId>
+        <label>Premium Paying Term</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Premium_Payment_Frequency__c</fullName>
+        <externalId>false</externalId>
+        <label>Premium Payment Frequency</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Annually</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Semi-Annually</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Quarterly</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Single Premium</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Premium_Payor__c</fullName>
+        <externalId>false</externalId>
+        <label>Premium Payor</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Employer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Primary_Beneficiary__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Primary Beneficiary</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Insurances (Primary Beneficiary)</relationshipLabel>
+        <relationshipName>Insurances</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Received_Premium__c</fullName>
+        <externalId>false</externalId>
+        <label>Received Premium</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>RemoveCheckbox__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>RemoveCheckbox</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Residual_Benefits__c</fullName>
+        <externalId>false</externalId>
+        <label>Residual Benefits</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Residual</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Return_Of_Interest__c</fullName>
+        <description>FP Changes - II</description>
+        <externalId>false</externalId>
+        <label>Interest Rate</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Revised_Maturity_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Revised Maturity Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Secondary_Beneficiary__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Secondary Beneficiary</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Insurances (ContactSecondary Beneficiary)</relationshipLabel>
+        <relationshipName>Insurances2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Start_Year__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Year</label>
+        <length>4</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Suggested_Cover_General_Insurance__c</fullName>
+        <externalId>false</externalId>
+        <label>Suggested Cover</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sum_Assured_Rs__c</fullName>
+        <externalId>false</externalId>
+        <label>Sum Assured (Rs.)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Surrender_Cash_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Surrender/ Cash Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Surrender_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Surrender Value (Current Value)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Synched_Date_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Synched Date Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Tenure_of_Insurance__c</fullName>
+        <externalId>false</externalId>
+        <label>Tenure of Insurance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>isIncludeActionPlan__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Include in Action Plan</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>totalAsset__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(
+ Policy_Type__c ,
+&apos;Whole Life&apos;,  Annual_Premium_amount__c *  (1.06 ^ Tenure_of_Insurance__c ),
+&apos;ULIP - Debt&apos;, Annual_Premium_amount__c *  (1.06 ^ Tenure_of_Insurance__c ),
+&apos;Money-Back&apos;,Annual_Premium_amount__c * (1.05 ^ Tenure_of_Insurance__c ),
+&apos;Endowment&apos;,Annual_Premium_amount__c *  (1.06 ^ Tenure_of_Insurance__c ),
+&apos;ULIP - Equity&apos;,Annual_Premium_amount__c * (1.10 ^ Tenure_of_Insurance__c ),
+&apos;Pension plan&apos;,Annual_Premium_amount__c * (1.06 ^ Tenure_of_Insurance__c ),
+0
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>totalAsset</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>total_insurance__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+CONTAINS(RecordTypeId , &apos;01220000000Do0u&apos; ) , Sum_Assured_Rs__c,
+IF(CONTAINS(RecordTypeId , &apos;01220000000Do0v&apos; ), Death_Benefit_Rs__c,
+0)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>total insurance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <label>Insurance</label>
+    <nameField>
+        <displayFormat>INS-{00000}</displayFormat>
+        <label>Insurance Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Insurances</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>General_Insurance</fullName>
+        <active>true</active>
+        <label>General Insurance</label>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Liquidate %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28sell%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Categories__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Flag__c</picklist>
+            <values>
+                <fullName>Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Data Entry</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>General_Insurance_Type__c</picklist>
+            <values>
+                <fullName>Disability Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fire Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Householder%27s Policy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Theft Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vehicle Insurance</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Life_Insurance_Type__c</picklist>
+            <values>
+                <fullName>Children Policy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Endowment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Money-Back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Term Life</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULIPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Whole Life</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Policy_Status__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Declined</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In-force</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lapse</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Postponed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Policy_Type__c</picklist>
+            <values>
+                <fullName>Critical Illness</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Householder%27s</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal Accident</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Top Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vehicle</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Premium_Frequency__c</picklist>
+            <values>
+                <fullName>Annually</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One Time Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quarterly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Semi Annual</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Premium_Payment_Frequency__c</picklist>
+            <values>
+                <fullName>Annually</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quarterly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Semi-Annually</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Single Premium</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Premium_Payor__c</picklist>
+            <values>
+                <fullName>Employer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Residual_Benefits__c</picklist>
+            <values>
+                <fullName>Residual</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Life_Insurance</fullName>
+        <active>true</active>
+        <label>Life Insurance</label>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Liquidate %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28sell%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Categories__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Flag__c</picklist>
+            <values>
+                <fullName>Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Data Entry</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>General_Insurance_Type__c</picklist>
+            <values>
+                <fullName>Disability Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fire Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Householder%27s Policy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medical Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Theft Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vehicle Insurance</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Life_Insurance_Type__c</picklist>
+            <values>
+                <fullName>Children Policy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Endowment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Money-Back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Term Life</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULIPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Whole Life</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Policy_Status__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Declined</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In-force</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lapse</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Postponed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Policy_Type__c</picklist>
+            <values>
+                <fullName>Children%27s</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Endowment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Money-Back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pension Plan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Term Life</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULIP - Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULIP - Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Whole Life</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Premium_Frequency__c</picklist>
+            <values>
+                <fullName>Annually</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One Time Premium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quarterly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Semi Annual</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Premium_Payment_Frequency__c</picklist>
+            <values>
+                <fullName>Annually</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quarterly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Semi-Annually</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Single Premium</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Premium_Payor__c</picklist>
+            <values>
+                <fullName>Employer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Residual_Benefits__c</picklist>
+            <values>
+                <fullName>Residual</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
 </CustomObject>

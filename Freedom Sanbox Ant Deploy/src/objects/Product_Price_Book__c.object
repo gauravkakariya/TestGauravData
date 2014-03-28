@@ -1,3 +1,549 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Price Books</relationshipLabel>
+        <relationshipName>Price_Books</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Advance_Value__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Advance Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Current_status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Expired</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Discount__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Discount</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Education_Cess__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Education Cess</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Flat_Commission__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Flat Commission</label>
+        <precision>7</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Installment_value_1__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Installment Value 1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Installment_value_2__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Installment Value 2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Installment_value_3__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Installment Value 3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Price_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Price Category</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Upfront</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Trail</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>One Time</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Price_End_date__c</fullName>
+        <defaultValue>TODAY() + 30</defaultValue>
+        <externalId>false</externalId>
+        <label>Price End date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Price_Start_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Price Start date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Price_type__c</fullName>
+        <externalId>false</externalId>
+        <label>Price Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Percentage of Investment Amount</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Percentage of Current Investment Value</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fixed Amount</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Price_value__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Products where Price Category is One Time, Price should be set as a decimal number containing 2 decimal places. e.g. 12545.22. 
+Products where Price Category is other One Time, Price should be set as percentage containing 2 decimal places. e.g.  0.75.</inlineHelpText>
+        <label>Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_code__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Product Code</label>
+        <referenceTo>Product_Master__c</referenceTo>
+        <relationshipLabel>Product Price Books</relationshipLabel>
+        <relationshipName>Product_Price_Books</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_price__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Renewal price</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Tax__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Service Tax</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Sp_Education_Cess__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Sp. Education Cess</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>VAT__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>VAT</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <label>Price Book</label>
+    <nameField>
+        <displayFormat>PRBK-{0000000}</displayFormat>
+        <label>Product Price Book Code</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Price Books</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Freedom_Product</fullName>
+        <active>true</active>
+        <label>Freedom Product</label>
+        <picklistValues>
+            <picklist>Current_status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Expired</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Price_Category__c</picklist>
+            <values>
+                <fullName>One Time</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upfront</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Price_type__c</picklist>
+            <values>
+                <fullName>Fixed Amount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Percentage of Current Investment Value</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Percentage of Investment Amount</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>One_Time_Layout</fullName>
+        <active>true</active>
+        <description>Price Type picklist should only contain Fixed Fees</description>
+        <label>One Time Layout</label>
+        <picklistValues>
+            <picklist>Current_status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Expired</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Price_Category__c</picklist>
+            <values>
+                <fullName>One Time</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Price_type__c</picklist>
+            <values>
+                <fullName>Fixed Amount</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Trail_Layout</fullName>
+        <active>true</active>
+        <description>Price Type picklist should contain all values except Fixed Fees</description>
+        <label>Trail Layout</label>
+        <picklistValues>
+            <picklist>Current_status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Expired</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Price_Category__c</picklist>
+            <values>
+                <fullName>Trail</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Price_type__c</picklist>
+            <values>
+                <fullName>Percentage of Current Investment Value</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Percentage of Investment Amount</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Upfront_Layout</fullName>
+        <active>true</active>
+        <description>Price Type picklist should contain all values except Fixed Fees</description>
+        <label>Upfront Layout</label>
+        <picklistValues>
+            <picklist>Current_status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Expired</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Price_Category__c</picklist>
+            <values>
+                <fullName>Upfront</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Price_type__c</picklist>
+            <values>
+                <fullName>Percentage of Current Investment Value</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Percentage of Investment Amount</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Product_code__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Price_Category__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Price_type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Current_status__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Price_value__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Advance_Value__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Product_code__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Price_Category__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Price_type__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Current_status__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Price_value__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Advance_Value__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Product_code__c</searchFilterFields>
+        <searchFilterFields>Price_Category__c</searchFilterFields>
+        <searchFilterFields>Price_type__c</searchFilterFields>
+        <searchFilterFields>Current_status__c</searchFilterFields>
+        <searchFilterFields>Price_value__c</searchFilterFields>
+        <searchFilterFields>Advance_Value__c</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Advance_Value_Greater_than_zero</fullName>
+        <active>true</active>
+        <description>If Fees in Advance is Checked for Product, Then advance value should be greater than zero.</description>
+        <errorConditionFormula>IF( RecordType.Name == &apos;One Time Layout&apos;,
+AND(Product_code__r.Fees_in_Advance_or_On_Service_Delivery__c == True ,Advance_Value__c &lt;= 0),false)</errorConditionFormula>
+        <errorDisplayField>Advance_Value__c</errorDisplayField>
+        <errorMessage>As Fees in Advance is Paid, Advance Value should be greater than zero.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>End_Date_greater_then_Start_Date</fullName>
+        <active>true</active>
+        <description>Start date should be less than end date.</description>
+        <errorConditionFormula>Price_End_date__c  &lt;  Price_Start_date__c</errorConditionFormula>
+        <errorDisplayField>Price_End_date__c</errorDisplayField>
+        <errorMessage>Product Start Date should be less than Product End date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Record_Type_Selection_for_Upfront_Trail</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(Product_code__r.Earn_Upfront_Fees__c == True,
+Product_code__r.Earn_Trail_Fees__c == True,
+RecordType.Name == &apos;One Time Layout&apos;)</errorConditionFormula>
+        <errorMessage>Record Type selected  should be Earn Upfront/Trail Fees.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Record_Type_for_Upfront_or_Trail</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(
+AND (
+            Product_code__r.Earn_Upfront_Fees__c == False,
+             Product_code__r.Earn_Trail_Fees__c == True, 
+             OR(RecordType.Name == &apos;Upfront Layout&apos;,
+             RecordType.Name == &apos;One Time Layout&apos;)),
+AND (
+            Product_code__r.Earn_Upfront_Fees__c == True,
+             Product_code__r.Earn_Trail_Fees__c == False, 
+             OR(RecordType.Name == &apos;Trail Layout&apos;,
+             RecordType.Name == &apos;One Time Layout&apos;)))</errorConditionFormula>
+        <errorMessage>Record Type Should be selected based on the Earn Fees Selected.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Report_Type_Selection_based_on_earn_fees</fullName>
+        <active>true</active>
+        <description>If &apos;Earn One time fees&apos; is checked then Record type selected for PriceBook should be &quot;One Time&quot;.
+Otherwise Other two record types can be selected if &quot;Earn Trail Fees&quot; or &quot;Earn Upfront Fees&quot; or both are selected.</description>
+        <errorConditionFormula>AND(
+       OR(Product_code__r.Earn_One_Time_Fees__c == True,
+       AND(Product_code__r.Earn_One_Time_Fees__c == True,
+              Product_code__r.Fees_in_Advance_or_On_Service_Delivery__c == True)),
+       OR(RecordType.Name == &apos;Upfront Layout&apos; , RecordType.Name == &apos;Trail Layout&apos;)
+)</errorConditionFormula>
+        <errorMessage>As Earn One Time Fees is checked, Record Type selected should be One Time.</errorMessage>
+    </validationRules>
+</CustomObject>
