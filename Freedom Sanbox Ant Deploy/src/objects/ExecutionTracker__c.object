@@ -1,32 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customSettingsType>List</customSettingsType>
-    <customSettingsVisibility>Public</customSettingsVisibility>
-    <description>Handle method call to calculate ARPP commission for ET</description>
-    <enableFeeds>false</enableFeeds>
-    <fields>
-        <fullName>Is_Execute__c</fullName>
-        <defaultValue>true</defaultValue>
-        <externalId>false</externalId>
-        <label>Is Execute</label>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>RPP_Deployment_Date__c</fullName>
-        <description>This is used for Getting Wrong product name from RPP Deployent Date</description>
-        <externalId>false</externalId>
-        <label>RPP Deployment Date</label>
-        <required>false</required>
-        <type>DateTime</type>
-    </fields>
-    <fields>
-        <fullName>Remark__c</fullName>
-        <externalId>false</externalId>
-        <label>Remark</label>
-        <length>255</length>
-        <required>false</required>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <label>Excecution Trigger For ARPP</label>
-</CustomObject>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata"/>
+

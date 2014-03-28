@@ -12,6 +12,7 @@
         <externalId>false</externalId>
         <label>Api Key</label>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
     <fields>
@@ -22,6 +23,7 @@
         <externalId>false</externalId>
         <label>Application key</label>
         <required>true</required>
+        <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
     <fields>
@@ -31,6 +33,7 @@
         <description>This tells the Status of user. If this field is checked then user is registered user else its not.</description>
         <externalId>false</externalId>
         <label>isRegistered</label>
+        <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
     <label>SMS Magic Security Setting</label>

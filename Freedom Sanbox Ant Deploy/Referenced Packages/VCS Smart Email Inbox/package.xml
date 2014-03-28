@@ -233,5 +233,5 @@ Administrators can easily add the free version of VCS Smart Inbox for Salesforce
         <members>VCSEmail__c.Reply_to_Account</members>
         <name>WebLink</name>
     </types>
-    <version>28.0</version>
+    <version>29.0</version>
 </Package>
