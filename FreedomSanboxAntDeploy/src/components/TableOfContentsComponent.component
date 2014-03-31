@@ -1,0 +1,78 @@
+<apex:component controller="FPReportControl">
+    <div class="divContainerStyle">
+        <table id="contentsTable" cellspacing="5" cellpadding="5" border="0" style="width:100%;">
+            <tr class="divStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.TableOfContents}"/></td>
+            </tr>    
+            <apex:outputPanel rendered="{!isIntroduction}"> 
+                <tr class="textStyle">
+                    <td class="upperCase"><apex:outputText value="{!$Label.Introduction}"/></td>
+                </tr>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!isDisclosureStatement}">  
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.Disclosure_Statement}"/></td>
+            </tr>
+            </apex:outputPanel>
+            <!-- Prajakta - FP changes - 01-03-2013  -->
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.Personal_Information}"/></td>
+            </tr>
+            <!-- Prajakta - FP changes - 11-03-2013  -->
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.Global_Assumptions}"/></td>
+            </tr>
+            <apex:outputPanel rendered="{!isGoalSummary}"> 
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.Goal_Summary}"/></td>
+            </tr>
+            </apex:outputPanel>
+            <!-- Prajakta - FP changes - 21-03-2013  -->
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.Portfolio_Summary}"/></td>
+            </tr>
+            
+<!--             <tr class="textStyle"> -->
+<!--                 <td class="upperCase"><apex:outputText value="{!$Label.Pictorial_Review}"/></td> -->
+<!--             </tr> -->
+            <apex:outputPanel rendered="{!isFinancialStatements}">  
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.Financial_Statements}"/></td>
+            </tr>
+            </apex:outputPanel>
+            
+            <!-- Prajakta - FP changes - 11-03-2013  -->
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.Cash_Flow}"/></td>
+            </tr>
+             <!-- Aditi - FP changes - 26-6-2013  -->
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="Cash Flow Projection"/></td>
+            </tr>
+            <apex:outputPanel rendered="{!isEmergencyPlanning}">  
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.Emergency_Fund}"/></td>
+            </tr>
+            </apex:outputPanel>
+            <apex:componentBody />
+            
+            <apex:outputPanel rendered="{!isFinancialPlanReview}" >
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.FinancialPlanReview}"/></td>
+            </tr>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!isInvestmentRisk}" >  
+                <tr class="textStyle">
+                    <td class="upperCase"><apex:outputText value="{!$Label.Investment_Risks}"/></td>
+                </tr>
+            </apex:outputPanel>    
+            
+            <apex:outputPanel rendered="{!isDeliveryAcknowledgement}" > 
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.Delivery_Acknowledgement}"/></td>
+            </tr>
+            </apex:outputPanel>
+        </table>
+    </div>
+</apex:component>

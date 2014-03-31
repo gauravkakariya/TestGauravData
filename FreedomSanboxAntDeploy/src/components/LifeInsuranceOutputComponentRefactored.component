@@ -1,0 +1,136 @@
+<!-- 
+	Revision History:
+	
+    Version     Version Author     Date         Comments
+    1.0         Persistent         NA  		  	Initial Draft
+   
+	2.0			Mahesh Hirugade	   03/05/2012    Issue Id : 00001618 : Added attribute ObjRemark
+	2.0			Manasi Ranade	   7/6/2012    	 Issue Id : 00001673 : Added the statement which was given by Shweta
+-->
+<apex:component controller="LifeInsuranceOutputCompRefactoredClass">
+
+<!--     <apex:attribute name="entity" assignTo="{!entity}" required="false" type="Account" description="Entity Account"/>  -->
+<!--     <apex:attribute name="adjustmentFactor" assignTo="{!selAdjustmentFactor}" required="false" type="String" description="Adjustment Factor"/>  -->
+<!--     <apex:attribute name="insuranceBean" assignTo="{!bean}" required="false" type="LifeInsurancePlanningBean" description="LifeInsurancePlanningBean"/> -->
+<!--     <apex:attribute name="HlvDetails" assignTo="{!HLVDetails}" type="HLVDetails__c" description="HlvDetails"/> -->
+<!--     <apex:attribute name="insurance" assignTo="{!insurance}" type="Insurance__c" description="Insurance"/>  -->
+<!--     <apex:attribute name="showOnPage" type="Boolean" description="Show save button and checkbox on page" default="false"/> -->
+<!--     Issue Id : 00001618 : Added attribute ObjRemark : mahesh -->
+<!--     <apex:attribute name="ObjRemark" type="Remarks__c" description="to show Remark of LI"/> -->
+    <apex:attribute name="HlvDetails" assignTo="{!HLVDetails}" type="HLVDetails__c" description="HlvDetails"/>
+    <div class="divContainerStyle">
+        <div class="divStyle">
+            <apex:outputLabel value="{!$Label.LifeInsuranceHeader} {!HLVDetails.Selected_Entity_Name__c}" style="margin-left:10px;vertical-align:middle;" />
+        </div>
+        <div>
+            <apex:outputText value="{!$Label.LifeInsuranceIntroduction}" escape="false" styleClass="textStyle"/>
+        </div>
+        
+        <div class="subHeader">
+            <apex:outputText value="{!$Label.What_you_want} {!$Label.Objective}" escape="false" styleClass="textStyle"/>
+        </div>
+        <div>
+            <ul class="TickList">
+                <li>
+                    <apex:outputText value="Analyzing the life insurance needs for the family in case {!HLVDetails.Selected_Entity_Name__c} dies prematurely." escape="false" styleClass="textStyle"/> 
+                </li>
+                <li>
+                    <apex:outputText value="{!$Label.LifeInsuranceObjective}" escape="false" styleClass="textStyle"/>
+                </li>
+            </ul>          
+        </div>            
+        <div class="subHeader">
+            <apex:outputText value="{!$Label.Where_you_are} " escape="false" styleClass="textStyle"/>
+            <b>
+                <apex:outputText value="{!$Label.Current_Situation}" escape="false" styleClass="textStyle"/>
+            </b>
+        </div>
+        <div>
+            <ul class="TickList">
+                <li>
+                    <apex:outputText value="You are currently insured for Rs." escape="false" styleClass="textStyle"/>
+                    <b>
+                        <apex:outputText value="{0,number,,##0}" escape="false" styleClass="textStyle">
+                            <apex:param name="existingLifeInsurance" value="{!HLVDetails.Existing_Life_Insurance_Present_Value__c}"/>
+                        </apex:outputText>
+                    </b>
+                </li>
+                <li>
+                       <apex:outputText value="In an unlikely event of your premature death Rs." escape="false" styleClass="textStyle"/>
+                       <b>
+                           <apex:outputText value="{0,number,,##0}" escape="false" styleClass="textStyle">
+                               <apex:param name="assetTotal" value="{!HLVDetails.Existing_Investments_Total__c}"/>
+                        </apex:outputText>
+                       </b>
+                       will be available to your dependants.
+                </li>
+            </ul>            
+        </div>
+        
+        <div class="subHeader">
+            <apex:outputText value="{!$Label.What_you_need_to_do} " escape="false" styleClass="textStyle"/>
+            <b>
+                <apex:outputText value="{!$Label.Analysis_and_Advice}" escape="false" styleClass="textStyle"/>
+            </b>
+        </div>
+        <div>
+            <ul class="TickList">
+                <li>
+                    <apex:outputText value="{!$Label.LifeInsuranceAnalysis}" escape="false" styleClass="textStyle"/>
+                </li>
+                <li>
+                    <apex:outputText value="{!$Label.LifeInsuranceAdequateInsured}" styleClass="textStyle"
+                            rendered="{!IF((HLVDetails.Additional_Life_Insurance_Required__c <= 0),true,false)}"/>
+                    <apex:outputPanel rendered="{!IF((HLVDetails.Additional_Life_Insurance_Required__c > 0),true,false)}">
+                    <apex:outputText value="As per the human life value method you are under insured by Rs." 
+                        styleClass="textStyle" escape="false"/>
+                    <b>
+                        <apex:outputText value=" {0,number,,##0}." styleClass="textStyle" escape="false">
+                            <apex:param name="addLifeInsurance" value="{!HLVDetails.Additional_Life_Insurance_Required__c}"/>
+                        </apex:outputText>
+                    </b>
+                    </apex:outputPanel>
+                </li>
+            </ul>
+        </div>            
+                
+        <div class="subHeader">
+             <apex:outputText value="{!$Label.How_to_do} " escape="false" styleClass="textStyle" /> 
+             <b>
+                 <apex:outputText value="{!$Label.Action_Plan}" escape="false" styleClass="textStyle" /> 
+             </b>
+        </div>
+        <div>
+            <ul class="TickList">
+                <li>
+                    <apex:outputText value="Since {!HLVDetails.Selected_Entity_Name__c} is adequately insured we suggest no action be taken on this front." styleClass="textStyle" 
+                            rendered="{!IF(HLVDetails.Additional_Life_Insurance_Required__c <= 0,true,false)}"/>
+                    <apex:outputPanel rendered="{!IF(HLVDetails.Additional_Life_Insurance_Required__c > 0,true,false)}">
+                    <apex:outputText value="{!HLVDetails.Selected_Entity_Name__c} needs to buy a {!HLVDetails.Policy_Type__c} insurance policy for Rs." 
+                        styleClass="textStyle" escape="false"/>
+                    <b>
+                        <apex:outputText value="{0,number,,##0}" styleClass="textStyle" escape="false">
+                            <apex:param name="roundLifeInsurance" value="{!HLVDetails.Round_Off__c}"/>
+                        </apex:outputText>
+                    </b>
+                    </apex:outputPanel>
+					<!--/** Eternus Solutions      **/
+					/** Author  : Manasi Ranade*/
+					/** Issue Id: 00001673      **/
+					/** Date    : 7/6/2012 **/
+					/** Purpose : Added the statement which was given by Shweta**/
+					/****************************************************/-->
+					<br/>
+					<apex:outputPanel rendered="{!IF(HLVDetails.Premium_Amount_Rs__c > 0,true,false)}">
+						<apex:outputText value="The annual estimated premium is expected to be in the range of Rs." styleClass="textStyle" escape="false"/>
+						<b>{!HLVDetails.Premium_Amount_Rs__c} </b>
+						<apex:outputText value="for a term of " styleClass="textStyle" escape="false"/>
+						<b>{!HLVDetails.Term_of_Insurance__c}</b>
+					</apex:outputPanel>
+                </li>
+            </ul>
+        </div>
+        <div class="subHeader"><b><apex:outputText value="{!$Label.Remarks} " escape="false" styleClass="textStyle" /></b></div>
+        <div><apex:OutputField value="{!HLVDetails.Remark__c}" /></div>
+    </div>
+</apex:component>

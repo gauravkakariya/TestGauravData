@@ -1,0 +1,143 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="Story_May12">
+<head>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+		_gaq.push([ '_trackPageview' ]);
+	
+		(function() {
+			var ga = document.createElement('script');
+			ga.type = 'text/javascript';
+			ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+					: 'http://www')
+					+ '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td><img src="{!URLFOR($Resource.images,'images/top_May12.gif')}" width="740" height="104" /></td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+				<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+					<td valign="top">
+						<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+							<tr>
+								<td valign="top">
+									<table width="100%" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/storyHIn.gif')}" width="131" height="40" /></td>
+										</tr>
+										<tr>
+											<td>
+												<table width="100%" border="0" cellpadding="0" cellspacing="0">
+													<tr>
+														<td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+														<td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+														<td valign="top">
+															<table width="98%" border="0" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>“I have been Touched by the Whole Planning Exercise, It Feels as if  they treat my Financial Plan as theirs”</em></strong></font></td>
+																</tr>
+																<tr>
+																	<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;"><p><br />
+																	I was always  interested in the financial markets and investments, ever since I started my  first job. I used to read a lot of financial magazines through as a guide for  investments. After 4 ½ years into my professional practice, I had little or no  time left for enhancing my knowledge further on financial planning and I was  left with little disposable wealth  in my  portfolio. <br />
+																	<br />
+																	I was looking for  some one to help me with my finances, until I met Sunitha from Ffreedom  Financial Planners, who explained me in detail, the necessity of a Financial  Plan. While in the beginning, I knew the aspect of Financial Planning, but what  truly moved me was the affection with which I was explained the importance of  having a sound Financial Plan. That’s when I decided to delegate my &amp; my  wife’s personal Financial Planning to Ffreedom Financial Planners to try and  see how best, my finances can be managed.<br />
+																	<br />
+																	Vinita Somaiya was  assigned as my &amp; my wife’s Financial Planner<strong>. My money life is open to my Family &amp; that all the more helped to  get all our financial information together </strong>and get Vinita aware of our  family’s financial status.<br />
+																	<br />
+																	After understanding  my finances in depth she gave an excellent advise on how to set my goals, and  in the long run reach my goals.<br />
+																	<br />
+																	<strong>Vinita went to the extent of following up with me, almost on  a weekly basis</strong>, in respect of  clearing and surrendering my credit card and also for the status of the  execution of my goals. <strong>This helped me  tremendously, as not only did it make me realize the seriousness of the Financial  Plan,</strong> but also reminded of my goals, vis-à-vis where I stand financially,  as a reality check, every moment!<br />
+																	<br />
+																	I have now become  much more aware as to where my money is going. I am very selective while  spending money.I believe that Ffreedom Financial Planners adopt a truly  innovative methodology, in writing Financial Plans for each Client. The whole  exercise of collating and obtaining data is a wonderful experience in  itself.  <strong>During the presentation of the Plan, Ffreedom truly brings out the care  and concern that they have, for their Clients for achieving their Financial  Goals.</strong> I was truly touched by the whole exercise, because it felt as if  they treated my Financial Plan as theirs!<br />
+																	<br />
+																	<strong>Excellent job done by Ffreedom, keep up the good work!</strong><br />
+																	<br />
+																	<strong>Saurabh Nathany Lawyer &amp; Senior  Associate at S N Gupta &amp; Co.</strong></p>
+																	</td>
+																</tr>
+																<tr>
+																	<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+													<tr>
+														<td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+														<td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+														<td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top">&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+					<td valign="top">
+						<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+							<tr>
+								<td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+								<td width="24%" rowspan="3">
+									<table border="0" align="center" cellpadding="0" cellspacing="0">
+										<tr>
+											<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+											<td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+										</tr>
+										<tr>
+											<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+											<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+							</tr>
+							<tr>
+								<td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+							</tr>
+							<tr>
+								<td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+							</tr>
+						</table>
+					</td>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+
+	<tr>
+		<td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+	</tr>
+</table>
+</body>
+</apex:page>

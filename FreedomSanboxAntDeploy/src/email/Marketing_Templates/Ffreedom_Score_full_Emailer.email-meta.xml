@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This email is created giving the link of the full Ffreedom Score website, you can use this email to initiate a lead.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Ffreedom Score (full) Emailer</name>
+    <style>formalLetter</style>
+    <subject>Check your Financial Health Today - Take the Ffreedom Score</subject>
+    <textOnly>Dear {!Lead.LastName},
+
+Its Natural to wonder how well you are doing financially. Hence it&apos;s time for a check-up.
+The Ffreedom Score is a Financial Health Check up that will give you an indication of how healthy your current financial situation is. This assessment measures the quality of your personal finance habits and your results are based on your own expectations.
+This exercise will help you take the initial steps in realizing a suitable financial strategy most appropriate to achive your goals and dreams; and help you attain Financial Freedom.
+So to get Started !!!Please visit www.ffreedomscore.in and take the Ffreedom Score &amp; see where you stand financially.   
+Post this our Financial Planners will get in touch with you shortly to set up a meeting with you wherein they will share the results of your Financial Health Check-Up &amp; also give you advice on how to improve you financial health.
+ Also To Join the Ffreedom Tribe &amp; Connect with us:
+
+Read the latest blog, &quot;Simplified Finance&quot; on Economic Times Online by Mr Sumeet Vaid, Founder, CEO, Ffreedom Financial Planners. 
+Like the Ffreedom Page &amp; Comment on our latest posts on Facebook  www.facebook.com/Ffreedom
+Follow us on Twitter www.twitter.com/_Ffreedom
+Visit us at www.ffreedom.in 
+Also Check out our Latest Videos on www.youtube.com/ffreedomtube &amp; www.youtube.com/ffreedomin  
+Best Regards, Ffreedom Financial Planners</textOnly>
+    <type>html</type>
+</EmailTemplate>

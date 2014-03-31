@@ -1,0 +1,344 @@
+<apex:page showHeader="false" sidebar="false"
+	title="Ffreedom Financial Planners | News Letters"
+	id="LeadStory_June12">
+	<head>
+	<link rel="shortcut icon" href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+	</head>
+
+	<body>
+		<table width="740" border="0" align="center" cellpadding="0"
+			cellspacing="0">
+			<tr>
+				<td><img
+					src="{!URLFOR($Resource.images,'images/top_June12.gif')}"
+					width="740" height="104" />
+				</td>
+			</tr>
+			<tr>
+				<td><table width="100%" border="0" cellspacing="0"
+						cellpadding="0">
+						<tr>
+							<td width="2" valign="top" bgcolor="#9CB82B"><img
+								src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+								height="1" />
+							</td>
+							<td valign="top"><table width="98%" border="0"
+									align="center" cellpadding="0" cellspacing="0">
+									<tr>
+										<td valign="top"><table width="100%" border="0"
+												cellspacing="0" cellpadding="0">
+												<tr>
+													<td><table width="100%" border="0" cellspacing="0"
+															cellpadding="0">
+															<tr>
+																<td width="1%" valign="top"><img
+																	src="{!URLFOR($Resource.images,'images/headL.gif')}"
+																	width="9" height="40" />
+																</td>
+																<td width="98%" valign="top"
+																	background="{!URLFOR($Resource.images,'images/headbg.gif')}"
+																	style="padding-top: 6px;"><font
+																	face="Arial, Helvetica, sans-serif" color="#FFFFFF"
+																	style="font-size: 14px;"><strong>IS
+																			THERE A CRISIS IN THE MARKET? DOES IT CALL FOR
+																			ACTION?</strong>
+																</font>
+																</td>
+																<td width="1%" valign="top"><img
+																	src="{!URLFOR($Resource.images,'images/headR.gif')}"
+																	width="9" height="40" align="right" />
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+
+												<tr>
+													<td><table width="100%" border="0" cellpadding="0"
+															cellspacing="0">
+															<tr>
+																<td width="9" valign="top"
+																	background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img
+																	src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"
+																	width="9" height="185" />
+																</td>
+																<td width="8" valign="top"><img
+																	src="{!URLFOR($Resource.images,'images/space.gif')}"
+																	width="8" height="1" />
+																</td>
+																<td valign="top"><table width="98%" border="0"
+																		cellpadding="0" cellspacing="0">
+																		<tr>
+																			<td valign="top"
+																				style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">
+																				All news channels and newspaper headlines are
+																				screaming that India is not shining anymore. The
+																				rupee is falling, government paralysis on every
+																				policy decision, untamable inflation, corruption in
+																				every walk of life and more. And worst of all
+																				against a projected 9%, our growth rate today is
+																				only 6.1% - a 30% drop. Can it get any worse? <br />
+																				<br /> Let's slightly look into our past. In the
+																				last 50 years, our average growth rate has been
+																				5.0%. In the 1960s growth rate was 6.7%, 1970s -
+																				2.9%, 1980s - 5.7%, 1990s - 5.6%, 2000s - 7.2%. So
+																				far in this decade, it is 8.0%. Are we not doing
+																				much better now than in the past? In the last ten
+																				years equity markets have returned 16.89% CAGR, far
+																				far better than most economies around the world, but
+																				we seem to think we are doing bad. <br /> <br />
+																				The objective here is not to brush aside the
+																				concerns. There are some problems and they are real.
+																				Just that they are not really as bad as they seem,
+																				or as they are made out to be. The problem is our
+																				reference point. <br /> <br /> Leaving the macro
+																				economy to the learned few, what does it mean to
+																				investors in general and you and I in
+																				particular?&nbsp; Most investors, at least the ones
+																				who jumped into the equity markets in the last 3
+																				years talk about opportunity cost or opportunity
+																				lost by staying invested in the equities. &nbsp; <br />
+																				<br /> &quot;All this theory, that in the long run
+																				markets will perform better than other asset classes
+																				and stuff is okay, but what about the losses I have
+																				already made?&quot; argue many investors. In the
+																				last two years, equity markets have moved down over
+																				20%. From here on, the portfolio will have to make
+																				up the losses of the previous years and then return
+																				YOY over 20% if not more, depending on how far your
+																				goal is, to get there! <br /> <br /> This logic
+																				and arithmetic is perfect. The assumption is not. <br />
+																				<br /> Remember the disclaimer ‘past performance
+																				are not an indicator of the future’ and this is
+																				applicable both when markets have been good and bad
+																				in the past, at least the near past.&nbsp; In the
+																				long run, history does repeat itself. And there is
+																				enough proof to this, at least from the stock
+																				markets. <br /> <br /> Markets rebound, quite
+																				smartly at that after a good correction. They did
+																				between 2008 and 2009 – over 100%. But since then
+																				they are just stuck there. It would be interesting
+																				to note that corrections are of two types – price
+																				corrections and time corrections. What we are seeing
+																				now are time corrections. Between 2008 and 2009 too
+																				much happened too fast. That should have ideally
+																				happened in 4-5 years. And so, the market is biding
+																				time. We continue to be range bound in the last 3
+																				years and are at the same levels we were in 2009. <br />
+																				<br /> Historically, investments made when P/E is
+																				less than 16, have in the next 4-5 years returned
+																				over 20% CAGR. But that is when most investors have
+																				lost faith and exited markets also. Markets today
+																				hover at about 14-15 P/E. <br /> <br /> <strong>But
+																					what if the goal is nearing and your assumptions go
+																					very wrong? </strong><br /> Assumptions can go wrong, they
+																				will. Let’s draw a comparison with missile warheads.
+																				The most sophisticated and most useful ones are the
+																				guided missiles. Guided missiles have some sort of
+																				guidance mechanism like infra red or laser
+																				radiations systems to identify target. When the
+																				missile takes off the target is located to be at a
+																				specific place. Wind direction, obstructions on the
+																				path and certain other parameters are assumed and
+																				based on that the flight system is programmed. <br />
+																				<br /> <strong>Assume that the target
+																					moves or some new obstruction come onto the path.
+																					Will the missile be abandoned? </strong><br /> The missile
+																				changes course to attack the target. When there is
+																				heavier wind or obstructions on the path the
+																				guidance system maneuvers the missile in flight, on
+																				the go and counters inaccuracies.&nbsp; And the
+																				missile will attempt hitting the target within a
+																				certain radius, in such a way that the target even
+																				if not exactly hit will feel the impact well enough.
+																				<br /> <br /> A financial plan attempts to do
+																				exactly that. The goal is projected and returns are
+																				assumed. The goal can move with time and so can
+																				assumptions go terribly wrong. The plan cannot be
+																				abandoned. But course corrections are to be done. <br />
+																				<br /> If the course correction means change asset
+																				allocation, make a one-time investment, increase
+																				regular investments, liquidate some assets, borrow
+																				to pitch in or whatever makes logical and economic
+																				sense, so be it. <br /> <br /> Financial planning
+																				is a process designed with the objective of reaching
+																				goals.&nbsp; The financial planner should have the
+																				courage and capability to spot changes in the
+																				circumstances, make more assumptions, get them right
+																				or wrong and make corrections on the
+																				course.&nbsp;Meanwhile please note, we don't want
+																				you to&nbsp;over react with your financial plan
+																				now.&nbsp;Hang in there.&nbsp;But regularly
+																				review&nbsp;your financial plan and
+																				rebalance&nbsp;your portfolio every year.
+																				That&nbsp;is mandatory.</td>
+																		</tr>
+																		<tr>
+																			<td valign="top"
+																				style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">&nbsp;</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+															<tr>
+																<td valign="top"><img
+																	src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"
+																	width="9" height="1" />
+																</td>
+																<td valign="top" bgcolor="#BD6105"><img
+																	src="{!URLFOR($Resource.images,'images/space.gif')}"
+																	width="1" height="1" />
+																</td>
+																<td valign="top" bgcolor="#BD6105"><img
+																	src="{!URLFOR($Resource.images,'images/space.gif')}"
+																	width="1" height="1" />
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table></td>
+									</tr>
+									<tr>
+										<td valign="top">&nbsp;</td>
+									</tr>
+								</table>
+							</td>
+							<td width="2" valign="top" bgcolor="#9CB82B"><img
+								src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+								height="1" />
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td width="2" valign="top" bgcolor="#9CB82B"><img
+								src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+								height="1" />
+							</td>
+							<td valign="top">
+								<table width="98%" border="0" align="center" cellpadding="0"
+									cellspacing="0">
+									<tr>
+										<td width="76%" height="20" valign="top"><font
+											face="Arial, Helvetica, sans-serif" color="#035728"
+											style="font-size: 13px;"><strong>Ffreedom
+													Financial Planners</strong>
+										</font>
+										</td>
+										<td width="24%" rowspan="3">
+											<table border="0" align="center" cellpadding="0"
+												cellspacing="0">
+												<tr>
+													<td><font face="Arial, Helvetica, sans-serif"
+														color="#333333" style="font-size: 12px;"><strong>
+																Follow us on&nbsp;&nbsp;&nbsp;</strong>
+													</font>
+													</td>
+													<td><a href="http://www.facebook.com/Ffreedom"
+														target="_blank"><img
+															src="{!URLFOR($Resource.images,'images/fb.png')}"
+															width="20" height="20" border="0" />
+													</a> <a href="http://twitter.com/_Ffreedom" target="_blank"><img
+															src="{!URLFOR($Resource.images,'images/tw.png')}"
+															width="20" height="20" hspace="6" border="0" />
+													</a> <a
+														href="http://www.linkedin.com/companies/ffreedom-financial-planners"
+														target="_blank"><img
+															src="{!URLFOR($Resource.images,'images/LinkedIn.png')}"
+															width="20" height="20" border="0" />
+													</a></td>
+												</tr>
+												<tr>
+													<td><font face="Arial, Helvetica, sans-serif"
+														color="#333333" style="font-size: 12px;"><strong>Watch
+																us on</strong>
+													</font>
+													</td>
+													<td><strong><a
+															href="http://www.youtube.com/user/ffreedomtube"
+															target="_blank"><img
+																src="{!URLFOR($Resource.images,'images/youtube.png')}"
+																width="20" height="20" vspace="6" border="0" />
+														</a>
+													</strong>
+													</td>
+												</tr>
+											</table></td>
+									</tr>
+									<tr>
+										<td height="20" valign="top"><font
+											face="Arial, Helvetica, sans-serif" color="#333333"
+											style="font-size: 11px;">506 / 507, Morya Landmark II,
+												Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font>
+										</td>
+									</tr>
+									<tr>
+										<td height="20" valign="top"><font
+											face="Arial, Helvetica, sans-serif" color="#333333"
+											style="font-size: 11px;">Boardline: +91 22 4222 4333
+												&nbsp;|&nbsp; Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a
+												href="mailto:contact@ffreedom.in">contact@ffreedom.in</a>
+												&nbsp;|&nbsp; <a href="http://www.ffreedom.in"
+												target="_blank">www.ffreedom.in</a>
+										</font>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" valign="top"><div align="justify">
+												<font face="Arial, Helvetica, sans-serif" color="#333333"
+													style="font-size: 11px;">Disclaimer: This
+													communication from Ffreedom provides general information
+													existing at the time of preparation. This mailer is
+													intended as a news update and Ffreedom Financial Planners
+													neither assumes nor accepts any responsibility for any loss
+													arising to any person acting or refraining from acting as a
+													result of any material contained in this communication. It
+													is recommended that professional advice be taken based on
+													the specific facts and circumstances. This communication
+													does not substitute the need to refer to the original
+													pronouncements.</font>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td width="2" valign="top" bgcolor="#9CB82B"><img
+								src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+								height="1" />
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td><img src="{!URLFOR($Resource.images,'images/footer.gif')}"
+					width="740" height="15" />
+				</td>
+			</tr>
+		</table>
+	</body>
+</apex:page>

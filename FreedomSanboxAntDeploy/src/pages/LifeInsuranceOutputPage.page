@@ -1,0 +1,46 @@
+<!-- /*
+	
+Revision History:
+
+   Version     Version Author     Date          Comments
+   1.0         Persistent         NA  		  	Initial Draft
+   
+   2.0 		   Mahesh Hirugade	  03/05/2012	Issue Id : 00001618 : Added ObjRemark to LifeInsuranceOutputComponent 
+-->
+<apex:page id="liPage" controller="LifeInsurancePlanningPageController" showHeader="false">
+<apex:stylesheet value="{!$Resource.FFStyle}"/>
+    <apex:composition template="TabPage">
+        <apex:define name="contents">
+            <apex:form >
+                <apex:pageBlock >
+                <div style="margin:bottom:20px; width:100%;margin-left:60px;">
+                    <apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;  background-image:none;background-color:#A9C5EB !important; " />
+                    <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+                    <apex:outputLabel value="Life Insurance Planning" styleclass="button" style="margin-left:20px;  background-image:none;background-color:#A9C5EB !important; " />
+                    <apex:image id="theImage2" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+                    <apex:commandButton id="theCommandLink2" styleclass="button" value="Analysis" action="{!analysis}" style="margin-left:20px; background-image:none;background-color:#A9C5EB !important;"  />
+                    <apex:outputLabel id="theCommandLink1" styleclass="button" value="Output" style="margin-left:20px; background-image:none;background-color:#F5D0A9 !important;" />
+                </div><br/>
+                    <div class="divContainerStyle">                     
+                    <apex:pageBlockSection columns="2">
+                        <apex:pageBlockSectionItem >
+                        <apex:outputText value="Select Entity for Insurance calculation" styleClass="textStyle"/>
+                        <apex:selectList value="{!selectedEntityId}" size="1" multiselect="false" tabindex="1">
+                        <apex:selectOptions value="{!EntityPicklist}"></apex:selectOptions>
+                    </apex:selectList>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                   <apex:commandButton value="Calculate" action="{!calculate}" rerender="componentPanel"/>
+                   </apex:pageBlockSectionItem>
+                   </apex:pageBlockSection>
+                   </div>
+                    <apex:outputPanel id="componentPanel">
+                    	<!--     Issue Id : 00001618 : Added ObjRemark to LifeInsuranceOutputComponent : mahesh -->
+                        <c:LifeInsuranceOutputComponent entity="{!entity}" adjustmentFactor="{!entity.Adjustment_Factor__c}" insuranceBean="{!bean}" insurance="{!insurance}" ObjRemark="{!objRemark}">
+                        </c:LifeInsuranceOutputComponent>
+                    </apex:outputPanel>
+                </apex:pageBlock>
+            </apex:form>
+        </apex:define>
+    </apex:composition>  
+</apex:page>

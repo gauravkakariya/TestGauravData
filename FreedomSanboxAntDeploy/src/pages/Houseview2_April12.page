@@ -1,0 +1,146 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="Houseview2_April12">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.Images,'images/top_April12.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td background="{!URLFOR($Resource.Images,'images/headbg.gif')}">
+                  	<img src="{!URLFOR($Resource.Images,'images/headR.gif')}" width="9" height="40" align="right" />
+                  	<img src="{!URLFOR($Resource.Images,'images/houseviewHIn.gif')}" width="132" height="40" />
+                  </td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                            
+                            <tr>
+                              <td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Is Succession Planning for you?</em></strong></font></td>
+                            </tr>
+                            
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;"><p>You have worked real hard, made lot of investments, left no stone  unturned to secure your life and your family’s future financially.<br />
+                                    <br />
+                                But just close your eyes for two minutes and imagine what will happen to  your hard earned money and assets when tomorrow you are not around, or when you  are unable to handle things yourself? What steps have you taken to show to your  loved ones that you really care?  Who  will be taking care of your properties when you are not able to?<br />
+  <br />
+                                If you are saying to yourself “I don’t know”, “Haven’t thought about it”  to the above questions then, think now. Socha nahi tho... socho abhi.<br />
+  <br />
+                                Succession Planning is a tool through which you can ensure smooth  transfer of assets to your legal heirs, loved ones or whoever you would like to  benefit from your wealth. <br />
+  <br />
+                                This recent report from RBI  is a shocker “Over the last few decades, the unclaimed amount spread over 1.03  crore bank accounts, has risen to Rs 1,700 crore with India's largest bank, SBI and its associates topping the list with unclaimed deposits of 279.7  crore”. <br />
+  <br />
+                                We can bet there must be  similar amounts lying with Post office deposits, Public provident funds and  life insurance companies. This means, there have been crores of people who  worked hard and sensibly put the money in investment instruments and banks, for  the benefit of their future and that of their loved ones.  But just forgot to inform their families about  it. <br />
+  <br />
+                                There is every possibility that these families continue to suffer till  date, and could have been better off if they had known about this money and has  access to it. <br />
+  <br />
+                                A Succession Planning exercise primarily notifies all assets and clearly  identifies legal heirs for the wealth, thereby making the process of transfer  of wealth effective.<br />
+  <br />
+                                It is understood by many people that once you have nominated somebody,  the asset will go to that person directly and without any hassles. But in  reality this is not true. <br />
+  <br />
+  <em>Delhi-based Padma Malhotra and her three  children have been struggling to access what is rightfully theirs. &quot;My  husband didn't leave a Will&quot; she says regretfully. So, she and her kids  have been running around to prove that they are the only legal heirs.  Malhotra's husband has a substantial amount of money in his bank account, but  it cannot be withdrawn till the bank is satisfied that there are no other  claimants. &quot;We have submitted copies of the death certificate and our  ration card as well as a letter of indemnity, but the bank is demanding more  documents,&quot; says Malhotra.</em><br />
+  <br />
+                                A nominee is only a trustee of your property and the claim of a legal  heir always supersedes the claim of a nominee. Banks and other financial  institutions insist on the Succession Certificates (a document issued by the  court) to handover money lying in the deceased account to the nominee. And if  the nominee is not the only legal heir, or is not at all a legal heir as  notified in the certificate, then a no-objection certificate from other legal  heirs is required before which the money can be handed over to the nominee.<br />
+  <br />
+                                All that Mr. Malhotra should have done was make a Will clearly  mentioning who should get his money after his time and life would have been so  much easier for Mrs.Malhotra now.<br />
+  <br />
+  <em>Ravi (name changed) lived with his aged father,  wife and two daughters in Mumbai. Unfortunately, at a fairly young age of 38 he  had a massive heart attack and passed away. He had nominated his wife in all  his investments, including employment benefits like EPF and gratuity. Ravi’s  wife was just 34 when this happened and their children were 6 and 3 years old.  She chose to remarry within a year of Ravi’s death and moved out with her  children leaving Ravi’s old father with no support and no money. </em><br />
+  <br />
+                                The Act that dictates how the assets of a person are distributed after  his death does not include the father as an heir. There are many such  complications in the law. <br />
+  <br />
+                                WILL is that legal document through which you can decide and choose the  person eligible to benefit from your assets. <br />
+  <br />
+                                The process of writing a Will is fairly simple. You might have to take  care of the legal language, clearly notify assets and beneficiaries with  details, appoint an executor for the Will and get it duly witnessed by at least  two people. It is not mandatory to register a Will. Upon death of the testator  the executor will have to probate the Will (get a legal stamp on the Will from  the court) before it can be executed. <br />
+                                <br />
+                                So get your Succession Plan in place so that your dependants are secured  in not just your lifetime, but right till their life time!<br />
+  <br />
+                                We will share more on  Nominations, Joint holding of assets, Gifts, Power of Attorney and Trusts in  the coming editions of this newsletter.<br />
+                                <br />
+                                Neha Jaiswal,  Manager - Legal</p></td>
+                            </tr>
+                            
+                            
+                            
+                            
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+                            </tr>
+                            
+                            
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.Images,'images/fb.png')}" width="20" height="20" border="0" /></a>
+                  		<a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.Images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a>
+                  		<a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.Images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>
+                  	<a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.Images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><img src="{!URLFOR($Resource.Images,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+</apex:page>

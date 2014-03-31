@@ -1,0 +1,362 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="LeadStory_Feb12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+</head>
+
+<body>
+
+	<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+		<tr>
+			<td><img src="{!URLFOR($Resource.images,'images/top_Feb2012.gif')}" width="740" height="104" /></td>
+		</tr>
+
+		<tr>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B">
+							<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+
+						<td valign="top">
+							<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+								<tr>
+									<td valign="top">
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td>
+													<table width="100%" border="0" cellspacing="0" cellpadding="0">
+														<tr>
+															<td width="1%" valign="top">
+																<img src="{!URLFOR($Resource.images,'images/headL.gif')}" width="9" height="40" />
+															</td>
+															<td width="98%" valign="top" background="{!URLFOR($Resource.images,'images/headbg.gif')}" style="padding-top: 6px;">
+																<font face="Arial, Helvetica, sans-serif" color="#FFFFFF" style="font-size: 14px;">
+																	<strong>FINANCIAL PLANNING IS ROMANTIC</strong>
+																</font>
+															</td>
+															<td width="1%" valign="top">
+																<img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" />
+															</td>
+		
+														</tr>
+													</table>
+												</td>
+											</tr>
+	
+											<tr>
+												<td>
+													<table width="100%" border="0" cellpadding="0" cellspacing="0">
+														<tr>
+															<td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}">
+																<img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" />
+															</td>
+		
+															<td width="8" valign="top">
+																<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" />
+															</td>
+		
+															<td valign="top">
+																<table width="98%" border="0" cellpadding="0" cellspacing="0">
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">The
+																			whole of our workplace was having fun at my cost the
+																			other day, when I told them financial planning is the
+																			most romantic thing to do. The laughter and jokes
+																			gradually turned to very serious discussions when one
+																			of my colleagues, a senior financial planner herself
+																			narrated an incident. She had gone to present the
+																			financial plan to one of her members - man and wife
+																			got into some serious argument that turned into
+																			shouting and embarrassingly ugly fight, bordering
+																			physical assault. <br /> <br /> Another colleague
+																			shared that a data gathering meeting with a young
+																			couple wouldn't end till after 4 hours because this
+																			member and spouse went about accusing each other of
+																			riding up all the credit card bills and refused to
+																			agree on goals. <br /> <br /> These are
+																			occupational hazards, something we have to live with.
+																			Adding to this quote of George Clooney from ‘Up in
+																			the air’ – “We are no shrink, we are the wake-up
+																			call” – just that many people don’t want to be woken
+																			up!<br /> <br /> How then am I saying financial
+																			planning is a romantic thing to do? It seems to bring
+																			out the worst in people. <br /> <br /> Okay, in
+																			case you refuse to believe me let’s get into this.
+																			Questions to these two planners - <br /> <br /> Me
+																			- How did both these clients’ financial situation
+																			look like when they had just signed up?<br /> “Oh!
+																			Sad. Really sad” <br /> “Super mess”<br /> <br />
+		
+																			Me – Did these members ultimately agree and implement
+																			the financial plan?<br /> “Yes they did, after a
+																			while”<br /> “Yeah, they finally did. Phew!”<br />
+		
+																			<br /> Question 3 – How are they doing now?<br />
+		
+																			“They stick to their plan. So far, so good”<br />
+		
+																			“Very well, in fact they provide the most number of
+																			referrals to me” <br /> Well, financially nobody
+																			doubts the fact that planning helps. They would
+																			definitely be better off, they better be. But how do
+																			you conclude that it is a romantic thing to do.<br />
+		
+																			<br /> Dig deeper…<br /> <br /> Client 1 – All was
+																			not well to begin with. If they could get to blows in
+																			front of a person who was neither family nor friend
+																			yet, there must have been quite some pent up emotions
+																			down there. That meeting had just helped them voice
+																			it out. They did not have a choice but answer
+																			together questions like, “How do you plan to take
+																			care of your aging parents?” “What do you want to do
+																			after your retirement?” <br /> <br /> They thought
+																			through, disagreed on many things, agreed on some and
+																			agreed to disagree on some. But it helped them
+																			prioritize and put in perspective issues like
+																			‘children education is more important than
+																			refurbishing their house’, ‘an exclusive holiday once
+																			a year would mean a lot more than partying every
+																			Saturday’, ‘It is more important to spend on things
+																			that will make us happier, than live up to society
+																			expectations’. <br /> <br /> Client 2 – There were
+																			a lot of shocks and surprises. “Oh, groceries are so
+																			expensive?” “You give the child pocket money?” “My
+																			laziness in not packing your lunch is costing so
+																			much?” They seem to be rediscovering their partner
+																			all over again. Did they start respecting and
+																			appreciating each other much better after the
+																			exercise? I really think so. <br /> <br /> I have
+																			personally seen this with myself. We never disagreed
+																			because may be, we never discussed. We cared and
+																			worried a lot. 'Worrying is like a rocking chair,
+																			keeps you busy but gets you nowhere', goes an
+																			anecdote. We blamed our busy lifestyle and kept doing
+																			things independently without any direction. <br /> <br />
+		
+																			But after we got our financial plan done, I can
+																			personally vouch for it, we are just talking to each
+																			other a lot more. There are things that have to be
+																			done together like visit the bank together to open
+																			joint savings accounts, sit for the plan updates and
+																			reviews (our planner refuses to meet us separately)
+																			etc and these gives us more opportunities to spend
+																			quality time together. <br /> <br /> Getting in
+																			touch with one’s deepest concerns, sharing it openly
+																			with the spouse, dreaming of a happy and secure
+																			future, looking forward to growing old together in
+																			each other’s arms – oh how romantic! Financial
+																			planning to me is one of the best couple things
+																			anybody could do. Do it this Valentine’s Day.
+																		</td>
+																	</tr>
+		
+																	<tr>
+																		<td valign="top" style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">&nbsp;</td>
+																	</tr>
+		
+																</table>
+															</td>
+														</tr>
+		
+														<tr>
+															<td valign="top">
+																<img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105">
+																<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105">
+																<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td valign="top">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B">
+							<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B">
+							<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+						
+						
+						
+						
+						
+						
+						<td valign="top">
+							<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="76%" height="20" valign="top">
+										<font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size: 13px;">
+											<strong>Ffreedom Financial Planners</strong>
+										</font>
+									</td>
+
+									<td width="24%" rowspan="3">
+										<table border="0" align="center" cellpadding="0" cellspacing="0">
+											<tr>
+												<td>
+													<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;">
+														<strong>Follow us on&nbsp;&nbsp;&nbsp;</strong>
+													</font>
+												</td>
+
+												<td>
+													
+													<a href="http://www.facebook.com/Ffreedom" target="_blank">
+														<img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" />
+													</a>
+													<a href="http://twitter.com/_Ffreedom" target="_blank">
+														<img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" />
+													</a>
+													<a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank">
+														<img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" />
+													</a>
+												</td>
+											</tr>
+
+											<tr>
+												<td>
+													<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;">
+														<strong>Watch us on</strong>
+													</font>
+												</td>
+
+												<td>
+													<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;">
+														<strong>
+															<a href="http://www.youtube.com/user/ffreedomtube" target="_blank">
+																<img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" />
+															</a>
+														</strong>
+													</font>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">506 / 507, Morya Landmark II,
+											Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font>
+									</td>
+
+								</tr>
+
+								<tr>
+
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">Boardline: +91 22 4222 4333
+											&nbsp;|&nbsp; Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a
+											href="mailto:contact@ffreedom.in">contact@ffreedom.in</a>
+											&nbsp;|&nbsp; <a href="http://www.ffreedom.in"
+											target="_blank">www.ffreedom.in</a>
+									</font>
+									</td>
+
+								</tr>
+
+								<tr>
+
+									<td colspan="2" valign="top"><div align="justify">
+											<font face="Arial, Helvetica, sans-serif" color="#333333"
+												style="font-size: 11px;">Disclaimer: This
+												communication from Ffreedom provides general information
+												existing at the time of preparation. This mailer is intended
+												as a news update and Ffreedom Financial Planners neither
+												assumes nor accepts any responsibility for any loss arising
+												to any person acting or refraining from acting as a result
+												of any material contained in this communication. It is
+												recommended that professional advice be taken based on the
+												specific facts and circumstances. This communication does
+												not substitute the need to refer to the original
+												pronouncements.</font>
+										</div>
+									</td>
+
+								</tr>
+
+							</table>
+						</td>
+						 
+						<td width="2" valign="top" bgcolor="#9CB82B">
+							<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+
+					</tr>
+
+				</table>
+			</td>
+
+		</tr>
+
+		<tr>
+
+			<td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" />
+			</td>
+
+		</tr>
+
+	</table>
+ 
+</body>
+
+	</html>
+</apex:page>

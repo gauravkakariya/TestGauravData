@@ -1,0 +1,61 @@
+<apex:page standardController="smagicbasic__SMS_Template__c" extensions="smagicbasic.smsTemplateExtension"  tabStyle="smagicbasic__SMS_Template__c">
+<apex:includeScript value="/soap/ajax/15.0/connection.js"/>
+<apex:includeScript value="/soap/ajax/15.0/apex.js"/>
+<apex:includeScript value="{!$Resource.smagicbasic__BulkSMSJS}"/>
+
+<apex:sectionHeader title="SMS Magic - {!$User.FirstName} {!$User.LastName}" subtitle="New SMS Template"/>
+<apex:form >
+
+<apex:pageBlock title="Create New template" helpTitle="Help For this Page?" helpUrl="/apex/SMSMagic_Help?from=NewSMSTemplate">
+<apex:pageMessages /><br/>
+<apex:pageBlockButtons location="top">
+<apex:commandButton value="Dashboard"  onclick="redirectTo('/apex/SMHome','');return false;"/>
+<apex:commandButton value="New SMS"  onclick="redirectTo('/apex/NewSMS','/apex/SMHome');return false;"/>
+<apex:outputLink style="margin-right:5px;" value="{!returnURL}" >[back]</apex:outputLink>
+</apex:pageBlockButtons>
+
+<apex:pageBlockSection title="Name" >
+<apex:pageBlockSectionItem labelStyle="text-align:left;" >
+    <apex:inputField value="{!smagicbasic__SMS_Template__c.smagicbasic__Name__c}" required="true" style="margin-left:15px;"/>
+    </apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+<apex:pageBlockSection title="ObjectType" title="select template type" id="mainObjectType">
+    
+    <apex:selectList value="{!templateType}" size="1" style="margin-left:15px;" id="mainTemplateType">
+        <apex:actionSupport event="onchange"  rerender="templateParams" status="objectStatus" />
+        <apex:selectOptions value="{!mainTemplateObjects}"/>
+    </apex:selectList>
+    <apex:actionStatus startText="loading objects list.." stopText="" id="objectStatus"/>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="Template Text" id="templateParams" columns="4" >
+
+<apex:pageBlockSectionItem id="templateParamsSectionItem">
+    <apex:selectList value="{!objectType}" size="1" style="width:140px;" id="objectSelectList" >
+        <apex:actionSupport event="onchange"  rerender="fieldSelectList" status="fieldStatus" />
+        <apex:selectOptions value="{!templateObjects}"/>
+    </apex:selectList>
+     
+    <apex:selectList value="{!fieldName}" size="1" style="width:140px;" id="fieldSelectList" >
+        <apex:selectOptions id="fieldSelectOptionList" value="{!fieldItems}"/>
+    </apex:selectList>
+	</apex:pageBlockSectionItem>
+      <apex:commandButton action="{!dummyAction}" onclick="changeTemplateText(this,'{!$Component.templateTextSection.templateTextSectionItem.templateText}', '{!$Component.templateParams.templateParamsSectionItem.objectSelectList}', '{!$Component.templateParams.templateParamsSectionItem.fieldSelectList}','{!$Component.mainObjectType.mainTemplateType}');return false;" value="insert" style="margin-left:-140px;margin-top:2px;"  />
+      <apex:actionStatus startText="loading fields ..." stopText="" id="fieldStatus"/>
+</apex:pageBlockSection>
+<apex:pageBlockSection id="templateTextSection" >
+<apex:pageBlockSectionItem labelStyle="text-align:left;"  id="templateTextSectionItem">
+    <apex:inputField value="{!smagicbasic__SMS_Template__c.smagicbasic__Text__c}" id="templateText" style="width:400px; height:80px;margin-left:16px;" />
+    </apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+
+    
+<apex:pageBlockButtons location="bottom" >
+	<apex:commandButton action="{!saveOver}" value="save" onclick="document.getElementById('{!$Component.templateParams.templateParamsSectionItem.fieldSelectList}').value='None';"/>
+    <apex:commandButton action="{!cancel}" value="cancel" />
+    <apex:commandButton action="{!deleteOver}" rendered="{!IF((smsTemplate.id == null), false, true)}" value="delete" />
+</apex:pageBlockButtons>
+
+</apex:pageBlock>
+</apex:form>
+</apex:page>

@@ -1,0 +1,6 @@
+<apex:page showHeader="false" sidebar="false">
+<apex:stylesheet value="{!URLFOR($Resource.PortalStyleSheet)}"/>
+<div id="main" border="1">
+ <apex:image url="{!URLFOR($Resource.EventImages,'EventImages/FfreedomMidImage.jpg')}"/>
+ </div>
+</apex:page>

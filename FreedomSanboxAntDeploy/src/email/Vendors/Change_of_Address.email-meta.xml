@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Change of Address</name>
+    <style>freeForm</style>
+    <subject>Change of Address</subject>
+    <textOnly> Dec 24th, 2009
+“Freedom Wealth Solutions Pvt. Ltd”.
+506/507, Morya Landmark II,
+Near Infinity Mall, Link Road,
+Andheri (W), Mumbai 400 053
+ 
+Dear {!Vendor_del__c.Name} ,
+ 
+This is to inform you that as of Dec 21st, 2009, Freedom Wealth Solutions Pvt. Ltd. has located to a new office. Our new address is 506/507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053. The telephone number for our new location continues to remain the same.
+ 
+ In case of any questions regarding our new location and address, feel free to call us at 91 22 42224333.
+ 
+ 
+Best Regards,
+ 
+Freedom Wealth Solutions Pvt. Ltd.</textOnly>
+    <type>html</type>
+</EmailTemplate>

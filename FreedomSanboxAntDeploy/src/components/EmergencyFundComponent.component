@@ -1,0 +1,182 @@
+<!-- /*
+    
+    Revision History:
+    
+    Version     Version Author     Date        Comments
+    1.0         --                 --           Initial Draft
+    2.0         Manasi Ranade      30/4/2012    Issue ID : 00001613 : Added output Filed to preserve new line characters
+*/ -->
+<apex:component controller="EmergencyPlanningController" allowDML="true" >
+	
+	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-1.9.1.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-ui.js')}"></script>
+	
+	 <script> 
+	     $(document).ready(function(){
+	
+	         CKEDITOR.on('instanceReady', function(e) {
+	             if (e.editor.config.magic) 
+	                return;
+	             var target = e.editor.config.bodyId;
+	            var name = e.editor.name;
+	             e.editor.destroy();
+	
+	             CKEDITOR.editorConfig = function( config ) { config.magic = true; }
+	             CKEDITOR.replace(name, {
+	                         height : 300, 
+	                         bodyId : target
+	             });
+	         });
+	     });
+	
+	</script>
+    <apex:stylesheet value="{!$Resource.FFStyle}"/>
+    <apex:attribute name="showButton" type="Boolean" description="Used to decide navigation button should be visible or not" default="true" />
+    <apex:outputPanel id="epPage">
+        <apex:pageBlock >
+            <apex:outputPanel rendered="{!showButton}">
+                <div class="divNavigationContainerStyle">
+                    <apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;  background-image:none;background-color:#A9C5EB !important; " />
+                    <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+                    <apex:outputLabel value="Emergency Planning" styleclass="button" style=" width:14%;margin-left:20px;  background-image:none;background-color:#A9C5EB !important; " />
+                </div>
+            </apex:outputPanel>
+            <div class="divContainerStyle">
+                <div class="divStyle">
+                    <apex:outputText value="{!$Label.Emergency_Fund}" escape="false" styleClass="upperCase"/>
+                </div>
+                <div style="padding:10px;">
+                    <apex:outputText value="{!$Label.EmergencyFundIntoduction}" escape="false" styleClass="textStyle"/><br/>   
+                </div>
+                
+                <div class="subHeader">
+                    <apex:outputText value="{!$Label.What_you_want} {!$Label.Objective}" escape="false" styleClass="upperCase"/>
+                </div>
+                <ul class="TickList">
+                    <li>
+                        <apex:outputText value="{!$Label.EmergencyFundObjective}" escape="false"/>
+                    </li>
+                </ul>        
+                <div class="subHeader">
+                     <apex:outputText value="{!$Label.What_you_need_to_do}" escape="false" styleClass="upperCase"/>
+                     <b>
+                         <apex:outputText value="{!$Label.Analysis_and_Advice}" escape="false" styleClass="upperCase"/>
+                     </b>
+                </div>
+                <ul class="TickList">
+                    <li>
+                        Your current monthly expenses are approximately Rs.<b><apex:outputText value="{0,number, ,##0}" escape="false">
+                            <apex:param name="expense" value="{!bean.totalMonthlyExpense}"/>
+                        </apex:outputText></b>
+                    </li>
+                    <li><apex:outputText value="{!$Label.RecommendEmergencyFund}" escape="false"/>
+                        <b><apex:outputText value="{0,number, ,##0} to cover {1,number, ,##0}" escape="false">
+                            <apex:param name="amt" value="{!bean.emergencyFundAmount}"/>
+                            <apex:param name="months" value="{!bean.noOfMonths}"/>
+                        </apex:outputText></b>  months worth of living expenses.
+                        
+                    </li>
+                </ul>   
+                <div class="subHeader">
+                   <apex:outputText value="{!$Label.How_to_do}" escape="false" styleClass="upperCase"/>
+                   <b>
+                       <apex:outputText value="{!$Label.Action_Plan}" escape="false" styleClass="upperCase"/>
+                   </b>
+                </div>
+                
+                <apex:outputPanel style="width:100%;">
+                    <div style="width:80%;margin-left:auto;margin-top: 15px;margin-right:auto;" >
+                        <apex:outputPanel rendered="{!IF(bean.apBeanList.size!=0,true,false)}" style="width:100%;">
+                            <table id="planTable" cellspacing="0" cellpadding="5" border="1">
+                                <tr class="tableHeader">
+                                    <td class="tableHeaderCell"><apex:outputText value="{!$Label.Type}"/></td>
+                                    <td class="tableHeaderCell"><apex:outputText value="{!$Label.Owner}"/></td>
+                                    <td class="tableHeaderCell"><apex:outputText value="{!$Label.Allocated_Amount}"/></td>
+                                    <td class="tableHeaderCell"><apex:outputText value="{!$Label.Action_to_be_taken}"/></td>
+                                </tr>
+                               
+                                <apex:repeat value="{!bean.apBeanList}" var="iList">
+                                    <tr class="tableData"> 
+                                        <td><apex:outputText value="{!iList.Name}" styleClass="textStyle"/></td>
+                                        <td><apex:outputText value="{!iList.Owner}" styleClass="textStyle"/></td>
+                                        <td class="rightAlignData">
+                                            <apex:outputText value="{0,number, ,##0}" styleClass="rightAlignData">
+                                                <apex:param name="amt" value="{!iList.Amount}"/>
+                                            </apex:outputText>
+                                        </td>
+                                        <td>
+                                            <apex:inputTextarea value="{!iList.Action}" rows="2" style="width:93%;margin:5px;" rendered="{!showButton}"/>
+                                            <apex:outputText value="{!iList.Action}" style="width:93%;margin:5px;" rendered="{!NOT(showButton)}"/>
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                                <tr class="tableData">
+                                    <td><apex:outputText value="{!$Label.total}" styleClass="textStyle" style="font-weight:bold;"/></td>
+                                    <td></td>
+                                    <td class="rightAlignData">
+                                        <apex:outputText value="{0,number, ,##0}" styleClass="rightAlignData">
+                                            <apex:param name="amt" value="{!bean.total}"/>
+                                        </apex:outputText>
+                                    </td>
+                                    <td></td>
+                                </tr>    
+                            </table>
+                        </apex:outputPanel>
+                    </div>
+                    <apex:outputPanel rendered="{!IF(bean.apBeanList.size==0,true,false)}">
+                        <apex:outputText value="{!$Label.EmergencyPlanningNoAllocation}" styleClass="textStyle"/>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <!-- FS0309 -->
+                <apex:outputPanel rendered="{!(if(ORemark.Remark__c=='',false,true))}" id="panRemark">
+                    <ul class="TickList">
+                        <li>
+                            {!$Label.Remarks}
+                        </li>
+                    </ul>
+                    <div>
+                        <!-- /** Eternus Solutions      **/
+                          /** Author  : Manasi Ranade   **/
+                          /** Issue Id: 00001613        **/
+                          /** Date    : 30/4/2012       **/
+                          /** Purpose : Commented previous Remark
+                                        Added output field to preserve new line characters
+                          /****************************************************/ -->
+                        <!--            {!strRemark} -->
+                        <apex:OutputField value="{!ORemark.RichText_Remark__c}"></apex:OutputField>
+                        <!--                        <apex:OutputField value="{!PartnerP.Logo__c}"></apex:OutputField> -->
+                    </div>
+                </apex:outputPanel>
+                <br/>
+                <br/><br/>
+<!--                 <apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+                <apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">    
+                    <div>
+                        <apex:outputLabel rendered="{!showButton}">{!$Label.EnterYourRemarks}</apex:outputLabel>
+                    </div>
+                    <div>
+                    <!--      <apex:inputTextArea id="txtRemark"  style="width:400px;height:80px;" value="{!strRemark}" rendered="{!showButton}"/>-->
+                         <apex:inputTextArea id="txtRemark"  style="width:400px;height:80px;" value="{!objRemark.RichText_Remark__c}" rendered="{!showButton}" richText="true"/>
+                    </div>
+                    
+                    
+                    <apex:outputLabel rendered="{!Not(IF(bean.apBeanList.size!=0,true,false) && (showButton))}" >
+                        <div>
+                            <apex:commandButton id="btnSave" value="Save" action="{!save}" rendered="{!showButton}"/>
+                        </div>
+                    </apex:outputLabel>
+                    <apex:actionStatus id="StatusData">
+                        <apex:facet name="start">
+                            <apex:outputPanel style="padding-left:45%;">
+                                <apex:image value="{!$Resource.loading_image}" width="4%" height="4%"/><br/>
+                            </apex:outputPanel>
+                        </apex:facet>
+                            <apex:facet name="stop" >
+                                <apex:commandButton value="Save" action="{!save}" rendered="{!IF(bean.apBeanList.size!=0,true,false) && (showButton)}" reRender="planTable,StatusData,panRemark" status="StatusData"  style="margin-left:35%;margin-top:50px;"/>
+                            </apex:facet>
+                    </apex:actionStatus>    
+                </apex:outputPanel>
+            </div>
+        </apex:pageBlock> 
+    </apex:outputPanel>
+</apex:component>

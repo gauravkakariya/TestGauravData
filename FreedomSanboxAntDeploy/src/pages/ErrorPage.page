@@ -1,0 +1,8 @@
+<apex:page showHeader="false" sidebar="false">
+<html>
+	<body style="color:red;align:center;font-size:20px; text-align:center;margin-top: 10%;">
+				This Site is Inactive
+	</body>
+</html>
+<!-- End Default Content REMOVE THIS -->
+</apex:page>

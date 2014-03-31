@@ -1,0 +1,109 @@
+<!-- /*
+    While generating Execution Tracker for given entity, save his Approved plan and his html and pdf as an attachment.
+*/-->
+<apex:page controller="GenerateActionPlanAsHTML" showHeader="false" sidebar="false" standardStylesheets="false">
+	<apex:includeScript value="{!URLFOR($Resource.PrintPDF, 'jQuery-printPage-plugin-master/jquery-1.4.4.min.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.PrintPDF, 'jQuery-printPage-plugin-master/jquery.printPage.js')}"/>
+	
+	<script type="text/javascript">
+		function displayPopup(pageUrl,width,height)
+		{
+			settings = "toolbar:no, location:no, directories:no, status:no, menubar:no, scrollbars:no, resizable:no, copyhistory:no,center:yes";
+			
+			if(window.showModalDialog)
+			{
+				//alert('showModalDialog');
+				settings = settings + "dialogWidth:" + width + ", dialogHeight:" + height;
+				window.showModalDialog(pageUrl,'Test',settings);
+			}
+			else
+			{
+				//alert('open');
+				settings = settings + "Width=" + width + ", Height=" + height + ",modal=yes";
+				window.open(pageUrl, 'Test',settings);
+			}
+		}
+	</script>
+	<script>
+		$(document).ready(function() {
+			$(".btnPrint").printPage();
+		});
+	</script>
+     <apex:composition template="TabPage">
+         <apex:define name="contents" >
+            <apex:form id="myForm">
+            	<apex:pageMessages />
+                <apex:pageBlock id="panDisplayET">
+                    <apex:panelGrid columns="2" width="40%">
+                        <apex:outputText value="Do you want to preview the plan?"/>
+<!--                         <apex:commandButton value="Preview" action="{!Generate}" />  -->
+						<apex:commandButton value="Preview" onclick="displayPopup('/apex/GeneratePlanInHtml?entityId={!entity}&tabname=Financial+Planning&displayButtons=1&isSendEmail=true','800px','600px');return false;" />
+            			
+                    <!--  /* Purpose : While generating Execution Tracker for given entity, save his Approved plan and his html as an attachment. */ -->
+                        <apex:outputLabel value="{!$Label.DoYouWantToSaveThisPlan}" rendered="{!isFPLimitedAccess}"/><!-- mahesh -->
+                        <apex:outputPanel rendered="{!isFPLimitedAccess}"><!-- mahesh -->
+	                        <apex:commandButton value="Save" action="{!Save}" status="counterStatusData" />
+	                        <apex:actionStatus stopText="" id="counterStatusData">
+	                            <apex:facet name="start">
+	                                <apex:image value="{!$Resource.loading_image}" width="25px" height="25px"/>
+	                            </apex:facet>
+	                            <apex:facet name="stop">
+	                            </apex:facet>
+	                        </apex:actionStatus>
+						</apex:outputPanel>
+					</apex:panelGrid>
+					
+					<apex:panelGrid columns="2" width="40%">
+<!-- 						/* Prajakta - FP changes II - 23-05-2013 - Added print button */ -->
+						<apex:outputText value="Do you want to print the plan?"/>
+<!-- 							<a href="javascript:printWindow()">Print The Different Page</a> -->
+<!-- 						<input type="button" value="Print this page" onClick="window.print()"/> -->
+<!-- 			  		Updated By : Kiran Patil
+	 			  		Updated At : 4-Jun-2013
+	 			  		Summary    : print Financial plan -->
+						<apex:commandButton styleclass="btnPrint" value="Print" status="counterStatusDataPrint" onClick="displayPopup('/apex/GeneratePlanInHtml?entityId={!entity}&tabname=Financial+Planning&displayButtons=1&isSendEmail=true&isPrint=true','800px','600px');return false;" />
+						<apex:actionStatus startText="(Please wait...)" id="counterStatusDataPrint" />
+					</apex:panelGrid>
+					
+					<hr/>
+                    <apex:panelGrid columns="1" width="40%">
+                    	<apex:outputLabel value="Do you want to send this plan to client?" />
+                    </apex:panelGrid>
+                    <!-- /*
+						  Updated By : Kiran Patil
+						  Updated At : 24-May-2013
+						  Summary    : FP changes-part2 - issue 21
+					*/ -->
+                	<apex:panelGrid columns="4" width="60%" rendered="{!IF(LEFT($User.ProfileId,15) == LEFT($Label.FP_LA_ProfileId,15),true,false)}"><!--  {!isBusinessPartner} -->
+                		<apex:outputLabel value="Email Body" />
+                		<apex:inputTextarea id="bodytext1" value="{!emailBody}" />
+                		<apex:CommandButton value="Send" action="{!sendEmail}" rerender="myForm" status="counterStatusData" />
+                		<apex:CommandButton value="Send Email To Owner" action="{!selectEmailIdToSendEmail}" status="counterStatusData" rerender="myForm" />
+                	</apex:panelGrid>
+                	<apex:panelGrid columns="3" width="40%" rendered="{!IF(LEFT($User.ProfileId,15) == LEFT($Label.FP_LA_ProfileId,15),false,true)}"><!-- {!NOT(isBusinessPartner)} -->
+                		<apex:outputLabel value="Email Body" />
+                		<apex:inputTextarea id="bodytext2" value="{!emailBody}" />
+                		<apex:CommandButton value="Send" action="{!sendEmail}" rerender="myForm" status="counterStatusData" />
+                	</apex:panelGrid>
+                </apex:pageBlock>
+               	<!-- /*
+					  Updated By : Kiran Patil
+					  Updated At : 24-May-2013
+					  Summary    : FP changes-part2 - issue 21
+				*/ -->
+<!-- 			/* Prajakta - FP changes II - 29-05-2013 - Added condition if logged in by Financial Planner - Limited access */ -->
+<!-- 				<apex:outputPanel rendered="{!IF(LEFT($User.ProfileId,15) == LEFT($Label.FP_LA_ProfileId,15),true,false)}"> -->
+	                <apex:pageBlock rendered="{!isSendEmailToOwner}">
+						<apex:inputText id="emailIdtext" value="{!ownerEmailId}" style="width:30%;"/>
+	               		<apex:outputText id="emailIdMsgtext" value="Use ' ; ' to add multiple email IDs." style="font-size:11px;vertical-align:text-bottom;color:#0000FF;"/>
+	               		&nbsp;&nbsp;&nbsp;&nbsp;
+	               		<apex:CommandButton value="Send Mail" action="{!sendEmailToOwner}" rerender="myForm" status="counterStatusData" />
+	                </apex:pageBlock>
+	                <apex:pageBlock rendered="{!isSentEmail}">
+						<apex:outputText id="emailIdMsgtext1" value="Email has sent to {!sentEmailMsg}" style="color:#006600;"/>
+	                </apex:pageBlock>
+<!-- 	            </apex:outputPanel> -->
+            </apex:form>
+         </apex:define>
+     </apex:composition>
+</apex:page>

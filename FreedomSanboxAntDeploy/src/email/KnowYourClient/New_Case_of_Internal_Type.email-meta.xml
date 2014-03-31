@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email template to Case owner when new Internal type case is created</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>New Case of  Internal Type</name>
+    <style>freeForm</style>
+    <subject>Case {!Case.CaseNumber} : {!Case.Subject} Logged</subject>
+    <textOnly>Dear {!Case.OwnerFirstName}
+
+
+We are looking into the issue and will get back to you soon with the resolution.
+
+
+In order to help us to resolve your case faster, can you please provide us with a screenshot of your issue and grant us login access for next 7 days. The steps to grant login access click on the following link-
+
+
+
+https://ffreedom.my.salesforce.com/01520000000hhtG
+
+
+
+If you have already done the above, then please ignore.
+
+
+Regards,
+
+Technology Support</textOnly>
+    <type>html</type>
+</EmailTemplate>

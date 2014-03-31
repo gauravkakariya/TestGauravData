@@ -1,0 +1,252 @@
+<apex:page showheader="false" title="Ffreedom Financial Planners | News Letters"	id="Story_Nov12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.images,'images/top_Nov12.gif')}" width="740" height="104" /></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                <tr>
+
+                  <td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/storyHIn.gif')}" width="131" height="40" /></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+                      <tr>
+
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+
+                          <tr>
+
+                            <td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>“On a Journey Towards Financial Freedom
+
+with my Family”</em></strong></font></td>
+
+                          </tr>
+
+
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">I came across Freedom Financial Planners at an event that they held for Financial 
+
+                                Planning for special children”. As my child has autism I thought of attending the seminar to 
+
+                                gain insights as to how I can help secure the future of my special child. After listening to Mr.
+
+                                Sumeet Vaid I was very impressed with the concept of financial planning and I decided to go for 
+
+                                Comprehensive Financial planning for my entire family.<br />
+
+                                <br />
+
+                                My Financial advisor, Siddesh Chavan helped me create my Comprehensive Financial Plan 
+
+                                which covers my risk planning, my child’s education and marriage, retirement planning for
+
+                                myself and creation of a trust for my special child. After going through the Financial Planning
+
+                                process I feel a lot better and relieved since I know that the future of my child is secure if in case
+
+                                anything should happen to me or my wife.<br />
+
+                                <br />
+
+                                I know that my child will be financially secure and will be able to live a comfortable and
+
+                                wholesome life after we are gone and that provides to me a great sense of security and relief.
+
+                                Vivek has always been available for advice and guidance whenever I have needed it.<br />
+
+                                <br />
+
+                                I would like to thank Siddesh Chavan and Ffreedom Financial Planners for opening up my
+
+                                eyes to the concept of Financial Planning and providing me with this wonderful
+
+                                opportunity to change the life of my family.
+
+                                <br />
+
+                                <br />
+
+                                Towards Financial Freedom.<br />
+
+                                <br />
+
+                                Thanks,<br />
+
+                                Ashley Lobo<br />
+
+                                Vice President, Building Construction<br />
+
+                                International Copper Promotion Council [India]</td>
+
+                            </tr>
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+
+                            </tr>
+
+                            
+
+
+
+                            
+
+                            
+
+                        </table></td>
+
+                      </tr>
+
+                      <tr>
+
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+
+                      </tr>
+
+                  </table></td>
+
+                </tr>
+
+              </table>
+
+              </td>
+
+          </tr>
+
+          <tr>
+
+            <td valign="top">&nbsp;</td>
+
+            </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        </tr>
+
+    </table></td>
+
+  </tr>
+
+  
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+
+                </tr>
+
+            </table></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+
+          </tr>
+
+          <tr>
+
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+
+          </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+      </tr>
+
+    </table></td>
+
+  </tr>
+
+  
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+
+  </tr>
+
+</table>
+
+</body>
+
+	</html>
+
+</apex:page>

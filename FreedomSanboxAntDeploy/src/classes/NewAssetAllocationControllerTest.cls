@@ -1,0 +1,149 @@
+/*
+	Revision History:
+	Version     Version Author     Date        Comments
+
+	2.0  		Prajakta Sanap     22/04/2013	Created TestData_Ffreedom which contains all the test data for this test class.											
+*/
+
+@isTest
+private class NewAssetAllocationControllerTest 
+{
+	static Account acc;
+ 	static NewAssetAllocationController assetAllCon;
+ 	static Account objBPAccount;
+ 	static User partnerUser;
+ 	static void testData()
+ 	{
+ 		
+ 		TestData_Ffreedom testData = new TestData_Ffreedom();
+
+       	Account objGeneralAccount = testData.init_GeneralAccount();
+	    insert objGeneralAccount;
+	    Contact objBizContact = testData.init_BizContact(objGeneralAccount);
+	    insert objBizContact;
+       	partnerUser = testData.initBusinessUser(objBizContact);
+       	insert partnerUser;
+
+ 		List<Account> lstAcc = new List<Account>();
+		acc = testData.initializeAccount();
+	    lstAcc.add(acc);
+	    objBPAccount = testData.initBusinessAccount(partnerUser);
+	    objBPAccount.PAN_ID__pc = 'ABCDF3456M';
+	    acc.Related_To__c = 'Business Partner';
+	    lstAcc.add(objBPAccount);
+	    
+	    insert lstAcc;
+	    
+	    lstAcc[1].Related_To__c = 'Business Partner';
+	    update lstAcc[1];
+	    
+	    Goal__c objGoal=new Goal__c(Entity__c=acc.id,Description__c='Education');
+	    upsert objGoal;
+	    List<Asset__c> lstAsset = new List<Asset__c>();
+	    
+	    Asset__c asset1 = testData.initialize_Asset(acc, 'EPF',AssetRecTypes__c.getInstance('Retirement Accounts').RecordTypeId__c, '');
+	    lstAsset.add(asset1);
+	    Asset__c asset3 = testData.initialize_Asset(acc, 'EPF', AssetRecTypes__c.getInstance('Cash and Cash Equivalents').RecordTypeId__c, '');
+	    lstAsset.add(asset3);
+	    Asset__c asset2 = testData.initialize_Asset(acc, 'EPF', AssetRecTypes__c.getInstance('Business Assets').RecordTypeId__c, '');
+	   	lstAsset.add(asset2);
+	    insert lstAsset;
+	    system.assertNotEquals(null,asset1.id);
+	    system.assertNotEquals(null,asset2.id);
+	    
+	    //RecordType objRecType = [Select Name, Id From RecordType  where Name = 'Fixed Income'];
+	    List<Investment_Asset__c> lstInvestmentAsset = new List<Investment_Asset__c>();
+	    Investment_Asset__c insv = testData.init_InvestmentAsset(acc, InvestmentAsset__c.getInstance('Fixed Income').RecordTypeId__c);
+	   	lstInvestmentAsset.add(insv);
+	   	Investment_Asset__c insv1 = testData.init_InvestmentAsset(acc, InvestmentAsset__c.getInstance('Stocks').RecordTypeId__c);
+	   	lstInvestmentAsset.add(insv1);
+	   	Investment_Asset__c insv2 = testData.init_InvestmentAsset(acc, InvestmentAsset__c.getInstance('Mutual Fund').RecordTypeId__c);
+	   	lstInvestmentAsset.add(insv2);
+	   	
+	   	insert lstInvestmentAsset;
+	    system.assertNotEquals(null,insv.id);
+	    
+	    Insurance__c ins = testData.initialize_Insurance(acc);
+	    upsert ins;
+	    system.assertNotEquals(null,ins.id);
+
+		Insurance__c ins1 = testData.initialize_Insurance(acc);
+	    upsert ins1;
+
+	    List<GoalAssetAssociation__c> lstGoalAssetAssociation = new List<GoalAssetAssociation__c>();
+	    GoalAssetAssociation__c gasset = testData.intialize_GoalAssetAssociation(asset1, objGoal);
+        lstGoalAssetAssociation.add(gasset);
+        GoalAssetAssociation__c gasset1 = testData.intialize_GoalAssetAssociation(asset2, objGoal);
+        lstGoalAssetAssociation.add(gasset1); 
+        GoalAssetAssociation__c gasset2 = testData.intialize_GoalAssetAssociation(asset3, objGoal);
+        lstGoalAssetAssociation.add(gasset2);
+        insert lstGoalAssetAssociation;
+        
+        List<GoalInvestmentAssetAssociation__c> lstGoalInvestmentAssetAssociation = new List<GoalInvestmentAssetAssociation__c>();
+        GoalInvestmentAssetAssociation__c ginv = testData.init_GoalInvAsset(insv, objGoal);
+        lstGoalInvestmentAssetAssociation.add(ginv);
+        insert lstGoalInvestmentAssetAssociation;
+        
+      	GoalInsuranceAssociation__c gins = testData.initialize_GoalIA(ins, objGoal);
+       	insert gins;
+      
+	    SummaryBean summaryBean = new SummaryBean('Header',20,5);
+	    Double summary = summaryBean.monthlySummary;
+	    List<Double>Yrlist = summaryBean.totalValueByYear;
+	    List<SummaryBean.SummaryDetail> summaryDetailList = summaryBean.summaryDetailList;
+	    
+	    SummaryBean.SummaryDetail detail = new summaryBean.SummaryDetail('Name',15);
+	    summaryBean.populateSummaryDetailList(detail);
+	    double dtailSummary = detail.monthlySummary;
+	    double percent = detail.summaryPercent;
+	    List<double> total = detail.totalValueByYear ; 
+ 	}
+ 	
+    static testMethod void saveTest() 
+    {
+    	test.startTest();
+       	testData();
+      	Apexpages.currentPage().getParameters().put('entityId',acc.id);
+     	assetAllCon = new NewAssetAllocationController();
+       	assetAllCon.save();
+       	AssetAllocationBean assetAllocationBean = new assetAllocationBean();
+		MAP<ID,Asset__c> assetMap  = assetAllocationBean.assetMap;
+		
+    	AssetAllocationBean.AssetDetailBean objAssetDetailBean = new AssetAllocationBean.AssetDetailBean ();
+    	AssetAllocationBean.GoalAssetMapping mappingBean = new AssetAllocationBean.GoalAssetMapping();
+    	objAssetDetailBean.populateGoalAssetMappingList(mappingBean);
+        test.stopTest();
+    }
+    
+    static testMethod void saveTest1() 
+    {
+    	test.startTest();
+    	testData();
+      	Apexpages.currentPage().getParameters().put('entityId',objBPAccount.Id);//'001R000000');
+      	System.runAs(partnerUser)
+      	{
+      		assetAllCon = new NewAssetAllocationController();
+       		assetAllCon.save();
+      	}
+       	test.stopTest();
+    }
+    
+    static testMethod void saveTest2() 
+    {
+    	test.startTest();
+    	testData();
+      	Apexpages.currentPage().getParameters().put('entityId',acc.Id);
+      	assetAllCon = new NewAssetAllocationController();
+       	assetAllCon.save();
+       	test.stopTest();
+    }
+    
+    static testMethod void saveTest3() 
+    {
+    	test.startTest();
+      	//Apexpages.currentPage().getParameters().put('entityId','001R000000');
+      	assetAllCon = new NewAssetAllocationController();
+       	assetAllCon.save();
+       	test.stopTest();
+    }
+}

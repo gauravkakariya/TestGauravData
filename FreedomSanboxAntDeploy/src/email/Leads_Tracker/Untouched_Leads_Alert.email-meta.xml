@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Untouched Leads Alert</name>
+    <style>freeForm</style>
+    <subject>Untouched Lead : {!Lead.Name} Alert</subject>
+    <textOnly>Hello {!Lead.CreatedBy},
+ 
+The Lead {!Lead.Name} from the Campaign {!Lead.Latest_Campaign__c} is in the Open Status for more than 5 days in the Advisor Factory. 
+ 
+The Lead is in the Open stage past {!Lead.00N20000002F0k8} days.
+ 
+Herein is the link of the same:{!Lead.Link}
+ 
+Please work on the lead to set up a meeting for the Fiancial Advisory Team. 
+ 
+Thank You,
+Khyati</textOnly>
+    <type>html</type>
+</EmailTemplate>

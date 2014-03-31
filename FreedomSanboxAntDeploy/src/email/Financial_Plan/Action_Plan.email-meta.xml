@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Action Plan</name>
+    <style>freeForm</style>
+    <subject>Action Plan</subject>
+    <textOnly>Hello {!Account.Name} ,
+
+We are happy to know that you have approved the Financial Plan that we have created for you.
+At this point you now have to start executing and taking the necessary steps to ensure that you adhere to your plan so that you may realize your goals and dreams in a timely manner. 
+
+At any point please feel free to get in touch with me for any questions/queries that you may have regarding your Financial Plan and please remember:
+
+“Seeds don’t reap any fruit unless they have been sown”
+ 
+Best Regards,
+Your trusted Financial Planner</textOnly>
+    <type>html</type>
+</EmailTemplate>

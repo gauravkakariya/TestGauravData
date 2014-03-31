@@ -1,0 +1,92 @@
+<apex:page controller="VCSSA.MailBoxController" action="{!init}" showheader="false" sidebar="false" standardStylesheets="true" cache="false">
+
+<apex:variable var="url_inboxpage"  value="{!URLFOR($Page.VCSSA__Inbox, null)}" />
+<apex:variable var="url_inboxextra"  value="{!if($CurrentPage.parameters.search!='','&search=1','')}{!if($CurrentPage.parameters.search_text!='','&search_text='+urlencode($CurrentPage.parameters.search_text),'')}{!if($CurrentPage.parameters.search_subject!='','&search_subject='+urlencode($CurrentPage.parameters.search_subject),'')}{!if($CurrentPage.parameters.search_from!='','&search_from='+urlencode($CurrentPage.parameters.search_from),'')}{!if($CurrentPage.parameters.search_tags!='','&search_tags='+urlencode($CurrentPage.parameters.search_tags),'')}{!if($CurrentPage.parameters.search_date1!='','&search_date1='+urlencode($CurrentPage.parameters.search_date1),'')}{!if($CurrentPage.parameters.search_date2!='','&search_date2='+urlencode($CurrentPage.parameters.search_date2),'')}" />
+<apex:variable var="url_inbox"  value="{!url_inboxpage}?aid={!aliasId}&ltags={!ltags}&p={!pageNo}{!url_inboxextra}" />
+<apex:variable var="url_inbox_nosearch"  value="{!url_inboxpage}?aid={!aliasId}&ltags={!ltags}&p={!pageNo}" />
+<apex:variable var="url_inbox1"  value="{!url_inboxpage}?aid={!aliasId}" />
+<apex:variable var="url_inbox2"  value="{!url_inboxpage}?ltags={!ltags}" />
+<apex:variable var="url_inbox3"  value="{!url_inboxpage}?aid={!aliasId}&ltags={!ltags}{!url_inboxextra}" />
+<apex:variable var="url_compose"  value="{!url_inbox}&action=compose&vmode=compose&inboxurl={!URLENCODE(url_inbox)}" /> 
+<apex:variable var="url_composesf"  value="/_ui/core/email/author/EmailAuthor?retURL={!URLENCODE(url_inbox)}&saveURL={!URLENCODE(url_inbox&'&cb=composesf&msg=The+message+was+sent')}" />
+<apex:variable var="url_addresses"  value="{!url_inbox}&vmode=addresses&inboxurl={!URLENCODE(url_inbox)}" />
+<apex:variable var="url_back"  value="{! if($CurrentPage.parameters.inboxurl!='',$CurrentPage.parameters.inboxurl,url_inbox) }" />
+<apex:variable var="url_quickreply" value="{!url_inboxpage}?vmode=reply&action=replyall&inboxurl={! URLENCODE(url_inbox) }&ids=" />
+<apex:variable var="url_viewfrominbox" value="{!url_inbox}&vmode=view&action=untag&tags=@unread&inboxurl={!URLENCODE(url_inbox)}&ids=" />
+
+<style type="text/css">
+.taglabel { display: inline; background-color: #E0ECFF; 
+	padding: 2px; padding-top: 1px; padding-bottom: 1px;  margin-right: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
+	}
+#tagsListSystem, #tagsListUser          { list-style: none; padding: 5px; padding-top: 0; margin: 0; }
+#tagsListSystem li,#tagsListUser li     { margin:0; margin-bottom:3px; padding: 3px; background-color: #CDE4EC; border: 1px solid #CDE4EC; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }
+#tagsList .selected { background-color: #1797C0; border: 1px solid #1797C0;  font-weight: bold; color: white; }
+#tagsListSystem li.hoverActive,#tagsListUser li.hoverActive { border-color: red; font-weight: bold; }
+
+.star_on { background: transparent url({!URLFOR($Resource.starred_email, null)}) no-repeat 50% 50%; }
+.star_off { background: transparent url({!URLFOR($Resource.starred_email_grey, null)}) no-repeat 50% 50%; }
+.subj_unread { font-weight: bold; }
+.selected { background-color: #EEEEEE; font-weight: bold; }
+
+.toolbarframe  { margin:3px; padding: 5px; border: 2px solid #8DAE84; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; vertical-align: text-bottom; margin-left: 0; margin-right:0; }
+.toolbarframe1 { min-height: 25px; vertical-align: text-bottom; }
+
+.ico_lead { background: transparent url(/img/icon/leads16.png) no-repeat; }
+.ico_account { background: transparent url(/img/icon/perAccounts16.png) no-repeat; }
+.ico_contact { background-image: url(/img/icon/contacts16.png); }
+.ico_case { background: transparent url(/img/icon/cases16.png) no-repeat; }
+.ico_opportunity { background: transparent url(/img/icon/opportunities16.png) no-repeat; }
+.ico_campaign { background: transparent url(/img/icon/campaigns16.png) no-repeat; }
+.ico_email { background: transparent url(/img/icon/documents16.png) no-repeat; }
+.ico_none {}
+
+.tdnowrap { white-space: nowrap; }
+
+input.lk { width: 100px; }
+
+.bindingBlock { display: block; float: left; width: 150px; height: 70px; margin:2px; padding: 3px;  vertical-align: text-bottom; }
+.bindingBlockUpdate { display: block; float: left; width: 50px; height: 70px; margin:2px; padding: 3px; }
+
+#workingMessage   { position: absolute; top:7px; left: 50%; padding: 5px; background-color: lightblue; color: white; display: none; text-align: center; }
+#alldoneMessage   { position: absolute; top:7px; right: 2%; padding: 5px; background-color: lightblue; color: green; font-weight: bold; }
+
+pre {
+ white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+
+</style>
+
+<br/>
+<input type="button" value="Compose new email" onclick="top.location.href='{!url_compose}'"/>
+<br/><br/>
+<form method="get" action="{!url_inboxpage}" target="_top">
+<input type="text" name="search_text" value="{!search_subject}" style="width:95%"/>
+<input type="hidden" name="search" value="1"/>
+<input type="submit" value="search"/>
+</form>
+
+<table width="95%"><tr><td valign="top" width="100%" class="toolbarframe" id="tagsList">
+    <ul id="tagsListSystem">
+        <li title="@inbox" class="dropmsg {!if(or(ltags=='@inbox',ltags==''),'selected','')}"> <a target="_top" href="{!url_inbox1}">Inbox {!if(actionj.countInbox>0,if(actionj.countInbox>=600,'(600+)','('+text(actionj.countInbox)+')'),'')}</a> </li>
+        <li title="@unread" class="dropmsg {!if(ltags=='@unread','selected','')}"> <a target="_top" href="{!url_inbox1}&ltags=@unread">Unread {!if(actionj.countUnread>0,if(actionj.countUnread>=600,'(600+)','('+text(actionj.countUnread)+')'),'')}</a> </li>
+        <li title="@star" class="dropmsg {!if(ltags=='@star','selected','')}"> <a target="_top" href="{!url_inbox1}&ltags=@star">Starred {!if(actionj.countStarred>0,if(actionj.countStarred>=600,'(600+)','('+text(actionj.countStarred)+')'),'')}</a> </li>
+        <li title="@draft" class="dropmsg {!if(ltags=='@draft','selected','')}"> <a target="_top" href="{!url_inbox1}&ltags=@draft">Drafts {!if(actionj.countDrafts>0,if(actionj.countDrafts>=600,'(600+)','('+text(actionj.countDrafts)+')'),'')}</a> </li>
+        <li title="@archive" class="dropmsg {!if(ltags=='@archive','selected','')}"> <a target="_top" href="{!url_inbox1}&ltags=@archive">Archived</a> </li>
+        <li title="@delete" class="dropmsg {!if(ltags=='@delete','selected','')}"> <a target="_top" href="{!url_inbox1}&ltags=@delete">Deleted</a> </li>
+        <li title="@outub" class=" {!if(ltags=='@sent','selected','')}"> <a target="_top" href="{!url_inbox1}&ltags=@sent">Sent</a> </li>
+        <li title="@all" class=" {!if(ltags=='@all','selected','')}"> <a target="_top" href="{!url_inbox1}&ltags=@all">All Mail</a> </li>
+    </ul>
+    <br/>
+    <ul id="tagsListUser">
+        <apex:repeat value="{!userTagsWithCount}" var="tag">
+            <li title="{!tag.tag}" class="dropmsg {!if(ltags==tag.tag,'selected','')}" style="background-color: #{!tag.tagColor}"> <a target="_top" href="{!url_inbox1}&ltags={!tag.tag}">{!tag.tag} {!if(tag.msgCount>0,if(tag.msgCount>=300,'(300+)','('+text(tag.msgCount)+')'),'')}</a></li>
+        </apex:repeat>
+    </ul>
+</td></tr></table>
+
+</apex:page>

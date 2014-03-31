@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>SavingForEducation</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>SavingForEducation</name>
+    <style>none</style>
+    <subject>SavingForEducation</subject>
+    <textOnly>Saving for education is no child’s play 
+
+Saving for children’s education is not just a matter of waiting for your investments to mature. You need to spend some time to monitor the growth of your money and switch to safer options.
+
+In the last one decade, the cost of quality education has moved up steeply. 
+
+It is the dream of every parent to secure their children’s future, especially in the field of education. A recent survey conducted by Aviva Life Insurance across 25 countries on the attitudes towards savings shows that Indians consider investment towards their children’s education a key priority. 
+
+According to the survey, as many as 44 per cent of the Indians invest in education compared to a mere 17 per cent in other countries.
+
+In the last one decade, the cost of education, especially quality education, has moved up considerably. But with rising salary levels and double income families, an increasing number of parents are keen on sending their children aboard for higher education.
+
+Rising costs 
+
+Even in India, the cost of primary education in good international schools is anywhere between Rs 1.5 lakh and Rs 2 lakh per annum. 
+
+The costs start skyrocketing at the graduate and post-graduate levels in professional courses. 
+
+For instance, for a four-year engineering course one has to shell out about Rs 10 lakh (if one opts for a management seat). And the cost of a medical seat (including post-graduation) would easily come to about Rs 75 lakh ( these are estimates based on the costs prevailing today). Is it unrealistic to think of such costly education? No, provided you plan well in advance.
+
+Building a corpus 
+
+You’ll have to start saving right now and use the power of compounding. For instance, a sum of Rs 10 lakh, if inflated at 6 per cent, works out to about Rs 25.4 lakh at the end of 16 years. 
+
+So, if you save (the present value of your investment of Rs 10 lakh) a sum of just Rs 4,366 for 192 months (16 years) and if it earns an interest of 12 per cent, you can easily provide for the education of your son or daughter. 
+
+Therefore, your main concern now should be on how you can earn that 12 per cent? If you start early, based on your risk appetite, you can choose a combination of debt, equity and other assets (such as real-estate and gold) to build this corpus. 
+
+As for debt options, you can consider insurance, fixed deposits and bonds with a cumulative payout maturing in tandem with the time horizon of the goals. 
+
+Children’s plans 
+
+When thinking of children’s plans, it is usually insurance products that come to mind. Traditional insurance products, such as endowment products, invariably generate an internal rate of return of 5.5-6 per cent. Along with this, you usually get a terminal bonus that would enhance the return by half a percentage point. 
+
+Apart from planning towards a corpus for education, the other decision you may have to take is on whether you wish to opt for insurance cover for the child or the parents. 
+
+Do keep in mind that covering your child’s life may offer only limited solace, as your loss in the event of anything unfortunate happening is more emotional than financial. 
+
+Therefore, if you are planning to go in for a children’s plan, it is advisable to first cover the breadwinner through insurance. In the event of death, the family will get a lumpsum, which can be used for the education of your child.
+
+If your requirement of funds is for a phased out period of time, you can split your policies to match your requirements. 
+
+Switching to debt 
+
+A point to note here is that if you have invested in Equity Funds and due to favourable market conditions you have achieved a better return than projected, then it is advisable to switch the profit to debt schemes to protect the money. 
+
+When you are close to the goal, it is advisable to switch the entire savings to debt plans to avoid any anxious moments similar to the ones now being experienced by equity investors. 
+
+A similar strategy should be used for volatile assets such as real estate, too. Due to the illiquid nature of the investment, it is advisable to liquidate it well ahead of your requirement. 
+
+So saving for children’s education is not just a matter of starting to save and waiting for your investments to mature. You need to spend some time to monitor the growth of your money and switch to safer options, to meet your goals.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

@@ -1,0 +1,122 @@
+<!-- /*
+    
+    Revision History:
+    
+    Version     Version Author     Date        Comments
+    1.0         --                 --           Initial Draft
+    2.0         Manasi Ranade      30/4/2012    Issue ID : 00001613 : Added output Filed to preserve new line characters
+*/ -->
+<apex:component id="FPEstatePlanningComponent" controller="EstatePlanningController" selfClosing="true">
+    <apex:attribute name="showButton" type="Boolean" description="Used to decide navigation button should be visible or not" default="true" />
+    <apex:form >
+        <apex:pageBlock >
+            <apex:outputPanel rendered="{!showButton}">
+                <div class="divNavigationContainerStyle">
+                     <apex:outputLabel value="Analysis" styleclass="button" style="width:10%; background-image:none;background-color:#A9C5EB !important; " />
+                     <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+                     <apex:outputLabel value="Estate Planning" styleclass="button" style=" width:14%;margin-left:20px;  background-image:none;background-color:#A9C5EB !important; " />
+                </div>
+            </apex:outputPanel>
+            <div class="divContainerStyle">
+                <div class="divStyle" style="padding-left:10px;">
+                    <apex:outputText value=" {!$Label.Estate_Planning}" styleClass="upperCase"/> 
+                </div><br/>
+                <div class="subHeader">
+                    <apex:outputText value=" {!$Label.Will}"/> 
+                </div>
+                <apex:outputPanel rendered="{!NOT(bean.entity.Will__c)}"> 
+                    <ul class="TickList">
+                        <li>
+                             <apex:outputText value=" {!$Label.WillAbsent}"/> 
+                         </li>
+                        <li>
+                             <apex:outputText value=" {!$Label.WhatIsWill}" escape="false"/> 
+                        </li>
+                        <li> <apex:outputPanel rendered="{!IF(bean.spouse.Name!=null,true,false)}"> 
+                                 <apex:outputText value="{!bean.entity.Name} and {!bean.spouse.Name} should make a Will as per their wish."/> 
+                             </apex:outputPanel> 
+                             <apex:outputPanel rendered="{!IF(bean.spouse.Name==null,true,false)}"> 
+                                 <apex:outputText value=" {!bean.entity.Name} should make a Will as per their wish."/> 
+                             </apex:outputPanel> </li>
+                        <li>
+                             <apex:outputText value=" {!$Label.WillChanges}" escape="false"/> 
+                        </li>
+                        <br/>
+                        <apex:outputText style="font-weight:bold;" value="One should consider below mentioned aspects while making a Will and POA." escape="false"/> <br/>
+                        <br/>
+                        <li>
+                             <apex:outputText style="font-weight:bold;" value="Holding pattern of assets : " escape="false"/><br/> 
+                             <apex:outputText value="Joint holding will ensure access to atleast one of you in case there is an emergency need for the money. 
+                             If many investments are singly held there is a possibility that it may remain inaccessible when needed. 
+                             It is good that you have your investments in joint holding.  In case some investments are very old, 
+                             you may want to check the holding pattern and make changes wherever applicable.  However anyone or 
+                             survivor joint holding is not to be confused with ownership. In the event of the demise of one of the holders, 
+                             the other does not become the sole owner, rather the share of the deceased holder will have to be distributed 
+                             accordingly to his Will or the Law."/>
+                        </li>
+                        <br/>
+                        <li>
+                             <apex:outputText style="font-weight:bold;" value="Keeping family informed : " escape="false"/><br/>
+                             <apex:outputText value="Your family for whose use you have accumulated all the assets need to have knowledge 
+                             of what is available and where it is accessible. Preparing a list of all your assets might be a very good idea. 
+                             Better still will be preparing a detailed Will. "/>
+                        </li>
+                        <br/>
+                        <li>
+                             <apex:outputText style="font-weight:bold;" value="Prepare a Will : " escape="false"/> <br/>
+                             <apex:outputText value="A Will is a declaration in a prescribed manner of the intention of the person making it, 
+                             with regard to the matters which he wishes to take effect upon or after his death. This is important to ensure 
+                             that the family and loved ones gain easy access to assets built for them without any legal hassles. 
+                             In this uncertain world, there is no better time than NOW to write the Will."/><br/>
+                            <apex:outputText value="Subscribe to our Succession Planning services for preparing a legally sound and comprehensively well thought out 
+                            Will from the comforts of your home."/>
+                        </li>
+                        <br/>
+                        <li>
+                             <apex:outputText style="font-weight:bold;" value="Power of Attorney : " escape="false"/> <br/>
+                             <apex:outputText value="A Power of Attorney is a legal right you give someone to act on your behalf in case 
+                             you are not available or in a position to act. This can be general POA to act on all matters or a restricted 
+                             POA to act only under certain circumstances. If you are travelling extensively, authorizing someone to work on 
+                             your behalf in case you cannot do it on your own, will ensure that your work will not be affectedbecause of your 
+                             unavailability. Also in case of a disability, access to your assets will not be denied if a POA is available. 
+                             At the same time a POA in the wrong hands can turn out dangerous. You may want to check the conditions in your 
+                             POA and ensure they are updated and relevant."/>
+                        </li>
+                        
+                    </ul>
+                    
+                   
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!bean.entity.Will__c}"> 
+                    <ul class="TickList">
+                        <li> 
+                             <apex:outputText value=" {!$Label.WillPresent}" escape="false"/> 
+                        </li>
+                        <li>
+                             <apex:outputText value=" {!$Label.WillChanges}" escape="false"/> 
+                        </li>
+                    </ul>
+                </apex:outputPanel>
+            </div>
+            <!-- FS0309 -->
+        <apex:outputPanel rendered="{!(if(ORemark.RichText_Remark__c=='',false,true))}">
+        <ul class="TickList">
+              <li>
+                  {!$Label.Remarks}
+              </li>
+          </ul>
+          <div>
+            <!-- /** Eternus Solutions      **/
+              /** Author  : Manasi Ranade   **/
+              /** Issue Id: 00001613        **/
+              /** Date    : 30/4/2012       **/
+              /** Purpose : Commented previous Remark
+                            Added output field to preserve new line characters
+              /****************************************************/ -->
+        <!--            {!strRemark} -->
+            <apex:outputField value="{!ORemark.RichText_Remark__c}"></apex:OutputField>
+          </div>
+         </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:component>

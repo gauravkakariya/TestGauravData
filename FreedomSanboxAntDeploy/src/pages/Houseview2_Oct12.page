@@ -1,0 +1,229 @@
+<apex:page showheader="false" title="Ffreedom Financial Planners | News Letters"	id="Houseview2_Oct12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.images,'images/top_Oct12.gif')}" width="740" height="104" /></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                <tr>
+
+                  <td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/houseviewHIn.gif')}" width="132" height="40" /></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+                      <tr>
+
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+
+                            
+
+                            <tr>
+
+                              <td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>What was in News in September?</em></strong></font></td>
+
+                            </tr>
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">The month of September has gone by with heavy news flow on domestic as well on international front. Jackson Hole meet, ECB Meeting, FOMC meeting (where Quantitative Easing 3 was announced), RBI’s Policy Review Meeting, Hike in diesel prices, FDI in Aviation and Retail Sector were some of the major events/news flow which dominated the headlines.The government has finally taken steps in the right direction and has allowed FDI in aviation and retail sector up to 49% and 51% respectively. It has finally hiked the diesel prices to reduce its subsidy burden. On the international front, the ECB has decided to infuse further liquidity and has pledged to buy bonds of countries that need help. The FED has also begun the Quantitative Easing program which would mean that now money equivalent to 40 Billion dollars would be infused in the market. I am trying to think that amidst all this chaos of news and views - what is the take away for the common man?<br />
+
+                                <br />
+
+                                Various experts gave their views about these events; some of them praised the steps taken by the government while others wanted something more. Before the month began the word in the market was that September has historically been a bad month for the equity markets but now the markets have rallied substantially in September. So does this mean that our economy has started its march towards progress? The views are divided as optimists saw the news as half glass full while the pessimists asserted that still the half glass is empty. Only time will tell if the economy is indeed recovering or is this just a flash in the pan. <br />
+
+                                <br />
+
+                                How do the policies of our government or for that matter the policies of USA government or the European Central Banks or news like China’s Manufacturing PMI shrinks for the 11th month in a row affect the common man in India? <br />
+
+                                <br />
+
+                                Firstly, the housewife who manages the house with a shoe string budget should be ready to shell out more for essential commodities. To make matters worse for them the rain gods are not helping either as monsoons in India are way below the normal standards this year – resulting in lower production, higher demand and so higher prices. <br />
+
+                                <br />
+
+                                USA has officially announced Quantitative Easing 3 which historically tends to increase the prices of commodities as India imports food and non-food commodities on a large scale.<br />
+
+                                <br />
+
+                                So, how does it look on the job front? Will our jobs stay, will we get better job opportunities and big annual hikes? The India Shining story seems to have lost its sheen. Not many overseas investors are attracted towards India as they were 5 years ago. The various scams and lack of policy reforms due political interests does not help to improve the sentiment either. <br />
+
+                                <br />
+
+                                The RBI wants to curb inflation while the government wants growth and they don’t seem to arrived at a consensus. Indian economy’s growth forecasts have come down from about 8.5% to 6% - 6.5%. India is under a threat of a sovereign downgrade from rating agencies.  This would mean that attracting investments would further become difficult. <br />
+
+                                <br />
+
+                                On the other hand this may also mean, if things pan out in a certain way our dependence on the outside world to invest in India might come down. There is a thought process going around, that the savings of the country has to be mobilised into investments for the economy – we are seeing the Ministry of Finance talking about mutual funds for retail investors, investor education initiatives etc. So, this could be the beginning also of the next big thing in the economy.<br />
+
+                                <br />
+
+                                For the economy to kick start from here however a few things have to happen - liquidity has to improve, interest rates have to come down for businesses to be able to borrow and grow and also for investors (in high interest fixed deposits) to become consumers.<br />
+
+                                <br />
+
+                                Looking from retail investor’s perspective should he be bullish on our economy or should he be sceptical? Should he look at the economy and say that all’s bad or should he look at the stock market and think that a market that never sells off on scams and controversies is a never a Bear. So should the common man be happy at the latest events or should he rejoice that small baby steps have been taken towards addressing his worries? Time will tell us. <br />
+
+                                <br />
+
+                                Regards,<br />
+
+                                  Satish Ghanshani, Research and Advisory Team</td>
+
+                            </tr>
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+
+                            </tr>
+
+                            
+
+                         </table></td>
+
+                      </tr>
+
+                      <tr>
+
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+
+                      </tr>
+
+                  </table></td>
+
+                </tr>
+
+              </table>
+
+              </td>
+
+          </tr>
+
+          <tr>
+
+            <td valign="top">&nbsp;</td>
+
+            </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        </tr>
+
+    </table></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+
+                </tr>
+
+            </table></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+
+          </tr>
+
+          <tr>
+
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+
+          </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+      </tr>
+
+    </table></td>
+
+  </tr>
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+
+  </tr>
+
+</table>
+
+</body>
+	</html>
+
+</apex:page>

@@ -1,0 +1,138 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="Houseview1_Oct11">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script type="text/javascript">
+ 			var _gaq = _gaq || [];
+  			_gaq.push(['_setAccount', 'UA-26313496-1']);
+  			_gaq.push(['_trackPageview']);
+ 
+			  (function() {
+			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			  })();
+ 		</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.images4,'images4/top.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/houseviewHIn.gif')}" width="132" height="40" /></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>
+                              Don’t dread your EMI…</em></strong></font></td>
+                          </tr>
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">
+                                <p> EMI-Equated Monthly Installment-is a dreaded word. Every month like clockwork you get a letter from your bank, ‘reminding’ you about it.  A constant cue that you have to pay for that loan, that has helped you buy your house or your car. And this dread increases manifolds when you realise that interest rates have gone through the roof, thanks to the rising inflation and slowdown in the economy. 
+
+                                 </p>
+                                <p> Now, there is no question that your recently purchased house or car has not made you happy. But knowing that you have a constant EMI to pay for the next few years acts as a black cloud in this joyous occasion.  So what do you do? At this stage, there is nothing to do but to pay off the loan as per the EMIs and get it done with. 
+
+                                </p>
+                                <p>Everybody knows that paying off your loans is easier said than done. You need more than just a good job to repay them. So what do you do? Stop every other expense that will occur in your life? Or just go with the flow? 
+
+                                </p>
+                                <p>
+                                Where do you start?<br/>
+                                For starters, paying EMI is not as difficult as you would assume it to be. Agreed that you will need to make a few cut backs in the beginning but with the right system in place, you can systematically finish the same without any lapses. 
+                                </p>
+                                <p><strong>Budget this additional expense into your monthly expenses</strong>: Once you know that you have an EMI to pay every month, rework on a budget that include this expense as a priority. This will enable you to streamline your monthly resources and make sure that you have sufficient amount of resources to pay your EMI. 
+                                </p>
+                                <p><strong>Make a money jar</strong>: Create different ‘jars’ to keep money for various expenses like bills, basic expenses, etc. This way every different expense group will have sufficient funds.
+                                </p>
+                                <p>Create a separate bank account for your loans and every month put in some from your salary into the same. This would not only give your control over your resources but also create a disciplined method for you to repay the loans.  When you do start an account, make sure that the account has an extra month’s EMI, so that you are not short. 
+
+                                </p>
+                                <p><strong>Don’t forget your investments</strong>: Just because you have an additional EMI to pay, does not mean that you discontinue your investments and your financial plan. Instead look for an alternative, where in you can compromise on your investments for a few months and still have enough resources to save up for your future dreams and goals. If you have trouble in finding a middle ground when it comes to your investments and EMI, consult your financial planner who will be able to create a new system where both are taken into consideration.  Your investments will help when in dire need of wealth. Don’t take them lightly. 
+
+                                </p>
+                                <p><strong>Save a little bit, before you take a loan</strong>: If you have not planned as to when you want to buy that new house or car, I suggest you save a little bit before you take a loan. This will help you in borrowing less when the time comes.
+                                </p>
+                                <p>Dreading your EMIs will only make things more difficult. The solution lies in planning it in a way that not only it becomes a smooth transaction but also keeps your dreams and goals safe for the future.</p>
+                                
+                                                                
+                                
+                                
+                                </td>
+                                </tr>
+                            
+
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+</apex:page>

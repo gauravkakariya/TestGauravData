@@ -1,0 +1,36 @@
+<!--/** Eternus Solutions  **/
+     /** Author  : Setty */
+     /** Issue Id: 00001700     **/  
+     /** Date    : 18/7/2012     **/
+     /** Purpose : Online promotion page Description**/
+<!-- /****************************************************/-->
+
+<apex:page showHeader="false">
+<apex:form id="outerForm">
+     <div style="position: absolute;">
+        <div style="float: left; width:100%; height:108px;">
+            <img src="{!URLFOR($Resource.images,'images/logobg.PNG')}" alt="Ffreedom Financial Planners" title="Ffreedom Financial Planners"/>
+       </div>
+       <br/>
+       <div align="justify" style="margin-right: 60px;"> 
+       		   	<font face="Arial, Helvetica, sans-serif" color="#333333"
+											style="font-size: 13px; align:justify;">
+											<p>You may have dreams for yourself, for your family, for the society. Are you doing anything,
+												are you doing enough to	make those dreams a reality? Or do you fear about the financial 
+												feasibility of achieving them?</p>
+											<p>If only you could do more of the right things with your money, your dreams would probably
+												come true. To reach your infinite goals with the finite money you have, Financial Planning
+												is the only way.</p>
+											<p>Financial Planning will help you understand family income and expenses, manage your loans 
+												and taxes, ensure family safety and comfort at all times, help you build wealth and live the
+												life of your dreams. Simply put, unbiased and customized financial advise can help you build
+												a healthy financial life.</p> <br/>
+												<strong>Check how financially healthy you are right now. </strong>
+											<p>Fill up the Financial X Ray questionnaire and we will provide you with a COMPLIMENTARY 
+												customized financial health check-up session by a Qualified Financial Planner. 
+												This will be at a time, date, place convenient to you</p> 
+										</font>
+	     </div>
+	    </div>
+</apex:form>
+</apex:page>

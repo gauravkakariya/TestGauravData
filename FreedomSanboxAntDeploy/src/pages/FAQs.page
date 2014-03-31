@@ -1,0 +1,67 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | FAQs">
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+ <div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+        
+       <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/FAQ_img.jpg')}" /></div>
+        <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+   </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+                  <!--<div class="leftlinkselectedimg" style="margin-top:144px; height:193px; background-repeat:no-repeat;"></div>-->
+              </div>
+   <div id="innerpage_textcontainer_middle">
+    <!--<div class="innerpage_titletext"><span class="innerpagetopheading">Financial Planning</span></div>-->
+        <div class="innerpage_titletext"><span class="innerpagetexttitle">FAQs</span> </div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Is Financial Planning meant for everyone? </strong></span> </div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">Financial Planning is usually targeted to those individuals who want accomplish their goals and dreams through a systematic process, keeping in mind their financial status. This process is for those people who are serious about their goals and dreams and want to achieve them through proper financial management.</span> </div>
+         
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Will paying a financial planner be worth the money that I am investing? </strong></span> </div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">When you hire a financial planner, you will be paying for the advice which will help you manage your finances better. The idea of planning your finances is so that you can achieve your dreams and goals and have long term returns on your investment rather than momentary ones. A financial plan gives you a better outlook as to where you stand in your finances and how you can reach your goals and attain your dreams.</span> </div>
+         
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>How can a Financial Planner help me, when I already have an established CA who helps me out with my investments?</strong></span> </div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">A certified Financial Planner does more than just tell you where to invest. He understands your goals and dreams and makes a plan that will help you achieve them without strenuous planning. A CA, on the other hand, helps you in the fulfillment of government regulation and other formalities.</span> </div>
+         
+          <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>What is the importance of a financial planner when I get the same advice from Fund Advisors? </strong></span> </div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">A financial planner does more than just discuss mutual funds or insurance. He takes into consideration your goals and aspirations, which you want to achieve. As financial planners, we advice and create what you want and how you would want to achieve your goals. Fund Advisors have one goal and that is to sell a product of the company. And while they do talk about how these investments can change your life, it’s often to push their products.  Financial Planners look at your needs and what suits you the best, not what suits them the best.</span> </div>
+         
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Can I expect a higher rate of return if I go to a Financial Planner than what is normally achieved?</strong></span> </div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">A Financial Planner helps you to develop and create a plan that will assist you to achieve your dreams and goals in a specific time frame. This does not give any guarantee on returns. Financial planners help in better management of an individual’s finances, which can lead to higher results, but the aim is to help that person achieve their goals and dreams in a specific time period.</span> </div>
+         
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Can I disclose all my confidential details to my Financial Planner?</strong></span> </div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">It is important to disclose your financial details to your Financial Planner. Incomplete information would cause confusion and will cause unknown glitches in a plan that would be created for you. Any information given to our Financial Planner will not be disclosed to any outside party and confidentiality is ensured. </span> </div>
+         
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Is filing tax returns a service that is offered by Financial Planners?</strong></span> </div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">This is a service that is offered by Chartered Accountants and Tax Return consultants. Financial Planners help in planning an individual’s finances so that he can achieve his goals and dreams in a specific time period. But a Financial Planner can definitely help you in tax planning.</span> </div>
+         
+       <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><br/><br/><a href="#top" class="otherslink">Top</a></span></div>                 
+      </div>
+     
+       <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" /></div>     
+      <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}" border="0" usemap="#Map21" />
+         <map name="Map21" id="Map21">
+           <area shape="rect" coords="3,0,230,50" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map></div>
+      <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+        
+      <div class="title123"><span class="imgtext">Related Links</span></div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="our_process"><strong>Our Process</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="What_is_Financial_Planning"><strong>What is Financial Planning?</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="about_ffreedom_overview"><strong>About Ffreedom</strong></a></span> </div>
+      <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

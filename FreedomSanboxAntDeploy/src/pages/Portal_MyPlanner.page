@@ -1,0 +1,66 @@
+<!-- 
+Revision History:
+	
+    Version     Version Author     Date        Comments
+    1.0         --           	   --	  		Initial Draft
+    2.0			Mahesh Hirugade    11/24/2011   Issue ID:F0314:
+    											The values of Planner Details : Photo, Name, Description, Mobile and Email displayed in this page are displayed using 
+    											UserPlannerDescription property which returns the details by query on User
+ -->
+<apex:page sidebar="false" controller="PortalController">
+	<apex:composition template="PortalFinancialMgrTemp">
+		<apex:define name="rightcontent">
+			<div class="BankdetailsMainDiv"
+				style="position: absolute; top: 15px; left: 100px;">
+				<table id="table1" width="650" height="30" cellpadding="0"
+					cellspacing="0" border="0" style="padding-top: 35px;">
+					<tr>
+						<td width="14"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/header1.png')}" width="30px" height="30px" /></td>
+						<td class="BlockHeader">My Financial Planner</td>
+						<td width="14"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/header2.png')}" width="30px" height="30px" /></td>
+					</tr>
+				</table>
+
+				<div class="FinancialPlannerMainSection">
+
+					<table border="1" width="630" height="200" cellspacing="6" class="MyPlannersTable">
+						<tr>
+							<td class="plannerName"><br />
+								<apex:variable var="imageVar" value="{!UserPlannerDescription.SmallPhotoUrl}"/>
+									<img src="{!imageVar}" height="85" width="85" />
+								<br /><br />
+								<apex:outputText value="{!UserPlannerDescription.Name}" />
+							</td>
+
+							<td rowspan="7" style="text-align: left;"><br />
+								<apex:outputText style="text-align:left;" styleClass="plannersDescription" value="{!UserPlannerDescription.AboutMe}" />
+							</td>
+						</tr>
+						<tr><td></td><td></td></tr>
+						<tr><td></td><td></td></tr>
+						<tr><td></td><td></td></tr>
+						<tr><td></td><td></td></tr>
+						<tr><td></td><td></td></tr>
+						<tr><td></td><td></td></tr>
+						<tr><td></td><td></td></tr>
+					</table>
+
+					<div>
+						For any queries regarding your financial plan you may contact
+						&nbsp;
+						<apex:outputText value="{!UserPlannerDescription.Name}" />
+						on:
+						<apex:outputText value="{!UserPlannerDescription.MobilePhone}" />
+					</div>
+					<br />
+					<div>
+						You may also reach your planner through the following email
+						address at: <b><apex:outputText value="{!UserPlannerDescription.Email}" />
+						</b>
+					</div>
+
+				</div>
+			</div>
+		</apex:define>
+	</apex:composition>
+</apex:page>

@@ -1,0 +1,2502 @@
+<!-- 
+	Revision History:
+	
+    Version     Version Author     Date         Comments
+    1.0         Persistent         NA  		  	Initial Draft
+   
+	2.0			Mahesh Hirugade	   03/05/2012    Issue Id : 00001618 : Removed ObjRemark from LifeInsurancePlanningComponent
+	2.0			Manasi Ranade	   28/5/2012     Issue Id : 00001656 : Passed the Remark to the Insurance Output Component
+	2.0			Manasi Ranade	   31/5/2012     Issue Id : 00001664 : 
+												 As the calculations are wrong in portfolio commeted c:PortolioComponent (temporary) : Request forom Shweta Karia
+	2.0			Manasi Ranade	   7/6/2012      Issue Id : 00001673 : passed the insurance value to LifiInsuranceOutputComponent component 
+-->
+<apex:page standardStylesheets="false" controller="GeneratePDFController" showHeader="false" sidebar="false">
+<!-- 	<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script> -->
+	<apex:includeScript value="{!URLFOR($Resource.PrintPDF, 'jQuery-printPage-plugin-master/jquery-1.4.4.min.js')}"/>
+	
+	<script type="text/javascript">
+		//Disable the right click after page load
+		$(document).ready(function(){
+			//alert('isPrint' + "{!isPrint}");
+			/*
+			  Updated By : Kiran Patil
+			  Updated At : 4-Jun-2013
+			  Summary    : print Financial plan
+			*/
+			if("{!isPrint}" == 'true'){
+				window.print();
+				window.close();
+			}
+			
+			$(document).bind("contextmenu",function(e){
+				return false;
+			});
+			
+		});
+		
+		 <!-- This is for styling alternate rows of SummaryTable -->
+        function altRows(id)
+        {
+           // alert('hello'+id);
+            if(document.getElementsByTagName)
+            {  
+                var table = document.getElementById(id);  
+                var rows = table.getElementsByTagName("tr"); 
+                for(i = 1; i < rows.length; i++)
+                {  
+                    if(i % 2 == 0)
+                        rows[i].className = "DataTableEven";
+                    else
+                        rows[i].className = "DataTableOdd";
+                }
+            }
+        }
+        window.onload =   altRows('DataTable');
+	</script>
+	<apex:stylesheet value="{!$Resource.FFStyle}"/>
+	<style>
+		.center
+		{
+		margin:auto;
+		width:400px;
+		border-top:7px solid #FFA500;
+		}
+	</style>
+	<apex:outputPanel rendered="{!NOT(isSendEmail)}">
+		<apex:outputPanel rendered="{!DisplayButton == '1'}">
+			<table style="width: 98%;border: 0px; padding: 0px;">
+			    <tr>
+			    	<td width="80%"></td>
+				    <td align="right" width="18%" >
+	<!-- 				    <a href="/apex/GenerateHTML?entityId={!bean.entityID}&tabname=Financial%20Planning">Back</a> -->
+						<a href="#" onclick="window.close()">Close Window</a>
+				    </td>
+				</tr>
+			</table>
+		</apex:outputPanel>
+		<apex:outputPanel rendered="{!DisplayButton == '2'}">
+			<table style="width: 98%;border: 0px; padding: 0px;">
+			    <tr>
+			    	<td width="80%"></td>
+				    <td align="right" width="18%" >
+	<!-- 				    <a href="/apex/GenerateHTML?entityId={!bean.entityID}&tabname=Financial%20Planning">Back</a> -->
+						<a href="/apex/ViewHtmlPlanLinks?EntityId={!bean.entityID}">Go back to Plans</a>
+				    </td>
+				</tr>
+			</table>
+		</apex:outputPanel>
+		<apex:outputPanel >
+			<apex:form >
+				<apex:PageMessages ></apex:PageMessages>
+				<table style="width: 60%;border: 0px;" id="theBtnTable" align="center">
+					<tr>
+						<td width="40%" align="right" bordercolor="black">
+						</td>
+			<!-- 				Commented on : 1/2/2013 : Aditi Satpute : As per Discussion with Sanat -->
+			<!-- 			    <td width="25%" align="left" bordercolor="black" > -->
+			<!-- 			    	<a href="/apex/GenerateDoc?EntityId={!bean.entityID}">Download as Document</a> &nbsp;&nbsp; -->
+			<!-- 				   		<a href="javascript:window.print();">Print</a> &nbsp;&nbsp; -->
+			<!-- 			    </td> -->
+					    <td width="35%" align="right" bordercolor="black" colspan="2">
+					    </td>
+					</tr>
+					<tr>
+						<td width="20%" align="right" bordercolor="black">
+							Email Body
+						</td>
+						<td width="30%" align="left" bordercolor="black">
+							<apex:inputTextarea id="bodytext" value="{!emailBody}" /> 
+						</td>
+						<td width="20%" align="left" bordercolor="black">
+						<apex:commandLink value="Send Email" action="{!sendAttachmentToEntity}"> </apex:commandLink>&nbsp;&nbsp;
+						</td>
+						<td width="30%">
+						</td>
+					</tr>
+					<tr>
+						<td width="40%" align="right" bordercolor="black">
+						</td>
+					    <td width="25%" align="left" bordercolor="black" >
+			<!-- 			    	<a href="/apex/ViewHtmlPlanLinks?EntityId={!bean.entityID}" rendered="{!DisplayButton == '2'}">Go back to Plans</a> -->
+				    	
+			<!-- 				   		<a href="javascript:window.print();">Print</a> &nbsp;&nbsp; -->
+					    </td>
+					    <td width="20%" align="right" bordercolor="black" colspan="2">
+					    </td>
+					</tr>
+				</table>
+				<div align="center">
+					<apex:outputLabel value="{!strMessage}" />
+				</div>
+			</apex:form>
+		</apex:outputPanel>
+	</apex:outputPanel>
+<!--     <div class="header"> -->
+<!--        <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent> -->
+<!--     </div> -->
+	<div style="page-break-after:always;">
+	<!--       <c:CoverComponent Logo_partner="{!Partnerlogo}" lstAddressInComponent="{!lstAddwithComma}" client="{!bean.client}"  spouse="{!bean.spouse}" generationDate="{!planGenerationDate}"></c:CoverComponent> -->
+<!--     <c:CoverComponent isFreedomUserProp="{!isFreedomUser}" addressInComponent="{!address}" Logo_partner="{!Partnerlogo}" client="{!bean.client}"  spouse="{!bean.spouse}" generationDate="{!planGenerationDate}"></c:CoverComponent>  -->
+   		 <div class="divContainerStyle">
+   		 <apex:form >
+<!--    		 Print the PDF -->
+<!--    		 <input type="button" value="Print this page" onClick="window.print()"/> -->
+<!-- 	        <div align="center"> -->
+<!--         		<apex:outputText value="Financial Plan" style="font-family:Times New Roman;font-weight:bold;color:#008000;font-size:48px;text-align:center;text-transform:capitalize ;"></apex:outputText> -->
+<!--          	</div> -->
+<!--          	 style="width:400px;border-top:7px solid #FFA500;" -->
+<!-- 	       	<div class="center"></div> -->
+			<table width="100%">
+	       		<tr> 
+	       			
+	       			<th  colspan="3" align = "center"><apex:outputText value="Financial Plan" style="font-family:Times New Roman;font-weight:bold;color:#008000;font-size:48px;text-align:center;text-transform:capitalize ;"></apex:outputText></th>
+	       		</tr>
+	       		<tr>
+	       			<td width="30%"></td>
+	       			<td  style="width:400px;border-top:7px solid #FFA500;"></td>
+	       			<td width="30%"></td>
+	       		</tr>
+       		</table>
+	       	<br/> 
+<!-- 	    <br/> --> 
+	       	<div align="center">
+	         	<apex:outputText value="{!bean.client.name} " style="font-family:Calibri;font-weight:bold;font-size:28px;text-align:center;text-transform:capitalize ;"></apex:outputText> 
+		        <apex:outputText value="and " rendered="{!if(bean.spouse.name!=null,true,false)}" style="font-weight:bold;font-family:Calibri;font-size:28px;text-align:center;"/>
+		        <apex:outputText value="{!bean.spouse.name} " rendered="{!if(bean.spouse.name!=null,true,false)}" style="font-weight:bold;font-family:Calibri;font-size:28px;text-align:center;text-transform:capitalize ;"/>
+		        <br/>
+	    	</div>
+	    	<table width="100%">
+	       		<tr> 
+	       			<td width="25%"></td>
+	       			<td align="center"><apex:image url="https://ffreedom.my.salesforce.com/servlet/servlet.ImageServer?oid=00D20000000JZVv&id=01520000000h9V8" rendered="{!if((objAcc.Family_Picture__c==null || objAcc.Family_Picture__c=='<br>') ,true,false)}"/><br/><br/>
+	        		<apex:outputField value="{!objAcc.Family_Picture__c}" rendered="{!if((objAcc.Family_Picture__c!=null) ,true,false)}"/><br/><br/></td>
+	        		<td width="25%"></td>
+	       		</tr>
+       		</table>
+		</apex:form>
+	        
+	        
+<!-- 	        	</center> -->
+	        <apex:outputPanel >
+		        <div align="left">
+		        	<apex:outputText value="FINANCIAL PLANNER" style="font-family:Calibri;font-weight:bold;color:#008000;font-size:18px;text-transform:capitalize ;"></apex:outputText>  
+	        		<div style="width:100%;border-bottom:5px solid #FFA500;border-right:5px solid #FFA500;"></div>
+	        	</div>
+	        	<div>
+	        		<apex:outputPanel rendered="{!NOT(isFreedomUser)}">
+		        		<apex:outputLabel value="{!Partnerlogo.Name}" style="font-size:16px;font-family:Calibri;font-weight:bold;padding-left:2px;"/>
+		        		<table width="100%" style="font-family:Calibri;font-size:14px;">
+			        		<tr>	
+				        		<td width="50%" align="left">
+				        			<apex:outputText style="font-size:14px;" value="Phone: +91 "/>
+				        			<apex:outputField style="font-size:14px;" value="{!Partnerlogo.Phone}"/>
+				        			<apex:outputPanel rendered="{!IF(Partnerlogo.Alternate_Mobile__c != null && Partnerlogo.Phone != null,true,false)}"> / {!Partnerlogo.Alternate_Mobile__c}</apex:outputPanel>
+			        				<apex:outputPanel rendered="{!IF(Partnerlogo.Alternate_Mobile__c != null && Partnerlogo.Phone == null,true,false)}">{!Partnerlogo.Alternate_Mobile__c}</apex:outputPanel>
+			        		
+	<!-- 		        				<apex:outputField style="font-size:14px;" value="{!IF(Partnerlogo.Alternate_Mobile__c != null,true,false)}"/> -->
+				        			<br/>
+	<!-- 			        			<apex:outputText style="font-size:14px;" value="Email: "/> -->
+				        			<apex:outputLabel style="font-size:14px;" value="Email: {!Partnerlogo.Email_ID__c}"/>
+				        			<br/>
+<!-- 				        			<apex:outputLabel style="font-size:14px;" value="Alternate Email: {!Partnerlogo.Alternate_E_Mail_Address__c}"/> -->
+<!-- 				        			<br/> -->
+<!-- 				        			<apex:outputLabel style="font-size:14px;" value="Website: {!Partnerlogo.Website}"/> -->
+<!-- 				        			<br/> -->
+				        			<apex:outputText style="font-size:14px" value="Address: "/>
+				        			<apex:repeat value="{!lstAddwithComma}" var="partnerAddress">
+	<!-- 			        			styleClass="upperCase"  -->
+						 				<apex:outputText style="font-size:14px;" value=" {!partnerAddress}" escape="false" rendered="{!NOT(isFreedomUser)}"/>
+						 				<br/>
+					 				</apex:repeat>
+				        		</td>
+				        		
+				        		<td width="50%" align="right">
+				        			<apex:outputField value="{!Partnerlogo.Logo__c}"/>
+				        		</td>
+		        			</tr>
+		        		</table>
+		        	</apex:outputPanel>
+		        	<apex:outputPanel rendered="{!!NOT(isFreedomUser)}">
+		        		<apex:outputLabel value="{!objFfreedomUser.Name}" style="font-size:16px;font-family:Calibri;font-weight:bold;padding-left:2px;"/>
+		        		<table width="100%" style="font-family:Calibri;font-size:14px;">
+			        		<tr>	
+				        		<td width="50%" align="left">
+				        			<apex:outputText style="font-size:14px;" value="Phone: +91 "/>
+				        			<apex:outputField style="font-size:14px;" value="{!objFfreedomUser.MobilePhone}"/>
+				        			<apex:outputPanel rendered="{!IF(objFfreedomUser.Phone != null && objFfreedomUser.MobilePhone != null,true,false)}"> / {!objFfreedomUser.Phone}</apex:outputPanel>
+				        			<apex:outputPanel rendered="{!IF(objFfreedomUser.Phone != null && objFfreedomUser.MobilePhone == null,true,false)}">{!objFfreedomUser.Phone}</apex:outputPanel>
+				        			<br/>
+				        			<apex:outputLabel style="font-size:14px;" value="Email: {!objFfreedomUser.Email}"/>
+<!-- 				        			<br/> -->
+<!-- 				        			<apex:outputLabel style="font-size:14px;" value="Address: "/> -->
+<!-- 				        			<apex:outputText value="{!objFfreedomUser.Street}" style="font-family:Calibri;font-size:14px;"/> -->
+<!-- 							        <apex:outputText value=", " rendered="{!if((objFfreedomUser.Street!=null && objFfreedomUser.City!=null) ,true,false)}"></apex:outputText> -->
+<!-- 							        <br/> -->
+<!-- 							        <apex:outputText value="{!objFfreedomUser.City}" style="font-family:Calibri;font-size:14px;"/> -->
+<!-- 									<apex:outputText value=", " rendered="{!if((objFfreedomUser.State!=null && objFfreedomUser.City!=null) ,true,false)}"></apex:outputText> -->
+<!-- 							       	<br/> -->
+<!-- 							        <apex:outputText value="{!objFfreedomUser.State}"  style="font-family:Calibri;font-size:14px;"/> -->
+<!-- 							        <apex:outputText value=", " rendered="{!if((objFfreedomUser.State!=null && objFfreedomUser.Country!=null) ,true,false)}"></apex:outputText> -->
+<!-- 					               	<br/> -->
+<!-- 							        <apex:outputText value="{!objFfreedomUser.Country}" style="font-family:Calibri;font-size:14px;"/> -->
+<!-- 									<apex:outputText value=", " rendered="{!if((objFfreedomUser.Country!=null && objFfreedomUser.PostalCode!=null) ,true,false)}"></apex:outputText> -->
+<!-- 									<br/> -->
+<!-- 							        <apex:outputText value="{!objFfreedomUser.PostalCode}" style="font-family:Calibri;font-size:14px;"/> -->
+				        			<br/>
+				        		</td>
+		        			</tr>
+		        		</table>
+	        		</apex:outputPanel>
+	        		<br/>
+        			<br/>
+        		</div>
+        	</apex:outputPanel>
+        	
+        	<div>
+        		<table width="100%">
+	        		<tr>	
+		        		<td width="50%" align="left"><apex:outputText value="{!$Label.PreparedBy}" style="align:left;font-family:Calibri;font-weight:bold;color:#008000;font-size:18px;text-align:right;text-transform:capitalize ;"></apex:outputText></td>
+		        		
+		        		<td width="50%" align="right"><apex:outputText value="PREPARED ON" style="font-family:Calibri;font-weight:bold;color:#008000;font-size:18px;text-align:right;text-transform:capitalize ;"></apex:outputText></td>
+        			</tr>
+        		</table>
+        		<div style="width:100%;border-bottom:5px solid #FFA500;border-right:5px solid #FFA500;"></div>
+        		<table width="100%">
+	        		<tr>	
+		        		<td width="50%" align="left"><apex:image url="https://ffreedom.my.salesforce.com/servlet/servlet.ImageServer?oid=00D20000000JZVv&id=01520000000h9oA" width="220" height="90"/></td>
+		        		
+<!-- 		        		<td width="50%" align="right"><apex:outputText value="{!planGenerationDate}" style="font-size:14px;font-family:Calibri;font-weight:bold;padding-right:20px;" /></td> -->
+        					<td width="50%" align="right"><apex:outputText value="{!DAY(TODAY())}/{!MONTH(TODAY())}/{!YEAR(TODAY())}" style="font-size:14px;font-family:Calibri;font-weight:bold;padding-right:20px;" /></td>
+        			</tr>
+        		</table>
+        	</div>
+       	 	<br/>
+<!--        	  	<br/> -->
+        	<div align="left">
+	        <apex:outputText value="PREPARED FOR" style="font-family:Calibri;font-weight:bold;color:#008000;font-size:18px;text-align:right;text-transform:capitalize ;"></apex:outputText>  
+        	<div style="width:100%;border-bottom:5px solid #FFA500;border-right:5px solid #FFA500;"></div>
+        	</div>
+<!-- 		<apex:outputText value="PREPARED FOR" style="padding-left:20px;" styleClass="sentenceCase"/> -->
+	        <br/>
+	        <apex:outputText value="{!LOWER(bean.client.name)}" style="font-size:14px;font-family:Calibri;font-weight:bold" styleClass="sentenceCase"/>
+	        <apex:outputText value=" and " style="font-size:14px;font-family:Calibri; font-weight:bold" rendered="{!if(bean.spouse.name!=null,true,false)}" styleClass="textStyle"/>
+	        <apex:outputText value="{!LOWER(bean.spouse.name)}" style="font-size:14px;font-family:Calibri;font-weight:bold" rendered="{!if(bean.spouse.name!=null,true,false)}" styleClass="sentenceCase"/>
+	        <br/>
+	        <apex:outputText value="{!bean.client.BillingStreet}" style="font-family:Calibri;font-size:14px;"/>
+	        <apex:outputText value=", " rendered="{!if((bean.client.BillingStreet!=null && bean.client.BillingCity!=null) ,true,false)}"></apex:outputText>
+	        <apex:outputText value="{!bean.client.BillingCity}" style="font-family:Calibri;font-size:14px;"/>
+<!-- 	        <br/> -->
+ 			<apex:outputText value=", " rendered="{!if((bean.client.BillingState!=null && bean.client.BillingCity!=null) ,true,false)}"></apex:outputText>
+	        <apex:outputText value="{!bean.client.BillingState}"  style="font-family:Calibri;font-size:14px;"/>
+	        <apex:outputText value=", " rendered="{!if((bean.client.BillingState!=null && bean.client.BillingCountry!=null) ,true,false)}"></apex:outputText>
+	        <apex:outputText value="{!bean.client.BillingCountry}" style="font-family:Calibri;font-size:14px;"/>
+<!-- 	        <br/> -->
+			<apex:outputText value=", " rendered="{!if((bean.client.BillingCountry!=null && bean.client.BillingPostalCode!=null) ,true,false)}"></apex:outputText>
+	        <apex:outputText value="{!bean.client.BillingPostalCode}" style="font-family:Calibri;font-size:14px;"/>
+	        <br/>
+<!-- 	        <br/> -->
+		        
+		        <!------- PREPARED BY --------->
+<!-- 		        <apex:outputText style="padding-left:20px;" value="{!$Label.PreparedBy}" styleClass="upperCase"/> -->
+<!-- 		        <br/> -->
+<!-- 		        <apex:image url="https://ffreedom.my.salesforce.com/servlet/servlet.ImageServer?oid=00D20000000JZVv&id=01520000000h9oA" style="padding-left:20px;"  -->
+<!-- 		        				rendered="{!isFreedomUser}"/> -->
+				<!--Partner Portal Aditi--> 
+<!-- 		             <apex:outputField value="{!Partnerlogo.Logo__c}" rendered="{!NOT(isFreedomUser)}" /> -->
+<!-- 		        <br/><br/> -->
+<!-- 		        <div style="padding-left:20px;"> -->
+<!-- 		            <apex:outputText value="FINANCIAL PLANNERS" styleClass="upperCase"/> -->
+<!-- 		            <br/> -->
+<!-- 		 			<apex:outputText value="{!$Label.PlannerAddress}" escape="false" styleClass="upperCase" rendered="{!isFreedomUser}"/>  -->
+<!-- 		 			Partner Portal Aditi -->
+<!-- 		 			<apex:repeat value="{!lstAddwithComma}" var="partnerAddress"> -->
+<!-- 		 				<apex:outputText value="{!partnerAddress}" escape="false" styleClass="upperCase" rendered="{!NOT(isFreedomUser)}"/> -->
+<!-- 		 				<br/> -->
+<!-- 		 			</apex:repeat> -->
+<!-- 		            <br/> -->
+<!-- 		        </div> -->
+<!-- 		        <br/> -->
+		        <!------- PLAN GENERATION DATE --------->
+<!-- 		        <apex:outputText value="Plan Generation Date" style="padding-left:20px;margin-top:10px;" styleClass="upperCase"/> -->
+<!-- 		        <br/> -->
+<!-- 		        <apex:outputText value="{!planGenerationDate}" style="padding-left:20px;" styleClass="upperCase"/> -->
+		    </div>
+		<div style="page-break-after:always"></div>
+		
+<!-- 		rendered="{NOT(pagenumber=='0')}" -->
+   	<apex:outputPanel rendered="{!if(isPDF=='true', true, false)}"> 	
+   	 	<div class="footer">
+	        <div style="font-family:Calibri;font-size:15px;text-align:right;">
+	        	<table  width="100%" cellspacing="0" cellpadding="0">
+		         	<tr style="height:15px;">
+	  					<td style="width:8px;border-right:2px solid #FF853B;">
+	  						<apex:outputText value="Ffreedom Financial Planners " style="text-transform:capitalize ;"/></td> 
+	  					<td valign="top"><span class="pagenumber"/></td>
+					</tr>
+					<tr style="height:10px;">
+		  				<td style="width:380px; border-top:2px solid #FF853B;border-right:2px solid #FF853B;"></td> 
+		  				<td style="width:12px; border-top:2px solid #FF853B;"></td>
+					</tr>
+	           	</table>
+	    	</div>
+    	</div>
+    </apex:outputPanel>
+    </div>
+    
+    <div style="page-break-after:always;">
+   		<!--             TABLE OF CONTENTS STARTS              -->
+<!--        <c:TableOfContentsComponent > -->
+        <div class="divContainerStyle">
+	        <table id="contentsTable" cellspacing="5" cellpadding="5" border="0" style="width:100%;">
+	            <tr class="divStyle">
+	                <td class="upperCase"><apex:outputText value="{!$Label.TableOfContents}"/></td>
+	            </tr>    
+	            <apex:outputPanel rendered="{!isIntroduction}"> 
+		            <tr class="textStyle">
+		                <td class="upperCase"><apex:outputText value="{!$Label.Introduction}"/></td>
+		            </tr>
+	            </apex:outputPanel>
+	            <apex:outputPanel rendered="{!isDisclosureStatement}">  
+	            <tr class="textStyle">
+	                <td class="upperCase"><apex:outputText value="{!$Label.Disclosure_Statement}"/></td>
+	            </tr>
+	            </apex:outputPanel>
+	            <!-- Prajakta - FP changes - 01-03-2013  -->
+	            <tr class="textStyle">
+	                <td class="upperCase"><apex:outputText value="{!$Label.Personal_Information}"/></td>
+	            </tr>
+	            <!-- Prajakta - FP changes - 11-03-2013  -->
+	            <tr class="textStyle">
+	                <td class="upperCase"><apex:outputText value="{!$Label.Global_Assumptions}"/></td>
+	            </tr>
+	            <tr class="textStyle">
+	                <td class="upperCase"><apex:outputText value="RISK PROFILE"/></td>
+	            </tr>
+	            <apex:outputPanel rendered="{!isGoalSummary}"> 
+	            <tr class="textStyle">
+	                <td class="upperCase"><apex:outputText value="{!$Label.Goal_Summary}"/></td>
+	            </tr>
+	            </apex:outputPanel>
+	            <!-- Prajakta - FP changes - 21-03-2013  -->
+	            <tr class="textStyle">
+	                <td class="upperCase"><apex:outputText value="{!$Label.Portfolio_Summary}"/></td>
+	            </tr>
+	            
+	<!--             <tr class="textStyle"> -->
+	<!--                 <td class="upperCase"><apex:outputText value="{!$Label.Pictorial_Review}"/></td> -->
+	<!--             </tr> -->
+				<apex:outputPanel rendered="{!isFinancialStatements}">  
+	            <tr class="textStyle">
+	                <td class="upperCase"><apex:outputText value="{!$Label.Financial_Statements}"/></td>
+	            </tr>
+	            </apex:outputPanel>
+	            
+	            <!-- Prajakta - FP changes - 11-03-2013  -->
+	            <tr class="textStyle">
+	                <td class="upperCase"><apex:outputText value="{!$Label.Cash_Flow}"/></td>
+	            </tr>
+	             <!-- Aditi - FP changes - 26-6-2013  -->
+	            <apex:outputPanel rendered="{!displayCashFlow}"> 
+		            <tr class="textStyle">
+		                <td class="upperCase"><apex:outputText value="Cash Flow Projection"/></td>
+		            </tr>
+		        </apex:outputPanel> 
+	            <apex:outputPanel rendered="{!isEmergencyPlanning}">  
+	            <tr class="textStyle">
+	                <td class="upperCase"><apex:outputText value="{!$Label.Emergency_Fund}"/></td>
+	            </tr>
+	            </apex:outputPanel>
+<!-- 	            <apex:componentBody /> -->
+	            
+	            <apex:outputPanel rendered="{!isFinancialPlanReview}" >
+	            <tr class="textStyle">
+	                <td class="upperCase"><apex:outputText value="{!$Label.FinancialPlanReview}"/></td>
+	            </tr>
+	            </apex:outputPanel>
+	            
+	            <apex:outputPanel rendered="{!isInvestmentRisk}" >  
+		            <tr class="textStyle">
+		                <td class="upperCase"><apex:outputText value="{!$Label.Investment_Risks}"/></td>
+		            </tr>
+		        </apex:outputPanel>    
+	            
+	            <apex:outputPanel rendered="{!isDeliveryAcknowledgement}" > 
+	            <tr class="textStyle">
+	                <td class="upperCase"><apex:outputText value="{!$Label.Delivery_Acknowledgement}"/></td>
+	            </tr>
+	            </apex:outputPanel>
+	       
+    	
+          <apex:repeat value="{!lstHLVDetails}" var="insurance">
+              <tr class="textStyle">
+                  <td class="upperCase"><apex:outputText value="LIFE INSURANCE ANALYSIS FOR {!insurance.Selected_Entity_Name__c}"/></td>
+              </tr>
+          </apex:repeat>
+          <apex:outputPanel rendered="{!isGeneralInsurance}">  
+           <tr class="textStyle">
+               <td class="upperCase"><apex:outputText value="{!$Label.General_Insurance}"/></td>
+           </tr>
+          </apex:outputPanel>
+          <apex:repeat value="{!goalMappingBeanList}" var="goalBean">
+              <tr class="textStyle">
+                  <td class="upperCase"><apex:outputText value="{!goalBean.goalObj.Description__c}"/></td>
+              </tr>
+          </apex:repeat>
+          
+          <apex:outputPanel rendered="{!isEstatePlanning}">
+          <tr class="textStyle">
+              <td class="upperCase"><apex:outputText value="{!$Label.Estate_Planning}"/></td>
+          </tr>
+          </apex:outputPanel>
+          <apex:outputPanel rendered="{!isSummaryActionPlan}">
+           <tr class="textStyle">
+               <td class="upperCase"><apex:outputText value="{!$Label.Summary_Action_Plan}"/></td>
+           </tr>
+          </apex:outputPanel>
+         <apex:variable var="counter" value="1"/>
+         <apex:repeat value="{!lstHLVDetails}" var="insurance">
+              <tr class="textStyle">
+                  <td class="upperCase"><apex:outputText value="ANNEXURE {!counter}: INSURANCE CALCULATION FOR {!insurance.Selected_Entity_Name__c}"/></td>
+              </tr>
+              <apex:variable var="counter" value="{!VALUE(counter) + 1}"/>
+         </apex:repeat>
+          </table>
+     </div>
+<!--         </c:TableOfContentsComponent>    -->
+    </div>
+   	<!-----------------------TABLE OF CONTENTS ENDS-------------->
+   	 
+    <!---------------------- INTRODUCTION STARTS ---------------->
+    <div style="page-break-after:always;">
+	    <apex:outputPanel rendered="{!isIntroduction}">
+		    <!--       <c:IntroductionComponent emailId="{!email}" accountName="{!Accname}" clientFullName="{!bean.client.name}" spouseFullName="{!bean.spouse.name}" entityOwner="{!bean.client.owner.name}" /> -->
+		    <c:IntroductionComponent clientFullName="{!bean.client.name}" spouseFullName="{!bean.spouse.name}" entityOwner="{!bean.client.owner.name}" />
+	    </apex:outputPanel> 
+   </div>
+	<!---------------------- INTRODUCTION ENDS ---------------->
+	
+	<!---------------------- DISCLOSURE STATEMENT STARTS ---------------->
+   <div style="page-break-after:always;">
+	   <apex:outputPanel rendered="{!isDisclosureStatement}">
+			<!--       <c:DisclosureComponent accountName="{!Accname}"/> -->
+			<c:DisclosureComponent />
+	   </apex:outputPanel>
+   </div>
+	<!---------------------- DISCLOSURE STATEMENT ENDS ---------------->
+	
+	<!---------------------- PERSONAL INFORMATION STARTS ---------------->
+	<!-- Prajakta - FP changes - 01-03-2013  -->
+	<div style="page-break-after:always;">
+<!-- 		<c:PersonalInformationComponent />  -->
+		<apex:form >
+			<apex:outputPanel >
+			    <apex:pageBlock > 
+				<div class="divContainerStyle">
+					<div class="divStyle" style="padding-left:10px;">PERSONAL INFORMATION WITH FAMILY DETAILS</div><br/>
+			          	<apex:outputPanel >  
+			                <table style="padding-left:80px;">
+			  					<tr> 
+<!-- 			  					style="page-break-after:always;"> -->
+			  					    <td>
+						  				<table  width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable7">
+									      	<tr >
+									      		<td class="personalInfo" style="width:300px;">Name</td>
+									      		<apex:repeat value="{!lstPersonalInfo}" var="infoDetails">
+						          					<td style="width:16%;">
+												    	<apex:outputText value="{!infoDetails.objAccount.Name}"  styleClass="textStyle">
+												    	</apex:outputText> 
+												    </td>
+												</apex:repeat>
+									      	</tr>
+									      	<tr >
+									      		<td class="personalInfo" style="width:16%;">Birthdate</td>
+									      		<apex:repeat value="{!lstPersonalInfo}" var="infoDetails">
+						          					<td style="width:16%;">
+												    	<apex:outputText value="{!infoDetails.strDate}"  styleClass="textStyle">
+												    	</apex:outputText> 
+												    </td>
+												</apex:repeat>
+									      	</tr>
+									      	<tr >
+									      		<td class="personalInfo" style="width:16%;">Relationship To Entity</td>
+									      		<apex:repeat value="{!lstPersonalInfo}" var="infoDetails">
+						          					<td style="width:16%;">
+												    	<apex:outputText value="{!infoDetails.objAccount.Relationship_to_Entity__pc}"  styleClass="textStyle">
+												    	</apex:outputText> 
+												    </td>
+												</apex:repeat>
+									      	</tr>
+				                		</table>
+			                		</td>
+			                	</tr>
+			                </table>
+			          <br/>
+			          <div  class="divStyle" style="padding-left:10px;">GLOBAL ASSUMPTIONS</div><br/>
+			                
+			                <table style="padding-left:80px;">
+<!-- 			  					<tr style="page-break-after:always;"> -->
+								<tr>
+			  					    <td>
+						  				<table  width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable7">
+						  				
+									      	<tr >
+									      		<td class="personalInfo" style="width:300px;">Number of Months savings <br/>required for Emergency Planning</td>
+						          					<td style="text-align:center;width:16%;">
+												    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Number_Of_Months__c}"  styleClass="textStyle">
+												    	</apex:outputText> 
+												    </td>
+									      
+									      		<td class="personalInfo" style="width:300px;">Expected Return on Investment</td>
+						          					<td style="text-align:center;width:16%;">
+												    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Expected_Return_on_Investment__c}" styleClass="textStyle">
+												    	</apex:outputText> 
+												    </td>  
+									      	</tr>
+										    <tr >
+									      		<td class="personalInfo" >Inflation Rate</td>
+						          					<td style="text-align:center;width:16%;">
+												    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Inflation_Rate__c}"  styleClass="textStyle">
+												    	</apex:outputText> 
+												    </td>
+									      	
+												<td class="personalInfo" >Stock Growth Rate</td>
+						          					<td style="text-align:center;width:16%;">
+												    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Stock_Growth_Rate__c}"  styleClass="textStyle">
+												    	</apex:outputText> 
+												    </td>
+												    
+									      	</tr>
+									      	<tr >
+									      		<td class="personalInfo">Retirement Age</td>
+						          					<td style="text-align:center;width:16%;">
+												    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Default_Retirement_Age__c}"  styleClass="textStyle">
+												    	</apex:outputText> 
+												    </td>
+									      	
+									      		<td class="personalInfo" >Equity</td>
+						          					<td style="text-align:center;width:16%;">
+												    	<apex:outputText value="{!newGlobalAssumptions.Equity}"  styleClass="textStyle">
+												    	</apex:outputText> 
+												    </td>
+									      	</tr>
+									     	<tr >
+									      		<td class="personalInfo">Estimated Life Expectancy</td>
+						          					<td style="text-align:center;width:16%;">
+												    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Default_Estimated_Life_Expectancy__c}"  styleClass="textStyle">
+												    	</apex:outputText> 
+												    </td>
+									      	
+									      		<td class="personalInfo" >Debt</td>
+						          					<td style="text-align:center;width:16%;">
+												    	<apex:outputText value="{!newGlobalAssumptions.Debt}"  styleClass="textStyle">
+												    	</apex:outputText> 
+												    </td>
+									      	</tr>
+									      	<tr >
+									      		<td class="personalInfo" >Income Growth Rate</td>
+						          					<td style="text-align:center;width:16%;">
+												    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Income_Growth_Rate__c}"  styleClass="textStyle">
+												    	</apex:outputText> 
+												    </td>
+									      	
+									      		<td class="personalInfo" >Gold</td>
+						          					<td style="text-align:center;width:16%;">
+												    	<apex:outputText value="{!newGlobalAssumptions.Gold}"  styleClass="textStyle">
+												    	</apex:outputText> 
+												    </td>
+									      	</tr>
+									      	<tr >
+									      		<td class="personalInfo" >Gold Growth Rate</td>
+						          					<td style="text-align:center;width:16%;">
+												    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Gold_Growth_Rate__c}"  styleClass="textStyle">
+												    	</apex:outputText> 
+												    </td>
+									      	
+									      		<td class="personalInfo" ></td>
+						          					<td style="text-align:center;width:16%;">
+												    </td>
+									      	</tr>
+									      	
+				                		</table>
+			                		</td>
+			                	</tr>
+			                </table>
+			             </apex:outputPanel>
+			        </div>        
+			    </apex:pageBlock>    
+			    </apex:outputPanel>
+			    </apex:form>
+	</div>
+	<!---------------------- PERSONAL INFORMATION ENDS ---------------->
+	
+		<!---------------------- PRISK PROFILE STARTS ---------------->
+	<!-- Prajakta - FP changes - 03-01-2013  -->
+	<div style="page-break-after:always;">
+		<apex:form >
+			<apex:outputPanel >
+			    <apex:pageBlock > 
+				<div class="divContainerStyle">
+					<div class="divStyle" style="padding-left:10px;">RISK PROFILE</div>
+			          	<apex:outputPanel >  
+			        		<ul class="TickList">
+						<li style="width:90%">
+						<apex:outputText value="Risk Profiling is a process that enables an individual to evaluate the extent to which he/she is willing to take risk.  
+						Like fingerprints, investment profiles of people are always unique.  Age, life stage, income, savings, dependents and 
+						mindsets are factors that define a person's attitude towards investments. Risk taking ability and mental frame of mind 
+						play a key role in determining where the investor ultimately puts his money."/>
+						</li><br/>
+						<li style="width:90%">
+						<apex:outputText value="There are several tools that enable Financial Advisors to evaluate their client’s Risk Profile. These tools help to 
+						quantify a person’s attitudes and behavioral responses to various investment possibilities. The resultant score obtained 
+						by the client indicates whether he has Low, Medium or High tolerance to risk. Hence, his asset allocation in terms of the 
+						proportion of Equity versus Debt in his portfolio can be determined on the basis of this score."/>
+						</li><br/>
+						<li style="width:90%">
+						<apex:outputText value="Risk tolerance in large part, is shaped by genetics and life experiences. Typically, it decreases with age, and may be 
+						changed by major life events. Accordingly, a person’s risk tolerance must be tested every 2-3 years and also after any 
+						major life event."/>
+						</li><br/>
+						<li>
+							<apex:outputText >
+								Your <b>Finametrica score is</b> : &nbsp;&nbsp;&nbsp; 
+								<apex:outputText value="{!fScore}" style="text-align:center;font-weight:bold; width:50px;" />.
+							</apex:outputText>
+						</li>
+						<br/>
+						<li>
+							<apex:outputText >
+								Based on this, you fall in the category of &nbsp;<apex:outputText value="{!riskProfile}" style="font-weight:bold;"/> Risk profile.
+							</apex:outputText>
+						</li>
+						</ul>
+			        
+			            </apex:outputPanel>   
+			         </div>
+			    </apex:pageBlock>  
+			    
+			    <apex:outputPanel rendered="{!(if(objRiskProfilerRemark.RichText_Remark__c =='',false,true))}">
+		   			<ul class="TickList" style="font-weight:bold;padding-left:25px;">
+		              	<li>
+		                  	{!$Label.Remarks}
+		              	</li>
+		          	</ul>
+		          	<div style="padding-left:75px;">
+						<apex:outputField value="{!objRiskProfilerRemark.RichText_Remark__c }"></apex:OutputField>
+		          	</div>
+		        </apex:outputPanel>  
+			</apex:outputPanel>
+		</apex:form>
+	</div>
+	<!---------------------- RISK PROFILE ENDS ---------------->
+	
+	<!-- ---------------------GOAL SUMMARY STARTS ---------------->
+    <div style="page-break-after:always;">
+	    <apex:outputPanel rendered="{!isGoalSummary}">
+<!-- 	    	<c:GoalSummaryComponent ></c:GoalSummaryComponent> -->
+		<div class="divContainerStyle">
+		  <div class="divStyle" style="padding-left:10px;">GOAL SUMMARY</div>
+		  <p class="textStyle">
+		      <apex:outputText value="{!$Label.GoalSummaryText}"/>
+		  </p>
+		  <apex:outputText value="Goals" style="font-weight:bold;" styleclass="textStyle"/>
+		  <table  border="1" cellspacing="0" cellpadding="5" class="textStyle" align="centre" >
+		  <tr class="tableHeader">
+		      <th>Description</th>
+		      <th>Priority</th>
+		      <th>Goal Start Year</th>
+		      <th>Goal End Year</th>
+		      <th>Inflation Rate</th>
+		      <th>Annual Cost of Goal </th>
+		      <th>Portfolio Allocation for the Goal</th>
+		  </tr>
+		  
+		  <apex:repeat value="{!objGoalSummaryController.financialGoalList}" var="goalDetails">
+		  	
+		      <tr>
+		          <td>
+		              <apex:outputText value="{!goalDetails.Description__c}"/>
+		          </td>
+		          <td>
+		              <apex:outputText value="{!goalDetails.Priority__c}"/>
+		          </td>
+		          <td class="rightAlignData">
+		              <apex:outputText value="{!goalDetails.Goal_Start_Year__c}"/>
+		          </td>
+		          <td class="rightAlignData">
+		              <apex:outputText value="{!goalDetails.Goal_End_Year__c}"/>
+		          </td>
+		          <td class="rightAlignData">
+		              <apex:outputText value="{0, number, ,##0.00}%" styleClass="rightAlignData">
+<!-- 		               Change By Niket  (Date : 1 June 2011 ) -->
+<!--  		               If Inflation Rate from the Goal is Null or then we will show the  -->
+<!-- 		              		Inflataion from the Global assumption for that particular entity  -->
+		               
+		                  <apex:param name="annualcost" value="{!IF(ISNULL(goalDetails.Inflation_Rate__c), objGoalSummaryController.GlobalAssumptionInflationRate, goalDetails.Inflation_Rate__c)}"/>
+		              </apex:outputText>
+		              
+		          </td>
+		          <td class="rightAlignData">
+		              <apex:outputText value="{0, number, ,##0}" styleClass="rightAlignData">
+		                  <apex:param name="annualcost" value="{!goalDetails.Cost_of_Goal_Annual__c}"/>
+		              </apex:outputText>
+		          </td>
+		          <td>
+		              <apex:outputText value="{!goalDetails.SelectedGoalProfile__r.name}"/>
+		          </td>
+		      </tr>
+		  </apex:repeat>
+		  </table>
+		  </div>
+	    </apex:outputPanel>
+    </div>
+    <!-- ---------------------GOAL SUMMARY ENDS ---------------->
+   
+    <!------------------------ SUMMARIZING YOUR ASSET ALLOCATION: CURRENT AND SUGGESTED STARTS ---------------------->
+    <!--/** Eternus Solutions      **/
+	/** Author  : Manasi Ranade*/
+	/** Issue Id: 00001664      **/
+	/** Date    : 31/5/2012 **/
+	/** Purpose : As the calculations are wrong in portfolio commeted this part (temporary) : Request forom Shweta Karia**/
+	/****************************************************/-->
+  
+    <!-- Prajakta - FP changes - 21-03-2013 -->
+     <!-- ---------------------PORTFOLIO SUMMARY Starts ---------------->
+   	<div style="page-break-after:always;">
+      	<div class="divContainerStyle">
+  			<div class="divStyle" style="padding-left:10px;">PORTFOLIO SUMMARY</div>
+  		</div>
+      	<apex:form >
+<!--            <c:PortolioComponent showButton="false"></c:PortolioComponent> -->
+			<apex:outputPanel >
+		        <apex:pageBlock id="block1">
+		        	<apex:pageMessages rendered="true" />
+		        	
+		            <apex:outputPanel rendered="false">
+		                <div class="divNavigationContainerStyle">
+			                <apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;background-image:none;background-color:#A9C5EB !important;padding-top:4px; padding-bottom:4px;" />
+			                <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;" />
+			                <apex:outputLabel value="Portfolio Summary" styleclass="button" style=" width:10%;margin-left:20px;background-image:none;background-color:#A9C5EB !important;padding-top:4px; padding-bottom:4px;" />
+		                </div>
+		            </apex:outputPanel>
+		            
+		        	<div class="divContainerStyle">
+			            <div  class="subHeader">
+		                    <apex:outputText value="SUMMARIZING YOUR CURRENT ASSET ALLOCATION" styleClass="textStyle"/>
+		                </div>
+			           	<br/>
+			            <apex:outputText styleClass="textStyle" value="Overview" style="font-weight:bold;" /><br/><br/>
+			            <apex:outputText styleClass="textStyle" value="{!$Label.PortfolioHeader1}"/><br/><br/>
+			            <apex:outputText styleclass="textStyle" value="{!$Label.PortfolioHeader2}"/><br/><br/>
+			            <apex:outputText styleclass="textStyle" value="{!$Label.PortfolioHeader3}"/><br/><br/>
+		            <div style="align:center;width:100%;">
+		            
+		            <table cellSpacing="0" cellPadding="0" class="" align="center" style="width:50%;margin-left:auto;margin-right:auto;">
+		                <tr>
+		                    <td style="width:47%;border-width:thin; border-style:solid; border-color:gray;">
+		                        <apex:image url="{!objPortfolio.chartData}" style="width:100%;"></apex:image>
+		                    </td>
+		                </tr>
+		            </table>
+		            
+		            <br/>
+		            <table id="DataTable" cellSpacing="0" cellPadding="3" border="1" align="center" style="margin-top: 10px;width:60%;margin-left:auto;margin-right:auto;">
+		                <tr class="tableHeader">
+		                    <th class="tableData" rowSpan="2" style="font-weight: bold;">
+		                        <apex:outputText value="Asset Class" styleclass="textStyle" />
+		                    </th>
+		                    <th  class="tableData" colSpan="2" style="font-weight: bold;text-align: center;">
+		                        <apex:outputText value="Current Asset Allocation" styleclass="textStyle" />
+		                    </th>
+		                </tr>
+		
+		                <tr class="tableHeader">
+		                    <td style="text-align: center;font-weight: bold;" class="tableData">
+		                        <apex:outputText value="Amount" styleclass="textStyle" />
+		                    </td>
+		                    <td style="text-align: center;font-weight: bold;" class="tableData">
+		                        <apex:outputText value="%" styleclass="textStyle" />
+		                    </td>
+		                </tr>
+		
+			            <apex:repeat value="{!objPortfolio.portfolioBeanList}" var="pf">
+		                    <tr class="tableData">
+		                    	<td >
+		                    		<apex:outputText value="{!pf.recordType}" style="font-weight:bold;"	styleclass="textStyle" />
+		                        </td>
+		                        <td align="right">
+		                        	<apex:outputText value="{0, number, ##,##0}" styleclass="textStyle">
+		                            	<apex:param value="{!pf.currentAsset}" />
+			                        </apex:outputText>
+			                    </td>
+		                        <td align="right">
+		                        	<apex:outputText value="{0, number, ##,##0.00}%" styleclass="textStyle">
+		                            	<apex:param value="{!pf.currentPercent}" />
+			                        </apex:outputText>
+			                     </td>
+		                    </tr>
+		                </apex:repeat>
+		                <tr >
+		                    <td>
+		                    	<apex:outputText styleclass="textStyle" value="Total" style="font-weight:bold;"/>
+		                    </td>
+		                    <td align="right" class="tableAlign">
+		                    	<apex:outputText value="{0, number, ##,##0}" styleclass="textStyle" style="font-weight:bold;">
+			                        <apex:param value="{!objPortfolio.totalValue}" />
+			                    </apex:outputText>
+			                </td>
+		                   	<td align="right" class="tableAlign" style="font-weight:bold;">
+								100%	
+							</td>
+		                </tr>
+		            </table>
+		          </div>
+		        </div>
+		        <apex:outputPanel rendered="{!(if(objPortfolio.objRemark.RichText_Remark__c =='',false,true))}">
+		   			<ul class="TickList">
+		              <li>
+		                  {!$Label.Remarks}
+		              </li>
+		           </ul>
+		           <div>
+		          	  <apex:OutputField value="{!objPortfolio.objRemark.RichText_Remark__c }"></apex:OutputField>
+		           </div>
+		         </apex:outputPanel>
+		        </apex:pageBlock>
+		    </apex:outputPanel>
+       	</apex:form>
+   	</div>
+   	  <!-- ---------------------PORTFOLIO SUMMARY ENDS ---------------->
+    <!------------------------ SUMMARIZING YOUR ASSET ALLOCATION: CURRENT AND SUGGESTED ENDS ---------------------->
+   
+    <!------------------------ FINANCIAL STATEMENTS STARTS ---------------------->
+    <div style="page-break-after:always;">
+<!-- 		<apex:form rendered="{!isFinancialStatements}"> -->
+		<apex:form rendered="true">
+<!--         	<c:NetworthPageComponent showButton="false"></c:NetworthPageComponent>  -->
+		  <apex:pageBlock >
+           <apex:outputPanel rendered="false">
+            <div style="margin:bottom:20px; width:50%;margin-left:60px;">
+                 <apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;  background-image:none;background-color:#A9C5EB !important; font-size:11px !important;padding-top:4px; padding-bottom:4px;" />
+                 <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+                 <apex:outputLabel value="Net Worth" styleclass="button" style=" width:10%;margin-left:20px;  background-image:none;background-color:#A9C5EB !important;font-size:11px !important; padding-top:4px; padding-bottom:4px;" />
+            </div><br/>
+            </apex:outputPanel>
+			<div class="divContainerStyle"> 
+                <div class="divStyle">
+                    <apex:outputText value="FINANCIAL STATEMENTS" styleClass="textStyle"/>
+                </div><br/>
+                <div  class="subHeader">
+                    <apex:outputText value="CURRENT NETWORTH" styleClass="textStyle"/>
+                </div><br/>
+                    <apex:outputText value="{!$Label.Networth_text}" styleClass="textStyle" escape="false"/>
+                <br/> <br/>     
+                <center>
+                    <apex:image url="{!objNetworthController.chartData}"></apex:image>
+                </center>
+                <br/>
+                
+                <table id="DataTable" border="1" cellspacing="0" cellpadding="5" align="center" width="90%" style="margin-top:20px;margin-left:auto;margin-right:auto;"  >
+                    <tr class="tableHeader">
+                        <th>
+                        </th>
+                        <th style="text-align:center;">
+                            <apex:outputText value="Amount" styleClass="textStyle"/>
+                        </th>
+                        <th style="text-align:center;">
+                            <apex:outputText value="%" styleClass="textStyle"/>
+                        </th>
+                        <th>
+                        </th>
+                        <th style="text-align:center;">
+                            <apex:outputText value="Amount" styleClass="textStyle"/>
+                        </th>
+                        <th style="text-align:center;">
+                            <apex:outputText value="%" styleClass="textStyle"/>
+                        </th>
+                    </tr>
+                    
+                    <tr class="tableData">
+                        <td class="textStyle" style="text-align:left;font-weight:bold;">
+                            <apex:outputText value="Assets" styleClass="textStyle"/>
+                        </td>
+                        <td class="tableData"></td>
+                        <td class="tableData"></td>
+                        <td class="textStyle" style="text-align:left; font-weight:bold;">
+                            <apex:outputText value="Networth" styleClass="textStyle"/>
+                        </td>
+                        <td class="rightAlignData" style="font-weight:bold;">
+                            <apex:outputText value="{0, number, ,##,##0}" styleClass="rightAlignData">
+                                <apex:param value="{!objNetworthController.getTotalNetworth}"/>
+                            </apex:outputText>
+                        </td>
+                        <td class="rightAlignData" style="font-weight:bold;">
+                            <apex:outputText value="100.00%" styleClass="rightAlignData"/>
+                        </td>
+                    </tr>
+                    
+<!--                      Change to See the Loop On Page  -->
+                    <apex:repeat value="{!objNetworthController.getNetworthSummaryList}" var="assets"  >
+                       <tr class="tableData">
+                           <td class="textStyle">
+                               <apex:outputText value="{!assets.name}" styleClass="textStyle"/>
+                           </td>
+                           <td class="rightAlignData">
+                               <apex:outputText value="{0, number, ,##,##0}" styleClass="rightAlignData">
+                                   <apex:param value="{!assets.summaryValue}"/>
+                               </apex:outputText>
+                           </td>
+                           <td class="rightAlignData">                        
+                               <apex:outputText value="{0, number, ,##,##0.00}%" styleClass="rightAlignData">
+                                   <apex:param value="{!assets.summaryPercent}"/>
+                               </apex:outputText>
+                           </td>
+                           <td class="tableData"></td>
+                           <td class="tableData"></td>
+                           <td class="tableData"></td>
+                       </tr>
+                    </apex:repeat>
+                    
+                     <tr class="tableData">
+                       <td class="tableData"></td>
+                       <td class="tableData"></td>
+                       <td class="tableData"></td>
+                       <td class="textStyle" style="font-weight:bold;">
+                       		<apex:outputText value="Liabilities" styleClass="textStyle"/>
+                       </td>
+                       <td class="rightAlignData" style="font-weight:bold;"></td>
+                       <td class="rightAlignData"></td>
+                     </tr>
+                    
+<!--                     Niket  -->
+<!--                      * Summary of modification : This change is done for the [issue F0035] -->
+<!--                      * This repeat show the List of the liablities on the NetworthPage. -->
+<!--                      * repeat is binded to the getLiabilitiesList which is comes from the NetworthController which is newly added for the Issue. -->
+                    
+                     <apex:repeat value="{!objNetworthController.getLiabilitiesList}" var="liablity">
+                        <tr class="tableData">
+	                       <td class="tableData"></td>
+	                        <td class="tableData"></td>
+	                        <td class="tableData"></td>
+	                        <td class="textStyle" style="font-weight:bold;">
+	                            <apex:outputText value="{!liablity.name}" styleClass="textStyle"/>
+	                        </td>
+	                        <td class="rightAlignData" style="font-weight:bold;">
+	                           <apex:outputText value="{0, number, ,##,##0}" styleClass="rightAlignData"> 
+	                            	<apex:param value="{!liablity.summaryValue}"/> 
+	                          </apex:outputText>
+	                        </td>
+	                        <td class="rightAlignData">
+	                        	<apex:outputText value="{0, number, ,##,##0.00}%" styleClass="rightAlignData">
+	                             	<apex:param value="{!liablity.summaryPercent}" />
+	                             </apex:outputText>
+	                        </td>
+	                    </tr>
+                    </apex:repeat>
+                    
+                    <tr class="tableData">
+                        <td class="textStyle" style="font-weight:bold;">
+                            <apex:outputText value="Total Assets" styleClass="textStyle"/>
+                        </td>
+                        <td class="rightAlignData" style="font-weight:bold;">
+                            <apex:outputText value="{0, number, ,##,##0}" styleClass="rightAlignData">
+                            <apex:param value="{!objNetworthController.getTotalAssets}"/>
+                          </apex:outputText>
+                        </td>
+                        <td class="rightAlignData" style="font-weight:bold;">
+                            <apex:outputText value="100.00%" styleClass="rightAlignData"/>
+                        </td>
+                        <td class="textStyle" style="font-weight:bold;">
+                            <apex:outputText value="Total Liabilities" styleClass="textStyle"/>
+                        </td>
+                        <td class="rightAlignData" style="font-weight:bold;">
+                           <apex:outputText value="{0, number, ,##,##0}" styleClass="rightAlignData">
+                               <apex:param value="{!objNetworthController.getTotalLiabilities}"/>
+                          </apex:outputText>
+                        </td >
+                        <td class="rightAlignData" style="font-weight:bold;">
+                            <apex:outputText value="100.00%" styleClass="rightAlignData"/>
+                        </td>
+                    </tr>   
+                </table>  
+               </div>
+               <apex:outputPanel rendered="{!(if(objNetworthController.Remark=='',false,true))}">
+	         		<ul class="TickList">
+	                    <li>
+	                        {!$Label.Remarks}
+	                    </li>
+	                </ul>
+	                <div>
+					  <ul>
+					  	<apex:OutputField value="{!objNetworthController.SelectedRemark.RichText_Remark__c }"/>
+					  </ul>
+	                </div>
+                </apex:outputPanel>
+            </apex:pageBlock>
+       	</apex:form>
+   </div>
+   <!------------------------ FINANCIAL STATEMENTS ENDS ---------------------->
+   
+   <!------------------------ CASH FLOW STARTS ---------------------->
+   <div style="page-break-after:always;">
+      <apex:form >
+<!--          <c:CashFlowComponent showButton="false"></c:CashFlowComponent> -->
+		<apex:outputPanel rendered="false">
+	    	<div class="divNavigationContainerStyle">
+		       	<apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;  background-image:none;background-color:#A9C5EB !important; font-size:11px !important;padding-top:4px; padding-bottom:4px;" />
+		       <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+		       <apex:outputLabel value="Cash Flow" styleclass="button" style=" width:10%;margin-left:20px;  background-image:none;background-color:#A9C5EB !important;font-size:11px !important; padding-top:4px; padding-bottom:4px;" />
+		       <apex:image id="theImage2" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+		       <apex:outputLabel id="theCommandLink2" styleclass="button" value="Output"  style="margin-left:20px; background-image:none;background-color:#F5D0A9!important;font-size:11px !important;padding-top:4px; padding-bottom:4px;"  />
+		       <apex:commandButton id="theCommandLink1" styleclass="button" value="Projection" action="{!objCashFlow.projection}" style="margin-left:20px; background-image:none;background-color:#A9C5EB !important; " />
+		    </div>
+		</apex:outputPanel>
+		<div class="divContainerStyle">
+	    
+	    <div class="divStyle">
+	       <apex:outputText value="CASH FLOW" styleClass="textStyle"/>
+	    </div><br/>
+	       <apex:outputText styleClass="textStyle" escape="false" value="{!$Label.CashFlow_text}"/> 
+	    <br/><br/>
+	   <center>
+	       <apex:image url="{!objCashFlow.chartData}"></apex:image> 
+	   </center>
+	    <div style="width:100%;">             
+	        <table id="DataTable" cellspacing="0" cellpadding="5" border="1" align="center" width="80%" style="margin-top:20px;margin-left:auto;margin-right:auto;">
+	            <tr class="tableHeader">
+	                <th>
+	                </th>
+	                <th style="text-align:center;">
+	                    <apex:outputText value="ANNUAL AMOUNT" styleClass="textStyle"/>
+	                </th>
+	                <th style="text-align:center;">
+	                    <apex:outputText value="%" styleClass="textStyle"/>
+	                </th>
+	            </tr>
+	            <apex:repeat value="{!objCashFlow.cashFlowBean.summaryList}" var="summaryBean">
+	                <tr class="tableData">
+	                    <td class="tableData" style="text-align:left; font-weight:bold;">
+	                        <apex:outputText value="{!summaryBean.header}" styleClass="textStyle"/>
+	                    </td>
+	                    <td class="tableData"></td>
+	                    <td class="tableData"></td>
+	                </tr>                                   
+	                <apex:repeat value="{!summaryBean.summaryRecordTypeBeanList}" var="summaryDetail">
+	                    <tr class="tableData">
+	                        <td class="tableData" style="text-align:left;">
+	                            <apex:outputText value="{!summaryDetail.name}" styleClass="textStyle"/>
+	                        </td>
+	                        <apex:repeat value="{!summaryDetail.totalValueByYear}" var="totalValue">
+	                            <td class="tableData" style="text-align:right;">
+	                                <apex:outputText value="{0, number, ,##,##0}">
+	                                    <apex:param value="{!totalValue}"/>
+	                                </apex:outputText>                                   
+	                            </td>
+	                        </apex:repeat>  
+	                        <td class="tableData" style="text-align:right;">                        
+	                            <apex:outputText value="{0, number, ,##,##0.00}%">
+	                                <apex:param value="{!summaryDetail.summaryPercent}"/>
+	                            </apex:outputText>
+	                        </td> 
+	                    </tr>
+	                </apex:repeat>                          
+	                <tr class="tableData">
+	                    <td class="tableData" style="text-align:left; font-weight:bold;">
+	                        <apex:outputText value="Total {!summaryBean.header}" styleClass="textStyle"/>
+	                    </td>
+	                    <apex:repeat value="{!summaryBean.totalValueByYear}" var="totalValue">
+	                        <td class="tableData" style="text-align:right;  font-weight:bold;">
+	                                <apex:outputText value="{0, number, ,##,##0}">
+	                                    <apex:param value="{!totalValue}"/>
+	                                    </apex:outputText>
+	                        </td>
+	                    </apex:repeat>  
+	                    <td class="tableData" style="text-align:right;  font-weight:bold;">
+	                        <apex:outputText value="100.00%" styleClass="textStyle"/>
+	                    </td>
+	                </tr>
+	            </apex:repeat>
+	            <tr class="tableData">
+	                <td class="tableData" style="text-align:left;  font-weight:bold;">
+	                        <apex:outputText value="NET CASH SURPLUS/(SHORTAGE)" styleClass="textStyle"/>
+	                </td>
+	                <td class="tableData" style="text-align:right;  font-weight:bold;">
+	                	<apex:outputText value="(" rendered="{!objCashFlow.IsSurplusNegative}"></apex:outputText>
+	                    <apex:outputText value="{0, number, ,##,##0}">
+	                        <apex:param value="{!objCashFlow.cashFlowBean.getFirstYearDifference}"/>
+	                    </apex:outputText>
+	                    <apex:outputText value=")" rendered="{!objCashFlow.IsSurplusNegative}"></apex:outputText>
+	                </td>    
+	                <td class="tableData" style="text-align:right;  font-weight:bold;">
+	                        <apex:outputText value="100.00%" styleClass="textStyle"/>
+	                </td>               
+	            </tr>                     
+	        </table>   
+	        </div>  
+	    </div>
+	     <apex:outputPanel rendered="{!(if(objCashFlow.objRemark.RichText_Remark__c =='',false,true))}">
+			<ul class="TickList">
+	           <li>
+	               {!$Label.Remarks}
+	           </li>
+	       </ul>
+	       <div>
+			<apex:OutputField value="{!objCashFlow.objRemark.RichText_Remark__c }"></apex:OutputField>
+	       </div>
+	      </apex:outputPanel>
+      </apex:form> 
+   </div>
+   <!------------------------ CASH FLOW ENDS ---------------------->
+   
+   <!-- 
+   /*
+	  Updated By : Kiran Patil
+	  Updated At : 5-Jun-2013
+	  Summary    : FP changes part 2 - issue 23
+	*/
+    -->
+   <!------------------------ CASH FLOW PROJECTION STARTS ---------------------->
+ <!--   <apex:outputText value="CASH FLOW PROJECTION" />
+   <div style="page-break-after:always;">
+	   <apex:repeat value="{!objCashFlow.lstProjectionDetail}" var="rec">
+			<table id="DataTable" class="gridtable"  style="margin-top:25px; border-left:2;" >
+				<tr> 
+					<th colspan="2" class="gridtableHeader"></th>
+					<apex:repeat value="{!rec.lstYear}" var="yearStr">
+						<th class="gridtableHeader">
+							{!yearStr}
+						</th>
+					</apex:repeat>
+				</tr>
+				<apex:repeat value="{!rec.lstNewSummaryBean}" var="summaryBean">
+					<tr style="border-right:1px solid;">
+						<td  class="gridtableColumn textStyle" style=" font-weight:bold;border-right:none;">
+							{!summaryBean.header}
+						</td>
+						<apex:repeat value="{!rec.lstYear}" var="yearStr">
+							<td class="textStyle"/>
+						</apex:repeat>
+						<td/><td/>
+					</tr>
+					<apex:repeat value="{!summaryBean.lstSummaryRecordTypeBean}" var="summaryRecordType">
+						<tr style="page-break-after:always;">
+							<td class="gridtableColumn" colspan="2">
+								{!summaryRecordType.name}
+							</td>
+							
+							<apex:repeat value="{!summaryRecordType.lstTotalValueByYear}" var="totalValue">
+								<td class="gridtableColumn textStyle" style="text-align:right;">
+									<apex:outputText value="{0, number, ,##,##0}" styleclass="textStyle">
+										<apex:param value="{!totalValue}"/>
+									</apex:outputText>
+								</td>
+							</apex:repeat>
+						</tr>
+					</apex:repeat>
+					<tr>
+						<td class="gridtableColumn" colspan="2" style=" font-weight:bold;">
+							Total {!summaryBean.header}
+						</td>
+						<apex:repeat value="{!summaryBean.lstSumByYear}" var="totalValue">
+							<td class="gridtableColumn" style="font-family:arial; font-weight:bold; text-align:right;">
+								<apex:outputText value="{0, number, ,##,##0}" styleclass="textStyle">
+									<apex:param value="{!totalValue}"/>
+								</apex:outputText>
+							</td>
+						</apex:repeat>
+					</tr>
+					<tr></tr>
+				</apex:repeat>
+				<tr>
+						<td class="gridtableColumn" colspan="2" style=" font-weight:bold;">
+							INCOME SURPLUS/(SHORTAGE)
+						</td>
+						<apex:repeat value="{!rec.lstIncomeSurplus}" var="difference">
+							<td class="gridtableColumn" style="font-family:arial; font-weight:bold; text-align:right;">
+								<apex:outputText value="{0, number, ,##,##0}" styleclass="textStyle" rendered="{!difference >= 0}">
+									<apex:param value="{!difference}"/>
+								</apex:outputText>
+								<apex:outputText value="({0, number, ,##,##0})" styleclass="textStyle" rendered="{!difference < 0}">
+									<apex:param value="{!ABS(difference)}"/>
+								</apex:outputText>
+							</td>
+						</apex:repeat>
+					</tr>
+			</table>
+		</apex:repeat>
+   </div> -->
+   <!------------------------- CASH FLOW PROJECTION ENDS ---------------->
+    <!--------24/6/13-----------------New CASH FLOW PROJECTION Starts ----------Aditi------>
+  
+   <br/><br/>
+   <div class="divContainerStyle"> 
+  		<apex:outputPanel layout="inline" rendered="{!displayCashFlow}">
+  		<div class="divStyle">
+	       <apex:outputText value="CASH FLOW PROJECTION" styleClass="textStyle" />
+	    </div>		 
+  		<table  width="80%" class="gridtable"  cellspacing="0" cellpadding="5" align="center" style="margin-top:20px;margin-left:auto;margin-right:auto;">
+  			<apex:repeat value="{!lstCashFlowInnerClass}" var="lstcashFlow">
+  				<tr style="page-break-after:always;">
+  					<td>
+		  				<table  width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable7">
+					      	
+					      	<tr>
+
+					      		<td class="tableHeader" style="font-size:14px;font-weight:bold;text-align:left;" width="30%"></td>
+					      		<apex:repeat id="year" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+		          					<td class="tableHeader" style="text-align:right;" width="10%">
+								    	<apex:outputText value="{0, number ,##,####0}" styleClass="textStyle">
+								    		<apex:param value="{!cashFlow.Year__c}"/> 
+								    	</apex:outputText> 
+								    </td>
+								</apex:repeat>
+					      	</tr>
+					      	<tr >
+					      		<td class="subHeader" style="font-size:14px;font-weight:bold;text-align:left;" width="30%">Incomes</td>
+					      	</tr>
+					      	<tr>
+<!-- 					      	style="display:{!If(mapNameToVisibility[$Label.Salary_Income],'block','none')};" -->
+					      		<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.Salary_Income],true,false)}">
+						      		<td class="tableData" style="font-size:14px;font-weight:bold;text-align:left;" width="30%">{!$Label.Salary_Income}</td>
+						      		<apex:repeat id="salaryincome" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle">
+									    	<apex:param value="{!cashFlow.Salary_Income__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr> 
+					      	
+					      	<tr>
+								<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.Rental_Income],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.Rental_Income}</td>
+						      		<apex:repeat id="rentalincome" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!cashFlow.Rental_Income__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+					      	<tr>
+					      		<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.Pension_Income],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.Pension_Income}</td>
+						      		<apex:repeat id="pensionincome" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!cashFlow.Pension_Income__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+					      	
+					      	<tr >
+					      		<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.Other_Income],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left" width="30%">{!$Label.Other_Income}</td>
+						      		<apex:repeat id="otherincome" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}"   styleClass="textStyle">
+									    	<apex:param value="{!cashFlow.Other_Income__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+					      	
+					      	<tr>
+					      		<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.Business_Income],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.Business_Income}</td>
+						      		<apex:repeat id="businessincome" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!cashFlow.Business_Income__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+					      	<tr >
+					      		<td class="subHeader" style="font-size:14px; font-weight:bold;text-align:left;" width="30%" >Total Incomes</td>
+									<apex:repeat id="incomeTotal" value="{!lstcashFlow.lstIncomeTotal}" var="incomeTotal">
+			          					<td class="subHeader" style="text-align:right;font-weight:bold;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!incomeTotal}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+					      	</tr>
+					      	<tr >
+					      		<td class="subHeader" style="font-size:14px; font-weight:bold;text-align:left;" width="30%" >Expenses</td>
+					      	</tr>
+					      	<tr> 
+								<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.LoanRepayments],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.LoanRepayments}</td>
+						      		<apex:repeat id="loanEMI" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!cashFlow.Loan_Repayments_EMI__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+						   <tr>
+						    	<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.Saving],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.Saving}</td>
+						      		<apex:repeat id="saving" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!cashFlow.Saving__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+					      	
+					      <tr>
+								<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.CashFlowInsurance],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.CashFlowInsurance}</td>
+						      		<apex:repeat id="insurance" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!cashFlow.Insurance__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+					      	<tr>
+								<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.Housing],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.Housing}</td>
+						      		<apex:repeat id="housing" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!cashFlow.Housing__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+					      	<tr>
+								<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.Utilities],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.Utilities}</td>
+						      		<apex:repeat id="utilities" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!cashFlow.Utilities__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+					      	<tr> 
+					      		<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.Personal],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.Personal}</td>
+						      		<apex:repeat id="personal" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle">
+									    	<apex:param value="{!cashFlow.Personal__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+					      	<tr>
+								<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.Food],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.Food}</td>
+						      		<apex:repeat id="food" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle   " >
+									    	<apex:param value="{!cashFlow.Food__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+					      	
+					      	<tr>
+								<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.Healthcare],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.Healthcare}</td>
+						      		<apex:repeat id="healthcare" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!cashFlow.Healthcare__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+				      		<tr>
+					      		<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.Family_care],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.Family_care}</td>
+						      		<apex:repeat id="familycare" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!cashFlow.Family_care__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+					      	<tr>
+								<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.Transportation],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.Transportation}</td>
+						      		<apex:repeat id="transportation" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!cashFlow.Transportation__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+				      		<tr>
+					      		<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.RecreationEntertainment],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.RecreationEntertainment}</td>
+						      		<apex:repeat id="recreation" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!cashFlow.Recreation_Entertainment__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr>
+					      	<tr>
+					      		<apex:outputText rendered="{!IF(mapNameToVisibility[$Label.CashFlowOther],true,false)}">
+						      		<td class="tableData" style="font-size:14px; font-weight:bold;text-align:left;" width="30%">{!$Label.CashFlowOther}</td>
+						      		<apex:repeat id="other" value="{!lstcashFlow.lstFiveCashFlowRecs}" var="cashFlow">
+			          					<td class="tableData" style="text-align:right;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!cashFlow.Other__c}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+								</apex:outputText>
+					      	</tr> 
+					      	<tr >
+					      		<td class="subHeader" style="font-size:14px; font-weight:bold;text-align:left;" width="30%" >Total Expenses</td>
+									<apex:repeat id="expenseTotal" value="{!lstcashFlow.lstExpenseTotal}" var="expenseTotal">
+			          					<td class="subHeader" style="text-align:right;font-weight:bold;" width="10%">
+									    	<apex:outputText value="{0, number ,##,##0}" styleClass="textStyle" >
+									    	<apex:param value="{!expenseTotal}"/>
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+					      	</tr>
+					      	<tr >
+					      		<td class="subHeader" style="font-size:14px; font-weight:bold;text-align:left;" width="30%" >INCOME SURPLUS/(SHORTAGE)</td>
+									<apex:repeat id="incomeSurplus" value="{!lstcashFlow.lstIncomeSurplus}" var="incomesurplus">
+			          					<td class="subHeader" style="text-align:right;font-weight:bold;" width="10%">
+									    	<apex:outputText value="{0, number, ,##,##0}" styleclass="textStyle" rendered="{!incomesurplus >= 0}">
+		                                        <apex:param value="{!incomesurplus}"/>
+		                                    </apex:outputText>
+		                                    <apex:outputText value="({0, number, ,##,##0})" styleclass="textStyle" rendered="{!incomesurplus < 0}">
+		                                        <apex:param value="{!ABS(incomesurplus)}"/>
+		                                    </apex:outputText>
+									    </td>
+									</apex:repeat>
+					      	</tr>	 
+	  					</table>
+	  				</td>
+				</tr>
+  			</apex:repeat>
+  		</table>
+  		</apex:outputPanel>
+   </div>
+    
+   <!-------------------------New CASH FLOW PROJECTION ENDS ----------Aditi------>
+   
+   
+   
+   <!------------------------- Emergency Fund Starts ---------------->
+   <div style="page-break-after:always;">
+       <apex:form rendered="{!isEmergencyPlanning}">
+<!--              <c:EmergencyFundComponent showButton="false"></c:EmergencyFundComponent> -->
+ 	<apex:outputPanel id="epPage">
+        <apex:pageBlock >
+        	<apex:outputPanel rendered="false">
+           		<div class="divNavigationContainerStyle">
+              		<apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;  background-image:none;background-color:#A9C5EB !important; " />
+                    <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+                    <apex:outputLabel value="Emergency Planning" styleclass="button" style=" width:14%;margin-left:20px;  background-image:none;background-color:#A9C5EB !important; " />
+               	</div>
+            </apex:outputPanel>
+            <div class="divContainerStyle">
+                <div class="divStyle">
+                    <apex:outputText value="{!$Label.Emergency_Fund}" escape="false" styleClass="upperCase"/>
+                </div>
+                <div style="padding:10px;">
+                    <apex:outputText value="{!$Label.EmergencyFundIntoduction}" escape="false" styleClass="textStyle"/><br/>   
+                </div>
+                
+                <div class="subHeader">
+                    <apex:outputText value="{!$Label.What_you_want} {!$Label.Objective}" escape="false" styleClass="upperCase"/>
+                </div>
+                <ul class="TickList">
+                    <li>
+                        <apex:outputText value="{!$Label.EmergencyFundObjective}" escape="false"/>
+                    </li>
+                </ul>        
+                <div class="subHeader">
+                     <apex:outputText value="{!$Label.What_you_need_to_do}" escape="false" styleClass="upperCase"/>
+                     <b>
+                         <apex:outputText value="{!$Label.Analysis_and_Advice}" escape="false" styleClass="upperCase"/>
+                     </b>
+                </div>
+                <ul class="TickList">
+                    <li>
+                        Your current monthly expenses are approximately Rs.<b><apex:outputText value="{0,number, ,##0}" escape="false">
+                            <apex:param name="expense" value="{!Ebean.totalMonthlyExpense}"/>
+                        </apex:outputText></b>
+                    </li>
+                    <li><apex:outputText value="{!$Label.RecommendEmergencyFund}" escape="false"/>
+                        <b><apex:outputText value="{0,number, ,##0} to cover {1,number, ,##0}" escape="false">
+                            <apex:param name="amt" value="{!Ebean.emergencyFundAmount}"/>
+                            <apex:param name="months" value="{!Ebean.noOfMonths}"/>
+                        </apex:outputText></b>  months worth of living expenses.
+                        
+                    </li>
+                </ul>   
+                <div class="subHeader">
+                   <apex:outputText value="{!$Label.How_to_do}" escape="false" styleClass="upperCase"/>
+                   <b>
+                       <apex:outputText value="{!$Label.Action_Plan}" escape="false" styleClass="upperCase"/>
+                   </b>
+                </div>
+                
+                <apex:outputPanel style="width:100%;">
+	                <div style="width:80%;margin-left:auto;margin-top: 15px;margin-right:auto;" >
+	                	<apex:outputPanel rendered="{!IF(Ebean.apBeanList.size!=0,true,false)}" style="width:100%;">
+	                        <table id="planTable" cellspacing="0" cellpadding="5" border="1">
+	                            <tr class="tableHeader">
+	                                <td class="tableHeaderCell"><apex:outputText value="{!$Label.Type}"/></td>
+	                                <td class="tableHeaderCell"><apex:outputText value="{!$Label.Owner}"/></td>
+	                                <td class="tableHeaderCell"><apex:outputText value="{!$Label.Allocated_Amount}"/></td>
+	                                <td class="tableHeaderCell"><apex:outputText value="{!$Label.Action_to_be_taken}"/></td>
+	                            </tr>
+	                           
+	                            <apex:repeat value="{!Ebean.apBeanList}" var="iList">
+		                            <tr class="tableData"> 
+		                                <td><apex:outputText value="{!iList.Name}" styleClass="textStyle"/></td>
+		                                <td><apex:outputText value="{!iList.Owner}" styleClass="textStyle"/></td>
+		                                <td class="rightAlignData">
+		                                    <apex:outputText value="{0,number, ,##0}" styleClass="rightAlignData">
+		                                        <apex:param name="amt" value="{!iList.Amount}"/>
+		                                    </apex:outputText>
+		                                </td>
+		                                <td>
+		                                    <apex:inputTextarea value="{!iList.Action}" rows="2" style="width:93%;margin:5px;" rendered=""/>
+		                                    <apex:outputText value="{!iList.Action}" style="width:93%;margin:5px;" rendered="true"/>
+		                                </td>
+		                            </tr>
+	                            </apex:repeat>
+	                            <tr class="tableData">
+	                                <td><apex:outputText value="{!$Label.total}" styleClass="textStyle" style="font-weight:bold;"/></td>
+	                                <td></td>
+	                                <td class="rightAlignData">
+	                                    <apex:outputText value="{0,number, ,##0}" styleClass="rightAlignData">
+	                                        <apex:param name="amt" value="{!Ebean.total}"/>
+	                                    </apex:outputText>
+	                                </td>
+	                                <td></td>
+	                            </tr>    
+	                        </table>
+	                	</apex:outputPanel>
+	                </div>
+	                <apex:outputPanel rendered="{!IF(Ebean.apBeanList.size==0,true,false)}">
+	                    <apex:outputText value="{!$Label.EmergencyPlanningNoAllocation}" styleClass="textStyle"/>
+	                </apex:outputPanel>
+                </apex:outputPanel>
+                <!-- FS0309 -->
+               	<apex:outputPanel rendered="{!(if(ORemark.RichText_Remark__c =='',false,true))}" id="panRemark">
+	         		<ul class="TickList">
+	                    <li>
+	                        {!$Label.Remarks}
+	                    </li>
+	                </ul> 
+	                <div>
+						<!-- /** Eternus Solutions      **/
+						  /** Author  : Manasi Ranade 	**/
+						  /** Issue Id: 00001613      	**/
+						  /** Date    : 30/4/2012 	 	**/
+						  /** Purpose : Commented previous Remark
+						  				Added output field to preserve new line characters
+						  /****************************************************/ -->
+						<!--        	{!strRemark} -->
+						<apex:OutputField value="{!ORemark.RichText_Remark__c }"></apex:OutputField>
+						<!-- 	                	<apex:OutputField value="{!PartnerP.Logo__c}"></apex:OutputField> -->
+					</div>
+                </apex:outputPanel>
+                <br/>
+                <br/><br/>
+<!--                 <apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+                <apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">    
+	                <div>
+		        		<apex:outputLabel rendered="false">{!$Label.EnterYourRemarks}</apex:outputLabel>
+			        </div>
+			        <div>
+				        <apex:inputTextArea id="txtRemark"  style="width:400px;height:80px;" value="{!strRemark}"  rendered="false"/>
+				    </div>
+				    <apex:outputLabel rendered="{!Not(IF(Ebean.apBeanList.size!=0,true,false) && false)}" >
+				    	<div>
+				    		<apex:commandButton id="btnSave" value="Save" action="{!save}" rendered="false"/>
+				    	</div>
+	                </apex:outputLabel>
+	                <apex:actionStatus id="StatusData">
+	                    <apex:facet name="start">
+	                        <apex:outputPanel style="padding-left:45%;">
+	                            <apex:image value="{!$Resource.loading_image}" width="4%" height="4%"/><br/>
+	                        </apex:outputPanel>
+	                    </apex:facet>
+		                    <apex:facet name="stop" >
+	                        	<apex:commandButton value="Save" action="{!save}" rendered="{!IF(Ebean.apBeanList.size!=0,true,false) && false}" reRender="planTable,StatusData,panRemark" status="StatusData"  style="margin-left:35%;margin-top:50px;"/>
+		                    </apex:facet>
+	                </apex:actionStatus>    
+	            </apex:outputPanel>
+            </div>
+        </apex:pageBlock> 
+    </apex:outputPanel>
+        </apex:form>
+   </div>
+	<!------------------------- Emergency Fund Ends ---------------->
+
+	<!------------------------- Life Insurance Starts ---------------->
+	<!-- Refactored {!IF(lstHLVDetails.size>0,true,false || isLifeInsuranceAnalysis) }-->
+	<apex:outputPanel rendered="true">
+       <apex:repeat value="{!lstHLVDetails}" var="hlv">
+<!-- 			<c:LifeInsuranceOutputComponentRefactored HlvDetails="{!ins}" >  -->
+<!-- 			</c:LifeInsuranceOutputComponentRefactored> -->
+			<div class="divContainerStyle">
+	        <div class="divStyle">
+	            <apex:outputLabel value="{!$Label.LifeInsuranceHeader} {!hlv.Selected_Entity_Name__c}" style="margin-left:10px;vertical-align:middle;" />
+	        </div>
+	        <div>
+	            <apex:outputText value="{!$Label.LifeInsuranceIntroduction}" escape="false" styleClass="textStyle"/>
+	        </div>
+	        
+	        <div class="subHeader">
+	            <apex:outputText value="{!$Label.What_you_want} {!$Label.Objective}" escape="false" styleClass="textStyle"/>
+	        </div>
+	        <div>
+	            <ul class="TickList">
+	                <li>
+	                    <apex:outputText value="Analyzing the life insurance needs for the family in case {!hlv.Selected_Entity_Name__c} dies prematurely." escape="false" styleClass="textStyle"/> 
+	                </li>
+	                <li>
+	                    <apex:outputText value="{!$Label.LifeInsuranceObjective}" escape="false" styleClass="textStyle"/>
+	                </li>
+	            </ul>          
+	        </div>            
+	        <div class="subHeader">
+	            <apex:outputText value="{!$Label.Where_you_are} " escape="false" styleClass="textStyle"/>
+	            <b>
+	                <apex:outputText value="{!$Label.Current_Situation}" escape="false" styleClass="textStyle"/>
+	            </b>
+	        </div>
+	        <div>
+	            <ul class="TickList">
+	                <li>
+	                    <apex:outputText value="You are currently insured for Rs." escape="false" styleClass="textStyle"/>
+	                    <b>
+	                        <apex:outputText value="{0,number,,##0}" escape="false" styleClass="textStyle">
+	                            <apex:param name="existingLifeInsurance" value="{!hlv.Existing_Life_Insurance_Present_Value__c}"/>
+	                        </apex:outputText>
+	                    </b>
+	                </li>
+	                <li>
+	                       <apex:outputText value="In an unlikely event of your premature death Rs." escape="false" styleClass="textStyle"/>
+	                       <b>
+	                           <apex:outputText value="{0,number,,##0}" escape="false" styleClass="textStyle">
+	                               <apex:param name="assetTotal" value="{!hlv.Existing_Investments_Total__c}"/>
+	                        </apex:outputText>
+	                       </b>
+	                       will be available to your dependants.
+	                </li>
+	            </ul>            
+	        </div>
+	        
+	        <div class="subHeader">
+	            <apex:outputText value="{!$Label.What_you_need_to_do} " escape="false" styleClass="textStyle"/>
+	            <b>
+	                <apex:outputText value="{!$Label.Analysis_and_Advice}" escape="false" styleClass="textStyle"/>
+	            </b>
+	        </div>
+	        <div>
+	            <ul class="TickList">
+	                <li>
+	                    <apex:outputText value="{!$Label.LifeInsuranceAnalysis}" escape="false" styleClass="textStyle"/>
+	                </li>
+	                <li>
+	                    <apex:outputText value="{!$Label.LifeInsuranceAdequateInsured}" styleClass="textStyle"
+	                            rendered="{!IF((hlv.Additional_Life_Insurance_Required__c <= 0),true,false)}"/>
+	                    <apex:outputPanel rendered="{!IF((hlv.Additional_Life_Insurance_Required__c > 0),true,false)}">
+	                    <apex:outputText value="As per the human life value method you are under insured by Rs." 
+	                        styleClass="textStyle" escape="false"/>
+	                    <b>
+	                        <apex:outputText value=" {0,number,,##0}." styleClass="textStyle" escape="false">
+	                            <apex:param name="addLifeInsurance" value="{!hlv.Additional_Life_Insurance_Required__c}"/>
+	                        </apex:outputText>
+	                    </b>
+	                    </apex:outputPanel>
+	                </li>
+	            </ul>
+	        </div>            
+	                
+	        <div class="subHeader">
+	             <apex:outputText value="{!$Label.How_to_do} " escape="false" styleClass="textStyle" /> 
+	             <b>
+	                 <apex:outputText value="{!$Label.Action_Plan}" escape="false" styleClass="textStyle" /> 
+	             </b>
+	        </div>
+	        <div>
+	            <ul class="TickList">
+	                <li>
+	                    <apex:outputText value="Since {!hlv.Selected_Entity_Name__c} is adequately insured we suggest no action be taken on this front." styleClass="textStyle" 
+	                            rendered="{!IF(hlv.Additional_Life_Insurance_Required__c <= 0,true,false)}"/>
+	                    <apex:outputPanel rendered="{!IF(hlv.Additional_Life_Insurance_Required__c > 0,true,false)}">
+	                    <apex:outputText value="{!hlv.Selected_Entity_Name__c} needs to buy a {!hlv.Policy_Type__c} insurance policy for Rs." 
+	                        styleClass="textStyle" escape="false"/>
+	                    <b>
+	                        <apex:outputText value="{0,number,,##0}" styleClass="textStyle" escape="false">
+	                            <apex:param name="roundLifeInsurance" value="{!hlv.Round_Off__c}"/>
+	                        </apex:outputText>
+	                    </b>
+	                    </apex:outputPanel>
+						<!--/** Eternus Solutions      **/
+						/** Author  : Manasi Ranade*/
+						/** Issue Id: 00001673      **/
+						/** Date    : 7/6/2012 **/
+						/** Purpose : Added the statement which was given by Shweta**/
+						/****************************************************/-->
+						<br/>
+						<apex:outputPanel rendered="{!IF((hlv.Premium_Amount_Rs__c !=null || hlv.Premium_Amount_Rs__c > 0),true,false)}">
+							<apex:outputText value="The annual estimated premium is expected to be in the range of Rs." styleClass="textStyle" escape="false"/>
+							<b>{!hlv.Premium_Amount_Rs__c} </b>
+							<apex:outputText value="for a term of " styleClass="textStyle" escape="false"/>
+							<b>{!hlv.Term_of_Insurance__c}</b>
+						</apex:outputPanel>
+	                </li>
+	            </ul>
+	        </div>
+	        <div class="subHeader"><b><apex:outputText value="{!$Label.Remarks} " escape="false" styleClass="textStyle" /></b></div>
+	        <div><apex:OutputField value="{!hlv.RichText_Remark__c}" /></div>
+	    </div>
+	   </apex:repeat>
+	</apex:outputPanel>
+<!-- Original -->
+<!--    <apex:outputPanel rendered="{!IF(bean.insuranceBeanList.size>0,true,false)}"> -->
+<!--          <apex:repeat value="{!bean.insuranceBeanList}" var="ins"> -->
+<!--            <div style="page-break-after:always;"> -->
+<!--                <c:LifeInsuranceOutputComponent insuranceBean="{!ins}" entity="{!ins.entity}" insurance="{!ins.insuranceObj}" adjustmentFactor="{!ins.entity.Adjustment_Factor__c}" ObjRemark="{!objRemark}" > -->
+<!--                </c:LifeInsuranceOutputComponent> -->
+
+				
+<!--             </div> -->
+<!--         </apex:repeat> -->
+<!--     </apex:outputPanel> -->
+    
+    
+    <!------------------------- General Insurance Starts ---------------->
+    <div style="page-break-after:always;">
+        <apex:form rendered="{!isGeneralInsurance}">
+<!--          <c:GeneralInsuranceComponent showButton="false"></c:GeneralInsuranceComponent> -->
+			<div class="divContainerStyle">  
+    
+	        <div class="divStyle">
+	            {!$Label.General_Insurance}
+	        </div><br/>
+	        
+	        <div class="subHeader">
+	            {!$Label.What_you_want} {!$Label.Objective}
+	        </div>
+	        <div>
+	            <apex:outputText value="{!$Label.GenInsuranceObjective}" escape="false" />
+	        </div>
+	    
+	        <div class="subHeader">
+	            {!$Label.Where_you_are} <b>{!$Label.Current_Situation}</b>
+	        </div>
+	        <div>
+            <ul class="TickList">
+                <li><apex:outputText value="{!$Label.Medical_Insurance}" escape="false"/>
+                    <br/><br/>
+                        <apex:outputText value="{!$Label.GenInsuranceNoMedicalPolicy}" escape="false" rendered="{!objGI.bean.currentMedicalEmptyFlag}"/>
+                        <apex:outputPanel rendered="{!!objGI.bean.currentMedicalEmptyFlag}">
+                        <apex:outputText value="{!$Label.GenInsuranceSummary}" escape="false"/> <br/>
+                        <table border="1" cellspacing="0" cellpadding="5"  >
+                            <tr class="tableHeader">
+                                <td class="textStyle">{!$Label.Insured}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Type__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Name__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Sum_Assured_Rs__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}</td>
+                            </tr>
+                            <apex:repeat value="{!objGI.bean.CurrentMedInsurance}" var="medIns">
+                            <tr>
+                                <td class="textStyle">
+                                    <apex:outputText value="{!medIns.Entity__r.Name}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                    <apex:outputText value="{!medIns.Policy_Type__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                     <apex:outputText value="{!medIns.Policy_Name__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="rightAlignData">
+                                     <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                        <apex:param name="premiumAmount" value="{!medIns.Sum_Assured_Rs__c}"/>
+                                    </apex:outputText>
+                                </td>
+                                <td class="rightAlignData">
+                                    <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                        <apex:param name="premiumAmount" value="{!medIns.Premium_Amount_Rs__c}"/>
+                                    </apex:outputText>
+                                </td>
+                              </tr>
+                            </apex:repeat>
+                        </table>
+                    </apex:outputPanel>
+                <br/>   
+                </li>
+                <li><apex:outputText value="{!$Label.Asset_Insurance}" escape="false"/>
+                     <br/><br/>
+                        <apex:outputText value="{!$Label.GenInsuranceNoAssetPolicy}" escape="false" rendered="{!objGI.bean.currentAssetEmptyFlag}"/>
+                   
+                        <apex:outputPanel rendered="{!!objGI.bean.currentAssetEmptyFlag}">
+                        <apex:outputText value="{!$Label.GenInsuranceSummary}" escape="false"/> <br/>
+                        <table border="1" cellspacing="0" cellpadding="5"  >
+                            <tr class="tableHeader">
+                                <td class="textStyle">{!$Label.Insured}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Type__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Name__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Sum_Assured_Rs__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}</td>
+                            </tr>
+                            <apex:repeat value="{!objGI.bean.currentAssetInsurance}" var="assetIns">
+                            <tr>
+                                <td class="textStyle">
+                                    <apex:outputText value="{!assetIns.Entity__r.Name}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                    <apex:outputText value="{!assetIns.Policy_Type__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                    <apex:outputText value="{!assetIns.Policy_Name__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="rightAlignData">
+                                    <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                        <apex:param name="premiumAmount" value="{!assetIns.Sum_Assured_Rs__c}"/>
+                                    </apex:outputText>
+                                </td>
+                                <td class="rightAlignData">
+                                    <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                        <apex:param name="premiumAmount" value="{!assetIns.Premium_Amount_Rs__c}"/>
+                                    </apex:outputText>
+                                </td>
+                              </tr>
+                            </apex:repeat>
+                        </table>
+                    </apex:outputPanel>
+                    
+                </li>
+            </ul>
+        </div>    
+    
+        <div class="subHeader">
+            {!$Label.What_you_need_to_do} <b>{!$Label.Analysis_and_Advice}</b>
+        </div>
+        <div>
+            <ul class="TickList">
+                <li><apex:outputText value="{!$Label.Medical_Insurance}" escape="false"/>
+                   <br/><br/>
+                        <apex:outputText value="{!$Label.GeneralInsuranceAdequateCover}" escape="false" rendered="{!AND((objGI.bean.suggestedMedicalEmptyFlag), NOT(objGI.bean.currentMedicalEmptyFlag))}"/>
+                 
+                        <apex:outputPanel rendered="{!NOT(objGI.bean.suggestedMedicalEmptyFlag)}">
+                        <apex:outputText value="{!$Label.GeneralInsuranceMedPolicy}" escape="false"/> <br/>
+                         <table border="1" cellspacing="0" cellpadding="5" id="Suggested" >
+                            <tr class="tableHeader">
+                                <td class="textStyle">{!$Label.Insured}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Type__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Name__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Sum_Assured_Rs__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}</td>
+                            </tr>
+                            <apex:repeat value="{!objGI.bean.suggMedList}" var="medIns">
+                            <tr>
+                                <td class="textStyle">
+                                  <apex:outputText value="{!medIns.Entity__r.Name}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                    <apex:outputText value="{!medIns.Policy_Type__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                     <apex:outputText value="{!medIns.Policy_Name__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="rightAlignData">
+                                     <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                    <apex:param name="premiumAmount" value="{!medIns.Sum_Assured_Rs__c}"/>
+                                </apex:outputText>
+                                </td>
+                                <td class="rightAlignData">
+                                      <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                        <apex:param name="premiumAmount" value="{!medIns.Premium_Amount_Rs__c}"/>
+                                      </apex:outputText>
+                                </td>
+                              </tr>
+                            </apex:repeat>
+                        </table>
+                        
+                    </apex:outputPanel>
+                    
+                <apex:outputText value="{!$Label.GeneralInsuranceNoAction}" escape="false" rendered="{!AND((objGI.bean.suggestedMedicalEmptyFlag), (objGI.bean.currentMedicalEmptyFlag))}"/> <br/>
+                <br/>    
+                </li>
+                <li><apex:outputText value="{!$Label.Asset_Insurance}" escape="false"/>
+                     <br/><br/>
+                        <apex:outputText value="{!$Label.GeneralInsuranceAssetAdequateCover}" escape="false" rendered="{!AND(NOT(objGI.bean.currentAssetEmptyFlag), (objGI.bean.suggestedAssetEmptyFlag))}"/>
+                   
+                        <apex:outputPanel rendered="{!NOT(objGI.bean.suggestedAssetEmptyFlag)}">
+                        <apex:outputText value="{!$Label.GeneralInsuranceAssetPolicy}" escape="false"/> <br/>
+                         <table border="1" cellspacing="0" cellpadding="5" id="Suggested" >
+                            <tr class="tableHeader">
+                                <td class="textStyle">{!$Label.Insured}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Type__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Name__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Sum_Assured_Rs__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}</td>
+                            </tr>
+                            <apex:repeat value="{!objGI.bean.suggAssetList}" var="assetIns">
+                            <tr>
+                                <td class="textStyle">
+                                 <apex:outputText value="{!assetIns.Entity__r.Name}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                       <apex:outputText value="{!assetIns.Policy_Type__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                     <apex:outputText value="{!assetIns.Policy_Name__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="rightAlignData">
+                                      <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                    <apex:param name="premiumAmount" value="{!assetIns.Sum_Assured_Rs__c}"/>
+                                </apex:outputText>
+                                </td>
+                                <td class="rightAlignData">
+                                      <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                        <apex:param name="premiumAmount" value="{!assetIns.Premium_Amount_Rs__c}"/>
+                                    </apex:outputText>
+                                </td>
+                              </tr>
+                            </apex:repeat>
+                        </table>
+                        
+                    </apex:outputPanel>
+                  <apex:outputText value="{!$Label.GeneralInsuranceNoAction}" escape="false" rendered="{!AND((objGI.bean.suggestedAssetEmptyFlag), (objGI.bean.currentAssetEmptyFlag))}"/>
+                </li>
+            </ul>
+        </div>    
+    
+      <!-- Prajakta - 20-03-2013  -->    
+       <apex:outputPanel rendered="{!(if(objGI.objRemark.RichText_Remark__c =='',false,true))}">
+	        <div class="subHeader">			
+	       		<b><apex:outputText value="{!$Label.Remarks} " escape="false" styleClass="textStyle" /></b>
+	        </div>
+		    <div>
+		   		<apex:OutputField value="{!objGI.objRemark.RichText_Remark__c }" />
+		   	</div>
+	   	</apex:outputPanel>
+       </div>
+      </apex:form>
+   	</div>
+	<!------------------------- General Insurance Ends---------------->
+	
+	<!------------------- GOAL RELATED WITH ENTITY STARTS ------------->
+  	<apex:outputPanel rendered="{!IF(goalMappingBeanList.size>0,true,false)}">
+	    <apex:repeat value="{!goalMappingBeanList}" var="goalBean">
+	        <div style="page-break-after:always;"> 
+	            <apex:form >
+	             	<!--/** Eternus Solutions      **/
+					/** Author  : Manasi Ranade*/
+					/** Issue Id: FS0230      **/
+					/** Date    : 31/10/2011 **/
+					/** Purpose : Passed the SIP values to the component**/
+					/****************************************************/-->
+	                <c:GoalComponent goalMappingBean="{!goalBean}" showButton="false" dblTotalSIP="{!goalBean.dblTotalSIP}" dblEquitySIP="{!goalBean.dblEquitySIP}"
+	            			dblGoldSIP="{!goalBean.dblGoldSIP}" dblDebtSIP="{!goalBean.dblDebtSIP}"  dblReturnsExpected="{!goalBean.goalObj.SelectedGoalProfile__r.Returns_expected__c}"></c:GoalComponent>
+	            </apex:form>
+	        </div>
+	    </apex:repeat>
+    </apex:outputPanel>
+   
+    <!------------------- GOAL RELATED WITH ENTITY ENDS ------------->
+
+
+ 
+ 	<!------------------------- EstatePlanningComponent Starts ---------------->
+  	 <apex:outputPanel rendered="{!isEstatePlanning}">
+	   <div style="page-break-after:always;">
+<!-- 	       <c:EstatePlanningComponent showButton="false"/> -->
+		  <apex:form >
+	        <apex:pageBlock >
+	            <apex:outputPanel rendered="false">
+	                <div class="divNavigationContainerStyle">
+	                     <apex:outputLabel value="Analysis" styleclass="button" style="width:10%; background-image:none;background-color:#A9C5EB !important; " />
+	                     <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+	                     <apex:outputLabel value="Estate Planning" styleclass="button" style=" width:14%;margin-left:20px;  background-image:none;background-color:#A9C5EB !important; " />
+	                </div> 
+	            </apex:outputPanel>
+	            <div class="divContainerStyle">
+	                <div class="divStyle" style="padding-left:10px;">
+	                    <apex:outputText value=" {!$Label.Estate_Planning}" styleClass="upperCase"/> 
+	                </div><br/>
+	                <div class="subHeader">
+	                    <apex:outputText value=" {!$Label.Will}"/> 
+	                </div>
+	                <apex:outputPanel rendered="{!NOT(objEstatePlanningController.bean.entity.Will__c)}"> 
+	                    <ul class="TickList">
+	                        <li>
+	                             <apex:outputText value=" {!$Label.WillAbsent}"/> 
+	                         </li>
+	                        <li>
+	                             <apex:outputText value=" {!$Label.WhatIsWill}" escape="false"/> 
+	                        </li>
+	                        <li> <apex:outputPanel rendered="{!IF(objEstatePlanningController.bean.spouse.Name!=null,true,false)}"> 
+	                                 <apex:outputText value="{!objEstatePlanningController.bean.entity.Name} and {!objEstatePlanningController.bean.spouse.Name} should make a Will as per their wish."/> 
+	                             </apex:outputPanel> 
+	                             <apex:outputPanel rendered="{!IF(objEstatePlanningController.bean.spouse.Name==null,true,false)}"> 
+	                                 <apex:outputText value=" {!objEstatePlanningController.bean.entity.Name} should make a Will as per their wish."/> 
+	                             </apex:outputPanel> </li>
+	                        <li>
+	                             <apex:outputText value=" {!$Label.WillChanges}" escape="false"/> 
+	                        </li>
+	                        
+	                        <br/>
+                        <apex:outputText style="font-weight:bold;" value="One should consider below mentioned aspects while making a Will and POA." escape="false"/> <br/>
+                        <br/>
+                        <li>
+                             <apex:outputText style="font-weight:bold;" value="Holding pattern of assets : " escape="false"/><br/> 
+                             <apex:outputText value="Joint holding will ensure access to atleast one of you in case there is an emergency need for the money. 
+                             If many investments are singly held there is a possibility that it may remain inaccessible when needed. 
+                             It is good that you have your investments in joint holding.  In case some investments are very old, 
+                             you may want to check the holding pattern and make changes wherever applicable.  However anyone or 
+                             survivor joint holding is not to be confused with ownership. In the event of the demise of one of the holders, 
+                             the other does not become the sole owner, rather the share of the deceased holder will have to be distributed 
+                             accordingly to his Will or the Law."/>
+                        </li>
+                        <br/>
+                        <li>
+                             <apex:outputText style="font-weight:bold;" value="Keeping family informed : " escape="false"/><br/>
+                             <apex:outputText value="Your family for whose use you have accumulated all the assets need to have knowledge 
+                             of what is available and where it is accessible. Preparing a list of all your assets might be a very good idea. 
+                             Better still will be preparing a detailed Will. "/>
+                        </li>
+                        <br/>
+                        <li>
+                             <apex:outputText style="font-weight:bold;" value="Prepare a Will : " escape="false"/> <br/>
+                             <apex:outputText value="A Will is a declaration in a prescribed manner of the intention of the person making it, 
+                             with regard to the matters which he wishes to take effect upon or after his death. This is important to ensure 
+                             that the family and loved ones gain easy access to assets built for them without any legal hassles. 
+                             In this uncertain world, there is no better time than NOW to write the Will."/><br/>
+							<apex:outputText value="Subscribe to our Succession Planning services for preparing a legally sound and comprehensively well thought out 
+							Will from the comforts of your home."/>
+                        </li>
+                        <br/>
+                        <li>
+                             <apex:outputText style="font-weight:bold;" value="Power of Attorney : " escape="false"/> <br/>
+                             <apex:outputText value="A Power of Attorney is a legal right you give someone to act on your behalf in case 
+                             you are not available or in a position to act. This can be general POA to act on all matters or a restricted 
+                             POA to act only under certain circumstances. If you are travelling extensively, authorizing someone to work on 
+                             your behalf in case you cannot do it on your own, will ensure that your work will not be affectedbecause of your 
+                             unavailability. Also in case of a disability, access to your assets will not be denied if a POA is available. 
+                             At the same time a POA in the wrong hands can turn out dangerous. You may want to check the conditions in your 
+                             POA and ensure they are updated and relevant."/>
+                        </li>
+	                    </ul>
+	                </apex:outputPanel>
+	                <apex:outputPanel rendered="{!objEstatePlanningController.bean.entity.Will__c}"> 
+	                    <ul class="TickList">
+	                        <li> 
+	                             <apex:outputText value=" {!$Label.WillPresent}" escape="false"/> 
+	                        </li>
+	                        <li>
+	                             <apex:outputText value=" {!$Label.WillChanges}" escape="false"/> 
+	                        </li>
+	                    </ul>
+	                </apex:outputPanel>
+	            </div>
+	            <!-- FS0309 -->
+	        <apex:outputPanel rendered="{!(if(objEstatePlanningController.ORemark.RichText_Remark__c =='',false,true))}">
+	   		<ul class="TickList">
+	              <li>
+	                  {!$Label.Remarks}
+	              </li>
+	          </ul>
+	          <div>
+				<!-- /** Eternus Solutions      **/
+				  /** Author  : Manasi Ranade 	**/
+				  /** Issue Id: 00001613      	**/
+				  /** Date    : 30/4/2012 	 	**/
+				  /** Purpose : Commented previous Remark
+				  				Added output field to preserve new line characters
+				  /****************************************************/ -->
+			<!--        	{!strRemark} -->
+				<apex:outputField value="{!objEstatePlanningController.ORemark.RichText_Remark__c }"></apex:OutputField>
+	          </div>
+	         </apex:outputPanel>
+	        </apex:pageBlock>
+	    </apex:form>
+	   </div>
+  	 </apex:outputPanel>
+  	 
+  	 
+  	<!------------------------- SUM Action Plan Starts ----------------> 
+	<apex:outputPanel rendered="{!isSummaryActionPlan}">
+		<div style="page-break-after:always;">
+	   		<apex:form >
+		    	<apex:pageBlock tabStyle="account" >
+			  	<div class="divContainerStyle">
+			  		<div class="divStyle">SUMMARY ACTION PLAN</div>
+		  			<br/>
+		  			<apex:outputPanel >
+				  		<apex:outputText value="{!$Label.Summary_Action_Plan_Write_Up_Line}" styleClass="textStyle" />
+				  		<br/><br/>
+				       	<apex:outputText value="{!$Label.Summary_Action_Plan_Write_Up}" styleClass="textStyle" /><br/><br/> 
+				 	</apex:outputPanel>
+			
+		  
+		 			<div class="subHeader">ACTION PLAN ON YOUR CURRENT INVESTMENT ASSETS</div>
+		  			<br/>         
+		  			<div style="width:90%;overflow:auto;height:100%;"> 
+		  				<table width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable1">
+					    	<tr class="tableHeader">
+					          <th class="textStyle">Asset</th>
+					          <th class="textStyle">Owner</th>
+					          <th class="textStyle">Goal</th>
+					          <th class="textStyle">Action</th>
+					          <th class="textStyle">Allocated Amount</th>
+					          <th class="textStyle">Allocated Percent (%)</th>
+					      	</tr>
+		      			 	<apex:repeat value="{!beanObj.aaBeanList}" var="ap">
+						      <tr class="tableData">
+						          <td class="textStyle" width="18%">{!ap.Assets}</td>
+						          <td class="textStyle" width="15%">{!ap.entityName}</td>
+						          <td class="textStyle" width="20%">{!ap.goalName}</td>
+						          <td class="textStyle" width="20%">{!ap.action}</td>
+						          <td class="textStyle" width="12%" style="text-align:right;">
+						          		<apex:outputText value="{0, number, ,##,##0}" >
+						          			<apex:param value="{!ap.allocatedAmount}"/>
+						          		</apex:outputText>
+						          </td>
+						          <td class="textStyle" width="12%" style="text-align:right;">{!ap.allocatedPercent}</td>
+						      </tr>
+		      			   </apex:repeat>
+		  				</table>
+		  			</div>
+		   			<apex:messages />
+		  			<br/> 
+		  			
+<!-- 				Prajakta - FP changes - 22-05-2013 - For unallocated assets -->
+				<div class="subHeader">{!$Label.Unallocated_Assets}</div>
+				<br/>         
+					<div style="width:90%;overflow:auto;height:100%;"> 
+					  	<table width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable11">
+					      	<tr class="tableHeader">
+					          	<th class="textStyle">Owner</th>
+					          	<th class="textStyle">Asset</th>
+					          	<th class="textStyle">Description</th>
+					          	<th class="textStyle">Current Value</th>
+					          	<th class="textStyle">Balance Remaining</th>
+					      	</tr>
+					      	<apex:repeat value="{!beanObj.unallocatedList}" var="ua">
+						      	<tr class="tableData">
+						          	<td class="textStyle" width="15%">{!ua.entityName}</td>
+						          	<td class="textStyle" width="20%">{!ua.Assets}</td>
+						          	<td class="textStyle" width="20%">{!ua.description}</td>
+						          	<td class="textStyle" width="15%" style="text-align:right;">
+						          		<apex:outputText value="{0, number, ,##,##0}" >
+						          			<apex:param value="{!ua.currentValue}"/>
+						          		</apex:outputText>
+						          	</td>
+						          	<td class="textStyle" width="15%" style="text-align:right;">
+						          		<apex:outputText value="{0, number, ,##,##0}" >
+						          			<apex:param value="{!ua.balanceRemaining}"/>
+						          		</apex:outputText>
+						          	</td>
+						      	</tr>
+					      	</apex:repeat>
+						</table>
+				  	</div>				  	
+					<!-- /*
+						  Updated By : Kiran Patil
+						  Updated At : 23-May-2013
+						  Summary    : FP changes-part2 - issue 10 
+					*/ -->
+				  	<br/>
+				  	<div>
+				  		<apex:pageBlockSection columns="2">
+							<apex:pageBlockSectionItem >
+			           			<apex:outputText value="Remarks:&nbsp;&nbsp;" escape="false" style="text-align:top;font-weight:bold;"/>
+			           			<apex:outputField value="{!remarks.RichText_Remark__c }"/>
+<!-- 			           			<apex:inputTextArea value="{!remarks.Remark__c}" style="width:300px;height:55px;"/> -->
+           					</apex:pageBlockSectionItem>
+           					<apex:pageBlockSectionItem >
+           					</apex:pageBlockSectionItem>
+						</apex:pageBlockSection>
+				  	</div>
+<!-- 				  	<div> -->
+<!-- 				  		<apex:commandButton value="Save" Action="{!saveUnallocatedAssetsRemark}"   -->
+<!-- 			        						style="margin-top:15px;margin-left:450px;font-weight:bold; font-size:11px;"  -->
+<!-- 			                                onclick="if(!confirm('Do you want to continue?')){return false;}" /> -->
+<!-- 				  	</div> -->
+				   	<apex:messages />
+				<br/>
+		  			
+		  			<div class="subHeader">GOAL WISE SIP AND LUMPSUM ALLOCATION</div>
+		  			<br/>
+				 	<div style="width:100%;overflow:auto;height:100%;">
+				   		<table width="100%" border="1" cellpadding="0" cellspacing="0" id="dataTable2" style="table-layout:fixed;text-wrap:normal;">
+							<tr class="tableHeader">
+							  	<th style="text-align:center; width:200px;">Mode</th>
+							  	<th colspan="3" style="text-align:center;">SIP</th>
+							    <th rowspan="2" style="text-align:center;">Total SIP</th>
+							    <th colspan="3" style="text-align:center;">Lumpsum</th>
+							    <th rowspan="2" style="text-align:center;">Total<br/> Lumpsum</th>
+							</tr>
+							<tr class="tableHeader">
+							    <th style="text-align:center;">Goals  /  Asset Class</th>
+							    <td class="textStyle">Debt</td>
+							    <td class="textStyle">Equity</td>
+							    <td class="textStyle">Gold</td>
+			<!-- 				    <td></td> -->
+							    <td class="textStyle">Debt</td>
+							    <td class="textStyle">Equity</td>
+							    <td class="textStyle">Gold</td>
+			<!-- 				    <td></td> -->
+							</tr>
+							<apex:variable var="totalSIP" value="{!0}"/>
+							<apex:variable var="totalLumpsum" value="{!0}"/>
+							<apex:repeat value="{!lstSummaryDetail}" var="rec">
+								<tr>
+									<td height="28px;" style="font-weight:bold; padding-left:5px;">
+										{!rec.description}
+									</td>
+									<apex:variable var="c" value="{!0}"/>
+									<apex:repeat value="{!rec.lstSipValue}" var="sip">
+										<apex:variable var="c" value="{! c +  ROUND(sip,0)}" />
+										<td class="textStyle" style="text-align:right; padding-right:5px;">
+											<apex:outputText value="{0, number, ,##,##0}" >
+						                    	<apex:param value="{!ROUND(sip,0)}"/>
+						                    </apex:outputText> 
+			<!-- 									{!ROUND(sip,0)} -->
+										</td>
+									</apex:repeat>
+									<td style="text-align:right; padding-right:5px;" class="tableHeader">
+										<apex:outputText value="{0, number, ,##,##0}" >
+				                        	<apex:param value="{!c}"/>
+				                 		</apex:outputText>
+				                 		<apex:variable var="totalSIP" value="{! totalSIP +  c}" />
+									</td>
+									<apex:variable var="c" value="{!0}"/>
+									<apex:repeat value="{!rec.lstLumpsumValue}" var="lumpsum">
+										<apex:variable var="c" value="{! c +  ROUND(lumpsum,0)}" />
+										<td class="textStyle" style="text-align:right; padding-right:5px;">
+											<apex:outputText value="{0, number, ,##,##0}" >
+						                    	<apex:param value="{!ROUND(lumpsum,0)}"/>
+						                    </apex:outputText>
+			<!-- 									{!ROUND(lumpsum,0)} -->
+										</td>
+									</apex:repeat>
+									<td class="tableHeader" style="text-align:right; padding-right:5px;">
+										<apex:outputText value="{0, number, ,##,##0}" >
+				                        	<apex:param value="{!c}"/>
+				                 		</apex:outputText>
+				                 		<apex:variable var="totalLumpsum" value="{! totalLumpsum +  c}" />
+									</td>
+								</tr>
+							</apex:repeat>
+							
+							<tr>
+								<td class="tableHeader" height="28px;">
+									{!objSummaryDetail.description}
+								</td>
+								<apex:variable var="c" value="{!0}"/>
+								<apex:repeat value="{!objSummaryDetail.lstSipValue}" var="sip">
+									<td class="tableHeader" style="text-align:right; padding-right:5px;">
+										<apex:outputText value="{0, number, ,##,##0}" >
+					                    	<apex:param value="{!sip}"/>
+					                    </apex:outputText>
+									</td>
+								</apex:repeat>
+								<td class="textStyle" style="text-align:center;font-weight:bold;">
+									<apex:outputText value="{0, number, ,##,##0}" >
+					                    <apex:param value="{!totalSIP}"/>
+					                </apex:outputText>
+								</td >
+								<apex:repeat value="{!objSummaryDetail.lstLumpsumValue}" var="lumpsum">
+									<td class="tableHeader" style="text-align:right; padding-right:5px;">
+										<apex:outputText value="{0, number, ,##,##0}" >
+					                    	<apex:param value="{!lumpsum}"/>
+					                    </apex:outputText>
+									</td>
+								</apex:repeat>
+								<td class="textStyle" style="text-align:center;font-weight:bold;">
+									<apex:outputText value="{0, number, ,##,##0}" >
+					                    <apex:param value="{!totalLumpsum}"/>
+					                </apex:outputText>
+								</td>
+							</tr>
+						</table>
+					</div>
+					
+				    <br/> 
+				 	<apex:outputPanel rendered="{!isLifeInsuranceAnalysis}">
+					 <div class="subHeader">LIFE INSURANCE</div>
+				 	<br/>
+		    
+		  			<apex:outputPanel rendered="{!NOT(beanObj.isLifeInsExist)}">
+					  <apex:outputText value="{!$Label.ActionPlanInsurenceMsg}" styleClass="textStyle" />
+					  </apex:outputPanel>
+				  	<apex:outputPanel rendered="{!beanObj.isLifeInsExist}">
+		  
+		  			<div style="width:100%;overflow:auto;height:100%;">
+		  			<table width="60%" cellspacing="0" cellpadding="2" border="1" id="dataTable3"  >
+			      		<tr class="tableHeader">
+				          <th class="textStyle">Insured</th>
+				          <th class="textStyle">Suggested Cover</th>
+				          <th class="textStyle">Premium Amount</th>
+				          <th class="textStyle">Policy Type</th>
+							<!--/** Eternus Solutions      **/
+							/** Author  : Manasi Ranade*/
+							/** Issue Id: 00001673      **/
+							/** Date    : 7/6/2012 **/
+							/** Purpose : Added Tenure Of Insurance on Action Plan**/
+							/****************************************************/-->
+				          <th class="textStyle">Tenure Of Insurance</th>
+				      	</tr>
+			      		<apex:repeat value="{!beanObj.liList}" var="liObj">
+					      <tr class="tableData" >
+					          <td class="textStyle"><apex:outputLabel value="{!liObj.Entity__r.FirstName + ' ' + liObj.Entity__r.LastName}" /></td>
+					          <td class="textStyle" style="text-align:right;"><apex:outputField value="{!liObj.Suggested_Cover_General_Insurance__c}" /> </td>
+					 		  <td class="textStyle" style="text-align:right;"><apex:outputText value="{0, number, ,##,##0}" >
+					                                  <apex:param value="{!liObj.Premium_Amount_Rs__c}"/>
+					                            </apex:outputText> </td>
+					          <td class="textStyle"><apex:outputField value="{!liObj.Policy_Type__c}" /></td>
+					          <td class="textStyle"><apex:outputField value="{!liObj.Tenure_of_Insurance__c}" /></td>
+					      </tr>
+			      		</apex:repeat>
+			 		 </table>  
+		  		</div>  
+		  	</apex:outputPanel>
+		  	<br/> 
+	 	</apex:outputPanel>
+		 
+		 <apex:outputPanel rendered="{!isGeneralInsurance}">
+		 <div class="subHeader">GENERAL INSURANCE</div>
+		 <br/>
+		 <apex:outputPanel rendered="{!NOT(beanObj.isGeneralInsExist)}">
+		      <apex:outputText value="{!$Label.ActionPlanInsurenceMsg}" styleClass="textStyle" />
+		 </apex:outputPanel>
+		 
+		 <apex:outputPanel rendered="{!beanObj.isGeneralInsExist}">
+			 <div style="width:100%;overflow:auto;height:100%;"> 
+			 <table width="60%" cellspacing="0" cellpadding="2" border="1" id="dataTable4"  >
+			      <tr class="tableHeader">
+			          <th class="textStyle">Insured</th>
+			          <th class="textStyle">Suggested Cover</th>
+			          <th class="textStyle">Premium Amount</th>
+			          <th class="textStyle">Policy Type</th>
+			      </tr>
+			      <apex:repeat value="{!beanObj.giList}" var="giObj">
+			      <tr class="tableData" >
+			          <td class="textStyle"><apex:outputLabel value="{!giObj.Entity__r.FirstName + ' '+ giObj.Entity__r.LastName}" /></td>
+			          <td class="textStyle" style="text-align:right;"><apex:outputField value="{!giObj.Suggested_Cover_General_Insurance__c}" /> </td>
+					<td class="textStyle" style="text-align:right;"><apex:outputText value="{0, number, ,##,##0}" >
+			                                 <apex:param value="{!giObj.Premium_Amount_Rs__c}"/>
+			                           </apex:outputText> </td>
+			          <td class="textStyle"><apex:outputField value="{!giObj.Policy_Type__c}" /></td>
+			      </tr>
+			       </apex:repeat>
+			  </table>
+			  </div>
+		  </apex:outputPanel>
+		  </apex:outputPanel>
+		  </div>
+		  </apex:pageBlock>  
+		  </apex:form>
+		   <script>
+		    <!-- This is for styling alternate rows of SummaryTable -->
+		        function altRows(id)
+		        {
+		           // alert('hello'+id);
+		            if(document.getElementsByTagName)
+		            {  
+		                var table = document.getElementById(id);  
+		                var rows = table.getElementsByTagName("tr"); 
+		                for(i = 1; i < rows.length; i++)
+		                {  
+		                    if(i % 2 == 0)
+		                    {
+		                        rows[i].className = "DataTableEven";
+		                    }
+		                    else
+		                    {
+		                        rows[i].className = "DataTableOdd";
+		                    }      
+		                }
+		            }
+		            
+		        }
+		    
+		        window.onload =   altRows('dataTable1');altRows('dataTable2');altRows('dataTable3');altRows('dataTable4');
+		    </script>
+	   </div>
+   	</apex:outputPanel>
+   	<!------------------------- SUM Action Plan End ----------------> 
+   	
+   	
+   	
+	<!--    <apex:outputPanel rendered="{!IF(bean.insuranceBeanList.size>0,true,false)}"> -->
+	<!--        <apex:variable var="counter" value="1"/> -->
+	<!--        <apex:repeat value="{!bean.insuranceBeanList}" var="insurance"> -->
+	<!--             <div style="page-break-after:always;"> -->
+	<!--  					<c:LifeInsurancePlanningComponent entity="{!insurance.entity}" spouse="{!insurance.spouse}"  -->
+	<!--                     adjustmentFactor="{!insurance.entity.Adjustment_Factor__c}" insuranceBean="{!insurance}"  -->
+	<!--                     showOnPage="false" count="{!counter}"  />ObjRemark="{!insurance.ObjRemark}" -->
+	<!--            </div> -->
+	<!--            <apex:variable var="counter" value="{!VALUE(counter) + 1}"/> -->
+	<!--         </apex:repeat> -->
+	<!--     </apex:outputPanel> -->
+	<!-- ///////////////////Refactored -->
+	<apex:outputPanel rendered="{!IF(lstHLVDetails.size>0,true,false)}">
+       <apex:variable var="counter" value="1"/>
+       <apex:repeat value="{!lstHLVDetails}" var="ins">
+            <div style="page-break-after:always;">
+ 				<c:LifeInsurancePlanningComponentRefactored HLVDetails="{!ins}" count="{!counter}">
+                </c:LifeInsurancePlanningComponentRefactored>
+           </div>
+           <apex:variable var="counter" value="{!VALUE(counter) + 1}"/>
+        </apex:repeat>
+    </apex:outputPanel>
+   
+    
+    <div style="page-break-after:always;">
+    <apex:outputPanel rendered="{!isFinancialPlanReview}">
+        <c:ReviewComponent />
+     </apex:outputPanel>   
+    </div>
+
+    <div style="page-break-after:always;">
+     <apex:outputPanel rendered="{!isInvestmentRisk}">
+      <c:InvestmentRisksComponent />
+     </apex:outputPanel> 
+    </div>
+
+<!--     <c:DeliveryAcknowledgementComponent accountName="{!Accname}"/> -->
+	<apex:outputPanel rendered="{!isDeliveryAcknowledgement}">
+		<c:DeliveryAcknowledgementComponent />
+	</apex:outputPanel>
+
+</apex:page>

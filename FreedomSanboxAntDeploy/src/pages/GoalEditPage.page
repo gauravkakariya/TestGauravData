@@ -1,0 +1,100 @@
+<!-- /*
+	Revision History:
+	
+    Version     Version Author     Date         Comments
+    1.0         Persistent         NA  		  	Initial Draft
+   
+	2.0			Manasi Ranade	   25/04/2012    Case No 00001605: Added Is_Include_In_HLV field on the page .
+									  			 That will be checked if we want to include the selected goal in HLV (Life Insurance Planning Page) 
+*/ -->
+<apex:page id="goalPage" controller="GoalVFPageController" standardStylesheets="true" showHeader="false" sidebar="false">
+    <style>
+    th.colWrap div{
+         white-space:pre-wrap;
+         
+         height:40px;
+    }
+   
+    </style>
+    <apex:includeScript value="{!$Resource.ffreedomJavascript}"/>
+    <apex:stylesheet value="{!$Resource.FFStyle}"/>   
+    <apex:composition template="TabPage" >
+    <apex:define name="contents">
+ 
+    <apex:form > 
+        <apex:outputPanel id="PopupPanel" >
+            <apex:outputLabel value="{!goalBeanInstance.selGoalType}"></apex:outputLabel>
+                <apex:pageBlock id="goalEdit" title="Goals">
+                    <div style="width:100%;overflow:auto;">
+                    <apex:pageMessages rendered="true" />
+                    
+                    <apex:pageBlockTable value="{!goalBeanInstance.goalList}" var="goalRecord" align="center" style="width:80%"  rowClasses="odd,even"  headerClass="standardFontStyle colWrap ">
+                       <!--<apex:column headerValue="{!$ObjectType.Goal__c.fields.Entity__c.label}" style="width:10%;">
+                             <apex:selectList id="EntitySelectList" value="{!goalRecord.Entity__c}" multiselect="false" size="1" styleClass="requiredField" style="height:20px;">
+                                        <apex:selectOptions value="{!OwnerItems}" />
+                             </apex:selectList>         
+                         </apex:column>-->
+                         <apex:column headerValue="Remove" style="width:4%;">
+                         	 <apex:inputCheckbox value="{!goalRecord.RemoveCheckbox__c}" rendered="{!IF(goalRecord.Goal_Type__c != 'Emergency Fund',true,false)}"/>
+                         </apex:column>
+                         
+                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Goal_Type__c.label} ">
+<!--                              <apex:inputField value="{!goalRecord.Goal_Type__c}" style="height:20px;" styleclass="standardFontStyle requiredField" /> -->
+								 <apex:selectList rendered="{!IF(goalRecord.Goal_Type__c != 'Emergency Fund',true,false)}" id="EntitySelectList" value="{!goalRecord.Goal_Type__c}" multiselect="false" size="1" style="height:20px;">
+                                        <apex:selectOptions value="{!lstGoalOptions}" />
+                                 </apex:selectList> 
+                                 <apex:outputField value="{!goalRecord.Goal_Type__c}" rendered="{!IF(goalRecord.Goal_Type__c == 'Emergency Fund',true,false)}" style="height:16px; width:90%;" styleclass="standardFontStyle requiredField"/>
+                         </apex:column>
+                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Description__c.label}" width="20%" >
+                             <apex:inputField value="{!goalRecord.Description__c}" style="height:16px; width:90%;" styleclass="standardFontStyle requiredField"/>
+                         </apex:column>
+                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Priority__c.label}" >
+                             <apex:inputField value="{!goalRecord.Priority__c}" style="height:20px;" styleclass="standardFontStyle"/>
+                         </apex:column>
+                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Goal_Start_Year__c.label}" width="7%">
+                             <apex:inputField value="{!goalRecord.Goal_Start_Year__c}" onkeypress="return isNumberKey(event)" onblur="yearLength(this);" style="width:75%;height:16px;" styleclass="standardFontStyle requiredField"/>
+                         </apex:column>
+                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Goal_End_Year__c.label}" width="7%">
+                             <apex:inputField value="{!goalRecord.Goal_End_Year__c}" onkeypress="return isNumberKey(event)" onblur="yearLength(this);" style="width:75%;height:16px;" styleclass="standardFontStyle requiredField"/>
+                         </apex:column>
+                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Inflation_Rate__c.label}" width="5%">
+                             <apex:inputField value="{!goalRecord.Inflation_Rate__c}" style="width:80%;height:16px;" styleclass="standardFontStyle"/>
+                         </apex:column>
+                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Cost_of_Goal_Annual__c.label}" >
+                             <apex:inputField value="{!goalRecord.Cost_of_Goal_Annual__c}" style="width:80%;height:16px;" styleclass="standardFontStyle requiredField"/>
+                         </apex:column> 
+                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Goal_Frequency__c.label}" >
+                             <apex:inputField value="{!goalRecord.Goal_Frequency__c}" style="width:80%;height:16px;" styleclass="standardFontStyle"/>
+                         </apex:column>
+						<!--/** Eternus Solutions       **/
+						/** Author  : Manasi Ranade **/
+						/** Issue Id: 00001605      **/
+						/** Date    : 25/04/2012 	**/
+						/** Purpose : Added Is_Include_In_HLV field on the page .
+									  That will be checked if we want to include the selected goal in HLV (Life Insurance Planning Page) 
+						/****************************************************/ -->
+                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Is_Include_In_HLV__c.label}" >
+                             <apex:inputField value="{!goalRecord.Is_Include_In_HLV__c}" styleclass="standardFontStyle"></apex:inputField>
+<!--                               style="width:80%;height:16px;" styleclass="standardFontStyle"/> -->
+                         </apex:column>
+                    </apex:pageBlockTable>
+                    <apex:actionStatus stopText="" id="counterStatusData">
+	                    <apex:facet name="start">                
+	                        <apex:outputPanel style="padding-left:45%;">
+	                        <apex:image value="{!$Resource.loading_image}" width="3%" height="3%"/>
+	                        </apex:outputPanel>
+	                    </apex:facet>
+                    </apex:actionStatus>  
+                	<apex:pageBlockButtons location="bottom">
+	                    <apex:commandButton value="Add New" action="{!addNewRow}" reRender="PopupPanel,counterStatusData" status="counterStatusData" rendered="{!(isNumberOfGoal && goalCount < objEntityGlobalAssumption.No_of_Goals__c + 1) }" />
+	                    <apex:commandButton value="Remove" action="{!Remove}" reRender="PopupPanel,SummaryTable,counterStatusData" status="counterStatusData"  /> 
+	                    <apex:commandButton value="Save" action="{!Save}"  reRender="PopupPanel,SummaryTable,counterStatusData" status="counterStatusData"/>
+                        <apex:commandButton value="Cancel" rerender="PopupPanel,SummaryTable" immediate="true" action="{!closePopup}"  />
+                    </apex:pageBlockButtons>
+                	</div>
+                </apex:pageBlock>
+            </apex:outputPanel>
+    </apex:form>      
+  </apex:define>
+  </apex:composition>
+</apex:page>

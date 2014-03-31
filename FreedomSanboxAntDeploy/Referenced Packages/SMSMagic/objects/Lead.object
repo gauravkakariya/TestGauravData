@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>SMSOptOut__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>SMS Opt Out</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <webLinks>
+        <fullName>Send_Bulk_SMS</fullName>
+        <availability>online</availability>
+        <description>Send bulk sms to number of leads</description>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Send Bulk SMS</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/10.0/connection.js&quot;)} 
+var packagePrefix =&quot;smagicbasic__&quot;;
+var records = {!GETRECORDIDS($ObjectType.Lead)}; 
+if (records[0] == null) 
+{ 
+alert(&quot;Please select at least one lead&quot;) 
+} 
+else{ 
+var recordType = &quot;Lead&quot;; 
+       var recordIds = &quot;&quot;;
+       var nameField = &apos;Name&apos;;
+       var mobileField = &apos;MobilePhone&apos;;
+	for (var n in records) {
+               if(n == &apos;remove&apos; || n == &apos;indexOf&apos;) continue;
+              	recordIds  = recordIds  + records[n];
+                                  
+		if (n != records.length-1) {
+			recordIds  = recordIds  + &quot;,&quot;;
+		}
+	}
+  var queryString =  parent.window.location.pathname;
+   if (parent.window.location.search){
+        queryString = queryString + parent.window.location.search
+    }
+
+   var url = &quot;/apex/&quot;+packagePrefix+&quot;BulkSendSMS?retURL=&quot;+queryString + &quot;&amp;nameField=&quot; +nameField +&quot;&amp;phoneField=&quot;+ mobileField+ &quot;&amp;objectType=&quot;+recordType+&quot;&amp;recordIds=&quot;+ recordIds;
+ 
+  parent.window.location = url;
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Send_SMS</fullName>
+        <availability>online</availability>
+        <description>Send sms to individual lead</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Send SMS</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/14.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/14.0/apex.js&quot;)} 
+var packagePrefix = &apos;smagicbasic__&apos;;
+var recordType = &apos;Lead&apos;; 
+var idToUpdate = &apos;{!Lead.Id}&apos; 
+var nameField = &apos;Name&apos;;
+var mobileField = &apos;MobilePhone&apos;;
+  var queryString =  parent.window.location.pathname;
+   if (parent.window.location.search){
+        queryString = queryString + parent.window.location.search
+    }
+   var url = &quot;/apex/&quot;+ packagePrefix + &quot;BulkSendSMS?retURL=&quot;+queryString + &quot;&amp;nameField=&quot; +nameField +&quot;&amp;phoneField=&quot;+ mobileField+&quot;&amp;objectType=&quot;+recordType+&quot;&amp;recordIds=&quot;+ idToUpdate;
+ 
+  parent.window.location = url;</url>
+    </webLinks>
+</CustomObject>

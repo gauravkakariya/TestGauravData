@@ -1,0 +1,118 @@
+<apex:page showHeader="false" sidebar="false" controller="EventRegistration" >
+
+  <apex:composition template="EventTemplate" >
+   
+  <apex:define name="rightcontent">  
+  <br/>
+
+  <apex:outputPanel id="error" style=""><apex:pageMessages ></apex:pageMessages></apex:outputPanel>
+
+    <!---  <apex:pageMessage summary="This pageMessage will always display. Validation error 
+           messages appear in the pageMessages component." severity="warning" strength="3" />
+           Hello world
+        <apex:pageMessages />
+          --->
+
+  <br/>
+  <br/>
+    <apex:outputPanel id="NewLeadFormPanel" rendered="{!$CurrentPage.parameters.id=null}" style="color:#000000;font-weight:normal;">
+    <span style="font:38px Brush Script MT;color:#FF8000;font-style:italic;padding-left:150px;">Request For An </span><span style="font:34px Brush Script MT;color:green;font-style:italic;">Invite</span>
+        <br/>
+  <br/>
+            <p>Attendance for the <b>"Ffreedom Day"</b> is on <b>invite only. </b> <span style="font-size:10px;font-weight:normal;">[There is no cost for attending].</span> </p>
+           <p> To receive an Invitation for the event kindly email us your full name and contact details (mobile number and email id) at contact@ffreedom.in  </p>
+           <br/>
+            <p>Once you have submitted your information, we shall review the same &amp; contact you shortly.</p>
+      <p>If you have already received an invitation kindly click on the RSVP link in the email to complete your registration.</p> <br/>
+      <div>
+                <b>Help Desk : </b>
+                For any assistance email us at <a href="http://www.ffreedom.in/Contact_Us">contact@ffreedom.in</a> <br/>or call us at 022-4222-4333.
+                </div> 
+                <br/>
+                <div> <b>Regards,<br/> Ffreedom Team.</b> </div>
+        </apex:outputPanel>
+       
+        
+
+<apex:outputPanel id="RegistrationFormPanel"  rendered="{!$CurrentPage.parameters.id !=null}">
+ <div style="color:blue; padding-left:50px;padding-top:20px;color:#000000;font-weight:normal;">
+ <br/>
+<p> <span style="font:38px Brush Script MT;color:#FF8000;font-style:italic;padding-left:35px;">Complete Your Registration For </span><span style="font:34px Brush Script MT;color:green;font-style:italic;padding-left:135px;">The Ffreedom Day</span></p>
+<br/>
+ <p>Kindly confirm your attendance for the Ffreedom Day.</p><br/>
+ <p>Steps to RSVP (confirm attendance) for the Ffreedom Day:</p><br/>
+ <ol>
+  <li>Please review you personal contact information, if incase there is something incorrect<br/> please make the require changes.</li>
+  <li>Click the check box if you are planning to bring along your spouse with your for the Ffreedom Day.</li>
+  <li>Please click submit button to confirm your attendance for the Ffreedom Day.</li>
+</ol>
+<br/>
+<p><b> Note: All event related communication will be sent through Email or by Call / SMS. Hence please make sure<br/> you are submitting the correct details.</b></p><br/> 
+
+<p>If you require any assistance in completing the confirmation process please feel free to contact us at <a href="www.gmail.com" target="_blank">contact@ffreedom.in</a> or call us at 022-4222-4333.</p><br/>  
+
+<p>Once you have confirmed/submitted your attendance for the Ffreedom Day you shall receive an email<br/> confirmation about the same.</p><br/> 
+ 
+ </div>
+ </apex:outputPanel>
+
+  <apex:form id="RegistrationForm" style="padding-left:60px;padding-top:20px;color:#000000;" rendered="{!$CurrentPage.parameters.id !=null}">
+  <apex:actionFunction name="saveRegistration" action="{!saveRegistration}"/>
+     <table align="left" style="font-size:14px;font-color:#ffffff;">        
+   
+          <tr >
+            <td><b>Name:</b> </td>
+            <td> <apex:inputText value="{!Registration.Name}"/></td>
+          </tr>
+          <tr > 
+            <td><b>Occupation:</b></td>
+            <td> <apex:inputText value="{!Registration.Occupation__c}"/></td>
+          </tr>
+          <tr >
+            <td><b>Street:</b></td>
+            <td> <apex:inputTextarea value="{!Registration.Street_Name__c}"/></td>
+          </tr>
+          <tr >  
+            <td><b>City:</b></td> 
+            <td> <apex:inputText value="{!Registration.City__c}"/></td>
+          </tr>
+          <tr >
+            <td><b>Zip:</b></td>
+            <td> <apex:inputText value="{!Registration.Zip__c}"/></td>
+          </tr> 
+          <tr >
+            <td><b>State:</b></td>
+            <td> <apex:inputText value="{!Registration.State__c}"/></td>
+          </tr>         
+          <tr >
+            <td><b>Mobile:</b></td>    
+            <td> <apex:inputText value="{!Registration.Mobile__c}"/></td>
+          </tr>  
+          <tr >
+            <td><b>Email-Id:</b></td>
+            <td> <apex:inputText value="{!Registration.Email__c}"/></td>
+          </tr>  
+          <tr>
+          
+            <td colspan="2">
+             <table> 
+                  <tr >
+                    <td> <apex:outputText style="font-weight:bold;" value="Would you like to be accompanied by your spouse?"> </apex:outputText>  </td>
+                     
+                    <td align="right" style="font-size:12px;"> <apex:inputCheckbox value="{!Registration.Accompanied_by_Spouse__c}"/></td>
+                </tr>
+                 <tr> 
+                    <td style="font-size:14px;"><input type="button" value="Submit" style="background-color:#D8D8D8; border-style:outset; border-width:2px; font-weight:bold; position:relative; left:100px;top:15px;" onclick="javascript:saveRegistration();"/></td>
+                </tr>
+            </table>
+            </td>
+          </tr>
+        </table>
+        
+       
+       
+    </apex:form>
+
+  </apex:define>
+ </apex:composition>
+</apex:page>

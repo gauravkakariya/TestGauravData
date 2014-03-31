@@ -1,0 +1,1274 @@
+<apex:page showHeader="false" sidebar="false" cache="true" title="Ffreedom Financial Planners | News Letters" id="Newsletter_Mar12">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+		_gaq.push([ '_trackPageview' ]);
+	
+		(function() {
+			var ga = document.createElement('script');
+			ga.type = 'text/javascript';
+			ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+					: 'http://www')
+					+ '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+	<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+		
+		<tr><td><img src="{!URLFOR($Resource.images,'images/top_Mar2012.gif')}" width="740" height="104" /></td></tr>
+		
+		<tr>
+
+			<td><table width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B">
+							<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+						<td valign="top">
+							<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="70%" valign="top">
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td>
+													<table width="100%" border="0" cellspacing="0" cellpadding="0">
+														<tr>
+															<td width="1%" valign="top">
+																<img src="{!URLFOR($Resource.images,'images/headL.gif')}" width="9" height="40" />
+															</td>
+															<td width="98%" valign="top" background="images/headbg.gif">
+																<table width="100%" border="0" cellspacing="0" cellpadding="0">
+																	<tr>
+																		<td height="30" bgcolor="#BD6105">
+																			<font face="Arial, Helvetica, sans-serif" color="#FFFFFF" style="font-size: 14px; line-height: 14px;">
+																				<strong>MONEY DOES NOT MAKE THE WORLD GO ROUND, BUT IT CERTAINLY
+																						MAKES THE RIDE WORTHWHILE</strong>
+																			</font>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td>
+																			<a href="http://articles.economictimes.indiatimes.com/2011-10-27/news/30328344_1_fear-financial-plan-financial-stability" target="_blank">
+																				<img src="{!URLFOR($Resource.images,'images/leadHbgFade.gif')}" width="452" height="10" border="0" title="Read More" />
+																			</a>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+															<td width="1%" valign="top">
+																<img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<table width="100%" border="0" cellpadding="0" cellspacing="0">
+														<tr>
+															<td width="9" valign="top">
+																<img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="230" />
+															</td>
+															<td width="8" valign="top">
+																<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" />
+															</td>
+															<td valign="top">
+																<table width="98%" border="0" cellpadding="0" cellspacing="0">
+																	<tr>
+																		<td valign="top" width="100%">
+																			<div align="justify">
+																				<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;">
+																					For ages, women have had a deep rooted relationship
+																					with money. As a child, I remember my mother
+																					setting aside a fixed sum as savings from the
+																					routine household budget. In the last two decades,
+																					the relationship of women with money has come a
+																					long way. From being an expense manager for the
+																					family, she is now an income contributor too.
+																					Today's woman is fiercely independent yet
+																					responsible; pragmatic yet emotional; strong yet
+																					vulnerable. Just like she manages to strike a
+																					perfect balance between work and family, she is
+																					capable of striking a balance between being a money
+																					manager to a key decision maker - or CFO of the
+																					family! Trustworthiness, Diligence, Empathy and
+																					Clarity of Thought are some of the attributes
+																					common to most women. It is because of these traits
+																					that the financial services industry in India has a
+																					huge female workforce. Chanda Kochhar, Naina Lal
+																					Kidwai, Shikha Sharma and Kalpana Morparia, to
+																					name....</font>
+																			</div>
+																		</td>
+																	</tr>
+
+
+
+																	<tr>
+																		<td height="30" valign="bottom"><a
+																			href="LeadStory_Mar12" target="_blank"><img
+																				src="{!URLFOR($Resource.images,'images/ReadMore.gif')}" width="83" height="22"
+																				border="0" title="Read More" />
+																		</a>
+																		</td>
+
+																	</tr>
+																</table>
+															</td>
+														</tr>
+														<tr>
+															<td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" 
+																width="9" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+														</tr>
+													</table>
+												</td>
+
+											</tr>
+										</table> <br />
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td width="50%" valign="top"><table width="50%"
+														border="0" cellspacing="0" cellpadding="0">
+														<tr>
+															<td><img src="{!URLFOR($Resource.images,'images/storyH.gif')}" width="235"
+																height="40" />
+															</td>
+														</tr>
+
+														<tr>
+															<td><table width="100%" border="0" cellpadding="0"
+																	cellspacing="0">
+																	<tr>
+																		<td width="9" valign="top"><img
+																			src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="230" />
+																		</td>
+																		<td width="8" valign="top"><img
+																			src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" />
+																		</td>
+																		<td valign="top"><table width="98%" border="0"
+																				cellpadding="0" cellspacing="0">
+																				<tr>
+																					<td valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#683400" style="font-size: 14px;"><strong><em>“I
+																									Found A Friend In Ffreedom”</em>
+																						</strong>
+																					</font>
+																					</td>
+
+																				</tr>
+																				<tr>
+																					<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" 
+																						width="1" height="5" />
+																					</td>
+																				</tr>
+																				<tr>
+																					<td valign="top"><div align="justify">
+																							<font face="Arial, Helvetica, sans-serif"
+																								color="#333333" style="font-size: 12px;">
+																								“Financial Planning” – it is that term that I
+																								had heard for a long time but didn’t know it’s
+																								real meaning till I met Ffreedom. I am a home
+																								maker &amp; my Husband is in the Merchant navy
+																								which leaves me with no option but to manage the
+																								whole household &amp; its chores single
+																								handedly. I have a 17 month old son &amp; have
+																								recently delivered my second child. With all
+																								these at hand &amp; my husband...</font>
+																						</div>
+																					</td>
+
+																				</tr>
+																				<tr>
+																					<td height="30" valign="bottom"><a
+																						href="Story_Mar12" target="_blank"><img
+																							src="{!URLFOR($Resource.images,'images/ReadMore.gif')}" width="83" height="22"
+																							border="0" title="Read More" />
+																					</a>
+																					</td>
+																				</tr>
+																			</table>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" 
+																			width="9" height="1" />
+																		</td>
+																		<td valign="top" bgcolor="#BD6105"><img
+																			src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+																		</td>
+
+																		<td valign="top" bgcolor="#BD6105"><img
+																			src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+												<td width="50%" valign="top"><table width="50%"
+														border="0" cellspacing="0" cellpadding="0">
+														<tr>
+															<td><img src="{!URLFOR($Resource.images,'images/plannerH.gif')}" width="235"
+																height="40" />
+															</td>
+														</tr>
+
+														<tr>
+															<td><table width="100%" border="0" cellpadding="0"
+																	cellspacing="0">
+																	<tr>
+																		<td width="9" valign="top"><img
+																			src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="230" />
+																		</td>
+																		<td width="8" valign="top"><img
+																			src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" />
+																		</td>
+																		<td valign="top"><table width="98%" border="0"
+																				cellpadding="0" cellspacing="0">
+																				<tr>
+																					<td valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#683400" style="font-size: 14px;"><strong><em>Knowing
+																									is very different from doing</em>
+																						</strong>
+																					</font>
+																					</td>
+
+																				</tr>
+																				<tr>
+																					<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																						width="1" height="5" />
+																					</td>
+																				</tr>
+																				<tr>
+																					<td valign="top"><div align="justify">
+																							<font face="Arial, Helvetica, sans-serif"
+																								color="#333333" style="font-size: 12px;">
+																								They were a young family with small children,
+																								well read, well placed, both of them chartered
+																								accountants, really knowledgeable and extremely
+																								sensible. After a couple of meetings explaining
+																								them about financial planning, what services we
+																								offer, doing the financial health check and
+																								exchanging a lot of mails and calls giving away
+																								a lot of free advice...</font>
+																						</div>
+																					</td>
+																				</tr>
+																				<tr>
+
+																					<td height="30" valign="bottom"><a
+																						href="FinancialPlanners_Mar12" target="_blank"><img
+																							src="{!URLFOR($Resource.images,'images/ReadMore.gif')}" width="83" height="22"
+																							border="0" title="Read More" />
+																					</a>
+																					</td>
+																				</tr>
+																			</table>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" 
+																			width="9" height="1" />
+																		</td>
+																		<td valign="top" bgcolor="#BD6105"><img
+																			src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+																		</td>
+																		<td valign="top" bgcolor="#BD6105"><img
+																			src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+																		</td>
+																	</tr>
+
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table> <br />
+										<table width="50%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td><img src="{!URLFOR($Resource.images,'images/houseviewH.gif')}" width="470"
+													height="40" />
+												</td>
+
+											</tr>
+											<tr>
+												<td><table width="100%" border="0" cellpadding="0"
+														cellspacing="0">
+														<tr>
+															<td width="9" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="250" />
+															</td>
+															<td width="8" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" />
+															</td>
+															<td valign="top"><table width="98%" border="0"
+																	cellpadding="0" cellspacing="0">
+																	<tr>
+																		<td width="50%" valign="top"><table width="100%"
+																				border="0" cellpadding="0" cellspacing="0">
+
+																				<tr>
+																					<td valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#683400" style="font-size: 14px;"><strong><em>Everything
+																									you wanted to know about Asset allocation (and
+																									didn’t know whom to ask)</em>
+																						</strong>
+																					</font>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																						width="1" height="5" />
+																					</td>
+																				</tr>
+																				<tr>
+																					<td valign="top"><div align="justify">
+																							<font face="Arial, Helvetica, sans-serif"
+																								color="#333333" style="font-size: 12px;">All
+																								of us, at some point in life, have been advised
+																								to never put all our eggs in one basket. Have a
+																								back-up in case your original idea does not work
+																								out. Over the years, I have come across many
+																								people who follow this advice to ‘T’ and many
+																								who believe they do not need options as their
+																								plan is fool proof. And while it should come as
+																								common sense that one needs to follow....</font>
+																						</div>
+																					</td>
+
+																				</tr>
+																				<tr>
+																					<td height="30" valign="bottom"><a
+																						href="Houseview1_Mar12" target="_blank"><img
+																							src="{!URLFOR($Resource.images,'images/ReadMore.gif')}" width="83" height="22"
+																							border="0" title="Read More" />
+																					</a><a href="#"></a>
+																					</td>
+																				</tr>
+																			</table>
+																		</td>
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																			width="8" height="1" />
+																		</td>
+																		<td valign="top" bgcolor="#BD6105"><img
+																			src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+																		</td>
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																			width="8" height="1" />
+																		</td>
+																		<td width="50%" valign="top"><table width="100%"
+																				border="0" cellpadding="0" cellspacing="0">
+
+																				<tr>
+																					<td valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#683400" style="font-size: 14px;"><strong><em>Timing
+																									your SIPs - do so at your own perils</em>
+																						</strong>
+																					</font>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																						width="1" height="5" />
+																					</td>
+																				</tr>
+																				<tr>
+																					<td valign="top"><div align="justify">
+																							<font face="Arial, Helvetica, sans-serif"
+																								color="#333333" style="font-size: 12px;">We
+																								get so many calls during times when market falls
+																								whether to exit SIPs and take all the money out,
+																								stay in debt or FD and re-enter when market
+																								rises. These questions are consistent in coming
+																								up and dying down with every rise and fall in
+																								the stock markets. This startling report from
+																								Dalbar inc. shows how investors have seldom
+																								actually benefitted from the returns markets
+																								give over a the...</font>
+																						</div>
+																					</td>
+
+																				</tr>
+
+																				<tr>
+																					<td height="30" valign="bottom"><a
+																						href="Houseview2_Mar12" target="_blank"><img
+																							src="{!URLFOR($Resource.images,'images/ReadMore.gif')}" width="83" height="22"
+																							border="0" title="Read More" />
+																					</a>
+																					</td>
+																				</tr>
+																			</table>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+
+														<tr>
+															<td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" 
+																width="9" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table> <br />
+
+										<table width="50%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td><img src="{!URLFOR($Resource.images,'images/newsH.gif')}" width="470" height="40" />
+												</td>
+											</tr>
+											<tr>
+												<td><table width="100%" border="0" cellpadding="0"
+														cellspacing="0">
+														<tr>
+															<td width="9" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="205" />
+															</td>
+															<td width="8" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" />
+															</td>
+
+															<td valign="top"><table width="98%" border="0"
+																	cellpadding="0" cellspacing="0">
+																	<tr>
+																		<td width="50%" valign="top"><table width="100%"
+																				border="0" cellpadding="0" cellspacing="0">
+																				<tr>
+																					<td colspan="2" valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#683400" style="font-size: 14px;"><strong><em>NATIONAL
+																									NEWS</em>
+																						</strong>
+																					</font>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td colspan="2" valign="top"><img
+																						src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="5" />
+																					</td>
+
+																				</tr>
+																				<tr>
+																					<td height="20" valign="top"><img
+																						src="{!URLFOR($Resource.images,'images/bullate.gif')}" width="12" height="10"
+																						hspace="8" vspace="2" />
+																					</td>
+																					<td height="35" valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#333333" style="font-size: 12px;"><a
+																							href="http://articles.economictimes.indiatimes.com/2012-02-06/news/31030598_1_fraud-or-suppression-health-insurance-claim-procedure"
+																							target="_blank">Buying a health insurance
+																								cover? Don’t skip the medical test</a>
+																					</font>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td valign="top"><img src="{!URLFOR($Resource.images,'images/bullate.gif')}"
+																						width="12" height="10" hspace="8" vspace="2" />
+																					</td>
+																					<td height="35" valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#333333" style="font-size: 12px;"><a
+																							href="http://articles.economictimes.indiatimes.com/2012-02-07/news/31034150_1_ulips-insurance-agents-unit-linked-insurance-plan"
+																							target="_blank">Four sales pitches by
+																								insurance agents that you mustn't fall for</a>
+																					</font>
+																					</td>
+
+																				</tr>
+																				<tr>
+																					<td valign="top"><img src="{!URLFOR($Resource.images,'images/bullate.gif')}"
+																						width="12" height="10" hspace="8" vspace="2" />
+																					</td>
+																					<td height="35" valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#333333" style="font-size: 12px;"><a
+																							href="http://www.business-standard.com/india/news/hiv-patients-unlikely-to-get-adequate-cover/464232/"
+																							target="_blank">HIV patients unlikely to get
+																								adequate cover</a>
+																					</font>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td valign="top"><img src="{!URLFOR($Resource.images,'images/bullate.gif')}"
+																						width="12" height="10" hspace="8" vspace="2" />
+																					</td>
+																					<td height="20" valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#333333" style="font-size: 12px;"><a
+																							href="http://www.business-standard.com/india/news/small-investors-stand-to-gain/464231/"
+																							target="_blank">Small investors stand to gain</a>
+																					</font>
+																					</td>
+
+																				</tr>
+																				<tr>
+																					<td valign="top"><img src="{!URLFOR($Resource.images,'images/bullate.gif')}"
+																						width="12" height="10" hspace="8" vspace="2" />
+																					</td>
+																					<td valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#333333" style="font-size: 12px;"><a
+																							href="http://articles.economictimes.indiatimes.com/2012-02-14/news/31059320_1_commodity-funds-commodity-prices-ing-investment-management-india"
+																							target="_blank">Why commodities are must in
+																								your portfolio</a>
+																					</font>
+																					</td>
+																				</tr>
+																			</table>
+																		</td>
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																			width="8" height="1" />
+																		</td>
+																		<td valign="top" bgcolor="#BD6105"><img
+																			src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+																		</td>
+
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																			width="8" height="1" />
+																		</td>
+																		<td width="50%" valign="top"><table width="100%"
+																				border="0" cellpadding="0" cellspacing="0">
+																				<tr>
+																					<td colspan="2" valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#683400" style="font-size: 14px;"><strong><em>INTERNATIONAL
+																									NEWS</em>
+																						</strong>
+																					</font>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td colspan="2" valign="top"><img
+																						src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="5" />
+																					</td>
+																				</tr>
+
+																				<tr>
+																					<td width="1%" height="20" valign="top"><img
+																						src="{!URLFOR($Resource.images,'images/bullate.gif')}" width="12" height="10"
+																						hspace="8" vspace="2" />
+																					</td>
+																					<td height="35" valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#333333" style="font-size: 12px;"><a
+																							href="http://online.wsj.com/article/SB10001424052970204662204577201751197496914.html"
+																							target="_blank">Itchy Investors Ramp Up the
+																								Risk</a>
+																					</font>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td width="1%" valign="top"><img
+																						src="{!URLFOR($Resource.images,'images/bullate.gif')}" width="12" height="10"
+																						hspace="8" vspace="2" />
+																					</td>
+																					<td height="20" valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#333333" style="font-size: 12px;"><a
+																							href="http://online.wsj.com/article/SB30001424052970203833004577247213357570048.html"
+																							target="_blank">Investors Gain Taste for
+																								'Junk'</a>
+																					</font>
+																					</td>
+																				</tr>
+
+																				<tr>
+																					<td width="1%" valign="top"><img
+																						src="{!URLFOR($Resource.images,'images/bullate.gif')}" width="12" height="10"
+																						hspace="8" vspace="2" />
+																					</td>
+																					<td height="35" valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#333333" style="font-size: 12px;"><a
+																							href="http://online.wsj.com/article/SB10001424052970203646004577215492891226810.html?mod=googlenews_wsj"
+																							target="_blank">Data Give Investors Courage
+																								to 'Fight Fed'</a>
+																					</font>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td width="1%" valign="top"><img
+																						src="{!URLFOR($Resource.images,'images/bullate.gif')}" width="12" height="10"
+																						hspace="8" vspace="2" />
+																					</td>
+																					<td height="35" valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#333333" style="font-size: 12px;"><a
+																							href="http://online.wsj.com/article/SB10001424052970204062704577221482793236836.html"
+																							target="_blank">For Bond Investors, Bigger Is
+																								Better</a>
+																					</font>
+																					</td>
+																				</tr>
+
+																				<tr>
+																					<td valign="top"><img src="{!URLFOR($Resource.images,'images/bullate.gif')}"
+																						width="12" height="10" hspace="8" vspace="2" />
+																					</td>
+																					<td height="35" valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#333333" style="font-size: 12px;"><a
+																							href="http://online.wsj.com/article/SB10001424052970204062704577222902312816094.html"
+																							target="_blank">Mining Investors Can Take
+																								Their Pick</a>
+																					</font>
+																					</td>
+																				</tr>
+
+																			</table>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+
+														<tr>
+															<td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" 
+																width="9" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table> <br />
+
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td width="50%" valign="top"><table width="50%"
+														border="0" cellspacing="0" cellpadding="0">
+														<tr>
+															<td><img src="{!URLFOR($Resource.images,'images/whatsnewH.gif')}" width="235"
+																height="40" />
+															</td>
+														</tr>
+														<tr>
+															<td><table width="100%" border="0" cellpadding="0"
+																	cellspacing="0">
+																	<tr>
+
+																		<td width="9" valign="top"><img
+																			src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="225" />
+																		</td>
+																		<td width="8" valign="top"><img
+																			src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" />
+																		</td>
+																		<td valign="top"><table width="98%" border="0"
+																				cellpadding="0" cellspacing="0">
+																				<tr>
+																					<td valign="top"><font
+																						face="Arial, Helvetica, sans-serif"
+																						color="#683400" style="font-size: 14px;"><strong><em>3
+																									years of Freedom…</em>
+																						</strong>
+																					</font>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																						width="1" height="5" />
+																					</td>
+
+																				</tr>
+																				<tr>
+																					<td valign="top"><div align="justify">
+																							<font face="Arial, Helvetica, sans-serif"
+																								color="#333333" style="font-size: 12px;">It
+																								is a proud moment for us at Ffreedom, as we
+																								complete three years and embark on to the
+																								fourth. Ffreedom Financial Planners was
+																								established to offer the financial planning
+																								service in India, a service which was
+																								non-existent until 2009. In the last three
+																								years, while Ffreedom graduated from being a 5
+																								member team to 50 member team, the financial
+																								planning industry too has grown and matured.
+																								Today...</font>
+																						</div>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td height="30" valign="bottom"><a
+																						href="WhatsNew_Mar12" target="_blank"><img
+																							src="{!URLFOR($Resource.images,'images/ReadMore.gif')}" width="83" height="22"
+																							border="0" title="Read More" />
+																					</a>
+																					</td>
+																				</tr>
+																			</table>
+																		</td>
+
+																	</tr>
+																	<tr>
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" 
+																			width="9" height="1" />
+																		</td>
+																		<td valign="top" bgcolor="#BD6105"><img
+																			src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+																		</td>
+																		<td valign="top" bgcolor="#BD6105"><img
+																			src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+
+												<td width="50%" valign="top"><table width="50%"
+														border="0" cellspacing="0" cellpadding="0">
+														<tr>
+															<td><img src="{!URLFOR($Resource.images,'images/Poll1.gif')}" width="235"
+																height="40" />
+															</td>
+														</tr>
+														<tr>
+															<td><table width="100%" border="0" cellpadding="0"
+																	cellspacing="0">
+																	<tr>
+																		<td width="9" valign="top"><img
+																			src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="225" />
+																		</td>
+																		<td width="8" valign="top"><img
+																			src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" />
+																		</td>
+
+																		<td valign="top"><table width="98%" border="0"
+																				cellpadding="0" cellspacing="0">
+																				<tr>
+																					<td valign="top"><script
+																							type="text/javascript"
+																							src="http://www.easypolls.net/ext/scripts/emPoll.js?p=4f34c0b0c2e1b0e4cc9ac294"></script><a
+																						class="OPP-powered-by"
+																						href="http://www.objectplanet.com/opinio/"
+																						style="text-decoration: none;"></a>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td valign="top">&nbsp;</td>
+																				</tr>
+																			</table>
+																		</td>
+
+																	</tr>
+																	<tr>
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" 
+																			width="9" height="1" />
+																		</td>
+																		<td valign="top" bgcolor="#BD6105"><img
+																			src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+																		</td>
+																		<td valign="top" bgcolor="#BD6105"><img
+																			src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+
+											</tr>
+										</table></td>
+									<td width="5%" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+										width="10" height="1" />
+									</td>
+									<td width="25%" valign="top"><table width="50%" border="0"
+											cellspacing="0" cellpadding="0">
+											<tr>
+												<td><img src="{!URLFOR($Resource.images,'images/FNewsH.gif')}" width="243"
+													height="40" />
+												</td>
+											</tr>
+											<tr>
+
+												<td><table width="100%" border="0" cellpadding="0"
+														cellspacing="0">
+														<tr>
+															<td width="9" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1080" />
+															</td>
+															<td width="8" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" />
+															</td>
+															<td valign="top"><table width="98%" border="0"
+																	cellpadding="0" cellspacing="0">
+																	<tr>
+																		<td valign="top"><font
+																			face="Arial, Helvetica, sans-serif" color="#333333"
+																			style="font-size: 12px;"><strong>Think
+																					beyond insurance, plan now</strong>
+																		</font>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																			width="1" height="5" />
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"><div align="justify">
+																				<font face="Arial, Helvetica, sans-serif"
+																					color="#333333" style="font-size: 12px;">Recently
+																					there was an interesting article about a lot of
+																					Europeans and Americans looking at relocating to
+																					smaller towns in India, like Goa and
+																					Pondicherry....</font>
+																			</div>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td height="30" valign="bottom"><a
+																			href="http://www.indianexpress.com/news/think-beyond-insurance-plan-now/908268/"
+																			target="_blank"><img src="{!URLFOR($Resource.images,'images/ReadMore.gif')}"
+																				width="83" height="22" border="0" title="Read More" />
+																		</a>
+																		</td>
+
+																	</tr>
+																	<tr>
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																			width="1" height="10" />
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td valign="top"><font
+																			face="Arial, Helvetica, sans-serif" color="#333333"
+																			style="font-size: 12px;"><strong>Romancing
+																					with financial planning</strong>
+																		</font>
+																		</td>
+																	</tr>
+																	<tr>
+
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																			width="1" height="5" />
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"><div align="justify">
+																				<font face="Arial, Helvetica, sans-serif"
+																					color="#333333" style="font-size: 12px;">On
+																					the occasion of Valentine’s day last week, our
+																					entire workplace was caught in a discussion about a
+																					remark made by a colleague who said that
+																					financial....</font>
+																			</div>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td height="30" valign="bottom"><a
+																			href="http://www.indianexpress.com/news/romancing-with-financial-planning/914117/"
+																			target="_blank"><img src="{!URLFOR($Resource.images,'images/ReadMore.gif')}"
+																				width="83" height="22" border="0" title="Read More" />
+																		</a>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																			width="1" height="10" />
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td valign="top"><font
+																			face="Arial, Helvetica, sans-serif" color="#333333"
+																			style="font-size: 12px;"><strong>Start
+																					a recurring deposit to gain from high interest
+																					rates </strong>
+																		</font>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																			width="1" height="5" />
+																		</td>
+
+																	</tr>
+																	<tr>
+																		<td valign="top"><div align="justify">
+																				<font face="Arial, Helvetica, sans-serif"
+																					color="#333333" style="font-size: 12px;">With
+																					interest rates almost at their peak, it is the
+																					right time to lock your funds in good debt
+																					instruments. But what if you don't have a lump sum
+																					to invest...</font>
+																			</div>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td height="30" valign="bottom"><a
+																			href="http://articles.economictimes.indiatimes.com/2012-02-20/news/31079671_1_interest-rates-deposit-savings-account"
+																			target="_blank"><img src="{!URLFOR($Resource.images,'images/ReadMore.gif')}"
+																				width="83" height="22" border="0" title="Read More" />
+																		</a>
+																		</td>
+																	</tr>
+																	<tr>
+
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																			width="1" height="10" />
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"><font
+																			face="Arial, Helvetica, sans-serif" color="#333333"
+																			style="font-size: 12px;"><strong>
+																					Don't invest to save tax </strong>
+																		</font>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																			width="1" height="5" />
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td valign="top"><div align="justify">
+																				<font face="Arial, Helvetica, sans-serif"
+																					color="#333333" style="font-size: 12px;">Rajiv
+																					Goel, chief executive, Bombay Capital Services,
+																					gets quite exasperated with clients. "We keep
+																					reminding them to plan in advance," he says,...</font>
+																			</div>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td height="30" valign="bottom"><a
+																			href="http://business-standard.com/india/news/dont-invest-to-save-tax/465368/"
+																			target="_blank"><img src="{!URLFOR($Resource.images,'images/ReadMore.gif')}"
+																				width="83" height="22" border="0" title="Read More" />
+																		</a>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																			width="1" height="10" />
+																		</td>
+
+																	</tr>
+																	<tr>
+																		<td valign="top"><font
+																			face="Arial, Helvetica, sans-serif" color="#333333"
+																			style="font-size: 12px;"><strong>
+																					Single parents and finances</strong>
+																		</font>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}"
+																			width="1" height="5" />
+																		</td>
+																	</tr>
+																	<tr>
+
+																		<td valign="top"><div align="justify">
+																				<font face="Arial, Helvetica, sans-serif"
+																					color="#333333" style="font-size: 12px;">A
+																					few years ago, I met a single father who asked me
+																					if it would be too late to start a financial plan
+																					for his daughter after the demise of his wife.
+																					His...</font>
+																			</div>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td height="40" valign="middle">
+																			<a href="http://www.indianexpress.com/news/single-parents-and-finances/916996/" target="_blank">
+																				<img src="{!URLFOR($Resource.images,'images/ReadMore.gif')}" width="83" height="22" border="0" title="Read More" />
+																			</a>
+																		</td>
+																	</tr>
+
+<!-- 																	<tr> -->
+<!-- 																		<td valign="top">&nbsp;</td> -->
+<!-- 																	</tr> -->
+
+																	<tr>
+																		<td valign="top">
+																			<iframe width="219" height="190" src="http://www.youtube.com/embed/tWMKaWm7sO0" frameborder="1" allowfullscreen="allowfullscreen"></iframe>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td height="20" valign="top">
+																			<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;">
+																				<a href="http://www.youtube.com/watch?feature=player_embedded&v=tWMKaWm7sO0" target="_blank">Click here to view CNBC Aawaz - I </a>
+																			</font>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top">
+																			<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="5" />
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top">
+																			<iframe width="219" height="190" src="http://www.youtube.com/embed/OEo_lWdctoc" frameborder="1" allowfullscreen="allowfullscreen"></iframe>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td height="20" valign="top">
+																			<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;">
+																				<a href="http://www.youtube.com/watch?feature=player_embedded&v=OEo_lWdctoc" target="_blank">Click here to view CNBC Aawaz - II </a>
+																			</font>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td height="20" valign="bottom">
+																			<a href="http://www.youtube.com/user/ffreedomtube" target="_blank">
+																				<img src="{!URLFOR($Resource.images,'images/ViewMore.gif')}" width="83" height="22" border="0" />
+																			</a>
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+														<tr>
+															<td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" 
+																width="9" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table> <br />
+										<table width="50%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td><img src="{!URLFOR($Resource.images,'images/funnyH.gif')}" width="243"
+													height="40" />
+												</td>
+
+											</tr>
+											<tr>
+												<td><table width="100%" border="0" cellpadding="0"
+														cellspacing="0">
+														<tr>
+															<td width="9" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="240" />
+															</td>
+															<td width="8" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" />
+															</td>
+															<td valign="top"><table width="90%" border="0"
+																	align="center" cellpadding="0" cellspacing="0">
+
+																	<tr>
+																		<td valign="top"><div align="center">
+																				<font face="Arial, Helvetica, sans-serif"
+																					color="#333333" style="font-size: 12px;">A
+																					professor was giving a big <br /> test one day to
+																					his students. <br /> He handed out all of the
+																					tests <br /> and went back to his desk to wait. <br />
+																					Once the test was over <br /> the students all
+																					handed <br /> the tests back in. <br /> The
+																					professor noticed that one <br /> of the students
+																					had attached <br /> a $100 bill to his test with a
+																					<br /> note saying "A dollar per point." <br />
+																					In the next class the professor <br /> handed the
+																					graded tests back out. <br /> This student got
+																					back his test, <br /> his test grade, and $64
+																					change.</font>
+																			</div>
+																		</td>
+																	</tr>
+
+
+																</table>
+															</td>
+														</tr>
+
+														<tr>
+															<td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" 
+																width="9" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table></td>
+
+								</tr>
+								<tr>
+									<td width="70%" valign="top">&nbsp;</td>
+									<td width="5%" valign="top">&nbsp;</td>
+									<td width="25%" valign="top">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td><table width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+						<td valign="top"><table width="98%" border="0" align="center"
+								cellpadding="0" cellspacing="0">
+
+								<tr>
+									<td width="76%" height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#035728"
+										style="font-size: 13px;"><strong>Ffreedom
+												Financial Planners</strong>
+									</font>
+									</td>
+
+									<td width="24%" rowspan="3"><table border="0"
+											align="center" cellpadding="0" cellspacing="0">
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong>
+															Follow us on&nbsp;&nbsp;&nbsp;</strong>
+												</font>
+												</td>
+												<td><a href="http://www.facebook.com/Ffreedom"
+													target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20"
+														height="20" border="0" />
+												</a><a href="http://twitter.com/_Ffreedom" target="_blank"><img
+														src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6"
+														border="0" />
+												</a><a
+													href="http://www.linkedin.com/companies/ffreedom-financial-planners"
+													target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}"
+														width="20" height="20" border="0" />
+												</a>
+												</td>
+											</tr>
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong>Watch
+															us on</strong>
+												</font>
+												</td>
+
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong><a
+															href="http://www.youtube.com/user/ffreedomtube"
+															target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}"
+																width="20" height="20" vspace="6" border="0" />
+														</a>
+													</strong>
+												</font>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">506 / 507, Morya Landmark II,
+											Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font>
+									</td>
+								</tr>
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">Boardline: +91 22 4222 4333
+											&nbsp;|&nbsp; Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a
+											href="mailto:contact@ffreedom.in">contact@ffreedom.in</a>
+											&nbsp;|&nbsp; <a href="http://www.ffreedom.in"
+											target="_blank">www.ffreedom.in</a>
+									</font>
+									</td>
+
+								</tr>
+								<tr>
+									<td colspan="2" valign="top"><div align="justify">
+											<font face="Arial, Helvetica, sans-serif" color="#333333"
+												style="font-size: 11px;">Disclaimer: This
+												communication from Ffreedom provides general information
+												existing at the time of preparation. This mailer is intended
+												as a news update and Ffreedom Financial Planners neither
+												assumes nor accepts any responsibility for any loss arising
+												to any person acting or refraining from acting as a result
+												of any material contained in this communication. It is
+												recommended that professional advice be taken based on the
+												specific facts and circumstances. This communication does
+												not substitute the need to refer to the original
+												pronouncements.</font>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+
+		</tr>
+		<tr>
+			<td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" />
+			</td>
+		</tr>
+	</table>
+</body>
+	</html>
+</apex:page>

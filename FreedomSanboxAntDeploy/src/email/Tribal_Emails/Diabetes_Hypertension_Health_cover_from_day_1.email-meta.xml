@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Diabetes &amp; Hypertension - Health cover from day 1</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Diabetes &amp; Hypertension - Health cover from day 1</name>
+    <style>none</style>
+    <subject>Diabetes &amp; Hypertension - Health cover from day 1</subject>
+    <textOnly>Dear
+
+People with diabetes, who are considered &apos;high-risk category&apos; by health insurance providers often, find it difficult to get proper medical insurance cover. Now they have options to choose from. Until recently, Diabetes Safe from Star Health Insurance was the only specialized Comprehensive health plan available for people suffering from this condition. Now, another standalone health insurer, Apollo Munich Health Insurance ( AMHI) is all set to the offer 65 million diabetic patients in India with another option called “Energy” a Specialized plan for individuals living with diabetes type 2 and/or hypertension.
+
+Energy is a unique wellness management plan for individuals with Type 2 Diabetes Mellitus, Impaired Fasting Glucose (IFG), Impaired Glucose Tolerance (IGT) and/or Hypertension that not only covers you in case of hospitalization but also provides a health eco-system to help manage your health better. The plan offers you
+
+Comprehensive health coverage
+
+Day 1 coverage for all hospitalization arising out of Diabetes and Hypertension (with no waiting period)
+Inpatient hospitalization coverage with no sub-limits, including coverage for pre and post hospitalization
+Sum insured options ranging from 2 lacs to 10 lacs
+
+Health management with a health reward program
+
+An optional diagnostic monitoring program which includes a doctor consultation, to monitor and manage your health
+Wellness incentives are offered on good health management through premium discounts and additional coverage for any health expenses
+
+Support through a health eco-system
+
+A personalized health coach to help guide you throughout your journey towards a healthy &amp; active lifestyle and also support you with personalized diet and fitness plans
+An access to a wellness portal that conducts an HRA, tracks your medical values, stores medical records, provides offers for health service and products.
+Access to a centralized helpline to answer any queries you may have
+A health market place which offers you healthy discounts on health merchandise, pharmacies, health foods, medical equipment’s like glucometers etc
+
+Variants offered under the plan
+
+Gold: The product variant that includes the cost of the diagnostic monitoring program along with a doctor consultation
+Silver: The product variant that does not include the cost of the diagnostic monitoring program along with a doctor consultation
+Both variants of the policy offer an optional copay of 20%
+
+Other Features-
+
+Energy also has additional features that further enhances the offering
+Lifelong Renewal: Stay covered lifelong and renew to monitor your health.
+No Sublimit on Room Rent: With this health plan you can get the room you like and the treatment you deserve without a hassle.
+Cashless Transactions: Energy enables you to get treated on a cashless basis across 4000 hospitals in over 800 cities.
+No Geography Based Sub-Limits: No matter where you buy your policy you can get treated in any city or hospital you like in the country with no additional copays or sub-limits.
+No Additional Loadings at Renewal Due to Claims: We will never load your renewal premium because you claimed or fell ill after taking our policy.
+Tax benefits: You can avail tax benefits for the premium amount under Section 80 D of the Income Tax Act.(Tax benefits are subject to changes in tax laws.)
+
+For more information please get in touch with your financial Planner or write us on kiran.n@ffreedom.in
+
+Regards,
+
+Team Ffreedom</textOnly>
+    <type>custom</type>
+</EmailTemplate>

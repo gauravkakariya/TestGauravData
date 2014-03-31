@@ -1,0 +1,654 @@
+<!-- 
+    Version     Version Author     Date          Comments
+    1.0         Anupam      11/01/2013      Displays ET page for Operation Team with all consolidated view
+-->
+<apex:page standardController="Account" extensions="ExecutionTrackerForOpsTeamController" sidebar="false">
+	<apex:sectionHeader title="Execution Tracker" />
+	<apex:pageMessages id="messages"/>
+	<script>
+		var curPopupWindow;
+		/* Aditi - ET Screen Enhancement - 15-03-2013 */
+		function openEditExecutionTrackerforLifeInsurance(eId, valType)
+		{
+			url = 'EditETforLifeInsurance?etid='+ eId +'&type=' + valType;
+			openWindow(url);
+			return false;
+		}
+		/* Aditi - ET Screen Enhancement - 19-03-2013 */
+		function openEditExecutionTrackerforGeneralInsurance(eId, valType)
+		{
+			url = 'EditETforGeneralInsurance?etid='+ eId +'&type=' + valType;
+			openWindow(url);
+			return false;
+		} 
+		
+		/* Aditi - ET Screen Enhancement - 20-03-2013 */
+		function openEditSTPExecutionTracker(etId,valType,eId,userType)
+		{
+			url = 'EditETforSTP?etid='+ etId +'&type=' + valType+'&eid='+ eId+'&userType='+userType;
+			openWindow(url);
+			return false;
+		}
+		
+		/* Aditi - ET Screen Enhancement - 26-03-2013 */
+		function openEditSwitchExecutionTracker(etId,valType,eId,userType)
+		{
+			url = 'EditETforSwitch?etid='+ etId +'&type=' + valType+'&eid='+ eId+'&userType='+userType;
+			openWindow(url);
+			return false;
+		}
+		
+		/* Aditi - ET Screen Enhancement - 29-03-2013 */
+		function openEditRedemptionExecutionTracker(etId,valType,eId,userType)
+		{
+			url = 'EditETforRedemption?etid='+ etId +'&type=' + valType+'&eid='+ eId+'&userType='+userType;
+			openWindow(url);
+			return false;
+		}
+		
+		/* Aditi - ET Screen Enhancement - 01-04-2013 */
+		function openEditHoldCOBExecutionTracker(etId,valType,eId,userType)
+		{
+			url = 'EditETforHoldCOB?etid='+ etId +'&type=' + valType+'&eid='+ eId+'&userType='+userType;
+			openWindow(url);
+			return false;
+		}
+		
+		function openWindow(URL)
+		{
+			if(curPopupWindow != null)
+			{	
+				curPopupWindow.close();
+				curPopupWindow  = window.open(URL, "_blank","width=650, height=600,dependent=no,toolbar=no,status=no,directories=no,menubar=no,scrollbars=1,resizable=yes", true);
+			}
+			else
+				curPopupWindow  = window.open(URL, "_blank","width=650, height=600,dependent=no,toolbar=no,status=no,directories=no,menubar=no,scrollbars=1,resizable=yes", true);
+		} 	
+		
+		function closeETWindow()
+		{
+			curPopupWindow.close();
+		} 
+		
+		//called on mouseout event and assign id of current cell to local variable.
+    	function hideAddContact(contactCell)
+    	{	
+    	
+    		if (contactCell.substring(0,8) == 'td____Id' && document.getElementById(contactCell).children.length == 1   )
+    		{	    			  	
+    			//alert('Hide If');		
+    			tempId = contactCell;
+    		} 
+    		else if(tempId != null)
+    		{
+    			//alert('Hide else');
+    			document.getElementById(tempId).innerHTML ='';
+    		}   			    			
+    	}	
+    	
+    	
+    	//remove button     	
+    	function removeButton(a)
+    	{
+    		if(a == null && tempId != null)
+    		{
+    		 	//alert('remove If');
+    			document.getElementById(tempId).innerHTML ='';
+    		}	    		
+     	}	
+     	function attributeSet(){
+			//alert();
+			document.getElementById('j_id0:formId:j_id29:j_id30:j_id31').disabled = "disabled";
+			document.getElementById('j_id0:formId:j_id29:j_id30:j_id31').className = "btnDisabled";
+			document.getElementById('j_id0:formId:j_id29:j_id30:bottom:j_id31').disabled = "disabled";
+			document.getElementById('j_id0:formId:j_id29:j_id30:bottom:j_id31').className = "btnDisabled";
+		}
+		
+		function attributeReset(){
+			//alert();
+			document.getElementById('j_id0:formId:j_id29:j_id30:j_id31').disabled = "";
+			document.getElementById('j_id0:formId:j_id29:j_id30:j_id31').className = "btn";
+			document.getElementById('j_id0:formId:j_id29:j_id30:bottom:j_id31').disabled = "";
+			document.getElementById('j_id0:formId:j_id29:j_id30:bottom:j_id31').className = "btn";
+// 			Prod Id : j_id0:formId:j_id30:j_id31:j_id32
+// 			Prod Id : j_id0:formId:j_id30:j_id31:bottom:j_id32
+		}
+	</script>
+	
+	
+	<apex:form id="formId"> 
+	<style>
+			#filterTable td
+			{
+				white-space:nowrap; 				
+				vertical-align:middle;
+				padding-left:30px;
+			}			
+			th
+			{
+				vertical-align:middle;
+			}
+			.rowHieght
+			{
+				height:35px;
+			}
+			.tableCls
+			{
+				padding:0px;
+				border:0px;
+				border-collapse:collapse;
+				width:200%;
+			}
+			 div .centerButtons
+			{
+				width : 100%;
+				text-align:center;
+				padding-bottom: 5px;
+				
+			}
+			span .space
+			{
+				padding-left: 20px;
+				padding-right:10px;
+			}
+			.firmTypeColumn td
+			{
+				width: 200px;	
+			}
+			.jobRoleColumn td
+			{
+				width: 150px;
+			}
+			.currency 
+			{
+				text-align:right;
+			}	
+			span .jobRoleName
+			{				
+				padding-left:5px;
+				padding-right:17px;
+			}
+			.break
+		    {
+				display:block;
+				padding-bottom :10px;
+		    }
+		</style>
+	
+		<apex:pageBlock >
+			<apex:pageBlockButtons >	
+				<apex:commandButton value="Save" action="{!updateExecutionTracker}" rerender="formId, messages" status="statusId"/>
+				<apex:commandButton value="Cancel" action="{!cancel}" />
+				<apex:actionStatus stopText="" id="statusId" onstart="attributeSet();" onstop="attributeReset();">
+                	<apex:facet name="start">
+               			<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                    		<img src="/img/loading.gif" width="16" height="16"/>
+						</apex:outputPanel>
+                	</apex:facet>
+        		</apex:actionStatus>
+			</apex:pageBlockButtons>
+			
+        	
+        	  
+		 	<apex:repeat value="{!lstExecutionTrackerGroupDetail}" var="executionTrackerDetail">
+		 	
+<!-- 		 		<apex:pageBlockSection title="{!executionTrackerDetail.schemeNameOrPolicyName}" columns="1"> -->
+		 		<apex:pageBlockSection title="{!executionTrackerDetail.schemeNameOrPolicyName}" columns="1">	
+		 			<apex:outputPanel rendered="{!!executionTrackerDetail.isInsurance && !executionTrackerDetail.isAddOn}">
+			 			<table width="100%">
+			 				<tr width="100%">
+<!-- 					 			<td width="30%"><b>Total Suggested Amount :</b> {!executionTrackerDetail.totalSuggestedAmount}</td> -->
+								<td width="30%"><b>Total Balance Remaining :</b> {!executionTrackerDetail.totalRemainingBalance}</td>
+					 			<td width="30%"><b>First Holder :</b> {!executionTrackerDetail.firstHolderName}</td>
+				 				<td width="40%"><b>Second Holder :</b> {!executionTrackerDetail.secondHolderName}</td>
+			 				</tr>
+			 				<tr width="100%">
+			 					<apex:outputPanel rendered="{!IF(executionTrackerDetail.strTransactionType != null,true,false)}">
+				 					<td width="30%"><b>Transaction Type :</b> {!executionTrackerDetail.strTransactionType}</td>
+				 					<td width="30%"><b>Installments :</b> {!executionTrackerDetail.installments}</td>
+				 					<td width="40%"></td>
+				 				</apex:outputPanel>
+			 				</tr>
+		 				</table>
+	 				</apex:outputPanel> 
+	 				<apex:outputPanel rendered="{!executionTrackerDetail.isInsurance}">
+			 			<table width="100%">
+			 				<tr width="100%"> 
+<!-- 					 			<td width="30%"><b>Total Suggested Amount :</b> {!executionTrackerDetail.totalSuggestedAmount}</td> -->
+								<apex:outputText rendered="{!IF((executionTrackerDetail.totalRemainingBalance != 0 && executionTrackerDetail.totalRemainingBalance != null),true,false)}">
+									<td width="30%"><b>Total Balance Remaining :</b> {!executionTrackerDetail.totalRemainingBalance}</td>
+								</apex:outputText>
+					 			<td width="30%"><b>Insured Name :</b> {!executionTrackerDetail.firstHolderName}</td>
+					 			<td width="40%"></td>
+			 				</tr>
+		 				</table>
+	 				</apex:outputPanel>
+	 				<apex:outputPanel rendered="{!executionTrackerDetail.isAddOn}">
+			 			<table width="100%">
+			 				<tr width="100%"> 
+					 			<td width="30%"><b>Applicant :</b> {!executionTrackerDetail.firstHolderName}</td>
+			 				</tr>
+		 				</table>
+	 				</apex:outputPanel>
+	 				<apex:outputPanel layout="inline">
+	 				<apex:repeat value="{!executionTrackerDetail.lstExecutionTrackerDetail}" var="rec">
+	 					<table width="100%" class="list tableCls" id="tableId">
+	 						<thead onmouseout="removeButton(null);" onmouseover="removeButton(null);">
+			 				<tr class="headerRow">
+								<td width="15%" align="left"><b>{!IF(executionTrackerDetail.isInsurance,'Insurance Type',IF(executionTrackerDetail.isAddOn,'Other Products','Goal'))}</b></td>
+					 			<apex:outputText rendered="{!IF((rec.strType != $Label.Surrender_Insurance 
+ 									&& rec.strType != 'Loan' && rec.strType != 'Fixed Deposit' && rec.strType != 'Bond'),true,false)}">
+						 			<td width="11%" align="left"><b>Recommended Amount</b></td>
+						 			<td width="11%" align="left"><b>Balance Remaining</b> </td>
+					 				<td width="11%" align="left"><b>Agreed Amount</b> </td>
+					 				<td width="12%" align="left"><b>Executed Amount</b> </td>
+				 				</apex:outputText>
+				 				<apex:outputText rendered="{!IF((rec.strType == 'Loan' || rec.strType == 'Fixed Deposit' || rec.strType == 'Bond'),true,false)}">
+				 					<td width="11%" align="left"><b>Recommended Amount</b></td>
+					 				<td width="11%" align="left"><b>Agreed Amount</b> </td>
+					 				<td width="12%" align="left"><b>Executed Amount</b> </td>
+				 				</apex:outputText>
+				 				<td width="20%" align="left"><b>Type</b> </td>
+				 				<td width="20%" align="left"><b>Application Status</b> </td>
+				 				
+			 				</tr>
+			 				</thead>
+			 				<tbody>
+			 				<tr class="dataRow even first rowHieght"  onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onmouseover="if (window.hiOn){hiOn(this);}">
+			 					<td width="15%" align="left" class=" dataCell  ">
+			 						<apex:outputText rendered="{!IF(rec.strType == 'Life Insurance',true,false)}">
+								 	<a href="EditETforLifeInsurance?etid={!rec.executionTrackerId}&type=other&eid={!rec.entityId}" 
+									 		target="_blank" style="cursor: pointer;text-decoration:underline;" >
+										{!rec.goalName}{!IF(rec.APStatus == 'Closed',' - Old Record','')}
+								 	</a>
+									 </apex:outputText>
+									 <apex:outputText rendered="{!IF(rec.strType == 'Loan',true,false)}">
+		 								 <a href="EditETforLoan?etid={!rec.executionTrackerId}&type=other&eid={!rec.entityId}" 
+								 				target="_blank" style="cursor: pointer;text-decoration:underline;" > 
+								 		{!rec.goalName}{!IF(rec.APStatus == 'Closed',' - Old Record','')}</a>
+									 </apex:outputText>
+									 <apex:outputText rendered="{!IF(rec.strType == 'Fixed Deposit',true,false)}">
+		 								 <a href="EditETforFixedDeposit?etid={!rec.executionTrackerId}&type=other&eid={!rec.entityId}" 
+								 				target="_blank" style="cursor: pointer;text-decoration:underline;" > 
+								 		{!rec.goalName}{!IF(rec.APStatus == 'Closed',' - Old Record','')}</a>
+									 </apex:outputText>
+								 	 <apex:outputText rendered="{!IF(rec.strType == 'Bond',true,false)}">
+		 								 <a href="EditETforBond?etid={!rec.executionTrackerId}&type=other&eid={!rec.entityId}" 
+								 				target="_blank" style="cursor: pointer;text-decoration:underline;" > 
+								 		{!rec.goalName}{!IF(rec.APStatus == 'Closed',' - Old Record','')}</a>
+									 </apex:outputText>
+									 <apex:outputText rendered="{!IF(rec.strType == 'General Insurance',true,false)}">
+		 								 <a href="EditETforGeneralInsurance?etid={!rec.executionTrackerId}&type=other&eid={!rec.entityId}" 
+								 				target="_blank" style="cursor: pointer;text-decoration:underline;" > 
+								 		{!rec.goalName}{!IF(rec.APStatus == 'Closed',' - Old Record','')}</a>
+									 </apex:outputText>
+									 
+									 <apex:outputText rendered="{!IF(rec.strType == $Label.Surrender_Insurance,true,false)}">
+		 								 <a href="EditETforSurrenderLifeInsurance?etid={!rec.executionTrackerId}&type=other&eid={!rec.entityId}" 
+								 				target="_blank" style="cursor: pointer;text-decoration:underline;" > 
+								 		{!rec.goalName}{!IF(rec.APStatus == 'Closed',' - Old Record','')}</a>
+									 </apex:outputText>
+									 
+									 <apex:outputText rendered="{!IF(((rec.actionType == 'STP To') || (rec.actionType == 'Lumpsum') || (rec.actionType == 'STP From') || (rec.actionType == 'New SIP')),true,false)}">
+									 	 <a href="EditETforSTP?etid={!rec.executionTrackerId}&type={!rec.strTypeforOps}&eid={!rec.entityId}&userType=opsTeam" 
+									 	 		target="_blank" style="cursor: pointer;text-decoration:underline;"> 
+									 	 {!rec.goalName}{!IF(rec.APStatus == 'Closed',' - Old Record','')}</a>
+									 </apex:outputText> 
+									 <apex:outputText rendered="{!IF(((rec.actionType == 'Switch In') || (rec.actionType == 'Switch Out') || (rec.actionType == 'Switch To')|| (rec.actionType == 'Switch From')),true,false)}">
+										 <a href="EditETforSwitch?etid={!rec.executionTrackerId}&type={!rec.strTypeforOps}&eid={!rec.entityId}&userType=opsTeam" 
+										 			target="_blank" style="cursor: pointer;text-decoration:underline;">
+										 {!rec.goalName}{!IF(rec.APStatus == 'Closed',' - Old Record','')}</a>
+									 </apex:outputText>  
+									 <apex:outputText rendered="{!IF(((rec.actionType == 'Stop') || (rec.actionType == 'Redeem')),true,false)}"> 
+										 <a href="EditETforRedemption?etid={!rec.executionTrackerId}&type={!rec.strTypeforOps}&eid={!rec.entityId}&userType=opsTeam" target="_blank" style="cursor: pointer;text-decoration:underline;">
+										 {!rec.goalName}{!IF(rec.APStatus == 'Closed',' - Old Record','')}</a>
+									 </apex:outputText>
+						 			 <apex:outputText rendered="{!IF(((rec.actionType == 'Hold - Change of broker') ||(rec.actionType == 'Hold - COB') 
+						 			 				|| (rec.actionType == 'Hold') || (rec.actionType == 'Existing SIP - COB') 
+ 						 			 				|| (rec.actionType == 'Existing SIP- COB')||(rec.actionType == 'Existing SIP') 
+					 			 				||(rec.actionType == 'Continue')),true,false)}"> 
+<!-- 											Added on : 01/04/13 : Aditi Satpute : Purpose : Open in new Tab As per call with Vinita -->
+										<a href="EditETforHoldCOB?etid={!rec.executionTrackerId}&type={!rec.strTypeforOps}&eid={!rec.entityId}&userType=opsTeam" 
+													target="_blank" style="cursor: pointer;text-decoration:underline;">
+											 {!rec.goalName}{!IF(rec.APStatus == 'Closed',' - Old Record','')}</a>
+									 </apex:outputText>
+			 					</td>
+			 					<apex:outputText rendered="{!IF((rec.strType != $Label.Surrender_Insurance && rec.strType != 'Loan' && rec.strType != 'Fixed Deposit' && rec.strType != 'Bond'),true,false)}">
+				 					<td width="11%" align="left" class=" dataCell  ">{!rec.recommendedAmount}</td>
+<!-- 				 					<apex:outputPanel rendered="{!IF((rec.strType != 'Loan' && rec.strType != 'Fixed Deposit' && rec.strType != 'Bond'),true,false)}"> -->
+				 						<td width="11%" align="left" class=" dataCell  ">{!rec.balanceRemaining}</td>
+<!-- 				 					</apex:outputPanel> -->
+				 					<td width="11%" align="left" class=" dataCell  ">{!rec.agreedAmount}</td>
+				 					<td width="12%" align="left" class=" dataCell  ">
+				 						<apex:outputPanel rendered="{!IF((rec.strType != 'Life Insurance' && rec.strType != 'General Insurance' && 
+				 								rec.strType != $Label.Surrender_Insurance && rec.strType != 'Loan' && rec.strType != 'Fixed Deposit' && rec.strType != 'Bond'),true,false )}">
+				 								
+											<apex:inputText value="{!rec.executedAmount}" rendered="{!(((rec.applicationStatus != 'Processed' && rec.applicationStatus != 'Closed' && rec.applicationStatus != 'Rejected'
+																										&& rec.applicationStatus != 'Opened' && rec.applicationStatus != $Label.Forms_Provided)
+																										||(rec.applicationStatus == 'Processed' &&(rec.executedAmount == null || rec.executedAmount == 0))  
+	 																									|| IF(rec.executedAmount != null && rec.agreedAmount != null,rec.executedAmount > rec.agreedAmount,false)) 
+	 																									&& (rec.strType != 'Life Insurance' || rec.strType != 'General Insurance' || rec.strType != $Label.Surrender_Insurance) 
+	 																									&& rec.APStatus != 'Closed')}"/>  
+											<apex:outputText value="{!rec.executedAmount}" rendered="{!(((rec.applicationStatus == 'Closed' || (rec.applicationStatus == 'Processed' && (rec.executedAmount > 0 && rec.executedAmount <= rec.agreedAmount)) 
+	 																									|| (rec.applicationStatus == 'Rejected' && rec.executedAmount > 0)
+	 																									&&	rec.executedAmount <= rec.agreedAmount) 
+																										|| ((rec.applicationStatus == 'Opened') || (rec.applicationStatus == $Label.Forms_Provided))) 
+																										&& (rec.strType != 'Life Insurance' || rec.strType != 'General Insurance' || rec.strType != $Label.Surrender_Insurance) && rec.APStatus!= 'Closed')}"/> 
+											
+	<!-- 									To Display ET Records Executed Text Box After New AP is Generated 	 -->
+											<apex:inputText value="{!rec.executedAmount}" rendered="{!(((rec.applicationStatus != 'Processed' && rec.applicationStatus != 'Closed' && rec.applicationStatus != 'Rejected'
+																										&& rec.applicationStatus != 'Opened' && rec.applicationStatus != $Label.Forms_Provided)
+																										||(rec.applicationStatus == 'Processed' &&(rec.executedAmount == null || rec.executedAmount == 0))  
+	 																									|| IF(rec.executedAmount != null && rec.agreedAmount != null,rec.executedAmount != rec.agreedAmount,false)) 
+	 																									&& (rec.strType != 'Life Insurance' || rec.strType != 'General Insurance' || rec.strType != $Label.Surrender_Insurance) 
+	 																									&& rec.APStatus == 'Closed')}"/>
+	 																									
+											<apex:outputText value="{!rec.executedAmount}" rendered="{!(((rec.applicationStatus == 'Closed' || (rec.applicationStatus == 'Processed' && (rec.executedAmount > 0 && rec.executedAmount == rec.agreedAmount)) 
+	 																									|| (rec.applicationStatus == 'Rejected' && rec.executedAmount > 0)
+	 																									&&	rec.executedAmount <= rec.agreedAmount) 
+																										|| ((rec.applicationStatus == 'Opened') || (rec.applicationStatus == $Label.Forms_Provided))) 
+																										&& (rec.strType != 'Life Insurance' || rec.strType != 'General Insurance' || rec.strType != $Label.Surrender_Insurance) && rec.APStatus == 'Closed')}"/> 
+											
+									
+									
+				 						</apex:outputPanel>
+<!-- Commented on :26/9/13:Aditi: No need to Display any Amount for Surrender Insurance as Per cal with Kiran<apex:outputPanel rendered="{!IF(rec.strType == 'Life Insurance' || rec.strType == 'General Insurance'|| rec.strType == 'Recommended Insurance',true,false )}"> -->
+				 						<apex:outputPanel rendered="{!IF(rec.strType == 'Life Insurance' || rec.strType == 'General Insurance',true,false )}">
+				 							<apex:inputText value="{!rec.executedAmount}" rendered="{!(rec.applicationStatus != 'Processed' && rec.applicationStatus != 'Closed')|| 
+	 																						(rec.applicationStatus == 'Processed' &&(rec.executedAmount == null || rec.executedAmount == 0)) 
+	 																						|| rec.executedAmount > rec.agreedAmount
+																							&& rec.APStatus != 'Closed'}"/>
+											<apex:outputText value="{!rec.executedAmount}" rendered="{!(rec.applicationStatus == 'Closed' || (rec.applicationStatus == 'Processed' && rec.executedAmount > 0)) &&
+	 																						rec.executedAmount <= rec.agreedAmount && rec.APStatus != 'Closed'}"/>
+	 										<!-- To Display ET Records Executed Text Box After New AP is Generated 	 -->
+	 										<apex:inputText value="{!rec.executedAmount}" rendered="{!(rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Closed')
+	 																						&& (rec.executedAmount != null || rec.executedAmount > 0) 
+	 																						&& rec.executedAmount != rec.agreedAmount
+																							&& rec.APStatus == 'Closed'}"/>
+											<apex:outputText value="{!rec.executedAmount}" rendered="{!(rec.applicationStatus == 'Closed' || (rec.applicationStatus == 'Processed' && rec.executedAmount > 0)) &&
+	 																						rec.executedAmount == rec.agreedAmount && rec.APStatus == 'Closed'}"/>
+				 						</apex:outputPanel>
+				 						<apex:outputPanel rendered="{!IF(rec.strType == 'Loan' || rec.strType == 'Fixed Deposit' || rec.strType == 'Bond',true,false )}">
+				 							<apex:inputText value="{!rec.executedAmount}" rendered="{!(rec.applicationStatus != 'Processed' && rec.applicationStatus != 'Closed')|| 
+	 																						(rec.applicationStatus == 'Processed' &&(rec.executedAmount == null || rec.executedAmount == 0)) 
+																							&& rec.APStatus != 'Closed'}"/>
+											<apex:outputText value="{!rec.executedAmount}" rendered="{!(rec.applicationStatus == 'Closed' || (rec.applicationStatus == 'Processed' && rec.executedAmount > 0)) &&
+	 																						(rec.executedAmount != null || rec.executedAmount > 0) && rec.APStatus != 'Closed'}"/>
+	 										<!-- To Display ET Records Executed Text Box After New AP is Generated 	 -->
+	 										<apex:inputText value="{!rec.executedAmount}" rendered="{!(rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Closed')
+	 																						&& (rec.executedAmount != null || rec.executedAmount > 0) 
+	 																						&& rec.executedAmount != rec.agreedAmount
+																							&& rec.APStatus == 'Closed'}"/>
+											<apex:outputText value="{!rec.executedAmount}" rendered="{!(rec.applicationStatus == 'Closed' || (rec.applicationStatus == 'Processed' && rec.executedAmount > 0)) &&
+	 																						rec.executedAmount == rec.agreedAmount && rec.APStatus == 'Closed'}"/>
+				 						</apex:outputPanel>
+				 					</td>
+			 					</apex:outputText>
+			 					
+			 					
+<!-- 			 					Added separate section for Add On Products -->
+			 					<apex:outputText rendered="{!IF((rec.strType != $Label.Surrender_Insurance && (rec.strType == 'Loan' || rec.strType == 'Fixed Deposit' || rec.strType == 'Bond')),true,false)}">
+				 					<td width="11%" align="left" class=" dataCell  ">{!rec.recommendedAmount}</td>
+				 					<td width="11%" align="left" class=" dataCell  ">{!rec.agreedAmount}</td>
+				 					<td width="12%" align="left" class=" dataCell  ">
+<!-- Commented on :26/9/13:Aditi: No need to Display any Amount for Surrender Insurance as Per cal with Kiran<apex:outputPanel rendered="{!IF(rec.strType == 'Life Insurance' || rec.strType == 'General Insurance'|| rec.strType == 'Recommended Insurance',true,false )}"> -->
+			 							<apex:inputText value="{!rec.executedAmount}" rendered="{!((rec.applicationStatus == 'Opened' || rec.applicationStatus == 'Closed' || rec.applicationStatus == 'Processed' 
+			 																				|| rec.applicationStatus == 'Rejected') &&(rec.executedAmount == null || rec.executedAmount == 0) 
+			 																				|| (rec.applicationStatus == 'Opened') &&(rec.executedAmount != null || rec.executedAmount > 0)) 
+																						&& rec.APStatus != 'Closed'}"/>
+										<apex:outputText value="{!rec.executedAmount}" rendered="{!(rec.applicationStatus == 'Closed' || rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Rejected') &&
+																							(rec.executedAmount != null && rec.executedAmount > 0) && rec.APStatus != 'Closed'}"/>
+											<!-- To Display ET Records Executed Text Box After New AP is Generated 	 -->
+											<apex:inputText value="{!rec.executedAmount}" rendered="{!(rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Closed')
+																							&& (rec.executedAmount != null || rec.executedAmount > 0) 
+																							&& rec.executedAmount != rec.agreedAmount
+																						&& rec.APStatus == 'Closed'}"/>
+										<apex:outputText value="{!rec.executedAmount}" rendered="{!(rec.applicationStatus == 'Closed' || (rec.applicationStatus == 'Processed' && rec.executedAmount > 0)) &&
+ 																						rec.executedAmount == rec.agreedAmount && rec.APStatus == 'Closed'}"/>
+				 					</td>
+			 					</apex:outputText>
+			 					
+			 					
+			 					
+			 					<td width="20%" align="left" class=" dataCell  ">{!rec.strType}</td>
+			 					<td width="250px" align="left" class=" dataCell  ">
+			 						<apex:outputText style="width:200px;" rendered="{!IF((rec.strType != 'Life Insurance' && rec.strType != 'General Insurance' && rec.strType != $Label.Surrender_Insurance && rec.strType != 'Loan' && rec.strType != 'Fixed Deposit' && rec.strType != 'Bond'),true,false )}"> 
+							        	<apex:selectList style="width:200px;" value="{!rec.applicationStatus}" size="1" 
+							        			rendered="{!((((rec.applicationStatus == 'Opened' || rec.applicationStatus == $Label.Forms_Provided)
+												&& (rec.executedAmount == null || rec.executedAmount = 0.0))) 
+												&& (rec.strType != 'Life Insurance' || rec.strType != 'General Insurance' || rec.strType != 'Loan' || rec.strType != 'Fixed Deposit'|| rec.strType != 'Bond' || rec.strType != $Label.Surrender_Insurance))}"> 
+											 <apex:selectOption itemValue="Opened" itemlabel="Opened"/>
+										  	 <apex:selectOption itemValue="{!$Label.Forms_Provided}" itemlabel="{!$Label.Forms_Provided}"/>
+										</apex:selectList>
+									
+							        	<apex:selectList style="width:200px;" value="{!rec.applicationStatus}" size="1" rendered="{!((rec.applicationStatus == $Label.Forms_Handed ||
+			 				        																(rec.applicationStatus == 'Processed' && (rec.executedAmount > rec.agreedAmount 
+			 				        																|| rec.executedAmount == null || rec.executedAmount == 0))  
+			 				        																|| (rec.applicationStatus == 'Rejected' && (rec.executedAmount > rec.agreedAmount 
+							        																|| rec.executedAmount == null || rec.executedAmount == 0))) 
+							        																&& rec.APStatus != 'Closed' && (rec.strType != 'Life Insurance' || rec.strType != 'General Insurance' || rec.strType != $Label.Surrender_Insurance))}"> 
+											 <apex:selectOption itemValue="{!$Label.Forms_Handed}" itemlabel="{!$Label.Forms_Handed}"/>
+											 <apex:selectOption itemValue="Processed" itemlabel="Processed"/>
+											 <apex:selectOption itemValue="Rejected" itemlabel="Rejected"/>
+										</apex:selectList>
+										<apex:selectList style="width:200px;"  value="{!rec.applicationStatus}" size="1" rendered="{!(rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Closed' || rec.applicationStatus == 'Rejected') &&
+			 																									(rec.executedAmount <= rec.agreedAmount && rec.executedAmount != 0)  && rec.APStatus != 'Closed'}"> 
+											 <apex:selectOption itemValue="Processed" itemlabel="Processed"/>
+										  	 <apex:selectOption itemValue="Closed" itemlabel="Closed"/>
+											 <apex:selectOption itemValue="Rejected" itemlabel="Rejected"/>
+										</apex:selectList>
+										
+<!-- 									To Display ET Records Executed Text Box After New AP is Generated -->
+										<apex:selectList style="width:200px;"  value="{!rec.applicationStatus}" size="1" rendered="{!(rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Closed') &&
+			 																									(rec.executedAmount < rec.agreedAmount && rec.executedAmount != 0) && rec.APStatus == 'Closed' 
+			 																									&& (rec.strType != 'Life Insurance' || rec.strType != 'General Insurance' || rec.strType != $Label.Surrender_Insurance)}"> 
+											 <apex:selectOption itemValue="{!$Label.Forms_Handed}" itemlabel="{!$Label.Forms_Handed}"/>
+											 <apex:selectOption itemValue="Processed" itemlabel="Processed"/>
+<!-- 											 <apex:selectOption itemValue="Rejected" itemlabel="Rejected"/> -->
+										</apex:selectList>
+										<apex:selectList style="width:200px;" value="{!rec.applicationStatus}" size="1" rendered="{!((rec.applicationStatus == $Label.Forms_Handed ||
+			 				        																(rec.applicationStatus == 'Processed' && (rec.executedAmount > rec.agreedAmount 
+			 				        																|| rec.executedAmount == null || rec.executedAmount == 0))  
+			 				        																|| (rec.applicationStatus == 'Rejected' && (rec.executedAmount > rec.agreedAmount 
+							        																|| rec.executedAmount == null || rec.executedAmount == 0))) 
+							        																&& rec.APStatus == 'Closed' && (rec.strType != 'Life Insurance' || rec.strType != 'General Insurance' || rec.strType != $Label.Surrender_Insurance))}"> 
+											 <apex:selectOption itemValue="{!$Label.Forms_Handed}" itemlabel="{!$Label.Forms_Handed}"/>
+											 <apex:selectOption itemValue="Processed" itemlabel="Processed"/>
+<!-- 											 <apex:selectOption itemValue="Rejected" itemlabel="Rejected"/> -->
+										</apex:selectList>
+										<apex:selectList style="width:200px;" value="{!rec.applicationStatus}" size="1" rendered="{!(rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Closed' || rec.applicationStatus == 'Rejected') &&
+																												(rec.executedAmount == rec.agreedAmount && rec.executedAmount != 0) && rec.APStatus == 'Closed'}">  
+											 <apex:selectOption itemValue="Processed" itemlabel="Processed"/>
+											  <apex:selectOption itemValue="Closed" itemlabel="Closed"/>
+<!-- 											  <apex:selectOption itemValue="Rejected" itemlabel="Rejected"/> -->
+										</apex:selectList>
+										
+							        </apex:outputText>
+							        
+<!-- Commented on :26/9/13:Aditi: No need to Display any Amount for Surrender Insurance as Per cal with Kiran <apex:outputText rendered="{!IF(rec.strType == 'Life Insurance' || rec.strType == 'General Insurance' || rec.strType == 'Recommended Insurance',true,false )}"> -->
+							        <apex:outputText rendered="{!IF(rec.strType == 'Life Insurance' || rec.strType == 'General Insurance',true,false )}">
+							        	<apex:selectList style="width:200px;" value="{!rec.applicationStatus}" size="1" rendered="{!rec.applicationStatus == 'Opened' && (rec.executedAmount != null && rec.executedAmount > 0 || (rec.executedAmount == null || rec.executedAmount == 0)) ||
+			 				        																(rec.applicationStatus == 'Processed' && (rec.executedAmount > rec.agreedAmount 
+			 				        																|| rec.executedAmount == null || rec.executedAmount == 0)) || 
+							        																(rec.applicationStatus == 'Rejected' && (rec.executedAmount > rec.agreedAmount 
+							        																|| rec.executedAmount == null || rec.executedAmount == 0))}"> 
+											 <apex:selectOption itemValue="Opened" itemlabel="Opened"/>
+											 <apex:selectOption itemValue="Processed" itemlabel="Processed"/>
+											 <apex:selectOption itemValue="Rejected" itemlabel="Rejected"/>
+										</apex:selectList>
+										<apex:selectList style="width:200px;" value="{!rec.applicationStatus}" size="1" rendered="{!(rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Closed' || rec.applicationStatus == 'Rejected') &&
+																												(rec.executedAmount <= rec.agreedAmount && rec.executedAmount != 0) && rec.APStatus != 'Closed'}">  
+											 <apex:selectOption itemValue="Processed" itemlabel="Processed"/>
+											  <apex:selectOption itemValue="Closed" itemlabel="Closed"/>
+											  <apex:selectOption itemValue="Rejected" itemlabel="Rejected"/>
+										</apex:selectList>
+										<apex:selectList style="width:200px;" value="{!rec.applicationStatus}" size="1" rendered="{!(rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Closed') 
+																												 && rec.APStatus == 'Closed'}">
+<!-- 																												 && (rec.executedAmount == rec.agreedAmount && rec.executedAmount != 0)   -->
+											 <apex:selectOption itemValue="Processed" itemlabel="Processed"/>
+											  <apex:selectOption itemValue="Closed" itemlabel="Closed"/>
+										</apex:selectList>
+<!-- 										<apex:selectList style="width:200px;" value="{!rec.applicationStatus}" size="1" rendered="{!(rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Closed')  -->
+<!-- 																												 && rec.APStatus == 'Closed' -->
+<!-- 																												 && (rec.executedAmount != rec.agreedAmount)}">   -->
+<!-- 											 <apex:selectOption itemValue="Processed" itemlabel="Opened"/> -->
+<!-- 											  <apex:selectOption itemValue="Closed" itemlabel="Processed"/> -->
+<!-- 										</apex:selectList> -->
+				       		 		</apex:outputText>
+				       		 		
+				       		 		   <apex:outputText rendered="{!IF(rec.strType == 'Loan' || rec.strType == 'Fixed Deposit' || rec.strType == 'Bond',true,false )}">
+							        	<apex:selectList style="width:200px;" value="{!rec.applicationStatus}" size="1" rendered="{!rec.applicationStatus == 'Opened' && (rec.executedAmount != null && rec.executedAmount > 0 || (rec.executedAmount == null || rec.executedAmount == 0)) ||
+			 				        																(rec.applicationStatus == 'Processed' && (rec.executedAmount == null || rec.executedAmount == 0)) || 
+							        																(rec.applicationStatus == 'Rejected' && (rec.executedAmount == null || rec.executedAmount == 0))}"> 
+											 <apex:selectOption itemValue="Opened" itemlabel="Opened"/>
+											 <apex:selectOption itemValue="Processed" itemlabel="Processed"/>
+											 <apex:selectOption itemValue="Rejected" itemlabel="Rejected"/>
+										</apex:selectList>
+										<apex:selectList style="width:200px;" value="{!rec.applicationStatus}" size="1" rendered="{!(rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Closed' || rec.applicationStatus == 'Rejected') &&
+																												(rec.executedAmount > 0 && rec.executedAmount != null) && rec.APStatus != 'Closed'}">  
+											 <apex:selectOption itemValue="Processed" itemlabel="Processed"/>
+											  <apex:selectOption itemValue="Closed" itemlabel="Closed"/>
+											  <apex:selectOption itemValue="Rejected" itemlabel="Rejected"/>
+										</apex:selectList>
+										<apex:selectList style="width:200px;" value="{!rec.applicationStatus}" size="1" rendered="{!(rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Closed') 
+																												 && rec.APStatus == 'Closed'}">
+<!-- 																												 && (rec.executedAmount == rec.agreedAmount && rec.executedAmount != 0)   -->
+											 <apex:selectOption itemValue="Processed" itemlabel="Processed"/>
+											  <apex:selectOption itemValue="Closed" itemlabel="Closed"/>
+										</apex:selectList>
+<!-- 										<apex:selectList style="width:200px;" value="{!rec.applicationStatus}" size="1" rendered="{!(rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Closed')  -->
+<!-- 																												 && rec.APStatus == 'Closed' -->
+<!-- 																												 && (rec.executedAmount != rec.agreedAmount)}">   -->
+<!-- 											 <apex:selectOption itemValue="Processed" itemlabel="Opened"/> -->
+<!-- 											  <apex:selectOption itemValue="Closed" itemlabel="Processed"/> -->
+<!-- 										</apex:selectList> -->
+				       		 		</apex:outputText>
+<!-- 				       		 		Added on :26/9/13:Aditi -->
+				       		 		 <apex:outputText rendered="{!IF(rec.strType == $Label.Surrender_Insurance,true,false )}">
+							        	<apex:selectList style="width:200px;" value="{!rec.applicationStatus}" size="1"> 
+											 <apex:selectOption itemValue="Opened" itemlabel="Opened"/>
+											 <apex:selectOption itemValue="Closed" itemlabel="Closed"/>
+											 <apex:selectOption itemValue="Rejected" itemlabel="Rejected"/>
+										</apex:selectList>
+				       		 		</apex:outputText>
+			 					</td>
+			 				</tr>
+			 				</tbody>
+		 				</table>
+	 				</apex:repeat>
+	 				</apex:outputPanel>
+<!-- 		 			<apex:pageBlockTable value="{!executionTrackerDetail.lstExecutionTrackerDetail}" var="rec" columns="6"> -->
+		 			
+<!-- 		 				<apex:column headerValue="{!IF(executionTrackerDetail.isInsurance,'Insurance Type',IF(executionTrackerDetail.isMutualFund,'Goal','Goal'))}" > -->
+<!-- 							<apex:outputPanel rendered="{!IF(rec.strType == 'Life Insurance',true,false)}"> -->
+<!-- 								 <a href="EditETforLifeInsurance?etid={!rec.executionTrackerId}&type=other&eid={!rec.entityId}"  -->
+<!-- 								 		target="_blank" style="cursor: pointer;text-decoration:underline;" > -->
+<!-- 									{!rec.goalName} -->
+<!-- 								 </a> -->
+<!-- 							 </apex:outputPanel> -->
+<!-- 							 <apex:outputPanel rendered="{!IF(rec.strType == 'General Insurance',true,false)}"> -->
+<!--  								 <a href="EditETforGeneralInsurance?etid={!rec.executionTrackerId}&type=other&eid={!rec.entityId}"  -->
+<!-- 						 				target="_blank" style="cursor: pointer;text-decoration:underline;" > {!rec.goalName}</a> -->
+<!-- 							 </apex:outputPanel> -->
+							 
+<!-- 							 <apex:outputPanel rendered="{!IF(rec.strType == 'Recommended Insurance',true,false)}"> -->
+<!--  								 <a href="EditETforSurrenderLifeInsurance?etid={!rec.executionTrackerId}&type=other&eid={!rec.entityId}"  -->
+<!-- 						 				target="_blank" style="cursor: pointer;text-decoration:underline;" > {!rec.goalName} </a> -->
+<!-- 							 </apex:outputPanel> -->
+							 
+<!-- 							 <apex:outputPanel rendered="{!IF(((rec.actionType == 'STP To') || (rec.actionType == 'Lumpsum') || (rec.actionType == 'STP From') || (rec.actionType == 'New SIP')),true,false)}"> -->
+<!-- 							 	 <a href="EditETforSTP?etid={!rec.executionTrackerId}&type={!rec.strTypeforOps}&eid={!rec.entityId}&userType=opsTeam"  -->
+<!-- 							 	 		target="_blank" style="cursor: pointer;text-decoration:underline;"> {!rec.goalName} </a> -->
+<!-- 							 </apex:outputPanel> -->
+<!-- 							 <apex:outputPanel rendered="{!IF(((rec.actionType == 'Switch In') || (rec.actionType == 'Switch Out') || (rec.actionType == 'Switch To')|| (rec.actionType == 'Switch From')),true,false)}"> -->
+<!-- 								 <a href="EditETforSwitch?etid={!rec.executionTrackerId}&type={!rec.strTypeforOps}&eid={!rec.entityId}&userType=opsTeam"  -->
+<!-- 								 			target="_blank" style="cursor: pointer;text-decoration:underline;">  {!rec.goalName} </a> -->
+<!-- 							 </apex:outputPanel> -->
+<!-- 							 <apex:outputPanel rendered="{!IF(((rec.actionType == 'Stop') || (rec.actionType == 'Redeem')),true,false)}">  -->
+<!-- 								 <a href="EditETforRedemption?etid={!rec.executionTrackerId}&type={!rec.strTypeforOps}&eid={!rec.entityId}&userType=opsTeam" target="_blank" style="cursor: pointer;text-decoration:underline;"> -->
+<!-- 										{!rec.goalName} </a> -->
+<!-- 							 </apex:outputPanel> -->
+<!-- 				 			 <apex:outputPanel rendered="{!IF(((rec.actionType == 'Hold - Change of broker') ||(rec.actionType == 'Hold - COB')  -->
+<!-- 				 			 				|| (rec.actionType == 'Hold') || (rec.actionType == 'Existing SIP - COB')  -->
+<!-- 				 			 				|| (rec.actionType == 'Existing SIP- COB')||(rec.actionType == 'Existing SIP') -->
+<!-- 				 			 				||(rec.actionType == 'Continue')),true,false)}"> -->
+<!-- 									Added on : 01/04/13 : Aditi Satpute : Purpose : Open in new Tab As per call with Vinita -->
+<!-- 								<a href="EditETforHoldCOB?etid={!rec.executionTrackerId}&type={!rec.strTypeforOps}&eid={!rec.entityId}&userType=opsTeam"  -->
+<!-- 											target="_blank" style="cursor: pointer;text-decoration:underline;"> {!rec.goalName} -->
+<!-- 								</a> -->
+<!-- 							 </apex:outputPanel> -->
+<!-- 		 				</apex:column> -->
+		 				
+		 			   
+<!-- 						<apex:column width="20%" headerValue="Suggested Amount"  value="{!rec.agreedAmount}" />  -->
+<!-- 						<apex:column width="20%" headerValue="Balance Remaining"  value="{!rec.suggestedAmount}" /> -->
+						
+						
+<!-- 						<apex:column width="20%" headerValue="Executed Amount" rendered="{!IF((rec.strType != 'Life Insurance' && rec.strType != 'General Insurance'),true,false )}"> -->
+							
+<!-- 							<apex:inputText value="{!rec.executedAmount}" rendered="{!(((rec.applicationStatus != 'Processed' && rec.applicationStatus != 'Closed' && rec.applicationStatus != 'Rejected' -->
+<!-- 																						&& rec.applicationStatus != 'Opened' && rec.applicationStatus != $Label.Forms_Provided) -->
+<!-- 																						||(rec.applicationStatus == 'Processed' &&(rec.executedAmount == null || rec.executedAmount == 0))  -->
+<!-- 																						|| IF(rec.executedAmount != null && rec.suggestedAmount != null,rec.executedAmount > rec.suggestedAmount,false)) && (rec.strType != 'Life Insurance' || rec.strType != 'General Insurance'))}"/>  -->
+<!-- 							<apex:outputText value="{!rec.executedAmount}" rendered="{!(((rec.applicationStatus == 'Closed' || (rec.applicationStatus == 'Processed' && (rec.executedAmount > 0 && rec.executedAmount <= rec.suggestedAmount))  -->
+<!-- 																						|| (rec.applicationStatus == 'Rejected' && rec.executedAmount > 0) -->
+<!-- 																						&&	rec.executedAmount <= rec.suggestedAmount)  -->
+<!-- 																						|| ((rec.applicationStatus == 'Opened') || (rec.applicationStatus == $Label.Forms_Provided)))&& (rec.strType != 'Life Insurance' || rec.strType != 'General Insurance'))}"/> -->
+							
+<!-- 						</apex:column> -->
+						
+						 
+<!-- 						<apex:column width="20%" headerValue="Executed Amount" rendered="{!IF(rec.strType == 'Life Insurance' || rec.strType == 'General Insurance',true,false )}"> -->
+<!-- 							<apex:inputText value="{!rec.executedAmount}" rendered="{!(rec.applicationStatus != 'Processed' && rec.applicationStatus != 'Closed')||  -->
+<!-- 																						(rec.applicationStatus == 'Processed' &&(rec.executedAmount == null || rec.executedAmount == 0)) ||  -->
+<!-- 																						rec.executedAmount > rec.suggestedAmount}"/> -->
+<!-- 							<apex:outputText value="{!rec.executedAmount}" rendered="{!rec.applicationStatus == 'Closed' || (rec.applicationStatus == 'Processed' && rec.executedAmount > 0) && -->
+<!-- 																						rec.executedAmount <= rec.suggestedAmount}"/> -->
+<!-- 						</apex:column> -->
+<!-- 						<apex:column width="20%" headerValue="Type" value="{!rec.strType}" /> -->
+<!-- 				        <apex:column width="30%" headerValue="Application Status" rendered="{!IF((rec.strType != 'Life Insurance' && rec.strType != 'General Insurance'),true,false )}"> -->
+<!-- 				        	<apex:selectList value="{!rec.applicationStatus}" size="1" rendered="{!((((rec.applicationStatus == 'Opened' || rec.applicationStatus == $Label.Forms_Provided)  -->
+<!-- 				        																				&& (rec.executedAmount == null || rec.executedAmount = 0.0)))&& (rec.strType != 'Life Insurance' || rec.strType != 'General Insurance'))}">  -->
+<!-- 								 <apex:selectOption itemValue="Opened" itemlabel="Opened"/> -->
+<!-- 							  	 <apex:selectOption itemValue="{!$Label.Forms_Provided}" itemlabel="{!$Label.Forms_Provided}"/> -->
+<!-- 							</apex:selectList> -->
+<!-- 				        	<apex:selectList value="{!rec.applicationStatus}" size="1" rendered="{!((rec.applicationStatus == $Label.Forms_Handed || -->
+<!-- 				        																(rec.applicationStatus == 'Processed' && (rec.executedAmount > rec.suggestedAmount  -->
+<!-- 				        																|| rec.executedAmount == null || rec.executedAmount == 0))  -->
+<!-- 				        																|| (rec.applicationStatus == 'Rejected' && (rec.executedAmount > rec.suggestedAmount  -->
+<!-- 				        																|| rec.executedAmount == null || rec.executedAmount == 0)))&& (rec.strType != 'Life Insurance' || rec.strType != 'General Insurance'))}">  -->
+<!-- 								 <apex:selectOption itemValue="{!$Label.Forms_Handed}" itemlabel="{!$Label.Forms_Handed}"/> -->
+<!-- 								 <apex:selectOption itemValue="Processed" itemlabel="Processed"/> -->
+<!-- 								 <apex:selectOption itemValue="Rejected" itemlabel="Rejected"/> -->
+<!-- 							</apex:selectList> -->
+<!-- 							<apex:selectList value="{!rec.applicationStatus}" size="1" rendered="{!(rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Closed' || rec.applicationStatus == 'Rejected') && -->
+<!-- 																									(rec.executedAmount <= rec.suggestedAmount && rec.executedAmount != 0)}">  -->
+<!-- 								 <apex:selectOption itemValue="Processed" itemlabel="Processed"/> -->
+<!-- 							  	 <apex:selectOption itemValue="Closed" itemlabel="Closed"/> -->
+<!-- 								 <apex:selectOption itemValue="Rejected" itemlabel="Rejected"/> -->
+<!-- 							</apex:selectList> -->
+<!-- 				        </apex:column> -->
+				        
+<!-- 				        <apex:column width="30%" headerValue="Application Status" rendered="{!IF(rec.strType == 'Life Insurance' || rec.strType == 'General Insurance',true,false )}"> -->
+<!-- 				        	<apex:selectList value="{!rec.applicationStatus}" size="1" rendered="{!rec.applicationStatus == 'Opened' && (rec.executedAmount != null && rec.executedAmount > 0 || (rec.executedAmount == null || rec.executedAmount == 0)) || -->
+<!-- 				        																(rec.applicationStatus == 'Processed' && (rec.executedAmount > rec.suggestedAmount  -->
+<!-- 				        																|| rec.executedAmount == null || rec.executedAmount == 0)) ||  -->
+<!-- 				        																(rec.applicationStatus == 'Rejected' && (rec.executedAmount > rec.suggestedAmount  -->
+<!-- 				        																|| rec.executedAmount == null || rec.executedAmount == 0))}">  -->
+<!-- 								 <apex:selectOption itemValue="Opened" itemlabel="Opened"/> -->
+<!-- 								 <apex:selectOption itemValue="Processed" itemlabel="Processed"/> -->
+<!-- 								 <apex:selectOption itemValue="Rejected" itemlabel="Rejected"/> -->
+<!-- 							</apex:selectList> -->
+<!-- 							<apex:selectList value="{!rec.applicationStatus}" size="1" rendered="{!(rec.applicationStatus == 'Processed' || rec.applicationStatus == 'Closed' || rec.applicationStatus == 'Rejected') && -->
+<!-- 																									(rec.executedAmount <= rec.suggestedAmount && rec.executedAmount != 0)}">  -->
+<!-- 								 <apex:selectOption itemValue="Processed" itemlabel="Processed"/> -->
+<!-- 								  <apex:selectOption itemValue="Closed" itemlabel="Closed"/> -->
+<!-- 								  <apex:selectOption itemValue="Rejected" itemlabel="Rejected"/> -->
+<!-- 							</apex:selectList> -->
+<!-- 				        </apex:column> -->
+<!-- 		 			</apex:pageBlockTable> -->
+		 		</apex:pageBlockSection>
+		 	</apex:repeat>
+	 	</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,61 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | Testimonials | My Stress Reliever">
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+<div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+      
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/result_img_new.png')}" style="height:30%;width:100%;"/></div>
+       <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+        </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+             
+      </div>
+      <div id="innerpage_textcontainer_middle">
+         <div class="innerpage_titletext"><span class="innerpagetexttitle">Testimonials</span></div>
+        <div class="innerpage_titletext"><center><span class="innerpagetexttitle">“My Stress Reliever”</span></center></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Previously, I was completely unaware/confused of planning my expenses.</strong> But “Ffreedom” acted as an 'analgesic' in solving my problems. 
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">As the name Ffreedom itself suggests that they give you freedom to enjoy your life without worrying about the most popular/famous tension of your life. 
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">They are so well-organized and perfect in planning my expenses that they owe the token of appreciation. It is really a worthwhile experience to be with “Ffreedom”.
+        </span></div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><br /><strong>It makes me proud to say that I have invested my time at the perfect place.</strong></span></div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><br /><br /><strong>Mahesh Shinde<br />
+Dy. Director IT - Hinduja Hospital</strong></span></div>
+       <center><a href="Testimonials" class="otherslink" alt="Testimonials"><strong>Back</strong></a>
+        </center>
+        <br /> 
+       </div>
+    
+    
+    
+      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" /></div>
+       
+      <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}"  border="0" usemap="#Map2" />
+         <map name="Map2" id="Map2">
+           <area shape="rect" coords="3,0,230,50" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map></div>
+       <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+         <div class="title123"><span class="imgtext">Related Links</span></div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Comprehensive_fp"><strong>Services Basket</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know our Financial Planers</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Why_do_you_need_a_plan"><strong>Why do you need a financial plan?</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Who_can_be_your_financial_planner"><strong>Who can be a financial planner?</strong></a></span> </div>
+<!--        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="why_fees"><strong> Financial Planning Fees</strong></a></span> </div> -->
+       <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

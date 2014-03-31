@@ -1,0 +1,55 @@
+<apex:component id="FPHeader">
+
+    <apex:attribute name="client" type="string" description="client full name" required="true"/>
+    <apex:attribute name="spouse" type="string" description="spouse full name" required="true"/>
+    <div style="font-family:Calibri;font-size:15px;text-align:right;">
+
+        <!--  <div style="border-bottom: 2px solid green;border-right: 2px solid green; width:90%; height: 17px;">
+          <apex:outputText value="{!client} and {!spouse} Financial plan" styleClass="footertext">
+        <apex:param name="pageno" value="{!pageNumber}"/>
+        </apex:outputText>  </div>
+           <div style="border-bottom: 2px solid orange; border-right: 2px solid orange;width:88%; height: 10px;"/>-->
+           <table  width="100%" cellspacing="0" cellpadding="0">
+               <tr style="height:13px;">
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                   <td style="border-right:2px solid green;"></td>
+                   <td></td>
+               </tr>
+               <tr>
+                   <td style="width:20px;"></td>
+                   <!--Partner Portal Aditi-->
+                   <td style="border-bottom:2px solid green;" class="rightAlignData">
+                       <apex:outputtext value="{!lower(client)} " style="font-family:calibri;font-size:15px;text-align:right;text-transform:capitalize ;"></apex:outputtext> 
+                       <apex:outputtext value="and " rendered="{!if(spouse!=null,true,false)}" style="font-family:calibri;font-size:15px;text-align:right;"/>
+                       <apex:outputtext value="{!lower(spouse)} " rendered="{!if(spouse!=null,true,false)}" style="font-family:calibri;font-size:15px;text-align:right;text-transform:capitalize ;"/>
+                       <apex:outputText value="{!$Label.Financial_Plan}" style="font-family:Calibri;font-size:15px;text-align:right;text-transform:capitalize ;"/>
+                   </td>
+                   <td style="width:8px;border-bottom:2px solid green;border-right:2px solid orange;"></td>
+                   <td style="width:10px;border-bottom:2px solid green;"></td>
+                   <td style="width:10px;border-bottom:2px solid green;border-right:2px solid green;"></td>
+                   <td style="width:8px;border-bottom:2px solid green;"></td>
+               </tr>
+                <tr style="height:13px;">
+                   <td style="border-bottom:2px solid orange;"></td>
+                   <td style="border-bottom:2px solid orange;"></td>
+                   <td style="height:10px;border-bottom:2px solid orange;border-right:2px solid orange;"></td>
+                   <td style="border-bottom:2px solid orange;"></td>
+                   <td style="border-right:2px solid green;"></td>
+                   <td></td>
+               </tr>
+               <tr style="height:13px;">
+                   <td></td>
+                   <td></td>
+                   <td style="border-right:2px solid orange;"></td>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+               </tr>
+           </table>
+            
+    </div>  
+   
+</apex:component>

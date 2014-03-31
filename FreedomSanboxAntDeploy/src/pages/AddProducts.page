@@ -1,0 +1,137 @@
+<!-- 
+    Page for entering product master records in the object Product_Manufacturer_Master__c 
+
+    Version     Version Author     Date           Comments
+    1.0         Prajakta Sanap     27/12/2012     To enter New Product Master details
+-->
+
+<apex:page standardController="Product_Master__c"
+           extensions="AddProductsController" 
+           title="New Product"
+           sidebar="false"
+           tabStyle="Product_Master__c">
+         
+    <script type="text/javascript">
+    function checkAll(cb,cbid)
+        {
+            var inputElem = document.getElementsByTagName("input");                    
+            for(var i=0; i<inputElem.length; i++)
+            {            
+                 if(inputElem[i].id.indexOf(cbid)!=-1){                                       
+                    inputElem[i].checked = cb.checked;
+                }
+            }
+        }
+    </script>
+    
+    <apex:form id="PMform">
+        
+        <apex:sectionHeader title="Products"/>
+        
+        <apex:pageBlock title="Add Products" mode="edit">
+        
+            <apex:outputPanel id="pnlMsg">
+                <apex:pageMessages id="pageMsgs" escape="false"/>
+            </apex:outputPanel>
+            
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!saveProduct}" reRender="pnlMsg"/>
+                <apex:commandButton value="Cancel" action="{!cancelProduct}" immediate="true"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection title="Product Details" columns="2" id="productTable"  rendered="{!isFreedomPrdoductService}">
+                <apex:inputField value="{!objProductMaster.Product_Name__c}" required="true"  />
+                <apex:inputField value="{!objProductMaster.Product_Manufacturer__c}"  required="true"/>
+                
+<!--                 <apex:inputField value="{!objProductMaster.ProductType__c}"  required="true"/> -->
+                <apex:selectList value="{!strSelectOption}" size="1" label="Product Type">
+                    <apex:selectoption itemValue="Base Product" itemLabel="Base Product" />
+                </apex:selectList>
+               
+                <apex:inputField value="{!objProductMaster.Base_Product_Weightage__c}" required="true" />
+                <apex:inputField value="{!objProductMaster.Subscription_Period_In_Days__c}" required="true" />
+             
+                <apex:inputField value="{!objProductMaster.Renewal_Period_In_Days__c}" required="true" />
+                
+                <apex:inputField value="{!objProductMaster.IsRenewalAllowed__c}" />
+                <apex:inputField value="{!objProductMaster.IsTopupService__c}" />
+                 
+                <apex:inputField value="{!objProductMaster.Is_Active__c}" />
+                
+                
+                <apex:inputField value="{!objProductMaster.No_of_Goals_Allowed__c}" />
+                <apex:inputField value="{!objProductMaster.Goals_Allowed_List__c}" />
+                <apex:inputField value="{!objProductMaster.Data_Collection_Analysis_Control__c}" />
+                <apex:inputField value="{!objProductMaster.Financial_Planing_Output_Report__c}" />
+             </apex:pageBlockSection>  
+             
+             
+             <apex:pageBlockSection title="Product Details" columns="2" rendered="{!isValueAddedService}">
+                <apex:inputField value="{!objProductMasterForValueAddedServices.Product_Name__c}" required="true"  />
+                <apex:inputField value="{!objProductMasterForValueAddedServices.Product_Manufacturer__c}"  required="true"/>
+                <apex:selectList value="{!strSelectOption}" size="1" label="Product Type" >
+                    <apex:selectoption itemValue="Value Added Services" itemLabel="Value Added Services" />
+                </apex:selectList>
+               
+                <apex:inputField value="{!objProductMasterForValueAddedServices.Subscription_Period_In_Days__c}" required="true" />
+                <apex:inputField value="{!objProductMasterForValueAddedServices.Renewal_Period_In_Days__c}" required="true" />
+                <apex:inputField value="{!objProductMasterForValueAddedServices.Is_Active__c}" />
+             </apex:pageBlockSection>
+               
+                    
+            <apex:pageBlockSection title="Details" columns="12" id="table" rendered="{!isOtherProduct}">
+                <apex:pageBlockTable value="{!lstProductMaster}" var="Prod" rendered="{!isOtherProduct}">
+                    <apex:column >
+                        <apex:facet name="header"><apex:inputCheckbox id="selectall" onclick="checkAll(this,'checkedone')"/></apex:facet>
+                        <apex:inputCheckbox value="{!Prod.isRemove}" id="checkedone"/>
+                    </apex:column>
+                    <apex:column headerValue="Product Name" >
+                        <apex:inputField value="{!Prod.objProductMaster.Product_Name__c}" style="width:180px;"/>
+                    </apex:column>
+                    <apex:column headerValue="Product Manufacturer" style="text-align:center;">
+                        <apex:selectList value="{!Prod.objProductMaster.Product_Manufacturer__c}" size="1" >
+                            <apex:selectOptions value="{!ProdManName}" />
+                        </apex:selectList>
+                    </apex:column>
+                    <apex:column headerValue="Type">
+<!--                         <apex:inputField value="{!Prod.objProductMaster.ProductType__c}" style="width:90px;"/> -->
+                        <apex:selectList value="{!Prod.strSelectOption}" size="1" label="Product Type" >
+                            <apex:selectoption itemValue="" itemLabel="--None--" />
+                            <apex:selectoption itemValue="Mutual Fund" itemLabel="Mutual Fund" />
+                            <apex:selectoption itemValue="Exchange-Traded Fund" itemLabel="Exchange-Traded Fund" />
+                            <apex:selectoption itemValue="Life Insurance" itemLabel="Life Insurance" />
+                            <apex:selectoption itemValue="General Insurance" itemLabel="General Insurance" />
+                            <apex:selectoption itemValue="FFreedom Service" itemLabel="FFreedom Service" />
+                        </apex:selectList>
+                    </apex:column>
+                    <apex:column headerValue="Active" style="text-align:center;">
+                        <apex:inputField value="{!Prod.objProductMaster.Is_Active__c}" style="width:50px;"/>
+                    </apex:column>
+                    <apex:column headerValue="Currently Recommended" style="text-align:center;" >
+                        <apex:inputField value="{!Prod.objProductMaster.Currently_Recommended__c}" required="true"/>
+                    </apex:column>
+                    <apex:column headerValue="SIP Allowed" style="text-align:center;">
+                        <apex:inputField value="{!Prod.objProductMaster.SIP_Allowed__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Fees in Advance" style="text-align:center;">
+                        <apex:inputField value="{!Prod.objProductMaster.Fees_in_Advance_or_On_Service_Delivery__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Earn One Time Fees" style="text-align:center;">
+                        <apex:inputField value="{!Prod.objProductMaster.Earn_One_Time_Fees__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Earn Trail Fees" style="text-align:center;">
+                        <apex:inputField value="{!Prod.objProductMaster.Earn_Trail_Fees__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Earn Upfront Fees" style="text-align:center;">
+                        <apex:inputField value="{!Prod.objProductMaster.Earn_Upfront_Fees__c}"/>
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+            </apex:pageBlockSection><br/>
+
+            <apex:commandButton value="Add" action="{!addRow}" reRender="PMform" style="margin-left:410px;" rendered="{!isOtherProduct}"/>
+            <apex:commandButton value="Remove" action="{!removeRows}" reRender="table,pnlMsg" rendered="{!isOtherProduct}"/>
+        </apex:pageBlock>
+
+    </apex:form>
+</apex:page>

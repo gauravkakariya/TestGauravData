@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Emotions in investing</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Emotions In Investing</name>
+    <style>none</style>
+    <subject>Emotions In Investing</subject>
+    <textOnly>Emotions in investing 
+
+Decision making is more often than not done on the basis of feelings, not clear thought. Here are some prejudices investors need to look out for.
+
+Everyone would like to think that we are logical and rational in decision making. We do not realise that emotional decision making is the default option for most of us. A wide variety of human errors stems from perpetual illusions, overconfidence and over-reliance on rules of thumb to do our daily chores. The same applies to investing too. 
+
+Here are some common emotional biases that affect our investing:
+
+Bias towards short term 
+
+We are hardwired to think of the short-term gains while taking decisions. We feel confident and stimulated about short-term gains and perhaps miss out the long-term view. For instance, when offered a choice between Rs 10,000 today and Rs 11,000 tomorrow, many people choose the immediate option – Rs 10,000 today. However, when asked to choose between Rs 10,000 in a year and Rs 11,000 after a year and a day, many people who chose the immediate option in the first instance will choose the second option.
+
+Investment based on genuine long-term expectation is so difficult today as to be scarcely practicable. We have to take a long-term view on investing and not get carried away only by developments in the short term.
+
+Here mentality provides the comfort of conventionality and is habitual to many of us. This is not restricted to individuals. We also find fund managers chasing a few stocks and falling prey to this bias. There are many instances of fund houses launching fund after another that they feel are the flavour of the season. 
+
+This results from over optimism and overconfidence. The great obstacle to discovery is not ignorance. It is illusion of knowledge. We feel that with loads of data we are equipped to take the correct decision on what to buy and where to invest. We forget that what is important is not the quantity but quality of data that we have.
+
+Bias of Overreaction 
+
+Every piece of information can be judged along two dimensions: Strength and weight. You read an article glorifying the performance of a fund. Sadly, the article is not objective. The strength is represented by high level of glowing traits talked about, but the weight you need to assign to the information is low as it is a biased source. High strength and low weight will generate overreaction whereas low strength and high weight will generate under reaction. 
+
+We have a very bad habit of looking into information that agrees with our pre-set notions. The thirst for agreement rather than refutation is called confirmatory bias. When it comes to investing, we often tend to form an opinion and then look all day for information that makes our opinion appear correct. 
+
+We have made an investment decision. We would not like any opinion that proves it wrong. If we are presented with such opinion we tend to dismiss it as biased. 
+
+Self attribution bias is the tendency to attribute good outcomes to skill. But when it comes to a bad outcome, we tend to attribute it to bad luck or blame the financial planner or the advisor who has recommended the investment. When a fund performs well, we boast of good fund-picking skills. But when it starts performing badly, we tend to blame the fund manager or financial planner who had suggested the said investment. 
+
+Hindsight Bias
+
+If everyone thinks that they can predict the past, they are likely to be far too sure about predicting the future. After the market crashes, we tend to believe that we knew that it would crash before the event. Incorrect or inaccurate predictions tend not to be remembered as well as vaguely correct predictions, reinforcing the idea in someone’s mind that his or her predictive skills are better than they really are. Hindsight bias generates overconfidence.
+
+We tend to extrapolate and generalise. Similar named schemes of mutual fund tend to garner more money. During the technology stock bubble, many companies were launched with names resembling tech companies, exploiting the representative bias of investors.
+
+People tend to rely on their own experiences in preference to hard statistics or the experience of others. Direct experience is more weighted than general experience. If we have a bad experience, may be isolated, we tend to attach more weight to it. 
+
+Direct experience triggers emotional reactions which vicarious information doesn’t. Investors look for big trigger events, missing the cumulative impact of small news. A bad investment decision in stock or a fund will ensure that he does not invest again, in spite of the said stock or fund improving its returns or performance. 
+
+Bias of Frame Dependence 
+
+By framing question in different ways, you get different answers. Investors do not redeem their investments if they have to make a loss. However, the advisor overcomes this by advising them to switch over to another stock or fund, thereby shifting the frame of dependence of the investor. Now, the profit or loss is calculated from the value of new investment and not the original one. 
+
+Status Quo Bias 
+
+A loss isn’t a loss until I take it. Status quo bias. Endowment effect. Once you own something you tend to place a higher value. We sell a winning position retaining a losing position. This forces us to sell the stars and retain the dogs.
+
+Emotions determine the tolerance for risk and tolerance for risk plays a key role in portfolio selection. Investors experience a variety of emotions as they ponder their investment alternatives, make decisions about how much risk to bear. 
+
+It is imperative for an investor to understand his emotions and the biases that are inherent in him as these have a direct relationship to investment decisions.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

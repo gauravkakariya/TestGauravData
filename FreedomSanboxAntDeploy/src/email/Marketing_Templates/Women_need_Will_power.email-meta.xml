@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Women need Will power!</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Women need Will power!</name>
+    <style>none</style>
+    <subject>Women need Will power!</subject>
+    <textOnly>Women need Will power!
+
+Learning Series
+
+Bhuvana Shreeram is your typical Mumbaikar. Adept at juggling both her worlds being a friend and confidante to her 5 year old son, Rishi at home and lending a very patient ear to her subordinates and customers at office. She shifted from Chennai to Mumbai in 2011 and took no time in adjusting to the fast paced life in the city. She is very clear about the exact auto fare from her home in Vile Parle to her office in Andheri West. She is also clear about why she made a Will. Shewanted to make sure her mother received a share of her assets in any eventuality.
+
+REFERENCES
+
+Section 15 and 16 of the Hindu Succession Act
+
+Dr. Justice AR Lakshmanan&apos;s
+Article 1
+Article 2
+
+NCW&apos;s recommendations
+
+Bhuvana’s husband, Shreeram, does not have such worries. Even if he does not write a Will, his mother does stand to receive a share of his assets.
+
+In order to assess where this distinction springs from, let us look at the rules that govern inheritance and succession in the absence of a Will. Today, we would look at these rules for a Hindu married woman.
+
+The rules governing intestate (without a Will) succession for married Hindu women is set out in Sections 15 and 16 of the Hindu Succession Act, 1956.
+
+Who gets to inherit in the absence of a Will?
+
+Let us take a look at what Section 15 and 16 indicate. The key elements that drive a Hindu married woman&apos;s properties inheritance rules are a) the source of the property and b) a laid down sequence for self created property. The diagram below shows how the source of property affects the inheritance. We also look at the sequence for self created property.
+
+
+* Including the children of any pre deceased son or daughter
+
+
+What does this imply for Bhuvana’s self created wealth?
+
+In the sequence lies the key to Bhuvana’s desire to make a Will. As is apparent, for any self created property, her parents feature in the third tier – a tier below the heirs of her husband.
+
+Thus, her husband’s sister was higher in priority than her own parents and if Bhuvana desired that her mother have access to some of her properties, it would be possible only if she created a Will and named her mother as one of the beneficiaries
+
+
+
+Let us look at two illustrations to further explain the point for a Hindu married woman’s self created property if she does not have a Will
+
+Illustration A: Husband and children alive, husband’s parents alive, her parents alive.
+
+In such a case, the entire property of the woman is inherited by her husband and children and neither her parents nor her husband’s parents stand to inherit anything.
+
+Illustration B: No children, husband predeceased, mother-in law alive, mother alive
+
+In such a case, her entire property is inherited by her mother-in-law and her mother does not inherit anything.
+
+What are the eminent people saying about this?
+
+There are articles in the mainstream media where eminent people are making a case for amendments to this law. The amendments desired are to take into account the Hindu married woman’s parents.
+
+The first set of articles is by Dr. Justice AR Lakshmanan, a former Judge of the Supreme Court of India writing in different fora.
+
+http://www.thehindu.com/opinion/open-page/let-us-amend-the-law-it-is-only-fair-to-women/article2288188.ece
+
+http://www.lawyersupdate.co.in/LU/1/119.asp
+
+The National Commission for Women has also looked at the issue and made suggestions.
+
+http://ncw.nic.in/frmReportLaws19.aspx
+
+In a future post, we would look at the rules for Christian and Parsi married women.
+
+Do write in with your feedback and comments.
+
+Disclaimer:  The legal information on this email is not legal advice and is not guaranteed to be correct, complete or up-to-date. Because the law changes rapidly and is also subject to varying interpretations by different courts and certain government and administrative bodies, we cannot guarantee that all the information in this mail is completely current. The law is a personal matter, and no general information can fit every circumstance.  Therefore, if you need legal advice for your specific problem, or if your specific problem is too complex, you should consult a lawyer.  This email contains links to other resources and businesses on the Internet. Those links are provided as citations and aids to help you identify and locate other Internet resources that may be of interest, and are not intended to state or imply that we sponsor, are affiliated or associated with, guarantee, or are legally authorized to use any trade name, registered trademark, logo, legal or official seal, or copyrighted symbol that may be reflected in the links.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

@@ -1,0 +1,62 @@
+<apex:page showHeader="false" standardController="Account" extensions="FamilyMemberDetailController" > 
+ 
+   <apex:outputPanel rendered="{!isDisplayFamilyDetails}" >
+        Purchase Order is not available. Please create Purchase Order.<a href="/{!entityId}"> back </a>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!isChequeDetails}" >
+        Cheque Details is not available. Please create Cheque Details Record.<a href="/{!entityId}"> back </a>
+    </apex:outputPanel>  
+	
+   <apex:outputPanel rendered="{!!(isDisplayFamilyDetails || isChequeDetails) }" >	
+	   <apex:composition template="TabPage" rendered="{!!(isDisplayFamilyDetails || isChequeDetails) }">
+		   <apex:define name="contents">   
+			   <apex:form >
+				   <apex:pageBlock title="Personal Details"  rendered="{!!isDisplayFamilyDetails}"  >
+				       <apex:pageMessages rendered="true" />
+		               <apex:pageBlockTable value="{!acc}" var="ac" id="familyDtls" align="center" style="border-width:thin;border-style:solid;width:50%;border-color:gray;">
+		                    <apex:column headerValue="Action" style="border-right:1px solid;border-color:Lightgray;">
+		                        <apex:commandLink action="{!AddDetails}" value="Add Details" rendered="{!not(ac.id=null)}" styleClass="standardFontStyle" rerender="block1,counterStatusData" status="counterStatusData">
+		                            <apex:param name="accid" value="{!ac.id}"/>
+		                            <apex:param name="parentAcc" value="{!ac.Parent_Entity__c}"/>
+		                        </apex:commandLink>
+		                    </apex:column>
+		                    <apex:column headerValue="{!$ObjectType.Account.fields.FirstName.label}" styleClass="standardFontStyle" style="border-right:1px solid;border-color:Lightgray;">
+		                        <apex:outputText value="{!ac.FirstName}" rendered="{!not(ac.id=null)}" styleClass="standardFontStyle"/>
+		                        <apex:inputText value="{!ac.FirstName}" rendered="{!(ac.id=null)}" styleClass="standardFontStyle"/>
+		                     </apex:column>    
+		                    <apex:column headerValue="{!$ObjectType.Account.fields.LastName.label}" styleClass="standardFontStyle" style="border-right:1px solid;border-color:Lightgray;"> 
+		                        <apex:outputText value="{!ac.LastName}" rendered="{!not(ac.id=null)}" styleClass="standardFontStyle"/>
+		                        <apex:inputText value="{!ac.LastName}" rendered="{!(ac.id=null)}" styleClass="standardFontStyle"/>
+		                    </apex:column>    
+		               </apex:pageBlockTable> 
+				               
+		                <apex:actionStatus stopText="" id="counterStatusData">
+	                        <apex:facet name="start">                
+	                               <apex:outputPanel style="padding-left:45%;">
+	                                  <apex:image value="{!$Resource.loading_image}" width="3%" height="3%"/>
+	                               </apex:outputPanel>
+	                        </apex:facet>
+		                </apex:actionStatus>  
+				               
+				       <apex:pageBlockSection id="saveBtn">
+					       <apex:commandButton action="{!save}"  value="Save"  rendered="{!isNew}"  style="float:right;" reRender="familyDtls,saveBtn"/> 
+					       <apex:commandButton action="{!Cancel}"  value="Cancel"  rendered="{!isNew}" style="float:left;" reRender="familyDtls,saveBtn"/>
+				       </apex:pageBlockSection>
+				   
+				       <apex:pageBlockButtons location="bottom" >
+	<!-- 			       	   <apex:outputPanel rendered="{!isDisplaySaveButton}"> -->
+							<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+						       <div style="float:left;margin-left:-40px;">
+						       		<apex:commandButton action="{!AddNewMember}" value="Add New Member"  reRender="familyDtls,saveBtn" />
+						       </div>
+						   </apex:outputPanel>
+					       <div style="float:right;margin-right:240px;">
+					       		<apex:commandButton action="{!Next}" value="Next" reRender="familyDtls,saveBtn" /> 
+					       </div>
+				     </apex:pageBlockButtons>
+				   </apex:pageBlock>
+			   </apex:form>
+		    </apex:define>
+	    </apex:composition>
+   </apex:outputPanel>     
+</apex:page>

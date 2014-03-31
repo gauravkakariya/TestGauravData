@@ -1,0 +1,2115 @@
+<!-- 
+	Page for displaying Read Only Ap with Open links for ET records
+    Version     Version Author     Date           Comments
+    1.0         Adit/Anupam      27/12/2012      Open link and Assign to Operations functionality
+--> 
+ 
+<apex:page controller="ExecutionTrackerController" showHeader="false" standardStylesheets="true"> 
+<!-- action="{!createExecutionTracker}" > -->
+<!-- rerender="readOnlyPanel, msg"> -->
+     <apex:composition template="TabPage">
+        <apex:define name="contents">
+        <apex:form id="frmId">
+    	<apex:stylesheet value="{!$Resource.FFStyle}"/>
+    	
+	    <style type="text/css">
+            .DataTableEven  { background-color:#FFFFFF; }
+            .DataTableOdd    { background-color:#E4FBC5; }
+            .actionPlan
+            {
+            	width:10%;
+            	margin-left:20px;  
+				background-image:none;
+				background-color:#F5D0A9!important; 
+				font-size:11px !important; 
+				padding-top:4px;
+				padding-bottom:4px;
+            } 
+            
+            .saveActionPlan
+            {
+            	margin-left:20px;
+            	background-image:none;
+            	background-color:#A9C5EB !important;
+            }
+            
+             .custPopup
+	        {
+	            background-color: white;
+	            border-width: 2px;
+	            border-style: solid;
+	            z-index: 9999;
+	            left: 32%;
+	            top: 20%;
+	            padding:15px;
+	            position: fixed;
+	            /* These are the 3 css properties you will need to change so the popup 
+	            displays in the center of the screen. First set the width. Then set 
+	            margin-left to negative half of what the width is. You can add 
+	            the height property for a fixed size pop up if you want.*/
+	            width: 885px;
+	            margin-left: -200px;
+	            top:80px;
+	        }
+	        .popupBackground{
+	            background-color:black;
+	            opacity: 0.20;
+	            filter: alpha(opacity = 2);
+	            position: absolute; 
+				width: 100%; 
+				height: 100%; 
+	            top: 0;
+	            left: 0;
+	            z-index: 9000;
+	            cursor: inherit;
+	        }
+	        .height250 
+			{
+				height: 245px;
+				width :102%;				
+				overflow-y: auto;
+			}
+			p.test2
+			{
+				width:100px; 
+				border:1px solid #000000;
+				text-wrap:normal;
+			}
+			
+			.width{
+				width: 100%;
+				border-width: 0.5px;
+			}
+			.right{
+				margin-right: 100%;
+	}
+			
+	    </style>
+	    
+	    <script>
+	    	var actionPlanId;
+	    	var saveActionPlanId;
+	    	
+	    	function changeCssActionPlan(val)
+	    	{
+	    		//alert(val);
+	    		if(val == 'Action Plan')
+	    		{
+					document.getElementById(actionPlanId).style.backgroundColor = '#F5D0A9';
+					document.getElementById(saveActionPlanId).style.backgroundColor = '#A9C5EB';
+				}
+				else
+				{
+					document.getElementById(actionPlanId).style.backgroundColor = '#A9C5EB';
+					document.getElementById(saveActionPlanId).style.backgroundColor = '#F5D0A9';
+				}
+				    	
+	    	}
+			function DynamicDatePicker(d_id) 
+			{
+			    DatePicker.pickDate(false, d_id.id, false);
+			}
+			
+			var curPopupWindow;
+			function openEditExecutionTracker(eId, valId, valType)
+			{
+				url = 'EditExecutionTracker?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			function openRelatedExecutionTracker(apId, valType)
+			{
+				url = 'RelatedExecutionTracker?apid='+ apId + '&type=' + valType;
+				openRelatedETWindow(url);
+				return false;
+			}
+			/* Prajakta - ET Screen Enhancement - 08-03-2013 */
+			function openETforSwitch(eId, valId, valType)
+			{
+				url = 'EditETforSwitch?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			/* Aditi - ET Screen Enhancement - 15-03-2013 */
+			function openEditETforLifeInsurance(eId, valId, valType)
+			{
+				url = 'EditETforLifeInsurance?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			
+			/* Aditi - ET Screen Enhancement - 19-03-2013 */
+			function openEditETforGeneralInsurance(eId, valId, valType)
+			{
+				url = 'EditETforGeneralInsurance?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			
+			/* Aditi - ET Screen Enhancement - 20-03-2013 */
+			function openEditSTPExecutionTracker(eId, valId, valType)
+			{
+				url = 'EditETforSTP?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			
+			/* Aditi - ET Screen Enhancement - 26-03-2013 */
+			function openEditSwitchExecutionTracker(eId, valId, valType)
+			{
+				url = 'EditETforSwitch?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			
+			/* Aditi - ET Screen Enhancement - 29-03-2013 */
+			function openEditRedemptionExecutionTracker(eId, valId, valType)
+			{
+				url = 'EditETforRedemption?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			
+			/* Aditi - ET Screen Enhancement - 01-04-2013 */
+			function openEditHoldCOBExecutionTracker(eId, valId, valType)
+			{
+				url = 'EditETforHoldCOB?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			
+			/* Aditi - ET Screen Enhancement - 02-04-2013 */
+			function openEditSurrenderInsuranceExecutionTracker(eId, valId, valType)
+			{
+				url = 'EditETforSurrenderLifeInsurance?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			
+			function openRelatedETWindow(URL)
+			{
+				if(curPopupWindow != null)
+				{	
+					curPopupWindow.close();
+					curPopupWindow  = window.open(URL, "_blank","width=750, height=400,dependent=no,toolbar=no,status=no,directories=no,menubar=no,scrollbars=1,resizable=yes", true);
+				}
+				else
+					curPopupWindow  = window.open(URL, "_blank","width=750, height=400,dependent=no,toolbar=no,status=no,directories=no,menubar=no,scrollbars=1,resizable=yes", true);
+			} 	
+			function openWindow(URL)
+			{
+				if(curPopupWindow != null)
+				{	
+					curPopupWindow.close();
+					curPopupWindow  = window.open(URL, "_blank","width=650, height=600,dependent=no,toolbar=no,status=no,directories=no,menubar=no,scrollbars=1,resizable=yes", true);
+				}
+				else
+					curPopupWindow  = window.open(URL, "_blank","width=650, height=600,dependent=no,toolbar=no,status=no,directories=no,menubar=no,scrollbars=1,resizable=yes", true);
+			} 	
+			
+			function closeETWindow()
+			{
+				curPopupWindow.close();
+			} 
+	    </script>
+	    <apex:pageMessages id="msg"/>
+	     <apex:outputPanel id="PopupPanel">
+            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopup}"/>
+             <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopup}" >
+	             <apex:pageBlock title="Assigned Records" id="pbId">
+					<apex:pageBlockButtons location="top">
+						<apex:outputPanel id="pbButtonId"> 
+							<apex:commandButton style="align:center" value="OK" action="{!closePopUp}" rerender="PopupPanel,frmId" status="topStatusEtDisplay"/>
+							<apex:actionStatus stopText="" id="topStatusEtDisplay">
+				                <apex:facet name="start">
+				               		<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+				                    	<img src="/img/loading.gif" width="16" height="16"/>
+									</apex:outputPanel>
+				                </apex:facet>
+				           </apex:actionStatus>  
+<!-- 							<apex:outputPanel >  --> 
+<!-- 								<a class="btn" href="/apex/FloatingExecutionTracker?eid={!entityId}" style="text-decoration: none" target="_Parent">Create/View Execution Tracker</a> -->
+<!-- 							</apex:outputPanel> -->
+						</apex:outputPanel>
+					</apex:pageBlockButtons>
+					
+					<apex:outputPanel id="optPanel1"> 
+						<apex:outputPanel rendered="{!lstAssignToOpsETRecords.size > 0}">
+							<apex:pageBlockTable value="{!lstAssignToOpsETRecords}" var="rec">
+<!-- 							 	<apex:column headerValue="Action" width="2%"> -->
+<!-- 										<apex:commandLink value="View" action="{!ViewRecords}" target="_blank"> -->
+<!-- 									            <apex:param name="recId" value="{!rec.Id}" assignTo="{!rejectedTrackerId}"/>  -->
+<!-- 										</apex:commandLink> -->
+<!-- 			                    </apex:column> -->
+								<apex:column headerValue="Goal Name" >
+									<apex:outputText value="{!rec.Goal_Name__c}"/>
+				                </apex:column>
+				                <apex:column headerValue="Executed Product Name" >
+				                	{!rec.Executed_Product_Name__c}
+				                </apex:column>  
+				                      
+<!-- 				            	<apex:column headerValue="Suggested Amount" > -->
+<!-- 				            		{!rec.Agreed_Amount_Base_Amount__c} -->
+<!-- 				                </apex:column>   -->
+				            	<apex:column headerValue="Agreed Amount" >
+				            		{!rec.Agreed_Amount__c}
+				                </apex:column> 
+				                
+<!-- 				            	<apex:column headerValue="Balance Remaining" > -->
+<!-- 				            		{!rec.Balance_Remaining__c} -->
+<!-- 				                </apex:column>   -->
+				                
+<!-- 				                <apex:column headerValue="Executed Amount" > -->
+<!-- 				            		{!rec.Executed_Amount__c} -->
+<!-- 				                </apex:column> -->
+				                
+				            	<apex:column headerValue="Application Status" >
+				            		{!rec.Application_Status__c}
+				                </apex:column> 
+				                
+<!-- 				                <apex:column headerValue="ET Status" > -->
+<!-- 				                	{!rec.ET_Status__c} -->
+<!-- 				                </apex:column>  -->
+				                
+<!-- 				                <apex:column headerValue="Owner" > -->
+<!-- 				                	{!rec.Owner__r.Name} -->
+<!-- 				                </apex:column> -->
+				             </apex:pageBlockTable>    
+						</apex:outputPanel>
+					</apex:outputPanel>
+				</apex:pageBlock>
+            </apex:outputPanel>
+	    </apex:outputPanel>
+	    
+	    
+	    <apex:outputPanel id="readOnlyPanel">
+        	<apex:outputPanel rendered="{!isSidebar}">
+		    <apex:pageBlock tabStyle="account" >
+		        <div style="margin:bottom:20px; width:100%;margin-left:10px;">
+<!-- 		        	 <apex:commandLink value="{!dataEntry.linkField}" action="{!showPopUp}" rendered="{!IF(isLoanEmpty,false,true)}" reRender="PopupPanel"> -->
+<!--                                         <apex:param name="selectedLoanType" value="{!dataEntry.linkField}" /> -->
+<!--                                     </apex:commandLink> -->
+		            <apex:commandButton id="theCommandLink3" styleclass="button" value="Assign to Operations" action="{!assignToOperations}" status="topStatus" rendered="true"
+		            					style="margin-left:20px; background-image:none;background-color:#A9C5EB !important; padding-bottom:2px" rerender=" messages,PopupPanel"/> 
+		           					
+					<apex:actionStatus stopText="" id="topStatus">
+		                <apex:facet name="start">
+		               		<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+		                    	<img src="/img/loading.gif" width="16" height="16"/>
+							</apex:outputPanel>
+		                </apex:facet>
+		           </apex:actionStatus>  
+		            <apex:pageMessages id="messages"/>
+		        </div>
+	        </apex:pageBlock>
+	        <apex:outputPanel >
+	        	<div class="divStyle" style="width:99%;padding-left:10px;"> ADVICE ON EXISTIING MUTUAL FUND SCHEMES </div> <br/>
+	        	   
+                <div class="space">  
+                    <div class="subHeader" style="width:100%;padding-left:10px;background-color:#66cd00;">CURRENT MUTUAL FUNDS - LUMPSUM</div> <br/>
+                    <div style="width:100%;overflow:auto;height:100%;"> 
+                        <table width="95%" border="1" cellpadding="2" cellspacing="0" id="dataTable2">
+                            <tr class="tableHeaderLight">
+                            	<th style="width:15%;" class="textStyle">Forms<br/>Provided</th>
+                            	<th style="width:15%;" class="textStyle">Assigned<br/>To Ops</th>
+                                <th style="width:15%;" class="textStyle">Scheme Name</th>
+                                <th style="width:12%;" class="textStyle">Asset Class</th>
+                                <th style="width:7%;" class="textStyle">Amount</th>
+                                <th style="width:20%;" class="textStyle">Owner</th>
+                                <th style="width:10%;" class="textStyle">Action</th>
+                                <th style="width:8%;" class="textStyle">Action Amount</th>
+<!--                                 <td style="width:8%; FONT-FAMILY: Calibri; FONT-SIZE: 15px; FONT-WEIGHT: bold; COLOR: #329902;">Execution Tracker to be opened</td> -->
+ 								<th style="width:8%;" class="textStyle">Execution<br/>Tracker<br/> to be opened</th>
+                                <th style="width:7%;" class="textStyle">Execution Tracker</th>
+                                <th style="width:7%;" class="textStyle">ET Status</th>
+                                <th style="width:7%;" class="textStyle">Related Records</th>
+                            </tr>
+                         	<apex:repeat value="{!beanObj.mapIdToCurrentFunds}" var="curLumpMap">  
+                            	<apex:repeat value="{!beanObj.mapIdToCurrentFunds[curLumpMap]}" var="curLumpObj">
+	                                <tr class="tableData">
+	                                	<td class="textStyle" style="text-align:center;">
+                                			<apex:outputPanel rendered="{!IF(curLumpObj.executionTracker == 'Yes',true,false)}"  >
+                                				{!curLumpObj.strFormsProvided}
+                               				</apex:outputPanel>
+                                		</td>
+                                		<td class="textStyle" style="text-align:center;">
+                                			<apex:outputPanel rendered="{!IF(curLumpObj.executionTracker == 'Yes',true,false)}"  >
+                                				{!curLumpObj.strAssignedToOps}
+                               				</apex:outputPanel>
+                                		</td>
+	                                    <td class="textStyle">{!curLumpObj.schemeName}</td>
+	
+	                                    <td class="textStyle">{!curLumpObj.assetClass}</td>
+	                                    
+	                                    <td class="textStyle" style="text-align:right;">
+	                                        <apex:outputText value="{0, number, ,##,##0}" >
+	                                            <apex:param value="{!curLumpObj.amount}"/>
+	                                        </apex:outputText>
+	                                    </td>
+	                                    
+	                                    <td class="textStyle" rendered="toDisplayFields">{!curLumpObj.owner}</td>
+	                                    
+	                                    <td class="textStyle">
+	                                        <apex:outputText value="{!curLumpObj.lumpsumAction}" />
+	                                    </td>   
+	                                    
+	                                    <td class="textStyle">
+	                                        <apex:outputText value="{!curLumpObj.actionAmount}" />
+	                                    </td>
+	                                    
+	                                    <td class="textStyle" style="text-align:center;"> 
+	                                        <apex:outputText value="{!curLumpObj.executionTracker}" />
+	                                   </td>
+<!-- 	                                 MFLumpsum Id :   {!curLumpObj.actionPlanMFLumpsumId} -->
+											
+	                                   <td class="textStyle" style="text-align:center;">
+                                           <apex:outputPanel rendered="{!IF(curLumpObj.executionTracker == 'Yes',true,false)}"  >
+<!-- 											   <a href="" style="cursor: pointer;text-decoration:underline;"  -->
+<!-- 												onClick="javascript:return  openEditExecutionTracker('{!beanObj.entityId}','{!curLumpObj.actionPlanMFLumpsumId}', 'Lumpsum')"> -->
+<!-- 												Open -->
+<!-- 											   </a> -->
+<!-- 											   <a href="" style="cursor: pointer;text-decoration:underline;"  -->
+<!-- 												onClick="javascript:return  openETforSwitch('{!beanObj.entityId}','{!curLumpObj.actionPlanMFLumpsumId}', 'Lumpsum')"> -->
+<!-- 												Open -->
+<!-- 											   </a> -->
+											    <apex:outputPanel rendered="{!IF(((curLumpObj.lumpsumAction == 'STP To') ||(curLumpObj.lumpsumAction == 'STP From')),true,false)}">
+													<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSTPExecutionTracker('{!beanObj.entityId}','{!curLumpObj.actionPlanMFLumpsumId}', 'Lumpsum')">
+														Open
+												   	</a>
+											    </apex:outputPanel>
+											     <apex:outputPanel rendered="{!IF(((curLumpObj.lumpsumAction == 'Switch In') ||(curLumpObj.lumpsumAction == 'Switch Out')),true,false)}">
+													<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSwitchExecutionTracker('{!beanObj.entityId}','{!curLumpObj.actionPlanMFLumpsumId}', 'Lumpsum')">
+														Open
+												   	</a>
+											    </apex:outputPanel>
+										      	<apex:outputPanel rendered="{!IF((curLumpObj.lumpsumAction == 'Redeem'),true,false)}">
+													<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditRedemptionExecutionTracker('{!beanObj.entityId}','{!curLumpObj.actionPlanMFLumpsumId}', 'Lumpsum')">
+														Open
+												   	</a>
+											    </apex:outputPanel>
+											    <apex:outputPanel rendered="{!IF(((curLumpObj.lumpsumAction == 'Hold - Change of broker') || (curLumpObj.lumpsumAction == 'Hold')),true,false)}">
+													<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditHoldCOBExecutionTracker('{!beanObj.entityId}','{!curLumpObj.actionPlanMFLumpsumId}', 'Lumpsum')">
+														Open
+												   	</a>
+											    </apex:outputPanel>
+											    
+							               </apex:outputPanel>
+	                                   </td>
+                                       <td class="tableHeaderLight" style="text-align:center;FONT-WEIGHT: bold;">
+			                           		<apex:outputText value="{!curLumpObj.ETStatus}" />
+			                           </td>
+                                       <td class="textStyle" style="text-align:center;">
+                                           <apex:outputPanel rendered="{!IF(curLumpObj.executionTracker == 'Yes',true,false)}"  >
+											   <a href="" style="cursor: pointer;text-decoration:underline;" 
+												onClick="javascript:return  openRelatedExecutionTracker('{!curLumpObj.actionPlanMFLumpsumId}','Lumpsum')">
+												View
+											   </a>
+							               </apex:outputPanel>
+	                                   </td>
+	                                   
+	                            	</tr>
+                             	</apex:repeat>
+                            </apex:repeat>
+                        </table>
+                        <div class="space" style="text-align:left;" >
+	                        <table style="width:100%;">
+								<tr style="width:100%;">
+			           				<td style="width:8%; FONT-FAMILY: Calibri; FONT-SIZE: 15px; FONT-WEIGHT: bold; COLOR: #329902;"><apex:outputText value="Remarks: " /></td>
+			           				<td class="test2"><apex:outputText value="{!mfLumpsumRemark}" style="width:300px;height:55px;"/></td>
+			           			</tr>
+			           		</table>
+		           		</div>
+                	</div>
+				</div> <br/> <br/>
+            
+       			<div class="space"> 
+           			<div class="subHeader" style="width:100%;padding-left:10px;background-color:#66cd00;">CURRENT MUTUAL FUNDS - RUNNING SIPs</div> <br/>
+           			<div style="width:100%;overflow:auto;height:100%;"> 
+              			 <table width="95%" border="1" cellpadding="2" cellspacing="0" id="dataTable3">
+		                 	<tr class="tableHeaderLight">
+		                 	   <th style="width:15%;" class="textStyle">Forms<br/>Provided</th>
+		                 	   <th style="width:15%;" class="textStyle">Assigned<br/> To Ops</th>
+		                       <th style="width:17%;" class="textStyle">Scheme Name</th>
+		                       <th style="width:12%;" class="textStyle">Asset Class</th>
+		                       <th style="width:7%;" class="textStyle">Current SIP</th>
+		                       <th style="width:20%;" class="textStyle">Owner</th>
+		                       <th style="width:10%;" class="textStyle">SIP Action</th>
+		                       <th style="width:8%;" class="textStyle">Action Amount</th>
+<!-- 		                       <td style="width:8%; FONT-FAMILY: Calibri; FONT-SIZE: 15px; FONT-WEIGHT: bold; COLOR: #329902;">Execution Tracker to be opened</td> -->
+		                       <th style="width:8%;" class="textStyle">Execution<br/>Tracker<br/> to be opened</th>
+		                       <th style="width:7%;" class="textStyle">Execution Tracker</th>
+		                       <th style="width:7%;" class="textStyle">ET Status</th>
+		                       <th style="width:7%;" class="textStyle">Related Records</th>
+		                    </tr>
+		                    <apex:repeat value="{!beanObj.lstSIPCurrentFunds}" var="curSIPObj">
+		                    	<tr class="tableData">
+		                    		<td class="textStyle" style="text-align:center;">
+                                			<apex:outputPanel rendered="{!IF(curSIPObj.SIPexecutionTracker == 'Yes',true,false)}"  >
+                                				{!curSIPObj.strFormsProvided}
+                               				</apex:outputPanel>
+                               		</td>
+		                    		<td class="textStyle" style="text-align:center;">
+                                			<apex:outputPanel rendered="{!IF(curSIPObj.SIPexecutionTracker == 'Yes',true,false)}" >
+                                				{!curSIPObj.strAssignedToOps}
+                               				</apex:outputPanel>
+                               		</td>
+		                        	<td class="textStyle">{!curSIPObj.schemeName}</td>
+		                          
+		                            <td class="textStyle">{!curSIPObj.assetClass}</td>
+		                          
+		                            <td class="textStyle" style="text-align:right;">
+		                            	<apex:outputText value="{0, number, ,##,##0}" >
+		                                    <apex:param value="{!curSIPObj.currentSIP}"/>
+		                                </apex:outputText>
+		                            </td> 
+		                          
+		                            <td class="textStyle">{!curSIPObj.owner}</td>
+		                          
+		                            <td class="textStyle">
+		                            	<apex:outputText value="{!curSIPObj.SIPaction}" />
+		                            </td>
+		                          
+		                            <td class="textStyle">
+		                            	<apex:outputText value="{!curSIPObj.SIPactionAmount}" />
+		                            </td>
+		                          
+		                            <td class="textStyle" style="text-align:center;">
+		                            	<apex:outputText value="{!curSIPObj.SIPexecutionTracker}" />
+		                            </td>
+		                            
+		                            <td class="textStyle" style="text-align:center;">
+		                                 <apex:outputPanel rendered="{!IF(curSIPObj.SIPexecutionTracker == 'Yes',true,false)}"  >
+<!-- 	                                    	<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditExecutionTracker('{!beanObj.entityId}','{!curSIPObj.actionPlanMFSipId}', 'SIP')"> -->
+<!-- 												Open -->
+<!-- 											</a> -->
+ 											<apex:outputPanel rendered="{!IF((curSIPObj.SIPaction == 'Stop'),true,false)}">
+												<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditRedemptionExecutionTracker('{!beanObj.entityId}','{!curSIPObj.actionPlanMFSipId}', 'SIP')">
+													Open
+												</a>
+											</apex:outputPanel>
+											<apex:outputPanel rendered="{!IF(((curSIPObj.SIPaction == 'Continue') || (curSIPObj.SIPaction == 'Existing SIP - COB')),true,false)}">
+												<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditHoldCOBExecutionTracker('{!beanObj.entityId}','{!curSIPObj.actionPlanMFSipId}', 'SIP')">
+													Open
+												</a>
+											</apex:outputPanel>
+								         </apex:outputPanel>
+		                            </td>      
+		                            <td class="tableHeaderLight" style="text-align:center;FONT-WEIGHT: bold;">
+			                           		<apex:outputText value="{!curSIPObj.ETStatus}" />
+			                        </td>
+		                            <td class="textStyle" style="text-align:center;">
+                                          <apex:outputPanel rendered="{!IF(curSIPObj.SIPexecutionTracker == 'Yes',true,false)}" >
+											   <a href="" style="cursor: pointer;text-decoration:underline;" 
+												onClick="javascript:return  openRelatedExecutionTracker('{!curSIPObj.actionPlanMFSipId}','SIP')">
+												View
+											   </a>
+							              </apex:outputPanel>
+	                                </td>
+		                        </tr>
+		                   	</apex:repeat> 
+               			 </table>
+               			 <div class="space" style="text-align:left;">
+	                        <table style="width:100%;">
+								<tr style="width:100%;">
+			           				<td style="width:8%; FONT-FAMILY: Calibri; FONT-SIZE: 15px; FONT-WEIGHT: bold; COLOR: #329902;"><apex:outputText value="Remarks: " /></td>
+			           				<td class="test2"><apex:outputText value="{!mfSIPRemark}" style="width:300px;height:55px;"/></td>
+			           			</tr>
+			           		</table>
+		           		</div>
+           		     </div>
+       			</div><br/> <br/>
+          
+           
+           
+	   			<!-- ==========================================================GOAL WISE ADVICE====================================================== -->        
+       			<div class="divStyle" style="width:99%;padding-left:10px;"> GOAL WISE ADVICE </div>
+          
+       			<!-- ============ EMERGENCY FUND DETAILS ========================= -->      
+        		<div class="space">         
+             		<div class="subHeader" style="width:100%;padding-left:10px;background-color:#66cd00;">{!beanObj.objEmergencyFundGoalDetails.description}</div>
+           			<div class="space">
+		                 <div class="subHeader" style="width:20%;padding-left:10px;background-color:#A1E96B;">Goal Details</div>
+		                 <table padding-left="50%" width="70%" border="1" cellpadding="2" cellspacing="0" id="dataTable3"> 
+		                     <tr class="tableHeaderLight" padding-left="10%" font-color="red">
+		                         <th style="width:9%;" class="textStyle">Start Year</th>
+		                         <th style="width:8%;" class="textStyle">End Year</th>
+		                         <th style="width:7%;" class="textStyle">Annual Cost of Goal</th>
+		                         <th style="width:20%;" class="textStyle">Risk Profile</th>
+		                         <th style="width:20%;" class="textStyle">Remarks</th>
+		                     </tr>
+		                     
+		                     <tr class="tableData" background-color="#EFFFF5" padding-left="10%">
+		                         <td class="textStyle" style="text-align:right;">{!beanObj.objEmergencyFundGoalDetails.startYear}</td>
+		                         <td class="textStyle" style="text-align:right;">{!beanObj.objEmergencyFundGoalDetails.endYear}</td>
+		                         <td class="textStyle" style="text-align:right;">{!beanObj.objEmergencyFundGoalDetails.annualGoalCost}</td>
+		                         <td class="textStyle">{!beanObj.objEmergencyFundGoalDetails.goalProfile}</td>
+		                         <td class="textStyle">{!beanObj.objEmergencyFundGoalDetails.remark}</td>
+		                     </tr>
+		                 </table>
+              		</div>
+                         
+     				<!-- =====================Assets Allocated DETAILS ====================================== -->
+		            <div style="width:100%;overflow:auto;height:100%;">
+		             	<apex:outputPanel rendered="{!IF(beanObj.objEmergencyFundGoalDetails.lstAssests.size>0,true,false)}" >
+		                    <div class="space">     
+		                        <div class="subHeader" style="width:20%;padding-left:10px;background-color:#A1E96B;">Assets Allocated</div>              
+		                          <table width="90%" border="1" cellpadding="2" cellspacing="0" id="dataTable1" >
+		                              <tr class="tableHeaderLight">
+		                                  <th style="width:15%" class="textStyle">Type</th>
+		                                  <th style="width:8%" class="textStyle">Description</th>
+		                                  <th style="width:10%" class="textStyle">Owner</th>
+		                                  <th style="width:8%" class="textStyle">Allocated Amount</th>
+		                                  <th style="width:8%" class="textStyle">Expected Growth rate</th>
+		                                  <th style="width:8%" class="textStyle">Goal Year Value</th>
+		                                  <th class="textStyle" style="width:20%">Action to be taken</th>
+		                              </tr>
+		                              <apex:repeat value="{!beanObj.objEmergencyFundGoalDetails.lstAssests}" var="allocatedAssets">
+			                              <tr class="tableData">
+			                                  <td class="textStyle">{!allocatedAssets.Type}</td>
+			                                  
+			                                  <td class="textStyle">{!allocatedAssets.Description}</td>
+			                                  
+			                                  <td class="textStyle">{!allocatedAssets.owner}</td>
+			                                  
+			                                  <td class="textStyle" style="text-align:right;">
+			                                      <apex:outputText value="{0, number, ,##,##0}" >
+			                                             <apex:param value="{!allocatedAssets.allocatedAmount}"/>
+			                                      </apex:outputText>
+			                                  </td>
+			
+			                                  <td class="textStyle" style="text-align:right;">
+			                                      <apex:outputText value="{0, number, ##,##0.00}%" rendered="{!((if(allocatedAssets.Type=='Mutual Fund' || allocatedAssets.action=='Liquidate (Align to goal)',false,true)))}">
+			                                         <apex:param value="{!allocatedAssets.expectedGrowthRate}"/>
+			                                      </apex:outputText>
+			                                      <apex:outputText value="{0, number, ##,##0.00}%" rendered="{!((if(allocatedAssets.Type=='Mutual Fund' ||allocatedAssets.action=='Liquidate (Align to goal)',true,false)))}">
+			                                         <apex:param value="{!beanObj.objEmergencyFundGoalDetails.IRR}"/>
+			                                      </apex:outputText>
+			                                  </td>
+			                                  
+			                                  <td class="textStyle" style="text-align:right;">
+			                                      <apex:outputText value="{0, number, ,##,##0}" >
+			                                          <apex:param value="{!allocatedAssets.goalYearValue}"/>
+			                                      </apex:outputText>
+			                                   </td>
+			                                   
+			                                  <td class="textStyle">{!allocatedAssets.action}</td>
+			                              </tr>
+		                              </apex:repeat>
+		                              
+		                              <tr class="tableHeaderLight " padding-left="10%" >
+		                                  <th style="width:7%;" class="textStyle">Total</th>
+		                                  <td colspan="2"></td>
+		                                  
+		                                  <td class="textStyle" style="text-align:right;">
+		                                    <apex:outputText value="{0, number, ,##,##0}" >
+		                                        <apex:param value="{!beanObj.objEmergencyFundGoalDetails.AssetsTotal}"/>
+		                                    </apex:outputText>
+		                                  </td>
+		                                  <td colspan="3"></td>
+		                              </tr>
+		                          </table>
+		                    </div>
+		                 </apex:outputPanel>
+		            </div> 
+                
+					<!-- ==================EmergencyFund SIP DETAILS================================= -->
+		            <div class="space"> 
+		             	<div class="subHeader" style="width:20%;padding-left:10px;background-color:#A1E96B;">SIP</div>
+		                <table padding-left="10%" width="90%" border="1" cellpadding="2" cellspacing="0" id="dataTable3"> 
+		                     <tr class="tableHeaderLight " padding-left="10%" >
+		                         <th style="width:20%;" class="textStyle">SIP</th>
+		                         <th style="width:10%;" class="textStyle">Equity Amount</th>
+		                         <th style="width:10%;" class="textStyle">Equity(%)</th>
+		                         <th style="width:10%;" class="textStyle">Debt Amount</th>
+		                         <th style="width:10%;" class="textStyle">Debt(%)</th>
+		                         <th style="width:10%;" class="textStyle">Gold Amount</th>
+		                         <th style="width:10%;" class="textStyle">Gold(%)</th>
+		                         
+		                     </tr>
+		                     <tr>
+		                         <td class="textStyle" style="text-align:right;">
+		                         	<apex:outputText value="{0, number, ,##,##0}" >
+		                                  <apex:param value="{!beanObj.objEmergencyFundGoalDetails.SIP}"/>
+		                             </apex:outputText>
+		                         </td>
+		                         
+		                         <td class="textStyle">
+		                              <apex:outputText value="{!beanObj.objEmergencyFundGoalDetails.equityAmt}" style="width:90%;text-align:right;"/>
+		                         </td>
+		                         
+		                         <td class="textStyle" style="text-align:right;">
+		                              <apex:outputText value="{0, number,0.000}" >
+		                                     <apex:param value="{!beanObj.objEmergencyFundGoalDetails.equityPerc}"/>
+		                              </apex:outputText>
+		                         </td>
+		                         
+		                         <td class="textStyle">
+		                               <apex:outputText value="{!beanObj.objEmergencyFundGoalDetails.debtAmt}" style="width:90%;text-align:right;"/>
+		                         </td>
+		                         
+		                         <td class="textStyle" style="text-align:right;">
+		                               <apex:outputText value="{0, number,0.000}" >
+		                                      <apex:param value="{!beanObj.objEmergencyFundGoalDetails.debtPerc}"/>
+		                               </apex:outputText>
+		                         </td>
+		                         
+		                         <td class="textStyle">
+		                               <apex:outputText value="{!beanObj.objEmergencyFundGoalDetails.goldAmt}" style="width:90%;text-align:right;"/>
+		                         </td>
+		                         
+		                         <td class="textStyle" style="text-align:right;">
+		                               <apex:outputText value="{0, number,0.000}" >
+		                                      <apex:param value="{!beanObj.objEmergencyFundGoalDetails.goldPerc}"/>
+		                               </apex:outputText>
+		                         </td>
+		
+		                     </tr>
+		                </table>
+		            </div>
+                
+					<!-- ============== EmergencyFund SIP Funds  ================================= -->                       
+		            <div class="space">  
+		            	<div class="subHeader" style="width:20%;padding-left:10px;background-color:#A1E96B;">SIP Funds</div> 
+		                <apex:outputPanel id="SipFundOutputPannel">
+		                    <table padding-left="10%" width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable3"> 
+		                        <tr class="tableHeaderLight " padding-left="10%" >
+		                        	<th style="width:15%;" class="textStyle">Forms<br/>Provided</th>
+		                            <th style="width:15%;" class="textStyle">Assigned<br/>To Ops</th>
+		                            <th style="width:40%;" class="textStyle">SIP Funds</th>
+		                            <th style="width:10%;" class="textStyle">Transaction Type</th>
+		                            <th style="width:10%;" class="textStyle">Amount</th>
+		                            <th style="width:10%;" class="textStyle">Installments</th>
+		                            <th style="width:10%;" class="textStyle">Category</th> 
+		                            <th style="width:15%;" class="textStyle">Option</th>
+		                            <th style="width:10%;" class="textStyle">Remarks</th>
+		                            
+		                            <th style="width:5%;" class="textStyle">Execution<br/> Tracker<br/>to be opened</th>
+		                            <th style="width:10%;" class="textStyle">Execution Tracker</th>
+		                            <th style="width:7%;" class="textStyle">ET Status</th>
+		                            <th style="width:7%;" class="textStyle">Related <br/>Records</th>
+		                        </tr>
+		                        <apex:repeat id="hdEmergency" value="{!beanObj.objEmergencyFundGoalDetails.lstSIPFunds}" var="lstSIPFunds">
+		                         <tr>
+		                         	 <td class="textStyle" style="text-align:center;">
+                                			<apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}"  >
+                                				{!lstSIPFunds.strFormsProvided}
+                               				</apex:outputPanel>
+                               		 </td>
+		                         	 <td class="textStyle" style="text-align:center;">
+                                		 <apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}"  >
+                                			 {!lstSIPFunds.strAssignedToOps}
+                               			 </apex:outputPanel>
+                               		 </td>
+		                             <td class="textStyle" style="text-align:left;">
+		                                   <apex:outputText value="{!lstSIPFunds.productName}" />
+		                             </td>
+		                             
+		                             <td>
+		                                  <apex:outputText value="{!lstSIPFunds.transactionType}" />
+		                             </td>
+		                             
+		                             <td class="textStyle" style="text-align:right;">
+		                                   <apex:outputText value="{!lstSIPFunds.amount}" />
+		                             </td>
+		                             
+		                             <td class="textStyle" style="text-align:right;">
+		                                   <apex:outputText value="{!lstSIPFunds.installments}" />
+		                             </td>
+		                             
+		                             <td>
+		                                 <apex:outputText value="{!lstSIPFunds.category}" />
+		                             </td>
+		                             
+		                             <td>
+		                                 <apex:outputText value="{!lstSIPFunds.option}" />
+		                             </td>
+		                             
+		                             <td class="textStyle" style="width:100%;">
+		                                 <apex:outputText value="{!lstSIPFunds.remarks}" />
+		                             </td> 
+		                             <td style="text-align:center;">
+		                                 <apex:outputText value="{!lstSIPFunds.executionTracker}" />
+		                             </td>
+		                             <td style="text-align:center;">
+		                                 <apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}"  >
+<!-- 	                                        <a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditExecutionTracker('{!beanObj.entityId}','{!lstSIPFunds.SIPFundId}', 'GoalSIP')"> -->
+<!-- 												Open -->
+<!-- 											</a> -->
+											<apex:outputPanel rendered="{!IF((lstSIPFunds.transactionType == 'New SIP'),true,false)}">
+												<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSTPExecutionTracker('{!beanObj.entityId}','{!lstSIPFunds.SIPFundId}', 'GoalSIP')">
+													Open
+												</a>
+											</apex:outputPanel>
+											<apex:outputPanel rendered="{!IF(((lstSIPFunds.transactionType == 'Existing SIP- COB')||(lstSIPFunds.transactionType == 'Existing SIP')),true,false)}">
+												<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditHoldCOBExecutionTracker('{!beanObj.entityId}','{!lstSIPFunds.SIPFundId}', 'GoalSIP')">
+													Open
+												</a>
+											</apex:outputPanel>
+							            </apex:outputPanel>
+		                             </td>
+		                              <td class="tableHeaderLight" style="text-align:center;FONT-WEIGHT: bold;">
+			                           		<apex:outputText value="{!lstSIPFunds.ETStatus}" />
+			                           </td>
+		                              <td class="textStyle" style="text-align:center;">
+                                           <apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}">
+											   <a href="" style="cursor: pointer;text-decoration:underline;" 
+												onClick="javascript:return  openRelatedExecutionTracker('{!lstSIPFunds.SIPFundId}','')">
+												View
+											   </a>
+							               </apex:outputPanel>
+	                                   </td>
+		                         </tr>
+		                        </apex:repeat>
+		                        <tr class="tableHeaderLight " padding-left="10%" >
+		                            <th style="width:7%;" class="textStyle">Total</th>
+		                            <td colspan = "3"></td>
+		                            <td class="textStyle" style="text-align:right;">
+		                                <apex:outputText value="{0, number, ,##,##0}" >
+		                                     <apex:param value="{!beanObj.objEmergencyFundGoalDetails.SIPTotal}"/>
+		                                </apex:outputText>
+		                            </td>
+		                            <td colspan = "9"></td>
+		                        </tr>
+		                    </table>
+		                </apex:outputPanel>
+		            </div> <br/>
+		            
+					<!-- =========================== EmergencyFund Lumpsum ================================ -->                         
+	                <div class="space"> 
+		                <div class="subHeader" style="width:20%;padding-left:10px;background-color:#A1E96B;">Lumpsum</div>
+	                    <table padding-left="10%" width="90%" border="1" cellpadding="2" cellspacing="0" id="dataTable3"> 
+	                        <tr class="tableHeaderLight " padding-left="10%" >
+	                            <th style="width:20%;" class="textStyle">Lumpsum</th>
+	                            <th style="width:10%;" class="textStyle">Equity Amount</th>
+	                            <th style="width:10%;" class="textStyle">Equity(%)</th>
+	                            <th style="width:10%;" class="textStyle">Debt Amount</th>
+	                            <th style="width:10%;" class="textStyle">Debt(%)</th>
+	                            <th style="width:10%;" class="textStyle">Gold Amount</th>
+	                            <th style="width:10%;" class="textStyle">Gold(%)</th>
+	                        </tr>
+	                        <tr>
+	                            <td class="textStyle" style="text-align:right;">
+	                                 <apex:outputText value="{0, number, ,##,##0}" >
+	                                        <apex:param value="{!beanObj.objEmergencyFundLumpsum.lumpsum}"/>
+	                                 </apex:outputText>
+	                            </td>
+	                            <td class="textStyle" style="text-align:right;">
+	                                  <apex:outputText value="{!beanObj.objEmergencyFundLumpsum.lumpsumEquityAmt}" />
+	                            </td>
+	                            <td class="textStyle" style="text-align:right;">
+	                                 <apex:outputText value="{0, number,0.000}" >
+	                                    <apex:param value="{!beanObj.objEmergencyFundLumpsum.lumpsumEquityPerc}"/>
+	                                 </apex:outputText>
+	                            </td>
+	                            <td class="textStyle" style="text-align:right;">
+	                                  <apex:outputText value="{!beanObj.objEmergencyFundLumpsum.lumpsumDebtAmt}" />
+	                            </td>
+	                             <td class="textStyle" style="text-align:right;">
+	                                  <apex:outputText value="{0, number,0.000}" >
+	                                         <apex:param value="{!beanObj.objEmergencyFundLumpsum.lumpsumDebtPerc}"/>
+	                                  </apex:outputText>
+	                            </td>
+	                            <td class="textStyle" style="text-align:right;">
+	                                  <apex:outputText value="{!beanObj.objEmergencyFundLumpsum.lumpsumGoldAmt}" />
+	                            </td>
+	                            <td class="textStyle" style="text-align:right;">
+	                                  <apex:outputText value="{0, number,0.000}" >
+	                                         <apex:param value="{!beanObj.objEmergencyFundLumpsum.lumpsumGoldPerc}"/>
+	                                  </apex:outputText>
+	                            </td>
+	                        </tr>
+	                    </table>
+	                </div> 
+                                
+	    			<!-- =========================== Lumpsum Emergency Funds ======================================== -->                       
+	                <div class="space">                 
+	                	<div class="subHeader" style="width:20%;padding-left:10px;background-color:#A1E96B;">Lumpsum Funds</div>
+	                    <apex:outputPanel id="LumpsumFundOutputPannel">
+	                        <table padding-left="10%" width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable4">
+	                            <tr class="tableHeaderLight " padding-left="10%" >
+	                            	<th style="width:10%;" class="textStyle">Forms <br/> Provided</th>
+	                                <th style="width:10%;" class="textStyle">Assigned<br/> To Ops</th>
+	                                <th style="width:10%;" class="textStyle">Lumpsum<br/> Funds</th>
+	                                <th style="width:10%;" class="textStyle">Transaction<br/> Type</th>
+	                                <th style="width:10%;" class="textStyle">Fund</th>
+	                                <th style="width:10%;" class="textStyle">Amount</th>
+	                                <th style="width:10%;" class="textStyle">Installments</th>
+	                                <th style="width:10%;" class="textStyle">Amount per<br/> Installments</th>
+	                                <th style="width:10%;" class="textStyle">Category</th>
+	                                <th style="width:5%;" class="textStyle">Option</th>
+	                                <th style="width:10%;" class="textStyle">Remarks</th>
+	                                <th style="width:5%;" class="textStyle">Execution <br/> Tracker<br/> to be opened</th>
+	                                <th style="width:5%;" class="textStyle">Execution<br/>  Tracker</th>
+	                                <th style="width:10%;" class="textStyle">ET Status</th>
+	                                <th style="width:5%;" class="textStyle">Related <br/> Records</th>
+	                            </tr>
+	                         
+	                            <apex:repeat id="hd111" value="{!beanObj.objEmergencyFundGoalDetails.lstLumpsumFunds}" var="lumpsumFunds">
+		                            <tr>
+		                            	<td class="textStyle" style="text-align:center;">
+                                			<apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}"  >
+                                				{!lumpsumFunds.strFormsProvided}
+                               				</apex:outputPanel>
+                               		 	</td>
+		                                <td class="textStyle" style="text-align:center;">
+                                		    <apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}"  >
+                                			     {!lumpsumFunds.strAssignedToOps}
+                               			    </apex:outputPanel>
+                               			</td>
+		                                <td class="textStyle" style="text-align:left;">
+		                                      <apex:outputText value="{!lumpsumFunds.lumpsumProductName}" style="width:90%;text-align:left;" />
+		                                </td>
+		                                
+		                                <td>
+		                                    <apex:outputText value="{!lumpsumFunds.lumpsumTransactionType}" />
+		                                </td>
+		                                
+		                                <td class="textStyle">
+		                                      <apex:outputText value="{!lumpsumFunds.lumpsumFund}" style="width:95%;text-align:left;" />
+		                                </td>
+		                                
+		                                <td class="textStyle"  style="text-align:right;">
+		                                      <apex:outputText value="{!lumpsumFunds.lumpsumAmount}" style="width:95%;text-align:left;" />
+		                                </td>
+		                                
+		                                <td class="textStyle" style="text-align:right;">
+		                                      <apex:outputText value="{!lumpsumFunds.lumpsumInstallments}" style="width:95%;text-align:left;" />
+		                                </td>
+		                                
+		                                <td class="textStyle" style="text-align:right;">
+		                                      <apex:outputText value="{!lumpsumFunds.lumpsumAmountPerInstall}" style="width:95%;text-align:left;" />
+		                                </td>
+		                                
+		                                <td>
+		                                    <apex:outputText value="{!lumpsumFunds.lumpsumCategory}" />
+		                                </td>
+		                                
+		                                <td>
+		                                    <apex:outputText value="{!lumpsumFunds.lumpsumOption}" style="width:20%;"/>
+		                                </td>
+		                                
+		                                <td class="textStyle" style="width:100%;">
+		                                    <apex:outputText value="{!lumpsumFunds.lumpsumRemarks}" style="width:95%;text-align:left;" />
+		                                </td>
+		                                
+		                                <td style="text-align:center;">
+		                                    <apex:outputText value="{!lumpsumFunds.lumpsumExecutionTracker}" />
+		                                </td>
+		                                <td style="text-align:center;">
+		                               		<apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}"  >
+<!-- 		                                    	<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditExecutionTracker('{!beanObj.entityId}','{!lumpsumFunds.LumpsumFundId}', 'GoalLumpsum')"> -->
+<!-- 													Open -->
+<!-- 												</a> -->
+												<apex:outputPanel rendered="{!IF(((lumpsumFunds.lumpsumTransactionType == 'Lumpsum') || (lumpsumFunds.lumpsumTransactionType == 'STP To') || (lumpsumFunds.lumpsumTransactionType == 'STP From')),true,false)}">
+													<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSTPExecutionTracker('{!beanObj.entityId}','{!lumpsumFunds.LumpsumFundId}', 'GoalLumpsum')">
+														Open
+													</a>
+												</apex:outputPanel>
+												<apex:outputPanel rendered="{!IF(((lumpsumFunds.lumpsumTransactionType == 'Switch To') ||(lumpsumFunds.lumpsumTransactionType == 'Switch From')),true,false)}">
+													<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSwitchExecutionTracker('{!beanObj.entityId}','{!lumpsumFunds.LumpsumFundId}', 'GoalLumpsum')">
+														Open
+												   	</a>
+											    </apex:outputPanel>
+											    <apex:outputPanel rendered="{!IF(((lumpsumFunds.lumpsumTransactionType == 'Hold') ||(lumpsumFunds.lumpsumTransactionType == 'Hold - COB')),true,false)}">
+													<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditHoldCOBExecutionTracker('{!beanObj.entityId}','{!lumpsumFunds.LumpsumFundId}', 'GoalLumpsum')">
+														Open
+												   	</a>
+											    </apex:outputPanel>
+								            </apex:outputPanel>
+		                                </td>
+	                                 	<td class="tableHeaderLight" style="text-align:center;FONT-WEIGHT: bold;">
+			                           		<apex:outputText value="{!lumpsumFunds.ETStatus}" />
+			                           	</td>
+		                                 <td class="textStyle" style="text-align:center;">
+                                           <apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}">
+											   <a href="" style="cursor: pointer;text-decoration:underline;" 
+												onClick="javascript:return  openRelatedExecutionTracker('{!lumpsumFunds.LumpsumFundId}','')">
+												View
+											   </a>
+							               </apex:outputPanel>
+	                                   </td>
+		                            </tr>
+	                          
+	                            </apex:repeat> 
+	                            <tr class="tableHeaderLight " padding-left="10%" >
+	                                <th style="width:20%;" class="textStyle">Total</th>
+	                                <td colspan="4"></td>
+	                                <td class="textStyle" style="text-align:right;">
+	                                    <apex:outputText value="{0, number, ,##,##0}" >
+	                                         <apex:param value="{!beanObj.objEmergencyFundGoalDetails.LumpsumTotal}"/>
+	                                    </apex:outputText>
+	                                </td>
+	                                <td colspan="10"></td>
+	                            </tr>
+	                        </table>
+	                    </apex:outputPanel>
+	                </div>
+                </div> 
+			   <!-- =======END OF EMERGENCY FUND DETAILS============================== -->
+		
+				<!-- ==================Goal DETAILS========================= -->
+	            <div  class="divContainerStyle" > 
+	            	<apex:outputPanel id="GoalDetailsPannel">
+		            	<apex:repeat id="hd" value="{!beanObj.lstGoalDetails}" var="goalList">  
+		                <div class="subHeader" style="width:100%;padding-left:10px;background-color:#66cd00;">{!goalList.description}</div>
+		                    <div class="space">
+		                    	
+								<!--       	Goal Detail Information       -->
+		                    	<div class="subHeader" style="width:20%;padding-left:10px;background-color:#A1E96B;">Goal Details</div>
+		                        <table padding-left="50%" width="70%" border="1" cellpadding="2" cellspacing="0" id="dataTable3"> 
+		                            <tr class="tableHeaderLight" padding-left="10%" font-color="red">
+		                                <th style="width:9%;" class="textStyle">Start Year</th>
+		                                <th style="width:8%;" class="textStyle">End Year</th>
+		                                <th style="width:7%;" class="textStyle">Annual Cost of Goal</th>
+		                                <th style="width:20%;" class="textStyle">Risk Profile</th>
+		                                <th style="width:20%;" class="textStyle">Remarks</th>
+		                            </tr>
+		                            
+		                            <tr class="tableData" background-color="#EFFFF5" padding-left="10%">
+		                                <td class="textStyle" style="text-align:right;">{!goalList.startYear}</td>
+		                                <td class="textStyle" style="text-align:right;">{!goalList.endYear}</td>
+		                                <td class="textStyle" style="text-align:right;">{!TEXT(goalList.annualGoalCost)}</td>
+		                                <td class="textStyle">{!goalList.goalProfile}</td>
+		                                <td class="textStyle">{!goalList.remark}</td>
+		                            </tr>
+		                        </table>
+		                    </div>
+                     
+						  <!-- ================== Assets Allocated   ================== -->
+		                  <div style="width:100%;overflow:auto;height:100%;" >
+			                  <apex:outputPanel rendered="{!IF(goalList.lstAssests.size>0,true,false)}" >
+			                    <div class="space">     
+			                        <div class="subHeader" style="width:20%;padding-left:10px;background-color:#A1E96B;">Assets Allocated</div>              
+			                          <table width="90%" border="1" cellpadding="2" cellspacing="0" id="dataTable1" >
+			                              <tr class="tableHeaderLight">
+			                                  <th style="width:15%" class="textStyle">Type</th>
+			                                  <th style="width:8%" class="textStyle">Description</th>
+			                                  <th style="width:10%" class="textStyle">Owner</th>
+			                                  <th style="width:8%" class="textStyle">Allocated Amount</th>
+			                                  <th style="width:8%" class="textStyle">Expected Growth rate</th>
+			                                  <th style="width:8%" class="textStyle">Goal Year Value</th>
+			                                  <th class="textStyle" style="width:20%">Action to be taken</th>
+			                              </tr>
+			                              <apex:repeat value="{!goalList.lstAssests}" var="allocatedAssets">
+				                              <tr class="tableData">
+				                                  <td class="textStyle">{!allocatedAssets.Type}</td>
+				                                  <td class="textStyle">{!allocatedAssets.Description}</td>
+				                                  <td class="textStyle">{!allocatedAssets.owner}</td>
+				                                  <td class="textStyle" style="text-align:right;">
+				                                      <apex:outputText value="{0, number, ,##,##0}" >
+				                                             <apex:param value="{!allocatedAssets.allocatedAmount}"/>
+				                                      </apex:outputText></td>
+				                                  <td class="textStyle" style="text-align:right;">
+				                                      <apex:outputText value="{0, number, ##,##0.00}%" rendered="{!(if(allocatedAssets.Type=='Mutual Fund' || allocatedAssets.action=='Liquidate (Align to goal)',false,true))}">
+				                                         <apex:param value="{!allocatedAssets.expectedGrowthRate}"/>
+				                                      </apex:outputText>
+				                                      <apex:outputText value="{0, number, ##,##0.00}%" rendered="{!(if(allocatedAssets.Type=='Mutual Fund' ||allocatedAssets.action=='Liquidate (Align to goal)',true,false))}">
+				                                         <apex:param value="{!goalList.IRR}"/>
+				                                      </apex:outputText>
+				                                  </td>
+				                                  <td class="textStyle" style="text-align:right;">
+				                                      <apex:outputText value="{0, number, ,##,##0}" >
+				                                             <apex:param value="{!allocatedAssets.goalYearValue}"/>
+				                                      </apex:outputText></td>
+				                                  <td class="textStyle">{!allocatedAssets.action}</td>
+				                              </tr>
+			                              </apex:repeat>
+			                              <tr class="tableHeaderLight " padding-left="10%" >
+			                                <th style="width:7%;" class="textStyle">Total</th>
+			                                <td colspan="2"></td>
+			                                <td class="textStyle" style="text-align:right;">
+			                                    <apex:outputText value="{0, number, ,##,##0}" >
+			                                        <apex:param value="{!goalList.AssetsTotal}"/>
+			                                    </apex:outputText>
+			                                </td>
+			                                <td colspan="3"></td>
+			                            </tr>
+			                          </table>
+			                    </div>
+			                </apex:outputPanel>
+		               </div> 
+                         
+					   <!-- ================== SIP Detail =============== -->                       
+		                    
+		               <div class="space"> 
+		                   <div class="subHeader" style="width:20%;padding-left:10px;background-color:#A1E96B;">SIP</div>
+		                   <table padding-left="10%" width="90%" border="1" cellpadding="2" cellspacing="0" id="dataTable3"> 
+		                       <tr class="tableHeaderLight " padding-left="10%" >
+		                           <th style="width:20%;" class="textStyle">SIP</th>
+		                           <th style="width:10%;" class="textStyle">Equity Amount</th>
+		                           <th style="width:10%;" class="textStyle">Equity(%)</th>
+		                           <th style="width:10%;" class="textStyle">Debt Amount</th>
+		                           <th style="width:10%;" class="textStyle">Debt(%)</th>
+		                           <th style="width:10%;" class="textStyle">Gold Amount</th>
+		                           <th style="width:10%;" class="textStyle">Gold(%)</th>
+		                       </tr>
+		                       <tr>
+		                           <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number, ,##,##0}" >
+		                                        <apex:param value="{!goalList.SIP}"/>
+		                                 </apex:outputText>
+		                           </td>
+		                           <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number, ,##,##0}" >
+		                                        <apex:param value="{!goalList.equityAmt}"/>
+		                                 </apex:outputText>
+		                           </td>
+		                           <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number,0.000}" >
+		                                        <apex:param value="{!goalList.equityPerc}"/>
+		                                 </apex:outputText>
+		                           </td>
+		                           <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number, ,##,##0}" >
+		                                        <apex:param value="{!goalList.debtAmt}"/>
+		                                 </apex:outputText>
+		                           </td>
+		                           <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number,0.000}" >
+		                                        <apex:param value="{!goalList.debtPerc}"/>
+		                                 </apex:outputText>
+		                           </td>
+		                           <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number, ,##,##0}" >
+		                                        <apex:param value="{!goalList.goldAmt}"/>
+		                                 </apex:outputText>
+		                           </td>
+		                           <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number,0.000}" >
+		                                        <apex:param value="{!goalList.goldPerc}"/>
+		                                 </apex:outputText>
+		                           </td>
+		                       </tr>
+		                   </table>
+		                </div>
+                
+						<!-- =================SIP Funds=========================== -->                         
+		                <div class="space">  
+		                   <div class="subHeader" style="width:20%;padding-left:10px;background-color:#A1E96B;">SIP Funds</div> 
+		                   <apex:outputPanel rendered="{!IF(goalList.lstSIPFunds.size>0,true,false)}" id="SipFundOutputPannel">
+		                    	<table padding-left="10%" width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable3"> 
+		                            <tr class="tableHeaderLight " padding-left="10%" >
+		                                <th style="width:15%;" class="textStyle">Forms<br/> Provided</th>
+		                                <th style="width:15%;" class="textStyle">Assigned <br/>To Ops</th>
+		                                <th style="width:40%;" class="textStyle">SIP Funds</th>
+		                                <th style="width:10%;" class="textStyle">Transaction Type</th>
+		                                <th style="width:10%;" class="textStyle">Amount</th>
+		                                <th style="width:10%;" class="textStyle">Installments</th>
+		                                <th style="width:10%;" class="textStyle">Category</th>
+		                                <th style="width:15%;" class="textStyle">Option</th>
+		                                <th style="width:10%;" class="textStyle">Remarks</th>
+		                            
+			                            <th style="width:5%;" class="textStyle">Execution <br/>Tracker<br/>to be opened</th>
+			                            <th style="width:10%;" class="textStyle">Execution Tracker</th>
+			                            <th style="width:10%;" class="textStyle">ET Status</th>
+			                            <th style="width:7%;" class="textStyle">Related <br/>Records</th>
+		                            </tr>
+		                            <apex:repeat id="hd" value="{!goalList.lstSIPFunds}" var="lstSIPFunds">
+			                            <tr>
+			                            	<td class="textStyle" style="text-align:center;">
+	                                			<apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}"  >
+	                                				{!lstSIPFunds.strFormsProvided}
+	                               				</apex:outputPanel>
+                               		 		</td>
+				                            <td class="textStyle" style="text-align:center;">
+	                                		    <apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}"  >
+	                                			    {!lstSIPFunds.strAssignedToOps}
+	                               			    </apex:outputPanel>
+	                               		    </td>
+			                                <td class="textStyle" style="text-align:left;">
+			                                      <apex:outputText value="{!lstSIPFunds.productName}" style="width:90%;text-align:left;" />
+			                                </td>
+			                                <td>
+			                                    <apex:outputText value="{!lstSIPFunds.transactionType}" />
+			                                </td>
+			                                 <td class="textStyle" style="text-align:right;">
+			                                      <apex:outputText value="{!lstSIPFunds.amount}" style="width:95%;text-align:left;" />
+			                                 </td>
+			                                 <td class="textStyle" style="text-align:right;">
+			                                      <apex:outputText value="{!lstSIPFunds.installments}" style="width:95%;text-align:left;" />
+			                                 </td>
+			                                 <td>
+			                                    <apex:outputText value="{!lstSIPFunds.category}" />
+			                                </td>
+			                                 <td>
+			                                    <apex:outputText value="{!lstSIPFunds.option}" />
+			                                </td>
+			                                <td class="textStyle" style="width:100%;">
+			                                    <apex:outputText value="{!lstSIPFunds.remarks}" style="width:95%;text-align:left;" />
+			                                </td>
+			                                <td style="text-align:center;">
+			                                    <apex:outputText value="{!lstSIPFunds.executionTracker}" />
+			                                </td>
+			                                <td style="text-align:center;">
+		                                    	<apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}"  >
+<!-- 			                                        <a href="" style="cursor: pointer;text-decoration:underline" onClick="javascript:return  openEditExecutionTracker('{!beanObj.entityId}','{!lstSIPFunds.SIPFundId}', 'GoalSIP')"> -->
+<!-- 														Open -->
+<!-- 													</a> -->
+													<apex:outputPanel rendered="{!IF((lstSIPFunds.transactionType == 'New SIP'),true,false)}">
+														<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSTPExecutionTracker('{!beanObj.entityId}','{!lstSIPFunds.SIPFundId}', 'GoalSIP')">
+															Open
+														</a>
+													</apex:outputPanel>
+													<apex:outputPanel rendered="{!IF(((lstSIPFunds.transactionType == 'Existing SIP- COB')||(lstSIPFunds.transactionType == 'Existing SIP')),true,false)}">
+														<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditHoldCOBExecutionTracker('{!beanObj.entityId}','{!lstSIPFunds.SIPFundId}', 'GoalSIP')">
+															Open
+														</a>
+													</apex:outputPanel>
+									            </apex:outputPanel>
+			                                </td>
+			                                <td class="tableHeaderLight" style="text-align:center;FONT-WEIGHT: bold;">
+			                           			<apex:outputText value="{!lstSIPFunds.ETStatus}" />
+			                           		</td>
+			                                 <td class="textStyle" style="text-align:center;">
+                                           		<apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}" >
+												   <a href="" style="cursor: pointer;text-decoration:underline;" 
+													onClick="javascript:return  openRelatedExecutionTracker('{!lstSIPFunds.SIPFundId}','')">
+													View
+												   </a>
+							               		</apex:outputPanel>
+	                                   		</td>
+			                            </tr>
+		                            </apex:repeat>
+		                            <tr class="tableHeaderLight " padding-left="10%" >
+		                                <th style="width:7%;" class="textStyle">Total</th>
+	                                 	<td colspan="3"></td>
+		                                <td class="textStyle" style="text-align:right;">
+		                                	<apex:outputText value="{0, number, ,##,##0}" >
+		                                        <apex:param value="{!goalList.SIPTotal}"/>
+		                                    </apex:outputText>
+		                                </td>
+		                                <td colspan="9"></td>
+		                                
+		                           </tr>
+		                       </table>
+		                   </apex:outputPanel>
+		                </div>
+		                <br/>
+               
+					   <!-- ==================== Lumpsum ========================= -->                       
+		               <div class="space"> 
+		                   <div class="subHeader" style="width:20%;padding-left:10px;background-color:#A1E96B;">Lumpsum</div>
+		                   <table padding-left="10%" width="90%" border="1" cellpadding="2" cellspacing="0" id="dataTable3"> 
+		                       <tr class="tableHeaderLight " padding-left="10%" >
+		                           <th style="width:20%;" class="textStyle">Lumpsum</th>
+		                           <th style="width:10%;" class="textStyle">Equity Amount</th>
+		                           <th style="width:10%;" class="textStyle">Equity(%)</th>
+		                           <th style="width:10%;" class="textStyle">Debt Amount</th>
+		                           <th style="width:10%;" class="textStyle">Debt(%)</th>
+		                           <th style="width:10%;" class="textStyle">Gold Amount</th>
+		                           <th style="width:10%;" class="textStyle">Gold(%)</th>
+		                       </tr>
+		                       <tr>
+		                           <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number, ,##,##0}" >
+		                                        <apex:param value="{!goalList.lumpsum}"/>
+		                                 </apex:outputText>
+		                           </td>
+		                           <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number, ,##,##0}" >
+		                                        <apex:param value="{!goalList.lumpsumEquityAmt}"/>
+		                                 </apex:outputText>
+		                           </td>
+		                           <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number,0.000}" >
+		                                        <apex:param value="{!goalList.lumpsumEquityPerc}"/>
+		                                 </apex:outputText>
+		                           </td>
+		                           <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number, ,##,##0}" >
+		                                        <apex:param value="{!goalList.lumpsumDebtAmt}"/>
+		                                 </apex:outputText>
+		                           </td>
+		                            <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number,0.000}" >
+		                                        <apex:param value="{!goalList.lumpsumDebtPerc}"/>
+		                                 </apex:outputText>
+		                           </td>
+		                           <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number, ,##,##0}" >
+		                                        <apex:param value="{!goalList.lumpsumGoldAmt}"/>
+		                                 </apex:outputText>
+		                           </td>
+		                            <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number,0.000}" >
+		                                        <apex:param value="{!goalList.lumpsumGoldPerc}"/>
+		                                 </apex:outputText>
+		                           </td>
+		                       </tr>
+		                   </table>
+		               </div>
+                
+					<!-- ===================== Lumpsum Funds ====================== -->                         
+	                    
+	                <div class="space">  
+	                   <div class="subHeader" style="width:20%;padding-left:10px;background-color:#A1E96B;">Lumpsum Funds</div>
+	                   <apex:outputPanel rendered="{!IF(goalList.lstLumpsumFunds.size>0,true,false)}" id="LumpsumFundOutputPannel">
+	                        <table padding-left="10%" width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable4">
+	                            <tr class="tableHeaderLight " padding-left="10%" >
+	                            	<th style="width:10%;" class="textStyle">Forms<br/>Provided</th>
+	                            	<th style="width:10%;" class="textStyle">Assigned<br/> To Ops</th>
+	                                <th style="width:10%;" class="textStyle">Lumpsum <br/>Funds</th>
+	                                <th style="width:10%;" class="textStyle">Transaction<br/> Type</th>
+	                                <th style="width:10%;" class="textStyle">Fund</th>
+	                                <th style="width:10%;" class="textStyle">Amount</th>
+	                                <th style="width:10%;" class="textStyle">Installments</th>
+	                                <th style="width:10%;" class="textStyle">Amount per<br/> Installments</th>
+	                                <th style="width:10%;" class="textStyle">Category</th>
+	                                <th style="width:10%;" class="textStyle">Option</th>
+	                                <th style="width:10%;" class="textStyle">Remarks</th>
+	                                
+	                                <th style="width:5%;" class="textStyle">Execution <br/>Tracker<br/> to be opened</th>
+		                            <th style="width:5%;" class="textStyle">Execution<br/>Tracker</th>
+		                            <th style="width:10%;" class="textStyle">ET Status</th>
+		                            <th style="width:5%;" class="textStyle">Related<br/> Records</th>
+	                            </tr>
+	                         
+	                            <apex:repeat id="hd1" value="{!goalList.lstLumpsumFunds}" var="lumpsumFunds">
+		                            <tr>
+		                            	<td class="textStyle" style="text-align:center;">
+                                			<apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}"  >
+                                				{!lumpsumFunds.strFormsProvided}
+                               				</apex:outputPanel>
+                               		 	</td>
+		                            	<td class="textStyle" style="text-align:center;">
+                                		    <apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}"  >
+                                			     {!lumpsumFunds.strAssignedToOps}
+                               			    </apex:outputPanel>
+                               			</td>
+		                                <td class="textStyle" style="text-align:left;">
+		                                      <apex:outputText value="{!lumpsumFunds.lumpsumProductName}" style="width:90%;text-align:left;" />
+		                                </td>
+		                                
+		                                <td>
+		                                    <apex:outputText value="{!lumpsumFunds.lumpsumTransactionType}" />
+		                                </td>
+		                                
+		                                <td class="textStyle">
+		                                      <apex:outputText value="{!lumpsumFunds.lumpsumFund}" style="width:80%;text-align:left;" />
+		                                </td>
+		                                
+		                                <td class="textStyle"  style="text-align:right;">
+		                                      <apex:outputText value="{!lumpsumFunds.lumpsumAmount}" style="width:95%;" 	/>
+		                                </td>
+		                                
+		                                <td class="textStyle" style="text-align:right;">
+		                                      <apex:outputText value="{!lumpsumFunds.lumpsumInstallments}" style="width:95%;" />
+		                                </td>
+		                                
+		                                <td class="textStyle" style="text-align:right;">
+		                                      <apex:outputText value="{!lumpsumFunds.lumpsumAmountPerInstall}" style="width:95%;" />
+		                                </td>
+		                                <td>
+		                                    <apex:outputText value="{!lumpsumFunds.lumpsumCategory}" />
+		                                </td>
+		                                
+		                                <td>
+		                                    <apex:outputText value="{!lumpsumFunds.lumpsumOption}" />
+		                                </td>
+		                                <td class="textStyle" style="width:100%;">
+		                                    <apex:outputText value="{!lumpsumFunds.lumpsumRemarks}" style="width:95%;text-align:left;" />
+		                                </td>
+		                                <td style="text-align:center;">
+		                                   <apex:outputText value="{!lumpsumFunds.lumpsumExecutionTracker}" />
+		                                </td >
+		                                <td style="text-align:center;">
+		                               		<apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}"  >
+<!-- 		                                    	<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditExecutionTracker('{!beanObj.entityId}','{!lumpsumFunds.LumpsumFundId}', 'GoalLumpsum')"> -->
+<!-- 													Open -->
+<!-- 												</a> -->
+												<apex:outputPanel rendered="{!IF(((lumpsumFunds.lumpsumTransactionType == 'Lumpsum') || (lumpsumFunds.lumpsumTransactionType == 'STP To') || (lumpsumFunds.lumpsumTransactionType == 'STP From')),true,false)}">
+													<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSTPExecutionTracker('{!beanObj.entityId}','{!lumpsumFunds.LumpsumFundId}', 'GoalLumpsum')">
+														Open
+													</a>
+												</apex:outputPanel>
+												 <apex:outputPanel rendered="{!IF(((lumpsumFunds.lumpsumTransactionType == 'Switch To') ||(lumpsumFunds.lumpsumTransactionType == 'Switch From')),true,false)}">
+													<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSwitchExecutionTracker('{!beanObj.entityId}','{!lumpsumFunds.LumpsumFundId}', 'GoalLumpsum')">
+														Open
+												   	</a>
+										    	</apex:outputPanel>
+										    	<apex:outputPanel rendered="{!IF(((lumpsumFunds.lumpsumTransactionType == 'Hold') ||(lumpsumFunds.lumpsumTransactionType == 'Hold - COB')),true,false)}">
+													<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditHoldCOBExecutionTracker('{!beanObj.entityId}','{!lumpsumFunds.LumpsumFundId}', 'GoalLumpsum')">
+														Open
+												   	</a>
+											    </apex:outputPanel>
+								            </apex:outputPanel>
+		                                </td>
+		                                <td class="tableHeaderLight" style="text-align:center;FONT-WEIGHT: bold;">
+			                           		<apex:outputText value="{!lumpsumFunds.ETStatus}" />
+			                           	</td>
+		                                 <td class="textStyle" style="text-align:center;">
+                                           <apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}">
+											   <a href="" style="cursor: pointer;text-decoration:underline;" 
+												onClick="javascript:return  openRelatedExecutionTracker('{!lumpsumFunds.LumpsumFundId}','')">
+												View
+											   </a>
+							               </apex:outputPanel>
+	                                   </td>
+		                            </tr>
+		                          
+	                            </apex:repeat> 
+	                            <tr class="tableHeaderLight " padding-left="10%" >
+	                                <th style="width:20%;" class="textStyle">Total</th>
+	                                <td colspan="4"></td>
+	                                <td class="textStyle" style="text-align:right;">
+	                                    <apex:outputText value="{0, number, ,##,##0}" >
+	                                         <apex:param value="{!goalList.LumpsumTotal}"/>
+	                                    </apex:outputText>
+	                                </td>
+	                                <td colspan="11"></td>
+	                            </tr>
+	                        </table>
+	                   </apex:outputPanel>
+	                </div><br/>
+	           </apex:repeat>
+	        </apex:outputPanel> <br/>
+	     </div><br/>
+                
+		<!-- ================ SUMMARY OF RECOMMENDED INVESTMENTS (MUTUAL FUNDS) ================================= -->              
+        <div class="divStyle" style="width:100%;padding-left:0px;"> SUMMARY OF RECOMMENDED INVESTMENTS (MUTUAL FUNDS) </div><br/>    
+               
+
+	    <!--  ============================ SIP Summary ============================= -->
+        <div class="divContainerStyle">
+            <div class="subHeader" style="width:100%;padding-left:10px;background-color:#66cd00;">SIP SUMMARY</div><br/>
+            <apex:outputPanel >
+            	<div style="overflow:auto;height:100%;"> 
+                    <div class="space">    
+                    <apex:repeat value="{!mapSIPFundsAlreadyExists}" var="sipFundsMap"> 
+                    	<div class="subHeader" style="width:15%;padding-left:10px;background-color:#A1E96B;">{!sipFundsMap}</div>
+                        <table width="90%" border="1" cellpadding="2" cellspacing="0" id="dataTable6" >
+                            <tr class="tableHeaderLight" >
+                                <th class="textStyle" style="width:15%;">SIP Summary</th>
+                                <th class="textStyle" style="width:12%;">Transaction Type</th>
+                                <th class="textStyle" style="width:12%;">Amount</th>
+                                <th class="textStyle" style="width:12%;">Installments</th>
+                                <th class="textStyle" style="width:12%;">Category</th>
+                                <th class="textStyle" style="width:12%;">Option</th>
+                                <th class="textStyle" style="width:12%;">Remarks</th>
+                            </tr>
+                           <apex:variable var="total" value="{!0}"/>
+						   <apex:repeat id="hdemergency1" value="{!mapSIPFundsAlreadyExists[sipFundsMap]}" var="sipFundsObj">
+                            <tr class="tableData"> 
+                                <td class="textStyle">
+                                      <apex:outputText value="{!sipFundsObj.productName}" style="width:90%;text-align:left;" styleClass="textStyle">
+                                      </apex:outputText> </td>
+                                <td>
+                                    <apex:outputText value="{!sipFundsObj.transactionType}" style="width:90%;text-align:left;" styleClass="textStyle">
+                                    </apex:outputText>
+                                </td>
+                                 <td class="textStyle" style="text-align:right;">
+                                 	  <apex:outputText value="{0, number, ,##,##0}" style="width:95%;text-align:left;" styleClass="textStyle">
+                                             <apex:param value="{!sipFundsObj.amount}"/>
+                                      </apex:outputText>
+                                 </td>
+                                 <td class="textStyle" style="text-align:right;">
+                                      <apex:outputText value="{!sipFundsObj.installments}" style="width:95%;" styleClass="textStyle">
+                                      </apex:outputText> 
+                                 </td>
+                                 <td>
+                                    <apex:outputText value="{!sipFundsObj.category}" style="width:90%;text-align:left;" styleClass="textStyle">
+                                    </apex:outputText>
+                                </td>
+                                <td>
+                                    <apex:outputText value="{!sipFundsObj.option}" style="width:90%;text-align:left;" styleClass="textStyle">
+                                    </apex:outputText>
+                                </td>
+                                
+                                <td>
+                                    <apex:outputText value="{!sipFundsObj.remarks}" style="width:95%;text-align:left;" styleClass="textStyle">
+                                    </apex:outputText>
+                                </td>
+                             </tr>
+                             <apex:variable var="total" value="{!total + ROUND(sipFundsObj.amount,0)}"/>	
+                        </apex:repeat>
+
+                        <tr class="tableHeaderLight " padding-left="10%" >
+                            <th style="width:20%; ">Total</th>
+                            <td></td>
+                            <td style="text-align:right;">
+                            	  <apex:outputText value="{0, number, ,##,##0}" style="width:95%;text-align:left;" styleClass="textStyle">
+                                         <apex:param value="{!total}"/>
+                                  </apex:outputText>
+                            </td>
+                            <td colspan="4"></td>
+                        </tr>
+                    </table>
+                    <br/>
+                  </apex:repeat>
+                  </div>
+               </div>
+            </apex:outputPanel> <br/> 
+           
+
+       	    <!--=========================== Lumpsum Summary ================================ -->
+            
+            <div class="subHeader" style="width:100%;padding-left:10px;background-color:#66cd00;">LUMPSUM SUMMARY</div> <br/>
+            <apex:outputPanel >
+                <div style="overflow:auto;height:100%;"> 
+                    <div class="space">     
+                    <apex:repeat value="{!mapLumpsumFundsAlreadyExists}" var="lumpsumFundsMap"> 
+                    	<div class="subHeader" style="width:15%;padding-left:10px;background-color:#A1E96B;">{!lumpsumFundsMap}</div>
+                        <table width="90%" border="1" cellpadding="2" cellspacing="0" id="dataTable3" >
+                            <tr class="tableHeaderLight" >
+                                <th style="width:15%;" class="textStyle">Lumpsum Summary</th>
+                                <th style="width:10%;" class="textStyle">Transaction Type</th>
+                                <th style="width:10%;" class="textStyle">Fund</th>
+                                <th style="width:10%;" class="textStyle">Amount</th>
+                                <th style="width:10%;" class="textStyle">Installments</th>
+                                <th style="width:10%;" class="textStyle">Amount per Installments</th>
+                                <th style="width:10%;" class="textStyle">Category</th>
+                                <th style="width:15%;" class="textStyle">Option</th>
+                                <th style="width:20%;" class="textStyle">Remarks</th>
+                            </tr> 
+                            <apex:variable var="total" value="{!0}"/>
+                            <apex:repeat id="hd3" value="{!mapLumpsumFundsAlreadyExists[lumpsumFundsMap]}" var="lumpsumFundsObj">
+	                            <tr>
+	                                <td >
+	                                      <apex:outputText value="{!lumpsumFundsObj.Product_Name__c}" style="width:90%;text-align:left;" styleClass="textStyle">
+	                                      </apex:outputText> 
+	                                </td>
+	                                <td>
+	                                    <apex:outputText value="{!lumpsumFundsObj.Transaction_Type__c}" style="width:90%;text-align:left;" styleClass="textStyle">
+	                                    </apex:outputText>
+	                                </td>
+	                                <td >
+	                                      <apex:outputText value="{!lumpsumFundsObj.Fund__c}" style="width:95%;text-align:left;" styleClass="textStyle">
+	                                      </apex:outputText> 
+	                                </td>
+	                                <td style="text-align:right;">
+	                                	  <apex:outputText value="{0, number, ,##,##0}" style="width:95%;text-align:left;" styleClass="textStyle">
+	                                             <apex:param value="{!lumpsumFundsObj.Amount__c}"/>
+	                                      </apex:outputText>
+	                                </td>
+	                                <td style="text-align:right;">
+	                                      <apex:outputText value="{!lumpsumFundsObj.Installments__c}" style="width:95%;" styleClass="textStyle">
+	                                      </apex:outputText> 
+	                                </td>
+	                                <td style="text-align:right;">
+	                                      <apex:outputText value="{!lumpsumFundsObj.Amount_Per_Installment__c}" style="width:95%;" styleClass="textStyle">
+	                                      </apex:outputText> 
+	                                </td>
+	                                <td>
+	                                    <apex:outputText value="{!lumpsumFundsObj.Category__c}" style="width:90%;text-align:left;" styleClass="textStyle">
+	                                    </apex:outputText>
+	                                </td>
+	                                <td>
+	                                    <apex:outputText value="{!lumpsumFundsObj.Option__c}" style="width:90%;text-align:left;" styleClass="textStyle">
+	                                    </apex:outputText>
+	                                </td>
+	                                <td>
+	                                    <apex:outputText value="{!lumpsumFundsObj.Remarks__c}" style="width:95%;text-align:left;" styleClass="textStyle">
+	                                    </apex:outputText>
+	                                </td>
+	                            </tr>
+	                        	<apex:variable var="total" value="{!total + ROUND(lumpsumFundsObj.Amount__c,0)}"/>	
+                            </apex:repeat>
+                            
+                            <tr class="tableHeaderLight" padding-left="10%" >
+                                <th style="width:20%; text-align:left;" class="textStyle">Total</th>
+                                <td colspan="2"></td>
+                                <td class="textStyle" style="text-align:right;">
+                                      <apex:outputText value="{0, number, ,##,##0}" style="width:95%;text-align:left;" styleClass="textStyle">
+                                             <apex:param value="{!total}"/>
+                                      </apex:outputText>
+                                </td>
+                                <td colspan="5"></td>
+                            </tr>
+                        </table>
+                        <br/>
+                       </apex:repeat>
+                     </div>
+                 </div>
+             </apex:outputPanel>
+          </div><br/><br/>
+
+		  <!-- ================================= RECOMMNEDATION ON EXISTING INSURANCE ======================================== -->       
+         <div class="divStyle" style="width:100%;padding-left:10px;"> RECOMMENDATION ON EXISTING INSURANCE </div><br/>
+         
+         <div class="space">
+              <apex:outputPanel >
+                <div style="overflow:auto;height:100%;"> 
+                    <table  width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable7">
+	                    <tr >
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;width:20%;">Policy Number</td>
+	                        <apex:repeat id="hdpolicyNumber" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{!recommendedInsurance.policyNumber}"  styleClass="textStyle">
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Insured</td>
+	                        <apex:repeat id="hdinsured" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{!recommendedInsurance.insured}"  styleClass="textStyle">
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Nominee</td>
+	                        <apex:repeat id="hdnominee" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{!recommendedInsurance.nominee}"  styleClass="textStyle">
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Insurance Company</td>
+	                        <apex:repeat id="hdinsuranceCompany" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{!recommendedInsurance.insuranceCompany}"  styleClass="textStyle">
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Policy Type</td>
+	                        <apex:repeat id="hdpolicyType" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{!recommendedInsurance.policyType}"  styleClass="textStyle">
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Policy Name</td>
+	                        <apex:repeat id="hdpolicyName" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{!recommendedInsurance.policyName}"  styleClass="textStyle">
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Commencement Date</td>
+	                        <apex:repeat id="hdcommencementDate" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" style="text-align:right;" styleClass="textStyle">
+	                                    <apex:param value="{!recommendedInsurance.commencementDate}" /> 
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Next Premium Due Date</td>
+	                        <apex:repeat id="hdnextPremiumDueDate" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" style="text-align:right;" styleClass="textStyle">
+	                                    <apex:param value="{!recommendedInsurance.nextPremiumDueDate}" /> 
+	                                </apex:outputText>
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Death Benefit (Rs.)</td>
+	                        <apex:repeat id="hddeathBenefitRs" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{!recommendedInsurance.deathBenefitRs}"  styleClass="textStyle">
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Premium Amount (Rs.)</td>
+	                        <apex:repeat id="hdpremiumAmountRs" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{!recommendedInsurance.premiumAmountRs}"  styleClass="textStyle">
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Premium Payment Frequency</td>
+	                        <apex:repeat id="hdpremiumPaymentFrequency" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{!recommendedInsurance.premiumPaymentFrequency}"  styleClass="textStyle">
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Tenure of Insurance</td>
+	                        <apex:repeat id="hdtenureofInsurance" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{!recommendedInsurance.tenureofInsurance}"  styleClass="textStyle">
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Premium Paying Term</td>
+	                        <apex:repeat id="hdpremiumPayingTerm" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{!recommendedInsurance.premiumPayingTerm}"  styleClass="textStyle">
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Surrender Cash Value</td>
+	                        <apex:repeat id="hdsurrenderCashValue" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{!recommendedInsurance.surrenderCashValue}"  styleClass="textStyle">
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Current Amount</td>
+	                        <apex:repeat id="hdcurrentAmount" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{0, number, ,##,##0}" styleClass="textStyle" >
+	                                      <apex:param value="{!recommendedInsurance.currentAmount}"/>
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Maturity Amount</td>
+	                        <apex:repeat id="hdmaturityAmount" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                 <apex:outputText value="{0, number, ,##,##0}" styleClass="textStyle" >
+	                                         <apex:param value="{!recommendedInsurance.maturityAmount}"/>
+	                                  </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Action to be taken</td>
+	                        <apex:repeat id="hdaction" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:right;">
+	                                <apex:outputText value="{!recommendedInsurance.action}"  styleClass="textStyle">
+	                                </apex:outputText> 
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Execution Tracker<br/> to be Opened</td>
+	                        <apex:repeat id="hdrecIns" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+	                            <td style="text-align:center;">
+		                             <apex:outputPanel rendered="{!IF(((recommendedInsurance.action == 'To be grown till maturity but stop saving more')|| (recommendedInsurance.action == 'Liquidate (Align to goal)')),true,false)}">
+		                            	<apex:outputText value="{!recommendedInsurance.recInsuranceExecutionTracker}"  styleClass="textStyle"/>
+		                            </apex:outputPanel>
+	                            </td>
+	                        </apex:repeat>
+	                    </tr>
+	                     <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Execution Tracker</td>
+	                        <apex:repeat id="hdrecommendedInsurance" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+								<td style="text-align:center;">	
+		                            <apex:outputPanel rendered="{!IF(recommendedInsurance.recInsuranceExecutionTracker == 'Yes',true,false)}"  >
+			                            <a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSurrenderInsuranceExecutionTracker('{!beanObj.entityId}','{!recommendedInsurance.approveActionPlanId}', 'Recommended Insurance')">
+											Open
+										</a>
+									</apex:outputPanel>
+								</td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Assigned To Ops</td>
+	                        <apex:repeat id="hdrecAssignToOps" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+								<td style="text-align:center;">	
+		                            <apex:outputPanel rendered="{!IF(recommendedInsurance.recInsuranceExecutionTracker == 'Yes',true,false)}"  >
+                                			{!recommendedInsurance.strAssignedToOps}
+									</apex:outputPanel>
+								</td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">ET Status</td>
+	                        <apex:repeat id="hdrecETStatus" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+								<td class="tableHeaderLight" style="text-align:center;FONT-WEIGHT: bold;">
+                            		<apex:outputText value="{!recommendedInsurance.ETStatus}" />
+                        		</td>
+	                        </apex:repeat>
+	                    </tr>
+	                    <tr>
+	                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;">Related Records</td>
+	                        <apex:repeat id="hdrecViewAssignedRecs" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+								<td style="text-align:center;">	
+		                            <apex:outputPanel rendered="{!IF(recommendedInsurance.recInsuranceExecutionTracker == 'Yes',true,false)}"  >
+									   <a href="" style="cursor: pointer;text-decoration:underline;" 
+										onClick="javascript:return  openRelatedExecutionTracker('{!recommendedInsurance.approveActionPlanId}','')">
+										View
+									   </a>
+									</apex:outputPanel>
+								</td>
+	                        </apex:repeat>
+	                    </tr>
+                    </table>
+                </div>
+            </apex:outputPanel>
+        </div>
+
+	   <!-- ====================== RECOMMENDED INSURANCE  ========================================== --> 
+		<apex:outputPanel rendered="{!(isLifeInsurancePlanning || isGeneralInsurancePlanning)}"> 
+        <br/>
+        <div class="divStyle" style="width:100%;padding-left:0px;"> RECOMMENDED INSURANCE  </div>
+        <br/>  
+         
+		<!--   ========================== LIFE INSURANCE ========================================================= -->
+        
+        <div class="divContainerStyle">
+        	<apex:outputPanel rendered="{!isLifeInsurancePlanning}">
+	            <div class="subHeader" style="width:100%;padding-left:10px;background-color:#66cd00;"> LIFE INSURANCE</div> <br/>
+	            <apex:outputPanel id="LifeInsuranceOutputPannel">
+	               <div style="overflow:auto;height:100%;"> 
+	                   <div class="space">      
+	                        <table width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable6" >
+	                            <tr class="tableHeaderLight" >
+<!-- 	                            	<th style="width:15%;" class="textStyle">Forms <br/> Provided</th> -->
+	                            	<th style="width:15%;" class="textStyle">Assigned<br/> To Ops</th>
+	                                <th class="textStyle" style="width:15%;">Insured</th>
+	                                <th class="textStyle" style="width:12%;">Suggested Cover</th>
+	                                <th class="textStyle" style="width:12%;">Sum Assured (Rs.)</th>
+	                                <th class="textStyle" style="width:12%;">Policy Name</th>
+	                                <th class="textStyle" style="width:12%;">Premium <br/>Amount</th>
+	                                <th class="textStyle" style="width:12%;">Policy Type</th>
+	                                <th class="textStyle" style="width:12%;">Tenure of <br/>insurance</th>
+	                                <th class="textStyle" style="width:8%;">Execution Tracker <br/>to be opened</th>
+	                                <th class="textStyle" style="width:8%;">Execution<br/>Tracker</th>
+	                                <th class="textStyle" style="width:8%;">ET Status</th>
+	                                <th style="width:7%;" class="textStyle">Related<br/>Records</th>
+	<!--                                 <th class="textStyle" style="width:12%;">Remarks</th> -->
+	                            </tr>
+	                           	<apex:repeat value="{!beanObj.mapIdToLifeInsuranceInnerClass}" var="lifeInsuranceMap">  
+	                           		<apex:repeat value="{!beanObj.mapIdToLifeInsuranceInnerClass[lifeInsuranceMap]}" var="liObj">
+			                            <tr class="tableData">
+<!-- 				                            <td class="textStyle" style="text-align:center;"> -->
+<!-- 			                              		<apex:outputPanel rendered="{!IF(liObj.executionTracker == 'Yes',true,false)}"  > -->
+<!-- 			                              			{!liObj.strFormsProvided} -->
+<!-- 			                           			</apex:outputPanel> -->
+<!-- 			                             	</td> -->
+			                            	<td class="textStyle" style="text-align:center;">
+	                                			<apex:outputPanel rendered="{!IF(liObj.executionTracker == 'Yes',true,false)}"  >
+	                                				{!liObj.strAssignedToOps}
+	                               				</apex:outputPanel>
+	                                		</td>
+			                            	<td class="textStyle" style="width:300px;">
+			                                    <apex:outputLabel value="{!liObj.insured}" /></td>
+			                                <td class="textStyle" style="text-align:right;">
+			                                    <apex:outputText value="{0, number, ,##,##0}" >
+			                                        <apex:param value="{!liObj.suggestedCover}"/>
+			                                    </apex:outputText> </td>
+			                                <td class="textStyle" style="text-align:right;">
+							          			<apex:outputText value="{0, number, ,##,##0}" >
+							                        <apex:param value="{!liObj.sumAssured}"/>
+							                    </apex:outputText> </td>    
+			                                <td class="textStyle">
+			                                    <apex:outputText value="{!liObj.policyName}" style="width:80px;"/></td>
+			                                <td class="textStyle" style="text-align:right;">
+			                                    <apex:outputText value="{0, number, ,##,##0}" style="width:80px;height:16px;" styleclass="standardFontStyle">
+			                                         <apex:param value="{!liObj.premiumAmount}"/>
+			                                    </apex:outputText> </td>
+			                                <td class="textStyle">
+			                                    <apex:outputText value="{!liObj.policyType}" style="width:80px;"/></td>
+			                                <td class="textStyle" style="text-align:right;">
+			                                    <apex:outputText value="{!liObj.tenureOfInsurance}" style="width:80px;" /></td>
+			                                <td class="textStyle" style="text-align:center;">
+			                                     <apex:outputText value="{!liObj.executionTracker}" style="width:80px;"/>
+			                                </td>
+			                                <td class="textStyle" style="text-align:center;">
+			                               		<apex:outputPanel rendered="{!IF(liObj.executionTracker == 'Yes',true,false)}"  >
+			                                    	<a href="" style="cursor: pointer;text-decoration:underline" onClick="javascript:return  openEditETforLifeInsurance('{!beanObj.entityId}','{!liObj.actionPlanLifeInsuranceID}', 'Life Insurance')">
+														Open
+													</a>
+									            </apex:outputPanel>
+			                                </td>
+		                                 	<td class="tableHeaderLight" style="text-align:center;FONT-WEIGHT: bold;">
+			                            		<apex:outputText value="{!liObj.ETStatus}" />
+			                        		</td>
+			                                <td class="textStyle" style="text-align:center;">
+	                                          	<apex:outputPanel rendered="{!IF(liObj.executionTracker == 'Yes',true,false)}">
+												   <a href="" style="cursor: pointer;text-decoration:underline;" 
+													onClick="javascript:return  openRelatedExecutionTracker('{!liObj.actionPlanLifeInsuranceID}','')">
+													View
+												   </a>
+						               			</apex:outputPanel>
+			                                </td>
+	<!-- 	                                 	<td class="textStyle"> -->
+	<!-- 		                                     <apex:inputTextArea value="{!liObj.insuranceRemark}" style="width:80px;height:20px;"/> -->
+	<!-- 	                                	</td> -->
+			                            </tr>
+			                    	</apex:repeat>
+	                         	</apex:repeat>
+	                        </table>
+	                        <br/>
+	                        <table width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable6" >
+	                        	<tr class="tableHeaderLight" >
+	                          		<th class="textStyle" style="width:12%;">Insured</th> 
+	                          		<th class="textStyle" style="width:78%;">Remarks</th> 
+	                          	</tr>
+	                       		<apex:repeat value="{!beanObj.lstLifeInsuranceRemark}" var="liObj">
+		                       		<tr>
+			                        	<td><apex:outputText style="width:12%;" value="{!liObj.insured}"/></td>
+			                        	<td><apex:outputText style="width:78%;" value="{!liObj.insuranceRemark}" /></td>
+		                        	</tr>  
+	                       		</apex:repeat>
+	                        </table>
+	                    </div>
+	                </div>
+	            </apex:outputPanel>
+	            <br/> 
+			</apex:outputPanel>
+			<!-- ================== GENERAL INSURANCE  ============================ -->
+		<apex:outputPanel rendered="{!isGeneralInsurancePlanning}">  
+            <div class="subHeader" style="width:100%;padding-left:10px;background-color:#66cd00;"> GENERAL INSURANCE</div> <br/>
+            <apex:outputPanel id="GeneralInsuranceOutputPannel">
+                <div style="overflow:auto;height:100%;"> 
+	                <div class="space"> 
+	                    <table width="90%" border="1" cellpadding="2" cellspacing="0" id="dataTable7">
+		                    <tr class="tableHeaderLight">
+<!-- 		                    	<th style="width:15%;" class="textStyle">Forms <br/> Provided</th> -->
+		                    	<th style="width:15%;" class="textStyle">Assigned <br/>To Ops</th>
+		                        <th class="textStyle" style="width:15%;">Insured</th>
+		                        <th class="textStyle" style="width:12%;">Policy Type</th>
+<!-- 		                        <th class="textStyle" style="width:10%;">Policy Name</th> -->
+		                        <th class="textStyle" style="width:12%;">Product Name</th>
+		                        <th class="textStyle" style="width:12%;">Sum Assured (Rs.)</th>
+		                        <th class="textStyle" style="width:12%;">Premium Amount</th>
+		                        <th class="textStyle" style="width:8%;">Execution Tracker <br/> to be opened</th>
+		                        <th class="textStyle" style="width:8%;">Execution Tracker</th>
+	                         	<th class="textStyle" style="width:8%;">ET Status</th>
+		                        <th style="width:7%;" class="textStyle">Related Records</th>
+		                    </tr>
+		                    
+		                    <apex:repeat value="{!beanObj.lstGeneralInsurance}" var="giObj">
+			                    <tr class="tableData">
+<!-- 			                    	<td class="textStyle" style="text-align:center;"> -->
+<!-- 	                              		<apex:outputPanel rendered="{!IF(giObj.executionTracker == 'Yes',true,false)}"  > -->
+<!-- 	                              			{!giObj.strFormsProvided} -->
+<!-- 	                           			</apex:outputPanel> -->
+<!-- 	                             	</td> -->
+			                    	<td class="textStyle" style="text-align:center;">
+                               			<apex:outputPanel rendered="{!IF(giObj.executionTracker == 'Yes',true,false)}"  >
+                               				{!giObj.strAssignedToOps}
+                            			</apex:outputPanel>
+                               		</td>
+			                        <td class="textStyle" style="width:300px;">
+			                            <apex:outputLabel value="{!giObj.insured}" /></td>
+			                        <td class="textStyle">
+			                            <apex:outputText value="{!giObj.policyType}" /></td>
+<!-- 			                        <td class="textStyle"> -->
+<!-- 			                            <apex:outputText value="{!giObj.policyName}" /></td> -->
+			                        <td class="textStyle">
+			                            <apex:outputText value="{!giObj.productName}" style="width:80px;"/></td>
+			                        <td class="textStyle" style="text-align:right;">
+			                            <apex:outputText value="{!giObj.sumAssured}" /> </td>
+			                        <td class="textStyle" style="text-align:right;">
+			                            <apex:outputText value="{0, number, ,##,##0}" style="width:80px;height:16px;" styleclass="standardFontStyle">
+			                                <apex:param value="{!giObj.premiumAmount}"/>
+			                            </apex:outputText></td> 
+			                        <td class="textStyle" style="text-align:right;">
+			                            <apex:outputText value="{!giObj.executionTracker}" />
+			                        </td>
+			                        <td class="textStyle" style="text-align:center;">
+	                               		<apex:outputPanel rendered="{!IF(giObj.executionTracker == 'Yes',true,false)}"  >
+<!-- 	                                    	<a href="" style="cursor: pointer;text-decoration:underline" onClick="javascript:return  openEditExecutionTracker('{!beanObj.entityId}','{!giObj.actionPlanGeneralInsuranceID}', 'General Insurance')"> -->
+<!-- 												Open -->
+<!-- 											</a> -->
+											<a href="" style="cursor: pointer;text-decoration:underline" onClick="javascript:return  openEditETforGeneralInsurance('{!beanObj.entityId}','{!giObj.actionPlanGeneralInsuranceID}', 'General Insurance')"> 
+												Open
+											</a> 
+							            </apex:outputPanel>
+			                        </td>
+			                        <td class="tableHeaderLight" style="text-align:center;FONT-WEIGHT: bold;">
+			                            <apex:outputText value="{!giObj.ETStatus}" />
+			                        </td>
+			                         <td class="textStyle" style="text-align:center;">
+                                           <apex:outputPanel rendered="{!IF(giObj.executionTracker == 'Yes',true,false)}">
+											   <a href="" style="cursor: pointer;text-decoration:underline;" 
+												onClick="javascript:return  openRelatedExecutionTracker('{!giObj.actionPlanGeneralInsuranceID}','')">
+												View
+											   </a>
+							               </apex:outputPanel>
+	                                   </td>
+			                    </tr>
+		                    </apex:repeat>
+	                    </table>
+	                    <br/>
+	                    <apex:outputPanel rendered="{!IF(beanObj.lstNewGeneralInsurance.size>0,true,false)}">
+		                  	<table width="90%" border="1" cellpadding="2" cellspacing="0" id="dataTable7">
+			                    <tr class="tableHeaderLight">
+<!-- 			                    	<th style="width:15%;" class="textStyle">Forms <br/> Provided</th> -->
+		                    		<th style="width:15%;" class="textStyle">Assigned <br/>To Ops</th>
+			                        <th class="textStyle" style="width:15%;">Insured</th>
+			                        <th class="textStyle" style="width:12%;">Policy Type</th>
+	<!-- 		                        <th class="textStyle" style="width:10%;">Policy Name</th> -->
+			                        <th class="textStyle" style="width:12%;">Product Name</th>
+			                        <th class="textStyle" style="width:12%;">Sum Assured (Rs.)</th>
+			                        <th class="textStyle" style="width:12%;">Premium Amount</th>
+			                        <th class="textStyle" style="width:8%;">Execution Tracker <br/> to be opened</th>
+			                        <th class="textStyle" style="width:8%;">Execution Tracker</th>
+			                        <th class="textStyle" style="width:8%;">ET Status</th>
+			                        <th style="width:7%;" class="textStyle">Related Records</th>
+			                    </tr>
+			                    
+			                    <apex:repeat value="{!beanObj.lstNewGeneralInsurance}" var="giObj">
+				                    <tr class="tableData">
+<!-- 				                    	<td class="textStyle" style="text-align:center;"> -->
+<!-- 		                              		<apex:outputPanel rendered="{!IF(giObj.executionTracker == 'Yes',true,false)}"  > -->
+<!-- 		                              			{!giObj.strFormsProvided} -->
+<!-- 		                           			</apex:outputPanel> -->
+<!-- 	                             		</td> -->
+					                    <td class="textStyle" style="text-align:center;">
+	                               			<apex:outputPanel rendered="{!IF(giObj.executionTracker == 'Yes',true,false)}"  >
+	                               				{!giObj.strAssignedToOps}
+	                            			</apex:outputPanel>
+	                               		</td>
+				                        <td class="textStyle" style="width:300px;">
+				                            <apex:outputLabel value="{!giObj.insured}" /></td>
+				                        <td class="textStyle">
+				                            <apex:outputText value="{!giObj.policyType}" /></td>
+	<!-- 			                        <td class="textStyle"> -->
+	<!-- 			                            <apex:outputText value="{!giObj.policyName}" /></td> -->
+				                        <td class="textStyle">
+				                            <apex:outputText value="{!giObj.productName}" style="width:80px;"/></td>
+				                        <td class="textStyle" style="text-align:right;">
+				                            <apex:outputText value="{!giObj.sumAssured}" /> </td>
+				                        <td class="textStyle" style="text-align:right;">
+				                            <apex:outputText value="{0, number, ,##,##0}" style="width:80px;height:16px;" styleclass="standardFontStyle">
+				                                <apex:param value="{!giObj.premiumAmount}"/>
+				                            </apex:outputText></td> 
+				                        <td class="textStyle" style="text-align:center;">
+				                            <apex:outputText value="{!giObj.executionTracker}" />
+				                        </td>
+				                        <td class="textStyle" style="text-align:center;">
+		                               		<apex:outputPanel rendered="{!IF(giObj.executionTracker == 'Yes',true,false)}"  >
+<!-- 		                                    	<a href="" style="cursor: pointer;text-decoration:underline" onClick="javascript:return  openEditExecutionTracker('{!beanObj.entityId}','{!giObj.actionPlanGeneralInsuranceID}', 'General Insurance')"> -->
+<!-- 													Open -->
+<!-- 												</a> -->
+												<a href="" style="cursor: pointer;text-decoration:underline" onClick="javascript:return  openEditETforGeneralInsurance('{!beanObj.entityId}','{!giObj.actionPlanGeneralInsuranceID}', 'General Insurance')"> 
+													Open
+												</a> 
+								            </apex:outputPanel>
+				                        </td>
+			                         	<td class="tableHeaderLight" style="text-align:center;FONT-WEIGHT: bold;">
+			                            	<apex:outputText value="{!giObj.ETStatus}" />
+			                       		</td>
+				                        <td class="textStyle" style="text-align:center;">
+	                                           <apex:outputPanel rendered="{!IF(giObj.executionTracker == 'Yes',true,false)}">
+												   <a href="" style="cursor: pointer;text-decoration:underline;" 
+													onClick="javascript:return  openRelatedExecutionTracker('{!giObj.actionPlanGeneralInsuranceID}','')">
+													View
+												   </a>
+								               </apex:outputPanel>
+	                                   	</td>
+				                    </tr>
+			                    </apex:repeat>
+		                    </table>
+	                  </apex:outputPanel>
+	                  <div class="space" style="text-align:left;" >
+	                        <table style="width:100%;">
+								<tr style="width:100%;">
+			           				<td style="width:8%; FONT-FAMILY: Calibri; FONT-SIZE: 15px; FONT-WEIGHT: bold; COLOR: #329902;"><apex:outputText value="Remarks: " /></td>
+			           				<td class="test2"><apex:outputText value="{!generalInsuranceRemark}" style="width:300px;height:55px;"/></td>
+			           			</tr>
+			           		</table>
+           		 	  </div>
+	                </div>
+                </div>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        </div>
+        <br/><br/><br/>
+        </apex:outputPanel>
+		<!-- ========================== SUCCESSION PLANNING ================================== -->
+       <apex:outputPanel rendered="{!isSuccessionPlanning}">            
+	       <div class="divStyle" style="width:100%;padding-left:0px;"> SUCCESSION PLANNING </div>
+	       <div class="divContainerStyle">
+		       <div class="subHeader" style="width:100%;padding-left:10px;background-color:#66cd00;">
+		           <apex:outputText value=" {!$Label.Will}"/>   
+		       </div>
+	           <apex:outputPanel rendered="{!NOT(bean.entity.Will__c)}"> 
+	               <ul class="TickList">
+	                   <li> <apex:outputText value=" {!$Label.WillAbsent}"/> </li>
+	                   <li> <apex:outputText value=" {!$Label.WhatIsWill}" escape="false"/> </li>
+	                   <li> 
+	                       <apex:outputPanel rendered="{!IF(bean.spouse.Name!=null,true,false)}"> 
+	                            <apex:outputText value="{!bean.entity.Name} and {!bean.spouse.Name} should make a Will as per their wish."/> 
+	                        </apex:outputPanel> 
+	                        <apex:outputPanel rendered="{!IF(bean.spouse.Name==null,true,false)}"> 
+	                            <apex:outputText value=" {!bean.entity.Name} should make a Will as per their wish."/> 
+	                        </apex:outputPanel> 
+	                   </li>
+	                   <li> <apex:outputText value=" {!$Label.WillChanges}" escape="false"/> </li> 
+	               </ul>
+	           </apex:outputPanel>
+	                
+	           <apex:outputPanel rendered="{!bean.entity.Will__c}"> 
+	              <ul class="TickList">
+	                  <li> 
+	                       <apex:outputText value=" {!$Label.WillPresent}" escape="false"/> 
+	                  </li>
+	                  <li>
+	                       <apex:outputText value=" {!$Label.WillChanges}" escape="false"/> 
+	                  </li>
+	                  
+	                  <li>
+	                  	<apex:outputText value="Execution Tracker to be opened? " escape="false"/> 
+		                <apex:outputText value="{!beanObj.isWillExecutionTracker}"/>
+	           		</li>
+	              </ul>
+	          </apex:outputPanel>
+	       </div>
+	       <br/> <br/><br/>
+        </apex:outputPanel>
+	  <!-- ================ UNALLOCATED ASSETS ================================== -->             
+<!--        <div class="divStyle" style="width:100%;padding-left:10px;"> UNALLOCATED ASSETS </div> <br/>
+        <div class="space">
+            <div class="subHeader" style="width:100%;padding-left:10px;background-color:#66cd00;"> ASSETS NOT ALLOCATED </div>
+               <br/>
+               <apex:outputPanel >
+                   <div style="overflow:auto;height:100%;"> 
+                    <div class="space"> 
+                        <table width="90%" border="1" cellpadding="2" cellspacing="0" id="dataTable7">
+	                        <tr class="tableHeaderLight">
+	                        	<th class="textStyle" style="width:15%;">Owner</th>
+	                            <th class="textStyle" style="width:15%;">Assets</th>
+	                            <th class="textStyle" style="width:25%;">Description</th>
+	                            <th class="textStyle" style="width:15%;">Current Value</th>
+	                            <th class="textStyle" style="width:15%;">Balance Remaining</th>
+	                        </tr>
+	                        <apex:repeat value="{!beanObj.lstUnAllocatedAssets}" var="unallocated">
+		                        <tr class="tableData">
+		                        	 <td class="textStyle">{!unallocated.entityName}</td>
+		                             <td class="textStyle">{!unallocated.Type}</td>
+		                             <td class="textStyle">{!unallocated.description}</td>
+		                             <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number, ,##,##0}" >
+		                                        <apex:param value="{!unallocated.currentValue}"/>
+		                                 </apex:outputText>
+		                             </td>
+		                             <td class="textStyle" style="text-align:right;">
+		                                 <apex:outputText value="{0, number, ,##,##0}" >
+		                                        <apex:param value="{!unallocated.balanceRemaining}"/>
+		                                 </apex:outputText>
+		                             </td>
+		                        </tr>
+	                        </apex:repeat>
+                        </table>
+                    </div>
+                    <div class="space" style="text-align:left;" >
+	                        <table style="width:100%;">
+								<tr style="width:100%;">
+			           				<td style="width:8%; FONT-FAMILY: Calibri; FONT-SIZE: 15px; FONT-WEIGHT: bold; COLOR: #329902;"><apex:outputText value="Remarks: " /></td>
+			           				<td class="test2"><apex:outputText value="{!unallocatedAssetRemark}" style="width:300px;height:55px;"/></td>
+			           			</tr>
+			           		</table>
+           		 	  </div>
+                   </div>
+               </apex:outputPanel>
+               
+             </div>
+             -->
+        	</apex:outputPanel>
+        	</apex:outputPanel>
+    	</apex:outputPanel>
+	</apex:form>
+  </apex:define>
+</apex:composition>
+</apex:page>

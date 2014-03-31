@@ -1,0 +1,27 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Wealth Solutions" >
+
+ <apex:composition template="EventTemplate"> 
+ <apex:define name="rightcontent"> 
+ <br/>
+ <span style="font:38px Brush Script MT;color:#FF8000;;font-style:italic;padding-left:180px;">Ffreedom </span><span style="font:34px Brush Script MT;color:green;font-style:italic;"> Day</span>
+ <br/>
+ <br/>
+ <p><b><span style="color:#FF8000;">Ffreedom</span><span style="color:green;"> Day</span></b> is initiated as a conference with a purpose of building a community of like minded people.This community is devoted to people who<b> Believe in their Dreams </b>&amp; want to take charge of their finances to <b>achieve Financial Freedom.</b> The <b>result</b> of which is<b> Happiness.</b></p>
+ <br/><p><i>"We believe passionately in the power of sharing ideas, experiences and knowledge to change attitudes &amp; lives."</i></p>
+  <br/><img src="{!URLFOR($Resource.EventImages,'EventImages/FfreedomMidImage.jpg')}" style="float:left;width:650px;height:200px;" />
+<p>  So we're building here a <i>powerhouse</i> that offers knowledge and inspiration from some of the most <i>passionate, driven and inspired thinkers,</i> and also a community of curious souls to engage with ideas and each other.</p>
+ <br/> <p>The conference will feature <span style="color:green;"><b>"Ffreedom talks"</b> </span> by speakers from various fields and expertise who will come together to share their ideas, experiences and knowledge revolving around the <b><span><i>theme of Happiness, Dreams and Financial Freedom.</i></span></b></p>
+ 
+ 
+ <!---- <br/> <div style="text-align:center"> <span style="font-weight:bold; color:#000000;"> Happiness is what we all look for,<br/> Our Dreams have to power to make us happy. <br/>  Financial Freedom helps us to live our dreams.<br/></span> </div>---->
+
+ 
+   <br/> 
+<p style="font-size:25px;padding-left:180px;font-family:Brush Script MT;">About Ffreedom Financial Planners</p><br/>
+    <br/>  <p><b>The <span style="color:#FF8000;">Ffreedom</span><span style="color:green;"> Day</span></b> is conceived and hosted by<span style="color:#FF8000;"> <b>Ffreedom Financial Planners </b></span>a financial planning firm which believes that financial planning stands for people, their dreams &amp; their goals.</p>
+     <br/>  <p> The vision of this group is to create a firm that acts as an all-inclusive system that meets with all the requirements related to financial management that a client might have. Ffreedom began with an insight that people needed a service that could be customized to provide them independence from financial hardships and in this manner provide a wholesome and stress free life void of financial worries to all the clients.</p><br/>
+    <div > <a href="http://www.ffreedom.in/about_ffreedom_overview" target="_blank" style="text-decoration:underline;">About Ffreedom Financial Planners</a> <a href="http://www.ffreedom.in/Ffreedom_Culture" target="_blank" style="text-decoration:underline;padding-left:90px;">About Ffreedom Culture</a> <a href="http://www.ffreedom.in/Contact_Us" target="_blank" style="text-decoration:underline;text-align:right;padding-left:90px;">Contact Us</a></div>
+ </apex:define> 
+ </apex:composition>
+
+</apex:page>

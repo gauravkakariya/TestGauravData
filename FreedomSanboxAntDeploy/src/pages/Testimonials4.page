@@ -1,0 +1,62 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | Testimonials | Its Truly Liberating">
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+<div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+      
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/result_img_new.png')}" style="height:30%;width:100%;"/></div>
+       <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+        </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+             
+      </div>
+      <div id="innerpage_textcontainer_middle">
+         <div class="innerpage_titletext"><span class="innerpagetexttitle">Testimonials</span></div>
+        <div class="innerpage_titletext"><center><span class="innerpagetexttitle">“Its Truly Liberating”</span></center></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        There are many things in life that we are all aware of but do little about. The gap between awareness &amp; action can be small but appear to be a gulf due to lack of clarity.<strong> The joint exercise carried out by my wife Manisha &amp; I along with Sunitha of Ffreedom Financial Planners has been such an eye-opener.</strong> 
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">It is said that a journey of a thousand miles starts with one step each &amp; for every person our individual goals is an important element of our commitments. The understanding of these and planning for the same generates a feeling of calmness &amp; peace which is unlike any other. With little discussion &amp; understanding of the process evolved by Ffreedom Financial Planners, one can clearly comprehend the way it all come true in a systematic &amp; organized manner. It is a scientific &amp; sustainable method which removes the veil over a lot of jargon. It dispels confusion, infuses clarity &amp; sets a clear director.<strong> One of the significant and unexpected off-shoot the exercise is that Manisha has started understanding different financial instruments and now is always eager to use the same for the future planning.</strong> 
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">The focus of Ffreedom’s highly trained &amp; qualified consultants is always on helping clients in achieving the stated goals. However the best planned strategies can very easily go wrong if not followed through with detailed implementation.<strong> The team at Ffreedom ensures that one gets the required back-end support to manage the financial affairs, which leaves one free to better leverage ones own strengths. In this it is more that just freedom, its truly “liberating”.</strong>
+        </span></div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><br /><strong>Wish you all the very best in life.</strong></span></div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><br /><br /><strong>Sandeep Narang<br />
+MD &amp; CEO, Snowcem Paints Pvt Ltd.</strong></span></div>
+       <center><a href="Testimonials" class="otherslink" alt="Testimonials"><strong>Back</strong></a>
+        </center>
+        <br /> 
+       </div>
+    
+    
+    
+      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" /></div>
+       
+       <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}"  border="0" usemap="#Map2" />
+         <map name="Map2" id="Map2">
+           <area shape="rect" coords="3,0,230,50" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map></div>
+       <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+         <div class="title123"><span class="imgtext">Related Links</span></div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Comprehensive_fp"><strong>Services Basket</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know our Financial Planers</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Why_do_you_need_a_plan"><strong>Why do you need a financial plan?</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Who_can_be_your_financial_planner"><strong>Who can be a financial planner?</strong></a></span> </div>
+<!--        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="why_fees"><strong> Financial Planning Fees</strong></a></span> </div> -->
+       <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

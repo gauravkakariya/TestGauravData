@@ -1,0 +1,124 @@
+<apex:page showheader="false" title="Ffreedom Financial Planners | News Letters"	id="Houseview1_April13">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/top_April13.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td background="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headbg.gif')}"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/houseviewHIn.gif')}" width="132" height="40" /></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Real Estate – The way ahead! </em></strong></font></td>
+                          </tr>
+                            
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">Recently we  crossed an important milestone. Writing 1000 Financial Plans! Having achieved  this milestone, we&rsquo;ve got a beautiful opportunity to get a glimpse of the goals  and aspirations of 1000 families. One common insight about Indian families is  that they give topmost priority to the goals set for their children – like  education, marriage and so on. The goal which comes the closest to this, is  that of buying a property – be it planning for the primary dream house, or a  vacation home, or a piece of land as an investment.<br />
+                                <br />
+                                Recently there  was piece of headlines which brings a sigh of relief and a ray of hope to the  long hauled investors –&ldquo;After stubbornly holding  on to high prices for four years in the face of sluggish sales, a crippling  liquidity crunch and rising cost of capital, Mumbai&rsquo;s real estate industry has  just blinked!&rdquo; <br />
+  <br />
+                                This piece of  news was neither a shock nor a surprise. For the four year period between  2003-04 and 2007-08, the housing loan disbursal by banks grew by as much as  35-40 percent. It had more than doubled in 2004-05. But, as inflation  strengthened its grip on the economy, demands for housing loans fell to less  than half by 2008-09. RBI statistics show that this was also the period when  housing NPAs as a percentage of housing loans began to rise.<br />
+  <br />
+                                The  high rate of inflation and the EMI payments have not only begun to hurt the  consumer but the Government as well. For instance, Housing - a stimulant for  various sector of the economy constitutes a very small percentage of GDP in  India. It was just 3.4% of the GDP in 2001 but shot up to 6.1% in 2006 and  accounted for 7% in 2007.<br />
+  <br />
+                                It  has stagnated at that level ever since. The multiplier effect is gone. (The  multiplier effect refers to the increase in final income arising from any new  injection of spending). Meanwhile mortgage market constitutes 12% of the GDP of  China, 22% in Malaysia, 40% in Australia and 65% in the US.<br />
+  <br />
+                                The  other day we got an opportunity to discuss the nature of different asset  classes with an industry veteran – Mr. B. P. Singh – the fund manager from  Pramerica AMC. He gave an interesting insight about why real estate may not see  the sustained growth from here on. <br />
+  <br />
+                                The  way the real estate has gone up in the last 5 years is not in tandem with the  growth in income. Let&rsquo;s take an example of a family – where both the partners  are working. Both of their net salaries (after tax and EPF Contribution) is  Rs.1,35,000. Most of the banks would provide 50% of take home as EMI. In this  case it works out to be Rs.67,500. This translates to their loan capacity as  Rs. 67 lacs (assuming the interest rate as 10.5% for a 20 year loan.). The  average cost of property in a tier 1 or tier 2 cities is 1 crore. This  basically indicates that they have to shell out 33 lacs as down payment. Over  and above this, the stamp duty and registration would add up other 5 to 7 lacs  lacs, which take&rsquo;s their own contribution to a whopping 40 lacs!<br />
+  <br />
+                                Now,  if someone has to pay upfront 30-40 lacs as down payment and then service a  hefty EMI of 60k-70k, it certainly looks like a distant dream. Also as a matter  of fact, what is the percentage of families drawing an income above 20 lacs?<br />
+  <br />
+                                Another  question that we need to ask is what happens to the other goals – mainly  retirement – if all the money goes in one goal? Financial Planning does call  for trade – off&rsquo;-s, and this one is indeed a big one. So, put down the number&rsquo;-s,  analyze the trade off&rsquo;-s and take an informed decision! <br />
+  <br />
+                                Source: National Housing Board Report<br />
+  <br />
+                                Regards,<br />
+                                Vinita Somaiya, 
+                                Head- Research &amp; Advisory </td>
+                            </tr>
+                            
+                            
+
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+                            </tr>
+                            
+                            
+                         </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+</apex:page>

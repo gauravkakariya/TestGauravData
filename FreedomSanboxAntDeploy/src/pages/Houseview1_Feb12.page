@@ -1,0 +1,371 @@
+<apex:page showHeader="false" sidebar="false"
+	title="Ffreedom Financial Planners | News Letters"
+	id="Houseview1_Feb12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+	<table width="740" border="0" align="center" cellpadding="0"
+		cellspacing="0">
+		<tr>
+			<td><img
+				src="{!URLFOR($Resource.Images,'images/top_Feb2012.gif')}" />
+			</td>
+		</tr>
+		<tr>
+
+			<td><table width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2"
+							height="1" /></td>
+						<td valign="top">
+							<table width="98%" border="0" align="center" cellpadding="0"
+								cellspacing="0">
+								<tr>
+									<td valign="top"><table width="100%" border="0"
+											cellspacing="0" cellpadding="0">
+											<tr>
+												<td
+													background="{!URLFOR($Resource.Images,'images/headbg.gif')}">
+													<img src="{!URLFOR($Resource.Images,'images/headR.gif')}"
+													width="9" height="40" align="right" /> <img
+													src="{!URLFOR($Resource.Images,'images/houseviewHIn.gif')}"
+													width="132" height="40" />
+												</td>
+											</tr>
+
+											<tr>
+												<td><table width="100%" border="0" cellpadding="0"
+														cellspacing="0">
+														<tr>
+															<td width="9" valign="top"
+																background="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}">
+																<img
+																src="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}"
+																width="9" height="185" />
+															</td>
+															<td width="8" valign="top"><img
+																src="{!URLFOR($Resource.Images,'images/space.gif')}"
+																width="8" height="1" />
+															</td>
+															<td valign="top"><table width="98%" border="0"
+																	cellpadding="0" cellspacing="0">
+																	<tr>
+																		<td height="25" valign="top"><font
+																			face="Arial, Helvetica, sans-serif" color="#683400"
+																			style="font-size: 14px;"><strong><em>Do
+																						you now need an insurance agent? What about buying
+																						online?</em>
+																			</strong>
+																		</font>
+																		</td>
+
+																	</tr>
+
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">“No
+																			no thank you, I don’t need any insurance now. By the
+																			way, can you please take my number off you calling
+																			list. Or do I have to go to your website to register
+																			in the Do Not Call list? Okay... Thank you” - one
+																			more of those really annoying tele-callers trying to
+																			sell insurances. I wonder what rate of conversion
+																			this type of selling really enjoys. Would anybody
+																			ever buy insurance because some kid calls up on the
+																			phone and rattles about something she hardly
+																			understands herself, when you are attending an
+																			important meeting or worse still driving? <br /> <br />
+																			It is true that in the past, insurance was considered
+																			a product that is never bought, but always sold
+																			(read, hard sold!) by agents whose livelihood
+																			depended on the commissions. These insurance agents
+																			were shunned by most people who believed that the
+																			mention of ill fortune itself was bad. This was
+																			probably ignorance on the part of the insurance
+																			needers or the lack of tact on the part of the
+																			insurance sellers. Me for one, definitely avoided the
+																			insurance agents though I was not ignorant.<br /> <br />
+																			I am a big fan of online purchasing. I group buy
+																			electronic goods and get good discounts. I buy most
+																			books online because I get to read unbiased reviews
+																			before having to buy them. I do most of my research
+																			on the internet before setting foot onto any store.
+																			So, when I had to buy some insurance I chose online
+																			portals to compare and contrast. I realised that
+																			policies purchased online (without having to go
+																			through an agent) came at lesser premiums. And boy!
+																			was I vindicated?<br /> <br /> The process was
+																			pretty simple – give some basic details on the
+																			website and get an immediate quote. Pay online and
+																			somebody calls in to fix an appointment for a medical
+																			test. Give the medical tests. Scan and send by mail
+																			your documents (age / id proof, income proof etc) and
+																			well, your insurance policy is generated and sent by
+																			post. Better still, with medical insurance you pay
+																			and instantly get the policy document on the email.
+																			No physical document is sent. You just take a print
+																			out of the document and save it in your file. Period!
+																			It is all done in less than half an hour. Who needs
+																			an ambitious agent?<br /> <br /> Of course, you
+																			should know that you NEED insurance, HOW MUCH
+																			insurance, which is the best insurance policy, what
+																			are the options etc? Most importantly you should know
+																			how to operate the internet and make online payments.
+																			We are financial planners ourselves so I kind of know
+																			how much and what insurances are good for me. <br />
+																			<br /> Just when I was thrilled about this new
+																			discovery and telling everybody I knew about this,
+																			this meeting happened. <br /> <br /> A group of
+																			insurance agents had jointly signed up for my class
+																			and after a technical session we were chatting up
+																			over tea. I was telling them I wanted to buy one of
+																			their company policies and enquired what the premium
+																			would be? When they looked up their table, and gave
+																			me the exact figure with service charges and taxes, I
+																			proudly told them I bought the same policy at 15%
+																			less on the internet. This started off a mind blowing
+																			discussion and after a couple of hours I had to eat
+																			humble pie – I was probably wrong about avoiding
+																			insurance agents. But I felt good, because I was more
+																			enlightened and had a new perspective to be shared.</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;"><ul>
+																				<li>What worked for me, may not work for
+																					everyone. Sometimes when the insurance company is
+																					not satisfied with the papers sent, they may reject
+																					the policy and refund the money without really
+																					giving good reasons. The intervention of an agent
+																					may be very helpful in those cases. Alternate
+																					documents that can be submitted, seeking a
+																					different sum assured or choosing different riders
+																					to ensure that the application is accepted and a
+																					policy is actually issued.<br /> &nbsp;&nbsp;</li>
+																				<li>I had bought a critical illness policy
+																					which had an inbuilt life insurance component as
+																					well. “Did you opt for the premium waiver raider”
+																					asked the agent. Me-“ Er, sorry, come again”. “In
+																					case of a critical illness which is subsequently
+																					cured the life cover can remain. If the premium
+																					waiver raider is opted for, then in case of
+																					critical illness further premium payments need not
+																					be paid, whereas the life insurance benefits will
+																					remain” explained the agent. Oh God, I had missed
+																					this point and this raider cannot be chosen after
+																					the policy has been issued. I have missed out on a
+																					benefit I could have easily got for a small
+																					increase in premium. Nobody explained this to me,
+																					because I did not ask anybody.<br /> &nbsp;&nbsp;</li>
+																				<li>Though I hate it when I get these
+																					commercial phone calls, I really wouldn’t mind a
+																					call to remind me of my premiums. Delaying or
+																					missing premium payments, is the worst disservice
+																					we could be doing to ourselves and our families. Of
+																					course, insurance companies would send out a mail /
+																					letter / sms to remind us of the premiums due, but
+																					a friendly call / a visit from the agent would
+																					prompt us to pay up on time and ensure that the
+																					action is taken. <br /> &nbsp;&nbsp;</li>
+																				<li>All the above quite did not completely
+																					convince me, but the last point did. In case of a
+																					misfortune would I or my family be in the position
+																					or mind frame to submit all relevant documents and
+																					run after insurance claim money. It could be the
+																					most emotionally draining thing to do and I am sure
+																					most of us would love some help at that time. A
+																					good agent can be that help. You have me there.</li>
+
+																			</ul>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">Though
+																			I don’t subscribe to blindly listening to what agents
+																			say, after all preliminary studies and deciding which
+																			policy to buy and for how much, I would probably ask
+																			the company to send me a local agent. Even if that
+																			means a small increase in premium I would happily pay
+																			it up. So should you, I think.</td>
+																	</tr>
+
+
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">&nbsp;</td>
+																	</tr>
+
+																</table>
+															</td>
+														</tr>
+														<tr>
+															<td valign="top"><img
+																src="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}"
+																width="9" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.Images,'images/space.gif')}"
+																width="1" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.Images,'images/space.gif')}"
+																width="1" height="1" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+
+										</table></td>
+								</tr>
+								<tr>
+									<td valign="top">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td><table width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+						<td valign="top"><table width="98%" border="0" align="center"
+								cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="76%" height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#035728"
+										style="font-size: 13px;"><strong>Ffreedom
+												Financial Planners</strong>
+									</font>
+									</td>
+
+									<td width="24%" rowspan="3"><table border="0"
+											align="center" cellpadding="0" cellspacing="0">
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong>
+															Follow us on&nbsp;&nbsp;&nbsp;</strong>
+												</font>
+												</td>
+												<td><a href="http://www.facebook.com/Ffreedom"
+													target="_blank"><img
+														src="{!URLFOR($Resource.Images,'images/fb.png')}"
+														width="20" height="20" border="0" />
+												</a> <a href="http://twitter.com/_Ffreedom" target="_blank">
+														<img src="{!URLFOR($Resource.Images,'images/tw.png')}"
+														width="20" height="20" hspace="6" border="0" /> </a> <a
+													href="http://www.linkedin.com/companies/ffreedom-financial-planners"
+													target="_blank"> <img src="{!URLFOR($Resource.Images,'images/LinkedIn.png')}"
+														width="20" height="20" border="0" /> </a></td>
+											</tr>
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong>Watch
+															us on</strong>
+												</font>
+												</td>
+
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong>
+															<a href="http://www.youtube.com/user/ffreedomtube"
+															target="_blank"> <img src="{!URLFOR($Resource.Images,'images/youtube.png')}"
+																width="20" height="20" vspace="6" border="0" /> </a>
+													</strong>
+												</font>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">506 / 507, Morya Landmark II,
+											Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font>
+									</td>
+								</tr>
+								<tr>
+
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">Boardline: +91 22 4222 4333
+											&nbsp;|&nbsp; Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a
+											href="mailto:contact@ffreedom.in">contact@ffreedom.in</a>
+											&nbsp;|&nbsp; <a href="http://www.ffreedom.in"
+											target="_blank">www.ffreedom.in</a>
+									</font>
+									</td>
+								</tr>
+								<tr>
+
+									<td colspan="2" valign="top"><div align="justify">
+											<font face="Arial, Helvetica, sans-serif" color="#333333"
+												style="font-size: 11px;">Disclaimer: This
+												communication from Ffreedom provides general information
+												existing at the time of preparation. This mailer is intended
+												as a news update and Ffreedom Financial Planners neither
+												assumes nor accepts any responsibility for any loss arising
+												to any person acting or refraining from acting as a result
+												of any material contained in this communication. It is
+												recommended that professional advice be taken based on the
+												specific facts and circumstances. This communication does
+												not substitute the need to refer to the original
+												pronouncements.</font>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+
+			<td><img src="{!URLFOR($Resource.Images,'images/footer.gif')}"
+				width="740" height="15" />
+			</td>
+		</tr>
+	</table>
+</body>
+
+	</html>
+</apex:page>

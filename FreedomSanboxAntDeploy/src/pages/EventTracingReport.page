@@ -1,0 +1,177 @@
+<apex:page controller="EventReport" id="EventTracingReport" sidebar="false">
+	<!-- action="{!Init}" -->
+	<apex:pageMessages id="pgMsg"></apex:pageMessages>
+	<apex:form >
+		<apex:outputPanel >
+			<apex:actionStatus id="StatusWorkstation" startText="Processing...." />
+			<apex:pageBlock id="pbtEvent">
+				<div>
+					<h5>
+						<label>Name of Financial Planner</label>
+					</h5>
+					&nbsp;&nbsp;
+					<apex:selectList value="{!nameofUser}" size="1"
+						id="FinancialPlanners" style="font-size:12px;width:150px">
+						<apex:selectOptions value="{!AllUsers}" />
+						<apex:actionSupport event="onchange" action="{!AssignManager}"
+							rerender="pbtEvent" status="StatusWorkstation" />
+					</apex:selectList>
+
+					<h5>
+						<apex:outputLabel value="Meeting Date" id="lblTitle" />
+					</h5>
+					<apex:inputField value="{!objEvent.StartDateTime}" />
+					<apex:inputField value="{!objEvent.EndDateTime}" />
+					<apex:commandButton value="Show" action="{!Init}" id="BtnShow" />
+					<apex:commandButton value="View All" action="{!ViewAll}" rendered="{!isDisplay}"/>
+				</div>
+				<!-- <table>
+		<tr>
+		<td>
+			<h5><apex:outputLabel value="Meeting Date" id="lblTitle"/></h5>
+		</td>
+		<td>
+			<apex:inputField value="{!objEvent.Completion_Date__c}" />
+		</td>
+		<td>
+			<apex:inputField value="{!objEvent.Completion_Date__c}"/>
+		</td>
+		<td>
+			<apex:commandButton value="Show" action="{!Init}" id="BtnShow" />
+		</td>
+		</tr>
+		<tr>
+		<td>
+			<h5><label>Name of Financial Planner</label></h5>
+			<apex:selectList value="{!nameofUser}" size="1" id="FinancialPlanners" style="font-size:12px;width:120px">
+			<apex:selectOptions value="{!AllUsers}"/>
+			<apex:actionSupport event="onchange" action="{!AssignManager}" rerender="pbtEvent" status="StatusWorkstation" >
+			</apex:actionSupport>
+			</apex:selectList>
+		</td>
+		</tr>
+	</table> -->
+				<!-- rendered="{!IF(lsrMasterEventInfo== null,true,false)} -->
+
+			</apex:pageBlock>
+		</apex:outputPanel>
+
+		<apex:pageBlock title="Meeting Report" rendered="{!!isViewAll}">
+			<!-- <apex:outputLabel value="There is no any meeting details present" id="ErrorMsg" rendered="{!Not(IF(lsrMasterEventInfo.size>0,true,false))}" style="font-size:20px; color:#FF0000; font-family: icon;  text-align: center;"/> -->
+			<apex:pageBlockTable value="{!lsrMasterEventInfo}" var="item">
+				<apex:column >
+					<b>Name of the Financial Planner :: <apex:outputLabel value="{!item.StrOwnerName}" /></b>
+					<apex:pageblocktable value="{!item.lstEventChildInfo}" var="Event">
+						<apex:column headerValue="Date">
+							<apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+								<!-- 'E hh:mm:ss:SSS z' -->
+								<apex:param value="{!Event.ChildEvent.Completion_Date__c}" />
+							</apex:outputText>
+						</apex:column>
+						<apex:column headerValue="Engagement Name">
+							<apex:outputLabel value="{!Event.StrName}" />
+						</apex:column>
+						<apex:column headerValue="Member / Lead ">
+							<apex:outputLabel value="{!Event.strWhoType}" />
+						</apex:column>
+						<apex:column headerValue="Meeting Count">
+							<apex:outputLabel value="{!Event.intMeetingCount}" />
+						</apex:column>
+						<apex:column headerValue="Place">
+							<apex:outputLabel value="{!Event.ChildEvent.Event_Place__c}" />
+						</apex:column>
+						<apex:column headerValue="From">
+							<apex:outputLabel value="{!Event.ChildEvent.From_Time__c}" />
+<!-- 							<apex:outputLabel value="{!Event.ChildEvent.StartDateTime}" /> -->
+							<!-- <apex:outputText value="{0,date,E hh:mm }">
+                            	<apex:param value="{!Event.ChildEvent.StartDateTime}" />
+                            </apex:outputText> -->
+						</apex:column>
+						<apex:column headerValue="To">
+<!-- 						<apex:outputLabel value="{!Event.ChildEvent.EndDateTime}" /> -->
+							<apex:outputLabel value="{!Event.ChildEvent.To_Time__c}" />
+							<!-- <apex:outputText value="{0,date,E hh:mm }">
+                            	<apex:param value="{!Event.ChildEvent.EndDateTime}" />
+                            </apex:outputText> -->
+						</apex:column>
+						<apex:column headerValue="Description">
+							<apex:outputLabel value="{!Event.ChildEvent.Description}" />
+						</apex:column>
+					</apex:pageblocktable>
+				</apex:column>
+			</apex:pageBlockTable>
+
+			<!--  Using Repeter -->
+			<!-- <table border="1">
+		<apex:repeat value="{!lsrMasterEventInfo}" var="item">
+			<tr>
+				<td><b>Name of the Finacial Planner :: <apex:outputLabel value="{!item.StrOwnerName}" /></b> </td>
+				<td>
+					<apex:repeat value="{!item.lstEventChildInfo}" var="Event" >
+						<table border="1">
+							<tr>
+								<td><apex:outputLabel value="{!Event.ChildEvent.StartDateTime}"/></td>
+								<td><apex:outputLabel value="{!Event.StrName}"/></td>
+								<td><apex:outputLabel value="{!Event.ChildEvent.StartDateTime}"/></td>
+								<td><apex:outputLabel value="{!Event.strWhoType}"/></td>
+								<td> <apex:outputLabel value="{!Event.ChildEvent.Meeting__c}"/> </td>
+								<td> <apex:outputLabel value="{!Event.ChildEvent.Event_Place__c}"/> </td>
+								<td>  <apex:outputLabel value="{!Event.ChildEvent.StartDateTime}"/> </td>
+								<td>  <apex:outputLabel value="{!Event.ChildEvent.EndDateTime}"/> </td>
+								<td> <apex:outputLabel value="{!Event.ChildEvent.Description}"/> </td>
+							</tr>
+						</table>
+					</apex:repeat>
+				</td>
+			</tr>
+		</apex:repeat>
+	</table>	 -->
+		</apex:pageBlock>
+		
+<!--Added on : 11/6/13 : Aditi Satpute - Change in display format for View All button	 -->
+	<apex:pageBlock title="Meeting Report" rendered="{!isViewAll}">
+		<div align="center">
+			<apex:commandButton value="Export Data" action="{!ExportData}"/>
+		</div>
+		<br/>
+					<apex:pageblocktable value="{!lstViewAllInformation}" var="Event">
+						<apex:column headerValue="Date">
+							<apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+								<apex:param value="{!Event.ChildEvent.Completion_Date__c}" />
+							</apex:outputText>
+						</apex:column> 
+						<apex:column headerValue="Engagement Name">
+							<apex:outputLabel value="{!Event.StrName}" />
+						</apex:column>
+						<apex:column headerValue="Member / Lead ">
+							<apex:outputLabel value="{!Event.strWhoType}" />
+						</apex:column>
+						<apex:column headerValue="Meeting Count">
+							<apex:outputLabel value="{!Event.intMeetingCount}" />
+						</apex:column>
+						<apex:column headerValue="Place">
+							<apex:outputLabel value="{!Event.ChildEvent.Event_Place__c}" />
+						</apex:column>
+						<apex:column headerValue="From">
+							<apex:outputLabel value="{!Event.ChildEvent.From_Time__c}" />
+						</apex:column>
+						<apex:column headerValue="To"> 
+							<apex:outputLabel value="{!Event.ChildEvent.To_Time__c}" />
+						</apex:column>
+						<apex:column headerValue="Description">
+							<apex:outputLabel value="{!Event.ChildEvent.Description}" />
+						</apex:column>
+						<apex:column headerValue="Owner Name">
+							<apex:outputLabel value="{!Event.StrOwnerName}" />
+						</apex:column>
+						<apex:column headerValue="PFP">
+							<apex:outputLabel value="{!Event.PFP_VirtualPartnerName}" />
+						</apex:column>
+						<apex:column headerValue="Channel Manager">
+							<apex:outputLabel value="{!Event.channelManager}" />
+						</apex:column>
+						 
+					</apex:pageblocktable>
+		</apex:pageBlock>	
+	</apex:form>
+</apex:page>

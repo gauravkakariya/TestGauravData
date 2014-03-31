@@ -1,0 +1,239 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="Houseview1_Jan12">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script type="text/javascript">
+ 			var _gaq = _gaq || [];
+  			_gaq.push(['_setAccount', 'UA-26313496-1']);
+  			_gaq.push(['_trackPageview']);
+ 
+			  (function() {
+			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			  })();
+ 		</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+
+	<tr>
+		<td><img src="{!URLFOR($Resource.Images,'images/top_Jan2012.gif')}"/></td>
+	</tr>
+	
+	<tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/houseviewHIn.gif')}" width="132" height="40" /></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td height="25" valign="top">
+									<font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;">
+										<strong><em>All that glitters, is not always an investment</em></strong>
+								</font></td>
+							</tr>
+							<tr>
+								<td valign="top" style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">
+									<p>
+										It has been a long standing tradition for years that
+										every bride is given gifts of gold, either by her
+										parents or family members. Most parents do so
+										believing that this commodity will act as security,
+										incase their child faces any troubles at her marital
+										home. <br />
+										
+										<br /> Call it for security or insurance or just a
+										piece of pretty metal; there has always been an
+										inclination to buy jewels, irrespective of the sky
+										high cost.<br />
+										
+										<br /> Statistics prove that Indians are the
+										world's largest consumers of gold, accounting for 20
+										percent of the world's demands and as reported by
+										the World Gold Council in November 2011, in the
+										third quarter of 2011, year-on-year gold demand in
+										India wass up 15% in tones and 46% in value (US$). <br />
+										
+										<br /> These numbers demonstrate that over the
+										years, gold has transformed from a mere metal to an
+										investment. And Citigroup's metals expert say that
+										'in the next year or two', the price of gold will
+										reach $3400.<br />
+										
+										<br /> Just looking at the significance of gold as
+										a commodity, many investors are holding on to this
+										investment. Not just that, we are also witnessing a
+										surge among new investors, who believe that
+										investing in gold is the best bet for future. The
+										other day we had a client who said that his wife
+										would buy jewellery every year with his bonus money,
+										as she believes that there is no investment as safe
+										and as well appreciating as gold. <br />
+										
+										<br /> In retrospect this is true. But the current
+										market situation is telling us a different story. In
+										this situation is gold still a good idea to invest
+										in? Investing in gold has its advantages:<br />
+									</p>
+							
+									<ul>
+										<li>Gold is the only investment tool that is
+											immune to any geo-political situations. Governments
+											and political relations may change but the value of
+											gold will not be affected by it.</li>
+							
+										<li>It's the only tool that is not dependant on
+											the value any stock or bonds.</li>
+							
+										<li>Inflation does not really affect the worth
+											of gold. When the prices of goods and services go
+											up, gold remains steady, and retains its value.</li>
+							
+										<li>It is a private investment and you do not
+											have to declare these assets to the government.</li>
+							
+									</ul>
+							
+									<p>
+										Knowing the pros of gold is good. But is it just a
+										safe investment? There are a few drawbacks that most
+										clients and investors don't think of while
+										investing.<br />
+									</p>
+
+									<ul>
+										<li>When was the last time you heard one of
+											your friends saying that they brought gold to
+											resell it? Never, right. That's because most people
+											buy gold to show off.</li>
+							
+										<li>Gold in the form of jewellery is always
+											expensive, as there are taxes, making charges and
+											wastage involved. This depreciates the value of the
+											commodity.</li>
+							
+										<li>Sale value is much lesser than purchase
+											value on the same day.</li>
+							
+										<li>Valuations may differ from jeweller to
+											jeweller</li>
+							
+										<li>Safekeeping is a hassle and expensive.</li>
+									</ul>
+									One more argument for considering jewels as liquid
+									assets is that can be en-cashed without hassles. The
+									definition of liquidity is "the ability to convert an
+									asset into cash immediately without loss of value".
+									That way gold doesn't really qualify.<br />
+									
+								<br /> So does this mean that it's not a win-win
+									situation? Actually there are ways that you can buy
+									gold and hold it without losing wealth. <br />
+									
+								<br /> If you have decided to buy gold, make sure you
+									buy it in its pure form i.e. wither as a gold bar or
+									coins. This means that you will not be paying taxes
+									or making charges. <br />
+									
+								<br /> Opt for investing in gold exchange traded
+									fund. The advantage of doing so is that you do not
+									have to any tax or duty on it and is available
+									online. It also eliminates drawbacks like cost of
+									storage, liquidity and purity, among others.<br />
+									
+								<br /> E-gold in the spot exchange/commodity markets:
+									E-Gold is an incarnation of gold, which enables you
+									to invest in gold, but at smaller denominations and
+									you can hold the same in a demat form, online. This
+									provides and chance to buy, accumulate, hold and
+									liquidate or even convert into a physical form
+									without any hassles<br />
+									
+								<br /> After all, all that glitters is always gold.</td>
+							</tr>
+							<tr>
+								<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+							</tr>
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top">
+            	<div align="justify">
+            		<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. 
+            			This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a 
+            			result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. 
+            			This communication does not substitute the need to refer to the original pronouncements.
+            		</font>
+            	</div>
+            </td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+
+</table>
+</body>
+
+</html>
+</apex:page>

@@ -1,0 +1,26 @@
+<apex:component id="FPReview" selfClosing="true">
+<apex:stylesheet value="{!$Resource.FFStyle}"/>
+
+ <div class="divContainerStyle">
+    <div class="divStyle" style="padding-left:10px">FINANCIAL PLAN REVIEW</div>
+    <br/>
+        <apex:outputText value="{!$Label.ReviewPoint1}" styleClass="textStyle"></apex:outputText>
+    <br/>
+    <ul class="TickList">
+        <li>Reasons for the reviews are
+            <ul id="subPoint">
+                <li><apex:outputText value="{!$Label.ReviewReason1}" styleClass="textStyle"/></li>
+                <li><apex:outputText value="{!$Label.ReviewReason2}" styleClass="textStyle"/></li>
+                <li><apex:outputText value="{!$Label.ReviewReason3}" styleClass="textStyle"/></li>
+                <li><apex:outputText value="{!$Label.ReviewReason4}" styleClass="textStyle"/></li>
+                <li><apex:outputText value="{!$Label.ReviewReason5}" styleClass="textStyle"/></li>
+                <li><apex:outputText value="{!$Label.ReviewReason6}" styleClass="textStyle"/></li>
+            </ul>
+         </li>
+        <li>Change in taxation and economic conditions referred as exogenous conditions</li>
+    </ul>
+    <apex:outputText value="{!$Label.ReviewPoint2}" styleClass="textStyle"/>
+    <br/><br/>
+    <apex:outputText value="{!$Label.ReviewPoint3}" styleClass="textStyle"/>
+</div>
+</apex:component>

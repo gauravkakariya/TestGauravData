@@ -1,0 +1,226 @@
+<apex:page showHeader="false" sidebar="false"
+	title="Ffreedom Financial Planners | News Letters" id="LeadStory_Dec11">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+</head>
+
+<body>
+	<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+		<tr>
+			<td><img src="{!URLFOR($Resource.images,'images/top_Dec2011.gif')}" width="740" height="104" />
+			</td>
+		</tr>
+		<tr>
+			<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+							height="1" /></td>
+						<td valign="top"><table width="98%" border="0" align="center"
+								cellpadding="0" cellspacing="0">
+								<tr>
+									<td valign="top"><table width="100%" border="0"
+											cellspacing="0" cellpadding="0">
+											<tr>
+												<td><table width="100%" border="0" cellspacing="0"
+														cellpadding="0">
+														<tr>
+															<td width="1%" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/headL.gif')}"
+																width="9" height="40" />
+															</td>
+															<td width="98%" valign="top"
+																background="{!URLFOR($Resource.images,'images/headbg.gif')}"
+																style="padding-top: 6px;"><font
+																face="Arial, Helvetica, sans-serif" color="#FFFFFF"
+																style="font-size: 14px;"><strong>Texed out? Plan for your future...</strong> </font>
+															</td>
+															<td width="1%" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/headR.gif')}"
+																width="9" height="40" align="right" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+
+											<tr>
+												<td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+														<tr>
+															<td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}">
+																<img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" />
+															</td>
+															<td width="8" valign="top">
+																<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" />
+															</td>
+															<td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+																	<tr>
+																		<td valign="top" style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">
+																			Just as the calendar year draws to an end, you realise that it is the time of the year when you need start thinking about your taxes. Though the end of the financial year is still a few months away, you would want to get a head start on your tax planning, to make sure that you don’t miss out on the due date and get your affairs in order. 
+																			<br /><br /> 
+																			Tax planning, as you may know, can be a tedious process even if you have an accountant or a consultant to help you with the same. However, few people realise that your current salary structure and expenses may already be allowing them to claim the maximum tax exemption of Rs. 1 lakh (under Section 80C) on their salary.
+																			<br /><br /> Read on to know about the areas that you may have ignored - <br /><br />
+																			<ul>
+																				<li>
+																					Provident fund and public provident fund – The deductions made from your salary against these two heads are covered under Section 80C.
+																				</li>
+																				<li>
+																					If you pay school tuition fees for your children then you can claim an exemption on the annual fees you pay too.
+																				</li>
+																				<li>
+																					Also, if you have paid premium towards health insurance, the same can be adjusted against the deduction allowed under Section 80 C. For the deduction, the maximum limit for you, your spouse and child is Rs. 15,000 per annum. And if you have paid premium for your parents, who are senior citizens, then you are allowed an additional deduction of Rs. 20,000 per annum.
+																				</li>
+																				<li>
+																					Additionally, premium paid towards life insurance, or other investments too qualifies you for this deduction.	
+																				</li>
+																			</ul> 
+																			<br /> While you may realise that these exemptions work in your favour to save your resources, it is vital to understand that your tax planning needs to be in sync with your financial plan and not the other way round. 
+																			<br />
+																			<br />Planning your finances keeping in mind your taxes, will help you not only allot your resources in a much streamlined manner but also protect your dreams and goals that you want to attain. Also, make sure that instead of creating a financial plan to suit your taxes budget, you start on the same at the beginning of your financial year and not the end. After all, it’s all about your achieving financial freedom.
+																			<br />
+																		</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+														<tr>
+															<td valign="top">
+																<img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105">
+																<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105">
+																<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table></td>
+								</tr>
+								<tr>
+									<td valign="top">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="images/space.gif" width="2" height="1" />
+						</td>
+					</tr>
+				</table></td>
+		</tr>
+
+		<tr>
+			<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B">
+							<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+						<td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+							<tr>
+								<td width="76%" height="20" valign="top">
+									<font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size: 13px;">
+										<strong>Ffreedom Financial Planners</strong>
+									</font>
+								</td>
+								<td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+										<tr>
+											<td>
+												<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;">
+													<strong>Follow us on&nbsp;&nbsp;&nbsp;</strong>
+												</font>
+											</td>
+											<td>
+												<a href="http://www.facebook.com/Ffreedom" target="_blank">
+													<img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" />
+												</a>
+												<a href="http://twitter.com/_Ffreedom" target="_blank">
+													<img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" />
+												</a>
+												<a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank">
+													<img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" />
+												</a>
+											</td>
+										</tr>
+										<tr>
+											<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;"><strong>Watch us on</strong></font></td>
+											<td>
+												<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;">
+													<strong>
+														<a href="http://www.youtube.com/user/ffreedomtube" target="_blank">
+															<img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" />
+														</a>
+													</strong>
+												</font>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">506 / 507, Morya Landmark II,
+											Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font>
+									</td>
+								</tr>
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">Boardline: +91 22 4222 4333
+											&nbsp;|&nbsp; Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a
+											href="mailto:contact@ffreedom.in">contact@ffreedom.in</a>
+											&nbsp;|&nbsp; <a href="http://www.ffreedom.in"
+											target="_blank">www.ffreedom.in</a> </font>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" valign="top"><div align="justify">
+											<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 11px;">
+												Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended
+												as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising
+												to any person acting or refraining from acting as a result of any material contained in this communication. It is
+												recommended that professional advice be taken based on the specific facts and circumstances. This communication does
+												not substitute the need to refer to the original pronouncements.
+											</font>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B">
+							<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td><img src="{!URLFOR($Resource.images,'images/footer.gif')}"
+				width="740" height="15" />
+			</td>
+		</tr>
+	</table>
+</body>
+	</html>
+</apex:page>

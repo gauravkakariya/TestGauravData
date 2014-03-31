@@ -1,0 +1,30 @@
+<apex:page showHeader="true" sidebar="true">
+
+ <apex:stylesheet value="{!URLFOR($Resource.Style)}" />
+<div class="MainContainer">
+<div class="topcontainer">
+<div class="text">May I Help You</div>
+</div>
+<div class="blockcontainer">
+ <div class="leftcontainer">
+ <apex:image url="{!URLFOR($Resource.newImage,'image/Cases_Icon.jpg')}" height="102px" width="119px" />
+</div>
+<div class="rightcontainer">
+<div class="blocktext">
+<br/>
+At Ffreedom we believe our client always come first &amp; we endeavor to service you &amp; be here for you at all time.<br/><br/>
+Therefore incase you require any information about your financial plan or have any queries or you would just like your financial planner to get in touch with you we would encourage you to kindly post a case and we shall revert to you.
+<br/>
+
+<br /><hr /></div>
+
+<div class="blocktext">
+<img src="{!URLFOR($Resource.newImage,'image/Cases_button.jpg')}" border="0" usemap="#Map" />
+<map name="Map" id="Map"><area shape="rect" coords="2,3,121,23" href="/500/o" /></map>
+<br /><br />
+</div>
+</div>
+</div>
+</div>
+
+</apex:page>

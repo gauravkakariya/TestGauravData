@@ -1,0 +1,20 @@
+<apex:page controller="ExportToExcelActionPlanController" action="{!getActionPlanProduct}" readOnly="true"  contenttype="application/vnd.ms-excel#ARPPDetail.xls">
+	
+	<apex:pageBlock >
+	 	<apex:pageBlockTable value="{!lstActionPlanRecord}" var="actionPlan">
+	 	
+	 		<apex:column headerValue="Account Id" >
+				<apex:outputText value="{!actionPlan.Account__c}" />
+			</apex:column>
+			
+	 		<apex:column headerValue="Product Name" >
+				<apex:outputText value="{!actionPlan.Product_Name__c}" />
+			</apex:column>
+			
+		 	<apex:column headerValue="Policy Name" >
+				<apex:outputText value="{!actionPlan.Policy_Name__c}" />
+			</apex:column>
+			
+		</apex:pageBlockTable>
+	</apex:pageBlock>
+</apex:page>

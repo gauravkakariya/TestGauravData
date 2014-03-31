@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ReminderOn1Day</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Reminder1Day</name>
+    <style>none</style>
+    <subject>Only A Day Left for The Ffreedom Day!!!</subject>
+    <textOnly>Dear {!Registration__c.Name},
+
+&quot;Most folks are about as happy as they make up their minds to be&quot;
+ – Abraham Lincoln.
+
+We thank all our Ffreedom Family members&amp; their friendswho have confirmed their Invitations/RSVPs &amp; made up their mind to come to the Ffreedom Day event.
+
+The whole Ffreedom Team isvery excited &amp; looking forward to meet you at the Ffreedom Day tomorrow at Hotel Novotel, Juhu [erstwhile Holiday Inn].
+
+Please Join us in the morning for a Cup of Coffee at 10 am, accompanied with somerefreshments.
+
+Looking forward to see you at the event.
+
+1 Day to go for the Ffreedom Day……
+Venue: Hotel Novotel,Juhu Beach, Juhu-Vile Parle (west). Mumbai - 49.
+Brief Program Schedule:
+10.30 am to 11.00 am – Registration (with Tea, Coffee &amp; Refreshments)
+11.00 am to 11.15 am – Opening Ceremony by the Chief Guest 
+11.30 am to 12.15 pm – Ffreedom Talks on Happiness
+12.15 pm to 01.00 pm – Ffreedom Talks on Dreams
+01.00 pm to 01.30 pm – Panel Discussion on Financial Freedom
+01.30 pm to 01.45 pm – Closing Ceremony
+01.45 pm onwards – Lunch &amp; Cocktail
+
+Best Regards,
+Ffreedom Financial Planners.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

@@ -1,0 +1,123 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="FinancialPlannersAug11">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/top.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/plannerHIn.gif')}" width="218" height="40" /></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Where  there is a will, wishes come true...</em></strong></font></td>
+                          </tr>
+
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px;"><p align="justify"><em>Have you ever wondered what would happen to your loved  ones after you are no more? Whether it happens as a result of old age or takes  place unexpectedly, have you prepared enough?</em></p>
+                                <p align="justify">Whenever there is a  human tragedy around us (like bomb blasts, riots, etc.), it makes us realise  how fragile our lives are and that the only thing to expect is the unexpected. While  there is no control on what happens in our future, the least we can do is to  prepare our loved ones for the worst.</p>
+                                <p align="justify">In India, we often  frown upon the idea of having creating a will. We believe that our family would  take care of each other and settle maters of property and estate peacefully.  However, when the time comes, things are often known to go awry and downhill. </p>
+                                <p align="justify"> The importance of a  will and a power of attorney cannot be stated enough. Preparing these plans can  not only help your family in your future but avoid unnecessary disagreements  amongst family members. Here are a few things you need to keep in mind while  drafting a will and a power of attorney:</p>
+                                <ul>
+                                  <li>
+                                    <div align="justify"><strong align="justify">Who should be included</strong>: While preparing a will, ask yourself who should be  included in the same. Many clients who come to us for estate planning are  unsure of the people they want to be included in the same. Usually, it is the  immediate family who is included in the will. However, provisions are made in  the same to include other relatives and friends.<br />
+                                      &nbsp;</div>
+                                  </li>
+                                  <li>
+                                    <div align="justify"><strong>Asset Allocation</strong>: Asset allocation is an important part of a will. If  you are in possession of property or assets, make a sustainable plan to get it  distributed amongst the rest of the family members. This would create a linear  method to dispense the same, without legal hassles. It is important to know  what you would like to give away. Write down a list of things you would want  your family to have and what you would like to donate to charity. According,  create sections within the will to make sure they are carried forward.<br />
+                                      &nbsp;</div>
+                                  </li>
+                                  <li>
+                                    <div align="justify"><strong>Get a lawyer</strong>: Always prepare a will with a lawyer present. This  would not only take care of the legal obligations that come while preparing the  same, but also makes it binding in front of the law. If you do not have a  lawyer present, ask your financial planner to help you find one, who would have  a good knowledge about the laws and the legalities that come with the same.<br />
+                                      &nbsp;</div>
+                                  </li>
+                                  <li>
+                                    <div align="justify"><strong>Review it regularly</strong>: Every year, review your will. There are always  possibilities that it may need to be amended to take care of things within your  financial and personal life.<br />
+                                      &nbsp;</div>
+                                  </li>
+                                  <li>
+                                    <div align="justify"><strong>Power of Attorney for financial reasons</strong>: A power of attorney is usually given when  you feel that your family would not be able to handle some of the  responsibilities after your death. A power of attorney would mean that you  would be giving someone the responsibility of handling your financial life,  long after you are gone. This would mean that your dreams and investments are  taken care of and your family’s goals are not forgotten in the process.<br />
+                                      &nbsp;</div>
+                                  </li>
+                                  <li>
+                                    <div align="justify"><strong>Tenure</strong>:  The tenure for power of attorney depends on how long you would want the  individual to be in-charge of your financial life. It can be for a short term  or for a long term. Choosing the right person is important. If you have trouble  trusting and finding the right person, you can choose a lawyer or your  financial planner to act as one. It is important that you trust the person to  carry out your wishes. </div>
+                                  </li>
+                                </ul>                                
+                                <p align="justify">A will acts as your final wish list to be  executed after you are gone. By preparing a will you can be at peace that you  will still be able to distribute your assets to those you wish to (including  charity) without causing any disagreements, animosity, etc.</p></td>
+                            </tr>
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+</apex:page>

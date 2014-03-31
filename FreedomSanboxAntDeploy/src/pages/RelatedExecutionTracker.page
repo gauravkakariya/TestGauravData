@@ -1,0 +1,142 @@
+<apex:page controller="RelatedExecutionTrackerController" showHeader="false" sidebar="fasle">
+	<script>
+		function populateParent()
+	    {
+	        return top.window.opener.closeETWindow();
+	        return false;
+	    }
+	    //called on mouseout event and assign id of current cell to local variable.
+    	function hideAddContact(contactCell)
+    	{	
+    	
+    		if (contactCell.substring(0,8) == 'td____Id' && document.getElementById(contactCell).children.length == 1   )
+    		{	    			  	
+    			//alert('Hide If');		
+    			tempId = contactCell;
+    		} 
+    		else if(tempId != null)
+    		{
+    			//alert('Hide else');
+    			document.getElementById(tempId).innerHTML ='';
+    		}   			    			
+    	}	
+    	
+    	
+    	//remove button     	
+    	function removeButton(a)
+    	{
+    		if(a == null && tempId != null)
+    		{
+    		 	//alert('remove If');
+    			document.getElementById(tempId).innerHTML ='';
+    		}	    		
+     	}	
+	</script>
+	<apex:pageBlock title="Execution Tracker Records">
+		<apex:pageBlockSection >
+		<apex:outputPanel rendered="{!!displayInsuranceFields && !displayOtherProductsFields}">
+             <apex:pageBlockTable value="{!lstExecutionTracker}" var="objET" border="3px">
+             	 <apex:column headerValue="Executed Product Name" style="text-align:center;">
+                     <apex:outputText value="{!objET.Executed_Product_Name__c}"/>
+                 </apex:column>
+                 <apex:column headerValue="Recommended Amount" style="text-align:center;">
+                 	<apex:facet name="header">Recommended <br/> Amount</apex:facet>
+                     <apex:outputText value="{!objET.Suggested_Amount__c}"/>
+                 </apex:column>
+                 <apex:column headerValue="Balance Remaining" style="text-align:center;">
+                 <apex:facet name="header">Balance <br/> Remaining</apex:facet>
+                	<apex:outputText value="{!objET.Total_Remaining_Balance__c}"/>
+                 </apex:column>
+                 <apex:column headerValue="Agreed Amount" style="text-align:center;">
+                     <apex:outputText value="{!objET.Agreed_Amount__c}"/>
+                 </apex:column>
+                 <apex:column headerValue="Executed Amount" style="text-align:center;">
+                     <apex:outputText value="{!objET.Executed_Amount__c}"/>
+                 </apex:column>
+                 <apex:column headerValue="Application Status" style="text-align:center;">
+                 <apex:facet name="header">Application <br/> Status</apex:facet>
+                     <apex:outputText value="{!objET.Application_Status__c}"/>
+                 </apex:column>
+                 <apex:column headerValue="ET Status" style="text-align:center;">
+                     <apex:outputText value="{!objET.ET_Status__c}"/>
+                 </apex:column>
+			</apex:pageBlockTable> 
+				
+<!-- 				<table style="width:100%" class="list tableCls" id="tableId"> -->
+<!-- 					<apex:repeat value="{!lstExecutionTracker}" var="rec"> -->
+<!-- 						<thead onmouseout="removeButton(null);" onmouseover="removeButton(null);"> -->
+<!-- 		 					<tr class="headerRow"> -->
+<!-- 		 						<td style="width:20%" align="left"><b>Executed Product Name</b></td> -->
+<!-- 		 						<apex:outputText rendered="{!IF(rec.Type__c == 'Recommended Insurance',false,true)}"> -->
+<!-- 									<td style="width:15%" align="left"><b>Recommended Amount</b></td> -->
+<!-- 						 			<td style="width:15%" align="left"><b>Balance Remaining</b> </td> -->
+<!-- 				 					<td style="width:15%" align="left"><b>Agreed Amount</b> </td> -->
+<!-- 				 					<td style="width:15%" align="left"><b>Executed Amount</b> </td> -->
+<!-- 				 				</apex:outputText>	 -->
+<!-- 				 				<td style="width:10%" align="left"><b>Application Status</b> </td> -->
+<!-- 				 				<td style="width:10%" align="left"><b>ET Status</b> </td> -->
+<!-- 		 					</tr> -->
+<!-- 	 					</thead> -->
+<!-- 	 					<tbody> -->
+<!-- 		 					<tr class="dataRow even first rowHieght"  onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onmouseover="if (window.hiOn){hiOn(this);}"> -->
+<!-- 		 						<td width="20%" align="left" class=" dataCell"><apex:outputText value="{!rec.Executed_Product_Name__c}"/></td> -->
+<!-- 		 						<apex:outputText rendered="{!IF(rec.Type__c == 'Recommended Insurance',false,true)}"> -->
+<!-- 			 						<td width="15%" align="left" class=" dataCell"><apex:outputText value="{!rec.Suggested_Amount__c}"/></td> -->
+<!-- 		 							<td width="15%" align="left" class=" dataCell"><apex:outputText value="{!rec.Total_Remaining_Balance__c}"/></td> -->
+<!-- 		 							<td width="15%" align="left" class=" dataCell"><apex:outputText value="{!rec.Agreed_Amount__c}"/></td> -->
+<!-- 		 							<td width="15%" align="left" class=" dataCell"><apex:outputText value="{!rec.Executed_Amount__c}"/></td> -->
+<!-- 	 							</apex:outputText> -->
+<!-- 		 						<td width="10%" align="left" class=" dataCell"><apex:outputText value="{!rec.Application_Status__c}"/></td> -->
+<!-- 		 						<td width="10%" align="left" class=" dataCell"><apex:outputText value="{!rec.ET_Status__c}"/></td> -->
+<!-- 		 					</tr> -->
+		 					
+<!-- 	 					</tbody> -->
+<!--  					</apex:repeat> -->
+<!-- 				</table> -->
+			</apex:outputPanel>
+			
+			<apex:outputPanel rendered="{!displayInsuranceFields}">
+             <apex:pageBlockTable value="{!lstExecutionTracker}" var="objET" border="3px">
+             	 <apex:column headerValue="Executed Product Name" style="text-align:left;">
+                     <apex:outputText value="{!objET.Executed_Product_Name__c}"/>
+                 </apex:column>
+                 <apex:column headerValue="Application Status" style="text-align:left;">
+                     <apex:outputText value="{!objET.Application_Status__c}"/>
+                 </apex:column>
+                 <apex:column headerValue="ET Status" style="text-align:left;width:200px;">
+                     <apex:outputText value="{!objET.ET_Status__c}"/>
+                 </apex:column>
+			</apex:pageBlockTable> 
+			</apex:outputPanel>
+			
+			<apex:outputPanel rendered="{!displayOtherProductsFields}">
+             <apex:pageBlockTable value="{!lstExecutionTracker}" var="objET" border="3px">
+             	 <apex:column headerValue="Executed Product Name" style="text-align:left;">
+                     <apex:outputText value="{!objET.Executed_Product_Name__c}"/>
+                 </apex:column>
+                  <apex:column headerValue="Recommended Amount" style="text-align:center;">
+                 	<apex:facet name="header">Recommended <br/> Amount</apex:facet>
+                     <apex:outputText value="{!objET.Suggested_Amount__c}"/>
+                 </apex:column>
+                 <apex:column headerValue="Agreed Amount" style="text-align:center;">
+                     <apex:outputText value="{!objET.Agreed_Amount__c}"/>
+                 </apex:column>
+                 <apex:column headerValue="Executed Amount" style="text-align:center;">
+                     <apex:outputText value="{!objET.Executed_Amount__c}"/>
+                 </apex:column>
+                 <apex:column headerValue="Application Status" style="text-align:center;">
+                 <apex:facet name="header">Application <br/> Status</apex:facet>
+                     <apex:outputText value="{!objET.Application_Status__c}"/>
+                 </apex:column>
+                 <apex:column headerValue="ET Status" style="text-align:center;">
+                     <apex:outputText value="{!objET.ET_Status__c}"/>
+                 </apex:column>
+			</apex:pageBlockTable> 
+			</apex:outputPanel>
+		</apex:pageBlockSection>
+		
+	</apex:pageBlock>
+</apex:page>
+
+
+<!-- Scheme Name/Policy Name	Suggested Amount	Agreed Amount	Executed Amount	Application Status	ET Status	Owner -->

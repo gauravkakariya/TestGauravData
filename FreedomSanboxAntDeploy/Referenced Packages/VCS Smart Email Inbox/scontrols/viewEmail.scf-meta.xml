@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scontrol xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contentSource>HTML</contentSource>
+    <description>to see the body of an within the standar record view of the vcs email</description>
+    <encodingKey>UTF-8</encodingKey>
+    <fileName>viewEmail</fileName>
+    <name>viewEmail</name>
+    <supportsCaching>true</supportsCaching>
+</Scontrol>

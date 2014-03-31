@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Customer Portal - Welcome</name>
+    <style>freeForm</style>
+    <subject>Welcome to the online service portal -&quot;The Freedom World&quot;</subject>
+    <textOnly>Dear {!Account.Name}, 
+
+We are very proud to announce the arrival of “The Ffreedom World”, a portal exclusively created for Ffreedom clients. The Ffreedom World is defined as “Piecing Together Your World of Financial Freedom” where we endeavor to help our clients live their dreams &amp; achieve financial freedom. 
+Some of the key features of The Ffreedom World are:
+·    It shall enable you to access all your personal &amp; family financial details
+·    You can see your financial plan and details about your financial planner
+·    You can keep a track of your investments through the portfolio reports
+·    You can participate in idea building where you can come up with ideas &amp; post them on the ideas’ section. So post your ideas and we will try to make it happen
+·    You can also post your queries/questions to us and your financial planner would revert back with a solution
+·    We have also created a learning centre, which enables you to learn more about what is happening in the financial service industry/personal finance. We hope that these articles help you understand finance better
+ The Ffreedom World is in the beta (trial) phase where we would like you to give us your feedback about the portal as we are sending this to a select set of clients.   
+This portal is created to bring you closer to us and we have also built in some social &amp; educative element to the portal which will help you socialize in the Ffreedom Family &amp; keep you up-to date on what&apos;s happening around you.
+ 
+This email will be followed by another email with our Ffreedom World login ID and its password. Feel free to access it through our website www.ffreedom.in
+ 
+Thanking you,
+ 
+Best Regards,
+Ffreedom Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

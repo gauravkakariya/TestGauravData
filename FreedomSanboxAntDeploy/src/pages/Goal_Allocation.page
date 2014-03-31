@@ -1,0 +1,378 @@
+<apex:page controller="GoalAllocationController" sidebar="false" showHeader="false" title="Goal Allocation" tabStyle="Goal__c" action="{!updateGoals}">
+ <apex:form >
+    <div id="pageError" style="text-align:left;width:1200px;" >
+        <apex:pageMessage detail="The numbers '1,2,3,4...' in the Goal Allocation section signifies the Goals as on the right hand panel.
+                    All values should be entered in terms of percentage value." severity="info" strength="3" />
+        <apex:pageMessages id="pageErrors" >
+             
+            
+        </apex:pageMessages>
+    </div>
+   
+<apex:pageBlock title="Goal Allocation" >
+    <table ><tr>
+    <td width="50%" valign="top">
+    <div style="overflow:auto; height:600px;width:950px;">
+    <apex:outputPanel title="Assets" style="width:600px;" rendered="{!(allocateAssets.size != 0)}">
+    <table width="500px;">
+    <tr>
+    <th style="font-size:15px;background-color:#8B9CD3;color:#FFFFFF;">Assets</th>
+    </tr>
+    <tr>
+    <td>
+        <apex:pageBlockTable value="{!allocateAssets}" var="a" border="1" width="600px;" id="assetsTable">
+              
+              <apex:column width="10%" headerValue="Asset Type">
+                 <div id="HoverDetail">
+                    <a href="/{!a.assetType.Id}"/>
+                    <a href="/{!a.assetType.Id}" id="lookup{!a.assetType.Id}" onblur="LookupHoverDetail.getHover('lookup{!a.assetType.Id}').hide();" 
+                            onfocus="LookupHoverDetail.getHover('lookup{!a.assetType.Id}', '/{!a.assetType.Id}/m?retURL=%2F{!a.assetType.Id}&isAjaxRequest=1').show();" 
+                            onmouseout="LookupHoverDetail.getHover('lookup{!a.assetType.Id}').hide();" 
+                            onmouseover="LookupHoverDetail.getHover('lookup{!a.assetType.Id}', '/{!a.assetType.Id}/m?retURL=%2F{!a.assetType.Id}&isAjaxRequest=1').show();">{!a.assetType.Asset_Types__c}</a>
+                  </div>
+                <!-- <apex:commandLink value="{!a.assetType.Asset_Types__c}" onclick="javascript:invokePage('{!a.assetType.Id}')"/>-->
+            </apex:column>
+              <apex:column width="10%" headerValue="Entity">
+                <a href="/{!a.assetType.Entity__c}">{!a.assetType.Entity__r.Name}</a>
+            </apex:column>
+             <apex:column width="10%" headervalue="Type">
+                
+                <apex:outputText value="{!a.assetType.Account_Type__c}"/>
+            </apex:column>
+             <apex:column width="20%" headervalue="Current Value">
+               
+                <apex:outputField value="{!a.assetType.Current_Value__c}" style="white-space: nowrap"/>
+            </apex:column>
+             <apex:column width="10%" headervalue="Categories">
+                
+                <apex:outputText value="{!a.assetType.Categories__c}"/>
+            </apex:column>
+             <apex:column width="10%" headervalue="Unallocated Amount" id="amt">
+               
+                <apex:outputText value="{!a.unallocatedAmt}"/>
+            </apex:column>
+            <apex:column width="30%" style="white-space: nowrap" headerValue="Goal Allocation">
+                 <apex:variable value="{!1}" var="rowNum"/>
+                <table border="0">
+                    <tr>   
+                    <apex:repeat value="{!a.goalList}" var="g" id="goalTable">
+                     
+                    <td>
+                    <apex:outputText value="{!TEXT(rowNum)}"></apex:outputText>.
+                    
+                    <apex:inputField value="{!g.Allocation__c}"  id="allocation" style="width: 25px">%
+                       <apex:actionSupport event="onchange" action="{!updateUnallocatedAmount}" rerender="amt,pageErrors">
+                            <apex:param name="assetId" value="{!a.assetType.Id}" assignTo="{!id}"/>
+                        </apex:actionSupport> 
+                    
+                    </apex:inputField>
+                   
+                     <apex:outputText value="  "></apex:outputText>
+                     
+                  </td>  
+                   <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+                </apex:repeat>
+               </tr>
+               </table>
+               
+            </apex:column>
+        </apex:pageBlockTable>
+        </td>
+        </tr>
+        </table>
+        
+    </apex:outputPanel>
+    <br/>
+  <apex:outputPanel style="width:600px;"  id="insTable" rendered="{!(allocateInsurance.size != 0)}">
+    <table width="500px;">
+    <tr>
+   <th style="font-size:15px;background-color:#8B9CD3;color:#FFFFFF;">Insurances</th>
+    </tr>
+    <tr width="500px;">
+    <td>
+    <apex:pageBlockTable value="{!allocateInsurance}" var="a" border="1" width="500px;">
+              <apex:column headerValue="Insurance Type" width="10%">
+                 <div id="HoverDetail1">
+                    <a href="/{!a.insurance.Id}"/>
+                    <a href="/{!a.insurance.Id}" id="lookup{!a.insurance.Id}" onblur="LookupHoverDetail.getHover('lookup{!a.insurance.Id}').hide();" 
+                            onfocus="LookupHoverDetail.getHover('lookup{!a.insurance.Id}', '/{!a.insurance.Id}/m?retURL=%2F{!a.insurance.Id}&isAjaxRequest=1').show();" 
+                            onmouseout="LookupHoverDetail.getHover('lookup{!a.insurance.Id}').hide();" 
+                            onmouseover="LookupHoverDetail.getHover('lookup{!a.insurance.Id}', '/{!a.insurance.Id}/m?retURL=%2F{!a.insurance.Id}&isAjaxRequest=1').show();">{!a.insurance.Policy_Type__c}</a>
+                  </div>
+                
+            </apex:column>
+             <apex:column width="10%" headervalue="Entity">
+                
+               <a href="/{!a.insurance.Entity__c}">{!a.insurance.Entity__r.Name}</a>
+            </apex:column>
+             <apex:column width="10%" headervalue="Policy">
+                
+                <apex:outputText value="{!a.insurance.Policy_Name__c}"/>
+            </apex:column>
+             <apex:column width="10%" headervalue="Surrender Value">
+               
+                <apex:outputField value="{!a.insurance.Surrender_Value__c}"/>
+            </apex:column>
+            <apex:column width="10%" headervalue="Categories">
+                
+                <apex:outputText value="{!a.insurance.Categories__c}"/>
+            </apex:column>
+             <apex:column width="10%" headervalue="Unallocated Amount" id="insAmt">
+               
+                <apex:outputText value="{!a.unallocatedAmt}"/>
+            </apex:column>
+            <apex:column width="30%" style="white-space: nowrap" headerValue="Goal Allocation">
+                <apex:variable value="{!1}" var="rowNum"/>
+                <table border="0">
+                    <tr>  
+                        <apex:repeat value="{!a.goalList}" var="g">
+                        <td>
+                            <apex:outputText value="{!TEXT(rowNum)}"></apex:outputText>.
+                            <apex:inputField value="{!g.Allocation__c}" style="width: 25px">%
+                                  <apex:actionSupport event="onchange" action="{!updateUnallocatedAmountForInsurance}" rerender="insAmt,pageError">
+                                    <apex:param name="insId" value="{!a.insurance.Id}" assignTo="{!id}"/>
+                                </apex:actionSupport> 
+                            
+                            </apex:inputField>
+                        
+                       </td>
+                         <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+                    </apex:repeat>
+                </tr>
+            </table>
+            </apex:column>
+        </apex:pageBlockTable>
+        </td>
+        </tr>
+        </table>
+    </apex:outputPanel>
+   <br/>
+     <apex:outputPanel style="width:600px;" id="invAssetsTable" rendered="{!(allocateInvestmentAssets.size != 0)}">
+       <table width="500px;">
+        <tr>
+        <th style="font-size:15px;background-color:#8B9CD3;color:#FFFFFF;">Investment Assets &amp; ULIP</th>
+        </tr>
+        <tr width="500px;">
+        <td>
+        <apex:pageBlockTable value="{!allocateInvestmentAssets}" var="a" border="1">
+             <apex:column width="10%" headerValue="Portfolio Type">
+                 <div id="HoverDetail2">
+                    <a href="/{!a.portfolio.Id}"></a>
+                    <a href="/{!a.portfolio.Id}" id="lookup{!a.portfolio.Id}" onblur="LookupHoverDetail.getHover('lookup{!a.portfolio.Id}').hide();" 
+                            onfocus="LookupHoverDetail.getHover('lookup{!a.portfolio.Id}', '/{!a.portfolio.Id}/m?retURL=%2F{!a.portfolio.Id}&isAjaxRequest=1').show();" 
+                            onmouseout="LookupHoverDetail.getHover('lookup{!a.portfolio.Id}').hide();" 
+                            onmouseover="LookupHoverDetail.getHover('lookup{!a.portfolio.Id}', '/{!a.portfolio.Id}/m?retURL=%2F{!a.portfolio.Id}&isAjaxRequest=1').show();">{!a.portfolio.Portfolio_Type__c}</a>
+                  </div>
+             
+           </apex:column>
+            <apex:column width="10%" headervalue="Entity">
+               
+                <a href="/{!a.portfolio.Entity__c}">{!a.portfolio.Entity__r.Name}</a>
+            </apex:column>
+            <apex:column width="10%" headervalue="Scheme">
+               
+               <apex:outputText value="{!a.portfolio.Scheme_Scrip_Name__c}"/>
+           </apex:column>
+            <apex:column width="10%" headervalue="Current Value">
+              
+               <apex:outputField value="{!a.portfolio.Current_Value__c}"/>
+           </apex:column>
+            <apex:column width="10%" headervalue="Categories">
+                
+                <apex:outputText value="{!a.portfolio.Categories__c}"/>
+            </apex:column>
+            <apex:column width="10%" headervalue="Unallocated Amount" id="invAssAmt">
+               
+                <apex:outputText value="{!a.unallocatedAmt}"/>
+            </apex:column>
+           <apex:column width="30%" style="white-space: nowrap" headerValue="Goal Allocation">
+            <apex:variable value="{!1}" var="rowNum"/>
+                <apex:variable value="{!1}" var="rowNum"/>
+              <table  border="0">
+               <tr>
+               <apex:repeat value="{!a.goalList}" var="g">
+                 
+                     
+                        <td>
+                            <apex:outputText value="{!TEXT(rowNum)}"></apex:outputText>.
+                           <apex:inputField value="{!g.Allocation__c}" style="width: 25px">%
+                             <apex:actionSupport event="onchange" action="{!updateUnallocatedAmountForInvAssets}" rerender="invAssAmt,pageError">
+                                    <apex:param name="invId" value="{!a.portfolio.Id}" assignTo="{!id}"/>
+                                </apex:actionSupport> 
+                           </apex:inputField>
+                       </td>
+                        <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+                      
+               </apex:repeat>
+               </tr>
+               </table>
+           </apex:column>
+        </apex:pageBlockTable>
+        </td>
+        </tr>
+        </table>
+    </apex:outputPanel>
+    <br/>
+     <apex:outputPanel style="width:600px;"  id="sipTable" rendered="{!(allocateSIP.size != 0)}">
+       <table width="500px;">
+        <tr>
+        <th style="font-size:15px;background-color:#8B9CD3;color:#FFFFFF;">SIP</th>
+        </tr>
+        <tr>
+        <td>
+        <apex:pageBlockTable value="{!allocateSIP}" var="a" border="0" width="500px;" >
+              <apex:column width="10%" headerValue="Portfolio Type">
+                  <div id="HoverDetail1">
+                        <a href="/{!a.portfolio.Id}"/>
+                        <a href="/{!a.portfolio.Id}" id="lookup{!a.portfolio.Id}" onblur="LookupHoverDetail.getHover('lookup{!a.portfolio.Id}').hide();" 
+                                onfocus="LookupHoverDetail.getHover('lookup{!a.portfolio.Id}', '/{!a.portfolio.Id}/m?retURL=%2F{!a.portfolio.Id}&isAjaxRequest=1').show();" 
+                                onmouseout="LookupHoverDetail.getHover('lookup{!a.portfolio.Id}').hide();" 
+                                onmouseover="LookupHoverDetail.getHover('lookup{!a.portfolio.Id}', '/{!a.portfolio.Id}/m?retURL=%2F{!a.portfolio.Id}&isAjaxRequest=1').show();">{!a.portfolio.Portfolio_Type__c}</a>
+                      </div>
+               
+            </apex:column>
+              <apex:column width="10%" headervalue="Entity">
+               
+                <a href="/{!a.portfolio.Entity__c}">{!a.portfolio.Entity__r.Name}</a>
+            </apex:column>
+             <apex:column width="10%" headervalue="Scheme Name">
+               
+                <apex:outputText value="{!a.portfolio.Scheme_Scrip_Name__c}"/>
+            </apex:column>
+            
+             <apex:column width="10%" headervalue="Current Value">
+                
+                <apex:outputField value="{!a.portfolio.Current_Value__c}"/>
+            </apex:column>
+              <apex:column width="10%" headervalue="Categories">
+                
+                <apex:outputText value="{!a.portfolio.Categories__c}"/>
+            </apex:column>
+             <apex:column width="10%" headervalue="Unallocated Amount" id="sipAmt">
+               
+                <apex:outputText value="{!a.unallocatedAmt}"/>
+            </apex:column>
+            <apex:column width="30%" style="white-space: nowrap" headerValue="Goal Allocation">
+                <apex:variable value="{!1}" var="rowNum"/>
+               <table border="0">
+                    <tr>   
+                    <apex:repeat value="{!a.goalList}" var="g" >
+                        <td>
+                        <apex:outputText value="{!TEXT(rowNum)}"></apex:outputText>.
+                        <apex:inputField value="{!g.Allocation__c}" style="width: 25px;white-space: nowrap">%
+                             <apex:actionSupport event="onchange" action="{!updateUnallocatedAmountForSIP}" rerender="sipAmt,pageError">
+                                <apex:param name="sipId" value="{!a.portfolio.Id}" assignTo="{!id}"/>
+                            </apex:actionSupport> 
+                        </apex:inputField>
+                      </td>
+                       <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+                    </apex:repeat>
+                    </tr>
+                    </table>
+            </apex:column>
+        </apex:pageBlockTable>
+        </td>
+        </tr>
+        </table>
+  
+     </apex:outputPanel>
+     </div>
+  <apex:pageBlockButtons >
+    <apex:commandButton value="Update Goals" action="{!updateGoals}"/>
+    <apex:commandButton value="Cancel" action="{!cancel}"/>
+  </apex:pageBlockButtons>
+  </td>
+  <td width="50%" valign="top">
+    <div style="overflow:auto; height:600px;width:280px;">
+  <apex:outputPanel title="Goals" id="goals">
+  <table>
+   <tr>
+        <th style="font-size:15px;background-color:#8B9CD3;color:#FFFFFF;">Goals</th>
+        </tr>
+   <tr>
+   <td>
+     <apex:variable value="{!1}" var="rowNum"/>
+      <apex:repeat value="{!goals}" var="g" >
+          <table>
+          <tr>
+          <td>
+             <b> <apex:outputText value="{!TEXT(rowNum)}"></apex:outputText>
+             <apex:outputText value=". "/>
+             <apex:outputText style="width:200px;" value="{!g.Description__c}"/></b>
+             <table border="1" RULES="NONE" FRAME="BOX" >
+              <tr>
+                 <td>
+                     <apex:outputLabel value="Cost of Goal(Future Value)" />
+                  </td>
+                  <td>
+                     <apex:outputField value="{!g.Cost_of_Goal_Annual__c}"/>
+                 </td>
+             </tr>
+              <tr>
+                 <td>
+                     <apex:outputLabel value="Allocated Amount"/>
+                  </td>
+                  <td>
+                     <apex:outputField value="{!g.Accumulated_Amount__c}"/>
+                 </td>
+             </tr>
+             <tr>
+                 <td>
+                     <apex:outputLabel value="Equity" rendered="{!(g.Allocated_Equity__c != 0.00)}"/>  
+                  </td>
+                  <td> 
+                     <apex:outputField value="{!g.Allocated_Equity__c}" rendered="{!(g.Allocated_Equity__c != 0.00)}"/>
+                 </td>
+             </tr>
+               <tr>
+                 <td>
+                     <apex:outputLabel value="Debt" rendered="{!(g.Allocated_Debt__c != 0.00)}"></apex:outputLabel>
+                   </td>
+                  <td>
+                     <apex:outputField value="{!g.Allocated_Debt__c}" rendered="{!(g.Allocated_Debt__c != 0.00)}"/>
+                 </td>
+             </tr>
+               <tr>
+                 <td>
+                     <apex:outputLabel value="Gold" rendered="{!(g.Allocated_Gold__c != 0.00)}"></apex:outputLabel>
+                  </td>
+                  <td>
+                     <apex:outputField value="{!g.Allocated_Gold__c}" rendered="{!(g.Allocated_Gold__c != 0.00)}"/>
+                 </td>
+              </tr>
+                <tr>
+                 <td>
+                     <apex:outputLabel value="Real Estate" rendered="{!(g.Allocated_Real_Estate__c != 0.00)}"></apex:outputLabel>
+                  </td>
+                  <td>
+                     <apex:outputField value="{!g.Allocated_Real_Estate__c}" rendered="{!(g.Allocated_Real_Estate__c != 0.00)}"/>
+                 </td>
+             </tr>
+               <tr>
+                 <td>
+                     <apex:outputLabel value="Others" rendered="{!(g.Allocated_Others__c != 0.00)}"></apex:outputLabel>
+                  </td>
+                  <td>
+                     <apex:outputField value="{!g.Allocated_Others__c}" rendered="{!(g.Allocated_Others__c != 0.00)}"/>
+                 </td>
+             </tr>
+             </table>
+             
+          </td>
+          </tr>
+         </table>
+          <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+      </apex:repeat>
+   </td>
+   </tr>
+    </table>
+  </apex:outputPanel>
+  </div>
+  
+ 
+  </td>
+  </tr>
+  </table>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

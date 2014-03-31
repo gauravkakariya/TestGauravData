@@ -1,0 +1,94 @@
+<apex:page sidebar="false" controller="PortalController">
+  <apex:composition template="PortalFinancialMgrTemp"> 
+ <apex:define name="rightcontent"> 
+<div class="familyMainDiv">
+
+
+
+<table id="table1" width="650" height="30" cellpadding="0" cellspacing="0" border="0" >
+<tr>
+<td width="14"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/header1.png')}" width="30px" height="30px" /></td>
+<td class="BlockHeader">My Personal Information</td>
+<td width="14"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/header2.png')}" width="30px" height="30px" /></td>
+</tr>
+</table>
+
+<table border="1" width="650" height="40" cellspacing="6" class="personalInfoTable">
+<tr><td><br/></td></tr>
+<tr >
+<td class="boldStyle" >Name:</td>
+<td style="text-align:left;"><apex:outputText value="{!Account.Name}"/>
+</td>
+<td></td>
+</tr>
+<tr>
+<td class="boldStyle">Birthdate:</td>
+<td style="text-align:left;"><apex:outputField value="{!Account.PersonBirthDate}"/></td>
+<td></td>
+</tr>
+<tr>
+<td class="boldStyle" width="100px">Pan Number:</td>
+<td style="text-align:left;"><apex:outputText value="{!Account.PAN_ID__pc }"/></td>
+<td></td>
+</tr>
+<tr>
+<td class="boldStyle">Email:</td>
+<td style="text-align:left;"><apex:outputText value="{!Account.PersonEmail}"/></td>
+<td></td>
+</tr>
+<tr>
+<td class="boldStyle">Phone:</td>
+<td style="text-align:left;"><apex:outputText value="{!Account.PersonMobilePhone}"/></td>
+<td></td>
+</tr>
+
+<tr>
+<td class="boldStyle" >Address:</td>
+<td colspan="2" style="text-align:left;"><apex:outputText value="{!Account.BillingStreet}"/>,<apex:outputText value="{!Account.BillingCity}"/>,<apex:outputText value="{!Account.BillingState}"/>,<apex:outputText value="{!Account.BillingPostalCode}"/>.</td>
+
+</tr>
+<tr><td><br/></td></tr>
+</table> 
+ 
+
+ <apex:outputPanel rendered="{!(ChildEntities.size != 0)}">
+
+<div class="familyMembersTopPadding">
+<table id="table2" width="650" height="30" cellpadding="0" cellspacing="0" border="0" >
+<tr>
+<td width="14"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/header1.png')}" width="30px" height="30px" /></td>
+<td class="BlockHeader">Family Members</td>
+<td width="14"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/header2.png')}" width="30px" height="30px" /></td>
+</tr>
+</table>
+
+
+
+<div class="familyMemberTable">
+<br/>
+<table>
+<!---<tr class="boldStyle"><td width="60%" >Name</td> <td width="40%">Relationship</td></tr>--->
+</table>
+<apex:dataTable cellspacing="6" cellspacing="3" style="height:auto;" value="{!ChildEntities}" var="child">
+
+<apex:column style="">
+        <apex:facet name="header">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name</apex:facet>   
+        <apex:outputText styleClass="familyChildName" value="{!child.Name}"></apex:outputText>
+    </apex:column>
+ 
+    <apex:column styleClass="" >
+       <apex:facet name="header">Relationship</apex:facet>
+        <apex:outputText value="{!child.Relationship_to_Entity__pc}"></apex:outputText>
+    </apex:column>
+</apex:dataTable>
+
+<br/>
+</div>
+
+</div>
+</apex:outputPanel>
+ </div>
+   </apex:define> 
+ </apex:composition>
+
+</apex:page>

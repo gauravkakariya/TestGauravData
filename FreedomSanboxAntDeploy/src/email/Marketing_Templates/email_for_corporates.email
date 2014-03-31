@@ -1,0 +1,423 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Dear {!Lead.Name}</font></span><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span><!--[if gte mso 9]><xml>
+ <o:OfficeDocumentSettings>
+  <o:RelyOnVML/>
+  <o:AllowPNG/>
+ </o:OfficeDocumentSettings>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Normal</w:View>
+  <w:Zoom>0</w:Zoom>
+  <w:TrackMoves/>
+  <w:TrackFormatting/>
+  <w:PunctuationKerning/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>EN-US</w:LidThemeOther>
+  <w:LidThemeAsian>X-NONE</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+   <w:SplitPgBreakAndParaMark/>
+   <w:DontVertAlignCellWithSp/>
+   <w:DontBreakConstrainedForcedTables/>
+   <w:DontVertAlignInTxbx/>
+   <w:Word11KerningPairs/>
+   <w:CachedColBalance/>
+  </w:Compatibility>
+  <m:mathPr>
+   <m:mathFont m:val="Cambria Math"/>
+   <m:brkBin m:val="before"/>
+   <m:brkBinSub m:val="--"/>
+   <m:smallFrac m:val="off"/>
+   <m:dispDef/>
+   <m:lMargin m:val="0"/>
+   <m:rMargin m:val="0"/>
+   <m:defJc m:val="centerGroup"/>
+   <m:wrapIndent m:val="1440"/>
+   <m:intLim m:val="subSup"/>
+   <m:naryLim m:val="undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="true"
+  DefSemiHidden="true" DefQFormat="false" DefPriority="99"
+  LatentStyleCount="267">
+  <w:LsdException Locked="false" Priority="0" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Normal"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="heading 1"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 2"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 3"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 4"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 5"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 6"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 7"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 8"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 9"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 1"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 2"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 3"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 4"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 5"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 6"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 7"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 8"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 9"/>
+  <w:LsdException Locked="false" Priority="35" QFormat="true" Name="caption"/>
+  <w:LsdException Locked="false" Priority="10" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Title"/>
+  <w:LsdException Locked="false" Priority="1" Name="Default Paragraph Font"/>
+  <w:LsdException Locked="false" Priority="11" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtitle"/>
+  <w:LsdException Locked="false" Priority="22" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Strong"/>
+  <w:LsdException Locked="false" Priority="20" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Emphasis"/>
+  <w:LsdException Locked="false" Priority="59" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Table Grid"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Placeholder Text"/>
+  <w:LsdException Locked="false" Priority="1" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="No Spacing"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 1"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 1"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Revision"/>
+  <w:LsdException Locked="false" Priority="34" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="List Paragraph"/>
+  <w:LsdException Locked="false" Priority="29" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Quote"/>
+  <w:LsdException Locked="false" Priority="30" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Quote"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 1"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 1"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 2"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 2"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 2"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 3"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 3"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 3"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 4"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 4"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 4"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 5"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 5"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 5"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 6"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 6"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 6"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="19" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Emphasis"/>
+  <w:LsdException Locked="false" Priority="21" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Emphasis"/>
+  <w:LsdException Locked="false" Priority="31" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Reference"/>
+  <w:LsdException Locked="false" Priority="32" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Reference"/>
+  <w:LsdException Locked="false" Priority="33" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Book Title"/>
+  <w:LsdException Locked="false" Priority="37" Name="Bibliography"/>
+  <w:LsdException Locked="false" Priority="39" QFormat="true" Name="TOC Heading"/>
+ </w:LatentStyles>
+</xml><![endif]--><!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin-top:0in;
+	mso-para-margin-right:0in;
+	mso-para-margin-bottom:10.0pt;
+	mso-para-margin-left:0in;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;}
+</style>
+<![endif]--><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">
+
+</font></span><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; "><b><i><span style="color: rgb(0, 51, 0); background-image: none; background-attachment: scroll; background-origin: initial; background-clip: initial; background-color: silver; background-position: 0% 0%; background-repeat: repeat repeat; "><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></span></i></b></p><!--StartFragment-->
+
+<p class="MsoNormal" style="text-align: center;line-height: normal; "><b><i><span style="color: rgb(0, 51, 0); "><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">'Our perfect life is when we are in our dreams awake’</font></span></span></i></b></p>
+
+<p class="MsoNormal" style="text-align: center;margin-bottom: 0.0001pt; line-height: normal; "><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;<o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Today people dream &amp;
+forget. Imagine them living their dreams. No dream/goal is achievable without a
+plan. This becomes even more pertinent when the dreams &amp; goals are attached
+to financial requirements.&nbsp;</font></span></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal"><b><span class="Apple-style-span" style="font-weight: normal;"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></span></b></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><span class="Apple-style-span" style="font-size: medium;"></span></font><b><span class="Apple-style-span" style="font-weight: normal;"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">We believe "</font></span></span><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Failing to
+Plan is Planning to Fail</font></span></b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">."</font></span></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><span class="Apple-style-span" style="font-size: medium;"></span></font><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">At Ffreedom Financial Planner, we
+understand this problem &amp; address it by providing Financial Planning though
+our proprietary financial models and help achieve one’s goals. In short - </font></span><b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">we enable people live their dreams.</font></span></b></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal"><b><font class="Apple-style-span" face="'Times New Roman', Times, serif"><span class="Apple-style-span" style="font-size: medium;"></span></font></b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">We believe that
+today, due to lack of knowledge &amp; time and enormous misguidance, most of
+the people are finding themselves lost in this financial jungle, which often
+leads to stress, worry and impaired relationships. This becomes even more
+significant for salaried people. Our aim is to empower them with knowledge
+&amp; planning, which would help them being financially free.</font></span></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></p>
+
+<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Ffreedom
+Financial Planners is a fee-based Financial Planning firm. We take great pride
+as we are into the business of reliving stress. <o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></p><p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Our
+services include:</font></span></p><p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><span class="Apple-style-span" style="font-size: medium;"></span></font></p><ul><li><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Dedicated Certified
+Financial Planner [CFP]&nbsp;</font></span></li><ul><li><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">There are only 1800
+CFPs in India</font></span></li></ul><li><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">One-on-One Data
+Collection &amp; Goal Setting</font></span></li><li><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Detailed Financial
+Plan presentation</font></span></li><ul><li><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Will include
+Emergency Planning, Risk Planning, Goal based Planning &amp; Retirement
+Planning</font></span></li><li><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Action Plan for each
+of the goals</font></span></li></ul><li><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Action Plan
+Presentation Post the Financial Plan Approval</font></span></li><li><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Access to Client
+Portal [with a secured username &amp; password]</font></span></li><ul><li><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Assets, Liabilities,
+Net-worth, Financial Plan, Action Points, etc</font></span></li></ul><li><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Implementation of the
+Action Plan</font></span></li><li><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Conference calls/meetings
+at your discretion with your dedicated CFP</font></span></li><li><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Monthly statements
+&amp; updates on your Financial Plan</font></span></li><li><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">SIP &amp; Premium
+reminders (through SMS &amp; Email).</font></span></li><li><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Income Tax Filing</font></span></li></ul><p></p>
+
+<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">We would like to encourage you to visit our website </font></span><a href="http://www.ffreedom.in"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">www.ffreedom.in</font></span></a><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"> &amp; also read some of your </font></span><b><a href="http://www.ffreedom.in/Client_Stories"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">client stories</font></span></a></b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"> &amp; </font></span><b><a href="http://www.ffreedom.in/Testimonials"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">testimonials</font></span></a><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;t</font></span></b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">o better understand what we do.</font></span></p><p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></p><p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">We
+believe that our services can be a meaningful addition to your </font></span><b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Employee Welfare
+Strategy</font></span></b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">. <o:p></o:p></font></span></p><p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></p>
+
+<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Financial
+Planning is very noble &amp; will enable your employees to be on top of their
+goals/objectives at all points of time. A service like this if offered from the
+employer will add tremendous confidence and stickiness to your employees.</font></span></p><p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></p>
+
+<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Through
+this email we seek an appointment to meet you in-person to share the concept
+and discuss how we can take this unique proposition ahead.<o:p></o:p></font></span></p><p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></p>
+
+<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Wishing
+you a good day ahead</font></span><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br><br></font></span><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">
+
+</font></span><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+line-height:normal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Warm
+Regards<o:p></o:p></font></span></p>
+
+<!--EndFragment-->
+
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; "><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; "><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Ashwin Dewan&nbsp;</font></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; "><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Head of Marketing | Ffreedom Financial Planners</font></span></p><p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal; "><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">E: marketing@ffreedom.in</font></span></p>]]></td>
+</tr>
+</table>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Level 2 Alert for Execution</name>
+    <style>freeForm</style>
+    <subject>Level 2 Alert -- Execution for &quot;{!Account.Name}&quot;</subject>
+    <textOnly>Hello {!Account.00N20000002FnOM},
+ 
+The execution for the entity {!Account.Name} has crossed more than 5 days but the Execution hasn&apos;t been completed yet.
+ 
+Please accomplish your task as early as possible.
+ 
+Regards,
+ComplianceTeam.</textOnly>
+    <type>html</type>
+</EmailTemplate>

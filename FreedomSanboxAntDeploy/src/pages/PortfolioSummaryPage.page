@@ -1,0 +1,68 @@
+<!-- FS0309 -->
+<apex:page showHeader="false" controller="RemarkController" >
+<link rel="stylesheet" href="{!URLFOR($Resource.AutoComplete, 'jqueyCss/jquery-ui.css')}" />
+<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-1.9.1.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-ui.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.ckeditor, 'ckeditor/ckeditor.js')}"></script>
+
+
+			  	<script> 
+					     $(document).ready(function(){
+					
+					         CKEDITOR.on('instanceReady', function(e) {
+					             if (e.editor.config.magic) 
+					                return;
+					             var target = e.editor.config.bodyId;
+					            var name = e.editor.name;
+					             e.editor.destroy();
+					
+					             CKEDITOR.editorConfig = function( config ) { config.magic = true; }
+					             CKEDITOR.replace(name, {
+					                         height : 300, 
+					                         bodyId : target
+					             });
+					         });
+					     });
+					
+						function ReloadCKEditor() {
+						   for(name in CKEDITOR.instances)
+						   {
+						       delete CKEDITOR.instances[name];
+						   }
+						   CKEDITOR.replaceAll();
+						}
+				
+						
+					</script>
+					
+					
+					
+    <apex:composition template="TabPage">
+        <apex:define name="contents">
+    
+            <apex:pageMessages rendered="true" />
+             <apex:form id="thePageBlock">
+                <c:PortolioComponent ></c:PortolioComponent>
+                     <!-- FS0309 -->
+<!--                <apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+                 <apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+                    <div>
+                        <apex:outputLabel >{!$ObjectType.Remarks__c.fields.Remark__c.label}</apex:outputLabel>
+                    </div>
+                    <div>
+                    
+                    
+                     <!--     <apex:inputTextArea id="txtRemark"  style="width:400px;height:80px;" value="{!strRemark}"/>-->
+                        <apex:inputField id="txtRemark"  style="width:400px;height:80px;" value="{!objRemark.RichText_Remark__c}" styleClass="ckeditor"/>
+                      
+                    </div>
+                    <div>
+                        <apex:commandButton id="btnSave" styleclass="button" value="Save" action="{!save}"/>
+                    </div>
+<!--                     <apex:actionSupport rerender="thePageBlock" 
+ 						oncomplete="ReloadCkEditor();"/> -->
+                </apex:outputPanel>
+            </apex:form>
+        </apex:define>
+     </apex:composition>
+ </apex:page>

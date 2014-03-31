@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>If a case is in Resolved status for more than 3 days,automatically case will be closed and email will be sent.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Request To Log New Case</name>
+    <style>freeForm</style>
+    <subject>Case {!Case.CaseNumber} : {!Case.Subject} Closed</subject>
+    <textOnly>Dear {!Case.OwnerFirstName},
+	 
+	This is to inform you that since case 
+	&apos;{!Case.CaseNumber} : {!Case.Subject}&apos; 
+	is in resolved state for more than 3 days, we are closing 
+	the case as per our process. 
+
+	Please log a new case in case the issue still persists.
+
+        Regards,
+        Technology Support</textOnly>
+    <type>html</type>
+</EmailTemplate>

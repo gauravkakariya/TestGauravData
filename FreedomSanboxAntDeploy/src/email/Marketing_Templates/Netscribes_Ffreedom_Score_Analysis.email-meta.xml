@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Official</letterhead>
+    <name>Ffreedom Score &amp; Analysis</name>
+    <style>freeForm</style>
+    <subject>Your Financial Health Check-up - Score &amp; Analysis</subject>
+    <textOnly>Dear {!Lead.Name},
+
+ Thank you for taking the Ffreedom Score [Financial Health Checkup Questionnaire], by doing so you have taken the first step towards achieving complete financial freedom. You will find below your personal &quot;Ffreedom Score&quot; generated on the basis of the financial health checkup questionnaire. Your score is an indicator of how far you are in realizing complete Financial Freedom. What is Financial Freedom?Financial Freedom is equal to having enough resources to achieve ones financial goals, having all your risks covered and also being prepared for any type of contingency or life event. This is the time on one is free from financial stress &amp; is experiencing peace of mind.
+You have scored {!Lead.Ffreedom_Score__c} compared to the ideal
+Ffreedom Score of 100 which is an
+indicator of complete Financial Freedom.
+
+
+{!Lead.Ffreedom_Score_Explanation__c} 
+
+
+Noted Below are certain Suggestions for Improvement according to your
+answers:
+
+
+
+ 
+ 
+ 1. Financial Goals
+ 
+ 
+ 
+ 
+  
+ {!Lead.Ffreedom_Score_Question_One__c}
+
+ 
+ 
+ 
+ 
+ 2. Plan for your Financial Goals
+ 
+ 
+ 
+ 
+  
+ {!Lead.Ffreedom_Score_Question_Two__c}
+
+ 
+ 
+ 
+ 
+ 3. Rebalancing your Portfolio
+ 
+ 
+ 
+ 
+  
+ {!Lead.Ffreedom_Score_Question_Three__c}
+
+ 
+ 
+ 
+ 
+ 4. Reviewing your
+ Investments
+ 
+ 
+ 
+ 
+  
+ {!Lead.Ffreedom_Score_Question_Four__c}
+
+ 
+ 
+ 
+ 
+ 5. Set Asset Allocation
+ 
+ 
+ 
+ 
+  
+ {!Lead.Ffreedom_Score_Question_Five__c}
+
+ 
+ 
+ 
+ 
+ 6. Retirement
+ 
+ 
+ 
+ 
+  
+ {!Lead.Ffreedom_Score_Question_Six__c}
+
+ 
+ 
+ 
+ 
+ 7. Retirement Amount
+ 
+ 
+ 
+ 
+  
+ {!Lead.Ffreedom_Score_Question_Seven__c}
+
+ 
+ 
+ 
+ 
+ 8. Written Will
+ 
+ 
+ 
+ 
+  
+ {!Lead.Ffreedom_Score_Question_Eight__c}
+
+ 
+ 
+ 
+ 
+ 9. Joint Accounts &amp; Power of
+ Attorney
+ 
+ 
+ 
+ 
+  
+ {!Lead.Ffreedom_Score_Question_Nine__c}
+
+ 
+ 
+ 
+ 
+ 10. Nominees for Bank Acoounts
+ 
+ 
+ 
+ 
+  
+ {!Lead.Ffreedom_Score_Question_Ten__c}
+ 
+ 
+
+
+ 
+
+The
+Ffreedom Score is a quantitative model that is used to measure how healthy
+your Finances are and is a proprietary tool of Ffreedom Financial
+Planners.
+
+ 
+
+
+
+You can also avail a Complimentary Consultation with a *Certified
+Financial Planner. To know the agenda of the Consultation &amp; fix up an
+appointment click here
+
+ 
+
+[* There are currently only 1031 Certified Financial
+Planners in India as per the Financial Planning Standards Board of India Journal,
+August 2010.]
+
+ 
+
+Regards 
+
+Ffreedom Team
+
+Dream
+&gt; Decide &gt; Do
+
+ 
+
+Join
+the Ffreedom Tribe, Connect with Ffreedom Financial Planners at:
+
+www.ffreedom.in | www.facebook.com/Ffreedom | www.twitter.com/_ffreedom |
+
+www.youtube.com/ffreedomin | www.youtube.com/ffreedomtube
+
+ </textOnly>
+    <type>html</type>
+</EmailTemplate>

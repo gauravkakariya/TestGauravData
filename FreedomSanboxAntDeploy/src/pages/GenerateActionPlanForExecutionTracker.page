@@ -1,0 +1,76 @@
+<!-- /*
+	
+Revision History:
+
+   Version     Version Author     Date          Comments
+   
+   1.0 		   Manasi Ranade	  18/11/2011	Issue Id : FS0290 :
+   												Added Page for generating Execution Tracker from Approved Action Plan
+*/-->
+<apex:page showHeader="false" standardStylesheets="true" controller="GenerateActionPlanForETController" action="{!init}">
+<apex:stylesheet value="{!$Resource.FFStyle}"/>
+    <apex:composition template="TabPage">
+        <apex:define name="contents">
+	        <apex:form >
+	        <apex:pageMessages />
+	            <apex:outputPanel id="panDisplayET">
+	            <apex:pageBlock rendered="{!blnIsPlanApproved}" id="pbIsPlanApproved">
+				            	<!-- <center> -->
+				            		<div style="width:70%;overflow:auto;height:100%;padding-bottom:100px;">
+				            			<div style="padding-top: 100px;">
+				            				{!$Label.ApprovePlanBeforeETGeneration}
+				            			</div>
+				            		</div>
+				            	<!-- </center> -->
+				</apex:pageBlock>
+		            <apex:pageBlock rendered="{!blnIsAllowedToCreateET}" id="pbDisplayET">
+		            	<div style="width:90%;overflow:auto;height:50%;padding-bottom:50px;">
+			            	<div style="padding-top: 50px;">
+			            		{!$Label.ExecutionTrackerWarning}
+			            		
+			            	</div>
+			            	<br/>
+			            	<br/>
+			            	<apex:actionStatus stopText="" id="counterStatusData">
+	                            <apex:facet name="start">                
+		                            <!-- <apex:outputPanel style="padding-left:45%;"> -->
+		                            <apex:outputPanel >
+		                            	<apex:image value="{!$Resource.loading_image}" width="3%" height="3%"/>
+		                            </apex:outputPanel>
+	                            </apex:facet>
+                    		</apex:actionStatus>
+                    		<br/>
+<!--                     		<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+							<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+			            		<apex:commandButton id="cmdBtnGenerateAPForET" styleclass="button" value="{!$Label.GenerateActionPlan}" action="{!generateAPForET}"
+			            		style="margin-left:20px; background-image:none;background-color:#A9C5EB !important; " rerender="panDisplayET,panDispSucessMsg,panDoNotDisplayET,counterStatusData" status="counterStatusData" />
+			            	</apex:outputPanel>
+			            </div>
+		            </apex:pageBlock>
+	            </apex:outputPanel>
+	            <apex:outputPanel id="panDoNotDisplayET">
+		            <apex:pageBlock rendered="{!blnIsEtAlreadyExist}" id="pbDoNotDisplayET">
+		            	<!-- <center> -->
+		            		<div style="width:70%;overflow:auto;height:100%;padding-bottom:100px;">
+		            			<div style="padding-top: 100px;">
+				            		{!$Label.ExecutionTrackerAlreadyExist}
+				            	</div>
+		            		</div>
+		            	<!-- </center> -->
+		            </apex:pageBlock>
+	            </apex:outputPanel>
+	            <apex:outputPanel id="panDispSucessMsg">
+	            	<apex:pageBlock rendered="{!blnDisplaySucessMsg}" id="pbDisplaySucessMSG">
+	            		<!-- <center> -->
+		            		<div style="width:70%;overflow:auto;height:100%;padding-bottom:100px;">
+		            			<div style="padding-top: 100px;">
+				            		{!$Label.ExecutionTrackerRecordCreated}
+				            	</div>
+		            		</div>
+		            	<!-- </center> -->
+	            	</apex:pageBlock>
+	            </apex:outputPanel>
+	        </apex:form>
+        </apex:define>
+    </apex:composition>
+</apex:page>

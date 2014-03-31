@@ -1,0 +1,14 @@
+<apex:page showHeader="false">
+<apex:stylesheet value="{!$Resource.FFStyle}"/>
+    <apex:composition template="TabPage">
+        <apex:define name="contents">
+        <apex:form >
+            <apex:pageBlock >
+               
+                    <c:GeneralInsuranceComponent ></c:GeneralInsuranceComponent>
+               
+            </apex:pageBlock> 
+            </apex:form>   
+        </apex:define>
+    </apex:composition>  
+</apex:page>

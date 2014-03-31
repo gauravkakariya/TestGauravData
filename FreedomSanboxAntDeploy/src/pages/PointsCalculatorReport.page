@@ -1,0 +1,10 @@
+<apex:page controller="PointsCalculatorReport">
+<apex:pageBlock >
+	<apex:pageBlockTable var="pc" value="{!lstPC}"> 
+		<apex:column headerValue="FP" value="{!pc.User__r.Name}">
+		</apex:column>
+		<apex:column headerValue="Points" value="{!pc.Points__c}">
+		</apex:column>		
+	</apex:pageBlockTable>
+</apex:pageBlock>
+</apex:page>

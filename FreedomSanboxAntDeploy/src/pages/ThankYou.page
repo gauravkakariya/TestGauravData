@@ -1,0 +1,474 @@
+<apex:page controller="WebFormController" showHeader="false"
+	sidebar="false" title="Ffreedomscore">
+	<link rel="shortcut icon"
+		href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+	<link href="{!URLFOR($Resource.ffreedom)}" rel="stylesheet"
+		type="text/css" />
+	<link href="{!URLFOR($Resource.css)}" rel="stylesheet" type="text/css" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}" />
+
+	<div class="MainContainer">
+		<!-- Over MainContainer 1-->
+		<div class="topleftimg">
+			<apex:image url="{!URLFOR($Resource.images,'images/topleftsidebg.jpg')}"
+				width="25" height="765" alt="" />
+		</div>
+		<div class="toprightimg">
+			<apex:image url="{!URLFOR($Resource.images,'images/innerpage_topright.jpg')}"
+				width="25" height="765" alt="" />
+		</div>
+
+		<div class="topcontainer">
+			<!-- Over topcontainer 1-->
+			<div class="logo">
+				<img src="{!URLFOR($Resource.images,'images/logobg.PNG')}"
+					border="0" width="220" height="78" usemap="#Map5"
+					alt="Ffreedom Financial Planners"
+					title="Ffreedom Financial Planners" />
+				<map name="Map5" id="Map5">
+					<area shape="rect" coords="3,4,220,78" href="index" />
+				</map>
+			</div>
+
+			<div id="bottomcontener">
+				<!-- Over bottomcontener 1-->
+				<ul class="level1" id="root">
+
+
+					<li><a href="Contact_Us">Contact Us</a> <!--<ul style="position: absolute; top: 0px; left: 0px; visibility: hidden;" class="level2">
+             <li><a href="#">Office</a></li>
+             <li><a href="#">Call Me</a></li>
+             <li><a href="#">Grievantes</a></li>
+             </ul> --></li>
+					<li class="sep">|</li>
+					<li><a href="Careers">Careers</a></li>
+					<li class="sep">|</li>
+					<li><a href="#">Media</a> <!-- <ul style="position: absolute; top: 0px; left: 0px; visibility: hidden;" class="level2">
+              <li><a href="#">Press Release</a></li>
+              <li><a href="#">Media Kit</a></li>
+              <li><a href="#">Media Person</a></li>
+            </ul>--></li>
+
+					<li class="sep">|</li>
+					<li><a href="#">FAQs</a> <!--<ul style="position: absolute; top: 0px; left: 0px; visibility: hidden;" class="level2">
+              <li><a href="#">Downloads</a></li>
+              <li><a href="#">Forms</a></li>
+              <li><a href="#">Reports</a></li>
+              <li><a href="#">Brochure</a></li>
+            </ul>--></li>
+					<li class="sep">|</li>
+					<li><a href="about_ffreedom_overview" style="color: #FF9834;">About
+							Ffreedom</a>
+						<ul
+							style="position: absolute; top: 0px; left: 0px; visibility: hidden;"
+							class="level2">
+							<li><a href="about_ffreedom_overview">Overview</a></li>
+							<li><a href="Ffreedom_Culture">Ffreedom Culture</a></li>
+							<li><a href="our_philosophy">Philosophy</a></li>
+							<li><a href="Our_Team">Our Team</a></li>
+							<li><a href="#">Pressroom</a></li>
+						</ul></li>
+					<li class="sep">|</li>
+					<li><a href="#">Sign In</a></li>
+
+					<li class="sep">|</li>
+					<li><a href="index">Home</a></li>
+				</ul>
+			</div>
+			<!-- bottomcontener 1-->
+
+			<div class="bookmark" align="right">
+				<a class="addthis_button"
+					href="http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4bd6b9a8088a3aa1"><apex:image url="http://s7.addthis.com/static/btn/v2/lg-share-en.gif"
+						width="125" height="16" alt="Bookmark and Share" style="border:0" /></a>
+				<script type="text/javascript"
+					src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4bd6b9a8088a3aa1"></script>
+			</div>
+
+		</div>
+		<!-- topcontainer 1-->
+
+		<div class="middletopcontainer">
+			<!-- Over middletopcontainer 1-->
+
+			<div class="innerpagemiddleleft">
+				<img src="{!URLFOR($Resource.images,'images/inner_chart.jpg')}"
+					alt="" width="220" height="274" border="0" usemap="#Map" />
+				<map name="Map" id="Map">
+					<area shape="rect" coords="108,238,211,257" href="#"
+						alt="Get Started" title="Get Started" />
+				</map>
+			</div>
+
+			<div class="placementcontainer">
+				<!-- Over placementcontainer 1-->
+
+				<div id="menuContainer_inner">
+					<!-- Over menuContainer_inner 1-->
+					<div id="menu1">
+						<ul class="level1" id="root1">
+							<li class="sep2"><apex:image url="{!URLFOR($Resource.images,'images/Fin_planing_icon.png')}" /></li>
+							<li><a href="What_is_financial_planning">Financial
+									Planning</a>
+								<ul
+									style="position: absolute; top: 0px; left: 0px; visibility: hidden;"
+									class="level2">
+									<li><a href="What_is_financial_planning">What is
+											financial planning?</a></li>
+									<li><a href="How_does_financial_planning_work">How
+											does financial planning work?</a></li>
+									<li><a href="Who_can_be_your_financial_planner">Who
+											can be your financial planner?</a></li>
+									<li><a href="Why_do_you_need_a_plan">Why do you need a
+											plan?</a></li>
+								</ul></li>
+							<li class="sep1"><apex:image url="{!URLFOR($Resource.images,'images/menu_divider.png')}" /></li>
+							<li class="sep"><apex:image url="{!URLFOR($Resource.images,'images/services_icon.png')}" /></li>
+							<li><a href="Comprehensive_fp">Services Basket</a>
+								<ul
+									style="position: absolute; top: 0px; left: 0px; visibility: hidden;"
+									class="level2">
+									<li><a href="Comprehensive_fp">Comprehensive FP</a></li>
+									<!--  <li><a href="One_Goal_Plan">One Goal Plan</a></li> -->
+									<li><a href="Risk_Planning">Risk Planning</a></li>
+									<li><a href="Estate_Planning">Succession Planning</a></li>
+									<!--<li><a href="#">NRI Plan</a></li>
+                <li><a href="#">Free Plan Calculation</a></li> -->
+								</ul></li>
+							<li class="sep1"><apex:image url="{!URLFOR($Resource.images,'images/menu_divider.png')}" /></li>
+							<li class="sep"><apex:image url="{!URLFOR($Resource.images,'images/why_freedom_icon.png')}" /></li>
+							<li><a href="our_process">Why Ffreedom</a>
+								<ul
+									style="position: absolute; top: 0px; left: 0px; visibility: hidden;"
+									class="level2">
+									<li><a href="our_process">Our Process</a></li>
+									<li><a href="our_advisors">Our Financial Planners</a></li>
+<!-- 									<li><a href="why_fees">Financial Planning Fees</a></li>  -->
+									<!-- <ul style="position: absolute; top: 0px; left: 0px; visibility: hidden;" class="level3">
+                    <li><a href="why_fees">Why Fees?</a></li>
+                    <li><a href="#">Fee Structure</a></li>
+                  </ul>-->
+									<li><a href="Client_Stories">Our Client Stories</a></li>
+								</ul></li>
+							<li class="sep1"><apex:image url="{!URLFOR($Resource.images,'images/menu_divider.png')}" /></li>
+							<li class="sep"><apex:image url="{!URLFOR($Resource.images,'images/freedom_hub_icon.png')}" /></li>
+							<li><a href="#">Ffreedom Hub</a> <!--<ul style="position: absolute; top: 0px; left: 0px; visibility: hidden;" class="level2">
+                <li><a href="#">News</a>
+                  <ul style="position: absolute; top: 0px; left: 0px; visibility: hidden;" class="level3">
+                    <li><a href="#">Financial News</a></li>
+                    <li><a href="#">Find Ffreedom</a></li>
+                    <li><a href="#">Your Thoughts</a></li>
+                  </ul></li>
+                <li><a href="#">Views</a>
+                  <ul style="position: absolute; top: 0px; left: 0px; visibility: hidden;" class="level3">
+                    <li><a href="#">welinars</a></li>
+                    <li><a href="#">Virals</a></li>
+                    <li><a href="#">POD Casts</a></li>
+                    <li><a href="#">Blog</a></li>
+                  </ul></li>
+                <li><a href="#">Events</a> </li>
+                <li><a href="#">Ask</a></li>
+                <li><a href="#">Live Chat</a></li>
+              </ul>--></li>
+							<li class="sep1"><apex:image url="{!URLFOR($Resource.images,'images/menu_divider.png')}" /></li>
+							<li class="sep"><apex:image url="{!URLFOR($Resource.images,'images/blog_icon.png')}" /></li>
+							<li><a href="#">Blog</a></li>
+						</ul>
+
+					</div>
+					<!--menu1 -->
+
+				</div>
+				<!-- menuContainer_inner 1-->
+
+				<div class="placementsbtncontainer">
+					<apex:image url="{!URLFOR($Resource.images,'images/inner_fma.jpg')}"
+						width="733" height="222" alt="" />
+				</div>
+				<a name="top" id="top"></a>
+
+			</div>
+			<!-- placementcontainer 1-->
+
+		</div>
+		<!-- middletopcontainer 1-->
+
+		<div class="bordercontainer">
+			<apex:image url="{!URLFOR($Resource.images,'images/inner_divider.jpg')}"
+				width="953" height="7" alt="" />
+		</div>
+
+		<div class="blockcontainer">
+			<!-- Over blockcontainer 1-->
+
+			<div class="leftcontainer">
+				<!-- Over leftcontainer 1-->
+				<div id="innerpage_textcontainer_left">
+					<!-- innerpage_textcontainer_left 1-->
+					<div id="innerpage_textcontainer_left">
+						<apex:image url="{!URLFOR($Resource.images,'images/result_img_new.png')}"
+							style="height:30%;width:100%;" />
+					</div>
+					<div class="innerpage_text_left">
+						<a href="#">Learn more about our recent study</a>
+					</div>
+				</div>
+				<!-- innerpage_textcontainer_left 1-->
+				<div class="borderimg">
+					<!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+				</div>
+				<!-- leftcontainer 1-->
+
+				<div id="innerpage_textcontainer_middle">
+					<!-- Over -->
+
+					<div class="innerpage_titletext">
+						<span class="innerpagetexttitle">
+							<center>
+								<br /> <br /> <br />Thank you for your interest in Ffreedom
+								Financial Planners.<br /> <br /> We will get in touch with you
+								soon.<br />
+							</center>
+						</span>
+					</div>
+
+				</div>
+				<!-- innerpage_textcontainer_middle -->
+
+				<div class="innerpageborderimgAdd">
+					<apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}"
+						width="5" height="579" alt="" />
+				</div>
+				<!-- <div class="callmeheadingCall"><span class="headertxtCall">Complimentary Consultation</span><br /><br /></div> -->
+
+				<!--<div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.jpg')}"  width="215" height="38" border="0" usemap="#Map2" />
+         <map name="Map2" id="Map2">
+           <area shape="rect" coords="3,0,230,36" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map>
+       </div>
+
+ <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div>  -->
+				
+<!-- 				<div class="title123"> -->
+<!-- 					<span class="imgtext">Related Information</span> -->
+<!-- 				</div> -->
+<!-- 				<div class="relatedinfoheading"> -->
+<!-- 					<span class="txtmatterbig_innerpage"><strong>Financial -->
+<!-- 							Planning Fees</strong></span> -->
+<!-- 				</div> -->
+<!-- 				<div class="callmeheading"> -->
+<!-- 					<span class="txtmatterbig_innerpage">How much does financial -->
+<!-- 						planning cost? Fees are besed on several factors.</span> -->
+<!-- 				</div> -->
+				
+				<div class="title123">
+						<span class="imgtext">Related Links</span>
+					</div>
+					<div class="relatedinfoheading">
+						<span class="txtmatterbig_innerpage"><a
+							href="Planning_Team"><strong>Know Our Financial
+									Planners</strong>
+						</a>
+						</span>
+					</div>
+					<div class="relatedinfoheading">
+						<span class="txtmatterbig_innerpage"><a href="our_process"><strong>Our
+									Process</strong>
+						</a>
+						</span>
+					</div>
+					<div class="relatedinfoheading">
+						<span class="txtmatterbig_innerpage"><a
+							href="Client_Stories"><strong>Our Client stories</strong>
+						</a>
+						</span>
+					</div>
+					<div class="relatedinfoheading">
+						<span class="txtmatterbig_innerpage"><a
+							href="Comprehensive_fp"><strong>Services Basket</strong>
+						</a>
+						</span>
+					</div>
+<!-- 					<div class="relatedinfoheading"> -->
+<!-- 						<span class="txtmatterbig_innerpage"><a href="why_fees"><strong> -->
+<!-- 									Financial Planning Fees</strong> -->
+<!-- 						</a> -->
+<!-- 						</span> -->
+<!-- 					</div> -->
+					<div class="relatedinfoheading">
+						<span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom
+									Hub</strong>
+						</a>
+						</span>
+					</div>
+<!-- 				<div class="relatedinfoheading"> -->
+<!-- 					<span class="txtmatterbig_innerpage"><strong>Financial -->
+<!-- 							Planning Fees</strong></span> -->
+<!-- 				</div> -->
+<!-- 				<div class="callmeheading"> -->
+<!-- 					<span class="txtmatterbig_innerpage">How much does financial -->
+<!-- 						planning cost? Fees are besed on several factors.</span> -->
+<!-- 				</div> -->
+
+
+			</div>
+			<!-- blockcontainer 1-->
+
+		</div>
+		<!--MainContainer 1-->
+
+
+		<div class="MainContainer">
+			<!-- Over MainContainer2 -->
+			<div class="topleftimg">
+				<apex:image url="{!URLFOR($Resource.images,'images/imporatntlinkleftsidebg.jpg')}"
+					width="25" height="152" alt="" />
+			</div>
+			<div class="toprightimg">
+				<apex:image url="{!URLFOR($Resource.images,'images/importantlinkrightsidebg.jpg')}"
+					width="25" height="152" alt="" />
+			</div>
+
+			<div class="leftcontainer">
+				<!-- Over leftcontainer-->
+
+				<div class="linkcontainer">
+					<!-- Over linkcontainer-->
+					<div class="leftfortext">
+						<span class="headertxt">Important Links :</span>
+					</div>
+					<div class="leftfortext1">
+						<apex:image url="{!URLFOR($Resource.images,'images/link_divider.png')}" />
+					</div>
+					<div class="link1">
+						<a href="about_ffreedom_overview" title="Overview" alt="Overview">Overview</a>
+					</div>
+					<div class="link2">
+						<a href="Comprehensive_fp" title="Comprehensive FP"
+							alt="Comprehensive FP">Comprehensive FP</a>
+					</div>
+					<div class="link3">
+						<a href="our_process" title="Our Process" alt="Our Process">Our
+							Process</a>
+					</div>
+					<div class="link4">
+						<a href="#" title="Pressroom" alt="Pressroom">Pressroom</a>
+					</div>
+					<div class="link1">
+						<a href="Ffreedom_Culture" title="Ffreedom Culture"
+							alt="Ffreedom Culture</">Ffreedom Culture</a>
+					</div>
+					<!--<div class="link2"><a href="One_Goal_Plan" title="One Goal Plan" alt="One Goal Plan">One Goal Plan</a></div> -->
+					<div class="link3">
+						<a href="our_advisors" title="Our Financial Planners"
+							alt="Our Financial Planners">Our Financial Planners</a>
+					</div>
+					<div class="link4">
+						<a href="Careers" title="Careers" alt="Careers">Careers</a>
+					</div>
+					<div class="link1">
+						<a href="our_philosophy" title="Philosophy" alt="Philosophy">Philosophy</a>
+					</div>
+					<div class="link2">
+						<a href="Risk_Planning" title="Risk Planning" alt="Risk Planning">Risk
+							Planning</a>
+					</div>
+<!-- 					<div class="link3"> -->
+<!-- 						<a href="why_fees" title="Financial Planning Fees" -->
+<!-- 							alt="Financial Planning Fees">Financial Planning Fees</a> -->
+<!-- 					</div> -->
+					<div class="link4">
+						<a href="#" title="Events" alt="Events">Events</a>
+					</div>
+					<div class="link1">
+						<a href="Our_Team" title="Our Team" alt="Our Team">Our Team</a>
+					</div>
+					<div class="link2">
+						<a href="Estate_Planning" title="Succession Planning"
+							alt="Succession Planning">Succession Planning</a>
+					</div>
+					<div class="link3"></div>
+					<div class="link4"></div>
+				</div>
+				<div class="imageinbottomrightblock">
+					<apex:image url="{!URLFOR($Resource.images,'images/bottomrightblockdeviderbg.jpg')}"
+						width="6" height="152" alt="" />
+				</div>
+
+				<div id="innerpage_thumbcontainer_left">
+					<!-- Over innerpage_thumbcontainer_left-->
+					<div class="title">
+						<span class="imgtext">Follow us on :</span>
+					</div>
+					<div class="title2">
+						<img
+							src="{!URLFOR($Resource.images,'images/twiterfacebooklogobg.jpg')}"
+							alt="" width="234" height="119" border="0" usemap="#Map3" />
+						<map name="Map3" id="Map3">
+							<area shape="rect" coords="15,25,69,74"
+								href="http://twitter.com/_Ffreedom" alt="Follow us on Twitter"
+								title="Follow us on Twitter" />
+							<area shape="rect" coords="88,27,139,79"
+								href="http://www.facebook.com/pages/Ffreedom-Financial-Planners/223113275210?ref=ts"
+								alt="Follow us on Facebook" title="Follow us on Facebook" />
+							<area shape="rect" coords="158,29,207,76"
+								href="http://www.linkedin.com/companies/ffreedom-financial-planners"
+								alt="Follow us on LinkedIn" title="Follow us on LinkedIn" />
+						</map>
+					</div>
+				</div>
+				<!-- innerpage_thumbcontainer_left -->
+			</div>
+			<!-- linkcontainer -->
+		</div>
+		<!-- leftcontainer -->
+	</div>
+	<!-- MainContainer 2 -->
+
+	<div class="MainContainer">
+		<!-- Over MainContainer 3-->
+		<div class="topleftimg">
+			<apex:image url="{!URLFOR($Resource.images,'images/bottomlinkleftsidebg.jpg')}"
+				width="25" height="88" alt="" />
+		</div>
+		<div class="toprightimg">
+			<apex:image url="{!URLFOR($Resource.images,'images/botomlinkrightsidebg.jpg')}"
+				width="25" height="88" alt="" />
+		</div>
+
+		<div class="bottomlinkcontainer">
+			<div class="bottomlink">
+				<span class="txtmatterbtm"><a
+					href="What_is_financial_planning" title="Financial Planning"
+					alt="Financial Planning">Financial Planning</a> | <a
+					href="Comprehensive_fp" title="Services Basket"
+					alt="Services Basket">Services Basket</a> | <a href="our_process"
+					title="Why Ffreedom" alt="Why Ffreedom">Why Ffreedom</a> | <a
+					href="#" title="Ffreedom Hub" alt="Ffreedom Hub">Ffreedom Hub</a> |
+					<a href="#" title="Blog" alt="Blog">Blog</a><br /> <br /> </span><span
+					class="txtmatterbtm1"> <a href="#" title="Sign In"
+					alt="Sign In">Sign In </a>| <a href="about_ffreedom_overview"
+					title="About Ffreedom" alt="About Ffreedom">About Ffreedom </a>|<a
+					href="#" title="Media" alt="Media"> Media </a>| <a href="#"
+					title="FAQs" alt="FAQs">FAQs </a>| <a href="Careers" title="Career"
+					alt="Career">Career </a>| <a href="Contact_Us" title="Contact Us"
+					alt="Contact Us"> Contact Us</a><br />
+				</span>
+			</div>
+			<div class="copyrightcontainer">
+				©2010 Ffreedom Financial Planners. All Rights Reserved. | <a
+					href="Privacy_policy" title="Privacy Policy" alt="Privacy Policy">Privacy
+					Policy</a> | <a href="#" title="Disclaimer" alt="Disclaimer">Disclaimer</a>
+			</div>
+		</div>
+		<!-- bottomlinkcontainer -->
+	</div>
+	<!-- MainContainer 3-->
+
+</apex:page>

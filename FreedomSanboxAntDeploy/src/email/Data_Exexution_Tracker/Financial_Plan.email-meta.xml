@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Financial Plan</name>
+    <style>freeForm</style>
+    <subject>Plan for  {!Account.Name}</subject>
+    <textOnly>Dear &quot;{!Account.Name}&quot;
+
+Please find attached you customized financial plan. During our meeting we would discuss the specifics and take your views.
+If you are okay with the details in the plan and accept the recommendations, please confirm your approval through a reply mail for our records.
+
+This is a confidential document and is not to be shared with anyone. This is a customized plan and the suggestions given in there are applicable only in your case and none else. You may want to safe keep this document and use it for reviewing the progress you have made in your financial life.
+
+To benefit from the planning exercise, you will have to act on the recommendations made. A detailed Action plan will be mailed to you after which you can choose how to go ahead with implementing the recommendations.
+
+At any point in time, please feel free to call me for any clarifications.
+
+Thanks and regards
+{!Account.OwnerFullName}</textOnly>
+    <type>html</type>
+</EmailTemplate>

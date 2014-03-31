@@ -1,0 +1,126 @@
+<!-- /*
+	
+Revision History:
+
+   Version     Version Author     Date          Comments
+   1.0         Persistent         NA  		  	Initial Draft
+   
+   2.0 		   Manasi Ranade	  18/11/2011	Issue Id : FS0290 :
+   												Added ET Link to the Page
+   2.0 		   Manasi Ranade	  9/08/2012 	Added this link to display Partner Name if it a Partner Entity
+   				  											
+*/-->
+<apex:page showHeader="false" StandardController="Account" extensions="FPsidebarController">
+  <apex:stylesheet value="{!$Resource.FFStyle}"/>    
+  <style>
+          body .bPageBlock .detailList tr td, body .bPageBlock .detailList tr th{
+        border:None;
+    }
+    .bPageBlock .pbTitle {
+        color:#222222;
+        font-size:12px;
+        margin:0;
+        vertical-align:middle;
+        width:30%;
+    }
+    
+    .btn, .button, .formulaButton, .btnWhatsNew {
+        background-image:none;
+        background-color:#7EAC6D;
+        background-position:left top;
+        background-repeat:repeat-x;
+        border-color:-moz-use-text-color #5C5D61 #5C5D61 -moz-use-text-color;
+        border-style:none solid solid none;
+        border-width:medium 1px 1px medium;
+        color:#000000;
+        cursor:pointer;
+        display:inline;
+        font-family:'Aerial','Geneva',sans-serif;
+        font-size:11px;
+        font-weight:bold;
+        padding:1px 3px;
+}
+    </style> 
+ <div style="width:18%; float:left; margin-right:0px; border:none;">
+     <apex:pageBlock >
+     	<apex:outputLink value="/{!entityId}" styleClass="standardFontStyle">Entity : <apex:outputText value="{!EntityName}" style="color:Blue; padding-keft:10px;"  /></apex:outputLink>
+              <br/>
+              <apex:pageBlockSection columns="1" title="Client Profile" collapsible="true" >
+              		
+<!--					Partner Portal Manasi : Added this link to display Partner Name if it a Partner Entity--> 
+<!-- 					<apex:outputPanel > -->
+						<apex:outputLabel value="{!strBusinessPartner}" rendered="{!IsPartnerEntity}" style="color:Red;" ></apex:outputLabel>
+							<!--Virtual Partner : Aditi : Added this link to display Virtual Partner's Name if it a Virtual Partner Entity--> 
+						<apex:outputLabel value="{!strVirtualPartner}" rendered="{!isVirtualPartner}" style="color:Red;" ></apex:outputLabel>
+<!-- 					</apex:outputPanel> -->
+                   <apex:outputLink rendered="{!NOT(fmBean.isCustomer)}" value="/apex/FamilyMemberDetail?entityId={!entityId}&tabname=Financial Planning" styleClass="standardFontStyle">Personal Details</apex:outputLink>
+                   <apex:outputLink rendered="{!(fmBean.isCustomer)}" value="/apex/ClientMemberDetails?entityId={!entityId}&tabname=Financial Planning" styleClass="standardFontStyle">Personal Details</apex:outputLink>
+<!--   					<apex:outputLink value="/apex/FinancialAccDtls?entityId={!entityId}&tabname=Financial Planning">Bank Details</apex:outputLink>--> 
+                   <apex:outputLink value="/apex/IncomeSummaryPage?entityId={!entityId}&tabname=Financial Planning" styleClass="standardFontStyle">Incomes</apex:outputLink>
+                   <apex:outputLink value="/apex/ExpenseVFPage?entityId={!entityId}&tabname=Financial Planning" styleClass="standardFontStyle"> Expenses </apex:outputLink>
+                   <apex:outputLink value="/apex/AssetSummaryPage?entityId={!entityId}&tabname=Financial Planning" styleClass="standardFontStyle"> Assets </apex:outputLink>
+                   <apex:outputLink value="/apex/InvestmentAssetPage?entityId={!entityId}&tabname=Financial Planning" styleClass="standardFontStyle"> Investment Assets </apex:outputLink>
+                   <apex:outputLink value="/apex/Loan?entityId={!entityId}&tabname=Financial Planning" styleClass="standardFontStyle"> Liabilities </apex:outputLink>
+                   <apex:outputLink value="/apex/InsuranceSummaryPage?entityId={!entityId}&tabname=Financial Planning" styleClass="standardFontStyle"> Insurance </apex:outputLink>
+                   <apex:outputLink value="/apex/GoalVFPage?entityId={!entityId}&tabname=Financial Planning" styleClass="standardFontStyle"> Goals </apex:outputLink>
+                   <apex:outputLink value="/apex/ProfilerQuestionPage?entityId={!entityId}&tabname=Financial Planning" styleClass="standardFontStyle"> Risk Profiler </apex:outputLink>
+             </apex:pageBlockSection>  
+    
+             <apex:pageBlockSection columns="1" title="Analysis" collapsible="true" rendered="{!NOT(fmBean.isCustomer)}">
+                    <apex:outputLink value="/apex/PortfolioSummaryPage?entityId={!entityId}&tabname=Financial Planning&selectedType=PortfolioSummary" rendered="{!isPortfolioSummary}"> Portfolio Summary </apex:outputLink>
+                    <!-- FS0309 -->
+                    <apex:outputLink value="/apex/NetworthPage?entityId={!entityId}&tabname=Financial Planning&selectedType=Networth" styleClass="standardFontStyle" rendered="{!isNetworth}" > Networth </apex:outputLink>
+                   <apex:outputLink value="/apex/NewCashFlowPage?entityId={!entityId}&tabname=Financial Planning&selectedType=CashFlow" styleClass="standardFontStyle" rendered="{!isCashFlow}" > Cash Flow </apex:outputLink>
+                   
+                   <!-- Prajakta - FP Enhancement II - 20-5-2013 - Changed title Asset Allocation to Asset Utilization -->
+                   <apex:outputLink value="/apex/NewAssetAllocationPage?entityId={!entityId}&tabname=Financial Planning" styleClass="standardFontStyle" rendered="{!isAssetAllocation}" > Asset Allocation </apex:outputLink>
+                   <apex:outputLink value="/apex/EmergencyPlanningPage?entityId={!entityId}&tabname=Financial Planning&selectedType=EmergencyPlanning" styleClass="standardFontStyle" rendered="{!isEmergencyPlanning}" > Emergency Planning </apex:outputLink>
+                   <apex:outputLink value="/apex/LifeInsurancePlanningPage?entityId={!entityId}&tabname=Financial Planning&selectedType=LifeInsurancePlanning" styleClass="standardFontStyle" rendered="{!isLifeInsurancePlanning}"> Life Insurance Planning </apex:outputLink>
+                   <apex:outputLink value="/apex/GeneralInsurancePlanningPage?entityId={!entityId}&tabname=Financial Planning&selectedType=GeneralInsurancePlanning" styleClass="standardFontStyle" rendered="{!isGeneralInsurancePlanning}"  > General Insurance Planning </apex:outputLink>
+                   <apex:outputLink value="/apex/EstatePlanningPage?entityId={!entityId}&tabname=Financial Planning&selectedType=SuccessionPlanning" styleClass="standardFontStyle" rendered="{!isSuccessionPlanning}" > Succession Planning </apex:outputLink>
+					 
+<!-- 			   Changed by Aditi on 05/02/13 : AP/FP changes : Added new Summary Action Plan link -->
+				   <apex:outputLink value="/apex/SummaryActionPlanPage?entityId={!entityId}&tabname=Financial Planning&isShowActionPlan=flase">Summary Action Plan</apex:outputLink>
+<!--                    <apex:outputLink value="/apex/SummaryActionPlan?entityId={!entityId}&tabname=Financial Planning"> Action Plan </apex:outputLink> -->
+<!--                    Action Plan : Prajakta Sanap  -->
+<!-- 					Changed by Aditi on 24/01/13 : AP/FP changes : Rename New Action Plan as Generate Action Plan  -->
+                   <!--   					Prajakta Sanap : 12-09-2013  -->
+                   <apex:outputPanel rendered="{!isActionPlanVisible}">
+                   		<apex:outputLink value="/apex/ActionPlan?entityId={!entityId}&tabname=Financial Planning">Generate Action Plan</apex:outputLink>
+                   </apex:outputPanel>
+<!--                    <apex:outputLink value="/apex/ET?entityId={!entityId}&tabname=Financial Planning&isShowActionPlan=true">New Action Plan</apex:outputLink> -->
+<!--   					Date : 24/12/12  Execution Tracker  : Aditi Satpute  -->
+<!--                    <apex:outputPanel rendered="{!isDisplaySaveButton}">	  -->
+<!--                   			<apex:outputLink value="/apex/ExecTracker?entityId={!entityId}&tabname=Financial Planning&navigate=sidebar" > New Execution Tracker </apex:outputLink> -->
+<!--                    </apex:outputPanel> -->
+                   
+                    	<!-- /** Eternus Solutions **/
+				   		/** Author  : Manasi Ranade**/
+				   		/** Issue Id: FS0290       **/
+				   		/** Date    : 18/11/2011   **/
+				   		/** Purpose : Added Link of 'Generate Action Plan' Of Execution Tracker **/
+				   		/****************************************************/  -->
+<!-- 				   Commented by Aditi on 24/01/13 : AP/FP changes   -->
+<!-- 				   <apex:outputLink value="/apex/GenerateActionPlanForExecutionTracker?entityId={!entityId}&tabname=Financial Planning"> Generate Action Plan </apex:outputLink> -->
+<!--                   Changed by Aditi on 24/01/13 : AP/FP changes : Rename Generate Plan as Generate Financial Plan  -->
+                   <apex:outputLink value="/apex/GenerateHtml?entityId={!entityId}&tabname=Financial Planning" styleClass="standardFontStyle"> Generate Financial Plan </apex:outputLink>
+<!-- 				   <apex:outputLink value="/apex/GeneratePlan?entityId={!entityId}&tabname=Financial Planning" styleClass="standardFontStyle"> Generate Plan </apex:outputLink> -->
+             </apex:pageBlockSection>
+     
+            <apex:pageBlockSection columns="1" title="Goals" collapsible="true" rendered="{!NOT(fmBean.isCustomer)}">
+                   <apex:repeat value="{!Goals}" var="gols" >
+                        <apex:pageBlockSection columns="1">
+                            <apex:outputLink styleClass="outLink standardFontStyle" value="/apex/GoalCalculationPage?goalId={!gols.Id}&entityId={!entityId}&tabname=Financial Planning"><apex:outputText value="{!gols.Description__c}" /></apex:outputLink>
+                        </apex:pageBlockSection>
+                   </apex:repeat> 
+            </apex:pageBlockSection> 
+                   
+             <apex:pageBlockSection title="Assumptions" collapsible="true" rendered="{!NOT(fmBean.isCustomer)}">
+                  <apex:outputLink styleClass="outLink" value="/apex/GlobalAssumptionPage?entityId={!entityId}&tabname=Financial Planning" rendered="{!isGlobalAssumption}" >Global Assumption</apex:outputLink><br/>
+             </apex:pageBlockSection>
+      </apex:pageBlock>
+   </div >    
+ 
+   <apex:insert name="FPsidebar" />
+   
+</apex:page>

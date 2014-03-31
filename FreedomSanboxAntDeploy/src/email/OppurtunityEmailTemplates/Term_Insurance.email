@@ -1,0 +1,25 @@
+<messaging:emailTemplate subject="Term Insurance" recipientType="Lead" >
+<messaging:htmlEmailBody >
+
+
+<html>
+<head>
+<title>Untitled</title>
+</head>
+<body>
+<div><img style="float:right;" src="https://emea.salesforce.com/servlet/servlet.ImageServer?id=01520000000ribD&oid=00D20000000JZVv"/>
+<br/><br/>
+</div>
+<p><span style="font-size:22px;">A</span> term insurance policy is one of the most misunderstood products in India.And it is little surprise that 'insurance' itself is not understood or appreciated enough in India.</p> 
+<p>To begin with, let's restrict ourselves to term insurance for the moment. For a typical investor buying an insurance policy primarily for the sake of tax benefit, the term policy appears to be an anathema. This is because the basic characteristic of a term policy is that you pay premiums in return for a benefit to your family in case you die and nothing for you if you survive.</p>
+<apex:image url="https://emea.salesforce.com/servlet/servlet.ImageServer?id=01520000000sbTF&oid=00D20000000JZVv" height="350"  width="630" rendered="true"/>
+<br/>
+<p>And hence the most common question is, why should I pay annually for a product if I am not going to get anything back?</p>
+</body>
+</html>
+<p>Very few understand that a term policy is insurance at its purest and simplest. You pay premiums because there is a guarantee that if something happens to you, your family will be paid out the pre-decided amount, hence you have the peace of mind that even if you are not there, those loved ones you leave behind will not have to bear a financial loss as well.</p>
+<p>Term insurance is protection against risk to life. The biggest benefit of buying a term policy is that since the premium is low, one can get adequate cover at lower cost. Sum assured formulae such as income multiplier are employed as thumb rules for term plans also to determine the amount of sum assured. The insurance requirement, however, differs from individual to individual and is based on a number of factors such as income, financial dependents, age, age of dependants and others.  No other insurance policy will offer you as much value for money as this.</p>
+<p>
+To unsubscribe email from www.ffreedom.in, <a href="mailto:unsubscribe@e-5ui0hxj5qxapiveyof8j85ac1.in.salesforce.com?subject=Unsubscribe"> Click</a> here</p>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -1,0 +1,9 @@
+<messaging:emailTemplate subject="Test Watermark" recipientType="User" relatedToType="Account">
+<messaging:htmlEmailBody >
+    <body>
+        <c:WelcomeLetterComponent UserId="{!recipient.Id}" AccountName="{!relatedTo.Name}" />
+    </body>
+</messaging:htmlEmailBody>
+
+
+</messaging:emailTemplate>

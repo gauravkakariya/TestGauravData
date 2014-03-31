@@ -1,0 +1,190 @@
+<apex:page showheader="false" cache="true" expires="600" controller="AdvisorOfficeHomeController">
+<apex:form >
+	<html xmlns="http://www.w3.org/1999/xhtml">
+	
+		<head>
+			<title>Welcome to AdvisorOffice.in</title>
+			<apex:includeScript value="{!$Resource.ffreedomJavascript}"/>
+			<apex:stylesheet value="{!$Resource.FFStyle}"/>
+			<apex:includeScript value="{!URLFOR($Resource.portal, 'portal/js/jquery.min.1.5.1.js')}"/>
+			<apex:includeScript value="{!URLFOR($Resource.js, 'js/jquery.showpassword.js')}"/>
+			<style type="text/css">
+			
+				#Mainbody {
+					width:1280px;
+					height:800px; 
+					margin:0px 40px; 
+					padding:0;
+				}
+				.tabStyle {
+					background-image:url('{!URLFOR($Resource.NewAdvisor,'NewAdvisor/menu-tab-graphics.PNG')}'); 
+					background-position:bottom; 
+					background-repeat: no-repeat;
+					background-size: 100% 55%;
+					height:70%; 
+					width:10%;
+					padding-top:6%; 
+					padding-left:3%; 
+					font-family:Calibri;
+				  	font-size: 20px;
+				  	color: #ffffff;
+				  	font-weight:bold;
+				  	font-style: Italic;
+				}
+				.Heading {
+				  	font-family:verdana;
+				  	font-style: Italic;
+				  	font-size: 22px;
+				  	color: #ffffff;
+				}
+				#AboutUsBottom {
+				  	font-family:Calibri;
+				  	font-style: regular;
+				  	font-size: 18px;
+				  	color: #a2c8fe;
+				}
+				.AboutUs {
+				  	font-family:verdana;
+				  	font-style: italic;
+				  	font-size: 20px;
+				  	color: #ffffff;
+				  	background-color: #4A8CF6;
+				}
+				
+				.bordered {
+					border-style: solid;
+					border-color:black;
+					background: #a2c8fe;
+					-moz-border-radius: 6px;
+					-webkit-border-radius: 6px;
+					border-radius: 6px;
+					background: url("C:\Users\ESPL\Desktop");
+				}
+				/*              Praj */
+			</style>
+				<script type="text/javascript">
+				// <![CDATA[
+					var j$ = jQuery.noConflict();
+			
+					j$(document).ready(function()
+					{ 
+						j$('#password').showPassword();
+						//alert("Test");
+					});
+				// ]]>
+				</script>
+		
+		</head>
+	
+		<body id="Mainbody" onLoad="checkFirstVisit()">
+		
+			<table style="background-image: url('{!URLFOR($Resource.NewAdvisor,'NewAdvisor/background.PNG')}');width:1280px; height:802px;background-repeat: no-repeat; background-size: 100% 100%;">
+			<tr height="20%"><td width="100%" height="20%" style="background-image:url('{!URLFOR($Resource.NewAdvisor,'NewAdvisor/header-image.PNG')}'); background-repeat: no-repeat;">
+<table style="width:100%; height:100%;" >
+		<tr>
+			<td width="30%" height="100%"></td>
+				<td width="70%" style="background-image:url('{!URLFOR($Resource.NewAdvisor,'NewAdvisor/logo-with-top-bar.PNG')}');background-size:100%; background-repeat: no-repeat;  height:100%;">
+						<apex:outputPanel id="MainMenu" >
+						<table height="100%" width="100%">
+							<tr height="25%" width="100%"></tr>
+							<tr height="75%" width="100%">
+								<td style="width:32%;" height="75%"></td>
+								<td class="tabStyle" height="70%" width="10%"><apex:commandLink value="About Us" action="{!showPopUp}" style="text-decoration: none; color:#ffffff" onclick="this.style.color='#fff500';" reRender="AboutUs" ></apex:commandLink></td>
+								<td class="tabStyle" width="10%"><apex:commandLink value="Contact Us" action="{!showPopUp}" style="text-decoration: none; color:#ffffff" onclick="this.style.color='#fff500';" reRender="ContactUs"></apex:commandLink></td>
+								<td class="tabStyle" width="10%"><a href="https://docs.google.com/open?id=0B59Tu3AJJgEYZUdBX0cxMHhvTGs" 	target="_blank" style="text-decoration: none; color:#ffffff" onclick="this.style.color='#fff500';">Brochure</a></td>
+								<td class="tabStyle" width="10%"><apex:commandLink value="Login" action="{!showPopUp}" style="text-decoration: none; color:#ffffff" onclick="this.style.color='#fff500';" reRender="Login"></apex:commandLink> </td>
+							</tr>
+						</table>
+						</apex:outputPanel>
+			</td>
+		</tr>
+</table>	
+			</td></tr>
+			<tr height="70%"><td width="100%" style="background-image:url('{!URLFOR($Resource.NewAdvisor,'NewAdvisor/home-image.PNG')}'); background-repeat: no-repeat;background-size: 100% 100%;">
+			</td></tr>
+				<tr height="9%"><td width="100%" style="background-image:url('{!URLFOR($Resource.NewAdvisor,'NewAdvisor/footer-image.PNG')}');background-repeat: no-repeat; background-size: 100% 100%;">
+					<table style="width:100%;">
+						<tr>
+								<td align="center" id="Copyright" width="100%">
+									©2012 AdvisorOffice.in. All Rights Reserved.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<a href="http://www.facebook.com/Ffreedom"><img  src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/facebook-icon.PNG')}" style="border:none;valign:bottom;"/></a>
+									<a href="https://twitter.com/#!/_ffreedom"><img  src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/twitter-icon.PNG')}" style="border:none;align:bottom;"/></a>
+								</td>
+							
+						</tr>
+					</table></td>
+				</tr>
+			</table>
+		</body>
+	</html>
+		
+		<apex:outputPanel id="AboutUs" >
+		<apex:outputPanel styleClass="popupBackground" style="height: 115%; margin: 0 4%; width: 95%;" layout="block" rendered="{!displayPopUp}" />
+		<apex:outputPanel styleClass="assetPopupForeground" style="background-color: #0D3F89; width:83%; margin:13% 0%; border-style:none;" layout="block" rendered="{!displayPopUp}">
+			<div style="float: right;">
+<!-- 			<apex:commandbutton style="background-image:url('{!URLFOR($Resource.NewAdvisor,'NewAdvisor/close-button.PNG')}');background-repeat:no-repeat; "></apex:commandbutton> -->
+		<a href="{!LEFT($Api.Partner_Server_URL_140,FIND('.com',$Api.Partner_Server_URL_140)+4)}/AdvisorOfficeHome" ><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/close-button.PNG')}" /></a> -->
+<!-- 	<a href="http://ffreedom.ffreedom.cs2.force.com/AdvisorOfficeHome" ><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/close-button.PNG')}" /></a> -->
+			</div>
+			<table><tr><td>
+			<table style="background-color: #0D3F89; width: 100%;height: 100%; ">
+						<tr style=" width: 100%;height: 100%;">
+
+							<td style=" width: 25%;height: 100%; padding-left: 1%; padding-right: 2%;padding-bottom: 5%;">
+								<table class="bordered" style="width: 100%;height: 100%;background-color: #A3C8FD;">
+									<thead>
+										<tr style=" width: 100%;height: 19%;" class="AboutUs">
+											<td class="Heading"><center>
+													Do you?
+												</center>
+											</td>
+										</tr>
+									</thead>
+									<tr>
+										<td class="AboutUsParagraph">
+										<br />
+										<font COLOR="#0D3F89">* Want to offer unbiased fee <br />
+												&nbsp;&nbsp;based advise to your clients? <br /> * Want to
+												grow your client <br /> &nbsp;&nbsp; base and service
+												levels?</font><br />
+										<br />
+										<br /></td>
+									</tr>
+								</table></td>
+							<td style=" width: 35%;height: 100%; padding-left: 1%; padding-right: 2%;padding-bottom: 2%;">
+								<table class="bordered" style="width: 100%;height: 100%;background-color: #A3C8FD;">
+<!-- 									 <br/> -->
+									<thead>
+										<tr style=" width: 100%;height: 19%;" class="AboutUs">
+											<td class="Heading"><center>
+													What is stopping you?
+												</center>
+											</td>
+										</tr>
+									</thead>
+									<tr>
+										<td class="AboutUsParagraph"><br />
+										<font COLOR="#0D3F89">* Probably lack of experience in
+												doing<br /> &nbsp;&nbsp;some thing similar <br /> * Lack of
+												ability to write financial plans <br /> * Lack of a back-end
+												support to follow up, <br /> &nbsp;&nbsp; implement plans
+												and review progress <br /> * Compliance requirements for
+												starting <br /> &nbsp;&nbsp; such a practice</font><br />
+										<br /></td>
+									</tr>
+								</table></td>
+							</tr>
+
+					</table>
+					</td></tr><tr><td>
+					<table>
+					<tr>
+					
+					</tr>
+					</table>
+					</td></tr></table>
+		</apex:outputPanel>
+</apex:outputPanel>
+
+</apex:form>
+</apex:page>

@@ -1,0 +1,19 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p><font face="Verdana,Helvetica,Sans-Serif" size="2">Hello Team,</font></p>
+<p><font face="Verdana,Helvetica,Sans-Serif" size="2"></font>&nbsp;</p>
+<p>&nbsp;</p>
+<p><font face="Verdana,Helvetica,Sans-Serif" size="2">As per our Advisor factory, {!Account.Name}'s birthday is&nbsp;due in just two days !!</font></p>
+<p><font face="Verdana" size="2"></font>&nbsp;</p>
+<p>&nbsp;</p>
+<p><font face="Verdana" size="2">Please let us all endeavour to make it meaningful in any little&nbsp;way as possible.</font></p>
+<p>&nbsp;</p>
+<p><font face="Verdana" size="2"></font>&nbsp;</p>
+<p><font face="Verdana" size="2">Herein is the link of the same:{!Account.Link}</font>&nbsp;</p>
+<p><font face="Verdana,Helvetica,Sans-Serif" size="2">&nbsp;</font></p>
+<p><font face="Verdana,Helvetica,Sans-Serif" size="2"></font>&nbsp;</p>
+<p>&nbsp;</p>
+<p><font face="Verdana,Helvetica,Sans-Serif" size="2"><br></font></p>]]></td>
+</tr>
+</table>

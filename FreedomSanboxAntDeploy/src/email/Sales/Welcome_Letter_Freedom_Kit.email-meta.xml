@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Welcome Letter - Freedom Kit</name>
+    <style>freeForm</style>
+    <subject>Freedom Kit</subject>
+    <textOnly>Hello {!Account.Name},
+
+Thank you for giving Ffreedom Planners the opportunity to assist you in creating your Financial Plan. We understand the importance of the responsibility that you have entrusted upon us and we assure you that we will work to the best of our abilities to serve you and help you in your journey towards creating a brighter future for you and your family. 
+
+We at Ffreedom believe that each one of us is entitled to a life void of Financial worries and strains. Whether it be planning for your child’s education or marriage, starting up a new business or buying a new house etc, we will direct and guide you in making appropriate and smart Financial Planning decisions and that is our first and foremost priority. 
+
+The “Freedom Kit” has been presented to you since you are now a part of the Freedom family. It is a tool which will help you in getting all of your documents in order. A one stop destination to store and access all your financial documents, the Freedom Kit has been designed especially keeping our clients convenience and confidentiality in mind. It will be the medium that will be used to collect the necessary information required to proceed with writing your Financial Plan. 
+
+We recommend that you refer to the “Starter Manual” in order to gain a better understanding of how to fill out the forms and supply back to us the necessary documents in the Freedom Kit.
+
+We look forward to working with you and empowering your life with the pleasure of knowing that you are on your way to Financial Freedom. 
+ 
+Best Wishes,
+Sumeet Vaid
+Founder, MD
+Ffreedom Financial Planners
+ </textOnly>
+    <type>html</type>
+</EmailTemplate>

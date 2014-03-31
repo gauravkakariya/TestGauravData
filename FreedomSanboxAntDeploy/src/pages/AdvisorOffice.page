@@ -1,0 +1,517 @@
+<apex:page showheader="false" cache="true" expires="600" controller="AdvisorOfficeHomeController" standardStylesheets="false" >
+	<html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<title>Welcome to AdvisorOffice.in</title>
+			
+			<Meta content="AdvisorOffice.in,Financial Planning,Investment Planning and Retirement planning, Planning Advisors, Back office,Advisor back office,Certified Financial Planners, Investment Advisory &amp; Planning,Personalized Financial Planning,personal financial planning,backoffice, advice back office,business financial planning " name="Keywords" />
+			<Meta name="Description" content="Advisor office - A fully equipped virtual office for financial advisors. You can chat up with colleagues, share knowlege, secure your documents, track your clients and many more. Low cost, world class benefits."/>
+			<Meta name="Robots" content="index,follow"/>
+			<Meta name="Rating" content="general"/>
+			<Meta name="Language" content="EN"/>
+			<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+			
+			<apex:includeScript value="{!$Resource.ffreedomJavascript}"/>
+			<apex:stylesheet value="{!$Resource.FFStyle}"/>
+			<apex:includeScript value="{!URLFOR($Resource.portal, 'portal/js/jquery.min.1.5.1.js')}"/>
+			<apex:includeScript value="{!URLFOR($Resource.js, 'js/jquery.showpassword.js')}"/>
+			
+			<link rel="shortcut icon" href="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/favicon.ico')}"></link>
+			<script type="text/javascript">
+
+			  var _gaq = _gaq || [];
+			  _gaq.push(['_setAccount', 'UA-32130210-1']);
+			  _gaq.push(['_trackPageview']);
+			
+			  (function() {
+			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			  })();
+			
+			</script>
+			
+			<style type="text/css">
+							
+				.mainbody{
+					background-image:url('{!URLFOR($Resource.NewAdvisor,'NewAdvisor/background.PNG')}');
+  					height: 680px;  
+ 					background-size:1366px;
+					margin-top:-8px;
+					margin-left:-8px;
+					margin-right:-16px;
+					margin-bottom:0px;
+					background-repeat:no-repeat;
+				}
+				.header-img{
+					background-image:url('{!URLFOR($Resource.NewAdvisor,'NewAdvisor/header-image.PNG')}');
+					height:168px;
+					margin-top:0px;
+				}
+				.footer{
+					background-image:url('{!URLFOR($Resource.NewAdvisor,'NewAdvisor/header-image.PNG')}');
+					width:auto;	
+					height:46px;
+					margin-bottom: -8px;
+				    margin-left: -8px;
+				    margin-right: -16px;
+/* 				    opacity:0.6; */
+/*   					filter:alpha(opacity=60); */
+  					margin-top:0px;
+					margin-left:-8px;
+				}
+				.logo{
+					height:196px;
+					width:993px;
+					margin-left:auto;
+					margin-right:13px;
+					background-image:url('{!URLFOR($Resource.NewAdvisor,'NewAdvisor/logo-with-top-bar.PNG')}');
+					background-repeat:no-repeat;
+					margin-top:-23px;
+				}
+				.menu-main{
+					width:50%;
+					margin-left:auto;
+					margin-right:10px;
+					height:35%;
+					margin-top:-85px;
+					
+				}
+				.tab{
+					background-image:url('{!URLFOR($Resource.NewAdvisor,'NewAdvisor/menu-tab-graphics.PNG')}');
+					background-repeat:no-repeat;
+					width:136px;
+					height:60px;
+				}
+				.Heading {
+				  	font-family:verdana;
+				  	font-style: Italic;
+				  	font-size: 22px;
+				  	color: #ffffff;
+				}
+				#AboutUsBottom {
+				  	font-family:Calibri;
+				  	font-style: regular;
+				  	font-size: 18px;
+				  	color: #a2c8fe;
+				}
+				.AboutUs {
+				  	font-family:verdana;
+				  	font-style: italic;
+				  	font-size: 20px;
+				  	color: #ffffff;
+				  	background-color: #4A8CF6;
+				}
+				.AboutUsParagraph {
+				  	font-family:verdana ;
+				  	font-style: italic;
+				  	font-size: 14px;
+				  	color: #0f3978 ;
+				}
+				.AboutUsParagraphText {
+				  	font-family:Calibri ;
+				  	font-size: 18px;
+				  	color: #ffffff ;
+				}
+				#div-1 {
+				 position:relative;
+				 float:right;
+				}
+				#Copyright {
+				  	font-family:Calibri;
+				  	font-style: regular;
+				  	font-size: 16px;
+				  	color: #FFF500;
+				}
+				.ContactUsAddress-Email-Fields {
+				  	font-family:Calibri;
+				  	font-style: italic;
+				  	font-size: 16px;
+				  	color: #ffffff;
+				  	font-weight:bold;
+				}
+				.ContactUsHeader {
+				  	font-family:Calibri;
+				  	font-style: italic;
+				  	font-size: 16px;
+				 	color: #fff500;
+				  	font-weight:bold;
+				}
+				.ContactUsNameHeader {
+				  	font-family:Calibri;
+				  	font-style: italic;
+				  	font-size: 18px;
+				 	color: #fff500;
+				  	font-weight:bold;
+				}
+				#keepmycoffeeready {
+					valign:top; 
+					type:button; 
+					font-family:'calibri'; 
+					color:#ffffff; 
+					font-style: italic;
+					font-size: 16px;
+					background-image:url('{!URLFOR($Resource.NewAdvisor,'NewAdvisor/keep-my-coffee-ready.PNG')}');
+					background-size:100%;
+				}
+				.LogIn {
+				  	font-family:Calibri;
+				  	font-style: regular;
+				  	font-size: 20px;
+				  	color: #ffffff;
+				  	font-weight:bold;
+				}
+				.form-login  {
+					width: 205px;
+					padding: 10px 4px 6px 3px;
+					border: 1px solid #0d2c52;
+					background-color:#e3e5e8;
+					font-size: 20px;
+					font-family:Calibri;
+					color: #01205F;
+				}
+				.bordered {
+					border: #4A8CF6 1px;
+					border-style: solid;
+					background: #a2c8fe;
+					-moz-border-radius: 6px;
+					-webkit-border-radius: 6px;
+					border-radius: 6px;
+					
+				}
+				/*              Praj */
+			</style>
+				<script type="text/javascript">
+				// <![CDATA[
+					var j$ = jQuery.noConflict();
+			
+					j$(document).ready(function()
+					{ 
+						j$('#password').showPassword();
+						//alert("Test");
+					});
+				// ]]>
+				
+				function ChangeTabLinkColor(currentId,Link1,Link2,Link3,a,b,c)
+				{
+					Link1 = SalesforceID(currentId,Link1);
+					Link2 = SalesforceID(currentId,Link2);
+					Link3 = SalesforceID(currentId,Link3);
+					document.getElementById(currentId).style.color=a;
+					document.getElementById(Link1).style.color=b;
+					document.getElementById(Link2).style.color=c;
+				}
+				function ChangeTabLinkColor(currentId,Link1,Link2,a,b,c)
+				{
+					Link1 = SalesforceID(currentId,Link1);
+					Link2 = SalesforceID(currentId,Link2);
+					document.getElementById(currentId).style.color=a;
+					document.getElementById(Link1).style.color=b;
+					document.getElementById(Link2).style.color=c;
+				}
+				function SalesforceID(textSfId,textId)
+			    {
+			     	var splitid = textSfId.split(':');
+			   		var strid ='';
+			        var currentId='';
+			        for(var j=0;j<splitid.length-2;j++)
+			        {
+			         strid +=splitid[j]+':';
+			        }
+			        currentId = splitid[splitid.length-2];
+			        return strid+currentId+':'+textId;
+			     }
+			     
+			     function openBrochureLink()
+			     {
+			        window.open("{!URLFOR($Resource.NewAdvisor,'NewAdvisor/AdvisorOffice.pdf')}");
+			     	window.location.reload();
+			     }
+			</script>
+		</head>	
+		
+		<body style="overflow:hidden;">
+			<div class="mainbody" >
+				<div class="header-img">
+					<div class="logo"></div>
+					<div class="menu-main">
+					<apex:form >
+						<div id="div-1" class="tab" align="center"><br style="line-height:10px;"/>
+							<apex:commandLink id="LoginLink" value="Login" action="{!showPopUpLogin}"
+							style="text-decoration: none; font-family:Calibri; font-size: 20px; color: #ffffff; font-weight:bold; font-style: Italic;"
+							onclick="ChangeTabLinkColor(this.id,'AboutUsLink','ContactUsLink','#fff500','#ffffff','#ffffff');"
+							reRender="AboutUs,ContactUs,Login"></apex:commandLink>
+						</div>
+						<div id="div-1" class="tab" align="center"><br style="line-height:10px;"/>
+							<a href="#"
+							id="BrochureLink" target="_self"
+							style="text-decoration: none; font-family:Calibri; font-size: 20px; color: #ffffff; font-weight:bold; font-style: Italic;"
+							onclick="openBrochureLink()">Brochure</a>
+						</div>
+						<div id="div-1" class="tab" align="center" ><br style="line-height:10px;"/>
+							<apex:commandLink id="ContactUsLink" value="Contact Us"
+							action="{!showPopUpContactUs}"
+							style="text-decoration: none; font-family:Calibri; font-size: 20px; color: #ffffff; font-weight:bold; font-style: Italic;"
+							onclick="ChangeTabLinkColor(this.id,'AboutUsLink','LoginLink','#fff500','#ffffff','#ffffff');"
+							reRender="AboutUs,ContactUs,Login"></apex:commandLink>
+						</div>
+						<div id="div-1" class="tab" align="center"><br style="line-height:10px;"/>
+							<apex:commandLink id="AboutUsLink" value="About Us"
+							action="{!showPopUpAboutUs}"
+							style=" text-decoration: none; font-family:Calibri; font-size: 20px; color: #ffffff; font-weight:bold; font-style: Italic;"
+							onclick="ChangeTabLinkColor(this.id,'ContactUsLink','LoginLink','#fff500','#ffffff','#ffffff');"
+							reRender="AboutUs,ContactUs,Login"></apex:commandLink>
+						</div>
+					</apex:form>
+					</div>
+				</div>
+			<div class="footer" id="Copyright" align="center" style="margin-top: 445px;"><br style="line-height:10px;" />©2012 AdvisorOffice.in. All Rights Reserved.
+				<div align="center" id="div-1" style="padding-right:100px;"><a href="https://twitter.com/advisoroffice" target="_blank"><img  src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/twitter-icon.PNG')}"  style="border:none;valign:top;"/></a></div>
+				<div align="center" id="div-1">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+				<div align="center" id="div-1" ><a href="http://www.facebook.com/AdvisorOffice.in" target="_blank"><img  src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/facebook-icon.PNG')}"  style="border:none;valign:top;"/></a></div>
+			</div>
+			</div>
+			
+		</body>	
+	</html>
+	
+	
+	<apex:outputPanel id="AboutUs" rendered="true" >
+		<apex:outputPanel styleClass="popupBackground" style="height: 500px; margin-left: 10px; margin-top: 153px; width: 1370px;" layout="block" rendered="{!displayPopUpAboutUs}" />
+		<apex:outputPanel styleClass="assetPopupForeground" style="background-color: #0D3F89; width: 1050px; height: 456px; margin-top: 132px; margin-left:30px; border-style:none;" layout="block" rendered="{!displayPopUpAboutUs}">
+			<div style="float: right; ">
+				<a href="/AdvisorOffice" ><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/close-button.PNG')}" style="border:none;"/></a>
+			</div>
+			
+			<table>
+				<tr>
+					<td>
+					<table width="100%" cellspacing="10" style="padding-left: 43px;">
+						<tr >
+							<td valign="top">
+								<table border="0" cellpadding="0" cellspacing="0" border-bottom="2">
+									<tr>
+										<td  width="1" valign="top"><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/left.PNG')}" width="9" height="40" hspace="0" align="right" /></td>
+										<td  width="220" valign="top" background="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/center-image.PNG')}" style="padding-top:6px;">
+											<font face="Calibri" color="#FFFFFF" style="font-size:22px;font-style:italic;font-weight:bold;">
+									        	<center>Do you?</center>
+									        </font>
+									    </td>
+									    <td width="1" valign="top"><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/right.PNG')}" width="9" height="40" hspace="0" align="left" /></td>
+									</tr>
+									<tr >
+										<td  width="1" valign="top" bgcolor="#A3C8FD" ><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/border-color.PNG')}"  width="2" height="175" hspace="0" align="left" /></td>
+										<td class="AboutUsParagraph" width="230" valign="top" bgcolor="#A3C8FD" style="padding-top:6px;">
+											<ul style="margin-left:-15;line-height:1.5;">
+											   <li>Want to offer unbiased fee based advise to your clients? </li>
+											   <li>Want to grow your client base and service levels?</li>
+											</ul>
+									    </td>
+									    <td width="1" valign="top" bgcolor="#A3C8FD" style="padding-left:7px;"  ><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/border-color.PNG')}" width="2" height="175" hspace="0" align="right" /></td>
+									</tr>
+									<tr>
+										<td width="1" valign="top" background="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/center-image.PNG')}" style="padding-top:2px;"></td>
+										<td width="150" valign="top" background="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/center-image.PNG')}" style="padding-top:2px;"></td>
+									    <td width="1" valign="top" background="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/center-image.PNG')}" style="padding-top:2px;"></td>
+								    </tr>
+								</table>
+							</td>
+							
+							<td valign="top">
+								<table border="0" cellpadding="0" cellspacing="0" border-bottom="2">
+									<tr>
+										<td  width="1" valign="top"><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/left.PNG')}" width="9" height="40" hspace="0" align="right" /></td>
+										<td  width="300" valign="top" background="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/center-image.PNG')}" style="padding-top:6px;">
+											<font face="Calibri" color="#FFFFFF" style="font-size:22px;font-style:italic;font-weight:bold;">
+									        	<center>What is stopping you?</center>
+									        </font>
+									    </td>
+									    <td width="1" valign="top"><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/right.PNG')}" width="9" height="40" hspace="0" align="left" /></td>
+									</tr>
+									<tr >
+										<td  width="1" valign="top" bgcolor="#A3C8FD"><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/border-color.PNG')}"  width="2" height="210" hspace="0" align="left" /></td>
+										<td class="AboutUsParagraph" width="270" valign="top" bgcolor="#A3C8FD" style="padding-top:6px;">
+											<ul style="margin-left:-15;line-height:1.3;">
+									        <li>Probably lack of experience in doing some thing similar</li>
+											<li>Lack of ability to write financial plans</li>
+											<li>Lack of back-end support to follow up, implement plans and review progress</li>
+											<li>Compliance requirements for starting such a practice</li>
+											</ul>
+									    </td>
+										<td width="1" valign="top" bgcolor="#A3C8FD" style="padding-left:7px;" ><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/border-color.PNG')}" width="2" height="210" hspace="0" align="right" /></td>
+									</tr>
+									<tr>
+										<td width="1" valign="top" background="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/center-image.PNG')}" style="padding-top:2px;"></td>
+										<td width="150" valign="top" background="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/center-image.PNG')}" style="padding-top:2px;"></td>
+									    <td width="1" valign="top" background="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/center-image.PNG')}" style="padding-top:2px;"></td>
+									</tr>
+								</table>
+							</td>
+							
+							<td valign="top">
+								<table border="0" cellpadding="0" cellspacing="0" border-bottom="2">
+									<tr>
+										<td  width="1" valign="top"><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/left.PNG')}" width="9" height="40" hspace="0" align="right" /></td>
+										<td  width="360" valign="top" background="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/center-image.PNG')}" style="padding-top:6px;">
+											<font face="Calibri" color="#FFFFFF" style="font-size:22px;font-style:italic;font-weight:bold;">
+									        	<center>How can AdvisorOffice.in help you?</center>
+											</font>
+									    </td>
+									    <td width="1" valign="top"><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/right.PNG')}" width="9" height="40" hspace="0" align="left" /></td>
+									</tr>
+									<tr >
+										<td  width="1" valign="top" bgcolor="#A3C8FD" ><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/border-color.PNG')}"  width="2" height="225" hspace="0" align="left" /></td>
+										<td class="AboutUsParagraph" width="320" valign="top" bgcolor="#A3C8FD" style="padding-top:6px;">
+									        <ul style="margin-left:-15; line-height:1.4;">
+									        <li>Research backed customized advisory and plan writing platform</li>
+											<li>Qualified and trained support team</li>
+											<li>Marketing and business development resources</li>
+											<li>Integrated technology and secure platform to create and manage client information</li>
+											<li>Practice management tools</li>
+											<li>Regular trainings to upgrade your skills</li>
+											</ul>
+									    </td>
+									    <td width="1" valign="top" bgcolor="#A3C8FD" style="padding-left:7px;"  ><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/border-color.PNG')}" width="2" height="225" hspace="0" align="right" /></td>
+									</tr>
+									<tr>
+										<td width="1" valign="top" background="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/center-image.PNG')}" style="padding-top:2px;"></td>
+										<td width="150" valign="top" background="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/center-image.PNG')}" style="padding-top:2px;"></td>
+									    <td width="1" valign="top" background="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/center-image.PNG')}" style="padding-top:2px;"></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+			
+					<table style="padding-left: 20px;">
+					<tr><td class="AboutUsParagraphText">
+						<p class="AboutUsParagraphText">
+							<font color="#a2c8fe">AdvisorOffice.in</font><font style="font-style: italic;"> was conceived
+							keeping in mind individuals who have the need to provide their
+							client with a high degree of comprehensive advice &amp; service
+							levels but are not able to take the leap due to lack of various
+							support systems. In a short period </font><font color="#a2c8fe">AdvisorOffice.in</font>
+							<font style="font-style: italic;">has managed to attract a lot of talent who have started their
+							practice and living their dream.</font>
+						</p>
+						<p class="AboutUsParagraphText">
+							<font color="#a2c8fe">AdvisorOffice.in</font>
+							<font style="font-style: italic;"> consists of People,
+							Process and Technology. Through this combination it provides you
+							with 360 degree backoffice support and helps you establish your
+							Financial Planning Practice - the professional way.</font>
+						</p>
+					</td></tr>
+					</table>
+					</td>
+				</tr>	
+			</table>
+		</apex:outputPanel>
+	</apex:outputPanel>
+	
+	
+	<apex:outputPanel id="ContactUs"  rendered="true" >
+	<apex:outputPanel styleClass="popupBackground" style="height: 500px; margin-left: 10px; margin-top: 153px; width: 1370px;" layout="block" rendered="{!displayPopUpContactUs}" />
+		<apex:outputPanel styleClass="assetPopupForeground" style="background-color: #0D3F89;border-style: none; width: 660px; height: 350px; margin: 150px 200px;" layout="block" rendered="{!displayPopUpContactUs}">
+			<apex:form >
+			<div style="float: right;">
+				<a href="/AdvisorOffice" ><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/close-button.PNG')}" style="border:none;"/></a>
+			</div>
+			<table style="background-color: #0D3F89; width: 100%;height: 100%; ">
+			<tr width="100%" >
+			<td width="100%" align="center" class="ContactUsHeader">
+				506/507, Morya Landmark-II, Near Infinity Mall<br/>
+				Link Road, Andheri(W), Mumbai 400 053<br/>
+				T: +91 22 4222 4333, F: +91 4222 4314<br/><br/>
+				<font style="font-size:18px">Sanjeeva Mathur</font> : sanjeeva.mathur@advisoroffice.in, M: +91 91466 11011<br/>
+				<font style="font-size:18px">Prashant Parit</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : prashant.parit@advisoroffice.in, M: +91 99870 22371&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/>
+			</td>
+			</tr>
+			<tr height="55%" width="100%">
+			<td widht="100%" height="100%" class="AboutUsParagraphText">
+				<br/><font style="padding-left:50px;font-size:18px;font-family:Calibri;font-style: italic; font-weight:bold;">Have heard that your coffee is one of the best</font><br/><br/>
+				<table style="padding-left:50px;">	
+					<tr>
+						<td class="ContactUsAddress-Email-Fields" >Name</td>
+						<td ><apex:inputText value="{!name}" style="background-color:#a2c8fe; border-color:#ffffff; "/></td>
+					</tr>
+					<tr>
+						<td class="ContactUsAddress-Email-Fields">Email</td>
+						<td ><apex:inputText value="{!email}" id="email" style="background-color:#a2c8fe; border-color:#ffffff;"/></td>
+					</tr>
+					<tr>
+						<td class="ContactUsAddress-Email-Fields">Contact No.</td>
+						<td ><apex:inputText value="{!mobile}" id="mobile" style="background-color:#a2c8fe; border-color:#ffffff;"/></td>
+					</tr>
+					<tr>
+						<td class="ContactUsAddress-Email-Fields">Remark</td>
+						<td>
+							<apex:inputTextarea value="{!remark}" id="remark" style="background-color:#a2c8fe; border-color:#ffffff; font-size:16px; font-style:italian; font-family:Calibri; width:137px;" />&nbsp;&nbsp;&nbsp;&nbsp;
+							<apex:commandButton id="keepmycoffeeready" action="{!send}" value="Keep my coffee ready" style="height: 44px; background-color:#0D3F89;background-image:url('{!URLFOR($Resource.NewAdvisor,'NewAdvisor/keep-my-coffee-ready.PNG')}');color:#ffffff;background-size: 100% 100%; "/>
+						</td>
+					</tr>
+				</table>
+			</td>
+			</tr>
+			</table>
+		</apex:form>
+		</apex:outputPanel>
+	</apex:outputPanel>
+	
+	
+	<apex:outputPanel id="Login"  rendered="true" > 
+		<apex:outputPanel styleClass="popupBackground" style="height: 500px; margin-left: 10px; margin-top: 153px; width: 1370px;" layout="block" rendered="{!displayPopUpLogin}" />
+		<apex:outputPanel styleClass="assetPopupForeground" style="width: 660px; height: 350px; margin: 156px  200px; background-color: #0D3F89; border-style: none; color: #FFFFFF;" layout="block" rendered="{!displayPopUpLogin}">
+			<div style="float: right;">
+				<a href="/AdvisorOffice"><img src="{!URLFOR($Resource.NewAdvisor,'NewAdvisor/close-button.PNG')}" style="border:none;"/></a>
+			</div>
+			<script type="text/javascript">
+				// <![CDATA[ -->
+ 					var j$ = jQuery.noConflict();
+						j$(document).ready(function(){
+						j$('#password').showPassword();
+					});
+				// ]]> 
+			</script>
+			
+			<form id= "frmSecure" class="form" method="post" action="https://login.salesforce.com/">
+				<table align="center" style="margin-top:100px">
+					<tbody>
+						<tr>
+							<td class="LogIn" align="left" >Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
+							<td width="2%"></td>
+							<td align="left"><input title="Username" size="30" name="un" maxlength="2048" class="form-login"/></td>
+						</tr>
+						<tr>
+							<td class="LogIn" align="left">Password&nbsp;&nbsp;:</td>
+							<td></td>
+							<td align="left">
+								<input type="password" name="pw" id="password" data-typetoggle="#show-password" class="form-login"/>
+								<input type="checkbox" title="Password" id="show-password"/>
+									<span style="font-family:calibri;color: #ffffff; font-size: 14px;">&nbsp;Show Credentials</span>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td>
+								<a href="https://login.salesforce.com/secur/forgotpassword.jsp?locale=uk">
+<!-- 								<input type="checkbox" title="ForgotPassword"/> -->
+								<font color="#ffffff" style="color: #ffffff; font-size: 14px;font-family:calibri;">Forgot Password</font></a>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td align="center">
+								<a href="#"> 
+ 									<input height="30" width="80" type="image" src="{!URLFOR($Resource.images,'images/partnerLogin-btn.png')}" name="LoginButton"/>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</apex:outputPanel>
+	</apex:outputPanel>
+</apex:page>

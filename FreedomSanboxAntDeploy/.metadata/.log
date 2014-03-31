@@ -1,0 +1,23 @@
+!SESSION 2014-03-28 11:42:44.889 -----------------------------------------------
+eclipse.buildId=4.3.0.M20130911-1000
+java.version=1.6.0_37
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.standard.product
+Command-line arguments:  -data D:\SVN Repo Projects\FfreedomSFDCSupport\Freedom Sanbox Ant Deploy -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.standard.product
+
+!ENTRY com.salesforce.ide.core 2 0 2014-03-28 11:45:26.970
+!MESSAGE  WARN [2014-03-28 11:45:26,948] (IntroEditorInput.java:loadDocument:130) - org.xml.sax.SAXParseException: The entity name must immediately follow the '&' in the entity reference.
+
+
+!ENTRY com.salesforce.ide.core 2 0 2014-03-28 11:47:10.841
+!MESSAGE  WARN [2014-03-28 11:47:10,839] (ConnectionFactory.java:clearCache:209) - No cached connections
+
+
+!ENTRY com.salesforce.ide.core 2 0 2014-03-28 11:47:10.845
+!MESSAGE  WARN [2014-03-28 11:47:10,844] (DescribeObjectRegistry.java:clearCache:654) - No cached describes
+
+
+!ENTRY com.salesforce.ide.core 2 0 2014-03-28 11:47:10.848
+!MESSAGE  WARN [2014-03-28 11:47:10,847] (MetadataFactory.java:clearCache:120) - No cached metadata stubs
+

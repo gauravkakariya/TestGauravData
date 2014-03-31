@@ -1,0 +1,81 @@
+<apex:page standardController="VCSSA__VCS_MailBox_Config__c" extensions="VCSSA.MailboxSettingsController" showheader="true" sidebar="false" action="{!init}" standardStylesheets="true" cache="false">
+
+
+<apex:variable var="url_inboxpage"  value="{!URLFOR($Page.VCSSA__Inbox, null)}" />
+<apex:variable var="url_back"  value="{! if($CurrentPage.parameters.inboxurl!='',$CurrentPage.parameters.inboxurl,url_inboxpage) }" />
+<apex:variable var="url_sfsettings"  value="/p/email/UserEmailPrefEdit?retURL={!urlencode(url_back)}" />
+<apex:variable var="url_sftemplates" value="/00X?setupid=EmailTemplates&retURL={!urlencode(url_back)}" />
+
+<apex:pageBlock >
+<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td width="40">
+    <a href="/apex/Inbox"><img src="{!URLFOR($Resource.logosmart, null)}" align="top"/></a>
+</td><td>
+    VCS Smart Email Inbox v2.91 EE - <b>Settings</b>
+    <div style="padding-top: 5px;"><small>{!$User.FirstName} {!$User.LastName} ({!$User.Email})</small></div>
+</td>
+<td align="right">
+    <div style="margin-top: 5px;">
+        <a href="{!url_inboxpage}">Inbox</a>
+    </div>
+</td>
+</tr></table>
+</apex:pageBlock>
+
+
+<apex:form >
+<apex:pageMessages />
+<apex:pageBlock >
+	<apex:pageBlockButtons >
+    	<apex:commandButton action="{!save1}" value="Save"/>
+    	<apex:commandButton action="{!cancel1}" value="Back to mailbox" immediate="true" onclick="top.location.href='{!url_inboxpage}'; return false;" />
+	</apex:pageBlockButtons>
+	<apex:pageBlockSection id="section1" columns="2" title="User Interface">
+		<apex:inputField value="{!config.VCSSA__Alert_new_emails__c}" />
+		<apex:inputField value="{!config.VCSSA__Page_size__c}" />
+		<apex:inputField value="{!config.VCSSA__Quit_VCS_branding__c}" />
+<!-- 		<apex:inputField value="{!config.Related_Hover_Links__c}" /> -->
+<!--		<apex:inputField value="{!config.Show_inbox_column__c}" /> -->
+<!--		<apex:inputField value="{!config.hideHelpPage__c}" /> -->
+<!-- 		<apex:inputField value="{!config.Preview_Emails_in_Inbox__c}" /> no se usa mas. Inestable por limites APEX, la query no carga mas los bodies. Reusado como flag para mostrar el detail de apex -->
+ 		<apex:inputField value="{!config.VCSSA__Show_binding_details_after_email_body__c}" />
+	</apex:pageBlockSection>
+	
+	<apex:pageBlockSection id="section2" columns="2" title="General">
+		<apex:inputField value="{!config.VCSSA__Only_Match_Leads_Contacts__c}" />
+			<small>&nbsp;</small>
+		<apex:inputField value="{!config.VCSSA__Log_Outgoings_Email__c}" />
+			<small>A copy of each email message written will be sent to this address.</small>
+		<apex:inputField value="{!config.VCSSA__Signature__c}" style="width: 200px; "/>
+			<small>This signature replaces the std salesforce email settings signature.</small>
+		<apex:inputField value="{!config.VCSSA__Signature_Above_Reply__c}" />
+		<apex:outputField value="{!config.Id}" />
+	</apex:pageBlockSection>
+	
+	<apex:pageBlockSection id="section3" columns="2" title="Integration">
+		<apex:inputField value="{!config.VCSSA__Auto_Create_Leads__c}" />
+		<apex:inputField value="{!config.VCSSA__Split_first_and_last_name_on_bindings__c}" />
+		<apex:inputField value="{!config.VCSSA__Save_all_as_Activity__c}" />
+		<apex:inputField value="{!config.VCSSA__Use_Campaigns__c}" />
+		<apex:inputField value="{!config.VCSSA__Use_Cases__c}" />
+		<apex:inputField value="{!config.VCSSA__Use_Contacts__c}" />
+		<apex:inputField value="{!config.VCSSA__Use_Leads__c}" />
+		<apex:inputField value="{!config.VCSSA__Use_Opportunities__c}" />
+		<apex:inputField value="{!config.VCSSA__Use_Person_Accounts__c}" />
+	</apex:pageBlockSection>
+	<apex:pageBlockSection id="section4" columns="2" title="Administrator-only settings" rendered="{!IsAdministrator}">
+		<apex:inputField value="{!config.VCSSA__Email_Service_Debug_Mode__c}" />
+			<span>This setting will store ALL the email messages incoming to your organization using this tag:
+				<a href="/apex/Inbox?aid=&search=1&aid=&ltags=@logging_success&search_subject=[smart+email]&search_tags=@delete&search=Search" target="_new">ADMIN. LOGGING</a>
+			</span> 
+		<apex:inputField value="{!config.VCSSA__Email_Service_Logging__c}" />
+			<span>Due to the sheer number of emails sent by this setting NEVER use the email address configured in any of your Smart Email User or its aliases.</span>
+		<apex:outputField value="{!config.VCSSA__Email_Service_Counter__c}" />
+			<span>Only this number of emails will be logged, and then the email address will be deleted.</span>
+	</apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+
+<apex:include pageName="VCSSA__MailboxSettingsAlias" rendered="{!($CurrentPage.parameters.configonly!='1')}" />
+<apex:include pageName="VCSSA__Installation" rendered="{!($CurrentPage.parameters.configonly!='1')}"/>
+
+</apex:page>

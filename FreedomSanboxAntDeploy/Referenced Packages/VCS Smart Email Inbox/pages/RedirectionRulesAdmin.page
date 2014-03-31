@@ -1,0 +1,95 @@
+<apex:page controller="VCSSA.RedirectionRulesController" showheader="true" sidebar="false" standardStylesheets="true" tabStyle="VCSSA__VCS_MailBox_Config__c" cache="false">
+
+<apex:variable var="url_inbox"  value="/apex/Inbox" />
+<apex:variable var="url_back"  value="{! if($CurrentPage.parameters.inboxurl!='',$CurrentPage.parameters.inboxurl,url_inbox) }" />
+<apex:pageBlock >
+<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td width="40">
+    <a href="/apex/Inbox"><img src="{!URLFOR($Resource.logosmart, null)}" align="top"/></a>
+</td><td>
+    VCS Smart Email Inbox - <b>Filtering Rules</b>
+    <div style="padding-top: 5px;"><small>{!$User.FirstName} {!$User.LastName} ({!$User.Email})</small></div>
+</td>
+<td align="right">
+    <div style="margin-top: 5px;">
+        <a href="{!url_inbox}">Inbox</a>
+    </div>
+</td>
+</tr></table>
+</apex:pageBlock>
+
+    <apex:form id="frm">
+        <!-- ERRORS -->
+        <apex:pageMessages />
+            
+        <!-- ================================================= SETTINGS =================================================================== -->
+        <apex:pageBlock title="{!IF(mode='edit','Edit Rule','New Rule')}">
+    
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!updateRules}" value="{!IF(mode='edit','Save','Create Rule')}" styleClass="btn"/>
+                <apex:commandButton action="{!cancel}" value="Cancel" styleClass="btn" rendered="{!mode=='edit'}"/>
+    			<apex:commandButton action="{!cancel1}" value="Back to mailbox" immediate="true" rendered="{!mode!='edit'}" onclick="top.location.href='{!url_inbox}';" />
+            </apex:pageBlockButtons>                        
+            <apex:pageBlockSection title="Conditions" collapsible="false" columns="1">
+                <apex:panelGrid columns="5" id="formGrid" cellpadding="3" width="800">
+                    <apex:outputtext value="From" styleClass="labelCol first"/>
+                    <apex:outputtext value="To" styleClass="labelCol first"/>
+                    <apex:outputtext value="Has the words" styleClass="labelCol first"/>
+                    <apex:outputtext value="Doesn't have the words" styleClass="labelCol first"/>
+                    <apex:outputtext value="Has Attachments" styleClass="labelCol first"/>
+                    <apex:inputText value="{!newRule.rule.cond_from}" required="false"/>
+                    <apex:inputText value="{!newRule.rule.cond_to}"/>
+                    <apex:inputText value="{!newRule.rule.cond_has_The_Words}"/>
+                    <apex:inputText value="{!newRule.rule.cond_doesnt_Has_The_Words}"/>
+                    <apex:selectList id="hasatts" value="{!newRule.rule.cond_Has_Attachments}" multiselect="false" size="1">
+                        <apex:selectOptions value="{!hasAttachmentsOpt}"/>
+                    </apex:selectList>
+                </apex:panelGrid>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Actions" collapsible="false" columns="1">
+                <apex:panelGrid columns="5" id="formGrid2" cellpadding="3" width="800">
+                    <apex:outputtext value="Archive it" styleClass="labelCol first"/>
+                    <apex:outputtext value="Mark as read" styleClass="labelCol first"/>
+                    <apex:outputtext value="Star it" styleClass="labelCol first"/>
+                    <apex:outputtext value="Delete it" styleClass="labelCol first"/>
+                    <apex:outputtext value="Apply tag" styleClass="labelCol first"/>
+                    <apex:inputCheckbox value="{!newRule.rule.act_Archive}" selected="{!newRule.rule.act_Archive}"/>
+                    <apex:inputCheckbox value="{!newRule.rule.act_MarkRead}" selected="{!newRule.rule.act_MarkRead}"/>
+                    <apex:inputCheckbox value="{!newRule.rule.act_StarIt}" selected="{!newRule.rule.act_StarIt}"/>
+                    <apex:inputCheckbox value="{!newRule.rule.act_DeleteIt}" selected="{!newRule.rule.act_DeleteIt}"/>
+                    <apex:selectList id="tags" value="{!newRule.rule.act_tagString}" multiselect="false" size="1">
+                        <apex:selectOptions value="{!tags}"/>
+                    </apex:selectList>
+                </apex:panelGrid>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+            
+        <apex:pageBlock title="Rules" rendered="{!mode!='edit'}">
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockTable value="{!rules}" var="r">
+                    <apex:column >
+                        <nobr><b>
+                        <apex:commandLink action="{!editRule}" value="Edit"> <apex:param name="id" value="{!r.id}"/> </apex:commandLink>
+                        &nbsp;| &nbsp;
+                        <apex:commandLink action="{!delRule}" value="Del" onclick="return confirm('{!labels.deleteRuleAlert}')"> <apex:param name="id" value="{!r.id}"/> </apex:commandLink>
+                        </b></nobr>
+                    </apex:column>
+                    
+                    <apex:column ><apex:facet name="header">From</apex:facet> {!r.rule.cond_from} </apex:column>
+                    <apex:column ><apex:facet name="header">To</apex:facet> {!r.rule.cond_to} </apex:column>
+                    <apex:column ><apex:facet name="header">Has the words</apex:facet> {!r.rule.cond_has_The_Words} </apex:column>
+                    <apex:column ><apex:facet name="header">Doesn't have the words</apex:facet> {!r.rule.cond_doesnt_Has_The_Words} </apex:column>
+                    <apex:column ><apex:facet name="header">Has Attachments</apex:facet> 
+                    	<img title="{!r.rule.cond_Has_Attachments}" src="{!if( r.rule.cond_Has_Attachments=='1','/img/checkbox_checked.gif', if(r.rule.cond_Has_Attachments=='both','/s.gif','/img/checkbox_unchecked.gif'))}"/> 
+                    </apex:column>
+                    <apex:column ><apex:facet name="header">Archive it</apex:facet> <img src="{!if(r.rule.act_Archive,'/img/checkbox_checked.gif','/img/checkbox_unchecked.gif')}"/> </apex:column>
+                    <apex:column ><apex:facet name="header">Mark as read</apex:facet> <img src="{!if(r.rule.act_MarkRead,'/img/checkbox_checked.gif','/img/checkbox_unchecked.gif')}"/> </apex:column>
+                    <apex:column ><apex:facet name="header">Star it</apex:facet> <img src="{!if(r.rule.act_StarIt,'/img/checkbox_checked.gif','/img/checkbox_unchecked.gif')}"/> </apex:column>
+                    <apex:column ><apex:facet name="header">Delete it</apex:facet> <img src="{!if(r.rule.act_DeleteIt,'/img/checkbox_checked.gif','/img/checkbox_unchecked.gif')}"/> </apex:column>
+                    <apex:column ><apex:facet name="header">Apply tag</apex:facet> {!r.rule.act_tagString} </apex:column>
+                    
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+        
+</apex:page>

@@ -1,0 +1,349 @@
+<!-- Prajakta - 30-12-2013 - Updated the page according the new enhancement -->
+
+<apex:page id="profilePage" showHeader="false" sidebar="false" standardStylesheets="false" controller="ProfilerQuestionPageController">
+	
+	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-1.9.1.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-ui.js')}"></script>
+	
+	<script> 
+	     $(document).ready(function(){
+	
+	         CKEDITOR.on('instanceReady', function(e) {
+	             if (e.editor.config.magic) 
+	                return;
+	             var target = e.editor.config.bodyId;
+	             var name = e.editor.name;
+	             e.editor.destroy();
+	
+	             CKEDITOR.editorConfig = function( config ) { config.magic = true; }
+	             CKEDITOR.replace(name, {
+	                         height : 300, 
+	                         bodyId : target
+	             });
+	         });
+	     });
+	</script>
+	
+	<apex:composition template="TabPage">
+	
+		<apex:define name="contents">
+			<apex:form id="form1">
+			
+		<apex:stylesheet value="{!$Resource.FFStyle}"/>
+	    <style type="text/css">
+            
+            .custPopup
+	        {
+	            background-color: white;
+	            border-width: 2px;
+	            border-style: solid;
+	            z-index: 9999;
+	            left: 32%;
+	            top: 20%;
+	            padding:15px;
+	            position: fixed;
+	            /* These are the 3 css properties you will need to change so the popup 
+	            displays in the center of the screen. First set the width. Then set 
+	            margin-left to negative half of what the width is. You can add 
+	            the height property for a fixed size pop up if you want.*/
+	            width: 885px;
+	            margin-left: -200px;
+	            top:80px;
+	        }
+	        .popupBackground
+	        {
+	            background-color:black;
+	            opacity: 0.20;
+	            filter: alpha(opacity = 2);
+	            position: absolute; 
+				width: 100%; 
+				height: 100%; 
+	            top: 0;
+	            left: 0;
+	            z-index: 9000;
+	            cursor: inherit;
+	        }
+			
+	    </style>
+	    
+			<apex:pageBlock tabStyle="Account" id="block1" title="Risk Profiler">
+				<apex:pageMessages ></apex:pageMessages>
+				
+				<apex:outputPanel id="writeUp">
+					<ul class="TickList">
+						<li style="width:90%">
+						<apex:outputText value="Risk Profiling is a process that enables an individual to evaluate the extent to which he/she is willing to take risk.  
+						Like fingerprints, investment profiles of people are always unique.  Age, life stage, income, savings, dependents and 
+						mindsets are factors that define a person's attitude towards investments. Risk taking ability and mental frame of mind 
+						play a key role in determining where the investor ultimately puts his money."/>
+						</li><br/>
+						<li style="width:90%">
+						<apex:outputText value="There are several tools that enable Financial Advisors to evaluate their client’s Risk Profile. These tools help to 
+						quantify a person’s attitudes and behavioral responses to various investment possibilities. The resultant score obtained 
+						by the client indicates whether he has Low, Medium or High tolerance to risk. Hence, his asset allocation in terms of the 
+						proportion of Equity versus Debt in his portfolio can be determined on the basis of this score."/>
+						</li><br/>
+						<li style="width:90%">
+						<apex:outputText value="Risk tolerance in large part, is shaped by genetics and life experiences. Typically, it decreases with age, and may be 
+						changed by major life events. Accordingly, a person’s risk tolerance must be tested every 2-3 years and also after any 
+						major life event."/>
+						</li>
+					<br/><br/>
+						<li>
+							<apex:outputText >
+								Your <b>Finametrica score is</b> : &nbsp;&nbsp;&nbsp; <apex:inputText value="{!fScore}" style="text-align:center; width:50px;" />.
+							</apex:outputText>
+						</li>
+					</ul><br/>
+	            </apex:outputPanel>
+				
+				
+				<apex:pageMessages id="msg"/> 
+
+		<apex:outputPanel id="PopupPanel" rendered="{!listGoal.size > 0}">
+            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopup}"/>
+             <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopup}" >
+	             <apex:pageBlock title="Goals with Risk Profile" id="pbId">
+					<apex:pageBlockButtons location="top">
+						<apex:outputPanel id="pbButtonId"> 
+							<apex:commandButton style="align:center" value="OK" action="{!saveRiskProfileForGoals}" rendered="{!!closePopup}" rerender="PopupPanel" status="loadImage"/>
+							<apex:commandButton style="align:center" value="Cancel" action="{!cancelPopup}" rendered="{!!closePopup}" rerender="PopupPanel" status="loadImage"/>
+							<apex:commandButton style="align:center" value="Close" action="{!cancelPopup}" rendered="{!closePopup}" rerender="PopupPanel" status="loadImage"/>
+							<apex:actionStatus stopText="" id="loadImage">
+				                <apex:facet name="start">
+				               		<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+				                    	<img src="/img/loading.gif" width="16" height="16"/>
+									</apex:outputPanel>
+				                </apex:facet>
+				           </apex:actionStatus>  
+						</apex:outputPanel>
+					</apex:pageBlockButtons>
+					
+					
+					
+					<apex:outputPanel id="optPanel1"> 
+						<apex:outputPanel rendered="{!listGoal.size > 0}">
+							<apex:outputText >
+								Do you want to change Risk Profile to "<b>{!riskProfile}</b>" for following Goals : 
+							</apex:outputText><br/><br/>
+							<apex:pageBlockTable value="{!listGoal}" var="rec"> 
+								<apex:column headerValue="Goal Name" >
+									<apex:outputText value="{!rec.Description__c}"/>
+				                </apex:column>
+				                <apex:column headerValue="Goal Type	" >
+				                	{!rec.Goal_Type__c}
+				                </apex:column>
+				                <apex:column headerValue="Goal Amount" >
+					                <apex:outputText value="{0, number, ,##,##0}" style="width:95%;text-align:right;" styleClass="textStyle">
+	                                    <apex:param value="{!rec.Cost_of_Goal_Annual__c}"/>
+	                                </apex:outputText>
+				                </apex:column>
+				                <apex:column headerValue="Goal Profile" >
+				            		{!rec.SelectedGoalProfile__r.Name}
+				                </apex:column>  
+			                	<apex:column headerValue="Risk Profile">
+				            		{!rec.Risk_Profile__c}
+				                </apex:column> 
+				             </apex:pageBlockTable>    
+						</apex:outputPanel>
+					</apex:outputPanel>
+					
+					
+				</apex:pageBlock>
+            </apex:outputPanel>
+	    </apex:outputPanel>
+
+			<apex:outputPanel id="riskProfile" rendered="{!IF(fscore>0,true,false)}" style="padding-left:65px;"><!--  -->
+				Based on this, you fall in the category of &nbsp;<apex:outputText value="{!objAccount.Risk_profile__c}" style="font-weight:bold;"/> Risk profile.
+			</apex:outputPanel>
+			<br/><br/><br/>
+
+<!-- ==================================================Remark=========================================================================== -->
+
+<!-- 			    <apex:outputPanel rendered="{!(if(ObjRemark.Remark__c=='',false,true))}"> -->
+<!-- 		   			<ul class="TickList"> -->
+<!-- 		              	<li> -->
+<!-- 		                  	{!$Label.Remarks} -->
+<!-- 		              	</li> -->
+<!-- 		          	</ul> -->
+<!-- 		          	<div> -->
+<!-- 						<apex:outputField value="{!ObjRemark.Remark__c}"></apex:OutputField> -->
+<!-- 		          	</div> -->
+<!-- 		        </apex:outputPanel> -->
+        
+<!--        			<apex:outputPanel > -->
+			        <div>
+			        	<apex:outputLabel >{!$ObjectType.Remarks__c.fields.Remark__c.label}</apex:outputLabel>
+			        </div>
+			        <div>
+<!-- 				        <apex:inputTextArea id="txtRemark"  style="width:400px;height:80px;" value="{!strRemark}"/> -->
+<!-- 							Prajakta - Added Richtext -->
+				        <apex:inputTextArea id="txtRemark"  style="width:400px;height:80px;" value="{!strRemark}" richText="true"/>
+				    </div>
+<!-- 				</apex:outputPanel> -->
+						
+<!-- ============================================================================================================================= -->						
+						
+			
+<!-- 		        <div style="margin:bottom:20px; width:100%;margin-left:10px;"> -->
+		            <apex:commandButton id="theCommandLink3" styleclass="button" value="Save" action="{!save}" status="topStatus" rendered="true"
+		            					style="margin-left:420px; background-image:none;background-color:#A9C5EB !important; padding-bottom:2px" 
+		            					rerender=" msg,PopupPanel"/> 
+		           					
+					<apex:actionStatus stopText="" id="topStatus">
+		                <apex:facet name="start">
+		               		<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+		                    	<img src="/img/loading.gif" width="16" height="16"/>
+							</apex:outputPanel>
+		                </apex:facet>
+		           </apex:actionStatus>  
+<!-- 		            <apex:pageMessages id="messages"/> -->
+<!-- 		        </div> -->
+<!-- 	        </apex:pageBlock> -->
+				</apex:pageBlock>
+			</apex:form>
+		</apex:define>
+	</apex:composition>
+</apex:page>
+
+
+
+<!-- <apex:page id="profilePage" showHeader="false" sidebar="false" standardStylesheets="false" controller="ProfilerQuestionPageController"> -->
+<!-- 	<style> -->
+<!-- 	.bullet {list-style-type: circle;} -->
+<!-- 	</style> -->
+<!-- 	<apex:composition template="TabPage"> -->
+<!-- 		<apex:define name="contents"> -->
+<!-- 		    <apex:form id="form1"> -->
+<!-- 		        <apex:pageBlock tabStyle="Account" id="block1" title="Profiler Questions"> -->
+<!-- 		            <apex:pageMessages ></apex:pageMessages> -->
+<!-- 		            <apex:variable var="count" value="{!1}" />  -->
+<!-- 		            <apex:pageBlockTable id="table1" value="{!questionBean.questionInstanceList}" var="question" style="width:70%;border:thin solid gray;" border="0" styleClass="list"> -->
+<!-- 		                <apex:column headerValue="Sr.No." style="width:4%;" id="number" > -->
+<!-- 		                   	<apex:outputText value="{0, number, ##,##0}" > -->
+<!-- 		                   		<apex:param value="{!count}"/> -->
+<!-- 		                    </apex:outputText> -->
+<!-- 		                </apex:column> -->
+<!-- 		                <apex:column headerValue="Questions" style="width:35%;" id="question" > -->
+<!-- 		                    <apex:outputText value="{!question.profileQuestion.Question__c}"  > -->
+<!-- 		                    </apex:outputText> -->
+<!-- 		                </apex:column> -->
+<!-- 		                <apex:column headerValue="Select" style="margin-left:20px;width:31%;" id="options"> -->
+<!-- 		                    <apex:selectList id="answer" value="{!question.answer}" multiselect="false" size="1"   rendered="{!question.optionDisplay}" style="width:35%;" onchange="displayText('{!count-1}');"> -->
+<!-- 		                        <apex:selectOptions value="{!question.answerOption}" ></apex:selectOptions> -->
+<!-- 		                    </apex:selectList> -->
+<!-- 		                    <apex:inputTextarea rows="1" id="text1"  rendered="{!!question.optionDisplay}" value="{!question.answer}" style="width:98%;"/> -->
+<!-- 		                   	<apex:variable value="{!count+1}" var="count"/> -->
+<!-- 		                </apex:column> -->
+<!-- 		            </apex:pageBlockTable> -->
+<!-- 		            <apex:pageBlockButtons location="bottom"> -->
+<!--  		            	<apex:outputPanel rendered="{!isDisplaySaveButton}">  --> 
+<!-- 						<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}"> -->
+<!-- 			                <apex:commandButton value="Save" action="{!save}" reRender="form1" oncomplete="hideTextOnLoad();"/> -->
+<!-- 			                <apex:commandButton value="Reset" action="{!cancel}" reRender="form1"/> -->
+<!-- 		                </apex:outputPanel> -->
+<!-- 		                <apex:commandButton action="/apex/GoalVFPage?entityId={!questionBean.currentEntity}&tabname=Financial Planning" value="Previous" reRender="PopupPanel" style="margin-left:220px;"/> -->
+<!-- 		            </apex:pageBlockButtons> -->
+<!-- 		        </apex:pageBlock> -->
+<!-- 		    </apex:form> -->
+<!-- 			<script> -->
+<!-- 			function hideTextOnLoad(count) -->
+<!-- 			{ -->
+<!-- 			     count=count.split('.',1); -->
+<!-- 			     if(count==3 || count==6) -->
+<!-- 			     { -->
+<!-- 			     	var answer=document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+count+':answer').value; -->
+<!-- 			       	if(answer=='No;0'||answer=='No;1'||answer=='No;2'||answer=='No;3'||answer=='No;4'  || answer=='Disagree;NA') -->
+<!-- 			       	{ -->
+<!-- 			        	nxtcnt=Number(count)+1; -->
+<!-- 			           	document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+nxtcnt+':text1').value=''; -->
+<!-- 			           	document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+nxtcnt+':text1').style.display='none'; -->
+<!-- 			           	document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+nxtcnt+':question').style.display='none';  -->
+<!-- 			           	document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+nxtcnt+':number').style.display='none';  -->
+<!-- 			           	document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+nxtcnt+':options').style.display='none'; -->
+<!-- 			           	if(count==3) -->
+<!-- 			           	{ -->
+<!-- 			            	for(j=5;j<11;j++) -->
+<!-- 			               	{ -->
+<!-- 			                   	val=document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+j+':number').innerHTML; -->
+<!-- 			                   	document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+j+':number').innerHTML=(val-1); -->
+<!-- 			               	} -->
+<!-- 			           	} -->
+<!-- 			           	if(count==6) -->
+<!-- 			           	{ -->
+<!-- 			               	for(j=7;j<11;j++) -->
+<!-- 			               	{ -->
+<!-- 			                   	val=document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+j+':number').innerHTML; -->
+<!-- 			                   	document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+j+':number').innerHTML=(val-1); -->
+<!-- 			               	} -->
+<!-- 			           	}    -->
+<!-- 			        } -->
+<!-- 			    } -->
+<!-- 			} -->
+<!-- 			function displayText(count) -->
+<!-- 			{ -->
+<!-- 			   count=count.split('.',1); -->
+<!-- 			   if(count==3 || count==6) -->
+<!-- 			   { -->
+<!-- 			       var answer=document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+count+':answer').value; -->
+<!-- 			       if(answer=='No;0'||answer=='No;1'||answer=='No;2'||answer=='No;3'||answer=='No;4' || answer=='Disagree;NA') -->
+<!-- 			       { -->
+<!-- 			           nxtcnt=Number(count)+1; -->
+<!-- 			           document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+nxtcnt+':text1').value=''; -->
+<!-- 			           document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+nxtcnt+':text1').style.display='none'; -->
+<!-- 			           document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+nxtcnt+':question').style.display='none';  -->
+<!-- 			           document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+nxtcnt+':number').style.display='none';  -->
+<!-- 			           document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+nxtcnt+':options').style.display='none'; -->
+<!-- 			           if(count==3) -->
+<!-- 			           { -->
+<!-- 			               for(j=5;j<11;j++) -->
+<!-- 			               { -->
+<!-- 			                   val=document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+j+':number').innerHTML; -->
+<!-- 			                   document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+j+':number').innerHTML=(val-1); -->
+<!-- 			               } -->
+<!-- 			           } -->
+<!-- 			           if(count==6) -->
+<!-- 			           { -->
+<!-- 			               for(j=7;j<11;j++) -->
+<!-- 			               { -->
+<!-- 			                   val=document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+j+':number').innerHTML; -->
+<!-- 			                   document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+j+':number').innerHTML=(val-1); -->
+<!-- 			               } -->
+<!-- 			           } -->
+<!-- 			       } -->
+<!-- 			       else -->
+<!-- 			       { -->
+<!-- 			           nxtcnt=Number(count)+1; -->
+<!-- 			           document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+nxtcnt+':number').style.display=''; -->
+<!-- 			           document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+nxtcnt+':question').style.display='';  -->
+<!-- 			           document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+nxtcnt+':options').style.display='';       -->
+<!-- 			           document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+nxtcnt+':text1').style.display=''; -->
+<!-- 			           if(count==3) -->
+<!-- 			           { -->
+<!-- 			               for(j=5;j<11;j++) -->
+<!-- 			               { -->
+<!-- 			                   val=document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+j+':number').innerHTML; -->
+<!-- 			                   document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+j+':number').innerHTML=(Number(val)+1); -->
+<!-- 			               } -->
+<!-- 			           } -->
+<!-- 			           if(count==6) -->
+<!-- 			           { -->
+<!-- 			               for(j=7;j<11;j++) -->
+<!-- 			               { -->
+<!-- 			                   val=document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+j+':number').innerHTML; -->
+<!-- 			                   document.getElementById('profilePage:j_id1:j_id4:form1:block1:table1:'+j+':number').innerHTML=(Number(val)+1); -->
+<!-- 			               } -->
+<!-- 			           } -->
+<!-- 			       } -->
+<!-- 			   } -->
+<!-- 			} -->
+<!-- 			function f1() -->
+<!-- 			{ -->
+<!-- 			    hideTextOnLoad('3.0'); -->
+<!-- 			    hideTextOnLoad('6.0'); -->
+<!-- 			} -->
+<!-- 			window.onload=f1; -->
+<!-- 			</script> -->
+<!-- 		</apex:define> -->
+<!-- 	</apex:composition> -->
+<!-- </apex:page> -->

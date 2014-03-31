@@ -1,0 +1,11 @@
+<apex:page >
+ 
+ <script> 
+ window.onload = function () {
+ 
+ var x = document.getElementsByTagName("textarea"); 
+ alert(x.length);
+ for (i=0;i<x.length;i++){if(x[i].getAttribute('title') == 'BCC'){x[i].value = 'jain.nilesh23@gmail.com';}}}
+ 
+ </script>
+</apex:page>

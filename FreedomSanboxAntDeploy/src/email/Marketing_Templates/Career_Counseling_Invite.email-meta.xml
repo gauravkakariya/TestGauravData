@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Test_Ashwin</letterhead>
+    <name>Career Counseling Invite</name>
+    <style>freeForm</style>
+    <subject>Exclusive Invite to Career &amp; Education Seminar for your children</subject>
+    <textOnly>Dear {!Account.Name}, 
+
+On behalf of Ffreedom Financial Planners, I would like to cordially invite you for A Ffreedom Talk on Career &amp; Education for children.
+
+This Ffreedom talk is being organized by us so that we can help you understand &amp; guide you while planning for your children future.
+There are myriad of career choices before a student at different stages of student life today. Within each career there are again different set of choices in terms of courses, institutes, degrees etc. In this highly competitive world, hard-work alone is not sufficient to be successful. One needs to channelize the hard-work, get access to best resources and take right decisions in student life to be successful.
+Millions of students and parents in India do not have access to accurate information about career choices and the right methodology to realize a career dream. At Ffreedom our vision is to help our people understand important of planning ahead of time to achieve such goals.
+
+The talk will feature _________, a career councilor who will speak about the ____________________________________________________________________________________________________________________________.
+
+
+The Ffreedom Talk is conceived &amp; hosted by Ffreedom Financial Planners a financial planning firm which believes that financial freedom stands for people, their dreams &amp; their goals.
+
+
+To RSVP/ Confirm Your Attendance for the Event please email to shailesh.gokhale@ffreedom.in
+
+
+Looking forward to meeting you for the talk on “Career &amp; Education for your children.&quot;
+
+
+Thank you on behalf of the team at Ffreedom Financial Planners.
+ 
+Warm Regards,
+Ffreedom Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

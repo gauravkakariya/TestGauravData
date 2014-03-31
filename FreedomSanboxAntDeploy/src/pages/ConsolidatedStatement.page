@@ -1,0 +1,610 @@
+<apex:page sidebar="false" showHeader="true" controller="ConsolidatedStatementController">
+<apex:stylesheet value="{!URLFOR($Resource.PortalStyleSheet1)}"/>
+     <apex:composition template="PortalFinancialMgrTemp"> 
+     <apex:define name="rightcontent"> 
+       <!--  <a href="#" style="float:right;padding-right:20px;font-weight:bold;" target="_blank">Print Statement</a>---->
+          <br/>
+          <br/>
+         <div style="overflow:scroll;height:440px;width:950px;">
+          <table height="50" width="906" style="border:1px solid black;font-size:16px;font-family:tahoma;background-color:white;">
+            <tr>
+                <td align="left" width="">
+                    <span style=""><img width="" height="" src="{!URLFOR($Resource.PortalImages,'PortalImages/consolidatedLogo.jpg')}"/> </span>
+                </td>
+                <td  valign="top" align="right" >
+<!--                 <img width="160" height="50" src="https://ffreedom--c.eu0.content.force.com/servlet/servlet.ImageServer?id=01520000000ribD&oid=00D20000000JZVv"/> -->
+					 <img src="{!URLFOR($Resource.NewWellnessImage)}" />
+                </td>
+                
+            </tr>
+          </table>    
+        <table height="auto" id="mainTable" width="900" cellpadding="12" style="border-collapse:collapse;font-size:13px;font-family:tahoma;background-color:white;">
+            <!----section one starts here----->
+            
+          <tr>
+              <td colspan="3" class="topHeaderRow" style="text-align:left;color:#595454;">
+                  Investment Assets
+              </td>
+          </tr>      
+            
+          <tr id="section1" class="sectionBorder">
+           
+                <td width="33%" valign="top">
+                    <!--- equity table starts here---->
+                     <table width="270" border="" style="border-collapse:collapse;">
+                        <!---<tr class="headerRow">--->
+                        <tr style="background-color:#4B924B; font-weight:bold; border:1px solid black;">
+                            <td width="50%" style="text-align:left;color:white;">
+                                Equity
+                            </td>
+                            <td width="50%" style="text-align:right;color:white;">
+                                Amount
+                            </td>
+                        </tr>
+                        <apex:repeat value="{!EquityInvestmentAssets}" var="EQasset" >
+                            <tr class="pistaGreenRowBorders" style="text-align:left;">
+                                <td>
+                                     <apex:outputText value="{!EQasset.subType}"/>
+                                </td>
+                                <td  style="text-align:right;">
+                                    <apex:outputText value="{!EQasset.amount}"/>
+                                </td>
+                            </tr>
+                            <tr class="whiteRowBorders" style="background-color:#ffffff;">
+                                <td height="10">
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                        <tr class="boldStyle" style="border:1px solid black;text-align:left;background-color:#F2F2F2;color:#413839;">
+                                <td >
+                                    Total
+                                </td>
+                                <td style="text-align:right;">
+                                    <apex:outputText value="{!equityInvestmentAssetsSubTotal}"/>
+                                </td>
+                        </tr>
+                        
+                    </table>
+                   <!--- equity table ends here---->   
+               </td>  
+               
+               <td  width="33%" valign="top"   >
+               <!--- debt table starts here---->  
+                    <table width="270" style="border-collapse:collapse;" >
+                        <tr class="headerRow"  style="background-color:#4B924B;">
+                            <td width="50%" style="text-align:left;color:white;">
+                                Debt
+                            </td>
+                            <td width="50%" style="text-align:right;color:white;">
+                                Amount
+                            </td>
+                        </tr>
+                        <apex:repeat value="{!DebtInvestmentAssets}"  var="debtAsset" >
+                            <tr class="pistaGreenRowBorders"  >
+                                <td style="text-align:left;">
+                                     <apex:outputText value="{!debtAsset.subType}"/>
+                                </td>
+                                <td style="text-align:right;">
+                                    <apex:outputText value="{!debtAsset.amount}"/>
+                                </td>
+                            </tr>
+                            <tr class="whiteRowBorders">
+                                <td height="10">
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                        <tr class="boldStyle" style="border:1px solid black;color:#413839;background-color:#F2F2F2;">
+                                <td style="text-align:left;" >
+                                    Total
+                                </td>
+                                <td style="text-align:right;">
+                                    <apex:outputText value="{!debtInvestmentAssetsSubTotal}"/>
+                                </td>
+                        </tr>
+                        
+                    </table>
+
+                <!--- debt table ends here---->       
+               </td >  
+               <td  width="34%" valign="top" >
+               
+               <!----chart comes here----->
+            <!---  <img style="border: px solid black;" src="http://chart.apis.google.com/chart?chs=270x110&chd=t:60,40&chco=A2D6A2&cht=p3&chtt=Investments&chdl=Equity|Debt&chl=60%|40%" /> --->
+               <apex:image style="border:1px solid black;" value="{!chartURL}"/>
+             
+ 
+               </td>
+              
+              
+          </tr>
+          
+           <!----section one ends here----->
+           
+           
+           
+           
+           <!----section two starts here----->
+           <tr>
+              <td colspan="3" class="topHeaderRow" style="text-align:left;color:#595454;">
+                  Insurance
+              </td>
+          </tr>    
+          <tr id="section2" class="sectionBorder" >
+              <td colspan="3" valign="baseline" >
+                  <table cellpadding="">
+                      <tr>
+                          <td width="40%" valign="top" >
+                         
+                         
+                           <!--- life Insurance table starts here---->  
+                           
+                           
+                               <table width="370" border="" style="border-collapse:collapse;border:1px solid black;">
+                                    <tr class="headerRow" style="background-color:#4B924B;">
+                                        <td width="33%" style="text-align:left;color:white;">
+                                            Policy Holder
+                                        </td>
+                                        <td width="34%" style="color:white;">
+                                            Suggested Cover
+                                        </td>
+                                        <td width="33%" style="text-align:right;color:white;">
+                                            Actual Cover
+                                        </td>
+                                    </tr>
+                                    <apex:repeat value="{!LifeInsuranceWrapper}"  var="life">
+                                        <tr class="pistaGreenRowBorders">
+                                            <td style="text-align:left;">
+                                                 <apex:outputText value="{!life.policyHolder}"/>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <apex:outputText value="{!life.suggestedCover}"/>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <apex:outputText value="{!life.actualCover}"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="whiteRowBorders" style="border-bottom:">
+                                            <td height="10">
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                    
+                             </table>
+                        <!--- life Insurance table ends here----> 
+                          </td>
+                          <td width="10%">
+                          </td>
+                          <td width="50%" valign="top" align="right" style="padding-left:20px;">
+                          <!--- general Insurance table starts here----> 
+                              <table width="470" style="border-collapse:collapse;border:1px solid black;">
+                                    <tr class="headerRow" style="background-color:#4B924B;">
+                                        <td width="25%" style="text-align:left;color:white;">
+                                            Policy Holder
+                                        </td>
+                                         <td width="25%" style="text-align:left;color:white;">
+                                            Policy Type
+                                        </td>
+                                        <td width="25%" style="color:white;">
+                                            Suggested Cover
+                                        </td>
+                                        <td width="25%" style="text-align:right;color:white;">
+                                            Actual Cover
+                                        </td>
+                                       
+                                    </tr>
+                                    <apex:repeat value="{!GeneralInsuranceWrapper}"  var="general">
+                                        <tr class="pistaGreenRowBorders">
+                                            <td style="text-align:left;">
+                                                 <apex:outputText value="{!general.policyHolder}"/>
+                                            </td>
+                                            <td style="text-align:left;">
+                                                 <apex:outputText value="{!general.policyType}"/>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <apex:outputText value="{!general.suggestedCover}"/>
+                                            </td>
+                                            <td style="text-align:right;">
+                                                <apex:outputText value="{!general.actualCover}"/>
+                                            </td>
+                                        </tr>
+                                        <tr class="whiteRowBorders" style="border-bottom:">
+                                            <td height="10">
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                             <td>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                    
+                             </table>
+                          <!--- general Insurance table ends here----> 
+                          </td>
+                      </tr>
+                  </table>
+              </td> 
+          </tr>
+          <!----section two ends here----->
+          
+             <!----section three starts here----->
+            <tr>
+              <td colspan="3" style="background-color:;border:1px solid black;border-bottom:none; font-size:18px;font-weight:bold;text-align:left;color:#595454;">
+                  Assets
+              </td>
+          </tr>   
+           <tr id="section3" style="border:1px solid black;border-top:none;" >
+              <td colspan="3" valign="top">
+                  <table cellpadding="">
+                      <tr>
+                          <td width="50%" valign="baseline" align="left" style="padding-right:20px;">
+                           <!--- Assets table starts here---->  
+                             <table width="270" border="" style="border-collapse:collapse;border:1px solid black;">
+                                <tr class="headerRow" style="background-color:#4B924B;">
+                                    <td width="50%" style="color:white;">
+                                        Asset Type
+                                    </td>
+                                    <td width="50%" style="text-align:right;color:white;">
+                                        Amount
+                                    </td>
+                                </tr>
+                                <apex:repeat value="{!AssetsWrapper}" var="asset" >
+                                    <tr class="pistaGreenRowBorders">
+                                        <td>
+                                             <apex:outputText value="{!asset.assetType}"/>
+                                        </td>
+                                        <td style="text-align:right;">
+                                            <apex:outputText value="{!asset.amount}"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="whiteRowBorders">
+                                        <td height="10">
+                                        </td>
+                                        <td width="10%">
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                            </table>
+                        <!--- Assets  table ends here----> 
+                          </td>
+                          
+                          <td width="50%" valign="top" align="right">
+                          <!--- Succession Planning table starts here----> 
+                          
+                              <table width="300" style="border-collapse:collapse;padding-left:100px;border:1px solid black;" >
+                                    <tr class="headerRow" style="text-align:left;background-color:#4B924B;" >
+                                        <td width="50%" style="color:white;">
+                                            Succession Planning
+                                        </td>
+                                        <td width="50%" style="text-align:center;color:white;">
+                                            Status
+                                        </td>
+                                    </tr>
+                                    <apex:repeat value="{!SuccessionPlanningWrapper}"  var="successionPlanning"  >
+                                        <tr class="pistaGreenRowBorders" >
+                                            <td align="center">
+                                                 <apex:outputText value="{!successionPlanning.label}"/>
+                                            </td>
+                                            <td align="center" >
+                                               <apex:form >
+                                                <apex:inputCheckbox disabled="true" style="" value="{!successionPlanning.selected}"/>
+                                                 </apex:form>
+                                                
+                                            </td>
+                                        </tr>
+                                        <tr class="whiteRowBorders">
+                                            <td height="10">
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                   
+                                </table> 
+                        
+                          <!--- Succession Planning table ends here----> 
+                          </td>
+                      </tr>
+                  </table>
+              </td> 
+          </tr>
+          <!----section three ends here----->
+          
+          
+          
+           <!----section four starts  here----->
+           
+          <tr>
+              <td colspan="3" style="background-color:;border:1px solid black;border-bottom:none; font-size:18px;font-weight:bold;text-align:left;color:#595454;">
+                  Liabilities
+              </td>
+          </tr>
+          <tr id="section4" style="border:1px solid black;border-top:none;" >
+              
+              <td>
+                <!--- Loan table starts here----> 
+                   <table width="270" style="border-collapse:collapse;" >
+                        <tr class="headerRow" style="background-color:#4B924B;">
+                            <td width="50%" style="text-align:left;color:white;">
+                                Loan Type
+                            </td>
+                            <td width="50%" style="text-align:right;color:white;">
+                                EMI
+                            </td>
+                        </tr>
+                        <apex:repeat value="{!LoanWrapper}"  var="loan" >
+                            <tr class="pistaGreenRowBorders" >
+                                <td style="text-align:left;">
+                                     <apex:outputText value="{!loan.loanType}"/>
+                                </td>
+                                <td style="text-align:right;">
+                                    <apex:outputText value="{!loan.EMI}"/>
+                                </td>
+                            </tr>
+                            <tr class="whiteRowBorders">
+                                <td height="10">
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                        <tr class="boldStyle" style="border:1px solid black;color:#413839;background-color:#F2F2F2;">
+                                <td >
+                                    Total
+                                </td>
+                                <td style="text-align:right;">
+                                    <apex:outputText value="{!EmiSubTotal}"/>
+                                </td>
+                        </tr>
+                        
+                    </table>
+               <!--- Loan table ends here---->    
+              </td>
+              <td>
+              <td>
+              </td>
+             </td>
+          </tr>
+             <!----section four ends here----->
+    
+            <!----section five starts here-----> 
+              <tr>
+              <td colspan="3" style="background-color:;border:1px solid black;border-bottom:none; font-size:18px;font-weight:bold;color:#595454;">
+                  Commitments
+              </td>
+          </tr>     
+              <tr id="section5" style="border:1px solid black;border-top:none;">
+                 
+                          <td colspan="3">
+                              <!--- Commitment table starts here----> 
+                                   <table style="border:1px solid black;" id="commitments">
+                                        <tr class="tableHeaders" style="background-color:#4B924B;">
+                                            <td class="boldStyle" width="140" style="text-align:left;color:white;">
+                                                 Name
+                                            </td>
+                                            <td class="boldStyle" width="140" style="text-align:left;color:white;"> 
+                                                 Description
+                                            </td>
+                                            <td class="boldStyle" width="140" style="text-align:left;color:white;">
+                                                 Member
+                                            </td>
+                                            <td class="boldStyle" width="140" style="text-align:left;color:white;">
+                                                 Mode
+                                            </td>
+                                            <td class="boldStyle" width="140" style="text-align:left;color:white;">
+                                                 Due Date
+                                            </td>
+                                            <td class="boldStyle" width="140" style="text-align:right;color:white;">
+                                                 Amount
+                                            </td>
+                                      
+                                        </tr>
+                                        
+                                       
+                                        <tr>
+                                            <td colspan="6" class="boldStyle" style="background-color:#E0F8F7;text-align:left;">
+                                                Life Insurances
+                                            </td>
+                                        </tr>
+                                              
+                                              <apex:repeat value="{!AllInsurances}" var="lifeInsurance" >
+                                                 <apex:outputPanel rendered="{!lifeInsurance.RecordType.Name='Life Insurance'}">
+                                                      <tr class="lightPistaGreen">
+                                                          <td style="text-align:left;">
+                                                              <apex:outputText value="{!lifeInsurance.Insurance_Company__c}"/>
+                                                          </td>
+                                                          
+                                                          <td style="text-align:left;">
+                                                              <apex:outputText value="{!lifeInsurance.Policy_Type__c}"/> /  <apex:outputText value="{!lifeInsurance.Policy_Number__c}"/>
+                                                          </td>
+                                                          
+                                                          <td style="text-align:left;">
+                                                              <apex:outputText value="{!lifeInsurance.Entity__r.Name}"/>
+                                                          </td>
+                                                          
+                                                          <td style="text-align:left;">
+                                                              <apex:outputText value="{!lifeInsurance.Premium_Frequency__c}"/>
+                                                          </td>
+                                                          
+                                                          <td style="text-align:left;">
+                                                               <apex:outputText value="{0,date,dd MMMM yyyy}">
+                                                               <apex:param value="{!lifeInsurance.Premium_Due_date__c}" /> 
+                                                               </apex:outputText>
+                                                          </td>
+                                                          
+                                                          <td style="text-align:right;">
+                                                              <!---<apex:outputText value="{!lifeInsurance.Premium_Amount_Rs__c}"/>--->
+                                                              <apex:outputText value="{0,number,,000}">
+                                                                  <apex:param value="{!lifeInsurance.Premium_Amount_Rs__c}"/>
+                                                               </apex:outputText>
+                                                          </td>
+                                                      </tr>
+                                                      <tr height="10">
+                                                          <td colspan="6">
+                                                          </td>
+                                                      </tr>
+                                                  </apex:outputPanel>   
+                                              </apex:repeat>
+                                         
+                                          <tr>
+                                            <td colspan="6" class="boldStyle" style="background-color:#E0F8F7;text-align:left;">
+                                                General Insurances
+                                            </td>
+                                        </tr>
+                                        <apex:repeat value="{!AllInsurances}" var="generalInsurance">
+                                            <apex:outputPanel rendered="{!generalInsurance.RecordType.Name='General Insurance'}">
+                                                <tr class="lightPistaGreen">
+                                                    <td style="text-align:left;">
+                                                          <apex:outputText value="{!generalInsurance.Insurance_Company__c}"/>
+                                                      </td>
+                                                      
+                                                      <td style="text-align:left;">
+                                                          <apex:outputText value="{!generalInsurance.Policy_Type__c}"/> /  <apex:outputText value="{!generalInsurance.Policy_Number__c}"/>
+                                                      </td>
+                                                      
+                                                      <td style="text-align:left;">
+                                                          <apex:outputText value="{!generalInsurance.Entity__r.Name}"/>
+                                                      </td>
+                                                      
+                                                      <td style="text-align:left;">
+                                                          <apex:outputText value="{!generalInsurance.Premium_Frequency__c}"/>
+                                                      </td>
+                                                      
+                                                      <td style="text-align:left;">
+                                                            <apex:outputText value="{0,date,dd MMMM yyyy}">
+                                                            <apex:param value="{!generalInsurance.Premium_Due_date__c}" /> 
+                                                            </apex:outputText>
+                                                      </td>
+                                                      
+                                                      <td style="text-align:right;">
+                                                         
+                                                          <apex:outputText value="{0,number,,000}">
+                                                              <apex:param value="{!generalInsurance.Premium_Amount_Rs__c}"/>
+                                                          </apex:outputText>
+                                                      </td>
+                                                 </tr> 
+                                                 <tr height="10">
+                                                      <td colspan="6">
+                                                      </td>
+                                                 </tr>
+                                             </apex:outputPanel>
+                                        </apex:repeat>      
+                                        <tr>
+                                            <td colspan="6" class="boldStyle" style="background-color:#E0F8F7;text-align:left;">
+                                                Loans
+                                            </td>
+                                       </tr>
+                                            
+                                          <apex:repeat value="{!AllLoans}" var="loan">
+                                              <tr class="lightPistaGreen">
+                                                  <td style="text-align:left;">
+                                                      <apex:outputText value="{!loan.Loan_Type__c}" />
+                                                  </td>
+                                                  
+                                                  <td style="text-align:left;">
+                                                      <apex:outputText value="{!loan.Fixed_Floating__c}" />
+                                                  </td>
+                                                  
+                                                  <td style="text-align:left;">
+                                                       <apex:outputText value="{!loan.Entity__r.Name}" />
+                                                  </td>
+                                                  
+                                                  <td style="text-align:left;">
+                                                      <apex:outputText value="Monthly" />
+                                                  </td>
+                                                  
+                                                  <td style="text-align:left;">
+                                                       <apex:outputText value="{0,date,dd MMMM yyyy}">
+                                                        <apex:param value="{!loan.Next_EMI_Date__c}" /> 
+                                                       </apex:outputText>
+                                                  </td>
+                                                  
+                                                  <td style="text-align:right;">
+                                                     
+                                                        <apex:outputText value="{0,number,,000}">
+                                                              <apex:param value="{!loan.EMI__c}"/>
+                                                        </apex:outputText>
+                                                  </td>
+                                              </tr>
+                                              <tr height="10">
+                                                  <td colspan="6">
+                                                  </td>
+                                              </tr>
+                                           </apex:repeat>    
+                                        <tr>
+                                            <td colspan="6" class="boldStyle" style="background-color:#E0F8F7;text-align:left;">
+                                                SIP
+                                            </td>
+                                        </tr>        
+                                       
+                                        <apex:variable id="counter" value="{!1}" var="rowNum"/>    
+                                        <apex:repeat value="{!SipTracker}"  var="sip">
+                                             
+                                                                                              
+                                                            <tr id="theSip" name="sipRows" class="lightPistaGreen">
+                                                                
+                                                                <td width="140" style="text-align:left;">
+                                                                    <apex:outputText value="{!sip.Scheme__c}"/>
+                                                                </td>
+                                                                
+                                                                <td width="140" style="text-align:left;">
+                                                                    <apex:outputText value="{!sip.Folio_Number__c}"/>
+                                                                </td>
+                                                                
+                                                                <td width="140" style="text-align:left;">
+                                                                    <apex:outputText value="{!sip.Entity__r.Name}"/>
+                                                                </td>
+                                                                
+                                                                <td width="140" style="text-align:left;">
+                                                                    <apex:outputText value="{!sip.Frequency__c}"/>
+                                                                </td>
+                                                                
+                                                                <td width="140" style="text-align:left;">
+                                                                    <apex:outputText value="{0,date,dd MMMM yyyy}">
+                                                                    <apex:param value="{!sip.Due_Date__c}" /> 
+                                                                    </apex:outputText>
+                                                                </td>
+                                                                
+                                                                <td width="140" style="text-align:right;">
+                                                                  
+                                                                     <apex:outputText value="{0,number,,000}">
+                                                                          <apex:param value="{!sip.SIP_Amount__c}"/>
+                                                                    </apex:outputText>
+                                                                </td>
+                                                                
+                                                                
+                                                             </tr>
+                                                             <tr height="10">
+                                                                 <td colspan="6">
+                                                                 </td>
+                                                             </tr>
+                                                      
+                                        </apex:repeat>  
+                                                               
+                                        
+                                  </table>
+                         
+                               <!--- Commitment table ends here----> 
+                         
+                   
+                   
+                    
+                  </td>
+              </tr>
+             <!----section five ends here----->          
+                  
+        </table>
+        </div>
+     
+     </apex:define> 
+     </apex:composition>
+</apex:page>

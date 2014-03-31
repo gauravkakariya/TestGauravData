@@ -1,0 +1,8 @@
+<body >
+<div style="width:705px;background-color: #F3F7DE" >
+<img src="https://emea.salesforce.com/servlet/servlet.ImageServer?id=01520000000sZuh&oid=00DW00000012h2l"/>
+<div style="font-family:Book Antiqua;font-size:16px;height:30px;font-color:#000000;">
+<span style="padding-left:30px;">Dear {!Registration__c.Name},</span></div>
+<img src="https://emea.salesforce.com/servlet/servlet.ImageServer?id=01520000000sXdc&oid=00DW00000012h2l"/>
+</div>
+</body>

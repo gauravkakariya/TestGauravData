@@ -1,0 +1,85 @@
+<!-- 
+    Version     Version Author     Date           Comments
+    1.0         Anupam      27/12/2012         Added new column for Operations Member Team
+-->
+
+<apex:page controller="CreateWorkstationController" id="CreateWorkstation" action="{!Init}" tabStyle="Workstation__c"  sideBar="false">
+<apex:PageMessages id="pgMsg" />
+<apex:form id="frmCreateworkstation">
+	<!-- <apex:actionFunction action="{!FilterFinacialPlanner}" name="FinancialPlanner"/>
+		<script>
+        	function FilterFinacialPlanner() {
+        		FinancialPlanner();
+        	}
+        </script> -->
+ 	<apex:outputPanel id="pnlCreateworkstation">
+	 		<apex:pageBlock title="Create Workstation" id="pbCreateWorkstattion" >
+			<apex:actionStatus id="StatusWorkstation" startText="Processing...."/>
+				 	<apex:pageBlockTable id="pbtCreateWorkstation" style="width:100%" value="{!lstWorkstations}" var="workstation" >
+				 	     <apex:column headerValue="Financial Planner" width="15%" id="pbtcFinancialPlanners">
+			 	      		<apex:selectList value="{!workstation.Financial_Planner__c}" size="1" id="FinancialPlanners" style="font-size:12px;width:120px">
+			 	      		<apex:selectOptions value="{!FinancialPlanners}"/>
+			 	      		<apex:actionSupport event="onchange" action="{!AssignManager}" rerender="pbtCreateWorkstation,pgMsg" status="StatusWorkstation" oncomplete="FilterFinacialPlanner()">
+							</apex:actionSupport>
+							</apex:selectList>
+	                     </apex:column> 
+	                     
+	                	 <apex:column headerValue="Location" width="12%" id="pbtclocation">
+	                           <apex:inputField value="{!workstation.Location__c}" id="location" style="font-size:12px;width:120px" />	<!-- required="true" -->
+	                     </apex:column>
+	                     
+	                     <apex:column headerValue="Manager" width="13%" id="pbtcManager">
+	                            <apex:outputField value="{!workstation.Manager__c}" style="font-size:12px;width:120px" id="Manager"/> 
+	                    </apex:column>
+	                    
+	                    <apex:column headerValue="Business Developer" width="13%" id="pbtcBusinessDeveloper">
+	                         	 <apex:selectList value="{!workstation.Business_Developer__c}" multiselect="false"  size="1" style="font-size:12px;width:120px" id="BusinessDeveloper" >
+									<apex:selectOptions value="{!BusinessDeveloper}"/>
+								</apex:selectList>
+	                   </apex:column>
+	                   
+	                   <apex:column headerValue="Compliance" width="12%" id="pbtcCompliance"> 
+	                          <apex:selectList value="{!workstation.Compliance__c}" multiselect="false"  size="1" style="font-size:12px;width:120px" id="Compliance"  >
+							  <apex:selectOptions value="{!Compliance}"/>
+							  </apex:selectList>
+	                   </apex:column>
+	                   
+	                   <apex:column headerValue="Technology" width="15%" id="pbtcTechnology"> 
+	                         <apex:selectList value="{!workstation.Tech__c}" multiselect="false"  size="1" style="font-size:12px;width:120px" id="Technology">  
+						     <apex:selectOptions value="{!Tech}"/>
+							 </apex:selectList>
+	                  </apex:column>
+	                  
+	                  <apex:column headerValue="Member Engagement" width="15%" id="pbtcMemberEngagement">
+	                         <apex:selectList value="{!workstation.Member_Engagement__c}" multiselect="false"  size="1" style="font-size:12px;width:120px"  id="MemberEngagement">
+							 <apex:selectOptions value="{!MemberEngagement}"/>
+							 </apex:selectList> 
+	                 </apex:column>
+	                  
+	                 <apex:column headerValue="Operation Member Team" width="15%">
+	                         <apex:selectList value="{!workstation.Operations__c}" multiselect="false"  size="1" style="font-size:12px;width:120px" >
+							 	<apex:selectOptions value="{!lstOperationTeamMember}"/>
+							 </apex:selectList> 
+	                 </apex:column>
+	                 
+	                 <apex:column headerValue="Advisor" width="10%" id="pbtcAdvisor">
+	                         <apex:selectList value="{!workstation.Advisory__c}" multiselect="false"  size="1" style="font-size:12px;width:120px"  id="Advisor">
+							 <apex:selectOptions value="{!Advosor}"/>
+							 </apex:selectList> 
+	                 </apex:column>
+	                 
+         </apex:pageBlockTable>
+         
+			          <apex:pageBlockButtons location="bottom">
+                           <apex:commandButton value="Add New"  action="{!Addrow}"  style="margin-left:90px;" reRender="pbtCreateWorkstation,pgMsg"/>
+                           <apex:commandButton value="Remove"  action="{!Remove}" reRender="pbtCreateWorkstation,pgMsg" /> 
+                           <apex:commandButton value="Save"  action="{!Save}"  reRender="pbtCreateWorkstation,pgMsg"/>
+                           <apex:commandButton value="Close" action="{!Close}"  immediate="true"/>
+                     	</apex:pageBlockButtons><br/><br/>
+                     	
+                     	<apex:commandLink action="{!ViewWorkstation}" value="View all Workstations" id="cmdlViewworkstation"/>
+                     	
+             </apex:pageBlock>
+	</apex:outputPanel>    
+</apex:form>
+</apex:page>

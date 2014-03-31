@@ -1,0 +1,268 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="FPHouseview">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.NewsLatterImages,'images/top.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLatterImages,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td background="{!URLFOR($Resource.NewsLatterImages,'images/headbg.gif')}"><img src="{!URLFOR($Resource.NewsLatterImages,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.NewsLatterImages,'images/houseviewHIn.gif')}" width="132" height="40" /></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.NewsLatterImages,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.NewsLatterImages,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.NewsLatterImages,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Outlook  on Equity Market</em></strong></font></td>
+                          </tr>
+
+                            <tr>
+                              <td valign="top">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td valign="top">
+                                <p align="justify">
+                                	<font color="#333333" face="Arial, Helvetica, sans-serif" style="font-size:12px;">
+                                		With the equity  markets registering a weak performance over the last few months, investor  sentiment is low and most are looking to exit the market. During such periods  investors prefer to switch from equity instruments to debt based options which  attract comparatively lower risk. Some investors also prefer to opt for fixed  income based options like fixed deposits.
+                                	</font>
+                                </p>
+                                
+                                <p align="justify">
+                                	<font color="#333333" face="Arial, Helvetica, sans-serif" style="font-size:12px;">
+                                		However, while the tendency during this point is to exit the equity market, we would advise you to remain invested in the equity markets. We tell you why…  
+                                	</font></p>
+	                                <ul>
+	                                  <li>
+	                                    	<div align="justify">
+	                                    		<font color="#333333" face="Arial, Helvetica, sans-serif" style="font-size:12px;" align="justify">
+	                                    			<strong>Base it on your financial plan</strong><br />
+	                                      			Most of the investments that we advise our clients to make are based on a financial plan with specific goals. Hence, when one is working towards attaining the financial goal, the focus should continue to remain on the long term plan rather than short term changes.
+	                                      		</font><br />&nbsp;&nbsp;
+	                                      	</div>
+	                                  </li>
+	                                  <li>
+	                                    	<div align="justify">
+	                                    		<font color="#333333" face="Arial, Helvetica, sans-serif" style="font-size:12px;" align="justify"> 
+	                                    			<strong>Good time to enter the market</strong><br />
+	                                      			The current valuations of equity stocks make them an attractive proposition. Since many stocks are trading at a discount, one can enter the market at a lower rate. While some may be concerned about the markets moving further southwards, it is difficult to time the markets. Hence, it is time in the market which is more important than timing the market
+	                                      		</font><br />&nbsp;&nbsp;
+	                                      	</div>
+	                                  </li>
+	                                  
+	                                  <li>
+	                                    	<div align="justify">
+	                                    		<font color="#333333" face="Arial, Helvetica, sans-serif" style="font-size:12px;" align="justify"> 
+	                                    			<strong>Equity only for long term</strong><br />
+	                                      			Given the volatility of equity markets, your short term financial goals are unlikely to rely on equity based investments. And from a long term perspective, the outlook towards the equity markets remains positive, helping you get sustained growth. Based on your goal your financial planner assigns asset allocation which helps you gets you get exposure into equity fixed income goals, of which equity as a long term goal.
+	                                      		</font>
+	                                      	</div>
+	                                  </li>
+	                                </ul>                                
+	                                	<p align="justify">
+	                                		<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">
+	                                			Following a disciplined approach, with the help of compounding can gain higher returns when investing for a long term plan. Investing in a disciplined fashion results in a more consistent increase in the total asset value. <br>
+	                                			</br><br/> The purpose of a good financial plan is to make sure that irrespective of your goals, it would come true using the right tools and products. And the equity market, on the whole, can help in that direction.
+	                                		</font>
+	                                	</p>
+	                            </td>
+                            </tr>
+                            <tr>
+                              <td valign="top">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td valign="top">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Revision  of Repo rates by RBI</em></strong></font></td>
+                            </tr>
+                            <!-- <tr>
+                              <td valign="top">&nbsp;</td>
+                            </tr>  -->
+                            <tr>
+                              <td valign="top">
+	                              <p align="justify">
+	                              	<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">
+	                              		Recently, the Reserve Bank of India (RBI), has hiked the Repo Rate and Reverse Repo by 25 basis points to 7.50% pa and 6.50% pa respectively while there has been no change to the CRR.
+	                              	</font>
+	                            	</p>
+                                	<p align="justify">
+                                		<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">
+                                			The hike comes close post the RBI’s annual monetary policy review on May 3, 2011, when it raised the Repo Rate by 50 basis points and the Reverse Repo Rate by 50 basis points to 7.25% pa and 6.25% pa respectively. (Repo Rate is the rate at which RBI provides liquidity to the commercial banks while Reverse Repo Rate is the rate earned by banks on the excess liquidity parked with RBI). The savings rate has been hiked from 3.5% pa to 4% pa while both the CRR and Bank Rate had been left unchanged at 6% during this review too.
+                                		</font>
+                                	</p>
+                                	<p align="justify">
+                                		<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">
+                                			As a result of the recent hikes in the rates by RBI, loans are set to become more expensive, with most banks preparing to increase their lending rates after the Reserve Bank of India (RBI) raised key policy rates for the 10th occasion in 15 months as illustrated in the table below - 
+                                		</font>
+                                	</p>
+                                <table width="80%" border="1" align="center" cellpadding="3" cellspacing="0" bordercolor="#ededed" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333">
+                                  <tr align="center">
+                                    <td colspan="5" valign="top" bgcolor="#f6f6f6"><div align="center"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Rate Rises In 2010-11</strong></font></div></td>
+                                    </tr>
+                                  <tr>
+                                    <td align="center" valign="top"><strong>Date </strong></td>
+                                    <td align="center" valign="top"><strong>Reverse    Repo (in %) </strong></td>
+                                    <td align="center" valign="top"><strong>Change (in bps) </strong></td>
+                                    <td align="center" valign="top"><strong>Repo (in %) </strong></td>
+                                    <td align="center" valign="top"><strong>Change (in bps)</strong></td>
+                                  </tr>
+                                  <tr>
+                                    <td align="center" valign="top"><strong>20-Apr-10</strong></td>
+                                    <td align="center" valign="top">3.75</td>
+                                    <td align="center" valign="top">25</td>
+                                    <td align="center" valign="top">5.25</td>
+                                    <td align="center" valign="top">25</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="center" valign="top"><strong>02-Jul-10</strong></td>
+                                    <td align="center" valign="top">4.00</td>
+                                    <td align="center" valign="top">25</td>
+                                    <td align="center" valign="top">5.50</td>
+                                    <td align="center" valign="top">25</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="center" valign="top"><strong>27-Jul-10</strong></td>
+                                    <td align="center" valign="top">4.50</td>
+                                    <td align="center" valign="top">50</td>
+                                    <td align="center" valign="top">5.75</td>
+                                    <td align="center" valign="top">25</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="center" valign="top"><strong>16-Sep-10</strong></td>
+                                    <td align="center" valign="top">5.00</td>
+                                    <td align="center" valign="top">50</td>
+                                    <td align="center" valign="top">6.00</td>
+                                    <td align="center" valign="top">25</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="center" valign="top"><strong>02-Nov-10</strong></td>
+                                    <td align="center" valign="top">5.25</td>
+                                    <td align="center" valign="top">25</td>
+                                    <td align="center" valign="top">6.25</td>
+                                    <td align="center" valign="top">25</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="center" valign="top"><strong>16-Dec-10</strong></td>
+                                    <td align="center" valign="top">5.25</td>
+                                    <td align="center" valign="top">0</td>
+                                    <td align="center" valign="top">6.25</td>
+                                    <td align="center" valign="top">0</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="center" valign="top"><strong>25-Jan-11</strong></td>
+                                    <td align="center" valign="top">5.50</td>
+                                    <td align="center" valign="top">25</td>
+                                    <td align="center" valign="top">6.50</td>
+                                    <td align="center" valign="top">25</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="center" valign="top"><strong>17-Mar-11</strong></td>
+                                    <td align="center" valign="top">5.75</td>
+                                    <td align="center" valign="top">25</td>
+                                    <td align="center" valign="top">6.75</td>
+                                    <td align="center" valign="top">25</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="center" valign="top"><strong>03-May-11</strong></td>
+                                    <td align="center" valign="top">6.25</td>
+                                    <td align="center" valign="top">50</td>
+                                    <td align="center" valign="top">7.25</td>
+                                    <td align="center" valign="top">50</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="center" valign="top"><strong>16-Jun-11</strong></td>
+                                    <td align="center" valign="top">6.50</td>
+                                    <td align="center" valign="top">25</td>
+                                    <td align="center" valign="top">7.50</td>
+                                    <td align="center" valign="top">25</td>
+                                  </tr>
+                                </table>
+                                <p align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">
+                                	<strong>Way forward &amp; Products to focus on</strong><br /> 
+                                  	The banking system is likely to witness pressure on its profitability due to the changes in the credit policy. It is likely that banks will increase both deposit rates as well as lending rates in a gradual manner. Therefore, it makes sense to remain invested in low duration funds at the moment and wait for money market rates to peak out in the next three to six months before seeking to extend the duration of investments.
+                                  	</font></p>
+                                <p align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">
+                                	While we may be nearing the end of the tightening cycle for interest rates, it would be advisable to remain away from interest rate sensitive at this juncture.  As a part of your financial plan, the focus should clearly be on short term accrual like strategies provided by liquid plus funds and/or lock in Fixed Maturity Plans (FMP) kind of strategies. FMPs would be a very good option for investors not wanting significant interest rate exposure and at the same time looking for a 1 year investment avenue.
+                                	</font></p>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                              <td valign="top">&nbsp;</td>
+                            </tr>
+
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.NewsLatterImages,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLatterImages,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLatterImages,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLatterImages,'images/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLatterImages,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLatterImages,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLatterImages,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.NewsLatterImages,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.NewsLatterImages,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLatterImages,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td><img src="{!URLFOR($Resource.NewsLatterImages,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+</apex:page>

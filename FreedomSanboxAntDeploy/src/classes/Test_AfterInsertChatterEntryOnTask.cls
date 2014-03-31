@@ -1,0 +1,24 @@
+@isTest
+private class Test_AfterInsertChatterEntryOnTask {
+
+    static testMethod void autoChatterEntryTest()
+    {
+    	UserRole ur = [select Id, Name from UserRole where Name = 'Tech' ];
+        User u = [select Id from User where UserRoleId = :ur.Id  limit 1];
+        System.runas(u){ 
+    	List<Task> lstTask = new List<Task>();
+        Task objTask = new Task();
+        objTask.Subject = 'Call';
+        objTask.Priority = 'Normal';
+        objTask.Status = 'Planned';
+        objTask.Description = 'Test Comments';
+        insert objTask;
+        FeedPost objFeedPost = new FeedPost();
+        objFeedPost.ParentId = u.Id; 
+		objFeedPost.Type = 'TextPost';
+		objFeedPost.Body = ' has created ' + objTask.Subject +  ' task.';
+		insert objFeedPost;
+        }
+        
+    }
+}

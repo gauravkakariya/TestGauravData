@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Earning more than 5 lakhs- E-filing is comppulsory-22nd July</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Earning more than 5 lakhs- E-filing is comppulsory-22nd July</name>
+    <style>none</style>
+    <subject>Earning more than 5 lakhs- E-filing is comppulsory</subject>
+    <textOnly>Earning more than 5 lakhs – E-filing is compulsory
+Sudhir Kaushik – Appeared in Taxspanner.com
+
+Out of the 4 crore income tax returns (ITRs) filed during the financial year 2011-12, 1.64 crore and 2.15 crore in 2012-13 were filed online. Majority of these were voluntary e-filers. This acceptance of the facility has made the government confident to make it mandatory for people with more than Rs. 5 lakh of total income (includes income from salary, professional, rental, capital gain on shares/property etc., business, interest on deposits or any other source).
+
+Although e-filing has been made mandatory for individuals having total income above Rs. 5 lakh, they are not required to use digital signature.
+
+What’s your status for Assessment Year 2013-14
+
+Source of incomeTotal IncomeEfiling mandatoryDSC required
+Salary, interest, capital gain, rental income, professional or business income Rs. 5 lakh and above Yes No
+Salary, interest, capital gain, rental income, professional or business income below Rs. 5 lakh No No
+Professional or contract employees Rs. 25 lakh and above Yes Yes
+Professional  or  contract employees below Rs. 5 lakh  No No
+Business income or  F &amp; O  Gross receipts below Rs. 100 lakh  No  No
+Business income or F &amp; O Gross receipts above Rs. 100 lakh  Yes Yes
+
+
+If we analyze the reasoning of the government around this measure, this step can be seen as a pilot run for making online filing of ITR mandatory for all taxpayers. The I-T Department may have started with the section of people earning more than Rs. 5 lakh as the amount of refund claimed by them is high. Hence, making them efile mandatory will prevent any delay in paying back this amount. That way, government will save on the interest amount paid by it to taxpayers who have paid more tax than due.
+
+Moreover, the general direction of the Income Tax Department indicates that the complete process of filing ITR and after-filing procedures will be made electronic. The department has already mandated for TDS deductors, the download of Form 16 and 16A from NSDL website.
+
+Digital signature is compulsory for
+From Assessement year 2013-14, e-filing with digital signature has been mandatory for:
+
+-  individuals having business income with receipts of Rs.100 lakhs
+-  professionals with income of Rs. 25 lakh
+Why E-file?
+
+Efiling is anyway the simplest way to file your ITR. All electronically filed returns are processed on priority basis at the I-T Department&apos;s Centralized Processing Centre at Bangalore. Thus, refunds are issued faster on e-filed returns. E-filing is a much more streamlined process than paper-filing and is also more environment-friendly.
+
+
+If you need help with e-filing your returns get in touch with us at kiran.n@ffreedom.in or 9820280114</textOnly>
+    <type>custom</type>
+</EmailTemplate>

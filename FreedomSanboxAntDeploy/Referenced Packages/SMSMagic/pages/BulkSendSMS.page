@@ -1,0 +1,45 @@
+<apex:page controller="smagicbasic.BulkSMSController"  tabStyle="SM_Home__tab">
+<apex:includeScript value="/soap/ajax/15.0/connection.js"/>
+<apex:includeScript value="/soap/ajax/15.0/apex.js"/>
+<apex:includeScript value="{!$Resource.smagicbasic__BulkSMSJS}"/>
+<apex:form >
+<apex:pageBlock id="main" title="Compose New SMS for Selected Contacts" helpTitle="Help For this Page?" helpUrl="/apex/SMSMagic_Help?from=BulkSendSMS">
+<apex:pageMessages /><br/>
+
+<apex:pageBlockSection id="sectionSenderId" title="Sender Id" rendered="{!isRegistered}" >
+    <apex:selectList size="1"  value="{!senderId}">
+    	<apex:selectOptions value="{!senderIds}"/>
+    </apex:selectList>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection columns="2" title="Selected Numbers" rendered="{!isRegistered}">    
+	<apex:pageBlockTable value="{!smsObjects}" var="item">
+		<apex:column value="{!item.smagicbasic__Name__c}"/>
+		<apex:column value="{!item.smagicbasic__PhoneNumber__c}"/>
+		<apex:column value="{!item.smagicbasic__ObjectType__c}"/>
+	</apex:pageBlockTable>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="Use Templates" rendered="{!isRegistered}">
+	<apex:selectList value="{!template}" size="1" title="Choose a template" >
+	    <apex:actionSupport event="onchange" rerender="textSection" action="{!changeTemplateText}" />
+	    <apex:selectOptions value="{!items}"/>
+	</apex:selectList>
+</apex:pageBlockSection>
+ 
+<apex:pageBlockSection id="textSection" columns="2" title="SMS Text" rendered="{!isRegistered}">   
+	<apex:inputTextArea id="SMSText"  style="width:400px;height:80px;" value="{!smsText}"/>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection id="optOut" columns="1" title="Do not Send SMS to Optout members" rendered="{!isRegistered}">   
+	<apex:inputCheckbox id="optOutChkbox" value="{!isOptOut}" />
+</apex:pageBlockSection>
+
+<apex:pageBlockButtons >
+	<apex:commandButton action="{!send}" value="send" disabled="{!IF (disableMe,true, false)}" rendered="{!isRegistered}"/>
+	<apex:commandLink action="{!cancel}" value="[back]" />
+</apex:pageBlockButtons>
+
+</apex:pageBlock>
+</apex:form>
+</apex:page>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ReminderOn3rdDay</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>ReminderOn3rdDay</name>
+    <style>none</style>
+    <subject>Ffreedom Day Coming in 3 days!!!</subject>
+    <textOnly>Dear {!Registration__c.Name},
+
+“All the world is a laboratory to the inquiring mind”
+– Martin Fischer.
+
+We are Happy that many an inquiring minds who believe in their dreams and want to take charge of their finances, are turning towards Ffreedom Day as their laboratory.
+
+Ffreedom Day Laboratory will be open to its members on Sunday the 22nd of August 2010 at Hotel Novotel [erstwhile Holiday Inn] Juhu.
+
+Each Ffreedom Family Memberparticipatingat the Ffreedom Day is attending with a reason, a purpose, that being ‘To Listen, To Explore, To Question, To Answer &amp; To Collaborate’.
+
+To help them with their purposewe shall have short ‘Ffreedom Talks’ by some of the leading speakers in their respective fields.
+
+To give you a glimpseabout flow of events during the Ffreedom Day we have herein mentioned the Program Schedule for your convenience.
+
+Program Schedule
+
+10.30 - 11.00 am	Registration 	(with Tea, Coffee &amp; Refreshments)
+11.00 – 11.15 am	Opening Ceremony	
+Ffreedom Talks on Happiness
+11.30 – 12.15 pm	Innovation Towards Happiness	Mr Bhupendar Sharma
+[ CEO of nxtlyf and Strategic Innovation Consultant ]
+
+	From GDP (Gross Domestic Product) to 
+GNH (Gross National Happiness)	Ms Rajni Bakshi
+[ Author of Bazaars, Conversations and Freedom ]
+
+Ffreedom Talks on Dreams
+12.15 – 1.00 pm	Just dial – My Dream	Mr. V S S Mani [ CEO of Just dial ]
+
+	A Musical Dream	Mr. Brahmanand Singh [ Film-maker and Wirter ]
+
+Ffreedom Talks on Financial Freedom
+1.00 – 1.35 pm	Panel Discuss on Financial Freedom	Moderator: Mr.    Bhupendra Sharma 
+Panelists – Sandeep Narang &amp; Family, Tulika Upadhyay &amp; Family
+                      Niraj Shah &amp; Family  
+1.30 - 01.45 pm	Closing Ceremony	
+1.45 pm onwards	Lunch &amp; Cocktail	
+
+3 Days to go…. Ffreedom day is coming…..
+Looking forward to meet you &amp; your Family at the event.
+
+Best Regards,
+Ffreedom team.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

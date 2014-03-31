@@ -1,0 +1,368 @@
+<!--					
+	Revision History:
+	
+    Version     Version Author     Date        Comments
+    1.0         --           	   --	  		Initial Draft
+    2.0			Manasi Ranade     14/12/2011    Issue ID:FS0349: Used existing Goal from 'goalMappingBean.goalobj'
+    											instead of 'objSelectedGoal'.-->
+<apex:page id="GoalCalculationPage" controller="GoalController" showHeader="false" standardStylesheets="true">
+	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-1.9.1.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-ui.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.ckeditor, 'ckeditor/ckeditor.js')}"></script>
+	
+<!--  	 <script> 
+	     $(document).ready(function(){
+	
+	         CKEDITOR.on('instanceReady', function(e) {
+	             if (e.editor.config.magic) 
+	                return;
+	             var target = e.editor.config.bodyId;
+	            var name = e.editor.name;
+	             e.editor.destroy();
+	
+	             CKEDITOR.editorConfig = function( config ) { config.magic = true; }
+	             CKEDITOR.replace(name, {
+	                         height : 300, 
+	                         bodyId : target
+	             });
+	         });
+	     });
+	
+	</script>
+	-->
+	<style>
+        .DataTableEven  { background-color:#FFFFFF; }
+        .DataTableOdd    { background-color:#CEF6CE; }
+        .goalPopupForeground {
+                background-color: white;
+                border-width: 2px; 
+                border-style: solid;
+                z-index: 1;
+                padding:1px;
+                position: absolute;
+                width: 30%;
+                margin-left:170px;
+                top:30px; 
+		}
+	</style>
+	<script>
+	
+		var curPopupWindow;
+		function showAllocationOrder(goalId)
+		{
+			url = 'AllocatedAssetSequence?gid='+ goalId;
+			openRelatedWindow(url);
+			return false;
+		}
+		function openRelatedWindow(URL)
+		{
+			if(curPopupWindow != null)
+			{	
+				curPopupWindow.close();
+				curPopupWindow  = window.open(URL, "_blank","width=750, height=400,dependent=no,toolbar=no,status=no,directories=no,menubar=no,scrollbars=1,resizable=yes", true);
+			}
+			else
+				curPopupWindow  = window.open(URL, "_blank","width=750, height=400,dependent=no,toolbar=no,status=no,directories=no,menubar=no,scrollbars=1,resizable=yes", true);
+		} 	
+		function closeWindow()
+		{
+			curPopupWindow.close();
+		} 
+		
+	function selectYear()
+	{
+	    var d = '{!planGenerationDate}'//new Date();
+	    //alert(d);
+	    var v = '{!sipYear}';
+	    if(v == '') 
+	    	document.getElementById('GoalCalculationPage:j_id3:j_id6:GoalCalculationForm:goal:goalDetailId:SIPStartYearId').value = d;
+	    	//d.getFullYear();
+	    	//document.getElementById('GoalCalculationPage:j_id3:j_id6:GoalCalculationForm:goal:goalDetailId:SIPStartYearId').value = d.getFullYear();
+	};
+	
+		
+	</script>                
+    <apex:stylesheet value="{!$Resource.FFStyle}"/>
+    <apex:includeScript value="{!$Resource.ffreedomJavascript}"/>
+
+
+    <apex:composition template="TabPage"><!-- Check Id for SelectYear Function as hard coded Id is used - j_id3:j_id6 -->
+        <apex:define name="contents">
+            <apex:pageMessages rendered="true" id="pageMsg"/>
+            <apex:form id="GoalCalculationForm">
+                <apex:outputPanel id="MainGoalCalculationPanel">
+                    <apex:pageBlock tabStyle="Account"><!-- id="goal" -->
+	                    <div style="margin:bottom:20px; width:50%;margin-left:10px;">
+		                    <apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;  background-image:none;background-color:#A9C5EB !important; font-size:11px !important;padding-top:4px; padding-bottom:4px;" />
+		                    <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+		                    <apex:outputLabel value="Goals" styleclass="button" style=" width:10%;margin-left:20px;  background-image:none;background-color:#A9C5EB !important;font-size:11px !important; padding-top:4px; padding-bottom:4px;" />
+		                    <apex:image id="theImage2" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+		                    <apex:outputLabel id="theCommandLink2" styleclass="button" value="{!goalMappingBean.goalObj.Description__c}"  style="margin-left:20px; background-image:none;background-color:#F5D0A9!important;font-size:11px !important;padding-top:4px; padding-bottom:4px;"  />
+		                    <apex:commandButton id="theCommandLink1" styleclass="button" value="Output" action="{!output}" style="margin-left:20px; background-image:none;background-color:#A9C5EB !important; " reRender="goalOutputForm"/>
+	                    </div>
+						<apex:outputPanel id="goal">
+	                    <apex:pageBlockSection id="goalDetailId">
+	                        <apex:outputField id="goalType"  value="{!goalMappingBean.goalObj.Goal_Type__c}"
+	                                            styleClass="standardFontStyle"/>
+	                        <apex:outputField id="goalDesc" value="{!goalMappingBean.goalObj.Description__c}"  
+	                                            styleClass="standardFontStyle" style="height:18px;"/>
+	                        <apex:pageBlockSectionItem >
+	                            <apex:outputLabel >Goal Amount</apex:outputLabel>
+	                            <apex:outputText id="goalAmount" value="{0, number, ,##,##0}" >
+	                                <apex:param value="{!goalMappingBean.goalObj.Cost_of_Goal_Annual__c}"/> 
+	                            </apex:outputText>                              
+	                        </apex:pageBlockSectionItem>                                                                                    
+	                        <apex:outputField id="inflationRate" value="{!goalMappingBean.goalObj.Inflation_Rate__c}"  
+	                                            styleClass="standardFontStyle" style="height:18px;"/>
+	                                            
+	                        <apex:pageBlockSectionItem >
+	                            <apex:outputLabel >Saving Type</apex:outputLabel>                    
+								<apex:selectList size="1" value="{!goalMappingBean.goalObj.Saving_type__c}"  multiselect="false">
+									<apex:selectOptions value="{!savingTypeList}">
+									</apex:selectOptions>                                               
+								</apex:selectList>
+							</apex:pageBlockSectionItem> 																					                                                
+	                        <apex:pageBlockSectionItem >
+	                            <apex:outputLabel >Goal profile</apex:outputLabel>
+	                            <apex:selectList size="1" value="{!goalMappingBean.goalObj.SelectedGoalProfile__c}"  multiselect="false">                               
+	                                <apex:selectOptions value="{!goalMappingBean.goalProfileList}">
+	                                </apex:selectOptions>                                               
+	                            </apex:selectList> 
+	                        </apex:pageBlockSectionItem> 
+	                        <apex:inputCheckbox value="{!goalMappingBean.goalObj.Include_SIP__c}"/>    
+<!-- 	                        <apex:outputPanel rendered="{!!isDisplayCustomRiskProfile}"> -->
+			                    <apex:inputField value="{!goalMappingBean.goalObj.Risk_Profile__c}" rendered="{!!isDisplayCustomRiskProfile}">    
+	                    	 		<apex:actionSupport event="onchange" rerender="goal,pageMsg" action="{!GoalProfilePicklist}" status="topStatus"/>
+	                    	 		<apex:actionStatus stopText="" id="topStatus">
+						                <apex:facet name="start">
+						               		<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+						                    	<img src="/img/loading.gif" width="16" height="16"/>
+											</apex:outputPanel>
+						                </apex:facet>
+				           		 	</apex:actionStatus>   
+	                       		</apex:inputField>
+<!--                        		</apex:outputPanel> -->
+                       		 <apex:pageBlockSectionItem rendered="{!isDisplayCustomRiskProfile}">
+<!-- 	                       		 <apex:outputPanel rendered="{!isDisplayCustomRiskProfile}"> -->
+		                            <apex:outputLabel >Risk profile</apex:outputLabel>
+		                            <apex:selectList size="1" value="{!goalMappingBean.goalObj.Risk_Profile__c}"  multiselect="false">                               
+		                                <apex:selectOptions value="{!CustomRiskProfile}">
+		                                </apex:selectOptions>  
+		                                <apex:actionSupport event="onchange" rerender="goal,pageMsg" action="{!GoalProfilePicklist}" status="topStatus"/>
+		                    	 		<apex:actionStatus stopText="" id="topStatus">
+							                <apex:facet name="start">
+							               		<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+							                    	<img src="/img/loading.gif" width="16" height="16"/>
+												</apex:outputPanel>
+							                </apex:facet>
+					           		 	</apex:actionStatus>                                                
+		                            </apex:selectList> 
+<!-- 	                            </apex:outputPanel> -->
+	                        </apex:pageBlockSectionItem> 
+	                        
+<!-- 			               Prajakta - Fp Changes -->          		
+                       		<apex:selectList value="{!goalMappingBean.goalObj.SIP_Start_Year__c}"
+			                				size="1" label="Investment Start Year" 
+			                				id="SIPStartYearId" >  <!-- Prajakta - FP Changes 2 - 06-05-2013 - Changes "SIP" to "Investment" -->
+							    <apex:selectOptions value="{!SipStartYear}"/> 
+							</apex:selectList>
+							<br/>
+	                        <!-- FS0309 -->
+							
+	                    </apex:pageBlockSection> 
+                    	</apex:outputPanel>
+                    			<apex:outputLabel >{!$ObjectType.Goal__c.fields.Remark__c.label}</apex:outputLabel>
+			                	<apex:inputField id="goalRemark" value="{!goalMappingBean.goalobj.RichText_Remark__c}" styleClass="ckeditor" />
+                    	
+<!--                         <apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+						<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+                            <input type="button" class="btn" value="Allocation order" onclick="return showAllocationOrder('{!$CurrentPage.parameters.goalId}');" />
+                            <apex:commandButton id="saveProfile" value="Calculate" action="{!Save}" styleClass="standardFontStyle" 
+                              							style="margin-left:390px;" rerender="pageBlockTargetAmount,pageMsg,sipDataId" status="topStatus__1"/>
+                             <apex:actionStatus stopText="" id="topStatus__1">
+				                <apex:facet name="start">
+				               		<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+				                    	<img src="/img/loading.gif" width="16" height="16"/>
+									</apex:outputPanel>
+				                </apex:facet>
+			           		 </apex:actionStatus>   							
+                            <apex:commandButton id="customized" value="Customized Allocation" action="{!customized}" styleClass="standardFontStyle" style="margin-left:208px; margin-top:15px; margin-bottom:15px;" />
+                    	</apex:outputPanel>
+                    </apex:pageBlock>   
+                     
+                    <apex:pageBlock id="pageBlockTargetAmount" >      
+                       <apex:pageBlockSection >
+							<!--   	table to display Goal Year and Target Amount   -->
+                            <apex:pageBlockTable value="{!goalMappingBean.goalDetailBeanList}" var="goalDetail" style="border:1px solid;border-right:1px solid; border-color:gray; border-style:thin;" >
+                                <apex:column rendered="{!IF(goalDetail.targetAmount == 0.0, false, true)}" value="{!goalDetail.goalEndYear}" width="50%;" style="border-right:1px solid; border-color:gray; border-style:thin; text-align:right;">                                    
+                                    <apex:facet name="header">Goal Year</apex:facet>
+                                </apex:column>
+                                <apex:column rendered="{!IF(goalDetail.targetAmount == 0.0, false, true)}" style="border-right:0px solid; border-color:gray; border-style:thin;  text-align:right;">
+                                    <apex:facet name="header">Target Amount</apex:facet>
+                                    <apex:outputText id="targetAmount" value="{0, number, ,##,##0}" >
+                                        <apex:param value="{!goalDetail.targetAmount}"/> 
+                                    </apex:outputText>                                                                                                                                      
+                                </apex:column>                           
+                            </apex:pageBlockTable>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock> 
+               </apex:outputPanel>   
+                                  
+               <apex:outputPanel id="PopupPanel" >
+                   <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/>
+                   <apex:outputPanel styleClass="goalPopupForeground" layout="block" rendered="{!displayPopUp}" id="innerPanel">
+                       <apex:pageMessages rendered="true" /> 
+                       <apex:pageBlock id="GoalCalcPage">
+	                       <div>
+                               <apex:outputLabel value="Goal Allocation Year customization" style="white-space:none; font-weight:bold; font-size:16px;">
+                               </apex:outputLabel>
+                               <hr/>
+	                       </div>
+                           <apex:pageBlockSection columns="1" >
+                                <apex:inputField id="aggressiveProfileYears" value="{!goalMappingBean.goalObj.aggressive_profile_years__c}"  
+                                        styleClass="standardFontStyle" style="white-space:none;"/>
+                                <apex:inputField id="moderatelyaggressiveProfileYears" value="{!goalMappingBean.goalObj.moderately_aggressive_profile_years__c}"  
+                                        styleClass="standardFontStyle" style="white-space:none;"/>                                                                                
+                                <apex:inputField id="moderateProfileYears" value="{!goalMappingBean.goalObj.moderate_profile_years__c}"  
+                                        styleClass="standardFontStyle" style="white-space:none;"/>
+                                <apex:inputField id="moderatelyConservativeProfileYears" value="{!goalMappingBean.goalObj.moderately_conservative_profile_years__c}"  
+                                        styleClass="standardFontStyle" style="white-space:none;"/>
+                                <apex:inputField id="conservativeProfileYears" value="{!goalMappingBean.goalObj.conservative_profile_years__c}"  
+                                        styleClass="standardFontStyle"/>                                                                        
+                            </apex:pageBlockSection>
+                                                                                           
+                            <!-- <apex:actionStatus stopText="" id="counterStatusData">
+                                <apex:facet name="start">                
+                                    <apex:outputPanel style="padding-left:45%;">
+                                        <apex:image value="{!$Resource.loading_image}" width="3%" height="3%"/>
+                                    </apex:outputPanel>
+                                </apex:facet>
+                            </apex:actionStatus>             
+	                            -->
+                            
+	                        <apex:commandButton value="Save" action="{!save}" reRender="MainGoalCalculationPanel,PopupPanel" style="margin-left:120px;" />
+	                        <apex:commandButton value="Cancel" action="{!cancel}" reRender="PopupPanel"  />                                                                            
+                       	</apex:pageBlock>
+                	</apex:outputPanel>
+            	</apex:outputPanel>         
+            </apex:form>   
+           
+			<!--            SIP Detail table      -->
+			<apex:outputPanel id="sipDataId">
+            <div id="1234" >
+            	<table id="common" width="100%;">
+                	<tr>
+                    	<td style="width:50%;">    
+                        	<table id="SIPTable" border="1" width="90%" cellpadding="0" cellspacing="0" style="margin-bottom:19px;" >
+                            	<tr>
+                                   <th colspan="4" style="background-color:#FFFFFF;">SIP </th>
+                                </tr>
+                                <tr>
+                                   <th style="text-align:center;"> 
+                                       Equity
+                                   </th>
+                                   <th style="text-align:center;"> 
+                                       Debt
+                                   </th>
+                                   <th style="text-align:center;"> 
+                                       Gold
+                                   </th>
+                                   <th style="text-align:center;"> 
+                                       Total
+                                   </th>                   
+                                </tr>       
+                                <apex:repeat value="{!goalMappingBean.getSIPDetails}" var="sip">
+                                   <tr>
+                                        <td style="text-align:right;">
+                                           <apex:outputText id="equityAmount" value="{0, number, ,##,##0}" >
+                                               <apex:param value="{!sip.equityAmount}"/> 
+                                           </apex:outputText>                                                                                                  
+                                        </td>
+                                        <td style="text-align:right;">
+                                           <apex:outputText id="debtAmount" value="{0, number, ,##,##0}" >
+                                               <apex:param value="{!sip.debt}"/> 
+                                           </apex:outputText>                                                                                                                                  
+                                        </td>
+                                        <td style="text-align:right;">
+                                           <apex:outputText id="gold" value="{0, number, ,##,##0}" >
+                                               <apex:param value="{!sip.gold}"/> 
+                                           </apex:outputText>                                                                                                                                                                  
+                                        </td>
+                                        <td style="text-align:right;">
+                                           <apex:outputText id="total" value="{0, number, ,##,##0}" >
+                                               <apex:param value="{!sip.totalValue}"/> 
+                                           </apex:outputText>                                                                                                                                                                  
+                                        </td>
+                                    </tr>                           
+                                </apex:repeat>      
+                        	</table>
+                        </td>
+                        <td style="width:40%;"> 
+                        	<div style="overflow:auto; width:455px;">     
+                                <table id="PVFVTable" border="1" width="40%" cellpadding="0" cellspacing="0" style="border-style:thin;">
+                                    <tr>
+                                        <th colspan="30" style="background-color:#FFFFFF;"> PV and FV </th>
+                                    </tr>
+                                    <tr>
+                                        <apex:repeat value="{!goalMappingBean.headerList}" var="header">
+                                            <th style="text-align:center;">
+                                                {!header}
+                                            </th>
+                                        </apex:repeat>
+                                    </tr>
+                                    <apex:repeat value="{!goalMappingBean.getPresentFutureValueList}" var="dataList">
+                                        <apex:repeat value="{!dataList}" var="data">
+                                            <tr>        
+                                                <td style="text-align:right;">{!data.linkField} </td>
+                                                <apex:repeat value="{!data.fieldList}" var="field">
+                                                    <td style="text-align:right;">
+                                                        <apex:outputText id="field" value="{0, number, ,##,##0}" >
+                                                            <apex:param value="{!field}"/> 
+                                                        </apex:outputText>                                  
+                                                    </td>
+                                                </apex:repeat>
+                                            </tr>                           
+                                        </apex:repeat>                      
+                                    </apex:repeat>
+                                </table> 
+                            </div>
+                        </td>
+                     </tr>
+                 </table> 
+             </div>  
+           </apex:outputPanel>                                                   
+    	</apex:define>
+    </apex:composition>   
+    <script>
+    <!-- This is for styling alternate rows of SummaryTable -->
+        function altRows(id)
+        {
+           // alert('hello'+id);
+            if(document.getElementsByTagName)
+            {  
+                var table = document.getElementById(id);  
+                var rows = table.getElementsByTagName("tr"); 
+                for(i = 1; i < rows.length; i++)
+                {  
+                    if(i % 2 == 0)
+                    {
+                        rows[i].className = "DataTableEven";
+                    }
+                    else
+                    {
+                        rows[i].className = "DataTableOdd";
+                    }      
+                }
+            }
+           
+        }
+        
+   //     window.onload = altRows('PVFVTable'); altRows('SIPTable');  selectYear();
+        window.onload =  function(){
+           altRows('PVFVTable');
+            altRows('SIPTable');  
+            selectYear();
+        };
+        
+    </script>
+</apex:page>

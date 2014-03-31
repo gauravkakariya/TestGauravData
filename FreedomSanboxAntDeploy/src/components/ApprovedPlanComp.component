@@ -1,0 +1,645 @@
+<!--/*
+    Revision History:
+    
+    Version     Version Author     Date         Comments
+    1.0         Persistent         NA           Initial Draft
+   
+    2.0         Manasi Ranade      13/12/2011   Issue ID : FS0290: Hide button if ET is already generated for current entity
+    2.0         Manasi Ranade      3/1/2012     Issue ID : FS0397: Removed the INR from from Currency field
+*/ -->
+<apex:component allowDML="true" controller="ApprovedPlanController">
+
+    <apex:form >
+        <style>
+.DataTableEven {
+    background-color: #FFFFFF;
+}
+
+.DataTableOdd {
+    background-color: #E4FBC5;
+}
+</style>
+        <apex:stylesheet value="{!$Resource.FFStyle}" />
+        <apex:pageBlock tabStyle="account">
+            <apex:pageMessages />
+            <div style="margin: bottom:20px; width: 100%; margin-left: 10px;">
+                <apex:outputLabel value="Analysis" styleclass="button"
+                    style=" width:10%;  background-image:none;background-color:#A9C5EB !important; font-size:11px !important;padding-top:4px; padding-bottom:4px;" />
+
+                <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}"
+                    style="margin-left:20px; vertical-align:bottom;" />
+                <apex:outputLabel value="Action Plan" styleclass="button"
+                    style=" width:10%;margin-left:20px;  background-image:none;background-color:#A9C5EB !important;font-size:11px !important; padding-top:4px; padding-bottom:4px;" />
+                <apex:image id="theImage2" value="{!URLFOR($Resource.Ffimage)}"
+                    style="margin-left:20px; vertical-align:bottom;" />
+                <apex:commandButton id="theCommandLink2" styleclass="button"
+                    value="Summary Action Plan" action="{!SummaryActionPlan}"
+                    style="margin-left:20px; background-image:none;background-color:#A9C5EB !important;" />
+                <apex:outputLabel id="theCommandLink1" styleclass="button"
+                    value="Approved Plan"
+                    style=" width:10%;margin-left:20px;  background-image:none;background-color:#F5D0A9!important;font-size:11px !important; padding-top:4px; padding-bottom:4px;" />
+            </div>
+            <br />
+            <div class="subHeader" style="width: 100% padding-left:10px;">ACTION
+                PLAN ON CURRENT ASSETS</div>
+            <br />
+            <div style="width: 100%; overflow: auto; height: 100%;">
+                <table width="90%" border="1" cellpadding="2" cellspacing="0"
+                    id="dataTable1">
+                    <tr class="tableHeader">
+                        <th style="width: 15%" class="textStyle">Asset</th>
+                        <th style="width: 10%" class="textStyle">Owner</th>
+                        <th style="width: 8%" class="textStyle">Current Value</th>
+                        <th style="width: 5%" class="textStyle">Available</th>
+                        <th style="width: 5%" class="textStyle">Allocated</th>
+                        <apex:repeat id="hd" value="{!beanObj.goalList}" var="golObj">
+                            <th style="width: 5%; white-space: pre-wrap;">{!golObj.Description__c}</th>
+                        </apex:repeat>
+                        <th class="textStyle" style="width: 20%">Action</th>
+                    </tr>
+                    <apex:repeat value="{!beanObj.aaBeanList}" var="ap">
+                        <tr class="tableData">
+                            <td class="textStyle">{!ap.Assets}</td>
+                            <td class="textStyle">{!ap.entityName}</td>
+                            <td class="textStyle" style="text-align: right;"><apex:outputText value="{0, number, ,##,##0}">
+                                    <apex:param value="{!ap.currentVal}" />
+                                </apex:outputText>
+                            </td>
+                            <td class="textStyle" style="text-align: right;">{!ap.available}</td>
+                            <td class="textStyle" style="text-align: right;">{!ap.allocated}</td>
+                            <apex:repeat value="{!ap.golListVals}" var="gtObj">
+                                <td class="textStyle" style="text-align: right;">{!gtObj}</td>
+                            </apex:repeat>
+                            <td class="textStyle">{!ap.action}</td>
+                        </tr>
+                    </apex:repeat>
+
+                </table>
+            </div>
+            <br />
+            <br />
+
+            <div class="subHeader" style="width: 100% padding-left:10px;">CURRENT
+                MUTUAL FUNDS - LUMPSUM</div>
+            <br />
+            <div style="width: 100%; overflow: auto; height: 100%;">
+                <table width="100%" border="1" cellpadding="2" cellspacing="0"
+                    id="dataTable2">
+                    <tr class="tableHeader">
+                        <th style="width: 9%;" class="textStyle">Scheme Name</th>
+                        <th style="width: 8%;" class="textStyle">Asset Class</th>
+                        <th style="width: 7%;" class="textStyle">Amount</th>
+                        <th style="width: 10%;" class="textStyle">Owner</th>
+                        <th style="width: 8%;" class="textStyle">Action</th>
+                        <th style="width: 10%;" class="textStyle">Action Amount</th>
+                        <apex:repeat value="{!beanObj.goalList}" var="golObj">
+                            <th style="width: 5%; white-space: pre-wrap;" class="textStyle">{!golObj.Description__c}</th>
+                        </apex:repeat>
+                    </tr>
+                    <apex:repeat value="{!beanObj.currentMFLumpSumList}"
+                        var="curLumpObj">
+                        <tr class="tableData">
+                            <td class="textStyle">{!curLumpObj.schemeName}</td>
+                            <td class="textStyle">{!curLumpObj.assetsClass}</td>
+                            <td class="textStyle" style="text-align: right;"><apex:outputText value="{0, number, ,##,##0}">
+                                    <apex:param value="{!curLumpObj.assetAmount}" />
+                                </apex:outputText>
+                            </td>
+                            <td class="textStyle">{!curLumpObj.entityName}</td>
+                            <td class="textStyle"><apex:selectList value="{!curLumpObj.action}" size="1" styleClass="textStyle"
+                                    style="width:100px;">
+                                    <apex:selectOptions value="{!lumpActions}"></apex:selectOptions>
+                                </apex:selectList></td>
+                            <td class="textStyle"><apex:inputText value="{!curLumpObj.actionAmount}" styleClass="textStyle"
+                                    style="width:70px;text-align:right;" />
+                            </td>
+                            <apex:repeat value="{!curLumpObj.golCurrMFLumpSum}" var="golObj">
+                                <td class="textStyle"><apex:inputText value="{!golObj.Allocated}" styleClass="textStyle"
+                                        onblur="countTotal(this.id,'txtvalues')"
+                                        style="width:50px;text-align:right;" maxlength="3"
+                                        id="txtvalues" />
+                                </td>
+                            </apex:repeat>
+                        </tr>
+                    </apex:repeat>
+                </table>
+            </div>
+            <br />
+            <br />
+
+            <div class="subHeader" style="width: 100% padding-left:10px;">CURRENT
+                MUTUAL FUNDS - RUNNING SIPs</div>
+            <br />
+            <div style="width: 100%; overflow: auto; height: 100%;">
+                <table width="100%" border="1" cellpadding="2" cellspacing="0"
+                    id="dataTable3">
+                    <tr class="tableHeader">
+                        <th style="width: 9%;" class="textStyle">Scheme Name</th>
+                        <th style="width: 8%;" class="textStyle">Asset Class</th>
+                        <th style="width: 7%;" class="textStyle">Current SIP</th>
+                        <th style="width: 10%;" class="textStyle">Owner</th>
+                        <th style="width: 10%;" class="textStyle">SIP Action</th>
+                        <th style="width: 10%;" class="textStyle">SIP Change</th>
+                        <apex:repeat value="{!beanObj.goalList}" var="golObj">
+                            <th style="width: 5%; white-space: pre-wrap;" class="textStyle">{!golObj.Description__c}</th>
+                        </apex:repeat>
+                    </tr>
+                    <apex:repeat value="{!beanObj.currentMFSIPList}" var="curSIPObj">
+                        <tr class="tableData">
+                            <td class="textStyle">{!curSIPObj.schemeName}</td>
+                            <td class="textStyle">{!curSIPObj.assetsClass}</td>
+                            <td class="textStyle" style="text-align: right;"><apex:outputText value="{0, number, ,##,##0}">
+                                    <apex:param value="{!curSIPObj.currentSIP}" />
+                                </apex:outputText>
+                            </td>
+                            <td class="textStyle">{!curSIPObj.entityName}</td>
+                            <td class="textStyle"><apex:selectList value="{!curSIPObj.SIPAction}" size="1" styleClass="textStyle"
+                                    style="width:100px;">
+                                    <apex:selectOptions value="{!sipActions}"></apex:selectOptions>
+                                </apex:selectList></td>
+                            <td class="textStyle"><apex:inputText value="{!curSIPObj.SIPChange}" styleClass="textStyle"
+                                    style="width:70px;text-align:right;" />
+                            </td>
+                            <apex:repeat value="{!curSIPObj.golCurrMFSIP}" var="golObj">
+                                <td class="textStyle"><apex:inputText value="{!golObj.Allocated}"
+                                        onblur="countTotal(this.id,'txtMutualFunds')"
+                                        id="txtMutualFunds" styleClass="textStyle"
+                                        style="width:50px;text-align:right;" />
+                                </td>
+                            </apex:repeat>
+                        </tr>
+                    </apex:repeat>
+                </table>
+            </div>
+            <br />
+            <br />
+
+            <div class="subHeader" style="width: 100% padding-left:10px;">SUGGESTED
+                MUTUAL FUNDS - LUMPSUM</div>
+            <br />
+            <apex:outputPanel id="lumpTable">
+                <div style="width: 100%; overflow: auto; height: 100%;">
+                    <table width="100%" border="1" cellpadding="2" cellspacing="0"
+                        id="dataTable4">
+                        <tr class="tableHeader">
+                            <th style="width: 2%;" class="textStyle">Remove</th>
+                            <th style="width: 9%;" class="textStyle">Scheme Name</th>
+                            <th style="width: 8%;" class="textStyle">Asset Class</th>
+                            <th style="width: 7%;" class="textStyle">Amount</th>
+                            <th style="width: 10%;" class="textStyle">Owner</th>
+                            <th style="width: 12%;" class="textStyle">Action</th>
+                            <apex:repeat value="{!beanObj.goalList}" var="golObj">
+                                <th style="width: 5%; white-space: pre-wrap;" class="textStyle">{!golObj.Description__c}</th>
+                            </apex:repeat>
+                            <th style="width: 15%;" class="textStyle">Notes</th>
+                        </tr>
+                        <apex:repeat value="{!beanObj.suggestedMFLumpSumList}"
+                            var="sugLumpObj">
+                            <tr class="tableData">
+                                <td style="width: 2%;"><apex:inputCheckbox value="{!sugLumpObj.isRemove}" />
+                                </td>
+                                <td class="textStyle">
+                                    <!-- FS0235 --> <!-- 
+              <apex:selectList value="{!sugLumpObj.schemeName}" size="1" style="width:90%;" styleClass="textStyle">
+                        <apex:selectOptions value="{!schemeNames}"></apex:selectOptions>
+              </apex:selectList>
+              --> <!-- FS0235 --> <apex:inputText value="{!sugLumpObj.schemeName}"
+                                        style="width:50%;text-align:left;" styleClass="textStyle" /></td>
+                                <td><apex:selectList value="{!sugLumpObj.assetsClass}"
+                                        size="1" style="width:85%;" styleClass="textStyle">
+                                        <apex:selectOptions value="{!assetClass}"></apex:selectOptions>
+                                    </apex:selectList></td>
+                                <td><apex:inputText value="{!sugLumpObj.amount}"
+                                        style="width:70%;text-align:right;" styleClass="textStyle" />
+                                </td>
+                                <td><apex:selectList value="{!sugLumpObj.entityId}"
+                                        size="1" style="width:95%;" styleClass="textStyle">
+                                        <apex:selectOptions value="{!entities}"></apex:selectOptions>
+                                    </apex:selectList></td>
+
+                                <td><apex:selectList value="{!sugLumpObj.action}" size="1"
+                                        style="width:90%;" styleClass="textStyle">
+                                        <apex:selectOptions value="{!sugLumpActions}"></apex:selectOptions>
+                                    </apex:selectList></td>
+                                <apex:repeat value="{!sugLumpObj.golsuggMFLump}" var="golObj">
+                                    <td><apex:inputText value="{!golObj.Allocated}"
+                                            style="width:50%;text-align:right;" styleClass="textStyle"
+                                            onblur="countTotal(this.id,'txtLumpsum')" id="txtLumpsum" />
+                                    </td>
+                                </apex:repeat>
+                                <td><apex:inputText value="{!sugLumpObj.notes}"
+                                        style="width:95%;text-align:right;" styleClass="textStyle" />
+                                </td>
+                            </tr>
+                        </apex:repeat>
+
+                    </table>
+
+                </div>
+                <!--
+    /** Eternus Solutions       **/
+    /** Author  : Manasi Ranade **/
+    /** Issue Id: FS0290        **/
+    /** Date    : 13/12/2011    **/
+    /** Purpose : Hide button if ET is already generated for current entity
+    /****************************************************/-->
+                <apex:outputPanel rendered="{!isDisplaySaveButton}">
+                    <apex:commandButton value="Add New" Action="{!addNewSuggLump}"
+                        reRender="lumpTable"
+                        style="margin-top:15px;margin-left:400px;font-weight:bold; font-size:11px;FONT-FAMILY: Calibri;"
+                        rendered="{!Not(blnIsETAlreadyGenerated)}" />
+                    <apex:commandButton value="Remove" Action="{!RemoveRecordLump}"
+                        style="font-weight:bold; font-size:11px;FONT-FAMILY: Calibri;"
+                        rendered="{!Not(blnIsETAlreadyGenerated)}" />
+                </apex:outputPanel>
+            </apex:outputPanel>
+
+            <br />
+            <br />
+
+            <div class="subHeader" style="width: 100% padding-left:10px;">SUGGESTED
+                MUTUAL FUNDS - SIPs</div>
+            <br />
+            <apex:outputPanel id="sipTable">
+                <div style="width: 100%; overflow: auto; height: 100%;">
+                    <table width="100%" border="1" cellpadding="2" cellspacing="0"
+                        id="dataTable5">
+                        <tr class="tableHeader">
+                            <th style="width: 2%;" class="textStyle">Remove</th>
+                            <th style="width: 9%;" class="textStyle">Scheme Name</th>
+                            <th style="width: 8%;" class="textStyle">Asset Class</th>
+                            <th style="width: 7%;" class="textStyle">SIP Amount</th>
+                            <th style="width: 10%;" class="textStyle">Owner</th>
+                            <apex:repeat value="{!beanObj.goalList}" var="golObj">
+                                <th style="width: 5%; white-space: pre-wrap;" class="textStyle">{!golObj.Description__c}</th>
+                            </apex:repeat>
+                        </tr>
+                        <apex:repeat value="{!beanObj.SuggestedMFSIPList}" var="sugSipObj">
+                            <tr class="tableData">
+                                <td style="width: 2%;"><apex:inputCheckbox value="{!sugSipObj.isRemove}" />
+                                </td>
+                                <td>
+                                    <!-- FS0235 --> <!--  
+              <apex:selectList value="{!sugSipObj.schemeName}" size="1" style="width:80%;" styleClass="textStyle">
+                        <apex:selectOptions value="{!schemeNames}"></apex:selectOptions>
+              </apex:selectList>
+              --> <!-- FS0235 --> <apex:inputText value="{!sugSipObj.schemeName}"
+                                        style="width:40%;text-align:left;" styleClass="textStyle" /></td>
+                                <td style="width: 8%;"><apex:selectList value="{!sugSipObj.assetsClass}" size="1" style="width:70%;"
+                                        styleClass="textStyle">
+                                        <apex:selectOptions value="{!assetClass}"></apex:selectOptions>
+                                    </apex:selectList></td>
+                                <td style="width: 7%;"><apex:inputText value="{!sugSipObj.SIPAmount}"
+                                        style="width:60%;text-align:right;" styleClass="textStyle" />
+                                </td>
+                                <td style="width: 10%;"><apex:selectList value="{!sugSipObj.entityId}" size="1" style="width:80%;"
+                                        styleClass="textStyle">
+                                        <apex:selectOptions value="{!entities}"></apex:selectOptions>
+                                    </apex:selectList></td>
+                                <apex:repeat value="{!sugSipObj.golSuggMFSIP}" var="golObj">
+                                    <td style="width: 5%;"><apex:inputText value="{!golObj.Allocated}"
+                                            style="width:40%;text-align:right;"
+                                            onblur="countTotal(this.id,'txtMfSip')" id="txtMfSip"
+                                            styleClass="textStyle" />
+                                    </td>
+                                </apex:repeat>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                </div>
+                <!--
+    /** Eternus Solutions       **/
+    /** Author  : Manasi Ranade **/
+    /** Issue Id: FS0290        **/
+    /** Date    : 13/12/2011    **/
+    /** Purpose : Hide button if ET is already generated for current entity
+    /****************************************************/-->
+                <apex:outputPanel rendered="{!isDisplaySaveButton}">
+                    <apex:commandButton value="Add New" Action="{!addNewSuggSIP}"
+                        reRender="sipTable"
+                        style="font-weight:bold; font-size:11px;margin-top:15px;margin-left:400px;FONT-FAMILY: Calibri;"
+                        rendered="{!Not(blnIsETAlreadyGenerated)}" />
+                    <apex:commandButton value="Remove" Action="{!RemoveRecordSIP}"
+                        style="font-weight:bold; font-size:11px;FONT-FAMILY: Calibri;"
+                        rendered="{!Not(blnIsETAlreadyGenerated)}" />
+                </apex:outputPanel>
+
+            </apex:outputPanel>
+
+
+            <br />
+            <br />
+
+            <div class="subHeader" style="width: 100% padding-left:10px;">SUGGESTED
+                LIFE INSURANCE</div>
+            <br />
+            <apex:outputPanel rendered="{!NOT(beanObj.isLifeInsExist)}">
+  {!$Label.ActionPlanInsurenceMsg}
+  </apex:outputPanel>
+            <apex:outputPanel rendered="{!beanObj.isLifeInsExist}">
+
+                <div style="width: 900px; overflow: auto; height: 100%;">
+                    <table width="500px" border="1" cellpadding="2" cellspacing="0"
+                        id="dataTable6">
+                        <tr class="tableHeader">
+                            <th class="textStyle">Insured</th>
+                            <th class="textStyle">Suggested Cover</th>
+                            <th class="textStyle">Premium Amount</th>
+                            <th class="textStyle">Policy Type</th>
+                        </tr>
+                        <apex:repeat value="{!beanObj.liList}" var="liObj">
+                            <tr class="tableData">
+                                <td class="textStyle"><apex:outputLabel value="{!liObj.Entity__r.FirstName + ' ' + liObj.Entity__r.LastName}" />
+                                </td>
+                                <td class="textStyle" style="text-align: right;"><apex:outputText value="{0, number, ,##,##0}">
+                                        <apex:param value="{!liObj.Suggested_Cover_General_Insurance__c}" />
+                                    </apex:outputText></td>
+                                <!-- <td class="textStyle" style="text-align:right;"><apex:outputText value="{0, number,INR ,##,##0}" >
+                                  <apex:param value="{!liObj.Premium_Amount_Rs__c}"/>
+                            </apex:outputText> </td> -->
+                                <!--
+          /** Eternus Solutions       **/
+          /** Author  : Manasi Ranade **/
+          /** Issue Id: FS0397        **/
+          /** Date    : 3/1/2012      **/
+          /** Purpose : Commented above code.Removed the INR from from Currency field
+          /****************************************************/-->
+                                <td class="textStyle" style="text-align: right;"><apex:outputText value="{0, number, ,##,##0}" style="width:80px;height:16px;"
+                                        styleclass="standardFontStyle">
+                                        <apex:param value="{!liObj.Premium_Amount_Rs__c}" />
+                                    </apex:outputText></td>
+                                <td class="textStyle"><apex:outputField value="{!liObj.Policy_Type__c}" />
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                </div>
+            </apex:outputPanel>
+            <br />
+            <br />
+
+            <div class="subHeader" style="width: 100% padding-left:10px;">SUGGESTED
+                GENERAL INSURANCE</div>
+            <br />
+            <apex:outputPanel rendered="{!NOT(beanObj.isGeneralInsExist)}">
+  {!$Label.ActionPlanInsurenceMsg}
+  </apex:outputPanel>
+            <apex:outputPanel rendered="{!beanObj.isGeneralInsExist}">
+                <div style="width: 900px; overflow: auto; height: 100%;">
+                    <table width="500px" border="1" cellpadding="2" cellspacing="0"
+                        id="dataTable7">
+                        <tr class="tableHeader">
+                            <th class="textStyle">Insured</th>
+                            <th class="textStyle">Suggested Cover</th>
+                            <th class="textStyle">Premium Amount</th>
+                            <th class="textStyle">Policy Type</th>
+                        </tr>
+                        <apex:repeat value="{!beanObj.giList}" var="giObj">
+                            <tr class="tableData">
+                                <td class="textStyle"><apex:outputLabel value="{!giObj.Entity__r.FirstName + ' '+ giObj.Entity__r.LastName}" />
+                                </td>
+                                <td class="textStyle" style="text-align: right;"><apex:outputField value="{!giObj.Suggested_Cover_General_Insurance__c}" /></td>
+                                <td class="textStyle" style="text-align: right;">
+                                    <!-- <apex:outputText value="{0, number,INR ,##,##0}" >
+                                  <apex:param value="{!giObj.Premium_Amount_Rs__c}"/>
+                            </apex:outputText>  --> <!--
+          /** Eternus Solutions       **/
+          /** Author  : Manasi Ranade **/
+          /** Issue Id: FS0397        **/
+          /** Date    : 3/1/2012      **/
+          /** Purpose : Commented above code.Removed the INR from from Currency field
+          /****************************************************/--> <apex:outputText value="{0, number, ,##,##0}" style="width:80px;height:16px;"
+                                        styleclass="standardFontStyle">
+                                        <apex:param value="{!giObj.Premium_Amount_Rs__c}" />
+                                    </apex:outputText>
+                                </td>
+                                <td class="textStyle"><apex:outputField value="{!giObj.Policy_Type__c}" />
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                </div>
+            </apex:outputPanel>
+            <br />
+            <br />
+
+            <div class="subHeader" style="width: 100% padding-left:10px;">DONE
+                LIFE INSURANCE</div>
+            <br />
+            <apex:outputPanel rendered="{!NOT(beanObj.isApprovedLifeInsExist)}">
+  {!$Label.ActionPlanInsurenceMsg}
+  </apex:outputPanel>
+            <apex:outputPanel rendered="{!beanObj.isApprovedLifeInsExist}">
+
+                <div style="width: 900px; overflow: auto; height: 100%;">
+                    <table width="500px" border="1" cellpadding="2" cellspacing="0"
+                        id="dataTable8">
+                        <tr class="tableHeader">
+                            <th class="textStyle">Insured</th>
+                            <th class="textStyle">Suggested Cover</th>
+                            <th class="textStyle">Premium Amount</th>
+                            <th class="textStyle">Policy Type</th>
+                            <th class="textStyle">Company</th>
+                        </tr>
+                        <apex:repeat value="{!beanObj.liApprovedList}" var="liObj">
+                            <tr class="tableData">
+                                <td><apex:outputLabel value="{!liObj.Entity_Name__c}"
+                                        styleClass="textStyle" style="width:100px;" />
+                                </td>
+                                <td><apex:inputField value="{!liObj.Suggested_Cover_General_Insurance__c}"
+                                        styleClass="textStyle" style="text-align:right;width:80px;" />
+                                </td>
+                                <td><apex:inputField value="{!liObj.Premium_Amount_Rs__c}"
+                                        styleClass="textStyle" style="width:80px;text-align:right;" />
+                                </td>
+                                <td><apex:inputField value="{!liObj.Policy_Type__c}"
+                                        styleClass="textStyle" style="width:80px;" />
+                                </td>
+                                <td><apex:inputField value="{!liObj.Insurance_Company__c}"
+                                        styleClass="textStyle" style="width:80px; height:18px;" />
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                </div>
+            </apex:outputPanel>
+            <br />
+            <br />
+
+            <div class="subHeader" style="width: 100% padding-left:10px;">DONE
+                GENERAL INSURANCE</div>
+            <br />
+            <apex:outputPanel rendered="{!NOT(beanObj.isApprovedGeneralInsExist)}">
+  {!$Label.ActionPlanInsurenceMsg}
+  </apex:outputPanel>
+            <apex:outputPanel rendered="{!beanObj.isApprovedGeneralInsExist}">
+                <div style="width: 900px; overflow: auto; height: 100%;">
+                    <table width="500px" border="1" cellpadding="2" cellspacing="0"
+                        id="dataTable9">
+                        <tr class="tableHeader">
+                            <th class="textStyle">Insured</th>
+                            <th class="textStyle">Suggested Cover</th>
+                            <th class="textStyle">Premium Amount</th>
+                            <th class="textStyle">Policy Type</th>
+                            <th class="textStyle">Company</th>
+                        </tr>
+                        <apex:repeat value="{!beanObj.giApprovedList}" var="giObj">
+                            <tr class="tableData">
+                                <td><apex:outputLabel value="{!giObj.Entity_Name__c}"
+                                        styleClass="textStyle" style="width:100px;" />
+                                </td>
+                                <td><apex:inputField value="{!giObj.Suggested_Cover_General_Insurance__c}"
+                                        styleClass="textStyle" style="width:80px;text-align:right;" />
+                                </td>
+                                <td><apex:inputField value="{!giObj.Premium_Amount_Rs__c}"
+                                        styleClass="textStyle" style="width:80px;text-align:right;" />
+                                </td>
+                                <td><apex:inputField value="{!giObj.Policy_Type__c}"
+                                        styleClass="textStyle" style="width:80px;" />
+                                </td>
+                                <td><apex:inputField value="{!giObj.Insurance_Company__c}"
+                                        styleClass="textStyle" style="width:80px; height:18px;" />
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                </div>
+            </apex:outputPanel>
+            <br />
+            <!--
+    /** Eternus Solutions       **/
+    /** Author  : Manasi Ranade **/
+    /** Issue Id: FS0290        **/
+    /** Date    : 13/12/2011    **/
+    /** Purpose : Hide button if ET is already generated for current entity
+    /****************************************************/-->
+            <apex:outputPanel rendered="{!isDisplaySaveButton}">
+                <apex:commandButton value="Approved" Action="{!upsertData}"
+                    style="margin-top:15px;margin-left:400px;font-weight:bold; font-size:11px;"
+                    rendered="{!Not(blnIsETAlreadyGenerated)}" />
+            </apex:outputPanel>
+            <br />
+            <br />
+            <apex:outputPanel >
+                <div style="width: 900px; overflow: auto; height: 100%;">
+                    <table width="700px" border="1" cellpadding="2" cellspacing="0"
+                        id="dataTable10">
+                        <tr class="tableHeader">
+                            <th class="textStyle">Mode</th>
+                            <th class="textStyle">Status</th>
+                            <th class="textStyle">Asset Class</th>
+                            <apex:repeat value="{!beanObj.goalList}" var="golObj">
+                                <th style="width: 5%; white-space: pre-wrap;" class="textStyle">{!golObj.Description__c}</th>
+                            </apex:repeat>
+                        </tr>
+                        <tr class="tableData">
+                            <td class="textStyle" style="width: 50px;" rowspan="8">SIP</td>
+                            <td class="textStyle" style="width: 70px;" rowspan="4">Suggested</td>
+                            <td><apex:repeat value="{!beanObj.suggestedSIP}"
+                                    var="sipObj">
+                                    <tr>
+                                        <td class="textStyle">{!sipObj.className}</td>
+                                        <apex:repeat value="{!sipObj.golListVals}" var="vals">
+                                            <td class="textStyle" style="text-align: right;"><apex:outputText value="{0, number, ,##,##0}" style="width:40px;">
+                                                    <apex:param value="{!vals}" />
+                                                </apex:outputText></td>
+                                        </apex:repeat>
+                                    </tr>
+                                </apex:repeat></td>
+                            <td class="textStyle" style="width: 70px;" rowspan="4">Done</td>
+                            <td><apex:repeat value="{!beanObj.doneSIP}" var="sipObj">
+                                    <tr>
+                                        <td class="textStyle">{!sipObj.className}</td>
+                                        <apex:repeat value="{!sipObj.golListVals}" var="vals">
+                                            <td class="textStyle" style="text-align: right;"><apex:outputText value="{0, number, ,##,##0}" style="width:40px;">
+                                                    <apex:param value="{!vals}" />
+                                                </apex:outputText></td>
+                                        </apex:repeat>
+                                    </tr>
+                                </apex:repeat></td>
+                        </tr>
+                        <tr class="tableData">
+                            <td class="textStyle" style="width: 50px;" rowspan="8">Lumpsum</td>
+                            <td class="textStyle" style="width: 70px;" rowspan="4">Suggested</td>
+                            <td><apex:repeat value="{!beanObj.suggestedLumpSum}"
+                                    var="lumpObj">
+                                    <tr class="dataRow">
+                                        <td class="textStyle">{!lumpObj.className}</td>
+                                        <apex:repeat value="{!lumpObj.golListVals}" var="valss">
+                                            <td class="textStyle" style="text-align: right;"><apex:outputText value="{0, number, ,##,##0}" style="width:40px;">
+                                                    <apex:param value="{!valss}" />
+                                                </apex:outputText></td>
+                                        </apex:repeat>
+                                    </tr>
+                                </apex:repeat></td>
+                            <td class="textStyle" style="width: 70px;" rowspan="4">Done</td>
+                            <td><apex:repeat value="{!beanObj.doneLumpSum}"
+                                    var="lumpObj">
+                                    <tr class="dataRow">
+                                        <td class="textStyle">{!lumpObj.className}</td>
+                                        <apex:repeat value="{!lumpObj.golListVals}" var="valss">
+                                            <td class="textStyle" style="text-align: right;"><apex:outputText value="{0, number, ,##,##0}" style="width:40px;">
+                                                    <apex:param value="{!valss}" />
+                                                </apex:outputText></td>
+                                        </apex:repeat>
+                                    </tr>
+                                </apex:repeat></td>
+                        </tr>
+
+
+                    </table>
+                </div>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+    <script>
+    <!-- This is for styling alternate rows of SummaryTable -->
+        function altRows(id) {
+            // alert('hello'+id);
+            if (document.getElementsByTagName) {
+                var table = document.getElementById(id);
+                var rows = table.getElementsByTagName("tr");
+                for (i = 1; i < rows.length; i++) {
+                    if (i % 2 == 0) {
+                        rows[i].className = "DataTableEven";
+                    } else {
+                        rows[i].className = "DataTableOdd";
+                    }
+                }
+            }
+
+        }
+
+        window.onload = altRows('dataTable1');
+        altRows('dataTable2');
+        altRows('dataTable3');
+        altRows('dataTable4');
+        altRows('dataTable5');
+        altRows('dataTable6');
+        altRows('dataTable7');
+        altRows('dataTable8');
+        altRows('dataTable9');
+        altRows('dataTable10');
+    </script>
+    <script type="text/javascript">
+        function countTotal(textSfId, txtId) {
+            var splitid = textSfId.split(':');
+            var strid = '';
+            var totalCount = 0;
+            for ( var j = 0; j < splitid.length - 2; j++) {
+                strid += splitid[j] + ':';
+            }
+            for ( var i = 0; i <= 25; i++) {
+                if (document.getElementById(strid + i + ':' + txtId) == null)
+                    break;
+                totalCount = totalCount
+                        + Number(document.getElementById(strid + i + ':'
+                                + txtId).value);
+            }
+            if (totalCount > 100) {
+                alert('Values are greater then 100');
+            }
+        }
+    </script>
+
+</apex:component>

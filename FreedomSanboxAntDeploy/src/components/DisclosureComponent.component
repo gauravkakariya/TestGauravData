@@ -1,0 +1,51 @@
+<apex:component id="FPDisclosureComponent" selfClosing="true">
+<apex:stylesheet value="{!$Resource.FFStyle}"/>
+<!--<style>
+p{
+    font-family:Calibri;
+    font-size:15px;
+}
+.title{
+    background-color:#92D050; //green shade
+    font-size:15px;
+    font-weight:bold;
+    color:white;
+    font-family:Calibri;
+   }
+  
+</style>-->
+<!--   <apex:attribute name="accountName" type="String" description="Account Name" required="true"/> -->
+    <apex:pageBlock >
+     <div class="divContainerStyle">
+        <div class="divStyle">DISCLOSURE STATEMENT</div>
+        <p class="textStyle">This financial plan is prepared to help you understand your current financial situation and 
+           present a structured roadmap in helping you realize your financial aspirations in a systematic manner.
+           In order to arrive at solutions we have taken into consideration various factors like future rate of 
+           inflation, risk, return on investment etc.</p>  
+        <p  class="textStyle">These projections are hypothetical in nature and do not reflect actual investment results, and are not guarantees of future results.
+           The actual returns of a specific product may be more or less than the returns projected in the financial plan.
+           All results use simplifying assumptions that do not completely or accurately reflect your specific circumstances.
+           No Plan or Report has the ability to accurately predict the future. As investment returns, inflation, taxes, and other economic conditions vary from 
+<!--            {!accountName}&rsquo;s  -->
+           our assumptions, your actual results will vary (sometimes significantly) from those presented in this Report.</p>
+        <p class="textStyle">We have prepared various statements like Networth, Cash Flow, Investment Analysis etc.  
+           These statements have been prepared to assist us in developing your financial plan. 
+           Accordingly, it should not be relied on for any purpose other than the financial plan.</p>
+        <p class="textStyle">The financial plan is prepared based on the information provided by you which forms the basis of various important assumptions. 
+           If you notice that any of the information is incorrect you are advised to report it to your financial planner as this may directly affect the output of the financial plan.</p>
+        <p class="textStyle">The financial plan and the various projections are based on the current laws and tax regime. Future changes in the laws may favorably or unfavorably affect the projections even.</p>
+        <p class="textStyle">It should be noted that there is a potential conflict of interest for the product recommendations made by 
+<!--         {!accountName}  -->
+        us as we are subject to underlying commissions from the product manufacturer. 
+           You are under no obligation, in full or in part, to act upon the suggestions listed down in the financial plan. 
+           In case you avail
+<!--             {!accountName}&rsquo;s  -->
+           our services for execution of the financial plan,
+<!--            {!accountName}  -->
+           we may be compensated as Agent/Registered Representative/Broker.</p>   
+        <p class="textStyle">Any analysis of accounting or legal issues in the financial plan is for discussion purpose only and should not be substituted as professional advice. 
+          You are requested to consult your Chartered Accountant or Lawyer who specialize in these areas to counsel you on specific topics related to your financial situation.</p>
+    </div>
+    
+    </apex:pageBlock>
+</apex:component>

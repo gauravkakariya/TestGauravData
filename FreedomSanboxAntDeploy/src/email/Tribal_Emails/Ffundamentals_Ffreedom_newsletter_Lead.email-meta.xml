@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>This is the Updated Email template which sends the News alerts to the Lead and entity.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Freedom_Updated_Letterheaders</letterhead>
+    <name>Ffundamentals Ffreedom newsletter - Lead</name>
+    <style>newsletter</style>
+    <subject>Ffundamentals - our inaugural Ffreedom newsletter - July issue</subject>
+    <textOnly> Click here to view Newsletter on our website
+Dear  {!Lead.Name} 
+
+
+
+
+
+
+
+
+We at “Ffreedom” continue to spread the message of Financial Freedom.“For every disciplined effort, there is a multiple reward,” said American motivational speaker and author Jim Rohn. This is true in every aspect of life, more so when it comes to fulfilling our life’s goals and dreams. It takes more than just a set of guidelines to get you there, but following it perfectly can ensure its success.&quot;
+Read More
+
+“A financial ark for my son”When one becomes a father, one of the most important goals in life is to ensure that the kid is adequately provided for and I was no different. Ever since my son was born, I wanted him to have a secure life. When my son turned 2, he was diagnosed with autism, and brought with is several challenges...
+
+Read More
+A financial plan can change your life.As financial planners, the single most common questions that we are asked is – ‘how does financial planning help me?’ Even today, the awareness about financial planning is low in India. While the basic purpose of financial planning is to fulfill your dreams and desires, one has to make sure that your...
+Read More
+Outlook on Equity MarketWith the equity markets registering a weak performance over the last few months, investor sentiment is low and most are looking to exit the market. During such periods investors prefer to switch from equity instruments to debt based options which attract comparatively lower risk. Some investors also prefer to opt for fixed...
+Read More
+Revision of Repo rates by RBIRecently, the Reserve Bank of India (RBI), has hiked the Repo Rate and Reverse Repo by 25 basis points to 7.50% pa and 6.50% pa respectively while there has been no change to the CRR. The hike comes close post the RBI’s annual monetary policy review on May 3, 2011, when it raised the Repo Rate by 50 basis points...
+Read More</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,89 @@
+<!-- <apex:page showheader="false" cache="true" expires="600" controller="PortalLoginController" standardStylesheets="false" > -->
+    <apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="PortalLoginController">
+    
+    <style type="text/css">
+                
+                .header{
+                    background-image:url('{!URLFOR($Resource.xrayimage,'logo.png')}');
+                    height: 200px;  
+                    margin : 20px 400px 0; 
+                    }
+                            
+                .mainbody{
+                    background-color:#BDC1C7;
+                    height: 150px;  
+                    background-size:400x;
+                    margin : 150px 350px 0; 
+                }
+                .LogIn {
+                    font-family:Calibri;
+                    font-style: regular;
+                    font-size: 20px;
+                    color: black;
+                    font-weight:bold;
+                }
+    </style>
+    <body style="overflow:hidden;"> 
+    <div align="center">
+        <apex:image url="{!URLFOR($Resource.xrayimage,'logo.png')}" width="20%" height="15%"/> 
+    </div>
+    <div align = "center"  style="margin-top:30px;font-family:Calibri;
+                    font-style: regular;
+                    font-size: 22px;font-weight:bold;
+                    color: #0D3F89;"> Partner Login</div>
+        <div class="mainbody" style="margin-top:10px">
+<!--        <form id= "frmSecure" class="form" method="post" action="https://login.salesforce.com/"> -->
+            <apex:form id="loginForm" forceSSL="true">
+                
+                <table align="center" style="margin-top:10px;">
+                    <tbody align="center">
+                    
+<!--                    <tr style="margin-top:150px; margin-left:100px;font-family:Calibri; -->
+<!--                    font-style: regular; -->
+<!--                    font-size: 18px; -->
+<!--                    color: #0D3F89;" ><td rowspan="1">Partner Login</td></tr> -->
+                        <br/>
+                        <tr style="margin-top:100px">
+<!--                            <td class="LogIn" align="left" >Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td> -->
+                                <td class="LogIn" align="left" ><apex:outputLabel value="{!$Label.site.username}"/></td>
+                            <td width="2%"></td>
+                            
+<!--                            <td align="left"><input title="Username" size="30" name="un" maxlength="2048" class="form-login"/></td> -->
+                            <td align="left"><apex:inputText value="{!username}"/></td>
+                        </tr>
+                        <tr>
+<!--                            <td class="LogIn" align="left">Password&nbsp;&nbsp;:</td> -->
+                                        <td class="LogIn" align="left"><apex:outputLabel value="{!$Label.site.password}" for="password"/></td>
+                                            
+                            <td></td>
+                            <td align="left">
+<!--                                <input type="password" name="pw" id="password" data-typetoggle="#show-password" class="form-login"/> -->
+<!--                                <input type="checkbox" title="Password" id="show-password"/> -->
+<!--                                    <span style="font-family:calibri;color: #ffffff; font-size: 14px;">&nbsp;Show Credentials</span> -->
+                                        <apex:inputSecret id="password" value="{!password}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+<!--                                <a href="https://login.salesforce.com/secur/forgotpassword.jsp?locale=uk"> -->
+<!--                                <input type="checkbox" title="ForgotPassword"/> -->
+<!--                                <font color="#ffffff" style="color: #ffffff; font-size: 14px;font-family:calibri;">Forgot Password</font></a> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td align="center">
+                                  <apex:commandButton action="{!login}" value="{!$Label.site.login_button}" id="loginButton"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </apex:form>
+            
+        </div>
+         <div align="center"><apex:pageMessages id="Error" rendered="true"/></div>
+     </body>
+</apex:page>

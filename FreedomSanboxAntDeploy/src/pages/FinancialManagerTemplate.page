@@ -1,0 +1,34 @@
+<apex:page sidebar="false" showHeader="true">
+<apex:stylesheet value="{!URLFOR($Resource.PortalStyleSheet)}"/>
+<apex:stylesheet value="{!URLFOR($Resource.js)}"/>
+<apex:stylesheet value="{!URLFOR($Resource.JQuery)}"/>
+ <div id="main_page" style="width:1040px;background-color:" >
+ 
+<div id="right_content" style="border:0.1px;padding-top:20px;-moz-border-radius: 6px; -webkit-border-radius: 6px;  white;height:495px;">
+   &nbsp;  &nbsp;  &nbsp;insert your body
+</div>
+
+<div id="left_content"  style="background-color; padding-top:15px;-moz-border-radius: 6px; -webkit-border-radius: 6px;border:0.5px #C1D99A;">
+<div style="padding-top:15px;">
+<!-----<div class="leftHeaderTab" style=""><img src="{!URLFOR($Resource.PortalImages,'PortalImages/rightarrow.gif')}"/> Family </div>---->
+
+<div class="leftHeaderTab" style="background-color:"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/rightarrow.gif')}"/> Family </div>
+
+<div class="leftContentTab">Family Members</div>
+<div class="leftHeaderTab"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/rightarrow.gif')}"/> Resources</div>
+<div class="leftContentTab">Bank Details</div>
+<div class="leftHeaderTab"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/rightarrow.gif')}"/> My Planner</div>
+<div class="leftContentTab">Planner details</div>
+<div class="leftHeaderTab"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/rightarrow.gif')}"/> Documents</div>
+<div class="leftContentTab">My Financial Plan</div>
+<div class="leftHeaderTab"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/rightarrow.gif')}"/> Reports</div>
+<div class="leftContentTab">Portfolio Report</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+</apex:page>

@@ -1,0 +1,112 @@
+<apex:page showheader="false">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/top_July12.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/houseviewHIn.gif')}" width="132" height="40" /></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                            
+                            <tr>
+                              <td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>MF industry reforms - for the good or bad?</em></strong></font></td>
+                            </tr>
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">Dr.Manmohan  Singh has always been a great believer that if retail Indian investors catch on  to the equity bandwagon, our dependence on foreign and institutional investors  will go down and that our capital markets can widen and deepen on their own  strength. So, it is not surprising to see activity in the mutual fund industry  and talks of entry loads coming back few days after he has taken charge of the  FinMin. <br />
+                                <br />
+                                We  have always maintained that scrapping entry loads in mutual funds was a step in  the right direction, but was not a bit but way ahead of its times. Even in  countries like the US and in Australia the regulators have tight norms for  advisors, on the basis for charging fee etc., and do not insist that all  payments should come from investors only. We are not ready for it yet. And that  has been evident in how the MF industry equity AUM has remained stagnant in the  last 2 years and on how many MF distributors have now moved on to other  professions. <br />
+                                <br />
+                                The  catch here is that, even though the retail investor needs the services of the  agent he is unwilling to pay him. Before the entry load ban era, he never knew  the agent made money out of his investment. He has now been told loudly and  clearly that it was the entry load that went as commissions and he now suspects  his agents of making more money out of his investments than he himself did in  falling markets. Rolling back an initiative that was pro-investor or pro-public  has its own political repercussions. <br />
+                                <br />
+                                Hence,  enters the new initiative – flexibility to the mutual funds to manage different  expenses within the total expense ratio. Currently AMCs have a cap on how much  they can accept as asset management fees. Only when a fund has over 100 crores  can they charge 2.25% expense ratio and out of this only 1% can be AMC charges,  the remaining 1.25% has to be used to pay the trial fees, the auditors and  registrars etc. With entry load gone, AMCs to keep their distribution channels  oiled had to shell out upfront fees to distributors from their charges. This  greatly pressurized the AMC’s profit margins and their ability to get great  talent if they were not big enough. The industry was losing sheen and facing  imminent death because neither was the manufacturer making money, nor was the  distributor and sadly the investor was not benefitting too. <br />
+                                <br />
+                                If  entry loads come back, that would be regressive. By now almost all investors  and distributors have gotten comfortable to the fact that “No entry loads”.  Distributors are adding value to their advisory and are experimenting with  charging the client a fee. Investors are demanding better services and opening  up their purse strings. Fresh and new creative ideas to grow business are  taking shape and most of them augur well for customers while helping industry  too. The single cheque system which will attempt to delineate the fee paid to  the AMC from the commission payable to the agents may be a via media solution. <br />
+                                <br />
+                                A  25 basis point increase in permitted expense ratio (from 2.25% to 2.5%) itself  has the potential to re-energise the MF distribution network, if used  creatively by the asset management companies, which we know they are more than  capable of doing. <br />
+                                <br />
+                                Now,  MFs may enter the pension space. What was so long a government owned portfolio  of guaranteed payment products, can now to be open to market and its vagaries.  Investors have to be aware of what they are getting into.&nbsp;It could be good  and it could be bad. <br />
+                                <br />
+                                The large segment of distributors or IFAs may be  disappointed if entry loads don’t come back, but we think it is better to move  forward than backward. Fee based advisory could be the way forward. There could  be more creative ideas like the omnibus schemes for mutual funds like how demat  accounts function.&nbsp; Or anything else as long as it is transparent, fair  and easy to administer. Distributors will do well to equip themselves better  and get ready for the exciting ride ahead.</td>
+                            </tr>
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+                            </tr>
+                         </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+
+</apex:page>

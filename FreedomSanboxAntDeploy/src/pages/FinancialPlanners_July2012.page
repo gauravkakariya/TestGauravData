@@ -1,0 +1,121 @@
+<apex:page showheader="false">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/top_July12.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+<!--                   <td background="images/headbg.gif"><img src="images/headR.gif" width="9" height="40" align="right" /><img src="images/plannerHIn.gif" width="218" height="40" /></td> -->
+                <td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="images/headR.gif" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/plannerHIn.gif')}" width="218" height="40" /></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Financial Planning</em></strong></font></td>
+                          </tr>
+
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">As  I have come to understand now, most problems around us whether with clients,  colleagues, friends and even family, are because we don't manage expectations  properly. I learnt an important life skill from one of my&nbsp;clients. <br />
+                                <br />
+  Mr.Rodrigues  was introduced to me almost a year back and he was a living example of how  expectations were mis-managed. He was due for retirement&nbsp;and his objective  with signing up with Ffreedom was to create for himself a simple retirement  plan.&nbsp;For various reasons, he&nbsp;did&nbsp;get a not so simple plan that  did not quite meet his expectations. The objective of the planner who was  handling him earlier, was to get him returns better than inflation, whereas  that of the client was to get regular returns.&nbsp;&nbsp;And the MIPs he  invested in failed to give regular dividends. <br />
+  <br />
+  Not  surprisingly, he was very upset and made it a point to stress at every possible  opportunity that he doubted the process, choice of instruments,&nbsp;the  possibility of him accumulating enough money before retiring&nbsp;etc. He  wanted to opt out and I was given the responsibility to see that his issues  were sorted out and that he renewed his relationship with us. This was to me  really nerve racking. <br />
+  <br />
+                                I  had to spend more time with him to understand him better. First thing, he was  not tech savvy. Our system of communicating by mail, transacting online, our  elaborate spread sheets etc wasn't working well for him. He preferred physical  reports, insisted on meeting him in person and doing transactions offline. <br />
+                                <br />
+                                He  preferred investing in real estate and FDs. His wife who had just  then&nbsp;retired received a decent sum as part of her&nbsp;PF and Gratuity  proceeds and was contemplating where to invest it. I gave them various  options,&nbsp;explained each one of them with advantages and disadvantages,  presented the detailed comparison, which he liked very much. <br />
+                                <br />
+                                He  said something that day which I think I will remember for the rest of my life  -&nbsp;'Keep things Simple', &nbsp;'Be flexible' - adjust according to the  needs and 'Under promise and over deliver'. He would tell me take your time for  preparations or revert on queries. Do not give me a date for completing the  task just to make me happy and then&nbsp;work in haste to meet the deadline. He continues to keep his opinions on many things  and doesn't necessary agree with my view points. But I have learnt to be  persistent,&nbsp;argue convincingly, listen and appreciate his view points and  most importantly manage expectations.<br />
+                                <br />Regards,<br />
+                                  Siddesh Chavan, Financial Planner</td>
+                            </tr>
+                            
+                            
+                            
+                            
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;"></td>
+                            </tr>
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+                            </tr>
+                            
+                            
+                            
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+
+</apex:page>

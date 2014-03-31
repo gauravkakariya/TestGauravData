@@ -1,0 +1,27 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p class="MsoListParagraph" style="font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font face="Arial, sans-serif">Dear {!Case.OwnerFirstName}</font></p>
+
+<p class="MsoNormal" style="font-size: 12pt; font-family: arial; margin-left: 0.75in; "><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></p>
+
+<p class="MsoNormal" style="font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font face="Arial, sans-serif">We are looking into the issue and
+will get back to you soon with the resolution.</font></p>
+
+<p class="MsoNormal" style="font-size: 12pt; font-family: arial; margin-left: 0.75in; "><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></p>
+
+<p class="MsoNormal" style="font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font face="Arial, sans-serif">In order to help us to resolve
+your case faster, can you please provide us with a screenshot of your issue and
+grant us login access for next 7 days. The steps to grant login access click on the following link-</font></p><p class="MsoNormal" style="font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font face="Arial, sans-serif"><br></font></p><p class="MsoNormal" style="margin-left: 0.75in; "><a href="https://ffreedom.my.salesforce.com/01520000000hhtG"><font face="Arial, sans-serif">https://ffreedom.my.salesforce.com/01520000000hhtG</font></a>
+</p><p class="MsoNormal" style="font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font face="Arial, sans-serif"><br></font></p>
+
+<p class="MsoNormal" style="font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font face="Arial, sans-serif">If you have already done the above,
+then please ignore.</font></p>
+
+<p class="MsoNormal" style="font-size: 12pt; font-family: arial; margin-left: 0.75in; "><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></p>
+
+<p class="MsoNormal" style="font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font face="Arial, sans-serif">Regards,</font></p>
+
+<p class="MsoNormal" style="font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font face="Arial, sans-serif">Technology Support</font></p>]]></td>
+</tr>
+</table>

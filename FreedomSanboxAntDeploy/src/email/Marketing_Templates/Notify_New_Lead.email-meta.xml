@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Notify New Lead</name>
+    <style>freeForm</style>
+    <subject>New Lead From Lead Engines waiting in Queue</subject>
+    <textOnly>Dear All Fps,	
+
+ We have a new Lead from the lead Engines awaiting in the FP queue. In case you need leads, take charge of the lead from the &quot;FPQueue&quot; view available on the leads page.
+
+Regards.
+ Ffreedom Team.</textOnly>
+    <type>html</type>
+</EmailTemplate>

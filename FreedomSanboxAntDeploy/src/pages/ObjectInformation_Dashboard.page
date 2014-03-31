@@ -1,0 +1,34 @@
+<apex:page controller="ObjectInformation_Dashboard" sidebar="false" showHeader="false" tabStyle="Lead">
+    <apex:pageBlock >
+        <table>
+            <tr><td>
+                Total number of Leads
+            </td><td>
+                :
+            </td><td>
+                <b><apex:outputText value="{!leadCount}"/></b>
+            </td></tr>
+            <tr><td>
+                Total number of Accounts
+            </td><td>
+                :
+            </td><td>
+                <b><apex:outputText value="{!accountCount}"/></b>
+            </td></tr>
+            <tr><td>
+                Total number of Campaigns
+            </td><td>
+                :
+            </td><td>
+                <b><apex:outputText value="{!campaignCount}"/></b>
+            </td></tr>
+            <tr><td>
+                Total number of Open Tasks
+            </td><td>
+                :
+            </td><td>
+                <b><apex:outputText value="{!openTaskCount}"/></b>
+            </td></tr>
+        </table>
+    </apex:pageBlock>
+</apex:page>

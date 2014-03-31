@@ -1,0 +1,146 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="Houseview1_May12">
+<head>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+		_gaq.push([ '_trackPageview' ]);
+	
+		(function() {
+			var ga = document.createElement('script');
+			ga.type = 'text/javascript';
+			ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+					: 'http://www')
+					+ '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td><img src="{!URLFOR($Resource.images,'images/top_May12.gif')}" width="740" height="104" /></td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+					<td valign="top">
+						<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+							<tr>
+								<td valign="top">
+									<table width="100%" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/houseviewHIn.gif')}" width="132" height="40" /></td>
+										</tr>
+										<tr>
+											<td>
+												<table width="100%" border="0" cellpadding="0" cellspacing="0">
+													<tr>
+														<td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+														<td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+														<td valign="top">
+															<table width="98%" border="0" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em> <strong>What is the most tax efficient way of using the bonus?</strong></em></strong></font></td>
+																</tr>
+																
+																<tr>
+																	<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">
+																		So much for soul searching and thinking about your future to decide what to do with the bonus money you have right now. Let's get some technically backed logic out. In financial planning, tax saving is never the purpose for which you take an insurance or make an investment - should never be. Tax efficiency should be pervasive in all that you do – whether cash management, insurances, investments, retirement planning, succession planning, debt management or even charity. Every transaction that you do should be tax efficient. So amongst the options available which ones are tax efficient, which ones are not? <br /><br />
+																		Let's consider the different things you could do with your bonus money. You could repay some loans, you could pay up your taxes, you could invest for the short term or medium term or long term goals or all of them, you could refurbish your home or buy some gadgets, you could go on a vacation or you could even gift some money away. The logic behind why you would do something, does it make sense in the long run etc are beyond the scope of this article. Will what you do, help you save some taxes is what we will discuss here. <br /><br />
+																		<strong>Repaying loans</strong> – Repaying your loans could save you a lot of money in future interests. A lakh on home loan is usually paid back along with another lakh of interest over a 20 year period. But they do give tax benefits. So maybe it is not a tax efficient idea to pay back the home loan. Or maybe it is. <br /><br />
+																		If your interest payment is over Rs. 1.5 lacs per year on the property you are living in, then any amount over Rs. 1.5 lacs that you pay as interest doesn't get you any tax benefit. For eg: If you have a loan of Rs. 30 lacs, your average EMI on a 20 year loan will be approx Rs. 37500 – Annual payment Rs. 4.5 lacs of which about 50% could be interest (the older the loan, the lower the percentage of interest to principal) which means Rs. 2.25 lacs is paid as interest. Only Rs. 1.5 lac is tax deductible. So, if you check with your lender how much your interest payment is and if it is above Rs. 1.5 lacs, find out how much you can prepay so that you can still get the full exemption under Section 24(b) while getting out of loans faster. You can repay appropriately and stand to gain on saving huge interest costs while not adversely affecting your tax benefits. <br /><br />
+																		Repaying your education loan may not be a great tax saving idea because the full amount of interest on the loan repaid gets a tax exemption. <br /><br />
+																		You might be better off paying away other loans like the personal loan, car loan etc. because they enjoy no tax benefit. Doing away with them will only make you better off because you have nothing to lose but a lot to gain in the form of saving interest. <br /><br />
+																		<strong>Investing for your goals</strong> – If you want to keep money in your savings bank account, keep not more than Rs. 2 – Rs.2.25 lacs, because interest upto Rs. 10000 only is tax exempt. At 5% interest any amount over Rs. 2.0 lacs is bound to attract tax. <br /><br />
+																		You could however keep money in liquid funds under the option daily dividend reinvestment and get about 7 – 7.5% tax free income only extremely liquid investments. <br /><br />
+																		Fixed deposits also are not tax efficient because the interest earned is taxable as per your tax bracket and a 10% TDS is deducted before paying out the interest to you. <br /><br />
+																		Investment in short term debt funds, fixed maturity plans or monthly income plans (Debt mutual funds) could be tax inefficient too. To make it slightly better tax efficient, for less than one year investments you could choose the dividend reinvest option and if you plan to stay invested for over 1 year you could choose the growth option. And if you are in the lowest or upto 10% tax bracket, a fixed deposit would be better than any of the above debt mutual fund options. <br /><br />
+																		If you plan to invest in equities either through mutual funds or through direct stocks, it makes good sense both for returns as well as tax efficiency only if you stay invested for the long term. But if you plan to exit within a year or use dividend /bonus stripping options for tax saving, choose the dividend option, otherwise you should be okay with the growth option. <br /><br />
+																		<strong>Refurbishing you house or purchasing electronic gadgets</strong> – A home improvement loan taken to renovate your house will be treated like a home loan and will enjoy the same tax benefits. But directly spending money on renovating your home may not fetch you any tax benefits. However you don't have to take any loan because it will give you tax benefit when you have liquid money available for spending. Of course purchase of car, electronic gadgets etc don't give you any tax benefit, but a lot of happiness though short lived. <br /><br />
+																		<strong>Go on a vacation</strong> – You can go on a vacation and still get tax benefits for the travel expenses incurred under your Leave Travel Allowance scheme. You will have to restrict yourself to vacationing only in India and only fly national carrier. Or you can also travel by First class train along with family including parents and siblings if they are dependent on you. You can claim this tax free allowance only twice in 4 years. There are many conditions and certain limits on this, but you can still plan your holidays and claim the maximum benefit for whatever it is worth. <br /><br />
+																		<strong>Gift away some money</strong> – Yes this can give you some tax breaks. Any contribution made for charitable purposes which qualify for deduction under Sec 80G will make that spend a tax effective one. You could check out with the charitable organization, orphanage, old age home or even temples if contributions can get tax exemptions and obtain appropriate receipts. <br /><br />
+																		<strong>Pay school fees</strong> – Ahh… good idea. If anyway your children's school fees have to be paid around this time of the year, use the bonus money to do that. That way you can claim tax deduction upto Rs. 1 lac under Sec 80C. <br /><br />
+																		Of course you can use this money to pay your insurance premiums or invest in tax saving mutual funds if you still haven't exhausted the 80C limit (Rs.1 lac) with your EPF, children's school fee or home loans. <br /><br />
+																		Better still you could pay your taxes now with the bonus money. In case you have had income apart from your salary like commissions, rent, interest or capital gains you will have to pay tax apart from what your employer deducted as TDS. You could use the bonus money to do just that and become a tax abiding citizen.<br /><br />
+																		Bonus is an income like salary and attracts tax as per your income slabs. But subsequently what you do with the amount can be tax efficient. Use the tips above to make use of your bonus to save you some taxes.
+																	</td>
+																</tr>
+																
+																<tr>
+																	<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+													<tr>
+														<td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+														<td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+														<td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top">&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+					<td valign="top">
+						<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+							<tr>
+								<td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+								<td width="24%" rowspan="3">
+									<table border="0" align="center" cellpadding="0" cellspacing="0">
+										<tr>
+											<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+											<td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+										</tr>
+										<tr>
+											<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+											<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+							</tr>
+							<tr>
+								<td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+							</tr>
+							<tr>
+								<td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+							</tr>
+						</table>
+					</td>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+	</tr>
+</table>
+</body>
+</apex:page>

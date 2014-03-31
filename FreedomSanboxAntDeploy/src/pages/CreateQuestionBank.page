@@ -1,0 +1,99 @@
+<apex:page controller="CreateQuestionBank" tabstyle="Question_Bank_List__c" action="{!Init}">
+
+<apex:form >	
+	<apex:PageMessages id="pgMsg"/>
+	<apex:pageBlock id="pgblock1" >
+		<apex:pageBlockButtons location="top" >
+			<apex:commandButton value="Create New" action="{!createNewQuestionBank}" rerender="pgblock1" rendered="{!btnVisible}"/><!--  rendered="{!NOT(isModify)}"-->
+			<apex:commandButton value="Modify" action="{!modifyQuestionBank}" rerender="pgblock1" rendered="{!btnVisible}"/><!-- rendered="{!NOT(isModify)}" -->
+		</apex:pageBlockButtons>
+	
+	<!-- This will show only question from Active question Bank -->  
+	<apex:pageBlock title="Active Question Banks" id="pb1" rendered="{!If(Not(isEdit)&&Not(isNew),true,false)}">
+		<!-- <apex:outputPanel id="op1" rendered="{!IF(lstQuestionBank.size > 0, false,true)}">
+			<apex:outputText value="Question Bank does not exists"/>
+		</apex:outputPanel> -->
+		<apex:outputpanel id="op2" rendered="{!IF(lstSelectedQuestions.size > 0, true, false)}" >
+			<apex:variable value="{!0}" var="rowNum"/>
+					<apex:pageBlockTable value="{!lstSelectedQuestions}" var="questionBank">
+						
+						<apex:column headerValue="No.">
+			 				<apex:variable value="{!rowNum+1}" var="rowNum"/>
+			 						<apex:outputText value="{0}">
+			 							<apex:param value="{!rowNum}"></apex:param>
+			 						</apex:outputText>
+						</apex:column>
+						 
+				<apex:column headerValue="Questions" value="{!questionBank.objQuestionnaire.Question_Bank_List__r.Question__c}" />					
+			</apex:pageBlockTable>
+		</apex:outputpanel>
+	</apex:pageBlock>
+	
+	
+	<!-- This will show the all the question from active Question Bank in edit mode -->
+	<apex:pageBlock id="pb" title="Edit Question Bank" rendered="{!isEdit}">
+		<apex:pageBlockButtons >
+			<apex:commandButton value="Save" action="{!createQuestionBankAndQuestionnaire}" rerender="pb1, pb"/>
+			<apex:commandButton value="Cancel" action="{!cancel}" rerender="pb1, pb"/>
+		</apex:pageBlockButtons>
+		
+		<apex:outputPanel id="idOpPanel">
+				<apex:actionStatus id="questionStatus" startText="Processing...."/>
+					<apex:variable value="{!0}" var="rowNum"/>
+						<apex:pageBlockTable value="{!lstSelectedQuestions}" var="que">
+							
+							<apex:column headerValue="No.">
+								<apex:variable value="{!rowNum+1}" var="rowNum"/>
+			 						<apex:outputText value="{0}">
+			 							<apex:param value="{!rowNum}"></apex:param>
+			 						</apex:outputText>
+							</apex:column>
+							
+							<apex:column >
+								<apex:inputCheckbox value="{!que.isChecked}" disabled="{!IF(que.ques.Parent_Question__c!= null, true, false)}"/> <!-- disabled="{!IF(que.objQuestionnaire.Question_Bank_List__r.Parent_Question__c!= null, true, false)}" -->
+							</apex:column>
+							
+							<apex:column headerValue="Question" value="{!que.ques.Question__c}"/>
+							
+			   				<apex:column headerValue="Question Sequence" >
+			   						<apex:inputField value="{!que.objQuestionnaire.Display_Sequence__c}"/><!-- rendered="{!IF(que.ques.Parent_Question__c!= null, false, true)}" -->
+			   				</apex:column>
+				</apex:pageBlockTable>
+	</apex:outputPanel>		
+	</apex:pageBlock> 
+	
+	<!--This will Show all the question from QuestionoptionList  -->
+	<apex:pageBlock id="pgblock2" title="Create New Question Bank" rendered="{!isNew}">
+		<apex:pageBlockButtons >
+			<apex:commandButton value="Save" action="{!createQuestionBankAndQuestionnaire}" rerender="pgMsg, pgblock2"/>
+			<apex:commandButton value="Cancel" action="{!cancel}" rerender="pgblock2"/>
+		</apex:pageBlockButtons>
+		
+		<apex:outputPanel id="idOpPanel">
+			<apex:variable value="{!0}" var="rowNum"/>
+				<apex:pageBlockTable value="{!lstSelectedQuestions}" var="que">
+					
+					<apex:column headerValue="No.">
+						<apex:variable value="{!rowNum+1}" var="rowNum"/>
+			 				<apex:outputText value="{0}">
+			 					<apex:param value="{!rowNum}"></apex:param>
+			 				</apex:outputText>
+					</apex:column>
+			
+				<apex:column >
+					<apex:inputCheckbox value="{!que.isChecked}" disabled="{!IF(que.ques.Parent_Question__c != null, true, false)}"/><!-- disabled="{!IF(que.ques.Parent_Question__c != null, true, false)}" -->
+				</apex:column>
+				
+				<apex:column headerValue="Question" value="{!que.ques.Question__c}"/>
+				
+				<apex:column headerValue="Question Sequence">
+			   		<apex:inputField value="{!que.objQuestionnaire.Display_Sequence__c}" /> <!-- rendered="{!IF(que.ques.Parent_Question__c != null, false, true)}" -->
+				</apex:column>
+				
+			</apex:pageBlockTable>
+	</apex:outputPanel>		
+	</apex:pageBlock> 
+	</apex:pageBlock>
+	
+</apex:form>
+</apex:page>

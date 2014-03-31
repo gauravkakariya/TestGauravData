@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>CUSTOMER RENEWAL MODEL [for those clients whose renewals are overdue till Feb 11]</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Customer Renewal - Emailer</name>
+    <style>formalLetter</style>
+    <subject>Ffreedom Yearly Review - 2011</subject>
+    <textOnly>Greetings,
+Dear {!Account.Name},
+We at Ffreedom Financial Planners we believe that financial planning stands for people, their dreams &amp; their goals.
+Our endeavor as a company will always be to help you live your dream &amp; achieve financial freedom.  
+To begin with like to firstly thank you for your continued support, your journey with Ffreedom Financial Planners had started at {!Account.CreatedDate}&amp; over this last year we have tried to help you and your family manage you finances in the best of manners. 
+At this point we would like to inform you that the yearly review of your financial plan is ready where we shall review you portfolio along with your goals &amp; also provide you with all the analysis of your financial health.
+As with a renewal of our relationship in the new year we would like to take this opportunity to sit down with you and understand if there are any goals that you would like to alter add or remove as well as if there has been any changes in your over all financials.
+Also we would like to inform you that your yearly financial planning renewal fees is due and your financial planner - {!Account.OwnerFirstName}, shall be in touch with you to set up a meeting for the review as well as to brief you on the details of the renewal fees.
+
+Warm Regards,Ffreedom Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,61 @@
+<apex:page controller="smagicbasic.SMHomeController" tabStyle="SM_Home__tab" title="SMS Magic - Home">
+
+<apex:includeScript value="/soap/ajax/15.0/connection.js"/>
+<apex:includeScript value="/soap/ajax/15.0/apex.js"/>
+<apex:includeScript value="{!$Resource.smagicbasic__BulkSMSJS}"/>
+<apex:sectionHeader title="SMS Magic - {!$User.FirstName} {!$User.LastName}" subtitle="Dashboard"/>
+<apex:form >
+<apex:pageBlock title="SMS Magic"  helpTitle="Help For this Page?" helpUrl="{!helpLink}">
+<apex:pageMessages />
+
+<apex:pageBlockButtons location="top" rendered="{!isRegistered}">
+<apex:commandButton value="New SMS" rendered="{!isRegistered}" onclick="redirectTo('/apex/NewSMS','/apex/SMHome');return false;" />
+<apex:commandButton value="New SMS Template"  rendered="{!isRegistered}" onclick="redirectTo('/apex/NewSMSTemplate','/apex/SMHome');return false;"/>
+</apex:pageBlockButtons>
+
+<apex:pageBlockSection title="Registration" columns="2" rendered="{!showRegistration}">
+<apex:outputText value="For registration click on register button" />
+<apex:actionFunction name="executeWS" action="{!executeWS}"></apex:actionFunction>
+<apex:commandButton action="{!manualRegister}" value="Register" onComplete="executeWS();"/>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="API key Configuration" columns="1" rendered="{!showApiKeyConfiguration}">
+<apex:outputLabel value="API Key" for="apiKey"/>
+<apex:inputText value="{!apiKey}" id="apiKey" maxlength="256"/>
+<apex:commandButton value="Save" action="{!saveApiKey}"/>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection title="SMS Magic Information" columns="2" rendered="{!showSMSMagicInfo}">
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="AccountId" for="accountId"/>
+<apex:outputText value="{!accountId}"  id="accountId"/>
+</apex:pageBlockSectionItem>
+<apex:pageBlockSectionItem >
+</apex:pageBlockSectionItem>
+<apex:pageBlockSectionItem rendered="{!IF(usingThirdPartyPipe, false, true)}">
+<apex:outputLabel value="Credits Available" for="availableCredits"  />
+<apex:outputText value=""  id="availableCredits">
+{!availableCredits}   
+&nbsp;&nbsp;&nbsp;<apex:outputLink target="_blank" rendered="{!IF (renderMe,true, false)}" value="http://screen-magic.com/salesforce/shoppingCart.html" style="color:red;">Click to buy more credits
+</apex:outputLink>
+</apex:outputText>
+</apex:pageBlockSectionItem>
+<apex:pageBlockSectionItem >
+
+</apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+<apex:pageBlockSection title="Recent SMS" columns="1"  rendered="{!isRegistered}">
+
+<apex:pageBlockTable value="{!recentSMS}" var="sms" >
+            <apex:column value="{!sms.smagicbasic__Name__c}" headerValue="Name"/>        
+            <apex:column value="{!sms.smagicbasic__PhoneNumber__c}" headerValue="Mobile"/>
+            <apex:column value="{!sms.smagicbasic__SMSText__c}" headerValue="Text"/>
+            <apex:column value="{!sms.CreatedDate}" headerValue="CreatedOn"/>
+ </apex:pageBlockTable>
+                
+</apex:pageBlockSection>
+
+</apex:pageBlock>
+</apex:form>
+</apex:page>

@@ -1,0 +1,213 @@
+<!-- 
+						Eternus Solutions
+                        Author  : Pravin Patil
+                        Issue Id: FS0145
+                        Date    : 12/09/2011
+                        Purpose : Newsletter for the Month of September  2011(website pages)     			--> 
+                         
+
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="Houseview2_Sep3" >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.images3,'images3/top.gif')}" width="740" height="104"  /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/houseviewHIn.gif')}" width="132" height="40" /></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                            
+                            <tr>
+                              <td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>It is always darkest before dawn</em></strong></font></td>
+                            </tr>
+                            
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;"> Initially, I wrote a long note on equity markets and on why it is time to press the pedal on equity investments, but then I was reminded of the saying that a picture is worth a 1000 words. So here is the picture and the abridged note follows.<br />
+                                <br />
+                                <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#EDEDED">
+                                  <tr>
+                                    <td height="25" align="center"><strong>Time</strong></td>
+                                    <td height="25" align="center"><strong>Sensex Level </strong></td>
+                                    <td height="25" align="center"><strong>1 yr fwd P/E </strong></td>
+                                    <td height="25" align="center"><strong>Main news</strong></td>
+                                    <td height="25" align="center"><strong>Total Return<br />
+                                      after 3 yrs</strong></td>
+                                    <td height="25" align="center"><strong>Total Return<br />
+                                      after 5 yrs </strong></td>
+                                  </tr>
+                                  <tr>
+                                    <td height="25" align="center">Sep-01 </td>
+                                    <td height="25" align="center">2812</td>
+                                    <td height="25" align="center">11</td>
+                                    <td height="25" align="center">Terrorist atttack on twin towers</td>
+                                    <td height="25" align="center"> 84% </td>
+                                    <td height="25" align="center">316%</td>
+                                  </tr>
+                                  <tr>
+                                    <td height="25" align="center">Jun-04 </td>
+                                    <td height="25" align="center">4795</td>
+                                    <td height="25" align="center">10</td>
+                                    <td height="25" align="center">General elections- unexpected defeat of BJP </td>
+                                    <td height="25" align="center">203%</td>
+                                    <td height="25" align="center"> 212%</td>
+                                  </tr>
+                                  <tr>
+                                    <td height="25" align="center">Jun-06</td>
+                                    <td height="25" align="center">9296</td>
+                                    <td height="25" align="center">13</td>
+                                    <td height="25" align="center">Collapse of US Housing market </td>
+                                    <td height="25" align="center">61% </td>
+                                    <td height="25" align="center">99%</td>
+                                  </tr>
+                                  <tr>
+                                    <td height="25" align="center">Nov-08</td>
+                                    <td height="25" align="center">9093 </td>
+                                    <td height="25" align="center">11</td>
+                                    <td height="25" align="center">Sub-prime crisis - Lehman collpase </td>
+                                    <td height="25" align="center">100% </td>
+                                    <td height="25" align="center">-</td>
+                                  </tr>
+                                  <tr>
+                                    <td height="25" align="center">Aug-11</td>
+                                    <td height="25" align="center">16857</td>
+                                    <td height="25" align="center">13</td>
+                                    <td height="25" align="center">US downgrade, European Crisis </td>
+                                    <td height="25" align="center">?</td>
+                                    <td height="25" align="center">?</td>
+                                  </tr>
+                                </table>
+                                <br />
+                                <br />
+The message is so simple that one does not have to be an expert to grasp the implications. <strong>Good returns materialize over time on investments made at cheap valuations (meaning low PEs) and PEs are more likely to be low when the news flow is adverse.</strong> Simple, isn’t it! To be successful in investing, one should focus more on value and less on news flow.<br />
+<br />
+Ironically, today, apart from the low PEs, even the news flow is getting <em><strong>better</strong></em>. The issue however is, with the US downgrade, with slow growth in West despite low interest rates / large stimulus, with countries on the verge of default, with rising interest rates &amp; high and persistent inflation in India, with the coming to light of corruption scandals in India with alarming regularity, etc how can the news flow be getting better?<br />
+<br />
+<em><strong>Sau sunar ki, ek luhar ki.</strong></em> This is a popular Hindi saying which means - 100 hits by the goldsmith have the same impact as 1 blow by the ironsmith. <br />
+<br />
+The not so appealing news items mentioned above miss one important happening and that is <em><strong>falling crude prices</strong></em>. Falling crude prices is the blow of the ironsmith, the positive impact of which is more than the negative impact of the rest.<br />
+<br />
+<strong>Why so? - The structure of the Indian economy</strong><br />
+India is one of the few emerging economies that is a net importer of commodities, oil being the largest. Thus every $20 fall saves the country $18 billion p.a., equivalent to 1.1% of GDP. Lower oil prices mean lower fiscal deficit, lower inflation, lower interest rates etc. over time. Indian exports to US/ Europe are only 6 % of GDP. In my opinion, even these are not materially linked to how these economies perform. Consider this: Indian IT exports over last 10 years have grown at a CAGR of 25 % in USD terms compared to 6 % growth in US / European economies in USD terms. Thus, bulk of the growth (nearly 75%) has come from gains in market share, which is driven by competitiveness and nothing else.<br />
+<br />
+Given the miniscule share of 1.6 % of Indian exports in total world trade and improving competitiveness of Indian exports, there should not be a material impact of slow down in West on Indian exports and even lower on overall Indian economy, given the low dependence of Indian economy on exports. Exports were materially impacted in 2009 after the Lehman bankruptcy as the crisis was unanticipated, due to a paralysis in bank lending and a consequent sharp inventory de-stocking. This is clearly not the situation today.<br />
+<br />
+Downgrade of the US and problems in Europe point to the fact that these economies have lived beyond their means for too long and it is now payback time – growth rates should continue to be low for many years. These also point to the shifting center of gravity of growth in the world economy – contrast the unsuccessful attempts to improve the growth rates in the West with the attempts to slow economic growth in the countries such as India / China.<br />
+<br />
+Scandals were already there, that was the bad news. Their coming in the open is good news. In a democracy with coalition governments, change is difficult. In such an environment, change takes place mostly in a crisis. Right from the opening up of the economy in 1992 driven by a balance of payments crisis, to improving the security set up after the terrorist attacks in Mumbai, to increasing diesel prices when the subsidy burden was unbearable, to the likely reforms in power distribution driven by mounting losses of distribution companies, all have been triggered by a crisis. India is in transition – the coming to light of these scandals is welcome – it will lead to change for the better in the way India functions. Some of the welcome changes that are already underway are improving transparency in land acquisition, in allocation of natural resources through a bidding process, better targeting of subsidies though cash transfer to the needy etc.<br />
+<br />
+<strong>Growth prospects of the Indian Economy</strong><br />
+The chart below clearly depicts how persistently the growth rates have been accelerating by 0.5-1% p.a. every decade. This is in spite of everything or despite so many things! It is almost as if economy is growing due to inertia.<br />
+<br />
+<img src="{!URLFOR($Resource.images3,'images3/graph1.gif')}" width="648" height="271" /><br />
+<br />
+The reasons for this behaviour of the economy are so well known i.e., a young and growing population, reducing size of families, increasing incomes and affordability, rising aspirations, improving availability of credit etc, that there is no need to dwell on these in detail.<br />
+<br />
+What is worth highlighting however is, why barring unforeseen developments of a large magnitude India should grow faster in the next ten than in the last ten years and could emerge as the fastest growing economy in the world. Apart from the above mentioned factors that lead to a secular growth in consumption, capital spending should accelerate as and when interest rates come down. Lower prices of crude in particular and other commodities in general could trigger a reversal in the trend of rising interest rates. Indian exports are also gaining in competitiveness against China because of the depreciation in INR vs the Yuan and the higher wage inflation in China. These are the two key reasons that could lead to a further acceleration in growth rates in the current decade. <br />
+<br />
+A point worth noting here is that despite the impediments, delays, scandals and several rounds of changes in regulation, infrastructure is improving significantly. Apart form the telecom story which is a clear success, India has a rapidly rising number of privately owned world class airports &amp; ports, fast improving inter-city roads, sharply reducing power deficits etc.<br />
+In my opinion, there are thus several reasons to be optimistic about the growth prospects and about improvement in governance and infrastructure in India. If growth persists and if PEs are low, then equity returns can’t be far, at least not too far. And finally for the pessimist, if you don’t believe that markets will perform over a reasonable time and if indeed that turns out to be true, then, it is even better for your long-term wealth provided you are a saver. This is so because, the longer the markets stay low, the more is the money that can be invested in equities and therefore higher will be the wealth whenever the markets finally move. This is important, since nearly everyone in India is a saver!<br />
+<br />
+Happy investing!<br />
+<br />
+Prashant Jain<br />
+August 2011<br />
+<br />
+<strong>PS:</strong></td>
+                            </tr>
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;"><ol>
+                                <li>Short term in the markets is always very hard to forecast, readers should note that this note is not commenting on the short-term prospects of the markets.<br />
+                                &nbsp;</li>
+                                <li>The charts/data presented in this note have been compiled from publicly available information to the best of our ability.</li>
+                              </ol></td>
+                            </tr>
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">DISCLAIMER: The views expressed by Mr. Prashant Jain, Executive Director &amp; Chief Investment Officer of HDFC Asset Management Company Limited, constitute the author’s views as of this date. It should not be construed as investment advice to any party. The statements contained herein may include statements of future expectations and other forward-looking statements that are based on the author’s views and assumptions and involve known and unknown risks and uncertainties that could cause actual results, performance or events to differ materially from those expressed or implied in such statements. The recipient(s) before acting on any information herein should make his/their own investigation and seek appropriate professional advice and shall be fully responsible for the decisions taken. </td>
+                            </tr>
+                            
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+                            </tr>
+                            
+                            
+                        </table></td>
+                      </tr>
+                      <tr>
+                         <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+       <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+   <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+</apex:page>

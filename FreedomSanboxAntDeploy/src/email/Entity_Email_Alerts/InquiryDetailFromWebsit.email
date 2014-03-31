@@ -1,0 +1,18 @@
+<messaging:emailTemplate subject="The below inquiry has come from the website " recipientType="Lead" relatedToType="Attachment">
+<messaging:plainTextEmailBody >
+The below inquiry has come from the website on {!recipient.CreatedDate}
+
+First Name : {!recipient.FirstName}
+
+Last Name :  {!recipient.LastName}
+
+Email Id :   {!recipient.Email}
+
+Mobile number :{!recipient.MobilePhone}
+
+Preferred Department :{!recipient.PreferredDepartment__c}
+
+https://ffreedom--ffreedomqa.cs13.my.salesforce.com/{!relatedTo.Id}
+</messaging:plainTextEmailBody>
+
+</messaging:emailTemplate>

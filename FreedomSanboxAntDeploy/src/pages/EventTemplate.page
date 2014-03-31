@@ -1,0 +1,139 @@
+<apex:page showHeader="false"   sidebar="false" title="Ffreedom Wealth Solutions">
+<body onload="ChangeCurrentTabColor()">
+<apex:stylesheet value="{!URLFOR($Resource.eventcss)}"/>
+<div id="main_bg" border="1">
+<div id="main" >
+<!-- header begins -->
+<div id="header">
+    <div id="buttons">
+        <script>
+             function ChangeCurrentTabColor()
+            {
+            
+                var sPath = window.location.pathname;
+               
+                //var sPage = sPath.substring(sPath.lastIndexOf('\\') + 1);
+                var sPage = sPath.substring(sPath.lastIndexOf('/') + 1);
+               
+                //switch(!$CurrentPage.Name)
+                 switch(sPage )
+                {
+                case "EventHomePage":
+                 document.getElementById('Tab0').style.backgroundColor = '#C35617';
+                  break;
+                  
+                  case "EventItinerary":
+                 document.getElementById('Tab1').style.backgroundColor = '#C35617';
+                  break;
+                  
+                  case "EventSpeakers":
+                 document.getElementById('Tab2').style.backgroundColor = '#C35617';
+                  break;
+                  
+                  case "EventRegistration":
+                 document.getElementById('Tab3').style.backgroundColor = '#C35617';
+                  break;
+                  
+                  case "EventVenue":
+                 document.getElementById('Tab4').style.backgroundColor = '#C35617';
+                  break;
+                
+                }
+ 
+            }
+            
+            </script>
+            
+ <style type="text/css">
+a:hover {
+text-decoration:underline;
+}
+
+
+</style>
+            
+
+         <div id="TabBody0"> <a href="EventHomePage?Id={!$CurrentPage.parameters.Id}" id="Tab0" class="but1" title="" onclick="ChangeCurrentTabColor('Tab0');">Home</a></div>
+         <div id="TabBody1"> <a href="EventItinerary?Id={!$CurrentPage.parameters.Id}" id="Tab1" class="but1" title="" onclick="ChangeCurrentTabColor('Tab1');">Programme Schedule</a></div>
+        <div id="TabBody2">  <a href="EventSpeakers?Id={!$CurrentPage.parameters.Id}"  id="Tab2" class="but1" title="" onclick="ChangeCurrentTabColor();">Speakers</a></div>
+         <div id="TabBody3"> <a href="EventRegistration?Id={!$CurrentPage.parameters.Id}"  id="Tab3" class="but1" title="" onclick="ChangeCurrentTabColor();">Registration</a></div>
+       <div id="TabBody4">  <a href="EventVenue?Id={!$CurrentPage.parameters.Id}" id="Tab4" class="but3" title="" onclick="ChangeCurrentTabColor();">Venue</a></div>
+        <script>ChangeCurrentTabColor();</script>
+       </div>
+       <div id="logo">  
+         <a href="EventHomePage"> <img src="{!URLFOR($Resource.EventImages,'EventImages/HomePageBanner.jpg')}" style="width:980px;height:252px;"/></a>
+          
+    </div>
+
+  
+</div>
+<!-- header ends -->
+    <!-- content begins -->
+
+        <div id="content_top"></div>
+        <div id="content">
+
+            <div id="right">
+            <apex:insert name="rightcontent"/><br/>
+             
+             
+          <!--       <b> Body comes here</b>-->
+               
+            </div>   
+            <div id="left"  >
+              <div class="tit_bot"  >
+<a href="EventRegistration?Id={!$CurrentPage.parameters.Id}"><img border="0"  src="{!URLFOR($Resource.EventImages,'EventImages/ClickHereImage.jpg')}" /></a>
+            <!---   <div class="bigtit_l"><a href="EventRegistration" style="color:#FFFFFF;font-weight:bold;text-decoration:none;">Click Here To Receive An Invitation for the Ffreedom Day Event</a></div>--->
+                
+                
+               
+                
+                
+                
+                
+                
+                
+           <div style="background-color:#ffffff;"><apex:iframe height="414px" id="theIframe" scrolling="true" src="http://www.facebook.com/plugins/likebox.php?id=123509464359414&connections=10&stream=true&header=true"  width="266px"></apex:iframe> </div> 
+           <br/>
+                 <h1  style="font-family: Verdana;">Follow Us On</h1>
+                 <div class="">
+                 
+                 <div class="title2"><img border="0" height="119" src="{!URLFOR($Resource.images,'images/twiterfacebooklogobg.jpg')}" tyle="position:relative; left:4px ;border:5px outset#E56717;" usemap="#Map3" width="248"/>
+<!--                  /resource/1278066686000/images/images/twiterfacebooklogobg.jpg" style="position:relative; left:4px ;border:5px outset#E56717;" usemap="#Map3" width="248" /> -->
+        <map id="Map3" name="Map3">
+          <area alt="Follow us on Twitter" coords="15,25,69,74" target="_blank" href="http://twitter.com/_Ffreedom" shape="rect" title="Follow us on Twitter" />
+          <area alt="Follow us on Facebook" coords="88,27,139,79"  href="http://www.facebook.com/pages/Ffreedom-Financial-Planners/223113275210?ref=ts" shape="rect" title="Follow us on Facebook" />
+          <area alt="Follow us on LinkedIn" coords="158,29,207,76" href="http://www.linkedin.com/companies/ffreedom-financial-planners" shape="rect" title="Follow us on LinkedIn" />
+
+       </map>
+      </div>                                                                      
+      <br />                    
+
+
+
+                </div>
+               
+                       
+              </div>
+
+                </div>
+            <br />
+            <div style="clear: both"><img src="{!URLFOR($Resource.EventImages,'EventImages/spaser.gif')}" alt="" width="1" height="1" /></div>
+        
+        </div> 
+    <!-- content ends -->
+        <div  id="bot_left"></div>
+        <div  id="content_bot"></div>
+         <!-- footer begins -->
+            <div id="footer">
+<a href="EventTerms?Id={!$CurrentPage.parameters.Id}">Terms of Use | </a><a href="EventPrivacyPolicy?Id={!$CurrentPage.parameters.Id}">Privacy Policy</a><br/>
+      © 2010 Freedom Wealth Solutions Pvt. Ltd. All Rights Reserved.<br/>Designed &amp; Developed by <a href="http://www.ffreedom.in/" title="Ffreedom Planners">Ffreedom Financial Planners</a><br />
+              </div>
+        <!-- footer ends -->
+
+</div>
+</div>
+
+</body>
+
+</apex:page>

@@ -1,0 +1,108 @@
+<apex:page showHeader="false" sidebar="false"  controller="GoalStatementController" renderAs="pdf">
+<apex:stylesheet value="{!URLFOR($Resource.PortalStyleSheet1)}"/>
+
+<div id="CompanyHeader" style="width:717px;font-size:11px; height:155px; border:1px solid black;">
+<img src="https://cs1.salesforce.com/servlet/servlet.ImageServer?id=015S0000000EyqP&oid=00DS00000006sj5"/>
+
+<apex:outputPanel id="organisationDetails" layout="block" style="padding-left:220px;position:absolute;top:15px;">
+<apex:outputText style="font-size:14px;font-weight:bold;" value="{!$Organization.Name}"/><br/>
+<apex:outputText value="{!$Organization.Street}"/><br/>
+ <apex:outputText value="{!$Organization.City}"/>.<br/> <apex:outputText value="{!$Organization.State}"/>.<br/>
+ Phone: <apex:outputText value="{!$Organization.Phone}"/>, Fax: <apex:outputText value="{!$Organization.Fax}"/><br/>
+ Email: <apex:outputLink value="www.gmailto.com">www.info@ffreedom.in</apex:outputLink>&nbsp;  Web:<apex:outputLink value="www.ffreedom.in">www.ffreedom.in</apex:outputLink>
+</apex:outputPanel> 
+
+<apex:outputPanel id="accountDetail" layout="block" style="padding-left:20px;position:absolute;top:100px;">
+<apex:outputText style="font-size:12px;font-weight:bold;" value="{!Account.Name}"/><br/>
+<apex:outputText value="{!Account.BillingStreet}"/><br/>
+<apex:outputText value="{!Account.BillingCity}"/>,&nbsp;<apex:outputText value="{!Account.BillingState}"/><br/>
+Email:&nbsp; <apex:outputText value="{!Account.PersonEmail}"/><br/>
+</apex:outputPanel>
+
+<div id="myPlanner" style="border:0px solid black; width:170px;height:60px;float:right;position:absolute;top:100px;left:500px;"> 
+<apex:outputPanel >
+Your Relationship Manager:<br/>
+<apex:outputText value="{!PlannerDescription.Name}"/><br/>
+<apex:outputText value="{!PlannerDescription.MobilePhone__c}"/>
+</apex:outputPanel>
+</div>
+</div>
+
+<div  style="border-style:solid;border-color:black;border-width:1px;background-color:#ffffff;">
+
+          <table width="700">
+              <tr>
+                  <td>
+                  <!----HEADERS START-->
+                       <table  width="700" height="30" >
+             
+                            <tr class="lightPistaGreen" style="text-align:center;font-size:11px;">
+                                <td width="20%">Scheme Name</td>
+                                <td width="10%">Folio No.</td>
+                                <td width="5%">Type</td>
+                                <td width="15%">Purchase Amt</td>
+                                <td width="15%">Current Value</td>
+                                <td width="9%">NAV</td>
+                                <td width="10%">NAV Date</td>
+                                <td width="13%">Net Gain</td>
+                                <td width="6%">Absolute Returns</td>
+                            </tr>
+                        </table>
+                  <!----HEADERS END-->
+      <apex:repeat value="{!GoalPortfolioReportWrapper}" var="OuterWrapper">
+         <table width="700" style="background-color:#FFFFFF">
+
+                   <tr>
+                       <td style="font-size:12px;font-weight:bold;text-align:left;"><apex:outputText value="{!OuterWrapper.goal.Goal_Type__c }"/> - <apex:outputText value="{!OuterWrapper.goal.Description__c }"/><br/>
+                       </td>
+                   </tr>  
+                   
+                   <tr >
+                     <td>  
+
+                         <apex:repeat value="{!OuterWrapper.PortfolioReportList}" var="innerWrapper">
+                                <table  width="700">
+                                     <tr style="font-size:11px;">
+                                        <td width="20%" style="text-align:left;"><apex:outputField style="" value="{!innerWrapper.Scheme_Scrip_Name__c}"/><br/></td> 
+                                        <td width="10%" style="text-align:left;"><apex:outputField style="" value="{!innerWrapper.Folio_Number__c}"/><br/> </td>
+                                        <td width="5%" style="text-align:left;"><apex:outputField style="" value="{!innerWrapper.Transaction_Type__c}"/><br/></td>
+                                        <td width="13%" style="text-align:right;"><apex:outputField style="" value="{!innerWrapper.Purchase_Amount__c}"/><br/></td>
+                                        <td width="13%" style="text-align:right;"><apex:outputField style="" value="{!innerWrapper.Current_Value__c}"/><br/></td>
+                                        <td width="10%" style="text-align:center;"><apex:outputField style="" value="{!innerWrapper.Nav_p__c}"/><br/></td>
+                                        <td width="10%" style="text-align:left;"><apex:outputField style="" value="{!innerWrapper.Date__c}"/><br/></td>
+                                        <td width="10%" style="text-align:right;"><apex:outputField style="" value="{!innerWrapper.Gain__c}"/><br/></td>  
+                                        <td width="9%" style="text-align:right;"><apex:outputField style="" value="{!innerWrapper.Absolute_Ret__c}"/><br/></td>  
+                                       
+                                    </tr>
+
+                                 </table>   
+                         </apex:repeat>  
+                     </td>  
+                  </tr>  
+                  <tr style="background-color:#F2F2F2;height:40px;">
+                       <td>
+                            <table width="700">
+                                 <tr style="font-size:11px;">
+                                   <td width="35%">
+                                        <span style="font-weight:bold;font-size:12px;text-align:left;"> Total Of Above Funds:</span>
+                                   </td>
+                                    <td width="13%" style="text-align:right;"><apex:outputField value="{!OuterWrapper.summary.Purchase_Amount__c}"/> </td>
+                                    <td width="13%" style="text-align:right;"><apex:outputField value="{!OuterWrapper.summary.Current_Value__c}"/> </td>
+                                  <!--- <td width="10%"><apex:outputField value="{!OuterWrapper.summary.Nav_p__c}"/> </td>--->
+                                  <td width="10%" style="text-align:center;">--</td>
+                                   <td width="10%" style="text-align:left;"> --- </td>
+                                   <td width="10%" style="text-align:right;"><apex:outputField value="{!OuterWrapper.summary.Gain__c}"/> </td>
+                                   <td width="9%" style="text-align:right;"><apex:outputField value="{!OuterWrapper.summary.Absolute_Ret__c}"/> </td>
+                                  </tr>
+
+                                 </table> 
+                        </td>
+                  </tr> 
+                  <tr><td> <br/></td> </tr>
+                 </table>
+             </apex:repeat> 
+            </td>
+         </tr>
+    </table>  
+</div>
+</apex:page>

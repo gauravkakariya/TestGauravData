@@ -1,0 +1,305 @@
+<apex:page showheader="false" title="Ffreedom Financial Planners | News Letters"	id="LeadStory_Aug12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+	<table width="740" border="0" align="center" cellpadding="0"
+		cellspacing="0">
+		<tr>
+			<td><img
+				src="{!URLFOR($Resource.images,'images/top_Aug2012.gif')}"
+				width="740" height="104" />
+			</td>
+		</tr>
+		<tr>
+			<td><table width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+						<td valign="top"><table width="98%" border="0" align="center"
+								cellpadding="0" cellspacing="0">
+								<tr>
+									<td valign="top"><table width="100%" border="0"
+											cellspacing="0" cellpadding="0">
+											<tr>
+												<td><table width="100%" border="0" cellspacing="0"
+														cellpadding="0">
+														<tr>
+															<td width="1%" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/headL.gif')}"
+																width="9" height="40" />
+															</td>
+															<td width="98%" valign="top"
+																background="{!URLFOR($Resource.images,'images/headbg.gif')}"
+																style="padding-top: 6px;"><font
+																face="Arial, Helvetica, sans-serif" color="#FFFFFF"
+																style="font-size: 14px;"><strong>ARE WE
+																		STILL SLAVES? </strong>
+															</font>
+															</td>
+															<td width="1%" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/headR.gif')}"
+																width="9" height="40" align="right" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+
+											<tr>
+												<td><table width="100%" border="0" cellpadding="0"
+														cellspacing="0">
+														<tr>
+															<td width="9" valign="top"
+																background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img
+																src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"
+																width="9" height="185" />
+															</td>
+															<td width="8" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}"
+																width="8" height="1" />
+															</td>
+															<td valign="top"><table width="98%" border="0"
+																	cellpadding="0" cellspacing="0">
+
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: center;"><img
+																			src="{!URLFOR($Resource.images,'images/leadimg1.jpg ')}"
+																			width="600" height="371" />
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">&nbsp;</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;"><p>
+																				What does freedom mean to you? This has been one of
+																				the most interesting questions ever asked and
+																				answered. Shallow, profound, complex, long pauses or
+																				sometimes just a smirk - the variety of answers this
+																				question elicits has been interesting. <br /> <br />
+																				An infant&rsquo;s freedom could be to walk and go
+																				after the toy, a young student&rsquo;s freedom could
+																				be to go to college and wear fashionable clothes, a
+																				college student&rsquo;s freedom could be get a job
+																				and spend money without restrictions, a family
+																				man&rsquo;s freedom could be to retire at will and
+																				go on that vacation, a retired person&rsquo;s
+																				freedom could be to live healthy and with dignity.
+																				For many, freedom is defined by what it is
+																				&lsquo;not&rsquo;- no restriction, no pressure, no
+																				need to ask dad for money. It depends on what stage
+																				in life we are in. <br /> <br /> If could also
+																				depend on what time we live in... <br /> <br /> In
+																				the late 1800s, people might have said freedom is to
+																				pursue a career of choice irrespective of what the
+																				father did, women might have said freedom means to
+																				be able to go out and show our faces to the world,
+																				pre 1947 Indians might have said freedom is to be
+																				able to choose our own leaders. A lot of it is stuff
+																				we now take for granted - the freedom of expression,
+																				freedom to vote, freedom to practice any religion!
+																				We already have all of it. Then what more is
+																				freedom? <br /> A dictionary explains
+																				&ldquo;Freedom is the capability and the ability to
+																				stay true to yourself and those around you without
+																				the fear of prejudice or politics&rdquo;. <br /> <br />
+																				Stay true to yourself and those around you…. Is
+																				pretty interesting, isn&rsquo;t it? What should we
+																				do to stay true to ourselves and those around us?
+																				What is stopping us from doing what it takes? <br />
+																				<br /> I am yet to come across a person who says I
+																				am already enjoying freedom. 65 years on we
+																				don&rsquo;t seem to think much of the freedom we got
+																				from foreign rule. History says that during
+																				India&rsquo;s struggle for independence, a majority
+																				of Indians themselves did not think freedom was
+																				necessary. <br /> <br /> There was and always is a
+																				deep sense of fear to pursue freedom. Freedom comes
+																				at a cost and with freedom comes responsibility.
+																				With freedom comes responsibility but in the reverse
+																				order. Responsibility first, freedom next! So, do we
+																				fear the responsibility? <br /> <br /> Whatever we
+																				fear or whatever we dare, within the broader rules
+																				of morality and goodness, freedom is for everyone to
+																				take. We are only slaves to our own limiting minds.
+																				That human capabilities are stretchable is being put
+																				on display in the Olympics every four years. But,
+																				only for the one whose mind is ready to stretch it.
+																				<br /> <br /> This Independence Day we can claim
+																				what is our birth right – the freedom to gain any
+																				kind of education, freedom to earn as much as we
+																				want, freedom to spend as we please, freedom to live
+																				a better life, freedom to live with dignity, freedom
+																				from financial worries and many more limitless
+																				freedoms if only we put our mind to it. And only, if
+																				we get responsible about it!
+																			</p>
+																			<p>
+																				Happy Independence Day! <br /> Bhuvan <br /> Head-
+																				Knowledge Hub
+																			</p>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">&nbsp;</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+														<tr>
+															<td valign="top"><img
+																src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"
+																width="9" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}"
+																width="1" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}"
+																width="1" height="1" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table></td>
+								</tr>
+								<tr>
+									<td valign="top">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td><table width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+						<td valign="top"><table width="98%" border="0" align="center"
+								cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="76%" height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#035728"
+										style="font-size: 13px;"><strong>Ffreedom
+												Financial Planners</strong>
+									</font>
+									</td>
+									<td width="24%" rowspan="3"><table border="0"
+											align="center" cellpadding="0" cellspacing="0">
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong>
+															Follow us on&nbsp;&nbsp;&nbsp;</strong>
+												</font>
+												</td>
+												<td><a href="http://www.facebook.com/Ffreedom"
+													target="_blank"><img
+														src="{!URLFOR($Resource.images,'images/fb.png')}"
+														width="20" height="20" border="0" />
+												</a><a href="http://twitter.com/_Ffreedom" target="_blank"><img
+														src="{!URLFOR($Resource.images,'images/tw.png')}"
+														width="20" height="20" hspace="6" border="0" />
+												</a><a
+													href="http://www.linkedin.com/companies/ffreedom-financial-planners"
+													target="_blank"><img
+														src="{!URLFOR($Resource.images,'images/LinkedIn.png')}"
+														width="20" height="20" border="0" />
+												</a>
+												</td>
+											</tr>
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong>Watch
+															us on</strong>
+												</font>
+												</td>
+												<td><strong><a
+														href="http://www.youtube.com/user/ffreedomtube"
+														target="_blank"><img
+															src="{!URLFOR($Resource.images,'images/youtube.png')}"
+															width="20" height="20" vspace="6" border="0" />
+													</a>
+												</strong>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">506 / 507, Morya Landmark II,
+											Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font>
+									</td>
+								</tr>
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">Boardline: +91 22 4222 4333
+											&nbsp;|&nbsp; Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a
+											href="mailto:contact@ffreedom.in">contact@ffreedom.in</a>
+											&nbsp;|&nbsp; <a href="http://www.ffreedom.in"
+											target="_blank">www.ffreedom.in</a>
+									</font>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" valign="top"><div align="justify">
+											<font face="Arial, Helvetica, sans-serif" color="#333333"
+												style="font-size: 11px;">Disclaimer: This
+												communication from Ffreedom provides general information
+												existing at the time of preparation. This mailer is intended
+												as a news update and Ffreedom Financial Planners neither
+												assumes nor accepts any responsibility for any loss arising
+												to any person acting or refraining from acting as a result
+												of any material contained in this communication. It is
+												recommended that professional advice be taken based on the
+												specific facts and circumstances. This communication does
+												not substitute the need to refer to the original
+												pronouncements.</font>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td><img src="{!URLFOR($Resource.images,'images/footer.gif')}"
+				width="740" height="15" />
+			</td>
+		</tr>
+	</table>
+</body>
+	</html>
+</apex:page>

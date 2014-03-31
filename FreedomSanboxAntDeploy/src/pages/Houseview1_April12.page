@@ -1,0 +1,173 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="Houseview1_April12">
+<head>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td><img src="{!URLFOR($Resource.Images,'images/top_April12.gif')}" width="740" height="104" /></td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2" height="1" /></td>
+					<td valign="top">
+						<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+							<tr>
+								<td valign="top">
+									<table width="100%" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td background="{!URLFOR($Resource.Images,'images/headbg.gif')}">
+												<img src="{!URLFOR($Resource.Images,'images/headR.gif')}" width="9" height="40" align="right" />
+												<img src="{!URLFOR($Resource.Images,'images/houseviewHIn.gif')}" width="132" height="40" />
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<table width="100%" border="0" cellpadding="0" cellspacing="0">
+													<tr>
+														<td width="9" valign="top" background="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+														<td width="8" valign="top"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="8" height="1" /></td>
+														<td valign="top">
+															<table width="98%" border="0" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Budget  for the Common Man….</em></strong></font></td>
+																</tr>
+												
+																<tr>
+																	<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">
+																		<p>
+																			Two of the most awaited  events in India happened today. The Budget for 2012 was out, followed by the  100th Century by Sachin  Tendulkar for Team India! <br />
+																			<br />
+																			Though the Budget seeks to  revive growth momentum, by increasing focus on infrastructure, agriculture and  rural economy, it does not have much in store for the common man! The increase  in the tax exemption limits was one of the few highlights for the aam aadmi.  Let’s have a look at the new tax slabs for 2012: <br />
+																			<br />
+																			0 -200000 – Nil (basic  exemption increased from 1,80,000 to 2,00,000) <br />
+																			2,00,000 – 5,00,000 – 10% <br />
+																			5,00,000 to 10,00,000 –  20% (increased from 8,00,000 to 10,00,000) <br />
+																			Above 10,00,000 – 30%  (increased from 8,00,000 to 10,00,000)<br />
+																			<br />
+																			So what is the savings  from the tax perspective for a common man? For a person earning a taxable  income of Rs.5,00,000, the Savings is Rs.2,000. For an individual with an  Annual Taxable Income of Rs.10,00,000 or more, the saving is Rs.22,000! <br />
+																			<br />
+																			Apart from the increase in  the tax slabs, there is something more in store. For an individual with an  Annual income of less than Rs.10,00,000, he can avail an additional exemption  of Rs.25,000 by investing Rs.50,000 in the Rajiv Gandhi Equity Scheme with a  lock in of 3 years. This is a good move by the government to increase the  retail participation in Equity. This initiative looks similar to the inclusion  of ELSS schemes under section 80C. But the ELSS has not ruled this section so  far, as there are multiple options in this space like Home Loan Principal,  Insurance Premium, EPF Contribution, etc. However, the nitty gritties of this  scheme is something we can look forward to. <br />
+																			<br />
+																			Another interesting  feature is an exemption of Rs.5,000 for the preventive Health Check Ups. This  is a welcome move to increase the focus on health and wellness. It is also  proposed to allow individual tax payers, a deduction of upto 10,000 for  interest from savings bank accounts.<br />
+																			<br />
+																			The good news is that the  Securities Transaction Tax is reduced by 20% for cash delivery transactions,  while on the flip side, Large Cars are likely to be more expensive as Excise  duty on large cars proposed to be enhanced. <br />
+																			<br />
+																			Tax free bonds of 60,000  crore to be allowed for financing infrastructure projects in 2012-13, opposed  to Bonds worth 30,000 crore floated in 2011-12. <br />
+																			<br />
+																			In the months to come, it  will be interesting to see the DTC unfold along with the GST framework. <br />
+																			<br />
+																			<strong>Advise  to the common man</strong><br />
+																			If you have been putting away getting your  master health check up done, please get it done now. You will get tax  exemption. Now, that has been a great reason for many people all these years to  do things that could have been good for them even otherwise - like take  insurance or invest in equities. <br />
+																			<br />
+																			Remember it is only for interest income on  savings bank account till Rs.10000 that is tax exempt. Please declare income  from fixed deposits, debt mutual funds etc. and pay tax on them. <br />
+																			<br />
+																			If you are earning less than Rs. 10 lacs a  year, you may want to invest in the RGESS. The FM's speech said that RGESS  would be investment in direct equity. Check out the composition of the stocks,  fund managers  etc before making the investment. You should not risk Rs.50,000 for Rs.5000  tax benefit. <br />
+																			<br />
+																			Above all of that, instead of spending too much  time and effort analysing the impact of the budget, get your personal budget  and financial plan done and stick to it with punishing discipline. You'll be  home, wealthy and wise.
+																		</p>
+																	</td>
+																</tr>
+												
+																<tr>
+																	<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+													<tr>
+														<td valign="top">
+															<img src="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+														<td valign="top" bgcolor="#BD6105">
+															<img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="1" height="1" /></td>
+														<td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="1" height="1" /></td>
+													</tr>
+												</table>
+											
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top">&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2" height="1" /></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2" height="1" /></td>
+					<td valign="top">
+						<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+							<tr>
+								<td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+								<td width="24%" rowspan="3">
+									<table border="0" align="center" cellpadding="0" cellspacing="0">
+										<tr>
+											<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+											<td>
+												<a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.Images,'images/fb.png')}" width="20" height="20" border="0" /></a>
+												<a href="http://twitter.com/_Ffreedom" target="_blank">
+													<img src="{!URLFOR($Resource.Images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" />
+												</a>
+												<a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank">
+													<img src="{!URLFOR($Resource.Images,'images/LinkedIn.png')}" width="20" height="20" border="0" />
+												</a>
+											</td>
+										</tr>
+										<tr>
+											<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+											<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.Images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+							</tr>
+							<tr>
+								<td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+							</tr>
+							<tr>
+								<td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+							</tr>
+						</table>
+					</td>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2" height="1" /></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td><img src="{!URLFOR($Resource.Images,'images/footer.gif')}" width="740" height="15" /></td>
+	</tr>
+</table>
+</body>
+</apex:page>

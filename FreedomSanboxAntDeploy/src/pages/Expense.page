@@ -1,0 +1,85 @@
+<apex:page controller="ExpenseController" tabStyle="Expense__c">
+ <apex:form >
+        
+      
+    <apex:pageBlock title="Enter your Expense Details">
+        <apex:actionfunction name="showSubExpenses" action="{!showSubExpenses}" rerender="subExpenses">
+           <apex:param name="count" value="" id="count"/>
+        </apex:actionfunction>
+        <script>
+            function setHiddenParam(expense)
+            {
+                
+                alert('Expense'+expense);
+                
+               
+                showSubExpenses(expense.value);
+                
+            }
+            
+            function checkRenderValue(){
+                alert('position'+document.getElementById('currentExpense').value);
+            }
+        </script>
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Save" action="{!saveExpenses}"/>
+            <apex:commandButton value="Cancel" action="{!cancel}"/>
+            
+        </apex:pageBlockButtons>
+        <input type="hidden" value="" name="generalExpense" id="generalExpense"/>
+        <input type="hidden" value="" name="currentExpense" id="currentExpense"/>
+        <apex:pageBlockTable value="{!expenseList}" var="expense" id="expenseTable" width="500px;" style="font-size:12px;">
+           <apex:column >
+                 <apex:outputText value="{!expense.count+1}"/>
+                
+           </apex:column>
+            <apex:column width="15%">
+                <apex:facet name="header">General Expenses</apex:facet>
+               
+                            <apex:inputField value="{!expense.exp.General_Expenses__c}" id="gExp" style="font-size:12px;width:120px"
+                onchange="showSubExpenses('{!expense.count}');">
+                       
+              </apex:inputField>
+            
+            </apex:column>
+            <apex:column width="15%">
+                <apex:facet name="header">Sub Expenses</apex:facet>
+                <apex:selectList value="{!expense.exp.Sub_Expenses__c}" id="subExpenses" size="1" style="font-size:12px;width:120px">
+                    <apex:selectOptions value="{!expense.subExpenses}" />
+                 
+                </apex:selectList>
+               
+            </apex:column>
+            <apex:column width="10%">
+                <apex:facet name="header">Start Year</apex:facet>
+                <apex:inputField value="{!expense.exp.Start_Year__c}" style="font-size:12px;width:60px"/>
+            </apex:column>
+            <apex:column width="10%">
+                <apex:facet name="header">End Year</apex:facet>
+                <apex:inputField value="{!expense.exp.End_Year__c}" style="font-size:12px;width:60px"/>
+            </apex:column>
+           <apex:column width="10%">
+                <apex:facet name="header">Current Expenses</apex:facet>
+                <apex:inputField value="{!expense.exp.Current_Expenses__c}" style="font-size:12px;width:60px"/>
+            </apex:column>
+            <apex:column width="10%">
+                <apex:facet name="header">Frequency</apex:facet>
+                <apex:inputField value="{!expense.exp.Frequency__c}" style="font-size:12px;width:60px"/>
+            </apex:column>
+            <apex:column width="10%">
+                <apex:facet name="header">Annualized</apex:facet>
+                <apex:inputField value="{!expense.exp.Annualized__c}" style="font-size:12px;width:60px"/>
+            </apex:column>
+             <apex:column width="10%">
+                <apex:facet name="header">Growth Rate</apex:facet>
+                <apex:inputField value="{!expense.exp.Expense_Growth_Rate__c}" style="font-size:12px;width:60px"/>
+            </apex:column>
+             <apex:column width="10%">
+                <apex:facet name="header">Essential</apex:facet>
+                <apex:inputField value="{!expense.exp.Essential__c}" style="font-size:12px;width:100px"/>
+            </apex:column>
+        </apex:pageBlockTable>
+    <apex:commandLink value="Add more rows" action="{!addMoreRows}" rerender="expenseTable"/>
+    </apex:pageBlock>
+    </apex:form>
+</apex:page>

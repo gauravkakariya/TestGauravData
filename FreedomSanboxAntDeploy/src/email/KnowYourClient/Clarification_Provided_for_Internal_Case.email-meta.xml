@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email template for - when case status changed to clarification provided</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Clarification Provided for Internal Case</name>
+    <style>freeForm</style>
+    <subject>Clarification provided for case {!Case.CaseNumber} : {!Case.Subject}</subject>
+    <textOnly>Dear Developer,
+ 
+Clarification has been provided in the ‘Case Comments’ section, for the case
+ &apos;{!Case.CaseNumber}  : {!Case.Subject}&apos; .
+ 
+Regards,
+Technology Support</textOnly>
+    <type>html</type>
+</EmailTemplate>

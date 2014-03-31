@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Careers Auto Response</name>
+    <style>freeForm</style>
+    <subject>Ffreedom Financial Planners</subject>
+    <textOnly>Greetings
+
+Dear {!Lead.Name},
+Thank you for applying to be a part of the Ffreedom Team.
+
+Request you to send us your updated CV.
+
+Also please send us your reply to the following Questions at hr@ffreedom.in
+
+1. Tell us about the Yourself
+2. What are you passionate about? [work, creative output, issues, communities etc.]
+3. Why do you want to apply at Ffreedom Financial Planners?
+
+Please take the time to answer the questions thoughtfully, with enough detail to help us understand who you are.
+
+We will get in touch with you after receiving your responses.
+
+Look forward to hearing from you.
+
+Sincerely,
+
+Team Ffreedom</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,241 @@
+<!-- /*
+	
+Revision History:
+
+   Version     Version Author     Date          Comments
+   1.0         Persistent         NA  		  	Initial Draft
+   
+   2.0 		   Manasi Ranade	  11/06/2011	Issue id: F0040,F0048 : Added input field for displaying current value 
+   												and maturity value of insurance.
+   2.0         Niket Chandane     21/06/2011    Summary : Put the Insurance Maturity Amount,Current Amount field in the OutputText to hide the Decimal Places 
+                              	   				Issue   : F0048
+   2.0         Manasi Ranade      01/07/2011    Issue   : F0047		
+   												Added input field for displaying Premium_Paying_Term__c of insurance
+   2.0 		   Manasi Ranade	  3/1/2011   	Issue id: FS0398 : Added style class to make field as Required.
+*/-->
+<apex:page controller="InsuranceSummaryPageController"  showHeader="false" standardStylesheets="true">
+    <style>
+        .dateFormat{
+         display:none;
+    }
+        th.colWrap div{
+         white-space:pre-wrap;
+         
+         height:40px;
+    }
+  
+    </style>
+    <apex:stylesheet value="{!$Resource.FFStyle}"/>
+    <apex:composition template="TabPage">
+	    <apex:define name="contents" > 
+		    <apex:form >
+		        <apex:outputPanel id="SummaryTable" >  
+		        <apex:pageBlock tabStyle="account" title="Insurance">
+		        
+		        <div style="margin:15px;">
+		            <apex:outputText value="{!$Label.GlobalNote}" styleClass="standardFontStyle" style="font-weight:bold;"/> 
+		            <apex:outputText value="<br/>{!$Label.InsuranceGlobalNote}" styleClass="standardFontStyle" escape="false"/> 
+		        </div>
+		
+		           <table id="DataTable" cellSpacing="0" cellPadding="0" border="1" align="center" class="list" style="border-width:thin;border-style:solid;width:70%;border-color:gray;">
+		                 <tr class="headerRow">  
+		                     <th style="width:35%;" >
+		                         <apex:outputText value="{!$Label.Insurance_Class}" />
+		                     </th>
+		                     <apex:repeat value="{!InsuranceBeanObj.AccountNameList}" var="AccName" >
+		                     <th class="labelCol" style="text-align:left;">
+		                          <apex:outputText value="{!AccName}" />
+		                     </th>
+		                     </apex:repeat>
+		                 </tr>
+		                 <apex:repeat value="{!InsuranceBeanObj.SummaryTableList}" var="STList" >
+		                 <tr>
+		                     <td> 
+		                         <apex:commandLink value="{!STList.RecordType}" action="{!showpopup}" reRender="PopupPanel">
+		                             <apex:param name="selRTypeId" value="{!STList.RecordTypeIdStr}" assignTo="{!InsuranceBeanObj.selRecordTypeId}"/>
+		                             <apex:param name="selRTypeName" value="{!STList.RecordType}" assignTo="{!InsuranceBeanObj.selRecordTypeName}"/>
+		                         </apex:commandLink>   
+		                     </td>
+		                     
+		                     <apex:repeat value="{!STList.InnerClassList}" var="InnerList">
+		                     <td class="labelCol">  
+		                        <apex:outputText value="{0, number, #,##0}">
+		                            <apex:param value="{!InnerList.AmountValue}"/>
+		                        </apex:outputText> 
+		                     </td>
+		                     </apex:repeat>
+		                 </tr>
+		                 </apex:repeat>  
+		                 <tr class="headerRow">  
+		                     <td class="dataCol" style="padding-left:10px">
+		                         <apex:outputText value="{!InsuranceBeanObj.TotalInsurance.RecordType }" />
+		                     </td>
+		                     <apex:repeat value="{!InsuranceBeanObj.TotalInsurance.InnerClassList}" var="account">
+		                         <td class="labelCol" style="width:15%;padding-right:10px;">
+		                               <apex:outputText value="{0, number, ##,##0}">
+		                            <apex:param value="{!account.AmountValue}"/>
+		                            </apex:outputText> 
+		                         </td>
+		                     </apex:repeat>
+		                 </tr>
+		          </table>
+		          <apex:pageBlockButtons location="bottom">
+		              <apex:commandButton action="/apex/Loan?entityId={!InsuranceBeanObj.entityId}&tabname=Financial Planning" value="Previous"   reRender="PopupPanel" style="margin-left:120px;"/>
+		              <apex:commandButton action="/apex/GoalVFPage?entityId={!InsuranceBeanObj.entityId}&tabname=Financial Planning" value="Next"   reRender="PopupPanel"  />
+		          </apex:pageBlockButtons>
+		        </apex:pageBlock>
+		        </apex:outputPanel>
+		
+		        <apex:outputPanel id="PopupPanel" style="height:100%;overflow:auto; width:100%;">
+		            <apex:outputPanel styleClass="popupBackgroundInsurance" layout="block" rendered="{!InsuranceBeanObj.displayPopUp}" />
+		            <apex:outputPanel styleClass="popupForegroundInsurance" layout="block" rendered="{!InsuranceBeanObj.displayPopUp}">
+		            <apex:pageBlock id="IncomeEditPage" tabStyle="Account" title="{!InsuranceBeanObj.selRecordTypeName}">
+		                <div style="width:100%;overflow:auto;height:100%;"> 
+		                    <apex:outputText value="| indicates required fields" styleClass="requiredInfoMsg standardFontStyle"/>
+		                    <apex:pageMessages rendered="true" />
+		                    <apex:pageBlockTable value="{!InsuranceBeanObj.InsuranceList}" var="Insurance" rowClasses="odd,even" width="90%" headerClass="standardFontStyle colWrap">
+		                         <apex:column style="width:4%;">
+		                            <apex:inputCheckbox value="{!Insurance.RemoveCheckbox__c}"/>
+		                         </apex:column>
+		                         
+		                         <apex:column headerValue="Include in ActionPlan" styleClass="headerBorder">
+		                            <apex:inputCheckbox value="{!Insurance.isIncludeActionPlan__c}"/>
+		                         </apex:column>
+		                         
+	                             <apex:column headerValue="Insured " styleClass="headerBorder" >
+	                                 <apex:selectList id="EntitySelectList" value="{!Insurance.Entity__c}" multiselect="false" size="1" rendered="true" styleClass="requiredField standardFontStyle " style="height:20px;">
+	                                            <apex:selectOptions value="{!OwnerItems}" />
+	                                 </apex:selectList>         
+	                             </apex:column>
+	                             
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Nominee__c.label} " styleClass="headerBorder" rendered="{!InsuranceBeanObj.displayLifeFields}" >
+	                                 <apex:selectList id="NomineeSelectList" value="{!Insurance.Nominee__c}" multiselect="false" size="1" rendered="true" style="height:20px;" styleClass="standardFontStyle">
+	                                            <apex:selectOptions value="{!OwnerItems}" />
+	                                 </apex:selectList>         
+	                             </apex:column>
+	                             
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Insurance_Company__c.label}" style="width:6%" styleClass="headerBorder" >
+	                                 <apex:inputField value="{!Insurance.Insurance_Company__c}" style="width:100px; height: 16px;" styleClass="standardFontStyle"/>
+	                             </apex:column>
+	                             
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Type__c.label} " rendered="{!InsuranceBeanObj.displayGeneralFields}">
+	                                 <apex:inputField value="{!Insurance.Policy_Type__c}"  styleClass="requiredField standardFontStyle" style="height:20px;"/>
+	                             </apex:column>
+	                             
+	                             <!-- /** Eternus Solutions  **/
+								/** Author  : Manasi Ranade	**/
+								/** Issue Id: FS0398     	**/
+								/** Date    : 3/1/2011 	**/
+								/** Purpose : Added style class to make field as Required**/
+								/****************************************************/-->
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Type__c.label} " rendered="{!InsuranceBeanObj.displayLifeFields}" >
+	                                 <apex:inputField value="{!Insurance.Policy_Type__c}" style="height:20px;" styleClass="requiredField standardFontStyle"/>
+	                             </apex:column>
+	                             
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Name__c.label}" >
+	                                 <apex:inputField value="{!Insurance.Policy_Name__c}" style="width:80px; height: 16px ;" styleClass="standardFontStyle"/>
+	                             </apex:column>
+	                             
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Number__c.label}" width="8%">
+	                                 <apex:inputField value="{!Insurance.Policy_Number__c}" style="width:80px;height:16px;text-align:right;" styleClass="standardFontStyle"/>
+	                             </apex:column>  
+	                             
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Commencement_Date__c.label}" rendered="{!InsuranceBeanObj.displayLifeFields}" >
+	                                 <apex:inputField value="{!Insurance.Commencement_Date__c}" style="height:16px;" styleClass="standardFontStyle requiredField"/>
+	                             </apex:column>   
+	                              
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Next_Premium_Due_Date__c.label}" style="width:30px;">
+	                                 <apex:inputField value="{!Insurance.Next_Premium_Due_Date__c}" style="height:16px;" styleClass="standardFontStyle"/>
+	                             </apex:column>   
+	                              
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Sum_Assured_Rs__c.label}" rendered="{!InsuranceBeanObj.displayGeneralFields}" >
+	                                 <apex:inputField value="{!Insurance.Sum_Assured_Rs__c}" style="width:95px;height:16px;" styleClass="standardFontStyle"/>
+	                             </apex:column>  
+	                                
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Death_Benefit_Rs__c.label}" rendered="{!InsuranceBeanObj.displayLifeFields}" >
+	                                 <apex:inputField value="{!Insurance.Death_Benefit_Rs__c}" style="width:100px;height:16px;text-align:right;" styleClass="standardFontStyle"/>
+	                             </apex:column>   
+	                              
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}"  >
+	                                 <apex:inputField value="{!Insurance.Premium_Amount_Rs__c}" styleClass="requiredField standardFontStyle" style="width:100%;height:16px;text-align:right;" />
+	                             </apex:column>   
+	                              
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Premium_Frequency__c.label}" style="white-space:pre-wrap;" >
+	                                 <apex:inputField value="{!Insurance.Premium_Frequency__c}"  styleClass="requiredField standardFontStyle" style="height:20px; width:130px;"/>
+	                             </apex:column>   
+	                              
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Tenure_of_Insurance__c.label}" rendered="{!InsuranceBeanObj.displayLifeFields}" >
+	                                 <apex:inputField value="{!Insurance.Tenure_of_Insurance__c}" style="width:80px;height:16px;" styleClass="standardFontStyle requiredField"/>
+	                             </apex:column>
+	                             
+	                             <!-- /** Eternus Solutions **/
+								/** Author  : Manasi Ranade	**/
+								/** Issue Id: F0047      	**/
+								/** Date    : 01/07/2011 	**/
+								/** Purpose : Added input field for displaying Premium_Paying_Term__c of insurance**/
+								/****************************************************/-->
+	                              <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Premium_Paying_Term__c.label}" rendered="{!InsuranceBeanObj.displayLifeFields}" >
+	                                 <apex:inputField value="{!Insurance.Premium_Paying_Term__c}" style="width:80px;height:16px;" styleClass="standardFontStyle"/>
+	                             </apex:column>  
+	                               
+	                            <!-- <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Number_of_Years_Left__c.label}" rendered="{!InsuranceBeanObj.displayLifeFields}" >
+	                                 <apex:inputField value="{!Insurance.Number_of_Years_Left__c}" style="width:80px;height:16px;" styleClass="standardFontStyle"/>
+	                             </apex:column>    -->
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Surrender_Cash_Value__c.label}" rendered="{!InsuranceBeanObj.displayLifeFields}"  >
+	                                 <apex:inputField value="{!Insurance.Surrender_Cash_Value__c}" style="width:80px;height:16px;" styleclass="standardFontStyle"/>
+	                             </apex:column>
+	                             
+<!-- 	                             Prajakta - FP changes II - 23-05-2013 - ROI Added   -->
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Return_Of_Interest__c.label}" rendered="{!InsuranceBeanObj.displayLifeFields}"  >
+	                                 <apex:inputField value="{!Insurance.Return_Of_Interest__c}" style="width:60px;height:16px;" styleclass="standardFontStyle"/>
+	                             </apex:column>
+	                             
+	                             
+	                            <!-- /** Eternus Solutions : Manasi Ranade	: F0040,F0048  : 11/06/2011 	**/
+								/** Purpose : Added input field for displaying current value and maturity value of insurance**/
+								/****************************************************/-->
+	                              <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Current_Amount__c.label}" style="text-align:right;" rendered="{!InsuranceBeanObj.displayLifeFields}"  >
+	                              	<apex:outputText value="{!Insurance.Current_Amount__c}" style="width:80px;height:16px;" styleclass="standardFontStyle"/>
+	                             </apex:column>
+	                             
+	                             <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Maturity_Amount__c.label}" style="text-align:right;" rendered="{!InsuranceBeanObj.displayLifeFields}"  >
+	                              <!-- Change By Niket Chandane 
+	                              	   Summary : Put the Insurance Maturity Amount in the OutputText to hide the Decimal Places 
+	                              	   Issue   : F0048
+	                               -->
+	                             	<apex:outputText value="{0, number, ,##,##0}" style="width:80px;height:16px;" styleclass="standardFontStyle">
+	                              		<apex:param value="{!Insurance.Maturity_Amount__c}"/>
+	                              	</apex:outputText>
+	                             </apex:column>
+	                             <!-- Prajakta - FP changes - 27-02-2013 - Made Maturity amount writable -->
+	                             <apex:column headerValue="Revised Maturity Amount" rendered="{!InsuranceBeanObj.displayLifeFields}"  style="text-align:right;">
+	                              	<apex:inputText value="{!Insurance.Revised_Maturity_Amount__c}" style="width:80px;height:16px;text-align:right;" styleclass="standardFontStyle"/>
+	                             </apex:column>
+	                                 
+		                    </apex:pageBlockTable>
+		                    
+		                     <apex:actionStatus stopText="" id="counterStatusData">
+		                         <apex:facet name="start">                
+		                                <apex:outputPanel style="padding-left:45%;">
+		                                   <apex:image value="{!$Resource.loading_image}" width="3%" height="3%"/>
+		                                </apex:outputPanel>
+		                         </apex:facet>
+		                    </apex:actionStatus>  
+		                    
+		                    <apex:pageBlockButtons location="bottom">
+<!-- 		                    	<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+								<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+			                        <apex:commandButton value="Add New" action="{!AddNewRow}" reRender="PopupPanel,counterStatusData" status="counterStatusData" style="margin-left:110px;"/>
+			                        <apex:commandButton value="Remove" action="{!Remove}" reRender="PopupPanel,SummaryTable,counterStatusData"  status="counterStatusData"/> 
+			                        <apex:commandButton value="Save" action="{!Save}" reRender="PopupPanel,SummaryTable,counterStatusData" status="counterStatusData" />
+		                        </apex:outputPanel>
+		                        <apex:commandButton value="Cancel" immediate="true" action="{!closePopup}" rerender="PopupPanel,SummaryTable"   />
+		                    </apex:pageBlockButtons>
+		                 </div> 
+		        	 </apex:pageBlock>
+		         	</apex:outputPanel>
+		         </apex:outputPanel>
+		    </apex:form> 
+	    </apex:define>   
+    </apex:composition>
+</apex:page>

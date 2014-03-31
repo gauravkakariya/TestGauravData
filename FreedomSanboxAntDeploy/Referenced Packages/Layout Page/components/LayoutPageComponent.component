@@ -1,0 +1,152 @@
+<apex:component controller="ClerisoftPages.LayoutPageController">
+ 
+   
+<!-- References -->
+<apex:includeScript value="../../soap/ajax/24.0/connection.js"/> 
+<script src="{!URLFOR($Resource.ClerisoftPages__JQ1816, 'js/jquery-1.6.2.min.js')}"/>
+<script src="{!URLFOR($Resource.ClerisoftPages__JQ1816, 'js/jquery-ui-1.8.16.custom.lpjs.min.js')}"/>
+<script src="{!URLFOR($Resource.ClerisoftPages__JQ1816, 'js/jquery-ui-1.8.16.custom.min.js')}"/>
+
+<apex:form >
+<div class="header">LAYOUT PAGE <font style="font-size:12px;position:absolute;right:2%;color:#F9F9F9;padding-top:4px;"><i>Visualforce Layout Pages; Simple &amp; Easy!</i></font></div>
+<div class="headerGuidance">LAYOUT PAGE converts any Salesforce Layout (Standard OR Custom) into a standard Visualforce page instantly - in just 3 simple &amp; easy steps.<div onclick="feedbackPage()" style="display:inline;cursor:pointer;font-style:italic;font-weight:normal;color:#5555FF;font-size:12px;">(Got feedback?)</div>  
+<div class="stepGuidance" id="stepGuidance">
+<ol>
+<li> Select the <b>Object</b></li>
+<li> Select the <b>Record Type</b> (if applicable)  <font clss="hint">(keep the default selection <b>ALL</b> to create one page that serves all record types)</font></li>
+<li> Select the Page type, <b>New/Edit (OR) Detail</b> Page</li>
+<li> Click <b>Build Page</b> button. Thats It! You are Done!!</li>
+</ol>
+ 
+<font style="margin-left:5%;"><input type="button" class="button" value="Proceed" onclick="loadStartPage()"/></font>
+</div>
+
+<div id="process" class="actionStatusStyleImageDiv"><apex:image value="{!$Resource.ClerisoftPages__Processing}" /></div>
+
+<div class="step1" id="step1">
+
+<center>
+<table width="90%" border="0" cellpadding="2" cellspacing="2">
+<tr><td width="15%" align="right"><font class="question">Object</font></td><td align="left"><font class="answer">
+<select name="objects" id="objects" class="selectList" onChange="updateRecordTypes()">
+  
+  
+</select></font></td></tr>
+<tr ><td width="15%" align="right"><font class="question">Record Type</font></td><td align="left"><font class="answer">
+<select name="records" id="records" class="selectList">
+ <option value="ALL">ALL</option>
+  
+</select></font></td></tr>
+<tr><td width="15%" align="right"><font class="question">Page Type</font></td><td align="left"><font class="answer">
+<input type="radio" name="mode" value="edit" checked="true" onChange="recordSelection('edit');"/> New/Edit Page &nbsp;
+<input type="radio" name="mode" value="detail" onChange="recordSelection('detail');"/> Detail Page</font></td></tr>
+<!-- <tr><td width="15%" align="right"><font class="question">Apex Class</font></td><td align="left"><font class="question"><input type="checkbox"  id="apexcheck"/> (Check this box to create Controller Extension Class for this Visualforce page)</font></td></tr> -->
+<tr><td width="15%" align="right"></td><td align="left"><font class="question">
+<input type="button" class="buttond" id="createbtn" value="Build Page" disabled="true" onclick="processPage()"/>
+<input type="button" class="buttonh" id="savebtn" value="Save"  onclick="savePage()"/>
+
+</font></td></tr>
+</table>
+
+</center>
+  
+
+</div>
+<center style="margin-top:2px;font-weight:bold"> 
+<textarea id="mm" readonly="readonly" style="display:none;resize: none;border:0px;width:99.3%;text-align:left;font-weight:normal;font-size:11px;margin-bottom:12px;height:150px;overflow:auto;border-radius:5px;background:#EEE;padding:3px;color:#777"/>
+<a style="font-size:11px;background:#FFA500;color:#FFF;padding:6px;border-radius:4px;text-decoration:none;font-weight:bold;" href="http://www.clerisoft.com" target="_blank">Clerisoft, Inc. (2008-2013)</a>
+<a style="font-size:11px;background:#FFA500;color:#FFF;padding:6px;border-radius:4px;text-decoration:none;font-weight:bold;" href="http://www.linkedin.com/groups/LAYOUT-PAGE-4609377" target="_blank">LAYOUT PAGE Community</a>
+</center>
+</div>
+<div id="codediv" class="codeDiv">
+<div class="headerPreview">PREVIEW <div style="display:inline; margin-left:80%;">
+<!-- <select name="records" id="previewrecords" class="selectList" onchange="reloadPreview()">
+</select> -->
+</div></div>
+
+<center>
+
+<iframe class="previewFrame"  name="if" id="if" height="600" onload="resizeMe(this);"></iframe>
+  
+
+</center>
+</div>
+<div class="popupBackground"  id="bg"></div>
+<div class="custPopup"  id="cp"><div class="popupHeader">Save Options <font id="closecross" style="position:absolute;right:3%;font-weight:bold;color:#EEE;cursor:pointer" onclick="saveCancel()">X</font></div>
+<div class="popupData">
+<table width="99%" border="0" cellspacing="3" id="optionstable">
+<tr><td width="20%" align="middle" colspan="2"><center><font class="answer">
+<input type="radio" id="sr" name="saction" value="save" checked="true" onChange="actionSelection('create');"/>New Page &nbsp;
+<input type="radio" id="ur" name="saction" value="update" onChange="actionSelection('update');"/>Update Page</font>
+</center>
+</td></tr>
+<tr id="saveselection"><td width="20%" align="right"><font class="question">Save as</font></td><td align="left"><input type="text" class="answerConfirmation" id="so" onkeydown="return event.keyCode != 13 && event.which != 13;"/></td></tr>
+<tr id="updateselection"  style="display:none;"><td width="20%" align="right"><font class="question">Select</font></td><td align="left">
+
+<select name="vfpages" id="pn" class="selectListConfirmation">
+ <option value="">--None--</option>
+</select>
+
+
+
+</td></tr>
+<tr><td colspan="2"></td></tr>
+
+
+</table>
+<div id="savemessage" class="saveMessage">Specify Name, Click <b>Complete</b>.</div>
+</div>
+<center><input type="button" class="button" id="completesavebtn" value="Complete"  onclick="completeSave()"/>
+<input type="button" class="buttonClose" id="completeclosebtn" value="Close"  onclick="saveClose()"/>
+</center>
+</div>
+
+<div class="feeedbackPopup"  id="feedbackDiv"><div class="popupHeader">Feedback <font style="position:absolute;right:3%;font-weight:bold;color:#EEE;cursor:pointer" onclick="feedbackClose()">X</font></div>
+<div class="popupDataConfirm" id="popupDataConfirm"><br/><br/><br/><br/>Thank you for sharing your thoughts with us. <br/>Your feedback helps us make our offerings better.<br/>We sincerely appreciate your time and effort in providing feedback to us.<br/><br/>Support Engineering<br/><a href="mailto:support@clerisoft.com" style="color:#0099CC;cursor:pointer;">support@clerisoft.com</a><br/><a style="color:#0099CC;cursor:pointer;" href="http://www.clerisoft.com">www.CLERISOFT.com</a></div>
+<div class="popupData" id="popupData">
+<table cellpadding="3" cellspacing="4" border="0" width="100%">
+<tr><td align="right" width="20%"><font class="question">From</font></td><td align="left"><font class="answer">{!$User.FirstName}&nbsp; {!$User.LastName}&nbsp;&nbsp;({!$User.Email})</font></td></tr>
+<tr><td align="right" width="20%"><font class="question">To</font></td><td align="left"><font class="answer">Clerisoft Support &nbsp;&nbsp;(support@clerisoft.com)</font></td></tr>
+<tr><td align="right" width="20%"><font class="question">Subject</font></td><td align="left">
+<font class="answer"><input type="radio" name="feedbackitem" value="Feature Request" checked="true" onChange="feedbackSelection('Feature Request');"/>Feature Request &nbsp;
+<input type="radio" name="feedbackitem" value="Issue Reporting" onChange="feedbackSelection('Issue Reporting');"/>Issue Reporting</font>
+</td></tr>
+<tr><td align="right" valign="top" width="20%"><font class="question">Message</font></td>
+<td><div onClick="this.contentEditable='true';" height="200px" id="fmessage" class="feedboxText"><div></div></div></td></tr>
+</table>
+</div>
+<center><input type="button" class="button" id="completefeedbackbtn" value="Send"  onclick="sendFeedback()"/>
+<input type="button" class="buttonClose" id="feedbackclosebtn" value="Close"  onclick="feedbackClose()"/>
+</center>
+</div>
+  
+</apex:form>
+
+<script>
+
+$j = jQuery.noConflict();
+
+var  bu = unescape('{! URLFOR($Action.Account.Tab, $ObjectType.Account,  null, true)}')
+bu = bu.substring(0, bu.indexOf('/001/'));
+setSessionId('{!JSENCODE(GETSESSIONID())}');
+setUserId('{!JSENCODE($User.Id)}');
+setBaseURL(bu);
+var isDebug = '{!JSENCODE($CurrentPage.parameters.debug)}';
+if(isDebug == '' || isDebug == undefined)
+isDebug = false;
+if(isDebug)
+{
+	setDebug(isDebug);
+	$j('#mm').show('fast');
+}
+setUserDetails('{!JSENCODE($User.FirstName)}', '{!JSENCODE($User.LastName)}', '{!JSENCODE($User.Email)}');
+window.addEventListener('message', function(event) {
+  if (isNaN(event.data) || event.data == 0) return; 
+  var height = parseInt(event.data) + 32; 
+  document.getElementById('if').style.height = height + "px";
+}, false);
+setTimeout(initializeLayoutPage, 250);
+</script>
+<!-- http://java+script+obf+usca+tor+.+c+o+m+ -- - LAST USED THIS ONE 03/20/2013>
+<!-- http://www.obfuscator.ro/en/index.php -->
+</apex:component>

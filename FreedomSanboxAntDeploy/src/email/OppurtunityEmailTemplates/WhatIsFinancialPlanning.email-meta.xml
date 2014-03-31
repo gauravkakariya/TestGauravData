@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>WhatIsFinancialPlanning</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>WhatIsFinancialPlanning</name>
+    <style>none</style>
+    <subject>What Is Financial Planning</subject>
+    <textOnly>What is Financial Planning?
+
+Financial planning is a critical exercise in ensuring long-term financial security.
+
+Here are three basic questions that you will answer during financial planning:
+
+Where are you today? What is your current financial situation?
+Where do you want to get to? What is your vision of your future financial situation?
+Will you be able to get there? How do you plan to achieve your vision?
+
+During the financial planning process you analyze what your financial needs and goals are. Then, you quantify in money terms what resources you need to meet those goals, and quantif y the time period during which you want to achieve these goals. Finally, you write an action plan on what you need to
+fulfil your plan in terms of what products to buy and what types of savings to make.
+
+Can you do Financial Planning yourself?
+
+Of course you can…but just like you won’t repair your own watch or car on your own, you need to come to an expert for financial planning. Otherwise, without the right financial skills and tools for financial planning, your finances can end up as a disaster.
+
+If you feel you can do financial planning on your own, you might want to answer the following questions:
+
+Is your family going to be financially secure, whatever happens to you?
+Are your finances tax efficient?
+ Do you know how to legally save taxes?
+Are you confident that investments give you the best return in a rising or
+a falling stock market?
+Do you have enough money to pay for your son or daughter’s education? How about for their wedding?
+Do you wish to retire in the mountains or next to the beach?
+ Is this just a wish, or have you enough money to turn this wish into reality?
+If you don’t have a Will, do you know what will happen to your hard earned assets upon your death?
+
+If you did not answer yes to all of the above, then you should feel uncomfortable. You must see a financial planning specialist who can make the right recommendations for you.
+ 
+Why do you need to Plan?
+
+When is the right time for Financial Planning? My future is a long way away, why bother today?
+
+The best time to review your financial situation is today! And you must do this as regularly as you can because your life is never static.
+
+Unless you start early, you might find that time has passed you by. You will get older, your children will have growing needs, your expenses will rise…..and, before you know it, you may be regretting not planning for the future.Don’t be complacent that you will be okay whatever happens.
+
+Financial plans must be dynamic to reflect the changing socio-economic environment, as well as the stage of life that you are in. Yet, very few of us bother to review our financial situation as we move from one stage of life to another. We recommend that you review your financial plan at least once a
+year to take advantage of changing investment opportunities and risk.
+
+Why should you do Financial planning regularly?
+
+Simply put, time never stands still. You grow old, your needs change, your family’s needs will also change. Additionally, the context around you will also change. There will be new investment opportunities. Some old investments that you would have made might no longer make sense with the passage of time or will need to get updated.
+
+With the passage of time and your increasing age, your needs change.
+Similarly, due to economic, political and family reasons, the context can also change.Accordingly, you need to adjust and update your financial plan
+to take advantage of the new conditions as well as to react to changes.
+
+Someone in their 20s will have different needs as they enter their 30s. Also, over this time period your risk profile might have also changed (age-based financial planning).
+
+Someone who is married with no children will have to update their plan when their child is born. As a start, if the person did not have any insurance, he or she must buy protection because the family size has increased. Also, this would be a good time to start thinking about writing a will to identify who your beneficiaries will be (life-stage based financial planning).</textOnly>
+    <type>custom</type>
+</EmailTemplate>

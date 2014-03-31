@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectSharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <ownerRules>
+        <fullName>FfreedomTeam295083</fullName>
+        <sharedTo>
+            <group>FfreedomTeam</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>FfreedomTeam</group>
+        </sharedFrom>
+        <accessLevel>Edit</accessLevel>
+        <name>Ffreedom Team</name>
+    </ownerRules>
+</CustomObjectSharingRules>

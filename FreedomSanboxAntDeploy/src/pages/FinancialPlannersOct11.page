@@ -1,0 +1,142 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="FinancialPlannersOct11">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script type="text/javascript">
+ 			var _gaq = _gaq || [];
+  			_gaq.push(['_setAccount', 'UA-26313496-1']);
+  			_gaq.push(['_trackPageview']);
+ 
+			  (function() {
+			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			  })();
+ 		</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.images4,'images4/top.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/plannerHIn.gif')}" width="218" height="40" /></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Emergency planning the key to keep dreaming</em></strong></font></td>
+                          </tr>
+
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px;">
+                                <p align="justify">In late 2007, the Great Recession was just beginning to unravel itself in the United States. In the next few months time, banks had declared bankruptcy, homes were sold, large corporate fell and many had lost their jobs. The rippling effect of this was seen across the globe, including in our shores. Many of my friends and relatives were rendered jobless and helpless.
+
+                                </p>
+                                <p align="justify">Life is full of such events that come without prior warning or a signal. And while we can do our best to understand the situation, facing it financially is tougher than we expect. Financially preparing yourself is the key to overcome any crisis. A contingency financial plan can help you understand not only how you would tackle the present but also what you should do in the future.
+
+                                </p>
+                                <p align="justify">Some of us may feel that planning for an emergency would adversely affect our current lifestyle. But looking at the events that have unfolded in the last few years, one can safely assume that emergency planning is the key to holding your financial life and your dreams together. </p>
+                                
+                                <ul>
+                                  <li>
+                                    <div align="justify"><strong align="justify">Prevention is better than cure:</strong> I am a firm believer of the Scout’s Motto: To be prepared. Preparing and creating an emergency plan makes sure that you are well equipped to solve any issues that may arise during dire times. Waiting for bad event to unfold to act upon it, would not just be a logistical pain, but will derail all your future plans too. Preparing and investing in a plan is no rocket science. All you need is a workable financial plan along with oodles of discipline to follow it through.
+
+
+                                    <br />
+                                      &nbsp;</div>
+                                  </li>
+                                  <li>
+                                    <div align="justify"><strong>Avoiding debt:</strong>    Somehow this idea that the credit card is to be used in case of emergencies has crept into our minds. It is but human nature to make sure that your loved ones are taken care of, whatever the situation. However in that endeavor, we tend to pile up more and more debt making our own lives miserable. Just avoiding debt when in crisis can mean that when things are finally back to normal, you can continue living your plans, instead of clearing newly accumulated debts. 
+
+
+                                    <br />
+                                      &nbsp;</div>
+                                  </li>
+                                  <li>
+                                    <div align="justify"><strong>Do no dip into retirement savings: </strong>  An emergency plan can keep your retirement plans on track, as you will not have to tap into those resources. Your retirement is as important as the rest of your life; any event should not hamper those plans. Creating two separate plans will ensure you have a smooth today as well as a comfortable tomorrow. 
+
+
+                                    <br />
+                                      &nbsp;</div>
+                                  </li>
+                                  <li>
+                                    <div align="justify"><strong>Maintain your life standards: </strong>  As mentioned earlier, during the recession, many who lost their jobs had to compromise on their standard of life as they were dependent on their fixed income investments. Some even had a lot of their investments in illiquid assets like real estate. Of course you would not be able to splurge on all the luxuries and the best brand names, but you wouldn’t have to cut back on basic needs nor fall in debt.
+                                   
+                                      &nbsp;</div>
+                                  </li>
+                                  </ul>                                
+                                <p align="justify">There is so much for all of us to learn from nature, from insects like ants. They have taught us that working hard and investing in today will not only protect us when times are stormy but will help make sense of life after the storm has passed.</p></td>
+                            </tr>
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+</apex:page>

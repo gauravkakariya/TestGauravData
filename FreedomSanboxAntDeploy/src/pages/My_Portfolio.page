@@ -1,0 +1,38 @@
+<!--							
+	Revision History:
+	
+    Version     Version Author     	Date        	Comments
+    1.0         Jyoti			   	--	  			Initial Draft
+    1.0			Mahesh Hirugade		04/05/2012    	Issue ID : 00001620 : Currently My Portfolio is opening up in same frame.
+    												So commented first section of code and uncommented second section of code to open this in separate window.
+-->
+
+<!-- **************** Section I **************** -->
+<!-- Following is to open page in same window -->
+<!-- <apex:page sidebar="false" showHeader="true"> 00001620-->
+<!--    <apex:composition template="PortalFinancialMgrTemp">-->
+<!--        <apex:define name="rightcontent">-->
+<!--             <apex:form id="myForm"> 00001620-->
+<!--                 <apex:iframe src="/apex/InvestWellLogin" scrolling="true" height="500px" id="theIframe"/> 00001620 -->
+<!--             </apex:form> 00001620 -->
+<!--        </apex:define> -->
+<!--    </apex:composition>-->
+<!-- </apex:page> 00001620-->
+<!-- ******************************************** -->
+
+
+<!-- **************** Section II **************** -->
+<!-- Following is to open page in new popup window,since iFrame is giving security error -->
+<apex:page sidebar="false" showHeader="true">
+   <HTML>
+       <head></head>
+       <body>
+           <form>
+               <script type="text/javascript">
+					window.open('/apex/InvestWellLogin','','fullscreen=yes');
+               </script>
+           </form>
+       </body>
+   </HTML>
+</apex:page>
+<!-- ******************************************** -->

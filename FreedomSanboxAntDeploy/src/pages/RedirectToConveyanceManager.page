@@ -1,0 +1,10 @@
+<apex:page standardController="Conveyance_Manager__c" extensions="RedirectToConveyanceManager" action="{!Init}">
+<apex:form >
+	<apex:pageBlock >
+		<apex:pageMessages />
+		<apex:pageBlockButtons >
+		<apex:commandButton action="{!Back}" value="Back"/>
+		</apex:pageBlockButtons>
+	</apex:pageBlock>
+</apex:form>
+</apex:page>

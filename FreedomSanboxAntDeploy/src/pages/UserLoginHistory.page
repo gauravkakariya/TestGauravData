@@ -1,0 +1,74 @@
+<apex:page controller="UserLoginHistroy" sidebar="false" readOnly="true">
+	<apex:form >
+		<apex:pageMessages id="pageMsg"/>
+		<apex:pageBlock title="Login History" >
+			<apex:pageBlockSection > 
+				<apex:pageBlockSectionItem > 
+					Start Date : <apex:inputField value="{!objContact.birthDate}"> </apex:inputField>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					End Date : <apex:inputField value="{!objEndContact.birthDate}"> </apex:inputField>
+				</apex:pageBlockSectionItem> 
+			</apex:pageBlockSection>
+			
+			<apex:commandButton action="{!filterLoginHistory}" value="Show Login History" rerender="loginHistoryId, calculatePercent, pageMsg" style="margin-left:470px;" status="topStatus"/>
+			<apex:commandButton action="{!calculatePercentage}" value="Percentage" rerender="calculatePercent, loginHistoryId, pageMsg" status="topStatus"/>
+			<apex:actionStatus stopText="" id="topStatus">
+                <apex:facet name="start">
+               		<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                    	<img src="/img/loading.gif" width="16" height="16"/>
+					</apex:outputPanel>
+                </apex:facet>
+            </apex:actionStatus>  
+			<br/>
+			<apex:commandButton action="{!filterLoginHistoryExportToExcel}" value="Show Login History Export To Excel" style="margin-left:385px;" />
+			<apex:commandButton action="{!calculatePercentageExportToExcel}" value="Percentage Export To Excel"/>
+		</apex:pageBlock>
+		
+		<apex:outputPanel id="loginHistoryId" >
+			<apex:pageBlock title="Login History" rendered="{!!isPercentage && lstLoginHistoryDetail.size!=0}" >
+				<apex:pageBlockTable value="{!lstLoginHistoryDetail}" var="loginHistory">
+					<apex:column headerValue="User Name">
+						{!loginHistory.UserName}
+					</apex:column>
+					<apex:column headerValue="Login Date">
+						{!loginHistory.strDate}
+					</apex:column>
+					<apex:column headerValue="Count">
+						{!loginHistory.countDate}
+					</apex:column>
+				</apex:pageBlockTable>
+			</apex:pageBlock>
+		</apex:outputPanel>
+		
+<!-- 		<apex:outputPanel id="loginHistoryId1" > -->
+<!-- 			<apex:pageBlock title="Login Description" rendered="{!!isPercentage && lstLoginHistoryDetail.size!=0}" > -->
+<!-- 				<apex:pageBlockTable value="{!lstloginDescription}" var="loginHistory"> -->
+<!-- 					<apex:column headerValue="User Name"> -->
+<!-- 						{!loginHistory.UserName} -->
+<!-- 					</apex:column> -->
+<!-- 					<apex:column headerValue="Login Date"> -->
+<!-- 						{!loginHistory.dtLoginTime} -->
+<!-- 					</apex:column> -->
+				
+<!-- 				</apex:pageBlockTable> -->
+<!-- 			</apex:pageBlock> -->
+<!-- 		</apex:outputPanel> -->
+		
+		<apex:outputPanel id="calculatePercent">	
+			<apex:pageBlock title="Calculate Percentage" rendered="{!isPercentage && lstLoginHistoryDetailwithPercent.size!=0}">
+				<apex:pageBlockTable value="{!lstLoginHistoryDetailwithPercent}" var="calcPercent">
+					<apex:column headerValue="User Name">
+						{!calcPercent.UserName}
+					</apex:column>
+					<apex:column headerValue="User Name">
+						<apex:outputText value="{0, number,0.00}" >
+	                        <apex:param value="{!calcPercent.percentage}"/>
+	                    </apex:outputText>
+	                </apex:column>
+				</apex:pageBlockTable>
+			</apex:pageBlock>
+		</apex:outputPanel>
+		
+	</apex:form>
+</apex:page>

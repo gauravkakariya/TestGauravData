@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Email 4 All FDay Invitees</name>
+    <style>freeForm</style>
+    <subject>Ffreedom Day Memories</subject>
+    <textOnly>Dear {!Registration__c.Name},
+
+Presenting to you “The Ffreedom Day Memories”.
+
+To take a look into the memories of Ffreedom Day click on the following link – 
+
+ http://www.facebook.com/album.php?aid=17122&amp;id=123509464359414
+
+And if you want to express your views, comment on the pictures and be a part of the post Ffreedom Day excitement you can connect with us on
+
+ www.facebook.com/Ffreedom.
+
+  We will also send you the links for the Pictures in Motion i.e the videos of all the Ffreedom Talks on Happiness | Dreams | Financial Freedom soon…..
+
+Also Feel free to contact us on +91 22 4222 4333 if there is anything which we can help you with.
+
+Regards,
+Ffreedom Team.
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:&quot;Table Normal&quot;;
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-qformat:yes;
+	mso-style-parent:&quot;&quot;;
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin-top:0in;
+	mso-para-margin-right:0in;
+	mso-para-margin-bottom:10.0pt;
+	mso-para-margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:&quot;Cambria&quot;,&quot;serif&quot;;
+	mso-ascii-font-family:Cambria;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:&quot;Times New Roman&quot;;
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Cambria;
+	mso-hansi-theme-font:minor-latin;}
+
+
+
+Dear {!Registration__c.Name},
+
+ Presenting to you “The
+Ffreedom Day Moments”.
+
+
+To take a look into the memories of Ffreedom Day&amp; have a look at all the pictures click on 
+http://picasaweb.google.com/108949726948604136157/FfreedomDay?authkey=Gv1sRgCKaehJPis47PqAE&amp;feat=directlink
+
+
+And if you want to express your views, comment on the
+pictures and be a part of the post Ffreedom Day excitement you can connect with
+us on 
+
+www.facebook.com/Ffreedom
+orhttp://www.facebook.com/album.php?aid=17122&amp;id=123509464359414
+
+
+ We will also send you
+the links for the Pictures in Motion i.e the videos of all the Ffreedom Talks
+on Happiness | Dreams | Financial
+Freedom soon…..
+
+
+Also Feel free to contact us on +91 22 4222 4333 if there is anything which we can help you with.
+
+ 
+
+Regards,Ffreedom Team.
+
+
+Ffreedom Team.</textOnly>
+    <type>html</type>
+</EmailTemplate>

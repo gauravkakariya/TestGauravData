@@ -1,0 +1,56 @@
+<apex:page standardController="Account" extensions="ExecutionTrackerRelatedListController" showHeader="false" sidebar="false">
+<apex:form > 
+		<apex:pageBlock title="Execution Tracker" id="pbId">
+			<apex:pageBlockButtons location="top">
+				<apex:outputPanel id="pbButtonId">
+					<apex:outputPanel > 
+						<a class="btn" onclick="return false" href="/apex/FloatingExecutionTracker?eid={!entityId}" style="text-decoration: none" target="_Parent">Create/View Execution Tracker</a>
+					</apex:outputPanel>
+				</apex:outputPanel>
+			</apex:pageBlockButtons>
+			
+			<apex:outputPanel id="optPanel1">
+				<apex:outputPanel rendered="{!lstET.size > 0}">
+					<apex:pageBlockTable value="{!lstET}" var="rec">
+					 	<apex:column headerValue="Action" width="2%">
+								<apex:commandLink value="View" action="{!ViewRecords}" target="_blank">
+							            <apex:param name="recId" value="{!rec.Id}" assignTo="{!rejectedTrackerId}"/> 
+								</apex:commandLink>
+	                    </apex:column>
+						<apex:column headerValue="Goal Name" >
+							<apex:outputText value="{!rec.Goal_Name__c}"/>
+		                </apex:column>
+		                <apex:column headerValue="Executed Product Name" >
+		                	{!rec.Executed_Product_Name__c}
+		                </apex:column>  
+		                      
+		            	<apex:column headerValue="Recommended Amount" >
+<!-- 		            		{!rec.Agreed_Amount_Base_Amount__c} -->
+		            		{!rec.Suggested_Amount__c}
+		                </apex:column>  
+		                <apex:column headerValue="Balance Remaining" >
+		            		{!rec.Total_Remaining_Balance__c}
+		                </apex:column>  
+		            	<apex:column headerValue="Agreed Amount" >
+		            		{!rec.Agreed_Amount__c}
+		                </apex:column> 
+		                
+	                  	<apex:column headerValue="Executed Amount" >
+		            		{!rec.Executed_Amount__c}
+		                </apex:column>
+		            	<apex:column headerValue="Application Status" >
+		            		{!rec.Application_Status__c}
+		                </apex:column> 
+		                <apex:column headerValue="Status" >
+		                	{!rec.ET_Status__c}
+		                </apex:column> 
+		                
+		                <apex:column headerValue="Owner" >
+		                	{!rec.Owner__r.Name}
+		                </apex:column>
+		             </apex:pageBlockTable>    
+				</apex:outputPanel>
+			</apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

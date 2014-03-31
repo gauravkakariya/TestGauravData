@@ -1,0 +1,54 @@
+<messaging:emailTemplate subject="‘Zindagi Na Milegi Dobara’ has Useful Lessons for Financial Planning, Economic Times, dated 08.09.20" recipientType="Contact" relatedToType="Account">
+
+<messaging:htmlEmailBody >
+Dear  {!Relatedto.Name}, <br/>
+<table border="0">
+<tr>
+        <td><br/></td>
+        <td><br/></td>
+ </tr>
+    
+    <tr>
+        <td width="5%"></td>
+        <td width="95%" align="center" style="font-size:18px;font-weight:bold;font-face:Arial;">
+            Please find attached a very relevant article that appeared in Economic Times dated 08.09.2011. 
+            It draws out analogies among real life and reel life.
+    
+            
+        </td>
+    </tr>
+    <tr>
+        <td><br/></td>
+    </tr>
+    <tr>
+     <td width="5%"></td>
+        <td align="center">
+            <apex:image url="https://emea.salesforce.com/servlet/servlet.ImageServer?id=01520000000hKWL&oid=00D20000000JZVv" width="400px;" height="250px;" style="align:center;"/>
+        </td>
+    </tr>
+   <tr>
+        <td><br/></td>
+    </tr>
+    <tr>
+        <td>
+        </td>
+        <td align="center" style="font-size:18px;font-weight:bold;color:black;">
+          
+           Happy Reading, 
+ 
+           Team Ffreedom
+
+        </td>
+    </tr>
+      <tr>
+        <td><br/></td>
+    </tr>
+    <tr>
+     <td width="5%"></td>
+        <td align="center">
+            <apex:image url="https://emea.salesforce.com/servlet/servlet.ImageServer?id=01520000000ribD&oid=00D20000000JZVv" width="320px;" height="100px;" style="align:center;"/>
+        </td>
+    </tr>
+</table>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

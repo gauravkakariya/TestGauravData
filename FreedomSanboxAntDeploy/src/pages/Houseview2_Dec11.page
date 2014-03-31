@@ -1,0 +1,145 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="Houseview2_Dec11">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script type="text/javascript">
+ 			var _gaq = _gaq || [];
+  			_gaq.push(['_setAccount', 'UA-26313496-1']);
+  			_gaq.push(['_trackPageview']);
+ 
+			  (function() {
+			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			  })();
+ 		</script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.Images,'images/top_Dec2011.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="images/space.gif" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/houseviewHIn.gif')}" width="132" height="40" /></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>  Knowing is different from doing  </em></strong></font></td>
+                          </tr>
+                          
+                          <tr>
+                          	 <td valign="top">
+                         		<div align="justify">
+                          		<p>
+									<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">We hear this a lot, ‘I know what to do with my money so, I’ll handle it myself’.  
+                                           <br />
+									<p>As much as we want to compare ourselves with doctors, the comparison is irrelevant, because we don’t know much there, there are no 24*7 TV channels talking about our body and how it works, nor are there many chemists who claim to be doctors and randomly give away advice.
+									</p>
+
+									<p>With so many magazines, blogs, TV channels, published books, seminars on money giving out so much wisdom, why do expensive insurance plans and complex investment options still sell, why then, do people wait till the end of the month to invest what is left of their earnings, why then do a lot of people still borrow for their childrens’ weddings? 
+									</p>
+
+									<p>If all those who read Tarla Dalal’s recipe books start cooking as well as she does, why then is the restaurant business one of the fastest growing? 
+									</p>
+
+									<p>There is a big difference between knowing what we should do and actually doing it. The knowledge piece seems quite sexy; being interested, learning something new, coming up with that cool idea. The doing part sounds comparatively dud, like routine work, no matter how easy the work may be to do or how obviously critical it is.
+									</p>
+
+									<p>That space between knowing that you need to do something and actually doing it is most often quite messy. The idea was mind blowing, the planning was exhilarating, and now it is time to plunge, call it uncertainty, call it indecisiveness or just plain indiscipline, people won’t act. <br/>
+                                    </p>
+									
+									<p>To all those who think ‘I will do it myself – I know what to do’, there are questions to ask – You can, but do you want to do it yourself? And have you actually done what should be done?
+									</p>
+
+									<p>Imagine you want to go on a trip and choose to go by road. You have a car and have a choice of driving down yourself or engaging a driver. If you choose to drive down yourself, there are two things – One, you should know how to drive. Two, assuming you know how to drive, if you choose to drive yourself you cannot do anything else. Instead if you had this driver, you can sit back, relax, converse with your spouse, play with your children, watch a movie, enjoy the scenery, read or simply doze off. So what would you rather do?
+									</p>
+
+									<p>To all those who know what to do – but…..have not done a thing - If the proof of the pudding is in the eating, why don’t you lay the table? If you have figured out how much money to stash away in emergency, know how much and what insurance to take, know how much where and how long to invest for your goals and retirement you have gotten nowhere. Have you actually got down to putting aside money to build your emergency fund, have you purchased those insurance policies, have you however boring it may sound, signed up for SIP through ECS towards your goals, have you written down your will, do you review regularly, have you actually worked on putting your finances in order? By the way, that is not a choice. It is for all practical purposes, your responsibility. 
+									</p>
+
+									<p>“Wisdom is knowing what to do next, skill is knowing how to do it, and virtue is doing it” said David Starr Jordan. Are you just wise or virtuous?</p>		
+									</font>
+								  </p>
+	                            
+								
+                             	</div>
+                             </td>
+                           </tr>
+                            
+                            
+
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+</apex:page>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This was created for leads from netscribes as a ping</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Power of Compounding - Car Story</name>
+    <style>formalLetter</style>
+    <subject>The Secret of Multiplying Your Money - Right Way !!</subject>
+    <textOnly>Dear {!Lead.LastName}
+
+
+Do you constantly think of some of the below question, may be it&apos;s time you look for a solution.
+Do
+you sometimes feel that your money does not work as hard as you do?
+
+ 
+
+Is
+your family going to be financially secure, whatever happens to you?
+
+ 
+
+Do you wish to retire
+in the mountains or next to the beach? Is this just a wish, or have you enough
+money to turn this wish into reality?
+
+
+Are you ok with your
+hard earned money being parked in a Salary Savings Account earning just 3.50%
+p.a. interest? Even if I were to tell you that there are safe enough
+investments opportunities available in the markets which yield a much higher
+rate of interest?
+
+
+Isn’t it high time
+you wisely invested that 1 lakh which you normally just hastily dump into some
+unknown investment avenue every year end to avail the 80C deduction?
+
+
+We
+can’t help you get a better salary hike at the end of the year from your
+employer. But what we can do is use our expertise to help you choose efficient
+investment opportunities which would generate handy returns for you!
+
+ 
+
+Here
+is an example -
+
+
+Kartik
+&amp; Joseph both 22 Years old just started their professional career. They
+work in the same company earning the same salary of Rs 30,000 per month. Kartik
+had a dream to buy a car worth Rs 6,00,000 when he is 27 years of age. He
+started to save for this dream and started working on it very early in the
+start of his career.
+
+ 
+
+He
+just saved Rs. 7,000 per month from his salary and invested the amount in the Mutual Fund Scheme for 5 Years.  At
+the end of the 5th Year, Kartik could easily buy the car of his
+dream. While his friend Joseph still travelled by his old scooter. This is what
+the power of Compounding!!
+
+ 
+
+Kartik
+identified his DREAM and DECIDED to DO something to accomplish it! He planned for his dream and
+invested 7,000 per month from his salary for the next 5 years and he got it!!
+
+
+Financial Planning is a very small price he had to pay to live his dream!
+
+
+Some more interesting information for you: 
+Read the latest blog of Mr. Sumeet Vaid (Founder &amp; CEO of Ffreedom Financial Planners) on Economic Times Blog - Simplified Finance click here
+
+
+View some interesting conversation by experts on the Ffreedom You Tube channel www.youtube.com/ffreedomtube &amp; www.youtube.com/ffreedomin
+Join the Ffreedom Tribe on Facebook &amp; twitter 
+Facebook - www.facebook.com/Ffreedom
+
+Twitter - www.twitter.com/_ffreedom
+
+
+Regards,
+Vatsal Pandya - Ffreedom Financial PlannersM: +91 98923 08027E: vatsal.pandya@ffreedom.in</textOnly>
+    <type>html</type>
+</EmailTemplate>

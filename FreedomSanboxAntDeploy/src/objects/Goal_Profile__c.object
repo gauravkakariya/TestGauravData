@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Goal Profiles</relationshipLabel>
+        <relationshipName>Goal_Profiles</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Bonds_Allocation__c</fullName>
+        <externalId>false</externalId>
+        <label>Bonds Allocation</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Debt_Allocation__c</fullName>
+        <externalId>false</externalId>
+        <label>Debt Allocation</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Equity_Allocation__c</fullName>
+        <externalId>false</externalId>
+        <label>Equity Allocation</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Goal_Profile_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Goal Profile Type</label>
+        <picklist>
+            <controllingField>Risk_Type__c</controllingField>
+            <picklistValues>
+                <fullName>Standard</fullName>
+                <controllingFieldValues>High</controllingFieldValues>
+                <controllingFieldValues>Low</controllingFieldValues>
+                <controllingFieldValues>Medium</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Customized</fullName>
+                <controllingFieldValues>High</controllingFieldValues>
+                <controllingFieldValues>Low</controllingFieldValues>
+                <controllingFieldValues>Medium</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Gold_allocation__c</fullName>
+        <externalId>false</externalId>
+        <label>Gold allocation</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Maximum_Returns68__c</fullName>
+        <description>calculates maximum returns for confidential interval 68</description>
+        <externalId>false</externalId>
+        <formula>( Return__c+Risk__c )*100</formula>
+        <label>Maximum Returns68</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Maximum_Returns95__c</fullName>
+        <externalId>false</externalId>
+        <formula>( Return__c+(2*Risk__c ))*100</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Maximum Returns95</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MinimumReturns68__c</fullName>
+        <description>this field calculates minimum returns based on confidence interval 68</description>
+        <externalId>false</externalId>
+        <formula>( Return__c-Risk__c )*100</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>MinimumReturns68</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MinimumReturns95__c</fullName>
+        <externalId>false</externalId>
+        <formula>( Return__c-(2*Risk__c ))*100</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>MinimumReturns95</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Return__c</fullName>
+        <description>This formula field calculates return based on the asset allocation and expected returns for that asset</description>
+        <externalId>false</externalId>
+        <formula>(Equity_Allocation__c * 14+ Debt_Allocation__c *7+ Gold_allocation__c *10)/100</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Return</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>10</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Return_expected__c</fullName>
+        <externalId>false</externalId>
+        <formula>(( 34* Equity_Allocation__c ) /100) + (( 25* Debt_Allocation__c ) /100) + (( 50* Gold_allocation__c ) /100)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Return expected</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Returns_expected__c</fullName>
+        <externalId>false</externalId>
+        <label>Returns expected</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Risk_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Risk Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>High</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Risk__c</fullName>
+        <description>this field calculates risk based on asset allocation and standarad deviation</description>
+        <externalId>false</externalId>
+        <formula>(SQRT( (Equity_Allocation__c ^ 2 )*( 32^ 2) +( Debt_Allocation__c ^ 2)*(5.5 ^ 2)+( Gold_allocation__c ^ 2)*(13 ^ 2)+ (2*Equity_Allocation__c*32*Debt_Allocation__c *5.5*0.3)+(2*Equity_Allocation__c*32*Gold_allocation__c*13*0)+ (2*Debt_Allocation__c *5.5*Gold_allocation__c*13*0))/100)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>10</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Goal Profile</label>
+    <nameField>
+        <label>Goal Profile Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Goal Profiles</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

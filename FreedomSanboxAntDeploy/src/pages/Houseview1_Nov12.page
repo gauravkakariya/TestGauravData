@@ -1,0 +1,244 @@
+<apex:page showheader="false" title="Ffreedom Financial Planners | News Letters"	id="Houseview1_Nov12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.images,'images/top_Nov12.gif')}" width="740" height="104" /></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                <tr>
+
+                  <td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/houseviewHIn.gif')}" width="132" height="40" /></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+                      <tr>
+
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+
+                          <tr>
+
+                            <td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>For a financially secured second innings…</em></strong></font></td>
+
+                          </tr>
+
+                            
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;"><em>It was Amitabh Bachchan’s birthday a few days back. All TV channels were  telecasting his movies, and while switching channels I chanced upon the movie  Baghban. The movie, in addition to the acting prowess of the lead pair, also  struck me as one of the few movies that tackle the issue of financial planning,  or rather the lack of it.</em><br />  
+
+                                <br />                                
+
+          While not all children are like the ones in  Baghban, there are numerous people who spend their entire professional lives in  securing the lives of their loved ones and in the process miss out on planning for  their own future. This more often than not disturbs the healthy balance in  relationships and forces them to compromise on their lifestyle or their  dignity. Is there a way in which you can ensure that the second innings is fun  and peace sans any financial distress? <br />
+
+          <br />
+
+                                Here are a few things that you can do while  you plan your life’s second innings:<br />
+
+                                <br />                                <strong>Make a realistic assessment of your financial situation</strong><br />
+
+                                <br />                                <em>Expenses</em> <br />
+
+                                Decide where and  how you would like to live during retirement – continue living in the same  place or going back to the hometown, moving to a retirement community or living  with children may all be different options you may consider. In each case, what  kind of expenses do you envisage? Remember after retirement your life style  will change – you may not travel as much, you may want to pursue some hobbies,  medical expenses may go up etc. Make an estimated expense sheet.&nbsp;<br />
+
+                                <br />                                <em>Income sources</em><br />
+
+                                Put on paper a complete list of all the assets  you have and can use during your retirement. Understand where the money to cover  your monthly expenses will come from after your earning years. It could be  pensions, income from investments like fixed deposits, dividends from shares or  mutual funds, rent from property etc. Is your income going to be sufficient for  the projected expenses? Do the maths. <br />
+
+                                <br />                                <strong>Think alternatives – liquidate low income  assets, reverse mortgage etc</strong><br />
+
+                                If after doing the maths you realise that maybe  the assets you have built may not be sufficient, consider generating income  from other sources. Land property or jewellery yielding no or minimum returns  may be liquidated and placed in fixed deposits, get a reverse mortgage on the  house you are living in, consider pursuing income generating hobbies or  activities. <br />                                <strong><br />
+
+                                </strong><strong>Get health insurance</strong><br />
+
+                                With sky-rocketing medical costs there isn’t  much option than getting a health insurance cover of your own as opposed to  solely depending on the health schemes issued by the employer / children’s  employers. Most of the employee-funded health covers are not sufficient as they  do not include many age-related ailments.&nbsp;&nbsp;If  you buy a health policy you get the option of selecting a policy which is  mainly designed for senior citizens. Look for early cover of pre-existing  diseases, life-long renewal, sufficient pre / post hospitalisation cover, proximity  of network hospitals, possibility to increase sum insured etc.<br />
+
+                                <br />                                <strong>Keep liquid money - accessible</strong><br />
+
+                                Post retirement the focus has to be on creating liquidity for handling expenses  and not high returns from investments. Unpredicted and sudden expenses like hospitalisation  may require you to have liquid cash rather than huge amounts of illiquid  assets. So ensure you have money in the bank / liquid funds which are jointly  held with your spouse / people you trust so that it is accessible in case of an  emergency when you will not be able to handle it yourself. <br />
+
+                                <br />                                <strong>Keep your assets yourself</strong><br />
+
+                                Keep your assets as long  as you live. Do not transfer it to your children right away with the hope that  they will take care of you. Make your intentions clear to all concerned. Write  a Will which will fairly distribute your assets/estate among your children and  others after you are gone. Keep the interests of your spouse in mind while  doing this.<br />
+
+                                <br />                                <strong>Stay busy </strong><br />
+
+                                If retirement to you  means, watching TV, reading the newspaper and generally whiling away time –  think again. Though during your busy working years you looked forward to these  lazy days – inactivity might make you weak physically and emotionally. Find ways  to utilise time productively – learn something new, pursue a hobby, volunteer  at the local NGO, get involved in your society activities, go out and make  friends. <br />
+
+                                <br />
+
+                                It is a lovely time in  your life. If you stay flexible, cheerful and positive, ensure good health and  diet, and keep your expectations from others low whether it helps in any other  way or not it will definitely ensure that all your money doesn't go the  doctors!<br />
+
+                                <br />
+
+                                Regards,<br />
+
+                                  Bhuvana,
+
+                                  Head- Knowledge Hub</td>
+
+                            </tr>
+
+                            
+
+
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+
+                            </tr>
+
+                            
+
+                            
+
+                         </table></td>
+
+                      </tr>
+
+                      <tr>
+
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+
+                      </tr>
+
+                  </table></td>
+
+                </tr>
+
+              </table>
+
+              </td>
+
+          </tr>
+
+          <tr>
+
+            <td valign="top">&nbsp;</td>
+
+            </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        </tr>
+
+    </table></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+
+                </tr>
+
+            </table></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+
+          </tr>
+
+          <tr>
+
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+
+          </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+      </tr>
+
+    </table></td>
+
+  </tr>
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+
+  </tr>
+
+</table>
+
+</body>
+
+
+	</html>
+</apex:page>

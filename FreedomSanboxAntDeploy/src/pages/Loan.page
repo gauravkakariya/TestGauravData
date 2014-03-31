@@ -1,0 +1,151 @@
+<apex:page controller="LoanController" showHeader="false">
+	<apex:stylesheet value="{!$Resource.FFStyle}"/>
+	<style>
+		.list .headerRow th{ white-space:pre-wrap !important;}
+	</style>
+
+	 <apex:composition template="TabPage">
+		 <apex:define name="contents" > 
+	       <apex:form >
+                <apex:outputPanel id="loanSummaryTable">  
+                    <apex:pageBlock tabStyle="Account" title="Liabilities">     
+                    <div style="width:100%;overflow:auto;height:100%;"> 
+                    <table  cellSpacing="0" cellPadding="0" border="1" align="center" class="list" style="width:500px;">
+                        <tr class="headerRow">  
+                            <td class="dataCol" style="width:100px;" >
+                                <apex:outputText value="Loan Type" />
+                            </td>
+                            <apex:repeat value="{!accountList}" var="AccName">
+                                <td class="labelCol" style="width:80px; text-align:left;">
+                                    <apex:outputText value="{!AccName.name}"/>
+                                </td>
+                            </apex:repeat>
+                        </tr>
+                        <apex:repeat value="{!loanSummaryForDataEntry}" var="dataEntry" >
+                            <tr >
+                                <td class="dataCol" style="width:100px;" > 
+                                    <apex:commandLink value="{!dataEntry.linkField}" action="{!showPopUp}" rendered="{!IF(isLoanEmpty,false,true)}" reRender="PopupPanel">
+                                        <apex:param name="selectedLoanType" value="{!dataEntry.linkField}" />
+                                    </apex:commandLink>
+                                    <apex:outputText value="{!dataEntry.linkField}" rendered="{!IF(isLoanEmpty,true,false)}"/>                                                                              
+                                </td>                                                               
+                                <apex:repeat value="{!dataEntry.fieldList}" var="field" >
+                                    <td class="labelCol" > 
+                                        <apex:outputText value="{0, number, ,##,##0}" style="width:80px;">
+                                             <apex:param value="{!field}"/>
+                                        </apex:outputText>
+                                    </td>                               
+                                </apex:repeat>
+                            </tr>
+                        </apex:repeat>
+                           <tr class="headerRow">  
+                             <td class="dataCol" style="padding-left:10px">
+                                 <apex:outputText value="Total" />
+                             </td>
+                             
+                             <apex:repeat value="{!accountList}" var="account">
+                             <td class="labelCol" style="width:15%;padding-right:10px;">
+                                   <apex:outputText value="{0, number, ##,##0}">
+                                <apex:param value="{!account.Total_Liabilities__c}"/>
+                                </apex:outputText> 
+                             </td>
+                             </apex:repeat>
+                        </tr>
+                    
+                    </table>
+                    </div>
+                    <apex:pageBlockButtons location="bottom" >
+<!--                     	<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+						<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+                        	<apex:commandButton value="Add New" action="{!addNewRow}" reRender="PopupPanel" style="margin-left:-40px;"/>  
+                        </apex:outputPanel>
+                        <apex:commandButton value="Previous" action="/apex/InvestmentAssetPage?entityId={!entityId}&tabname=Financial Planning" reRender="PopupPanel" style="margin-left:300px;"/>                                             
+                        <apex:commandButton value="Next" action="/apex/InsuranceSummaryPage?entityId={!entityId}&tabname=Financial Planning" reRender="PopupPanel" style="margin-left:3px;"/>                                             
+                    </apex:pageBlockButtons>    
+                    </apex:pageBlock>                                                                          
+                </apex:outputPanel>
+                
+                <apex:outputPanel id="PopupPanel" >
+                    <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}" />
+                    <apex:outputPanel styleClass="loanpopupForeground" layout="block" rendered="{!displayPopUp}" >
+                        <apex:pageBlock id="loanEditPage" tabStyle="Account" title="Liabilities" >
+                        
+                               <apex:outputText value="| indicates required fields" styleClass="requiredInfoMsg"/>
+                               <apex:pageMessages rendered="true"/>
+                               
+                               <apex:pageBlockTable value="{!loanBean.loanList}" var="loan" headerClass="colWrapClass" style="width:100%;"  >
+                                   <apex:column headerValue="Remove" style="width:1%;">
+                                       <apex:inputCheckbox value="{!loan.RemoveCheckbox__c}"/>
+                                   </apex:column>
+                                   <apex:column headerValue="{!$Label.Owner}" style="width:6%;"  >
+                                        <apex:selectList id="EntitySelectList" value="{!loan.Entity__c}" multiselect="false" size="1" styleClass="requiredField" style="width:100%;">
+                                                   <apex:selectOptions value="{!OwnerItems}" />
+                                        </apex:selectList>         
+                                    </apex:column>
+                                    <apex:column headerValue="{!$ObjectType.Loan__c.fields.Loan_Type__c.label}" style="width:5%;"  >
+                                        <apex:inputField value="{!loan.Loan_Type__c}" styleClass="requiredField" style="width:100%" />
+                                    </apex:column>
+                                    <apex:column style="width:10%" headerValue="{!$ObjectType.Loan__c.fields.Financial_Institution__c.label}"  >
+                                       
+                                        <apex:inputField value="{!loan.Financial_Institution__c}" style="height:16px;width:97%;"/>
+                                    </apex:column>
+                                    <apex:column style="width:4%;" >
+                                       <apex:facet name="header">Principal<br/>Amount<br/>Outstanding</apex:facet>
+                                        <apex:inputField value="{!loan.Principal_Amount_Outstanding__c}" style="width:95%;" />
+                                    </apex:column>
+                                    <apex:column headerValue="{!$ObjectType.Loan__c.fields.EMI__c.label}" style="width:4%" title="{!$Label.loanEMINote}">
+                                        <apex:inputField value="{!loan.EMI__c}" styleClass="requiredField" style="width:95%;"/>
+                                    </apex:column>
+                                    <apex:column headerValue="{!$ObjectType.Loan__c.fields.Interest_Rate__c.label}" style="width:1%;" >
+                                        <!-- Modified by = Dipak Nikam
+                                         *** Case Subject = Need mandatory field for rate of interest in Liabilities Page
+                                          ***Case number  =  00001499 
+                                             Case owner =  Shewta Karia  -->
+										  <!--  <apex:inputField value="{!loan.Interest_Rate__c}" style="width:95%;"   /> -->
+										  <apex:inputField value="{!loan.Interest_Rate__c}" style="width:95%;" styleClass="requiredField"  /> 
+                                    </apex:column>    
+                                    <apex:column style="width:1%;" headerValue="{!$ObjectType.Loan__c.fields.Term_No_of_years__c.label}"  >
+                                        <apex:facet name="header">Loan Tenure<br/>(No. of years)</apex:facet>
+                                        <apex:inputText value="{!loan.Term_No_of_years__c}" style="width:95%;"/>
+                                    </apex:column>  
+                                    <apex:column style="width:1%;"  title="{!$Label.LoanBalanceYearsNote}" > 
+                                        <apex:facet name="header">Balance<br/>No. of years</apex:facet>
+                                        <apex:inputField value="{!loan.Balance_No_of_Years__c}" styleClass="requiredField" style="width:95%;"/>
+                                    </apex:column>  
+                                                                                             
+                                    <apex:column style="width:2%;" headerValue="{!$ObjectType.Loan__c.fields.Fixed_Floating__c.label}"  >
+                                        
+                                        <apex:inputText value="{!loan.Fixed_Floating__c}" style="width:95%;"/>
+                                    </apex:column>
+                                   
+                                    <apex:column headerValue="{!$ObjectType.Loan__c.fields.Prepayment_terms__c.label}" style="width:8%;"  >
+                                        
+                                        <apex:inputText value="{!loan.Prepayment_terms__c}" style="width:95%;"  />
+                                    </apex:column>
+                               </apex:pageBlockTable>
+                               
+                                <apex:actionStatus stopText="" id="counterStatusData">
+                                     <apex:facet name="start">                
+                                         <apex:outputPanel style="padding-left:45%;">
+                                            <apex:image value="{!$Resource.loading_image}" width="3%" height="3%"/>
+                                         </apex:outputPanel>
+                                     </apex:facet>
+                               </apex:actionStatus>  
+                            
+                             <apex:pageBlockButtons location="bottom">
+<!--                             	<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+								<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+                                	<apex:commandButton value="Add New" action="{!AddNewRow}" reRender="PopupPanel,counterStatusData" status="counterStatusData" style="margin-left:90px;"/>
+                                	<apex:commandButton value="Remove" action="{!remove}" status="counterStatusData" reRender="PopupPanel,SummaryTable,counterStatusData"  /> 
+                                	<apex:commandButton value="Save" action="{!Save}" reRender="PopupPanel,loanSummaryTable,counterStatusData" status="counterStatusData" />
+                                </apex:outputPanel>
+                                <apex:commandButton value="Cancel" immediate="true" action="{!closePopup}" rerender="PopupPanel,loanSummaryTable" />
+                            </apex:pageBlockButtons>
+                        </apex:pageBlock>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+	         </apex:form>
+	    
+	    </apex:define>
+    </apex:composition>
+</apex:page>

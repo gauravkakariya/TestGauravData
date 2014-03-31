@@ -1,0 +1,15 @@
+<apex:page standardController="Account" recordSetVar=""
+extensions="ShowPartnerController">
+<br/>
+<apex:form >
+<apex:pageBlock title="Account" id="selectionBlock">
+     <apex:inputField value="{!objAccount.Business_Unit__c}">
+        <apex:actionSupport event="onchange" action="{!partnerPopulated}"/> 
+     </apex:inputField>
+     
+     <apex:outputField value="{!objAccount.Virtual_Partner__c}" />
+          
+</apex:pageBlock>
+
+</apex:form>
+</apex:page>

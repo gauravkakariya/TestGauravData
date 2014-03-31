@@ -1,0 +1,79 @@
+<apex:page controller="EventReport" showheader="false" sidebar="false" contenttype="application/vnd.ms-excel#MeetingReport.xls" >
+	<apex:pageBlock title="Meeting Report" rendered="{!isViewAll}">
+<!-- 		<apex:pageblocktable value="{!lstViewAllInformation}" var="Event"> -->
+<!-- 			<apex:column headerValue="Date"> -->
+<!-- 				<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"> -->
+<!-- 					<apex:param value="{!Event.ChildEvent.Completion_Date__c}" /> -->
+<!-- 				</apex:outputText> -->
+<!-- 			</apex:column>  -->
+<!-- 			<apex:column headerValue="Engagement Name"> -->
+<!-- 				<apex:outputLabel value="{!Event.StrName}" /> -->
+<!-- 			</apex:column> -->
+<!-- 			<apex:column headerValue="Member / Lead "> -->
+<!-- 				<apex:outputLabel value="{!Event.strWhoType}" /> -->
+<!-- 			</apex:column> -->
+<!-- 			<apex:column headerValue="Meeting Count"> -->
+<!-- 				<apex:outputLabel value="{!Event.intMeetingCount}" /> -->
+<!-- 			</apex:column> -->
+<!-- 			<apex:column headerValue="Place"> -->
+<!-- 				<apex:outputLabel value="{!Event.ChildEvent.Event_Place__c}" /> -->
+<!-- 			</apex:column> -->
+<!-- 			<apex:column headerValue="From"> -->
+<!-- 				<apex:outputLabel value="{!Event.ChildEvent.From_Time__c}" /> -->
+<!-- 			</apex:column> -->
+<!-- 			<apex:column headerValue="To">  -->
+<!-- 				<apex:outputLabel value="{!Event.ChildEvent.To_Time__c}" /> -->
+<!-- 			</apex:column> -->
+<!-- 			<apex:column headerValue="Description"> -->
+<!-- 				<apex:outputLabel value="{!Event.ChildEvent.Description}" /> -->
+<!-- 			</apex:column> -->
+<!-- 			<apex:column headerValue="Owner Name"> -->
+<!-- 				<apex:outputLabel value="{!Event.StrOwnerName}" /> -->
+<!-- 			</apex:column> -->
+<!-- 			<apex:column headerValue="PFP"> -->
+<!-- 				<apex:outputLabel value="{!Event.PFP_VirtualPartnerName}" /> -->
+<!-- 			</apex:column> -->
+<!-- 			<apex:column headerValue="Channel Manager"> -->
+<!-- 				<apex:outputLabel value="{!Event.channelManager}" /> -->
+<!-- 			</apex:column> -->
+<!-- 		</apex:pageblocktable> -->
+<!-- 		<div class="subHeader" style="width:100%;padding-left:10px;background-color:#66cd00;">Meeting Report</div> <br/> -->
+        <div style="width:100%;overflow:auto;height:100%;"> 
+            <table width="95%" border="1" cellpadding="2" cellspacing="0" id="dataTable2">
+              	<tr class="tableHeaderLight">
+              		<th style="width:15%;" class="textStyle">Date</th>
+              		<th style="width:15%;" class="textStyle">Engagement Name</th>
+                	<th style="width:15%;" class="textStyle">Member / Lead</th>
+                	<th style="width:12%;" class="textStyle">Meeting Count</th>
+               	 	<th style="width:7%;" class="textStyle">Place</th>
+                	<th style="width:20%;" class="textStyle">From</th>
+                	<th style="width:10%;" class="textStyle">To</th>
+                	<th style="width:8%;" class="textStyle">Description</th>
+					<th style="width:8%;" class="textStyle">Owner Name</th>
+                	<th style="width:7%;" class="textStyle">PFP</th>
+                	<th style="width:7%;" class="textStyle">Channel Manager</th>
+              	</tr>
+               	<apex:repeat value="{!lstViewAllInformation}" var="Event">  
+               	 <tr class="tableData">
+                    <td class="textStyle" align="center">
+                    	<apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+ 							<apex:param value="{!Event.ChildEvent.Completion_Date__c}" /> 
+		 				</apex:outputText>
+		 			</td>
+                	<td class="textStyle">{!Event.StrName}</td>
+                	<td class="textStyle">{!Event.strWhoType}</td>
+                	<td class="textStyle">{!Event.intMeetingCount}</td>
+                	<td class="textStyle">{!Event.ChildEvent.Event_Place__c}</td>
+                	<td class="textStyle">{!Event.ChildEvent.From_Time__c}</td>
+                	<td class="textStyle">{!Event.ChildEvent.From_Time__c}</td>
+                	<td class="textStyle">{!Event.ChildEvent.To_Time__c}</td>
+                	<td class="textStyle">{!Event.ChildEvent.Description}</td>
+                	<td class="textStyle">{!Event.StrOwnerName}</td>
+                	<td class="textStyle">{!Event.PFP_VirtualPartnerName}</td>
+                	<td class="textStyle">{!Event.channelManager}</td>
+                 </tr>
+               	</apex:repeat>
+                </table>
+        </div>
+	</apex:pageBlock>	
+</apex:page>

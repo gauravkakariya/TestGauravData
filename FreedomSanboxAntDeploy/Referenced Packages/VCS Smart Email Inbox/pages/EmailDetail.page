@@ -1,0 +1,4 @@
+<apex:page standardController="VCSSA__VCSEmail__c" showheader="false" sidebar="false" cache="false">
+<script type="text/javascript">top.location.href='/apex/Inbox?aid=&ltags=&p=1&vmode=view&action=untag&tags=@unread&ids={!$CurrentPage.parameters.id}';</script>
+<a href="/apex/Inbox?aid=&ltags=&p=1&vmode=view&action=untag&tags=@unread&ids={!$CurrentPage.parameters.id}" target="top">Redirecting to the email page</a>
+</apex:page>

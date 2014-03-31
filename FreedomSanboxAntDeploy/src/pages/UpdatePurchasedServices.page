@@ -1,0 +1,69 @@
+<apex:page controller="UpdatePurchasedServicesController" sidebar="false">
+	<apex:form >
+	
+		<apex:actionFunction name="callBaseProductPrice" action="{!baseProductPrice}" rerender="purchaseOrderId,baseServicepageBlock,purchaseServiceform" >
+			<apex:param name="baseproductName" value=""/>
+		</apex:actionFunction>
+		
+		<apex:actionFunction name="callValueAddedServices" action="{!valueAddedService}"  rerender="valueAddedPageBlockId">
+			<apex:param name="index" value=""/>
+		</apex:actionFunction>
+		
+		<apex:pageBlock title="Base Service" id="baseServicepageBlock">
+		
+			<apex:pageBlockButtons location="top">
+		        <apex:commandButton value="Save" action="{!saveProduct}" />
+		        <apex:commandButton value="Cancel"  immediate="true"/>
+      		</apex:pageBlockButtons>
+      		
+			<apex:pageBlockTable value="{!objProductOrder}" var="rec" id="purchaseOrderId">
+	                <apex:column headerValue="Product Name" >
+	                <apex:selectList id="productNameId"  value="{!rec.Selected_Product__c}" size="1" onchange="callBaseProductPrice(this.value);">
+						   <apex:selectOptions value="{!baseProductOptions}" ></apex:selectOptions>						   
+				  	     </apex:selectList> 
+				  	 </apex:column>    
+	                <apex:column headerValue="Product Price" >
+	                       <apex:outputText value="{!rec.Product_Price__c}"/> 
+	                </apex:column>  
+	            	<apex:column headerValue="Product Discount" >
+	                      <apex:inputField value="{!rec.Discount__c}"/> 
+	                </apex:column>  
+	            	<apex:column headerValue="Payble Amount" >
+	                     <apex:outputText value="{!rec.Payable_Amount__c}"/> 
+	                </apex:column>  
+	                <apex:column headerValue="No Of Goals" >
+            		<apex:outputField value="{!rec.Product_Master__r.No_of_Goals_Allowed__c}"/> 
+                </apex:column> 
+	       	</apex:pageBlockTable> 
+	 	</apex:pageBlock>  
+	 	
+	 	 <apex:pageBlock title="Value Added Service" id="valueAddedPageBlockId">
+	    
+	     		<apex:pageBlockTable value="{!lstWrapperPurchaseOrder}" var="product" id="productPriceId">
+	     			
+					 <apex:column headerValue="Service Name" >
+					 	 <apex:selectList id="productNameId"  value="{!product.selectedServiceName}" size="1"  rendered="{!!product.isValueAddedService}" onchange="callValueAddedServices('{!product.index}');">
+							   <apex:selectOptions value="{!valueAddedServiceNameOptions}" ></apex:selectOptions>						   
+					  	    </apex:selectList> 
+				  	     <apex:outputField value="{!product.objPurchaseOrder.Selected_Product__c}" rendered="{!product.isValueAddedService}"/> 
+		             </apex:column>
+		             <apex:column headerValue="Product Price" >
+		                    <apex:outputText value="{!product.objPurchaseOrder.Product_Price__c}" rendered="{!product.isValueAddedService}"/> 
+		                    <apex:outputField value="{!product.productPriceBook.Price_value__c}" rendered="{!!product.isValueAddedService}"/>
+		             </apex:column>  
+		           	 <apex:column headerValue="Product Discount" >
+		                     <apex:outputField value="{!product.objPurchaseOrder.Discount__c}" rendered="{!product.isValueAddedService}"/> 
+		                     <apex:inputField value="{!product.productPriceBook.Discount__c}" rendered="{!!product.isValueAddedService}" />
+		             </apex:column>  
+		           	 <apex:column headerValue="Payable Amount" >
+		                    <apex:outputText value="{!product.objPurchaseOrder.Payable_Amount__c}" rendered="{!product.isValueAddedService}"/> 
+		                    <apex:outputText value="{!product.payableAmount}" rendered="{!!product.isValueAddedService}"/>
+		             </apex:column>  
+	      		 </apex:pageBlockTable> 
+	       		
+	       	<apex:commandButton value="Add" action="{!addValueAddedServices}" rerender="valueAddedPageBlockId" 
+	       					    rendered="{!lstWrapperPurchaseOrder.size != valueAddedServiceNameOptions.size}"/> 
+	    </apex:pageBlock>  	
+	 	
+	</apex:form>   
+</apex:page>

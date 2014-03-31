@@ -1,0 +1,105 @@
+<apex:page controller="ApexQueryGeneratorController">
+<apex:form id="QueryGenerator">
+<apex:pageBlock id="block2" >
+
+
+<apex:pageblocksection >
+<apex:selectList value="{!selectedObject}" size="5" multiselect="true">
+<apex:selectOptions value="{!objectNames}"/>
+</apex:selectList>
+<br/>
+
+
+<apex:pageblocksection id="tableApp" >
+
+<table id="apppp">
+<tr>
+<th>Name</th>
+</tr>
+ <apex:repeat var="d" value="{!objectNames}">
+<tr>
+    <td><apex:outputText value="{!d.label}"/></td>
+
+
+</tr>
+
+ </apex:repeat>
+ </table>
+ </apex:pageblocksection>
+
+
+
+<apex:commandButton value="Generate Query" action="{!showFields}"/>
+<br/>
+
+
+
+			<apex:pageBlockSection columns="1">
+				<apex:pageBlock >
+					<apex:outputPanel id="queryEditorPanel">
+<!-- 						<apex:inputTextarea id="queryeditorId" value="{!objectNames}" cols="150" /> -->
+						
+					</apex:outputPanel>
+				</apex:pageBlock>
+			</apex:pageBlockSection>
+			<br/>
+			<apex:commandButton value="Result" action="{!result}"/>
+			<br/>
+			
+			
+			<apex:pageBlockSection columns="1">
+				<apex:pageBlock >
+					<apex:outputPanel id="queryResult">
+						<apex:inputTextarea value="{!queryResult}" cols="120" />
+					</apex:outputPanel>
+				</apex:pageBlock>
+			</apex:pageBlockSection>
+
+               <apex:repeat value="{!queryResult}" var="string" id="theRepeat">
+               <apex:outputText value="{!string}" id="theValue"/><br/>
+               </apex:repeat>
+
+
+
+			</apex:pageblocksection>
+			
+			
+<!-- 							 <apex:pageBlock id="block"> -->
+<!-- 				             <apex:pageBlockTable id="table" var="account" value="{!queryResult}"> -->
+<!-- 				             <apex:column headerValue="Account Name" value="{!account.Name}" /> -->
+<!-- 				             <apex:repeat var="f" value="{!$ObjectType.Account.FieldSets.Example_Fieldset}"> -->
+<!-- 				             <apex:column headerValue="{!f.label}"> -->
+<!-- 				             <apex:inputField value="{!account[f]}" /> -->
+<!-- 				             </apex:column> -->
+<!-- 				             </apex:repeat> -->
+<!-- 				             </apex:pageBlockTable> -->
+<!-- 				             </apex:pageBlock> -->
+				             
+				             
+
+<!-- 									<apex:pageblocksection id="fieldList" rendered="{!not(isnull(selectedObject))}"> -->
+<!-- 									<apex:panelBar items="{!fields}" var="fls"> -->
+<!-- 									<apex:panelBarItem label="{!fls.key}">{!fls.val}</apex:panelBarItem> -->
+<!-- 									</apex:panelBar> -->
+<!-- 									</apex:pageblocksection> -->
+
+
+
+<!-- 						                    <apex:pageBlockTable rendered="{!IF(sob.size > 0 , true , false)}" value="{!sob}" var="rec">   -->
+<!-- 						                    <apex:column value="{!rec.Id}" rendered="{!IF(queryField.size == 0 , true, false)}"/>   -->
+<!-- 						                    <apex:repeat value="{!queryField}" var="FieldLable">   -->
+<!-- <!-- 						                    <apex:column value="{!rec[FieldLable]}" rendered="{!IF(FieldLable != '--None--' , true, false)}"/>   --> -->
+<!-- 						                    </apex:repeat>   -->
+<!-- 						                    </apex:pageBlockTable>   -->
+						                  
+<!-- 						                <apex:outputPanel rendered="{!IF(sob.size < 1 , true , false)}">   -->
+<!-- 						                    <apex:pageMessage severity="ERROR" summary="No records to display"/>   -->
+<!-- 						                </apex:outputPanel>   -->
+
+
+			
+			
+
+</apex:pageBlock>
+</apex:form>
+</apex:page>

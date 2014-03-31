@@ -1,0 +1,6 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[Dear "{!Account.Name}"<br><br>Please find attached your Action Plan which specifies what you should do to secure your financial life and build wealth for your goals.<br><br>You may have some paperwork to do, submit some documents, do some medical tests, make payments etc. <br>If you need help with implementing the action points given here, please entertain our colleague from the Member Engagement Team who will call you to check and do whatever is necessary. <br><br>At any time, if you have any clarifications or any assistance please get in touch with me or our member service team @ 022-42224333<br><br>Thanks and regards<br>{!Account.OwnerFullName}<br>]]></td>
+</tr>
+</table>

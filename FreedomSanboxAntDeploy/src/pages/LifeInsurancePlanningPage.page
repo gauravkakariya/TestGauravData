@@ -1,0 +1,223 @@
+<!-- 
+    Revision History:
+    
+    Version     Version Author     Date         Comments
+    1.0         Persistent         NA           Initial Draft
+   
+    2.0         Manasi Ranade      01/06/2011    Added message to the page if Suggested_Cover_General_Insurance__c is not greater than zero .
+                                                 But it was not rerendering.So removed reRender="statusData" from save button**/            
+    2.0         Manasi Ranade      17/04/2012    Added Textbox to enter user defined Tenure of Insurance
+    
+    2.0         Mahesh Hirugade    03/05/2012    Issue Id : 00001618 : Removed ObjRemark from LifeInsurancePlanningComponent
+-->
+<apex:page controller="LifeInsurancePlanningPageController" showHeader="false"> 
+    
+    <apex:includeScript value="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" />
+    <apex:includeScript value="//code.jquery.com/jquery-migrate-1.2.1.min.js" />
+    
+    <apex:includeScript value="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js" /> 
+    
+    <script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-1.9.1.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-ui.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.ckeditor, 'ckeditor/ckeditor.js')}"></script>
+<!--    <script type="text/javascript" src="{!URLFOR($Resource.CkeditorData, 'ckeditorJS/ckeditorSetData.js')}"></script> -->
+    
+     <script> 
+         var name;  
+         $(document).ready(function(){
+    
+            
+             CKEDITOR.on('instanceReady', function(e) {
+                 if (e.editor.config.magic) 
+                    return;
+                 var target = e.editor.config.bodyId;
+                name = e.editor.name;
+               
+                 e.editor.destroy();
+    
+                 CKEDITOR.editorConfig = function( config ) { config.magic = true; }
+                 CKEDITOR.replace(name, {
+                             height : 300, 
+                             bodyId : target
+                 });
+             });
+         });
+            
+        
+    </script>
+    
+    <script type="text/javascript">
+        function applyAttributes()
+        {
+            document.getElementById("e1").setAttribute("align","center");
+        }
+        window.onload = applyAttributes;
+        //Prajakta
+        function attributeSet(){
+            //alert();
+            document.getElementById('j_id0:j_id2:j_id5:myForm:pBlock:pageBlkButtonsId:e1').disabled = "disabled";
+            document.getElementById('j_id0:j_id2:j_id5:myForm:pBlock:pageBlkButtonsId:e1').className = "btnDisabled";
+        }
+        
+        function attributeReset(){
+            //alert();
+            document.getElementById('j_id0:j_id2:j_id5:myForm:pBlock:pageBlkButtonsId:e1').disabled = "";
+            document.getElementById('j_id0:j_id2:j_id5:myForm:pBlock:pageBlkButtonsId:e1').className = "btn";
+        }
+        
+        function applyAtt(target,att,attVal){
+            target.setAttribute(att,attVal);
+        }
+            
+        function removeAtt(target,att)
+        {
+            target.removeAttribute(att);
+        }
+        
+        
+        
+    </script>
+
+    <apex:composition template="TabPage">
+        <apex:define name="contents">
+            <apex:form id="myForm">
+         
+                <apex:pageBlock id="pBlock">
+                    <div style="margin:bottom:20px; width:100%;margin-left:60px;">
+                        <apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;  background-image:none;background-color:#A9C5EB !important; " />
+                        <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+                        <apex:outputLabel value="Life Insurance Planning" styleclass="button" style="margin-left:20px;  background-image:none;background-color:#A9C5EB !important; " />
+                        <apex:image id="theImage2" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+                        <apex:outputLabel id="theCommandLink2" styleclass="button" value="Analysis"  style="margin-left:20px; background-image:none;background-color:#F5D0A9 !important;"  />
+                        <!--00001597 -->
+                        <apex:commandButton id="theCommandLink1" styleclass="button" value="Output" action="{!output}" reRender="componentPanel,RemarkPanel" style="margin-left:20px; background-image:none;background-color:#A9C5EB !important;" />
+                    </div><br/>
+                    
+                    <div class="divStyle" style="width:87%;margin-left:60px;margin-top:25px;">
+                        <apex:outputText value="{!$Label.LifeInsuranceAnalysisFor} {!entity.Name}"/> 
+                    </div><br/>
+                    
+                    <div style="width:87%; margin-left:60px;">
+                        <apex:pageBlockSection columns="7">
+                            <apex:outputText value="{!$Label.SelectEntityForLifeInsurance}"/>
+                             
+                            <apex:selectList value="{!selectedEntityId}" size="1" multiselect="false" tabindex="1">
+                                <apex:selectOptions value="{!EntityPicklist}"></apex:selectOptions>
+                            </apex:selectList>
+                            <apex:outputText value="{!$Label.SelectAdjustmentFactor}"/>
+                            <apex:selectList value="{!selAdjustmentFactor}" size="1" multiselect="false">
+                                <apex:selectOptions value="{!AdjustmentFactor}">
+                                </apex:selectOptions>
+                            </apex:selectList>
+                            
+                            <!-- <apex:commandButton value="Calculate" onclick="showComponent();" reRender="componentPanel"/>
+                            <apex:actionFunction name="showComponent" action="{!calculate}" reRender="componentPanel"/>-->
+                            <!-- FS0281 -->
+                            <!--00001597   -->
+                            <apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+                                <apex:commandButton id="preview" value="{!$Label.Calculate}" action="{!calculate}" rerender="componentPanel,calculateStatusData,chkIsInclude,RemarkPanel" status="calculateStatusData" onComplete="ckEditorResetData();" />
+                            </apex:outputPanel>
+                            <apex:actionStatus stopText="" id="calculateStatusData">
+                                <apex:facet name="start">
+                                    <apex:image value="/img/loading.gif"/>
+                                </apex:facet>
+                            </apex:actionStatus>          
+                        </apex:pageBlockSection>
+                            
+                        <apex:outputPanel id="componentPanel" >
+                            <!-- 00001613 -->
+                            <!-- Issue Id : 00001618 : Removed ObjRemark from LifeInsurancePlanningComponent : mahesh -->
+                            <c:LifeInsurancePlanningComponent entity="{!entity}" spouse="{!spouse}" adjustmentFactor="{!selAdjustmentFactor}" 
+                                                              insuranceBean="{!bean}" showOnPage="true"><!-- ObjRemark="{!objRemark}"-->
+                            </c:LifeInsurancePlanningComponent>
+                            
+                            <!--   Refactoring   -->
+                            <!--        <c:LifeInsurancePlanningComponentRefactored HLVDetails="{!objHLVDetail}">ObjRemark="{!objRemark}" -->
+                            <!--        </c:LifeInsurancePlanningComponentRefactored> -->
+                        </apex:outputPanel>
+                        <!--00001597 -->
+                        <apex:outputPanel id="RemarkPanel" >
+                            <apex:pageBlockSection columns="2" >
+                                <apex:inputField value="{!insurance.Premium_Amount_Rs__c}"/>
+                                <apex:inputField value="{!insurance.Policy_Type__c}" />
+                           </apex:pageBlockSection>
+                           
+                            <!--Eternus Solutions      **/
+                            /** Author  : Manasi Ranade*/
+                            /** Issue Id: 00001595      **/
+                            /** Date    : 17/04/2012 **/
+                            /** Purpose : Added Textbox to enter user defined Tenure of Insurance -->
+                           <div align ="left" style = "padding-left :5%;">
+                                <apex:outputText value="Term of Insurance" styleClass="textStyle"/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <apex:inputText value="{!insurance.Tenure_of_Insurance__c}" />
+                           </div>
+                           <br/>
+                           <apex:pageBlockSection columns="2">
+                                <apex:outputText value="{!$Label.IncludeInFinancialPlan}" style="float:right;" styleClass="textStyle"/>
+                                <!-- FS0281 -->
+                                <apex:inputCheckbox value="{!includeInDoc}" style="float:left;" id="chkIsInclude"/>
+                            <!-- FS0309 -->
+                            <br/><br/><br/>                
+                            </apex:pageBlockSection>
+                            <apex:inputText value="{!objRemark.RichText_Remark__c}" styleClass="richtextRemark"/>
+                  </apex:outputPanel>      
+                            
+                            <div>
+                                <apex:outputLabel >{!$Label.EnterYourRemarks}</apex:outputLabel>
+                            </div>
+                            <div>
+<!--                            <apex:inputTextArea id="txtRemark"  style="width:400px;height:80px;" value="{!strRemark}" richText="true"  /> -->
+                                <apex:inputField id="txtRemark" style="width:400px;height:80px;" value="{!objRemark.RichText_Remark__c}" />
+                            </div>
+                            {!objRemark.RichText_Remark__c}------------------------------                           
+                            <apex:outputPanel id="getvalueRamarkId">
+                            <script>
+                                var testing;
+                                function ckEditorResetData()
+                                {
+                                    //testing = '{!objRemark.RichText_Remark__c}';
+                                    //var name = 'j_id0:j_id2:j_id5:myForm:pBlock:txtRemark:textAreaDelegate_RichText_Remark__c';
+                                    //var a= CKEDITOR.instances[name].setData('{!strRemark}');
+                                    alert('@@@');
+                                }   
+                            
+                            </script>
+                            </apex:outputPanel>
+                            
+                            
+                        <apex:pageBlockButtons id="pageBlkButtonsId" location="bottom">
+                            <apex:actionStatus stopText="" id="statusData">
+                                <apex:facet name="start">
+                                       <apex:outputPanel style="padding-left:30%;">
+                                          <apex:image value="{!$Resource.loading_image}" width="3%" height="3%"/>
+                                       </apex:outputPanel>
+                                </apex:facet>
+                            </apex:actionStatus>    
+                             
+                            <!--         /** Eternus Solutions      **/
+                            /** Author  : Manasi Ranade*/
+                            /** Issue Id: F0025      **/
+                            /** Date    : 01/06/2011 **/
+                            /** Purpose : Added message to the page if Suggested_Cover_General_Insurance__c is not greater than zero .
+                            but it was not rerendering. So removed reRender="statusData" from save button**/    -->   
+<!--                           <apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+                            <apex:outputPanel id="saveBtnPanel" rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+                                <apex:commandButton id="e1" value="{!$Label.Save}" action="{!save}" status="statusId" rerender="RemarkPanel"/>
+<!--                                 onstop=" applyAtt('Disabled','false','{!save}')" -->
+<!--                                oncomplete=" applyAtt('Disabled','false')"  -->
+                            </apex:outputPanel> 
+                            <apex:actionStatus stopText="" id="statusId" onstart="attributeSet();" onstop="attributeReset();"> 
+                                <apex:facet name="start">
+                                    <apex:outputPanel style="padding-left:1%;padding-top:2px;" >
+                                        <img src="/img/loading.gif" width="16" height="16"/>
+                                    </apex:outputPanel>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:pageBlockButtons>
+                    </div>
+                </apex:pageBlock>
+            </apex:form>
+        </apex:define>
+    </apex:composition>  
+</apex:page>

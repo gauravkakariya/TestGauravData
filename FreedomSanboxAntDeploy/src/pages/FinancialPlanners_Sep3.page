@@ -1,0 +1,134 @@
+<!-- Following code is copied into ComplimentaryConsultationComponent Component page  
+						Eternus Solutions
+                        Author  : Trupti Gaikwad
+                        Issue Id: FS0145
+                        Date    : 12/09/2011
+                        Purpose : Newsletter for the Month of September  2011 (website pages)  --> 
+
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="FinancialPlanners_Sep3">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.images3,'images3/top.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/plannerHIn.gif')}" width="218" height="40" /></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Are you teaching your child the basics of financial planning?</em></strong></font></td>
+                          </tr>
+
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px;">
+                                <p align="justify">As adults, we know the importance that money and finances play in our lives. Yet, many of us learn the hard way that we need to be wise with our investments and expenditures to lead a financially stables life. With the infusion of financial planning we are able to define our dreams into goals, and then articulate these goals in financial terms, giving us targets that we strive to achieve.</p>
+                                <p align="justify">Yet, while we ourselves try to imbibe financial planning into our lives, how many of us have actually thought about the next generation by taking an effort to teach kids about the value of money or the basics of financial planning.</p>
+                                <p align="justify">If you have a child dependent on you, start sharing lessons on money management with the kid from an early stage, so that by the time the child becomes an adult he/she will not make the kind of mistakes that one normally makes in youth.</p>
+                                <p align="justify"> To start your child on financial planning you can start off with –</p>
+                                <ol>
+                                  <li>
+                                    <div align="justify"><strong align="justify">Personal finance basics for kids</strong></br>As a parent, the worst thing one can do is assume that the child will automatically learn personal finance. The lessons for personal finance have to begin at home since there is no other avenue where the child can learn.<br />
+                                      &nbsp;</div>
+                                  </li>
+                                  <li>
+                                    <div align="justify"><strong>Make them feel responsible</strong></br>Most parents do this but probably not consciously enough. Set a monthly allowance for your child, and let him/her do chores around the house to ‘earn’ more money. When your child comes to you for an iPad tell him that to get the iPad, he will have to save atleast part of the money before you go ahead and buy it for him.<br />
+                                      &nbsp;</div>
+                                  </li>
+                                  <li>
+                                    <div align="justify"><strong>Teach about limited resources to manage multiple needs</strong></br>Kids will come to you with multiple demands based on what they see their friends carrying. It could be a bicycle or the newest tech-gadget. Tell the child that you cannot buy him everything that he needs and the limit to which you can spend on his demands every year. Then, sit with your child and ask him to make a choice between his desires, in process rationalizing his wants.
+                                    <br />
+                                      &nbsp;</div>
+                                  </li>
+                                  <li>
+                                    <div align="justify"><strong>Involve them in family finances</strong></br>Children always desire to be treated like adults. Involve your child in setting and maintaining your monthly household budget. Based on your child’s age, try to involve the child in the family financial plan as well. Explain the financial plan to the child starting with how goals are articulated in financial terms. Also, try to explain to the child how you go about ensuring that your desires do not derail your long term vision.
+                                    <br />
+                                      &nbsp;</div>
+                                  </li>
+                                  <li>
+                                    <div align="justify"><strong>Compounding and how it can help</strong></br>If you have set up an education fund for your child, explain to him how by starting early you have been able to capitalize on the power of compounding.  On a regular basis, share the progress towards the goal with your child, giving him an insight into how regular investments attaining a goal. 
+                                      <br />
+                                      &nbsp;</div>
+                                  </li>
+                                  <li>
+                                    <div align="justify"><strong>The credit trap</strong></br>Most parents today hand a credit card to children during their mid-teens. Such a step can be extremely detrimental towards their understanding of money. If you must give your child a credit card, ensure that you first explain to the child that money spent on the card has to be paid at the end of each month and how the child should be responsible before making a credit purchase. Also, try to opt for a credit card where you can set a monthly limit on the expenditure to ensure a maximum cap on the purchases. </div>
+                                  </li>
+                                </ol>                             
+                                <p align="justify">As mentioned earlier, children always seek to be treated as adults. Try to keep your child informed about your finances and be as honest with your child as possible. You can also ask your child to join you during a financial plan review to understand the process better. As a parent, you are responsible in imparting financial education to your child. Don’t let them commit the same mistakes you made by not introducing them to the basic of money management at an early age.</p></td>
+                            </tr>
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+</apex:page>

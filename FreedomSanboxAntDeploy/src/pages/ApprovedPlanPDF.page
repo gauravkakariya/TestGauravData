@@ -1,0 +1,5 @@
+<apex:page showHeader="false" standardStylesheets="false" renderAs="pdf">
+	<apex:stylesheet value="{!$Resource.FFStyle}"/>
+		
+    <c:ApprovedPlanCompPDF />
+</apex:page>

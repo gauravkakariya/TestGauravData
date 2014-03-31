@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssignmentRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignmentRule>
+        <fullName>Ffreedom Case Rule</fullName>
+        <active>true</active>
+        <ruleEntry>
+            <assignedTo>analytics@ffreedom.in</assignedTo>
+            <assignedToType>User</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Customer Portal</value>
+            </criteriaItems>
+            <template>KnowYourClient/Case_Assignment</template>
+        </ruleEntry>
+    </assignmentRule>
+</AssignmentRules>

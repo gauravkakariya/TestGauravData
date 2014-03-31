@@ -1,0 +1,98 @@
+<!--
+/**
+Revision History:
+	
+    Version     Version Author     Date        Comments
+    1.0         --           	   --	  		Initial Draft
+    
+   
+	2.0			Manasi Ranade	   11/5/2012   Issue ID: 00001640: 
+												Removed the Name of the Entity Owner from Financial Plan
+												
+*/ -->
+<apex:component controller="CoverComponentController">
+
+    <apex:attribute name="Logo_partner" type="Account" required="true" description="detail information of client"/>
+    <apex:attribute name="addressInComponent" type="String" required="true" description="detail information of client" assignTo="{!newAddress}"/>
+   	<apex:attribute name="client" type="Account" required="true" description="detail information of client"/>
+    <apex:attribute name="spouse" type="Account" required="true" description="spouse detail" />
+    <apex:attribute name="isFreedomUserProp" type="boolean" description="Boolean Flag" required="true"/>
+    <apex:attribute name="generationDate" type="string" required="true" description="plan generation date" />
+    <div class="divContainerStyle">
+    <center> 
+<!--         <apex:outputText value="{!UPPER(PlanName)}" style="font-weight:bold;font-size:36px;font-family:calibri;"/>  <br/> -->
+<!--         <apex:outputText value="{!client.name} Financial Plan" style="font-weight:bold;font-size:36px;font-family:calibri;"/>  <br/> -->
+        
+        <apex:outputText value="{!client.name} " style="font-family:Calibri;font-weight:bold;font-size:36px;text-align:right;text-transform:capitalize ;"></apex:outputText> 
+        <apex:outputText value="and " rendered="{!if(spouse!=null,true,false)}" style="font-weight:bold;font-family:Calibri;font-size:36px;text-align:right;"/>
+        <apex:outputText value="{!spouse.name} " rendered="{!if(spouse!=null,true,false)}" style="font-weight:bold;font-family:Calibri;font-size:36px;text-align:right;text-transform:capitalize ;"/>
+        <apex:outputText value="Financial plan" style="font-family:Calibri;font-weight:bold;font-size:36px;text-align:right;text-transform:capitalize ;"/>
+  
+       
+        <br/>
+        <apex:image url="https://ffreedom.my.salesforce.com/servlet/servlet.ImageServer?oid=00D20000000JZVv&id=01520000000h9V8" rendered="{!if((Family_Picture.Family_Picture__c==null || Family_Picture.Family_Picture__c=='<br>') ,true,false)}"/><br/><br/>
+        <apex:outputField value="{!Family_Picture.Family_Picture__c}" rendered="{!if((Family_Picture.Family_Picture__c!=null) ,true,false)}"/><br/><br/>
+        
+        
+<!--         <apex:image url="https://ffreedom.my.salesforce.com/servlet/servlet.ImageServer?oid=00D20000000JZVv&id=01520000001cFKu"/><br/><br/> -->
+        </center>
+        
+        <!------- PREPARED FOR --------->
+        <apex:outputText value="PREPARED FOR" style="padding-left:20px;" styleClass="sentenceCase"/>
+        <br/>
+        <apex:outputText value="{!LOWER(client.name)} " style="padding-left:20px;font-size:18px;font-family:verdana; font-weight:bold" styleClass="sentenceCase"/>
+        <apex:outputText value=" and " style="font-size:18px;font-family:verdana; font-weight:bold" rendered="{!if(spouse!=null,true,false)}" styleClass="textStyle"/>
+        <apex:outputText value="{!LOWER(spouse.name)}" style="font-size:18px;font-family:verdana; font-weight:bold" rendered="{!if(spouse!=null,true,false)}" styleClass="sentenceCase"/>
+        <br/>
+        <apex:outputText value="{!client.BillingStreet}" style="padding-left:20px;" styleClass="sentenceCase"/>
+        <apex:outputText value=" , " rendered="{!if((client.BillingStreet!=null && client.BillingCity!=null) ,true,false)}"></apex:outputText>
+        <apex:outputText value="{!client.BillingCity}" styleClass="sentenceCase"/>
+        <br/>
+        <apex:outputText value="{!client.BillingState}" style="padding-left:20px;" styleClass="sentenceCase"/>
+        <apex:outputText value=" , " rendered="{!if((client.BillingState!=null && client.BillingCountry!=null) ,true,false)}"></apex:outputText>
+        <apex:outputText value="{!client.BillingCountry}" styleClass="sentenceCase"/>
+        <br/>
+        <apex:outputText value="{!client.BillingPostalCode}" style="padding-left:20px;" styleClass="textStyle"/>
+        <br/><br/>
+        
+        <!------- PREPARED BY --------->
+        <apex:outputText style="padding-left:20px;" value="{!$Label.PreparedBy}" styleClass="upperCase"/>
+        <br/>
+        <!--<apex:image value="{!$Resource.PlannerImage}" height="20%" width="20%" style="padding-left:30px;"/>-->
+        <apex:image url="https://ffreedom.my.salesforce.com/servlet/servlet.ImageServer?oid=00D20000000JZVv&id=01520000000h9oA" style="padding-left:20px;" 
+        				rendered="{!isFreedomUserProp}"/>
+<!--              <apex:outputText value="{!Partnerlogo.Logo__c}" rendered="{!NOT(isFreedomUser)}" /> -->
+		<!--Partner Portal Aditi--> 
+             <apex:outputField value="{!Logo_partner.Logo__c}" rendered="{!NOT(isFreedomUserProp)}" />
+<!--         rendered="{!isFreedomUser}" /> -->
+        <br/><br/>
+        <div style="padding-left:20px;">
+        <!--/** Eternus Solutions   **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: 00001640      **/
+		/** Date    : 11/5/2012 	**/
+		/** Purpose : Removed the Name of the Entity Owner from Financial Plan**/
+		/****************************************************/-->
+<!--             <apex:outputText value="{!client.Owner.Name}" style="font-size:18px;font-weight:bold" styleClass="sentenceCase"/> -->
+<!--             <br/> -->
+<!--             <apex:outputText value="{!UPPER(titleName)}" styleClass="upperCase"/> -->
+            <apex:outputText value="FINANCIAL PLANNERS" styleClass="upperCase"/>
+            <br/>
+<!--             <apex:outputField value="{!$Label.PlannerAddress}" escape="false" styleClass="upperCase" rendered="{!isFreedomUser}"/> -->
+ 			<apex:outputText value="{!$Label.PlannerAddress}" escape="false" styleClass="upperCase" rendered="{!isFreedomUserProp}"/> 
+ 			<!--Partner Portal Aditi-->
+ 			<apex:repeat value="{!lstAddwithComma}" var="address">
+ 				<apex:outputText value="{!address}" escape="false" styleClass="upperCase" rendered="{!NOT(isFreedomUserProp)}"/>
+ 				<br/>
+ 			</apex:repeat>
+ 			
+<!--             <apex:outputText value="{!Partnerlogo.Company_Address__c}" escape="false" styleClass="upperCase" rendered="{!NOT(isFreedomUser)}"/> -->
+            <br/>
+        </div>
+        <br/>
+        <!------- PLAN GENERATION DATE --------->
+        <apex:outputText value="Plan Generation Date" style="padding-left:20px;margin-top:10px;" styleClass="upperCase"/>
+        <br/>
+        <apex:outputText value="{!generationDate}" style="padding-left:20px;" styleClass="upperCase"/>
+    </div>
+</apex:component>

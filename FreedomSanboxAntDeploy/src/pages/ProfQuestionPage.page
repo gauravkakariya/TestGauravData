@@ -1,0 +1,148 @@
+<!--
+Revision History:
+
+   Version     Version Author     	Date          Comments
+   1.0         Prajakta Sanap     06-07-2013      Initial Draft - Profiler Question pattern to be changed
+   
+-->
+
+<apex:page controller="ProfQuestionPageController"
+	standardStyleSheets="false" 
+	cache="false" sidebar="false" showHeader="false">
+		            
+	<script>
+		function showProgress(Percentage) {
+			$("#progressbar").progressbar({
+				value : parseInt(Percentage)
+			});
+			var txtPercentage = Percentage + '%';
+			$("#progresstext").html(txtPercentage);
+		}
+		
+	</script>
+
+	<style type="text/css">
+	.ui-progressbar {
+		height: 1em;
+		text-align: center;
+	}
+
+	.loadingImage{
+	         top: 100px;           
+	         left: 400px;     
+	         z-index:1000;  
+	         position:absolute;
+	}  
+	
+	.errorMsg
+	{
+		color:red !important;
+	}
+</style>
+
+	<apex:composition template="TabPage">
+		<apex:define name="contents">
+		    <apex:form id="form1">
+		        <apex:pageMessages id="topPgMsg"/>
+					<apex:outputPanel id="questionPanel" >
+					<apex:outputPanel rendered="{!isProfilerQuestion}">
+					<apex:pageBlock tabStyle="Account" id="block1" title="Profiler Questions">
+<!-- 					<apex:pageBlockSection id="block" columns="1">	 -->
+						<div style="margin-left: 39px; width: 900px; height:100%;" class = "que-ans" >
+							<apex:repeat var="qa" value="{!lstOfQuestionAnswer}" id="idRepeat">
+<!-- 							<apex:pageBlockSection columns="1"> -->
+								<table width="500px" >
+									<tr >
+										<td>
+											 <apex:outputText value="{!qa.objQuestionnaire.Display_Sequence__c}.  " style="font-weight:bold;"/>
+										 	 <apex:outputText value="{!qa.question}" style="font-weight:bold;"/>
+										</td>
+									</tr>
+									<tr >
+										<td >	
+											<span><apex:selectRadio value="{!qa.selectedAnswer}" layout="pageDirection" id="idCheckRadio">
+												<apex:selectOptions value="{!qa.strAnswer}" />
+											</apex:selectRadio></span><br />	
+										</td>
+									</tr>		
+								</table>
+<!-- 							</apex:pageBlockSection> -->
+								
+							</apex:repeat>
+							<apex:commandButton value="Submit" action="{!save}" 
+									reRender="pgMsg,profOutput,score,questionPanel,topPgMsg" status="statusNewSIPId"
+									style="margin-left: 20px;" styleclass="groovybutton">
+							</apex:commandButton>
+							
+							<apex:commandButton value="Reset" reRender="topPgMsg,pgMsg,profOutput,score,questionPanel" action="{!Reset}"
+												immediate="true" status="statusNewSIPId" style="margin-left: 10px;"/>
+
+							<apex:actionStatus stopText="" id="statusNewSIPId">
+		                    		<apex:facet name="start"> 
+				                        <apex:outputPanel style="padding-left:20%;">
+				                             <img src="/img/loading.gif" width="16" height="16"/>
+				                        </apex:outputPanel>
+				                    </apex:facet>
+		                   </apex:actionStatus>  
+							<br/><br/>							
+							<span style="color: red;"> 
+								<apex:PageMessages id="pgMsg" />
+							</span>		
+						</div>
+<!-- 						<div id="theHiddenInput" style="display: none;">{!quesSequence}</div> -->
+						<br/>
+<!-- 						<apex:commandButton value="Reset" reRender="questionPanel" style="margin-left:220px;"/> -->
+<!-- 						</apex:pageBlockSection> -->
+					</apex:pageBlock>
+					
+					</apex:outputPanel>
+				</apex:outputPanel>
+					
+					
+				<apex:outputPanel id="profOutput" >
+				<apex:outputPanel rendered="{!isProfilerOutput}">	
+					<apex:pageBlock tabStyle="account" title="Profiler Questions Output" >
+		                <apex:variable var="count" value="{!1}" /> 
+		              <apex:pageBlockTable value="{!lstOfQuestionAnswer}" var="score" styleClass="HeaderClass" border="1" cellspacing="0" cellpadding="0" style="width:80%;">
+		                  <apex:column headerValue="Sr.No." style="width:4%; text-align:center;" id="number" >
+		                      <apex:outputText value="{0, number, ##,##0}" >
+		                        <apex:param value="{!count}"/>
+		                      </apex:outputText>
+		                  </apex:column>
+		                  <apex:column headerValue="Profile Question" style="width:45%;">
+		                      <apex:outputText value="{!score.question}"/>
+		                  </apex:column>
+		                  <apex:column headerValue="Answer" style="width:45%;">
+		                      <apex:outputText value="{!score.selectedOption}"/>
+		                  </apex:column>
+		                  <apex:column headerValue="Score" style="width:45%; text-align:right;">
+		                      <apex:outputText value="{!score.score}"/>
+		                      <apex:variable value="{!count+1}" var="count"/>
+		                  </apex:column>
+		              </apex:pageBlockTable>
+		             
+					<br/>	<br/>
+					<apex:outputPanel id="score">
+						<div class="divClass" style="font-weight:bold;">	
+							<apex:outputText value="Total Score" style="padding-left:185px;"/>
+		                    <apex:outputText value="{!totalScore}" style="padding-left:250px;"/>
+						</div><br/>
+						<div class="divClass" style="font-weight:bold;">	
+							<apex:outputText value="Risk Profile" style="padding-left:185px;"/>
+		                    <apex:outputText value="{!riskProfile}" style="padding-left:250px;"/>
+						</div>
+						<br/>
+<!-- 						<apex:outputLink value="/apex/ProfQuestionPage?entityId={!strEntityId}&tabname=Financial Planning"  -->
+<!-- 									 styleClass="button" rendered="{!isProfilerQuestion}"> Reset </apex:outputLink>		 -->
+<!-- 						<apex:commandButton action="{!Reset}" value="Back" reRender="questionPanel" style="margin-left:220px;" /> -->
+					</apex:outputPanel>	
+					
+						
+				</apex:pageBlock>
+				</apex:outputPanel></apex:outputPanel>
+				
+				
+			</apex:form>
+		</apex:define>
+	</apex:composition>
+</apex:page>

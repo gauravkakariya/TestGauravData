@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email template for - when the case status changed to &apos;Need Clarification&apos;</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Need Clarification for Internal Case</name>
+    <style>freeForm</style>
+    <subject>Clarification request for Case {!Case.CaseNumber} : {!Case.Subject}</subject>
+    <textOnly>Dear {!Case.OwnerFirstName},
+ 
+We require some clarification regarding your case
+ &apos; {!Case.CaseNumber} : {!Case.Subject} &apos;.
+
+Please provide us the clarification in the ‘Case Comments’ section and change the status of the case to ‘Clarification Provided’.
+ 
+Regards,
+Technology Support</textOnly>
+    <type>html</type>
+</EmailTemplate>

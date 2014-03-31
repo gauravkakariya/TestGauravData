@@ -1,0 +1,252 @@
+<apex:page showHeader="false" sidebar="false"
+	title="Ffreedom Financial Planners | News Letters" id="LeadStory_Jan12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+</head>
+
+<body>
+	<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+		<tr>
+			<td><img src="{!URLFOR($Resource.images,'images/top_Jan2012.gif')}" width="740" height="104" />
+			</td>
+		</tr>
+		<tr>
+			<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+							height="1" /></td>
+						<td valign="top"><table width="98%" border="0" align="center"
+								cellpadding="0" cellspacing="0">
+								<tr>
+									<td valign="top"><table width="100%" border="0"
+											cellspacing="0" cellpadding="0">
+											<tr>
+												<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+														<tr>
+															<td width="1%" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/headL.gif')}"
+																width="9" height="40" />
+															</td>
+															<td width="98%" valign="top" background="{!URLFOR($Resource.images,'images/headbg.gif')}" style="padding-top:6px;">
+																<font face="Arial, Helvetica, sans-serif" color="#FFFFFF" style="font-size:14px;">
+																	<strong>Budgeting - How to make it work</strong></font>
+															</td>
+															<td width="1%" valign="top">
+																<img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+
+											<tr>
+												<td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+														<tr>
+															<td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}">
+																<img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" />
+															</td>
+															<td width="8" valign="top">
+																<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" />
+															</td>
+															<td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+																	<tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;"><strong>Say No to Budgeting Blues</strong><br />
+
+                                <br />
+
+                                Budgeting is a spit worthy word…Tell me, honestly,  how many of you have written down the details of every penny you spent, on a piece  of paper, and then lost your peace of mind after looking at it. Every time I  read personal finance articles that talk about maintaining records of all  spending, cutting down on wasteful (read enjoyable) expenses etc, it puts me  off. Why, on earth, are we working so hard to earn money, if we can’t indulge a  bit? Any activity that does not make you happy is not worth doing. I think it’s  this fear of having to do budgeting that stops most people from doing financial  planning. And I would say, fair enough!<br />
+
+                                <br />
+
+                                Truth be told, budgeting sucks the energy  out of activities meant to excite. It destroys peace around family dinners and makes  you feel old and vain. Yet, it is important. It is the foundation on which  wealth is built. Knowing how much comes in, how much goes out is essential to  determine how much can be put aside to reach goals and build wealth! <br />
+
+                                <br />
+
+                                <strong>So, is there a way out? What is it?</strong><br />
+
+                                <br />
+
+                                I think there does exist a way out. I’ll  share with you, what works for me and for my client members. Don’t start financial  planning with budgeting. <br />
+
+                                <br />
+
+                                Start with your dreams, goals and  aspirations. What is that thing that you want to do with your life? With your  time? With your money? Think ahead into the future about the responsibilities  you will have to fulfill, the dreams that you would like realized, the causes  that you would like to support. <br />
+
+                                <br />
+
+                                When you have put down your goals and  aspirations, remind yourself all this mean money. Find out, or take some help  to figure out how much money you will need, to put your children through  college, to go on that promised world tour, to establish a trust that will  support a social cause etc. <br />
+
+                                <br />
+
+                                Instead of fretting about the budget, work  backwards on how much you will need to put away today and every coming day, to  live your dreams.  Commit yourself to  putting away whatever is necessary.<br />
+
+                                <br />
+
+                                As soon as your salaries hit your bank  account, move the amount required for reaching your goals, automatically, to  the saving account and from there, automatically, to the designated investment  vehicle. You can work around your expenses with the rest of the money. <br />
+
+                                <br />
+
+                                Now, if the above has been done, you don’t have  to bother about what you spend where. As long as you are meeting the  requirements of fulfilling your basic needs and not borrowing, go ahead and  spend. Don’t bother budgeting, earn a reprieve. <br />
+
+                                <br />
+
+                                Don’t count on discipline and self control  and the likes. Instead, automate your payments of credit card bill etc through  ECS. You can be rest assured that when your goals come due, you will have money.  And you do even now, to spend as you please. No emotional baggages, no guilt,  no month end fretting – just lot more wealth! </td>
+
+                            </tr>
+
+                            
+
+                            
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+
+                            </tr>
+
+																</table>
+															</td>
+														</tr>
+														<tr>
+															<td valign="top">
+																<img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105">
+																<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105">
+																<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table></td>
+								</tr>
+								<tr>
+									<td valign="top">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="images/space.gif" width="2" height="1" />
+						</td>
+					</tr>
+				</table></td>
+		</tr>
+
+		<tr>
+			<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B">
+							<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+						<td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+							<tr>
+								<td width="76%" height="20" valign="top">
+									<font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size: 13px;">
+										<strong>Ffreedom Financial Planners</strong>
+									</font>
+								</td>
+								<td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+										<tr>
+											<td>
+												<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;">
+													<strong>Follow us on&nbsp;&nbsp;&nbsp;</strong>
+												</font>
+											</td>
+											<td>
+												<a href="http://www.facebook.com/Ffreedom" target="_blank">
+													<img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" />
+												</a>
+												<a href="http://twitter.com/_Ffreedom" target="_blank">
+													<img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" />
+												</a>
+												<a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank">
+													<img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" />
+												</a>
+											</td>
+										</tr>
+										<tr>
+											<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;"><strong>Watch us on</strong></font></td>
+											<td>
+												<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;">
+													<strong>
+														<a href="http://www.youtube.com/user/ffreedomtube" target="_blank">
+															<img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" />
+														</a>
+													</strong>
+												</font>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">506 / 507, Morya Landmark II,
+											Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font>
+									</td>
+								</tr>
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">Boardline: +91 22 4222 4333
+											&nbsp;|&nbsp; Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a
+											href="mailto:contact@ffreedom.in">contact@ffreedom.in</a>
+											&nbsp;|&nbsp; <a href="http://www.ffreedom.in"
+											target="_blank">www.ffreedom.in</a> </font>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" valign="top"><div align="justify">
+											<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 11px;">
+												Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended
+												as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising
+												to any person acting or refraining from acting as a result of any material contained in this communication. It is
+												recommended that professional advice be taken based on the specific facts and circumstances. This communication does
+												not substitute the need to refer to the original pronouncements.
+											</font>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B">
+							<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td><img src="{!URLFOR($Resource.images,'images/footer.gif')}"
+				width="740" height="15" />
+			</td>
+		</tr>
+	</table>
+</body>
+	</html>
+</apex:page>

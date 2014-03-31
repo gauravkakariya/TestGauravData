@@ -1,0 +1,45 @@
+<apex:component controller="customLoginController" id="loginComponent">
+
+<!-- 	/*  Prajakta Sanap -->
+<!-- 		04/07/2012 -->
+<!-- 		Added java script for the popup window function */ -->
+	<script language="javascript">
+		var popupWindow = null;
+		function centeredPopup(url,winName,w,h,scroll,location)
+		{
+			LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+			TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+			settings = 'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',location='+location+',resizable'
+			popupWindow = window.open(url,winName,settings)
+		}
+	</script>
+	
+	 <apex:form id="loginForm" forceSSL="true">
+	    <apex:outputPanel layout="block" id="op1">
+	      <apex:pageMessages id="Error" rendered="true"/>
+	      <apex:outputLabel value="Please enter valid Username and Password." rendered="{!IsInvalid}" style="color:red; font-size:11px;"/>
+	        <apex:panelGrid columns="2" style="margin-top:1em;">
+	         <apex:outputLabel value="{!$Label.site.username}"/>
+		        <apex:inputText value="{!username}"/>
+		        <apex:outputLabel value="{!$Label.site.password}" for="password"/>
+		        <apex:inputSecret id="password" value="{!password}"/>
+		        <apex:outputText value=""/>
+		        <apex:commandButton action="{!login}" value="{!$Label.site.login_button}" id="loginButton">
+		<!--    <apex:param name="cursession" value="{!$Api.Session_ID}" assignTo="{!SessionId}"/> -->
+		        </apex:commandButton>
+		        <apex:outputText value=""/>
+		        <apex:outputText value=""/>
+		        <apex:outputText value=""/>
+		    
+		    <apex:panelGroup id="theLinks">
+<!-- 	Prajakta Sanap -->
+<!-- 	04/07/2012 -->
+<!-- 	Added link for the forgot password */ -->
+	        	<apex:commandLink value="Forgot Password" onclick="centeredPopup('ForgotPwd','myWindow','650','250','yes','no');return false"></apex:commandLink>
+		        <apex:outputText value=" | " rendered="{!$Site.RegistrationEnabled}" />
+		        <apex:outputLink value="{!$Page.SiteRegister}" rendered="{!$Site.RegistrationEnabled}">{!$Label.site.new_user_q}</apex:outputLink>
+		    </apex:panelGroup>
+	      </apex:panelGrid>
+	    </apex:outputPanel>
+	 </apex:form>
+</apex:component>

@@ -1,0 +1,42 @@
+<!-- FS0309 -->
+<apex:page showHeader="false">
+    <apex:composition template="TabPage">
+        <apex:define name="contents">
+            <apex:form id="myform" >
+                <c:EmergencyFundComponent />
+                <!-- FS0309 -->
+                <!-- <div>
+	        		<apex:outputLabel >{!$ObjectType.Remarks__c.fields.Remark__c.label}</apex:outputLabel>
+		        </div>
+		        <div>
+			        <apex:inputTextArea id="txtRemark"  style="width:400px;height:80px;" value="{!strRemark}"/>
+			    </div>
+			    <div>
+			    	<apex:commandButton id="btnSave" styleclass="button" value="Save" action="{!save}"/>
+			    </div> -->
+            </apex:form>
+        </apex:define>
+    </apex:composition>
+    <script>
+        function altRows(id)
+        {
+            if(document.getElementsByTagName)
+            {  
+                var table = document.getElementById(id);  
+                var rows = table.getElementsByTagName("tr"); 
+                for(i = 1; i < rows.length; i++)
+                {  
+                    if(i % 2 == 0)
+                    {
+                        rows[i].className = "DataTableEven";
+                    }
+                    else
+                    {
+                        rows[i].className = "DataTableOdd";
+                    }      
+                }
+            }
+        }
+        window.onload =   altRows('planTable');
+    </script>
+</apex:page>

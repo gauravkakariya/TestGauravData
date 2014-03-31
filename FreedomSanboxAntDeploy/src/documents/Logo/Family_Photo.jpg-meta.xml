@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Family photo for Financial Plan in Cover Component</description>
+    <internalUseOnly>false</internalUseOnly>
+    <keywords>Family, photo, financial plan, logo</keywords>
+    <name>Family Photo</name>
+    <public>true</public>
+</Document>

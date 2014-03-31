@@ -1,0 +1,81 @@
+<apex:page sidebar="false" showHeader="false" controller="PortfolioController">
+
+<apex:stylesheet value="{!URLFOR($Resource.PortalStyleSheet)}"/>
+ <apex:includeScript value="{!URLFOR($Resource.PortalScript)}"/> 
+<div id="main" style="background-color:#F2F2F2;"> 
+<div class="header" style="height:258px;"></div>
+<div class="borderImage"></div>
+<div class="first-section" >
+<div class="right-image" >
+<div class="bar"> <div class="title1" style="padding:4px 0px 2px 70px;font-size:12px;font-weight:bold;" >Important Links</div></div>
+<div class="GreenBorder" ></div>
+<div><ul style="padding-top:15px;">
+<li><a href="http://www.ffreedom.in/Comming_Soon_FfreedomHub" target="_blank">Ffreedom Hub</a></li>
+<li><a href="http://www.ffreedom.in/Comming_Soon_Bolg" target="_blank">Ffreedom Blogs</a></li>
+<li><a href="http://www.ffreedom.in/Client_Stories" target="_blank">Client Stories</a></li>
+<!----<li><a href="#" target="_blank">Recommend Ffreedom To A Friend</a></li>---->
+</ul></div> 
+
+</div>
+
+<div class="border"></div>
+
+<div class="right-image" style="width:578px;"> 
+<div class="title1" style="padding-top:7px;padding-bottom:4px;margin-left:0px;"><span class="title2" style="padding:0px 0px 7px 0px;font-size:14px;font-weight:bold; "><apex:outputText value="{!WelcomeMessage}"></apex:outputText>&nbsp;<apex:outputText value="{!Account.FirstName}"></apex:outputText>,</span><br/></div> <div><span style="padding-top:10px;padding-left:12px;color:#616161;font-size:13px;font-family: Tahoma; font-size: 13px;">Welcome to The Ffreedom World !!!</span></div> 
+<div class="description" style="width:535px;padding-top:4px;">At Ffreedom we endeavor to help our clients live their dreams &amp; achieve financial freedom, hence Ffreedom World is one of our incentives to help you keep your plan on track and will give us the opportunity to service you faster &amp; better.<br/>We have also built in some social &amp; educative element to the Ffreedom World which will help you socialize in the Ffreedom Family &amp; keep you up-to date on what's happening around you.</div>
+</div>
+</div>
+
+<div class="borderImage"></div>
+
+<div class="first-section" >
+<div class="right-image" style="height:190px;">
+<div class="bar"> <div class="title1" style="padding:4px 0px 2px 40px;font-size:12px;font-weight:bold;">Knowledge Center Updates</div></div>
+<div class="GreenBorder" ></div>
+<br/>
+<div>
+<script type="text/javascript">
+function LoadUrl(url)
+{
+
+parent.location.href=url;
+}
+</script>
+<ul>
+<!-----<li><a href="#" onclick="javascript:LoadUrl('/sfc/#version?selectedDocumentId=06920000000HRpO')">Financial Planning</a></li>
+<li><a href="#" onclick="LoadUrl('/sfc/#version?selectedDocumentId=06920000000HRpO')">Financial Planning</a></li>---->
+<li><a  href="#" onclick="javascript:LoadUrl('/sfc/#workspaceView?selectedWorkspaceId=05820000000H5mj')">Freedom Buzz</a></li>
+<li><a  href="#" onclick="javascript:LoadUrl('/sfc/#workspaceView?selectedWorkspaceId=05820000000H077')">General Articles</a></li>
+<!-----<li><a  href="#" onclick="javascript:LoadUrl('/sfc/#version?selectedDocumentId=06920000000HP1I')">Despite rising prices gold ETFs look strong</a></li>---->
+</ul></div> 
+
+</div>
+
+<div class="border2" style="height:168px;"></div>
+
+<div class="right-image" style="height:190px;">
+<div class="bar"> <div class="title1" style="padding:4px 0px 2px 100px;font-size:12px;font-weight:bold; ">Post an Idea</div></div>
+<div class="GreenBorder" ></div>
+<!---<div class="description" style=" margin-top: 5px;padding-left:12px;width:250px;">Share your Ideas with us or give your views/suggestion on any of the posted Ideas</div >---->
+
+<div class="description" style=" margin-top: 10px;padding-left:80px;width:250px;"><b>Share - Vote - Discuss</b></div >
+
+<div><a href="#" onclick="javascript:LoadUrl('/apex/NewIdeas?sfdc.tabName=01r20000000A772')"><img width="160" height="100" src="{!URLFOR($Resource.PortalImages,'PortalImages/Idea.png')}" style="padding-left:85px;padding-top:px;"/></a> </div>
+</div>
+
+
+<div class="border2" style="height:168px;"></div>
+<div class="right-image" style="width:278px;height:190px;">
+<div class="bar" style="width:278px;"> <div class="title1" style="padding:4px 0px 2px 60px;font-size:12px;font-weight:bold; ">My Financial Plan</div></div>
+<div class="GreenBorder" style="width:278px;"></div>
+<div class="description" style=" margin-top: 10px;padding-left:35px;"><b>Know Your Financial Plan</b></div ><br/>
+<div style="padding-bottom:15px;"><a href="#" onclick="javascript:LoadUrl('/sfc/#workspaces')"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/FinancialPlan.png')}" width="80" height="80" style="padding-left:100px;"/></a></div>
+
+</div>
+
+</div>
+<div class="borderImage" style="position-relative; bottom:25px;"></div>
+
+</div>
+
+</apex:page>

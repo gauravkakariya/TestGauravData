@@ -1,0 +1,36 @@
+<apex:page showHeader="true" sidebar="true">
+
+ <apex:stylesheet value="{!URLFOR($Resource.Style)}" />
+<div class="MainContainer">
+<div class="topcontainer">
+<div class="text">My Ffreedom Idea</div>
+</div>
+
+<div class="blockcontainer">
+ <div class="leftcontainer">
+ <apex:image url="{!URLFOR($Resource.newImage,'image/Ideas_icon.jpg')}" height="102px" width="119px" />
+</div>
+<div class="rightcontainer">
+<div class="blocktext">
+<br/>
+Today the world has truly become a global village &amp; the greatest insight to this change have been through collaboration may it be through business talking to each other from across the globe or friends sharing ideas on facebook on which movie to see. "My Ffreedom Ideas" is one of our initiatives to let our clients share their ideas about Financial Freedom.<br /><br /><br />
+
+
+As a client of Ffreedom you know better than anyone else what Financial Freedom means to you. So tell us... Now is the time to share your ideas, what you think of other people's ideas &amp; join the discussion. <br /><br /><br />
+
+
+“Ideas are the beginning points of all fortunes.”<br /><br /><br />
+
+
+So we're here, and we're ready to make ideas happen<br/><br /><hr /></div>
+
+<div class="blocktext">
+<img src="{!URLFOR($Resource.newImage,'image/Ideas_button.jpg')}" border="0" usemap="#Map" />
+<map name="Map" id="Map"><area shape="rect" coords="2,3,121,23" href="/ideas/ideaList.apexp" /></map>
+<br /><br />
+</div>
+</div>
+</div>
+</div>
+
+</apex:page>

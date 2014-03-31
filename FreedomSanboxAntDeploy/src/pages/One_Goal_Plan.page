@@ -1,0 +1,109 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | One Goal Plan">
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+ <div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+        <div class="sidemenucontainer">
+         <div id="sidemenu1">
+            <ul style="list-style-type:none">
+        <li><a href="Comprehensive_fp">Comprehensive FP</a></li>
+        <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+        <!-- <li><span class="selected_btn">One Goal Plan </span></li> -->
+        <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+        <li><a href="Risk_Planning">Risk Planning</a></li>
+        <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+        <li><a href="Estate_Planning">Succession Planning</a></li>
+        <!--  <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+         <li><a href="#">NRI Plan</a></li>
+         <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+        <li><a href="#">Free Plan Calculation</a></li> -->
+        </ul>
+        </div>
+        </div>
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/Service_img.jpg')}" /></div>
+        <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+        </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+              <div class="leftlinkselectedimg" style="margin-top:67px; height:107px; background-repeat:no-repeat;"></div>
+              </div>
+      <div id="innerpage_textcontainer_middle">
+        <!--<div class="innerpage_titletext"><span class="innerpagetopheading">Services</span></div>-->
+         <!-- <div class="innerpage_titletext"><span class="innerpagetexttitle">One Goal Plan</span> </div> -->
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">Life is full of ambitions and dreams. You may want to buy a house by the time you are 40 or buy a car by 30. And to make these come true, you would normally make investments to save up and make it happen. Our advisors know the importance of these events in your life and to help you attain them through our One Goal Plan.<p>
+        Since the goal is already planned, our advisors will help you to reallocate, borrow and invest your resources, so that when the time comes, you can start proceeding with it.  
+</p> </span></div>
+<div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>How does it helps you?</strong></span> </div>
+<div class="innerpage_titletext"><span class="txtmatterbig_innerpage">The purpose of this plan is to help you get to the place where you want to be, without facing the risks and the trivialities of making that goal happen. Once the goal has been identified by you, all you need to do is tell our advisors when you would like to attain that. 
+Understanding your finances will give us an idea as to how we can reallocate resources, cut costs and invest in various tools, so that when the time comes, you can follow up on your dreams. <br /><br />
+   </span></div>
+   <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Our one goal plan will help you to: </strong></span> </div>
+    <div class="innerpage_litext"><span class="txtmatterbig_innerpage">
+   <li>Create a realistic timeline to attain your goal</li>
+   <li>Set financial milestones you need to reach on your way </li>
+    <li>Attain your dream within the time you desire</li>
+   </span></div>   
+   <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">Usually, this plan is opted when you already know the goal that has to be achieved and would want to save up on your resources, so that when the time of execution arises, you are not faced with financial difficulties. This Plan helps you to overcome those issues that may prohibit you air cause an hindrance to your drams and goals. 
+ </span></div>  
+ 
+ <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Our One Goal Plan service includes:</strong></span> </div>
+   <div class="innerpage_litext"><span class="txtmatterbig_innerpage">
+   <li>Based on our analysis of your goal, we recommend to you various scenarios for 
+    the savings/ investments required.</li>
+   <li>An Action Plan is created that includes the investment (product) recommendation 
+    for fresh investments.</li>
+   <li>Rebalancing existing assets that you wish to allocate to the goal.</li>
+   <li>The Financial Planner will present to you, your Goal Plan through phone or web 
+    conferencing.</li>
+   <li>Implementation of the Action Plan for your Goal Plan.</li>
+   <li>We shall conduct two half yearly reviews of your Goal Plan.</li>
+   <li>SIP reminders (through SMS &amp; Email).</li>
+   <li>Monthly statements &amp; updates on your goal plan. </li>
+   </span></div>
+    
+   <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><a href="#"><strong>To know about our fees check out Financial Planning Fees</strong></a><br/><br/></span></div>
+  
+  
+    <div class="innerpage_titletextOE"><span class="txtmatterbig_innerpage"><strong>Our Expertise:</strong></span> </div>
+ 
+       <div class="innerpage_titletextOE"><span class="txtmatterbig_innerpage">We, at Ffreedom, will provide you with the best of our services which will include:</span></div> 
+   <div class="innerpage_litextOE"><span class="txtmatterbig_innerpage">
+       <li><span class="txtmatterbig_innerpage"><strong>A written financial plan:</strong></span>  Analyzing your budget and your current financial situation will help us draw a written financial plan that will be tailor made to suit your needs and achieve your goals.</li><br/>
+       <li><span class="txtmatterbig_innerpage"><strong>One advisor - All products:</strong></span>We are a single Window for all the products [eg: Mutual Funds, Insurance, Gold ETFs, Bonds, Loans, Real estate, will, trust, power of attorney and more] We will assign you a single advisor, who will answer all your doubts, recommend you the products  &amp; also procure for you the products suitable for you according to the term and nature of your goal. </li><br/>
+       <li><span class="txtmatterbig_innerpage"><strong>Consolidation of all statements: </strong></span> All your investments will be mapped onto a single consolidated statement. Your entire Investments basket will be mark to market making it convenient for you to have one statement will all investments. So more trying to go through different statements to find out where you stand in terms of your goals.</li><br/>
+       <li><span class="txtmatterbig_innerpage"><strong>Review and rebalancing: </strong></span> Reviewing your current plan to understand the changes and rebalancing it to fit your goals is what we offer and believe in.</li><br/>
+   </span></div> 
+    <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><i>*Registration, if required, will be charged extra. Services of a lawyer (if required) are not included in the above mentioned fees.</i><br /><br />
+      </span><a href="#top" class="otherslink">Top</a></div>
+ </div>
+ 
+      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" />
+      </div>
+      <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}"  border="0" usemap="#Map2" />
+         <map name="Map2" id="Map2">
+           <area shape="rect" coords="3,0,230,50" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map></div>
+       <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+       
+       <div class="title123"><span class="imgtext">Related Links</span></div>
+<!--          <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="why_fees"><strong>Financial Planning Fees</strong></a></span> </div> -->
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="our_process"><strong>Our process</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know Our Financial Planners</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Client_Stories"><strong>Our client stories</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Why_do_you_need_a_plan"><strong>Why do you need a plan?</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+        </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

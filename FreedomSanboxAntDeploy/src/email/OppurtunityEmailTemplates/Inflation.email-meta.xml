@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Inflation</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Inflation</name>
+    <style>none</style>
+    <subject>Inflation</subject>
+    <textOnly>Question: How Does Inflation Impact my Life?
+
+Answer: Inflation always hurts your standard of living. Rising prices means you have to pay more for the same goods and services. If your income increases at a slower rate as inflation, your standard of living declines even if you are making more. Inflation&apos;s main consequence is a subtle reduction in your standard of living.
+
+Inflation doesn&apos;t affect everything equally. Gas prices can double while your home loses value. This makes financial planning more difficult.
+
+Inflation is really bad for your retirement planning because your target has to keep getting higher and higher to pay for the same quality of life. In other words, your savings will buy less. As a result, you will need to save more today to pay for higher priced goods and services in the future. Since
+everything you buy today costs more, so you have less left-over income available to save. Inflation has another bad side-effect...once people start to expect inflation, they will spend now rather than later. That&apos;s because they know things will only cost more later. This consumer spending heats up
+the economy even more, leading to further inflation. This situation is known as spiraling inflation because it spirals out of control.
+
+Inflation is important if you are holding bonds or Treasury notes
+. These fixed price assets only give a fixed return each year. As inflation spirals faster than the return on these assets, they become less valuable. As they become less valuable, people rush to sell them, further depreciating their value. As their value becomes lower, the U.S. government is forced to offer higher interest rates to sell them at all. This increases mortgage interest rates .
+
+Inflation Devil
+
+Inflation, the rate at which the general level of prices for goods and services rises, can steadily erode the purchasing power of your income. That is why you should invest a portion of your savings at a rate higher than the inflation rate to recover the loss of purchasing power.
+
+This means that over time a rupee will be able to buy a lesser amount of goods and services. If the inflation rate is 5%, then Rs. 100 worth of goods will cost Rs. 105 after a year.  The following table indicates how the value of Rs 1,00,000 will change over time at different levels of inflation.
+
+Inflation % p.a.
+Years  2             3               4          4.5            5             6
+ 5    90,573   86,261   82,193   80,245   78,353   74,726
+10   82,035   74,409   67,556   64,393   61,391   55,839
+15   74,301   64,186   55,526   51,672   48,102   41,727
+20   67,297   55,368   45,639   41,464   37,689   31,180
+25   60,953   47,761   37,512   33,273   29,530   23,300
+30   55,207   41,199   30,832   26,700   23,138   17,411
+
+Table indicating the value of Rs 1,00,000 at different levels of inflation over time.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

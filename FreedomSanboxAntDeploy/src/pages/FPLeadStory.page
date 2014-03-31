@@ -1,0 +1,279 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="FPLeadStory">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.NewsLatterImages,'images/top.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLatterImages,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td background="{!URLFOR($Resource.NewsLatterImages,'images/headbg.gif')}"><img src="{!URLFOR($Resource.NewsLatterImages,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.NewsLatterImages,'images/LeadStoryHIn.gif')}" width="324" height="40" /></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.NewsLatterImages,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.NewsLatterImages,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.NewsLatterImages,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                             <tr>
+                              <td valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">
+                                <br /> 
+                                	“For every disciplined effort, there is a multiple reward,” said American motivational speaker and author Jim Rohn.  This is true in every aspect of life, more so when it comes to fulfilling our life’s goals and dreams. It takes more than just a set of guidelines to get you there, but following it perfectly can ensure its success.  <br /><br/>
+									The single most important step to make your financial plan successful is being disciplined in your approach – and the onus for this lies completely with you. Unfortunately, this is also the single most common mistake that people generally make.  <br />
+								<br />
+									Disciplined investing allows one to take advantage of long term regular investment, over a period of time, resulting in a sustainable increase in asset values. For e.g if you consistently invest in your savings account, you will notice a considerable augmentation in your savings. <br /><br />To study the benefits of disciplined investing, the team at Ffreedom has conducted an analysis on Systematic Investment Plans (SIPs) diversified equity mutual funds investments for a period of 10 years, and the results were startling. <br /><br/>
+									For the study, returns on an investment of Rs. 10,000 per month in SIP equity oriented mutual funds, in early 2000 were evaluated to analyze the power of compounding (i.e. generating earning from previously invested earnings) that we always talk about. With a disciplined approach over 10 years, the returns on Rs. 12 lakhs (10 years x 12 months x Rs. 10,000) on an average were valued at Rs. 48-50 lakhs in early 2010. In the case of some of the top equity performing fund, this valuation breached the Rs. 90 lakh mark.
+								<br /><br /> You may wonder, how did you miss this opportunity? And why didn’t anyone advice on a lucrative plan? Actually, several financial and investment advisors too have failed to realize the opportunity that was available over the last decade. Moreover, the number of people who identify goals or dreams, and prepare their financial plan through a certified financial planner (not so-called financial advisors) is negligible. Even today in a working population of about half billion only insignificant number would have a written financial plan in place. If you don’t believe me, have a small survey amongst tour closest friend and ask them if they have ever considered of creating a financial plan. You will be surprised by not only their replies but the reluctance to visit a certified financial planner.
+								<br /><br /> Ever since I have shared this ‘finding’ with friends and colleagues, I can see many dropping shoulders. Some even mentioned that if they had planned finances, started with an investment of Rs. 10,000 and kept increasing their monthly commitment by 10%, then today, the 3 year sabbatical or a semi-retirement plan may not sound farfetched. <br /><br />
+									And while one may think that the best is behind us, think again. The India growth story is still in its evolution. While there might be short term setbacks in equity market sentiments, over a long term horizon it outlook is still positive. 
+								<br/><br/> 
+								Think of this - In 2000, if one started with Rs 10,000 SIP in the funds (in the table) and increased the SIP amount by 10% every year assuming that their income also increases by the same level ; he would end up getting Rs 1.36 Crore in 2009. </font>
+								<br /><br />
+                                <table border="1" cellpadding="3" cellspacing="0" bordercolor="#FFF3E1" style=" font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333;">
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap" bgcolor="#FF9900"><font color="#763D03"><strong>Name of Fund</strong></font></td>
+                                    <td align="left" valign="top" bgcolor="#FF9900"><font color="#763D03"><strong>Principal    Amount Invested</strong></font></td>
+                                    <td align="left" valign="top" nowrap="nowrap" bgcolor="#FF9900"><font color="#763D03"><strong>Fund Value</strong></font></td>
+                                    <td align="left" valign="top" nowrap="nowrap" bgcolor="#FF9900"><font color="#763D03"><strong>Index Value</strong></font></td>
+                                    <td align="left" valign="top" bgcolor="#FF9900"><font color="#763D03"><strong>SIP Scheme    Return</strong></font></td>
+                                    <td align="left" valign="top" bgcolor="#FF9900"><font color="#763D03"><strong>Systematic Investment 
+                                      Index Return</strong></font></td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap" bgcolor="#FFF3E1"><strong>HDFC Top 200</strong></td>
+                                    <td colspan="5" align="left" valign="top" bgcolor="#FFF3E1">&nbsp;</td>
+                                    </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">10 years</td>
+                                    <td align="left" valign="top" nowrap="nowrap">1,200,000</td>
+                                    <td align="left" valign="top">5532952</td>
+                                    <td align="left" valign="top">3241845</td>
+                                    <td align="left" valign="top" nowrap="nowrap">34.84%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">23.39%</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">5 years</td>
+                                    <td align="left" valign="top" nowrap="nowrap">600,000</td>
+                                    <td align="left" valign="top">1121342</td>
+                                    <td align="left" valign="top">917404</td>
+                                    <td align="left" valign="top" nowrap="nowrap">25.68%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">17.02%</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">3 Years</td>
+                                    <td align="left" valign="top" nowrap="nowrap">360,000</td>
+                                    <td align="left" valign="top">522726</td>
+                                    <td align="left" valign="top">459093</td>
+                                    <td align="left" valign="top" nowrap="nowrap">26.46%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">16.47%</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">1 Year</td>
+                                    <td align="left" valign="top" nowrap="nowrap">120,000</td>
+                                    <td align="left" valign="top">175036</td>
+                                    <td align="left" valign="top">170092</td>
+                                    <td align="left" valign="top" nowrap="nowrap">98.00%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">85.87%</td>
+                                  </tr>
+                                  <tr>
+                                    <td nowrap="nowrap" colspan="6" valign="bottom">&nbsp;</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap" bgcolor="#FFF3E1"><strong>Reliance Growth</strong></td>
+                                    <td colspan="5" align="left" valign="top" nowrap="nowrap" bgcolor="#FFF3E1">&nbsp;</td>
+                                    </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">10 years</td>
+                                    <td align="left" valign="top" nowrap="nowrap">1,200,000</td>
+                                    <td align="left" valign="top">9041359</td>
+                                    <td align="left" valign="top">3674934</td>
+                                    <td align="left" valign="top" nowrap="nowrap">37.92%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">21.21%</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">5 years</td>
+                                    <td align="left" valign="top" nowrap="nowrap">600,000</td>
+                                    <td align="left" valign="top">1081282</td>
+                                    <td align="left" valign="top">924246</td>
+                                    <td align="left" valign="top" nowrap="nowrap">23.79%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">17.32%</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">3 Years</td>
+                                    <td align="left" valign="top" nowrap="nowrap">360,000</td>
+                                    <td align="left" valign="top">496847</td>
+                                    <td align="left" valign="top">455021</td>
+                                    <td align="left" valign="top" nowrap="nowrap">22.11%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">15.84%</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">1 Year</td>
+                                    <td align="left" valign="top" nowrap="nowrap">120,000</td>
+                                    <td align="left" valign="top">176273</td>
+                                    <td align="left" valign="top">167509</td>
+                                    <td align="left" valign="top" nowrap="nowrap">97.44%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">81.09%</td>
+                                  </tr>
+                                  <tr>
+                                    <td colspan="6" valign="bottom">&nbsp;</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap" bgcolor="#FFF3E1"><strong>Birla Sunlife Equity</strong></td>
+                                    <td colspan="5" align="left" valign="top" nowrap="nowrap" bgcolor="#FFF3E1">&nbsp;</td>
+                                    </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">10 years</td>
+                                    <td align="left" valign="top" nowrap="nowrap">1,200,000</td>
+                                    <td align="left" valign="top">5527622</td>
+                                    <td align="left" valign="top">3738340</td>
+                                    <td align="left" valign="top" nowrap="nowrap">28.8%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">21.5%</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">5 years</td>
+                                    <td align="left" valign="top" nowrap="nowrap">600,000</td>
+                                    <td align="left" valign="top">985021</td>
+                                    <td align="left" valign="top">917404</td>
+                                    <td align="left" valign="top" nowrap="nowrap">19.9%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">17.0%</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">3 Years</td>
+                                    <td align="left" valign="top" nowrap="nowrap">360,000</td>
+                                    <td align="left" valign="top">471087</td>
+                                    <td align="left" valign="top">459093</td>
+                                    <td align="left" valign="top" nowrap="nowrap">18.3%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">16.5%</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">1 Year</td>
+                                    <td align="left" valign="top" nowrap="nowrap">120,000</td>
+                                    <td align="left" valign="top">174687</td>
+                                    <td align="left" valign="top">170092</td>
+                                    <td align="left" valign="top" nowrap="nowrap">94.5%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">85.9%</td>
+                                  </tr>
+                                  <tr>
+                                    <td nowrap="nowrap" colspan="6" valign="bottom">&nbsp;</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap" bgcolor="#FFF3E1"><strong>ICICI Pru Power-Growth</strong></td>
+                                    <td colspan="5" align="left" valign="top" nowrap="nowrap" bgcolor="#FFF3E1">&nbsp;</td>
+                                    </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">10 years</td>
+                                    <td align="left" valign="top" nowrap="nowrap">1,200,000</td>
+                                    <td align="left" valign="top">4834570</td>
+                                    <td align="left" valign="top">3353432</td>
+                                    <td align="left" valign="top" nowrap="nowrap">26.3%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">19.5%</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">5 years</td>
+                                    <td align="left" valign="top" nowrap="nowrap">600,000</td>
+                                    <td align="left" valign="top">915620</td>
+                                    <td align="left" valign="top">905524</td>
+                                    <td align="left" valign="top" nowrap="nowrap">16.9%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">16.5%</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">3 Years</td>
+                                    <td align="left" valign="top" nowrap="nowrap">360,000</td>
+                                    <td align="left" valign="top">451674</td>
+                                    <td align="left" valign="top">445009</td>
+                                    <td align="left" valign="top" nowrap="nowrap">15.3%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">14.3%</td>
+                                  </tr>
+                                  <tr>
+                                    <td align="left" valign="top" nowrap="nowrap">1 Year</td>
+                                    <td align="left" valign="top" nowrap="nowrap">120,000</td>
+                                    <td align="left" valign="top">168210</td>
+                                    <td align="left" valign="top">161098</td>
+                                    <td align="left" valign="top" nowrap="nowrap">82.4%</td>
+                                    <td align="left" valign="top" nowrap="nowrap">69.4%</td>
+                                  </tr>
+                                </table>
+                                <font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><em><br />
+                                Disclaimer: Data based on CAGR during 2000-2009. Past performance is not gaurantee of future returns.</em><br />
+                                <br />
+                                A key aspect to remember is that even during the decade of 2000-2010 there were recessionary periods and a herd mentality from investors was to exit the markets rather than faces losses. However, if you had invested on the basis of a financial plan, there would not be a need to exit the market… The disciplined approach to regularly investing would see you through the period and help you realize your goals in the long term. <br/><br/>
+                                </font>
+                                
+                                </div></td>
+                            </tr>
+                            <tr>
+                              <td valign="top">&nbsp;</td>
+                            </tr>
+
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.NewsLatterImages,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLatterImages,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLatterImages,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLatterImages,'images/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLatterImages,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank" ><img src="{!URLFOR($Resource.NewsLatterImages,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLatterImages,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.NewsLatterImages,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.NewsLatterImages,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in" style="color : Blue;">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank" style="color : Blue;">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLatterImages,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td><img src="{!URLFOR($Resource.NewsLatterImages,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+</apex:page>

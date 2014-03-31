@@ -1,0 +1,160 @@
+<!-- /*
+    
+    Revision History:
+    
+    Version     Version Author     Date        Comments
+    1.0         --                 --           Initial Draft
+    2.0         Mahesh             04/13/2012   If an Annual Amount of Net Cash Surplus/(Shortage) is negative, then it should be shown in Bracket without negative sign. 
+                                                So used ABS() & rendered="{!cashFlowBean.getMonthlyDifference >= 0}" & rendered="{!cashFlowBean.getMonthlyDifference >= 0}"
+                                                in TD and in Repeat
+    2.0         Manasi Ranade      30/4/2012    Issue ID : 00001613 : Added output Filed to preserve new line characters
+*/ -->
+
+<apex:component controller="NewCashFlowController">
+ <apex:attribute name="showButton" type="Boolean" description="Used to decide navigation button should be visible or not" default="true" />
+<apex:outputPanel rendered="{!showButton}">
+    <div class="divNavigationContainerStyle">
+       <apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;  background-image:none;background-color:#A9C5EB !important; font-size:11px !important;padding-top:4px; padding-bottom:4px;" />
+       <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+       <apex:outputLabel value="Cash Flow" styleclass="button" style=" width:10%;margin-left:20px;  background-image:none;background-color:#A9C5EB !important;font-size:11px !important; padding-top:4px; padding-bottom:4px;" />
+       <apex:image id="theImage2" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+       <apex:outputLabel id="theCommandLink2" styleclass="button" value="Output"  style="margin-left:20px; background-image:none;background-color:#F5D0A9!important;font-size:11px !important;padding-top:4px; padding-bottom:4px;"  />
+       <apex:commandButton id="theCommandLink1" styleclass="button" value="Projection" action="{!projection}" style="margin-left:20px; background-image:none;background-color:#A9C5EB !important; " />
+    </div>
+</apex:outputPanel>
+<div class="divContainerStyle">
+    
+    <div class="divStyle">
+       <apex:outputText value="CASH FLOW" styleClass="textStyle"/>
+    </div><br/>
+       <apex:outputText styleClass="textStyle" escape="false" value="{!$Label.CashFlow_text}"/> 
+    <br/><br/>
+   <center>
+       <apex:image url="{!chartData}"></apex:image> 
+   </center>
+    <div style="width:100%;">             
+        <table id="DataTable" cellspacing="0" cellpadding="5" border="1" align="center" width="80%" style="margin-top:20px;margin-left:auto;margin-right:auto;">
+            <tr class="tableHeader">
+                <th>
+                </th>
+                <th style="text-align:center;">
+                    <apex:outputText value="ANNUAL AMOUNT" styleClass="textStyle"/>
+                </th>
+                <th style="text-align:center;">
+                    <apex:outputText value="%" styleClass="textStyle"/>
+                </th>
+            </tr>
+            <apex:repeat value="{!cashFlowBean.summaryList}" var="summaryBean">
+                <tr class="tableData">
+                    <td class="tableData" style="text-align:left; font-weight:bold;">
+                        <apex:outputText value="{!summaryBean.header}" styleClass="textStyle"/>
+                    </td>
+                    <td class="tableData"></td>
+                    <td class="tableData"></td>
+                </tr>                                   
+                <apex:repeat value="{!summaryBean.summaryRecordTypeBeanList}" var="summaryDetail">
+                    <tr class="tableData">
+                        <td class="tableData" style="text-align:left;">
+                            <apex:outputText value="{!summaryDetail.name}" styleClass="textStyle"/>
+                        </td>
+                        <apex:repeat value="{!summaryDetail.totalValueByYear}" var="totalValue">
+                            <td class="tableData" style="text-align:right;">
+                                <apex:outputText value="{0, number, ,##,##0}">
+                                    <apex:param value="{!totalValue}"/>
+                                </apex:outputText>                                   
+                            </td>
+                        </apex:repeat>  
+                        <td class="tableData" style="text-align:right;">                        
+                            <apex:outputText value="{0, number, ,##,##0.00}%">
+                                <apex:param value="{!summaryDetail.summaryPercent}"/>
+                            </apex:outputText>
+                        </td> 
+                    </tr>
+                </apex:repeat>                          
+                <tr class="tableData">
+                    <td class="tableData" style="text-align:left; font-weight:bold;">
+                        <apex:outputText value="Total {!summaryBean.header}" styleClass="textStyle"/>
+                    </td>
+                    <apex:repeat value="{!summaryBean.totalValueByYear}" var="totalValue">
+                        <td class="tableData" style="text-align:right;  font-weight:bold;">
+                                <apex:outputText value="{0, number, ,##,##0}">
+                                    <apex:param value="{!totalValue}"/>
+                                    </apex:outputText>
+                        </td>
+                    </apex:repeat>  
+                    <td class="tableData" style="text-align:right;  font-weight:bold;">
+                        <apex:outputText value="100.00%" styleClass="textStyle"/>
+                    </td>
+                </tr>
+            </apex:repeat>
+            <tr class="tableData">
+                <td class="tableData" style="text-align:left;  font-weight:bold;">
+                        <apex:outputText value="NET CASH SURPLUS/(SHORTAGE)" styleClass="textStyle"/>
+                </td>
+                <!-- 
+                /** Eternus Solutions       **/
+                /** Author  : Mahesh        **/
+                /** Case no : 00001592      **/
+                /** Date    : 4/13/2012     **/
+                /** Purpose : On new cash flow page, if an Annual Amount of Net Cash Surplus/(Shortage) is negative, 
+                              then it should be shown in Bracket without negative sign 
+                              So used math.abs() function below
+                /****************************************************/
+                 -->
+                <td class="tableData" style="text-align:right;  font-weight:bold;">
+                    <apex:outputText value="(" rendered="{!IsSurplusNegative}"></apex:outputText>
+                    <apex:outputText value="{0, number, ,##,##0}">
+                        <apex:param value="{!cashFlowBean.getFirstYearDifference}"/>
+                    </apex:outputText>
+                    <apex:outputText value=")" rendered="{!IsSurplusNegative}"></apex:outputText>
+                </td>    
+                <td class="tableData" style="text-align:right;  font-weight:bold;">
+                        <apex:outputText value="100.00%" styleClass="textStyle"/>
+                </td>               
+            </tr>                     
+        </table>   
+        </div>  
+    </div>
+    <!-- FS0309 -->
+     <apex:outputPanel rendered="{!(if(objRemark.Remark__c=='',false,true))}">
+        <ul class="TickList">
+           <li>
+               {!$Label.Remarks}
+           </li>
+       </ul>
+       <div>
+       <!-- /** Eternus Solutions      **/
+      /** Author  : Manasi Ranade   **/
+      /** Issue Id: 00001613        **/
+      /** Date    : 30/4/2012       **/
+      /** Purpose : Commented previous Remark
+                    Added output field to preserve new line characters
+      /****************************************************/ -->
+<!--            {!strRemark} -->
+        <apex:OutputField value="{!objRemark.Remark__c}"></apex:OutputField>
+       </div>
+      </apex:outputPanel>
+ <script>
+    <!-- This is for styling alternate rows of SummaryTable -->
+        function altRows(id)
+        {
+            if(document.getElementsByTagName)
+            {  
+                var table = document.getElementById(id);  
+                var rows = table.getElementsByTagName("tr"); 
+                for(i = 1; i < rows.length; i++)
+                {  
+                    if(i % 2 == 0)
+                    {
+                        rows[i].className = "DataTableEven";
+                    }
+                    else
+                    {
+                        rows[i].className = "DataTableOdd";
+                    }      
+                }
+            }
+        }    
+        window.onload =   altRows('DataTable');                           
+    </script>
+</apex:component>

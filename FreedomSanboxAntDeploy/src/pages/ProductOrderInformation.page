@@ -1,0 +1,89 @@
+<apex:page standardController="Account" extensions="ProductOrderInformationController" showHeader="false" sidebar="false">
+    
+    <script>
+        function callDeletePurchaseOrder(po)
+        {
+            afDeletePurchaseOrder(po);
+        }
+    </script>
+    <style>
+    </style>
+    <apex:form >
+<!--     title="Purchased Order Description"  -->
+        <apex:pageBlock id="pbId">
+            <apex:pageBlockButtons location="top">
+                <apex:outputPanel id="pbButtonId">
+                    <apex:outputPanel rendered="{!!isEditPurchasedOrder}">
+                        <a class="btn" href="/apex/PurchasedServices?entityid={!entityId}" style="text-decoration: none" target="_top">Purchased Services</a>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!isEditPurchasedOrder}">
+                        <a class="btn" href="/apex/EditPurchasedServices?entityid={!entityId}" style="text-decoration: none" target="_top">Purchased Services</a>
+                    </apex:outputPanel>
+                    
+<!--                     <apex:outputPanel rendered="{!isRenewal}"> -->
+<!--                         <a class="btn" href="/apex/RenewPurchasedBaseService?entityid={!entityId}" style="text-decoration: none" target="_top">Renewal</a> -->
+<!--                     </apex:outputPanel> -->
+                </apex:outputPanel>
+                
+                <apex:actionStatus stopText="" id="statusId">
+                    <apex:facet name="start">
+                        <apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                            <img src="/img/loading.gif" width="16" height="16"/>
+                        </apex:outputPanel>
+                    </apex:facet>
+               </apex:actionStatus> 
+            </apex:pageBlockButtons>
+            <apex:pageMessages id="msgId"/>
+            
+            <apex:outputPanel id="optPanel1">
+                <apex:outputPanel rendered="{!lstPurchaseOrderDetail.size > 0}" >
+<!--                      <apex:pageBlockSection > -->
+<!--                         <apex:outputText label="Total PayableAmount :" value="{!totalPaybleAmount}" /> -->
+<!--                      </apex:pageBlockSection> -->
+                     <div id="dialog"  style="width :100%; overflow:auto; height:220px;">
+                        <apex:pageBlockTable value="{!lstPurchaseOrderDetail}" var="rec" >
+                            <apex:column headerValue="Order No" >
+<!--                                <apex:outputText value="{!rec.purchaseOrder}" rendered="{!rec.orderStatus != 'New'}"/> -->
+                                <apex:outputPanel rendered="{!rec.orderStatus != ''}">
+                                    <a  href="/apex/EditPurchasedServices?entityid={!entityId}"  target="_top">{!rec.purchaseOrder}</a>
+                                </apex:outputPanel>
+                            </apex:column>
+                            
+<!--                              <apex:column headerValue="Order Status" > -->
+<!--                                 {!rec.orderStatus} -->
+<!--                             </apex:column>  -->
+                            
+                            <apex:column headerValue="Product Name" >
+                                {!rec.objPurchaseOrder.Selected_Product__c}
+                            </apex:column>  
+                                  
+                            <apex:column headerValue="Product Type" >
+                                {!rec.objPurchaseOrder.Product_Type__c}
+                            </apex:column>  
+                            
+                            <apex:column headerValue="Price(Rs.)" >
+                                {!rec.objPurchaseOrder.Product_Price__c}
+                            </apex:column>  
+                            
+                            <apex:column headerValue="Discount(Rs.)" >
+                                {!rec.objPurchaseOrder.Discount__c}
+                            </apex:column>
+                            
+                            <apex:column headerValue="Payable Amount(Rs.)" >
+                                {!rec.objPurchaseOrder.Payable_Amount__c}
+                            </apex:column> 
+                            
+                         </apex:pageBlockTable> 
+                     </div>   
+                </apex:outputPanel>
+            </apex:outputPanel>
+            
+            <apex:outputPanel id="optPanel2">
+                <apex:outputPanel rendered="{!lstPurchaseOrderDetail.size == 0}" >
+                    <span style="color:red"> No Records Found</span>
+                </apex:outputPanel>
+            </apex:outputPanel>
+            
+        </apex:pageBlock>   
+    </apex:form> 
+</apex:page>

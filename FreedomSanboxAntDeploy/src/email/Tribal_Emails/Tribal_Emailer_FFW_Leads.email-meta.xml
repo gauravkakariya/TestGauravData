@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This is a weekly emailer that is sent to all the leads.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Official</letterhead>
+    <name>Tribal Emailer: FFW (Leads)</name>
+    <style>newsletter</style>
+    <subject>FFW - &quot;Investing facts&quot;</subject>
+    <textOnly>This e-mailer is an initiative by Ffreedom Financial Planners, if you wish to unsubscribe this e-mailer kindly click here
+
+
+Dear {!Lead.Name},
+
+
+We at “Ffreedom” continue to spread the message of Financial Freedom. This week we are sharing with you two articles which encapsulates:1.      How interest rates are in a very sensitive zone right now.2.   How investors should not to get carried away when buying gold.
+Please let us know if you liked the information &amp; if it was of use to you. Warm Regards,Ffreedom Team
+
+
+
+                                                             
+
+Article: Now pay Rs16 more as interest per lakh of loan
+Publication: DNA
+Brief: The Reserve Bank of India (RBI) raised its policy rates by 25 basis 
+points (bps) or a quarter percent on Thursday in another bid to fight 
+stubbornly high inflation.Link: Click Here
+                                                          Article:How much gold should you buy?Publication: Economic TimesBrief: Sumeet Vaid, managing director of Ffreedom Financial Planners, advises investors not to get carried away. 
+Link: Click Here</textOnly>
+    <type>html</type>
+</EmailTemplate>

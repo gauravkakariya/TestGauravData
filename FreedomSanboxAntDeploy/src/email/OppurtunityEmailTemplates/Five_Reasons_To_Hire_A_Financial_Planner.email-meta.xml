@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Five Reasons To Hire A Financial Planner</name>
+    <style>none</style>
+    <subject>Five Reasons To Hire A Financial Planner</subject>
+    <textOnly>5 reasons to hire a financial planner
+
+As a concept ‘financial planner’ has been in existence over several decades in the western world and in modern times, this role has turned into a well understood and highly regulated profession. In the developed markets Financial planners would be similar to the family GP (general practitioner or family doctor) advising their clients on money matters ranging from Investment planning, Insurance and Risk Planning, buying into real estate to making of wills and estate planning. 
+
+In India though the concept, as it is understood in the west, is yet to arrive; we always did plan our finances well. This was, however, done by a variety of means. For instance, we took advice of friends and family members before finalizing the property deal; we asked colleagues for a reference to persons who could provide us the financial product that we wanted to invest in. We also were chased by individuals who would specialize in selling a particular product (Common mistakes in Personal Finance). It could have been insurance, tax planning products, loans etc. In most events there was significant mis-match between what we wanted and what we got. The products would service most but not all requirements of the problem we had.
+
+
+
+This has been changing over the past 5-7 years with the emergence of financial planners. These individuals/firms approach in dealing with client’s financial problems is more integrated than what most of the firms offer in India today. Financial planning firms in India now help you address whatever your financial need, just like their western counterparts. Below are 5 main reasons why should hire a financial planner:
+
+1. Service
+
+This is the most fundamental part of any financial planner. Since when you hire a planner and he charges you fees, individuals can expect a very high level of personalised service from the firm/planner. This serves several purposes. It frees a significant amount of time that you invest in doing research for investment/ financial products. This in-turn helps you choose the right financial product/service.
+
+
+
+2. Accountability
+
+By far the most important reason to hire a planner. Over the past few years, there have been a plethora of financial products that got manufactured and a significant of those that got invested into were sold by individual/firms who were and are not held accountable for promise and performance. There has been a wide gap between these and it continues to be easy to get away after completing the transaction without any recourse to the agent/intermediary for non-performance. ‘Caveat-emptor’ or buyer beware is applied on majority of financial products. A financial planner and his engagement is a multi-year one and rest assured that chances are that more often than not you can demand an answer and check back on promise and performance of the financial product sold. In fact, the planner of today in India is the one that keeps clients updated on what has been the periodic performance of his/her investments.
+
+
+3. Knowledge 
+
+There has been a sea change in the financial landscape in India over the past 10 years. Financial products that got manufactured in India have increased in complexity and oft border on the esoteric fringe. A planner endures that he is updated on the latest happenings around him and is expected to do two things – guard his client into signing on against anything which is not in his/her interest and select products which though not understood well but suit and serve the purpose and his financial goals. Both of these activities require a deep understanding of the markets and products per se. In addition, global certifications such as the CFPCM (Certified Financial Planner) provide the added comfort that the individual has done enough homework before he takes fiduciary responsibility of your funds.
+
+
+4. Ethics
+
+This is easy to understand and preach but difficult to find and practice. Here is where the difference can be stark and contrasted. Financial planners who have demonstrated business ethics and integrity will remain a standout. Because of the esoteric nature of quality involved in testing the planner whether he is ethical or not, the test can be done by simply asking questions such as – What process does he follow in taking and dealing in funds? What is the quality of people he employs at this firm? How long has he been in the business? How has he grown the business? – references, ads etc. Answers to questions such as these will provide you with a fair degree of things such as Ethics, honesty etc.
+
+
+5. Goal orientation
+
+Not the least of them and equally important is the ability of the current planner to being goal oriented and inculcating a habit of financial discipline into the client’s psyche. The benefits of this get blurred in the overall scheme of things due to the nature of the long length towards the realisation of them. Things like children’s education, marriage or spending for one’s 25th marriage anniversary are events stretched far out in the future and hence not planned for. The planner’s ability to set aside or build funds for these events and the benefit of those would dawn upon when the events arrive over the short horizon.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

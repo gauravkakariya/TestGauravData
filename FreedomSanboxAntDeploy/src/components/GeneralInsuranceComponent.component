@@ -1,0 +1,252 @@
+<!-- /*
+    
+    Revision History:
+    
+    Version     Version Author     Date        Comments
+    1.0         --                 --           Initial Draft
+    2.0         Manasi Ranade      30/4/2012    Issue ID : 00001613 : Added output Filed to preserve new line characters
+*/ -->
+<apex:component controller="GeneralInsurancePlanningController" allowDML="true" >
+     
+    <apex:attribute name="showButton" type="Boolean" description="Based on the value of this navigation buttons are rendered" default="true"/>
+    <apex:outputPanel rendered="{!showButton}">
+     <div style="margin:bottom:20px; width:100%;margin-left:60px;">
+        <apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;  background-image:none;background-color:#A9C5EB !important; " />
+        <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+        <apex:outputLabel value="Life Insurance Planning" styleclass="button" style="margin-left:20px;  background-image:none;background-color:#A9C5EB !important; " />
+        <apex:image id="theImage2" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+        <apex:commandButton id="theCommandLink2" styleclass="button" value="Analysis" action="/apex/GeneralInsurancePlanningPage?entityId={!entityId}&tabname=Financial Planning" style="margin-left:20px; background-image:none;background-color:#A9C5EB !important;"  />
+        <apex:outputLabel id="theCommandLink1" styleclass="button" value="Output" style="margin-left:20px; background-image:none;background-color:#F5D0A9 !important;" />
+    </div><br/>
+    </apex:outputPanel>
+    <div class="divContainerStyle">  
+    
+        <div class="divStyle">
+            {!$Label.General_Insurance}
+        </div><br/>
+        
+        <div class="subHeader">
+            {!$Label.What_you_want} {!$Label.Objective}
+        </div>
+        <div>
+            <apex:outputText value="{!$Label.GenInsuranceObjective}" escape="false" />
+        </div>
+    
+        <div class="subHeader">
+            {!$Label.Where_you_are} <b>{!$Label.Current_Situation}</b>
+        </div>
+        <div>
+            <ul class="TickList">
+                <li><apex:outputText value="{!$Label.Medical_Insurance}" escape="false"/>
+                    <br/><br/>
+                        <apex:outputText value="{!$Label.GenInsuranceNoMedicalPolicy}" escape="false" rendered="{!bean.currentMedicalEmptyFlag}"/>
+                    
+                  
+                        <apex:outputPanel rendered="{!!bean.currentMedicalEmptyFlag}">
+                        <apex:outputText value="{!$Label.GenInsuranceSummary}" escape="false"/> <br/>
+                        <table border="1" cellspacing="0" cellpadding="5"  >
+                            <tr class="tableHeader">
+                                <td class="textStyle">{!$Label.Insured}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Type__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Name__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Sum_Assured_Rs__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}</td>
+                            </tr>
+                            <apex:repeat value="{!bean.CurrentMedInsurance}" var="medIns">
+                            <tr>
+                                <td class="textStyle">
+                                    <apex:outputText value="{!medIns.Entity__r.Name}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                    <apex:outputText value="{!medIns.Policy_Type__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                     <apex:outputText value="{!medIns.Policy_Name__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="rightAlignData">
+                                     <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                        <apex:param name="premiumAmount" value="{!medIns.Sum_Assured_Rs__c}"/>
+                                    </apex:outputText>
+                                </td>
+                                <td class="rightAlignData">
+                                    <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                        <apex:param name="premiumAmount" value="{!medIns.Premium_Amount_Rs__c}"/>
+                                    </apex:outputText>
+                                </td>
+                              </tr>
+                            </apex:repeat>
+                        </table>
+                    </apex:outputPanel>
+                <br/>   
+                </li>
+                <li><apex:outputText value="{!$Label.Asset_Insurance}" escape="false"/>
+                     <br/><br/>
+                        <apex:outputText value="{!$Label.GenInsuranceNoAssetPolicy}" escape="false" rendered="{!bean.currentAssetEmptyFlag}"/>
+                   
+                        <apex:outputPanel rendered="{!!bean.currentAssetEmptyFlag}">
+                        <apex:outputText value="{!$Label.GenInsuranceSummary}" escape="false"/> <br/>
+                        <table border="1" cellspacing="0" cellpadding="5"  >
+                            <tr class="tableHeader">
+                                <td class="textStyle">{!$Label.Insured}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Type__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Name__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Sum_Assured_Rs__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}</td>
+                            </tr>
+                            <apex:repeat value="{!bean.currentAssetInsurance}" var="assetIns">
+                            <tr>
+                                <td class="textStyle">
+                                    <apex:outputText value="{!assetIns.Entity__r.Name}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                    <apex:outputText value="{!assetIns.Policy_Type__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                    <apex:outputText value="{!assetIns.Policy_Name__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="rightAlignData">
+                                    <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                        <apex:param name="premiumAmount" value="{!assetIns.Sum_Assured_Rs__c}"/>
+                                    </apex:outputText>
+                                </td>
+                                <td class="rightAlignData">
+                                    <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                        <apex:param name="premiumAmount" value="{!assetIns.Premium_Amount_Rs__c}"/>
+                                    </apex:outputText>
+                                </td>
+                              </tr>
+                            </apex:repeat>
+                        </table>
+                    </apex:outputPanel>
+                    
+                </li>
+            </ul>
+        </div>    
+    
+        <div class="subHeader">
+            {!$Label.What_you_need_to_do} <b>{!$Label.Analysis_and_Advice}</b>
+        </div>
+        <div>
+            <ul class="TickList">
+                <li><apex:outputText value="{!$Label.Medical_Insurance}" escape="false"/>
+                   <br/><br/>
+                        <apex:outputText value="{!$Label.GeneralInsuranceAdequateCover}" escape="false" rendered="{!AND((bean.suggestedMedicalEmptyFlag), NOT(bean.currentMedicalEmptyFlag))}"/>
+                 
+                        <apex:outputPanel rendered="{!NOT(bean.suggestedMedicalEmptyFlag)}">
+                        <apex:outputText value="{!$Label.GeneralInsuranceMedPolicy}" escape="false"/> <br/>
+                         <table border="1" cellspacing="0" cellpadding="5" id="Suggested" >
+                            <tr class="tableHeader">
+                                <td class="textStyle">{!$Label.Insured}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Type__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Name__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Sum_Assured_Rs__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}</td>
+                            </tr>
+                            <apex:repeat value="{!bean.suggMedList}" var="medIns">
+                            <tr>
+                                <td class="textStyle">
+                                  <apex:outputText value="{!medIns.Entity__r.Name}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                    <apex:outputText value="{!medIns.Policy_Type__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                     <apex:outputText value="{!medIns.Policy_Name__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="rightAlignData">
+                                     <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                    <apex:param name="premiumAmount" value="{!medIns.Sum_Assured_Rs__c}"/>
+                                </apex:outputText>
+                                </td>
+                                <td class="rightAlignData">
+                                      <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                        <apex:param name="premiumAmount" value="{!medIns.Premium_Amount_Rs__c}"/>
+                                      </apex:outputText>
+                                </td>
+                              </tr>
+                            </apex:repeat>
+                        </table>
+                        
+                    </apex:outputPanel>
+                    
+                        <apex:outputText value="{!$Label.GeneralInsuranceNoAction}" escape="false" rendered="{!AND((bean.suggestedMedicalEmptyFlag), (bean.currentMedicalEmptyFlag))}"/> <br/>
+                <br/>    
+                </li>
+                <li><apex:outputText value="{!$Label.Asset_Insurance}" escape="false"/>
+                     <br/><br/>
+                        <apex:outputText value="{!$Label.GeneralInsuranceAssetAdequateCover}" escape="false" rendered="{!AND(NOT(bean.currentAssetEmptyFlag), (bean.suggestedAssetEmptyFlag))}"/>
+                   
+                        <apex:outputPanel rendered="{!NOT(bean.suggestedAssetEmptyFlag)}">
+                        <apex:outputText value="{!$Label.GeneralInsuranceAssetPolicy}" escape="false"/> <br/>
+                         <table border="1" cellspacing="0" cellpadding="5" id="Suggested" >
+                            <tr class="tableHeader">
+                                <td class="textStyle">{!$Label.Insured}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Type__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Policy_Name__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Sum_Assured_Rs__c.label}</td>
+                                <td class="textStyle">{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}</td>
+                            </tr>
+                            <apex:repeat value="{!bean.suggAssetList}" var="assetIns">
+                            <tr>
+                                <td class="textStyle">
+                                 <apex:outputText value="{!assetIns.Entity__r.Name}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                       <apex:outputText value="{!assetIns.Policy_Type__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="textStyle">
+                                     <apex:outputText value="{!assetIns.Policy_Name__c}" styleClass="textStyle"/>
+                                </td>
+                                <td class="rightAlignData">
+                                      <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                    <apex:param name="premiumAmount" value="{!assetIns.Sum_Assured_Rs__c}"/>
+                                </apex:outputText>
+                                </td>
+                                <td class="rightAlignData">
+                                      <apex:outputText value="{0,number,,##0}" style="text-align:right !important;" styleClass="rightAlignData">
+                                        <apex:param name="premiumAmount" value="{!assetIns.Premium_Amount_Rs__c}"/>
+                                    </apex:outputText>
+                                </td>
+                              </tr>
+                            </apex:repeat>
+                        </table>
+                        
+                    </apex:outputPanel>
+                   
+                        <apex:outputText value="{!$Label.GeneralInsuranceNoAction}" escape="false" rendered="{!AND((bean.suggestedAssetEmptyFlag), (bean.currentAssetEmptyFlag))}"/>
+                   
+                </li>
+            </ul>
+        </div>    
+    
+    <!-- FS0309 -->
+<!--      <apex:outputPanel rendered="{!(if(objRemark.Remark__c=='',false,true))}"> -->
+<!--        <ul class="TickList"> -->
+<!--            <li> -->
+<!--                {!$Label.Remarks} -->
+<!--            </li> -->
+<!--        </ul> -->
+<!--        <div> -->
+<!-- /** Eternus Solutions      **/
+      /** Author  : Manasi Ranade   **/
+      /** Issue Id: 00001613        **/
+      /** Date    : 30/4/2012       **/
+      /** Purpose : Commented previous Remark
+                    Added output field to preserve new line characters
+      /****************************************************/ -->
+<!--            {!strRemark} -->
+<!--            <apex:OutputField value="{!objRemark.Remark__c}"></apex:OutputField> -->
+<!--        </div> -->
+<!--       </apex:outputPanel> -->
+      
+      <!-- Prajakta - 20-03-2013  -->    
+                <apex:outputPanel rendered="{!(if(objRemark.Remark__c=='',false,true))}">
+                    <div class="subHeader">         
+                        <b><apex:outputText value="{!$Label.Remarks} " escape="false" styleClass="textStyle" /></b>
+                    </div>
+                    <div>
+                        <apex:OutputField value="{!objRemark.Remark__c}" />
+                    </div>
+                </apex:outputPanel>
+            </div>
+</apex:component>

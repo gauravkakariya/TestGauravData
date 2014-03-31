@@ -1,0 +1,26 @@
+<apex:page standardController="Account" extensions="UploadDocument">
+
+<apex:form enctype="multipart/form-data">
+    <apex:pageMessages />
+    <apex:pageBlock title="Upload a Attachment">
+ 
+      <apex:pageBlockButtons >
+        <apex:commandButton action="{!upload}" value="Save"/>
+      </apex:pageBlockButtons>
+ 
+      <apex:pageBlockSection showHeader="false" columns="2" id="block1">
+ 
+        <apex:pageBlockSectionItem >
+          <apex:inputFile filename="{!attachment.name}" value="{!attachment.body}" id="file"/>
+          
+        </apex:pageBlockSectionItem>
+        
+ 
+        
+ 
+      </apex:pageBlockSection>
+ 
+    </apex:pageBlock>
+  </apex:form>
+
+</apex:page>

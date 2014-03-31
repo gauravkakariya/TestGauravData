@@ -1,0 +1,111 @@
+<!-- FS0309 -->
+<apex:page tabStyle="account"  showHeader="false" controller="RemarkController">
+
+	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-1.9.1.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-ui.js')}"></script>
+	
+	 <script> 
+	     $(document).ready(function(){
+	
+	         CKEDITOR.on('instanceReady', function(e) {
+	             if (e.editor.config.magic) 
+	                return;
+	             var target = e.editor.config.bodyId;
+	            var name = e.editor.name;
+	             e.editor.destroy();
+	
+	             CKEDITOR.editorConfig = function( config ) { config.magic = true; }
+	             CKEDITOR.replace(name, {
+	                         height : 300, 
+	                         bodyId : target
+	             });
+	         });
+	     });
+	
+	</script>
+	
+    <apex:stylesheet value="{!$Resource.FFStyle}"/>
+    <style type="text/css">
+    	 .DataTableEven  { background-color:#FFFFFF; }
+         .DataTableOdd    { background-color:#E4FBC5; }
+          
+         .button {
+				    display: inline-block;
+				    outline: none;
+				    cursor: pointer;
+				    text-align: center;
+				    text-decoration: none;
+				    font: 14px/100% Arial, Helvetica, sans-serif;
+				    padding: .5em 2em .55em;
+				    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+				    
+				    -moz-border-radius: .3em;
+				    border-radius: .5em;
+				   
+				    -moz-box-shadow: 0 6px 7px rgba(2,2,2,.4);
+				    box-shadow: 0 7px 8px rgba(1,1,1,.4);
+				}
+		.button:hover {
+					  		text-decoration: none;
+					    	color:#FFFFFF;
+					  }
+		.button:active {
+					   		position: relative;
+						    top: 4px;
+					   }
+    </style>
+    <apex:composition template="TabPage">
+    	<apex:pageMessages ></apex:pageMessages>
+        <apex:define name="contents" > 
+	        <apex:form id="ProjectionPage"> 
+	            <c:NetworthPageComponent ></c:NetworthPageComponent>
+	            <!-- FS0309 -->
+	            <!-- <apex:pageBlockSection >
+					<apex:pageBlockSectionItem >
+			                    	<apex:outputLabel >{!$ObjectType.Remarks__c.fields.Remark__c.label}</apex:outputLabel>
+			                    	 <apex:inputField id="goalRemark" value="{!objRemark.Remark__c}">
+			                        </apex:inputField>
+					</apex:pageBlockSectionItem>                            
+		        </apex:pageBlockSection> -->
+		        <!-- FS0309 -->
+<!-- 		        <apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+				<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+			        <div>
+			        	<apex:outputLabel >{!$ObjectType.Remarks__c.fields.Remark__c.label}</apex:outputLabel>
+			        </div>
+			        <div>
+				       <!--   <apex:inputTextArea id="txtRemark"  style="width:400px;height:80px;" value="{!strRemark}"/>-->
+				        <apex:inputField id="txtRemark"  style="width:400px;height:80px;" value="{!objRemark.RichText_Remark__c}"/>
+				    </div>
+				    <div>
+				    	<apex:commandButton id="btnSave" styleclass="button" value="Save" action="{!save}"/>
+				    </div>
+			    </apex:outputPanel>      
+	        </apex:form>
+        </apex:define>
+    </apex:composition>
+    <script>
+    <!-- This is for styling alternate rows of SummaryTable -->
+        function altRows(id)
+        {
+           // alert('hello'+id);
+            if(document.getElementsByTagName)
+            {  
+                var table = document.getElementById(id);  
+                var rows = table.getElementsByTagName("tr"); 
+                for(i = 1; i < rows.length; i++)
+                {  
+                    if(i % 2 == 0)
+                    {
+                        rows[i].className = "DataTableEven";
+                    }
+                    else
+                    {
+                        rows[i].className = "DataTableOdd";
+                    }      
+                }
+            }
+        }
+        window.onload =   altRows('DataTable');
+    </script>
+</apex:page>

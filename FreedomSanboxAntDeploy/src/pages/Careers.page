@@ -1,0 +1,215 @@
+<!-- Revision History:
+*   Version     Version Author     Date       		Comments
+*   1.0        	Ffreedom		   --		   		Initial Draft
+*	2.0			Dipak			   24/08/2011		Issue Id : FS0126 : 
+													Changes related to Upload Resume 
+*	3.0			Setty				25/07/2012		New position Added as Financial Planner (Business Partner Vertical) with page name "FPBusinessPartner"	
+	4.0			Setty				03/09/2012		New position Added as (Research &amp; Advisory, Operations-Mutual Funds, Financial Planner, Manager Financial Planning (Direct))
+	5.0			Setty				23/09/2013		00002368- Replace Research & Advisory with Financial Planning & Advisory, Operation Executive with Partner Back Office Support System, Replace Financial Planner with Financial Planning: Practice Success Team and remove Financial Planner (Business Partner Vertical), Replace: Practice Success Team with Financial Planning Practice Manager									
+-->
+<apex:page showHeader="false" sidebar="false" controller="WebFormController" title="Ffreedom Financial Planners | Careers">
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+    <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+    <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+ <apex:define name="bodycontent">
+	<div class="leftcontainer">
+    	<div id="innerpage_textcontainer_left">
+	        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/Careers_img.jpg')}" /></div>
+    	    <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+		</div>
+		<div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+                 <!--<div class="leftlinkselectedimg" style="margin-top:144px; height:193px; background-repeat:no-repeat;"></div>-->
+		</div>
+		<div id="innerpage_textcontainer_middle">
+			<div class="innerpage_titletext"><span class="innerpagetexttitle">Careers</span> </div>  
+			<div class="innerpage_titletext">
+				<span class="txtmatterbig_innerpage">
+				<br/>Every <strong>Ffreedomite</strong> is coming from various backgrounds, places and experience levels, we all are one big <strong>family.</strong>
+				</span>
+			</div>    
+			<div class="innerpage_titletext"><span class="txtmatterbig_innerpage"> 
+				You may be a Fresher on the way to become an established professional or and established professional looking forward seeking fresh challenge.</span>  
+			</div>
+			<div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><center><strong>“We Hire for attitude &amp; Train for Skills”</strong></center></span></div>
+			<div class="innerpage_titletext"><span class="txtmatterbig_innerpage">At Ffreedom we believe that<strong> “If employees experience a WOW, only then clients will experience a consistent WOW ”</strong></span></div>
+			<div class="innerpage_titletext">
+				<span class="txtmatterbig_innerpage">
+					“Ffreedom goes in the direction where Ffreedomities take it, Ffreedom is theirs, what we do is just put passionate people together and give them tools to succeed. So whether you are in marketing, financial planning, operations, or technology you’ll play an important role in bringing happiness to the lives of many individuals and families throughout the country and one family will be yours too.” 
+					<br /><br />     
+				<span class="innerpagetexttitle">Opportunities Available @ Ffreedom:</span>
+				
+            <!-- <div class="innerpage_titletext" style="line-height:2"><span class="txtmatterbig_innerpage"><a href="AssistantManagerMarketing" style="color:#FF9834;"><strong>Assistant Manager – Marketing</strong></a></span><br /> </div> -->
+            
+<!--            00001749: setty:Start -->
+            <div class="innerpage_titletext" style="line-height:2"><span class="txtmatterbig_innerpage"><a href="ResearchAdvisory" style="color:#FF9834;"><strong>Financial Planning &amp; Advisory </strong></a></span><br /> </div>
+            <div class="innerpage_titletext" style="line-height:2"><span class="txtmatterbig_innerpage"><a href="MFOperations" style="color:#FF9834;"><strong>Partner Back Office Support System </strong></a></span><br /> </div>
+            <div class="innerpage_titletext" style="line-height:2"><span class="txtmatterbig_innerpage"><a href="BusinessDevelopmentFP" style="color:#FF9834;"><strong>Financial Planning</strong></a> </span><br /> </div>
+<!--             <div class="innerpage_titletext" style="line-height:2"><span class="txtmatterbig_innerpage"><a href="ManagerFinancialPlanner" style="color:#FF9834;"><strong>Manager Financial Planning (Direct)</strong></a> Position Vacant =1 (Pune)</span><br /> </div> -->
+<!--             End -->
+<!--             <div class="innerpage_titletext" style="line:height:2"><span class="txtmatterbug_innerpage"><a href="FPBusinessPartner" style="color:#FF9834;"><strong>Financial Planner (Business Partner Vertical)</strong></a></span><br/></div> -->
+
+<!--             <div class="innerpage_titletext" style="line:height:2"><span class="txtmatterbug_innerpage"><a href="Legal" style="color:#FF9834;"><strong>Legal</strong></a></span><br/></div> -->
+<!--             <div class="innerpage_titletext" style="line-height:2"><span class="txtmatterbig_innerpage"><a href="JDSeniorManMarketing" style="color:#FF9834;"><strong>Senior Manager Marketing</strong></a></span><br /> </div> -->
+            
+<!--             <div class="innerpage_titletext" style="line-height:2"><span class="txtmatterbig_innerpage"><a href="FinancialPlannerOpening" style="color:#FF9834;"><strong>Financial Planners : Location - Pune</strong></a></span><br /> </div> -->
+            
+             <!-- <div class="innerpage_titletext" style="line-height:2"><span class="txtmatterbig_innerpage"><a href="AsstManagerTechnology" style="color:#FF9834;"><strong>Manager/Assistant Manager – Technology</strong></a></span><br /> </div> -->
+             <!--  <div class="innerpage_titletext" style="line-height:2"><span class="txtmatterbig_innerpage"><a href="FinancialPlanner" style="color:#FF9834;"><strong>Financial Planner </strong></a></span><br /> </div>-->
+              <!-- <div class="innerpage_titletext" style="line-height:2"><span class="txtmatterbig_innerpage"><a href="OperationsExecutive" style="color:#FF9834;"><strong>Operations Executive </strong></a></span><br /> </div> -->
+            <br />
+            <br />
+         <strong>Apply here to become a part of Ffreedom Financial Planners: <br /><br /></strong>
+         
+         <apex:form id="Contactus" >
+            
+       <div class="settable">
+        <table class="textmatter" width="400">        
+          <tr>
+            <td width="22%">First Name :</td>
+            <td><apex:inputField id="FirstName" required="true" value="{!lead.FirstName}" style="font-size:12px;width:100px"  /></td>
+          </tr>
+          <tr> 
+            <td >Last Name :</td>
+            <td><apex:inputField id="LastName"  value="{!lead.LastName}" style="font-size:12px;width:100px" /></td>
+          </tr>
+          <tr>
+            <td>Mobile number:</td>
+            <td><apex:inputField id="Mobilenumber" required="true" value="{!lead.MobilePhone}" style="font-size:12  px;width:100px" /></td>
+          </tr>
+          <tr> 
+            <td>Alternate phone:</td>
+            <td><apex:inputField id="Alternatephone" value="{!lead.Alternate_Mobile__c}" style="font-size:12    px;width:100px" /></td>
+          </tr>          
+          <tr>
+            <td>Email id:</td>
+            <td><apex:inputField id="youremail" required="true" value="{!lead.Email}" style="font-size:12px;width:100px" /></td>
+          </tr>
+         <!-- 
+        /** Eternus Solutions       **/
+		/** Author  : Trupti         **/
+		/** Issue Id: FS0310    	**/
+		/** Date    : 23/11/2011 	**/
+		/** Purpose : Add this two field Current/Permanent location and Preferred location
+		/****************************************************/ -->
+          <tr>
+            <td>Current/Permanent location:</td>
+            <td><apex:inputField id="location" required="true" value="{!lead.Location__c}" style="font-size:12px;width:100px" /></td>
+          </tr>
+           <tr>
+            <td>Preferred location:</td>
+            <td><apex:inputField id="preferredlocation" required="true" value="{!lead.Preferred_location__c}" style="font-size:12px;width:100px" /></td>
+          </tr>
+
+          <tr>
+            <td>Position applied:</td>
+            <td><apex:inputfield id="Role_Position" required="true" value="{!lead.Role_Position__c}" style="font-size:12px;width:100px"/></td>
+          </tr>
+           <tr>
+            <td>Interested in:</td>
+            <td><apex:inputField id="IntrestedRole" required="true" value="{!lead.Interested_Role__c}" style="font-size:12px;width:100px" /></td>
+          </tr>
+           <tr>
+            <td>Current CTC:</td>
+            <td><apex:inputField id="CurrentCTC" value="{!lead.Current_CTC__c}" style="font-size:12px;width:100px" /></td>
+          </tr>
+          <tr>
+            <td>Expected CTC:</td>
+            <td><apex:inputField id="ExpectedCTC" value="{!lead.Expected_CTC__c}" style="font-size:12px;width:100px" /></td>
+          </tr>
+           <tr>
+            <td>Notice period:</td>
+            <td><apex:inputField id="Noticeperiod" value="{!lead.Notice_Period__c}" style="font-size:12px;width:100px" /></td>
+          </tr>
+                          
+        <tr >
+        <td colspan="2"><strong>Preferred Department:</strong></td>
+        </tr>        
+        </table>
+            <apex:repeat var="opt" value="{!CheckboxesListforCareers}">
+       
+            <table class="textmatter" width="400">       
+                <tr>
+                    <td align="left"><apex:inputcheckbox required="true" id="check2" value="{!opt.selected}"/>
+                    &nbsp;{!opt.label} 
+                    &nbsp;<apex:inputText id="others" value="{!opt.value}" rendered="{!opt.label=='Others' }"/>
+                    </td>
+                </tr> 
+            </table> 
+        </apex:repeat>
+       
+        <table class="textmatter" width="400">        
+        <tr>
+        
+        
+            <td>Cover Letter:</td>
+            <td><apex:inputField id="CoverLetter" value="{!lead.Description}" style="font-size:12px;width:200px"  /></td>
+        </tr>
+        
+        <!--   <tr>
+            <td>Resume:</td>
+            <td><apex:inputText required="true" id="Resume" maxlength="80" size="30" /></td>
+        </tr>-->
+        <!-- 
+        /** Eternus Solutions       **/
+		/** Author  : Dipak         **/
+		/** Issue Id: FS0126      	**/
+		/** Date    : 24/08/2011 	**/
+		/** Purpose : Upload Resume related functionality
+		/****************************************************/ -->
+        <tr>
+            <td>Upload your CV here:</td>
+            <td><apex:inputFile value="{!attachment.Body}" filename="{!attachment.Name}"/></td>
+        </tr>
+        
+         <tr > 
+        <td colspan="2" align="center">
+        <apex:commandButton value="Submit" id="sendButton" onclick="validate()" action="{!insertCareersPageInfo}"/>
+
+     <!--    <apex:actionFunction id="dataSendFunction" name="sendData" action="{!send}">
+           <apex:param name="FullName" assignTo="{!FullName}" value=""/>
+            <apex:param name="Occupation" assignTo="{!Occupation}" value=""/>
+            <apex:param name="Location" assignTo="{!Location}" value=""/>
+            <apex:param name="youremail" assignTo="{!youremail}" value=""/>
+            <apex:param name="Mobilenumber" assignTo="{!Mobilenumber}" value=""/>
+        </apex:actionFunction>
+        -->
+        </td></tr>            
+         </table>
+      </div>
+    
+    </apex:form>
+           
+       </span></div>                
+                           
+ </div><!-- innerpage_textcontainer_middle -->
+     
+      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" />
+      </div>
+      <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}" border="0" usemap="#Map21" />
+         <map name="Map21" id="Map21">
+           <area shape="rect" coords="3,0,230,50" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map></div>
+      <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+    
+         <div class="title123"><span class="imgtext">Related Links</span></div>
+         <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Ffreedom_Culture"><strong>Ffreedom Culture</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Meet_The_Leaders"><strong>Meet The Leaders</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="about_ffreedom_overview"><strong>About Ffreedom</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="our_philosophy"><strong>Philosophy</strong></a></span> </div>
+<!----       <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Planning_Team"><strong>Know our Financial Planners</strong></a></span> </div>---->
+       <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Who_can_be_your_financial_planner"><strong>Who is a financial planner?</strong></a></span> </div>
+     <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+     </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

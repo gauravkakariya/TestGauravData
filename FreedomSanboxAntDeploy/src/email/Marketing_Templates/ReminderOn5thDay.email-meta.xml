@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>ReminderOn5thDay</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>ReminderOn5thDay</name>
+    <style>none</style>
+    <subject>Ffreedom Day is Coming in 5 days !!!</subject>
+    <textOnly>Dear {!Registration__c.Name},
+
+The Ffreedom Team welcomes you to the Ffreedom Day to be held on Sunday, the 22nd of August 2010 where the whole Ffreedom Family shall come together.
+
+Preparations for the Ffreedom Day are in full swing &amp; we would like to thank every one of you for believing in what we are trying to do here at the Ffreedom Day. 
+
+To give you a glimpse about what the Ffreedom Day has in store for you, here are some of the highlights that we have planned: 
+
+Ffreedom Talks:
+Ffreedom Day will be playing a host to some of the leading speakers in their respective fields who also happen to be part of the Ffreedom Family.
+
+Ffreedom talks on Happiness:
+
+‘Innovation towards Happiness’a Ffreedom Talk by Mr. Bhupendra Sharma – Founder nxtlyf.
+With Passion for Innovation he has lead many initiatives to evangelize innovation across the globe. He has conceptualized India’s first everGlobal Innovation Summit &amp; also is an Innovation consultant to the Government of India. With such insights &amp; experience towards innovation Mr. Bhupendra will talk about how an individual can innovate to be happy.
+
+‘From Gross Domestic Product to Gross National Happiness’a Ffreedom Talk by Ms. RajniBakshi – Author of Bazaars, Conversations &amp; Freedom.
+Her book highlights the audacious journeys of many pioneers who are trying to make markets work for society rather than often the other way around. It speaks about a market culture beyond greed &amp; fear. She will introduce us to the Era of Goodness &amp; talk about how the world can be a happy place.
+Ffreedom talks on Dreams:
+
+‘Justdial, My Dream’a Ffreedom Talk by Mr. V S S Mani – Founder &amp; MD, Just Dial.
+Mr. V S S Mani is a first generation Entrepreneur, a strong visionary and an experienced management professional. He has revolutionized the process of searching for information. Listening to Mr. Mani talk about his journey from being a dreamer to a doer is an experience in itself.
+
+‘A Musical Dream’a Ffreedom talk by Mr. Brahmanand Singh – Writer &amp; Film Maker.
+Synonymous to Short films &amp; Documentaries Mr. Singh’sfilms [Pancham Unmixed – a film on R D Burman’s life] have been screened at various International film festivals as well as on national and international television channels. “One’s identity are his dreams”  Mr.Brahmanand through stories, music &amp;short film will demonstrate just that.
+
+The Intent of Ffreedom Day is to Inspire Action and with this belief &amp; zeal ‘We aspire to Inspire’. 
+Be Ready to get Inspired.
+
+The Ffreedom Day is coming…..
+5 days to go…….
+
+‘Experience the Experience itself ’
+
+Best Regards,
+Ffreedom Team.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

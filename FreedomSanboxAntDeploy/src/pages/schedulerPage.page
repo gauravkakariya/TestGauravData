@@ -1,0 +1,6 @@
+<apex:page controller="schedulerController" id="schedulerPage">
+		<apex:pageMessages ></apex:pageMessages>
+		<apex:form >
+			<apex:commandButton action="{!save}" value="Schedule Email" id="theButton"/>
+		</apex:form>
+</apex:page>

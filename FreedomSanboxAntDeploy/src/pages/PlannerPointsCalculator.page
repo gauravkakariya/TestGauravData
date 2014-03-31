@@ -1,0 +1,268 @@
+<apex:page controller="PlannersPointCalculator" sidebar="false">
+     <apex:includeScript value="{!URLFOR($Resource.CalendarPopup)}"/>
+     <SCRIPT LANGUAGE="JavaScript" ID="jscal1x">
+              var cal = new CalendarPopup();
+     </SCRIPT>
+    <apex:pageMessages ></apex:pageMessages>
+    <apex:pageBlock title="Welcome {!loggedInUser.Name}">
+         <apex:form >    
+              <table width="935px;">
+	              <tr style="background-color:#8B9CD3;">
+	                  <td style="color:#FFFFFF;width:935px;font-size:12px;padding-top:3px;padding-bottom:3px;padding-left:10px;" colspan="3">
+	                      <b>Please enter the date range</b>
+	                  </td>
+	              </tr>
+	              <tr>
+	              </tr>
+	              <tr>
+	              		<td>
+	                        <b>Start Date: </b><apex:inputText VALUE="{!startDate}" SIZE="15" id="startDate" required="true"/>
+	                        <A HREF="#" onClick="cal.select(document.getElementById('{!$Component.startDate}'),'anchor1','MM/dd/yyyy'); return false;" NAME="anchor1" ID="anchor1">select</A>
+	              		</td>
+			            <td>     
+			            	<b>End Date: </b><apex:inputText VALUE="{!endDate}" SIZE="15" id="endDate" required="true"/>
+			                <A HREF="#" onClick="cal.select(document.getElementById('{!$Component.endDate}'),'anchor1','MM/dd/yyyy'); return false;" NAME="anchor1" ID="anchor1">select</A>
+			            </td>
+		                <td>        
+		                 	<apex:commandButton value="Calculate Points" action="{!calculatePoints}"/>
+		               	</td>
+	               </tr>
+               </table>
+               <br/>
+               <apex:outputPanel rendered="{!(pointDetailsList.size != 0)}">
+                  <table width="935px;">
+                      <tr style="background-color:#8B9CD3;">
+                          <td style="color:#FFFFFF;width:935px;font-size:12px;padding-top:3px;padding-bottom:3px;padding-left:10px;" colspan="3">
+                              <b>Points as per Planners</b>
+                          </td>
+                      </tr>
+                      <tr><td></td></tr>
+                      <tr>
+                          <td>
+                          	<apex:pageBlockTable value="{!pointDetailsList}" var="ps" style="width:900px;">
+                            	<apex:column headerValue="Planner Name">
+                                	<apex:outputText value="{!ps.workstaion}"></apex:outputText>
+                                </apex:column>
+                                	<apex:column headerValue="Entity Renewal Points">
+                                  		<apex:outputText value="{!ps.entityRenewalPoints}">
+                                     </apex:outputText>
+                                </apex:column>
+                                  	<apex:column headerValue="Entity Conversion Points">
+                                       <apex:outputText value="{!ps.entityNonReferralPoints}">
+                                      </apex:outputText>
+                                </apex:column>
+                                	<apex:column headerValue="Plan Completion Points">
+                                    	<apex:outputText value="{!ps.planLifeCyclePoints}"></apex:outputText>
+                                  	</apex:column>
+                                   	<apex:column headerValue="Total Points">
+                                    	<apex:outputText value="{!ps.totalPoints}"></apex:outputText>
+                                  	</apex:column>
+                              </apex:pageBlockTable>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td><br/></td>
+                      </tr>
+                       <tr>
+                          <td><u><b>Plan Lifecycle Points</b></u></td>
+                      </tr>
+                      <tr>
+                          <td>
+                              <apex:pageBlockTable value="{!pointDetailsList}" var="ps" title="Plan Lifecycle Points Details" style="width:900px;">
+                                  <apex:column headerValue="Workstations">
+                                      <apex:outputText value="{!ps.workstaion}"></apex:outputText>
+                                  </apex:column>
+                                   <apex:column headerValue="Plan LifeCycle <= 30 Days">
+                                      <apex:outputText value="{!ps.planLifeCyclePointsHigh}"></apex:outputText>
+                                  </apex:column>
+                                   <apex:column headerValue="Plan LifeCycle <= 45 Days">
+                                      <apex:outputText value="{!ps.planLifeCyclePointsMedium}"></apex:outputText>
+                                  </apex:column>
+                                  <apex:column headerValue="Plan LifeCycle <= 60 Days">
+                                      <apex:outputText value="{!ps.planLifeCyclePointsLow}"></apex:outputText>
+                                  </apex:column> 
+                                  <apex:column headerValue="Plan LifeCycle > 60 Days ">
+                                      <apex:outputText value="{!ps.planLifeCyclePointsVeryLow}"></apex:outputText>
+                                  </apex:column>
+                              	</apex:pageBlockTable>
+                          </td>
+                      </tr>
+                       <tr><td><br/></td></tr>
+                      </table>
+                      <table width="900px:">
+                      <tr>
+                          <td><u><b>Execution Points Details</b></u></td>
+                      </tr>
+                      <tr>
+                          <td style="width:900px;">
+                              <apex:pageBlockTable value="{!pointDetailsList}" var="ps" width="900px;">
+                                  <apex:column headerValue="Workstations">
+                                      <apex:outputText value="{!ps.workstaion}"></apex:outputText>
+                                  </apex:column>
+                                   <apex:column headerValue="Life Insurance Points">
+                                      <apex:outputText value="{!ps.exeLIPoints}"></apex:outputText>
+                                  </apex:column>
+                                   <apex:column headerValue="General Insurance Points">
+                                      <apex:outputText value="{!ps.exeGIPoints}"></apex:outputText>
+                                  </apex:column>
+                                   <apex:column headerValue="SIP Points">
+                                      <apex:outputText value="{!ps.exeSIPPoints}"></apex:outputText>
+                                  </apex:column>
+                                  <apex:column headerValue="Investments Points">
+                                      <apex:outputText value="{!ps.exeInvestmentsPoints}"></apex:outputText>
+                                  </apex:column>
+                                   <apex:column headerValue="Business Planning Points">
+                                      <apex:outputText value="{!ps.exeBPPoints}"></apex:outputText>
+                                  </apex:column>
+                                    <apex:column headerValue="Real Estate Points">
+                                      <apex:outputText value="{!ps.exeRPPoints}"></apex:outputText>
+                                  </apex:column>
+                                    <apex:column headerValue="Succession Planning Points">
+                                      <apex:outputText value="{!ps.exeEPPoints}"></apex:outputText>
+                                  </apex:column>
+                                    <apex:column headerValue="Income Tax Planning Points">
+                                      <apex:outputText value="{!ps.exeITPoints}"></apex:outputText>
+                                  </apex:column>
+                                  <apex:column headerValue="Account & Book Keeping">
+                                      <apex:outputText value="{!ps.exeABPPoints}"></apex:outputText>
+                                  </apex:column>
+                                   <apex:column headerValue="Total Execution Points">
+                                    <apex:outputText value="{!(ps.exeLIPoints+ps.exeGIPoints+ps.exeITPoints+ps.exeRPPoints+ps.exeEPPoints+ps.exeSIPPoints+ps.exeInvestmentsPoints+ps.exeABPPoints)}"/>
+                                  </apex:column>
+                              </apex:pageBlockTable>
+                          </td>
+                      </tr>
+                   </table>
+                   <br/>
+                   <!-- <table width="700px;">
+                       <tr>
+                           <td colspan="5">
+                               <u><b>Average Point Calculation Details</b></u>
+                           </td>
+                       </tr>
+                       <tr>
+                           <td> <b>Category</b> </td>
+                       
+                           <td> <b>Average Monthly</b> </td>
+                           <td> <b>Points/Unit</b> </td>
+                           <td> <b>Time Frame (In Months)</b></td>
+                           <td> <b> Total Points </b></td>
+                       </tr>
+                       <tr>
+                           <td> Entity Referral</td>
+                           <td> {!$Label.Average_Entity_Referral_Monthly}</td>
+                           <td>{!$Label.Entity_Referral_Points}</td>
+                           <td>{!monthsInBetween}</td>
+                           <td>{!averageEntityReferralPoints}</td>
+                       </tr>
+                       <tr>
+                           <td> Entity Non Referral Points</td>
+                           <td> {!$Label.Average_Entity_Non_Referral}</td>
+                           <td>{!$Label.Entity_Non_Referral_Points}</td>
+                           <td>{!monthsInBetween}</td>
+                           <td> {!averageEntityNonReferralPoints}</td>
+                       </tr>
+                       <tr>
+                           <td> Opportunity Points</td>
+                           <td> {!$Label.Average_Oppty_Month}</td>
+                           <td>{!$Label.Oppty_Points}</td>
+                           <td>{!monthsInBetween}</td>
+                           <td> {!averageOppPoints}</td>
+                       </tr>
+                       <tr>
+                           <td> Plan Life Cycle - 10 Days</td>
+                           <td> {!$Label.Average_Plan_High}</td>
+                           <td>{!$Label.Plan_High_Points}</td>
+                           <td>{!monthsInBetween}</td>
+                           <td> {!averagePlanLifecyclePointsHigh}</td>
+                       </tr>
+                       <tr>
+                           <td> Plan Life Cycle - 20 Days</td>
+                           <td> {!$Label.Average_Plan_Medium}</td>
+                           <td>{!$Label.Plan_Medium_Points}</td>
+                           <td>{!monthsInBetween}</td>
+                           <td> {!averagePlanLifecyclePointsMedium}</td>
+                       </tr>
+                       <tr>
+                           <td> Plan Life Cycle - 30 Days</td>
+                           <td> {!$Label.Average_Plan_Low}</td>
+                           <td> {!$Label.Plan_Low_Points}</td>
+                           <td> {!monthsInBetween}</td>
+                           <td> {!averagePlanLifecyclePointsLow}</td>
+                       </tr>
+                       <tr>
+                           <td> Execution - Life Insurance</td>
+                           <td> {!$Label.Average_Exe_Life_Insurance}</td>
+                           <td> {!$Label.Exe_Life_Insurance_Points}</td>
+                           <td> {!monthsInBetween}</td>
+                           <td> {!averageLIPoints}</td>
+                       </tr>
+                        <tr>
+                           <td> Execution - General Insurance</td>
+                           <td> {!$Label.Average_Exe_GI}</td>
+                           <td> {!$Label.Exe_GI_Points}</td>
+                           <td> {!monthsInBetween}</td>
+                           <td> {!averageGIPoints}</td>
+                       </tr>
+                        <tr>
+                           <td> Execution - SIP</td>
+                           <td> {!$Label.Average_Exe_SIP}</td>
+                           <td> {!$Label.Exe_SIP_Points}</td>
+                           <td> {!monthsInBetween}</td>
+                           <td> {!averageMFPoints}</td>
+                       </tr>
+                       <tr>
+                           <td> Execution - Investments</td>
+                           <td> {!$Label.Average_Exe_Investments}</td>
+                           <td> {!$Label.Exe_Investments_Points}</td>
+                           <td> {!monthsInBetween}</td>
+                           <td> {!averageMFPoints}</td>
+                       </tr>
+                       <tr>
+                           <td> Execution - Subsequent Investments</td>
+                           <td> {!$Label.Average_Exe_SI}</td>
+                           <td> {!$Label.Exe_SI_Points}</td>
+                           <td> {!monthsInBetween}</td>
+                           <td> {!averageMFPoints}</td>
+                       </tr>
+                        <tr>
+                           <td> Execution - Real Estate</td>
+                           <td> {!$Label.Average_Exe_RP}</td>
+                           <td> {!$Label.Exe_RP_Points}</td>
+                           <td> {!monthsInBetween}</td>
+                           <td> {!averageRPPoints}</td>
+                       </tr>
+                        <tr>
+                           <td> Execution - Succession Planning</td>
+                           <td> {!$Label.Average_Exe_EP}</td>
+                           <td> {!$Label.Exe_EP_Points}</td>
+                           <td> {!monthsInBetween}</td>
+                           <td> {!averageEPPoints}</td>
+                       </tr>
+                        <tr>
+                           <td> Execution - Income Tax Planning</td>
+                           <td> {!$Label.Average_Exe_IT}</td>
+                           <td> {!$Label.Exe_IT_Points}</td>
+                           <td> {!monthsInBetween}</td>
+                           <td> {!averageITPoints}</td>
+                       </tr>
+                        <tr>
+                           <td> Execution - Business Planning</td>
+                           <td> {!$Label.Average_Exe_BP}</td>
+                           <td> {!$Label.Exe_BP_Points}</td>
+                           <td> {!monthsInBetween}</td>
+                           <td> {!averageBPPoints}</td>
+                       </tr>
+                       <tr>
+                           <td> Total Points</td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td> {!(averagePlanLifecyclePointsLow+averagePlanLifecyclePointsMedium+averagePlanLifecyclePointsHigh+averageOppPoints+averageEntityNonReferralPoints+averageEntityReferralPoints+averageITPoints+averageLIPoints+averageSIPPoints+averageGIPoints+averageRPPoints+averageEPPoints+averageInvestmentsPoints+averageBPPoints+averageSIPoints)}</td>
+                       </tr>
+                   </table>-->
+               </apex:outputPanel>
+       </apex:form>
+    </apex:pageBlock>
+    
+</apex:page>

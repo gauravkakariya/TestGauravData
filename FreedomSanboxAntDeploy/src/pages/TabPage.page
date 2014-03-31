@@ -1,0 +1,29 @@
+<apex:page tabStyle="Account" extensions="FPsidebarController" standardController="Account" sidebar="false" showHeader="true" standardStylesheets="false" >
+    <!-- Define Tab panel .css styles -->
+   
+    <!-- Create Tab panel -->
+    <apex:tabPanel selectedTab="Financial Planning" value="{!$CurrentPage.parameters.tabname}"   switchType="client" width="100%" id="AccountTabPanel" headerAlignment="right" >
+           <apex:tab rendered="{!NOT(fmBean.isCustomer)}" label="CRM" name="CRM" id="CRM" labelWidth="210px"  styleClass="standardFontStyle">content for tab one
+               <!--- Sidebar for CRM tab ---> 
+           </apex:tab>
+            <apex:tab rendered="{!NOT(fmBean.isCustomer)}" label="Admin" name="Admin" id="Admin" labelWidth="210px" styleClass="standardFontStyle">content for tab Admin
+               <!--- Sidebar for Admin tab --->     
+            </apex:tab>            
+            <apex:tab label="{!fpLabel}" name="Financial Planning" id="FinancialPlanning" labelWidth="{!lblWidth}" styleClass="standardFontStyle">
+               <!--- Sidebar for FinancialPlanning tab --->     
+                <apex:composition template="FinancialPlanningSidebarPage">
+                    <apex:define name="FPsidebar" > 
+                        <div style="width:82%; float:right; margin-left:0px; border:none;">
+                            <apex:insert name="contents"/>
+                        </div>
+                    </apex:define>
+                </apex:composition>                 
+            </apex:tab>
+            <apex:tab rendered="{!NOT(fmBean.isCustomer)}" label="Analytics" name="Analytics" id="Analytics" labelWidth="210px" styleClass="standardFontStyle">content for tab Analytics
+               <!--- Sidebar for Analytics tab --->      
+            </apex:tab>
+            <apex:tab rendered="{!NOT(fmBean.isCustomer)}" label="Productivity" name="Productivity" id="Productivity" labelWidth="210px" styleClass="standardFontStyle">content for tab Productivity
+               <!--- Sidebar for Productivity tab --->     
+            </apex:tab>            
+    </apex:tabPanel>
+</apex:page>

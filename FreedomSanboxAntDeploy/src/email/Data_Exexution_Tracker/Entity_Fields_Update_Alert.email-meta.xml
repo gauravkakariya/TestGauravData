@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Entity Fields Update Alert</name>
+    <style>freeForm</style>
+    <subject>Please fill {!Account.Name}&apos;s data into Advisor Factory</subject>
+    <textOnly> 
+Hello {!Account.OwnerFirstName},
+ 
+Congratulations for getting us a new client, let us all endeavour to give him/her a valuable service !!    
+ 
+Please fill in the following details of your client {!Account.Name}:
+1. Entity Status,
+2. The entire Additional Information Section (Agreement Structure, Amount Received, Services Offered, Cross-sell/Upsell Opp sneized along with its date, Recurring fees, Agreement Received, Cheque date, Cheque Satus),
+3. Entity Details Section along with its Entity Stage details,
+4. Client Satisfaction Section.
+ 
+Herein is the link of the same: {!Account.Link} 
+ 
+ 
+ 
+Thank You !!</textOnly>
+    <type>html</type>
+</EmailTemplate>

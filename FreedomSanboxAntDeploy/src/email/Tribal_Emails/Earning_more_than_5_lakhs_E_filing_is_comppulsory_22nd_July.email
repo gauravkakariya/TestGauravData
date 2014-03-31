@@ -1,0 +1,117 @@
+<apex:page sidebar="false" showHeader="false" >
+<html>
+<header>
+<style type="text/css">
+table.gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	
+	border-color: #666666;
+ 	border-collapse: collapse; 
+ 	
+	
+}
+table.gridtable th {
+    width:50px;
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table.gridtable td {
+    width:50px;
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+</style>
+</header>
+
+<h3 style="text-decoration: underline; padding-left:400px; margin-top:50px;">Earning more than 5 lakhs – E-filing is compulsory</h3>
+<div style="padding-left:300px; padding-right:300px;">
+Sudhir Kaushik – Appeared in Taxspanner.com<br/><br/>
+<P>Out of the 4 crore income tax returns (ITRs) filed during the financial year 2011-12, 1.64 crore and 2.15 crore in 2012-13 were filed online. Majority of these were voluntary e-filers. This acceptance of the facility has made the government confident to make it mandatory for people with more than Rs. 5 lakh of total income (includes income from salary, professional, rental, capital gain on shares/property etc., business, interest 
+on deposits or any other source).</P>
+<p>Although e-filing has been made mandatory for individuals having total income above Rs. 5 lakh, they are not required to use digital signature.</P>
+What’s your status for Assessment Year 2013-14<br/><br/>
+</div>
+
+<!-- CSS goes in the document HEAD or added to your external stylesheet -->
+
+<!-- Table goes in the document BODY -->
+<div style="padding-left:450px; padding-right:450px;">
+<table class="gridtable">
+<tr>
+	<th>Source
+of
+income</th><th>Total Income</th><th>Efiling
+mandatory</th><th>DSC
+required</th>
+</tr>
+<tr>
+	<td>Salary, interest, capital gain, rental income, professional or business income</td><td>Rs. 5 lakh 
+and above</td><td>Yes</td><td>No</td>
+</tr>
+<tr>
+	<td>Salary, interest, capital gain, rental income, professional or business income</td><td>below  
+Rs. 5 lakh</td><td>No</td><td>No</td>
+</tr>
+<tr>
+	<td>Professional or contract employees</td><td>Rs. 25 lakh
+and above</td><td>Yes</td><td>Yes</td>
+</tr>
+<tr>
+	<td>Professional  or  contract employees</td><td>below  
+Rs. 5 lakh
+</td><td>No</td><td>No</td>
+</tr>
+
+<tr>
+	<td>Business income or  F &amp; O</td>
+	<td>Gross receipts below Rs. 100 lakh</td>
+	<td>No</td>
+	<td>No</td>
+	
+</tr>
+<tr>
+	<td>Business income 
+or F &amp; O</td><td>Gross receipts above Rs. 100 lakh
+</td><td>Yes</td><td>Yes</td>
+</tr>
+
+
+</table>
+</div><br/>
+<div style="padding-left:350px; padding-right:350px;"><p>
+If we analyze the reasoning of the government around this measure, this step can be seen as a pilot run for making online filing of ITR mandatory for all taxpayers. The I-T Department may have started with the section of 
+people earning more than Rs. 5 lakh as the amount of refund claimed by them is high. Hence, making them efile mandatory will prevent any delay in paying back this amount. That way, government will save on the interest 
+amount paid by it to taxpayers who have paid more tax than due.</P>
+
+<p>Moreover, the general direction of the Income Tax Department indicates that the complete process of filing ITR and after-filing procedures will be made electronic. The department has already mandated for TDS deductors, the download of Form 16 and 16A from NSDL website.</P>
+
+From Assessment year 2013-14, e-filing with digital signature has been mandatory for 
+</div>
+
+<h3 style="padding-left:300px; padding-right:300px;">Digital signature is compulsory for</h3>
+<div style="padding-left:300px; padding-right:300px;" >
+From Assessement year 2013-14, e-filing with digital signature has been mandatory for:
+</div>
+<div style="padding-left:350px; padding-right:350px;" >
+-  individuals having business income with receipts of Rs.100 lakhs<br/><br/>
+-  professionals with income of Rs. 25 lakh
+</div>
+
+<h3 style="padding-left:300px; padding-right:300px;">Why E-file?</h3>
+
+<div style="padding-left:300px; padding-right:300px;" ><P>Efiling is anyway the simplest way to file your ITR. All electronically filed 
+returns are processed on priority basis at the I-T Department's Centralized 
+Processing Centre at Bangalore. Thus, refunds are issued faster on e-filed returns. E-filing is a much more streamlined process than paper-filing and is also more environment-friendly.</P>
+If you need help with e-filing your returns get in touch with us at <a href="http://www.kiran.n@ffreedom.in" style="color: blue">kiran.n@ffreedom.in</a> or 9820280114
+</div>
+</html>
+</apex:page>

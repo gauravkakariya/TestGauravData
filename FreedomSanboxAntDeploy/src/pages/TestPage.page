@@ -1,0 +1,153 @@
+<apex:page showheader="false" cache="true" expires="600">
+<apex:form >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- <link rel="shortcut icon" href="{!URLFOR($Resource.images,'images/favicon_AO.ico')}"/> -->
+<title>Welcome to AdvisorOffice.in</title>
+
+<Meta content="AdvisorOffice.in,Financial Planning,Investment Planning and Retirement planning, Planning Advisors, Back office,Advisor back office,Certified Financial Planners, Investment Advisory &amp; Planning,Personalized Financial Planning,personal financial planning,backoffice, advice back office,business financial planning " name="Keywords" />
+<Meta name="Description" content="Advisor office - A fully equipped virtual office for financial advisors. You can chat up with colleagues, share knowlege, secure your documents, track your clients and many more. Low cost, world class benefits."/>
+<Meta name="Robots" content="index,follow"/>
+<Meta name="Rating" content="general"/>
+<Meta name="Language" content="EN"/>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+
+<apex:includeScript value="{!URLFOR($Resource.portal, 'portal/js/jquery.min.1.5.1.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.js, 'js/jquery.showpassword.js')}"/>
+
+    <style type="text/css">
+        body {
+            background-image: url(img/bg.JPG);
+            margin-left: 0px;
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            background-repeat: no-repeat;
+        }
+        .style1 {
+            color: #FFFFFF;
+            font-weight: bold;
+            font-family:"Times New Roman", Times, serif;
+        }
+        .style2 {color: #FFFFFF}
+        .style3 {font-weight: bold}
+        
+        #login-box {
+            width:333px;
+            height: 352px;
+            padding: 58px 76px 0 76px;
+            color: #ebebeb;
+            font: 12px Arial, Helvetica, sans-serif;
+            background-image: url('{!URLFOR($Resource.images,'images/AdvisorOfficeBg.JPG')}');
+        }
+        
+        #login-box img {
+            border:none;
+        }
+        
+        #login-box h2 {
+            padding:0;
+            margin:0;
+            color: #fffff;
+            font: bold 44px "Calibri", Arial;
+        }
+        
+        #login-box-name {
+            float: left;
+            display:inline;
+            width:80px;
+            text-align: right;
+            padding: 14px 10px 0 0;
+            margin:0 0 7px 0;
+        }
+        
+        #login-box-field {
+            float: left;
+            display:inline;
+            width:230px;
+            margin:0;
+            margin:0 0 7px 0;
+        }
+        
+        .form-login  {
+            width: 205px;
+            padding: 10px 4px 6px 3px;
+            border: 1px solid #0d2c52;
+            background-color:#e3e5e8;
+            font-size: 16px;
+            font-family:"Times New Roman", Times, serif;
+            color: #01205F;
+        }
+        
+        #form {
+            background-image: url('{!URLFOR($Resource.images,'images/AdvisorOfficeBg.JPG')}');
+        }
+        
+        .login-box-options  {
+            clear:both;
+            padding-left:87px;
+            font-size: 12px;
+            float : left;
+        }
+        
+        .login-box-options a {
+            color: #ebebeb;
+            font-size: 12px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        // <![CDATA[
+            var j$ = jQuery.noConflict();
+             
+                j$(document).ready(function(){ 
+                j$('#password').showPassword();
+            });
+        // ]]>
+    </script>
+</head>
+
+<body >
+    <form id= "frmSecure" class="form" method="post" action="https://login.salesforce.com/">
+        <table border="1" baground-color="#ffffff">
+            <tr >
+                <td>
+                    <table border="1">
+                        <tr>
+                            <td class="style1" >Email:</td>
+                            <td><input name="un" class="form-login" title="Username" value="" size="30" maxlength="2048"/></td>
+                        </tr>
+                        <tr>
+                            <td class="style1" >Password:</td>
+                            <td>
+                                <input id="password" type="password" name="pw" value="" data-typetoggle='#show-password' class="form-login" />&nbsp;
+                                <input id="show-password" type="checkbox" title="Password" /><span >&nbsp;Show Credentials</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                            <table border="1">
+                                <tr>
+                                    <td >
+                                        <a href="https://login.salesforce.com/secur/forgotpassword.jsp?locale=uk" style="text-decoration: none;">Forgot password</a>
+                                    </td>
+                                    <td>
+                                        <a href="#" ><input type="image" name="LoginButton" src="{!URLFOR($Resource.images,'images/partnerLogin-btn.png')}" width="80" height="30" /></a>
+                                        <img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/hindu_woman_1.jpg')}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>
+</apex:form>
+</apex:page>

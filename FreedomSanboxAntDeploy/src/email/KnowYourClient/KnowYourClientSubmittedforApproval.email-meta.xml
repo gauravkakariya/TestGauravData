@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email template to the Lead Financial Advisor when a Know Your Client form is submitted for approval.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Know Your Client - Submitted for Approval</name>
+    <style>none</style>
+    <subject>Know Your Client - Submitted for Approval</subject>
+    <type>text</type>
+</EmailTemplate>

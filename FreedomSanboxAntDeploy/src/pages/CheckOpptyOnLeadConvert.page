@@ -1,0 +1,5 @@
+<apex:page standardController="Lead" extensions="CheckOpptyForLeadController" action="{!checkForOppty}">
+ <apex:pageMessages >
+ </apex:pageMessages>
+ <p style="padding-left:20px;">Click <a href="/{!Lead.Id}">here</a> to return to the previous page</p>
+</apex:page>

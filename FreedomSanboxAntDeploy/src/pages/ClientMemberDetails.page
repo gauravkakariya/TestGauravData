@@ -1,0 +1,75 @@
+<apex:page showHeader="false" controller="ClientMemberDetailsController">
+    <apex:composition template="TabPage">
+        <apex:define name="contents">
+            <apex:form >
+                <apex:pageBlock title="Personal Details">
+                    <apex:pageMessages rendered="true" />
+                    <apex:pageBlockTable value="{!existingAcc}" var="ac"
+                        id="existfamilyDtls" align="center"
+                        style="border-width:thin;border-style:solid;width:50%;border-color:gray;border-bottom:none;">
+                        <apex:column headerValue="Action" style="border-right:1px solid;border-color:Lightgray;">
+                            <apex:commandLink action="{!AddDetails}" value="Add Details"
+                                styleClass="standardFontStyle"
+                                rerender="familyDtls,counterStatusData"
+                                status="counterStatusData">
+                                <apex:param name="accid" value="{!ac.Entity__c}" />
+                                <apex:param name="parentAcc" value="{!ac.Parent_Entity__c}" />
+                            </apex:commandLink>
+                        </apex:column>
+                        <apex:column headerValue="{!$ObjectType.Account.fields.FirstName.label}"
+                            styleClass="standardFontStyle" style="border-right:1px solid;border-color:Lightgray;">
+                            <apex:outputText value="{!ac.First_Name__c}"
+                                styleClass="standardFontStyle" />
+                        </apex:column>
+                        <apex:column headerValue="{!$ObjectType.Account.fields.LastName.label}"
+                            styleClass="standardFontStyle" style="border-right:1px solid;border-color:Lightgray;">
+                            <apex:outputText value="{!ac.Last_Name__c}"
+                                styleClass="standardFontStyle" />
+                        </apex:column>
+                    </apex:pageBlockTable>
+                    <apex:pageBlockTable value="{!newAcc}" var="ac1" id="familyDtls"
+                        align="center"
+                        style="border-width:thin;border-style:solid;width:50%;border-color:gray;border-top:none;">
+                        <apex:column headerValue="" width="25%">
+                        </apex:column>
+                        <apex:column headerValue="" width="18%"
+                            styleClass="standardFontStyle">
+                            <apex:inputText value="{!ac1.First_Name__c}"
+                                styleClass="standardFontStyle" />
+                        </apex:column>
+                        <apex:column headerValue="" width="25%"
+                            styleClass="standardFontStyle">
+                            <apex:inputText value="{!ac1.Last_Name__c}"
+                                styleClass="standardFontStyle" />
+                        </apex:column>
+                    </apex:pageBlockTable>
+                    <apex:actionStatus stopText="" id="counterStatusData">
+
+                        <apex:facet name="start">
+                            <apex:outputPanel style="padding-left:45%;">
+                                <apex:image value="{!$Resource.loading_image}" width="3%"
+                                    height="3%" />
+                            </apex:outputPanel>
+                        </apex:facet>
+                    </apex:actionStatus>
+                    <apex:pageBlockSection id="saveBtn">
+                        <apex:commandButton action="{!save}" value="Save"
+                            rendered="{!isNew}" style="float:right;"
+                            reRender="familyDtls,saveBtn" />
+                        <apex:commandButton action="{!Cancel}" value="Cancel"
+                            rendered="{!isNew}" style="float:left;"
+                            reRender="familyDtls,saveBtn" />
+                    </apex:pageBlockSection>
+                    <apex:pageBlockButtons location="bottom">
+                        <div style="float: left; margin-left: -38px;"><apex:commandButton action="{!AddNewMember}" value="Add New Member"
+                            reRender="familyDtls,saveBtn" /></div>
+                        <div style="float: right; margin-right: 260px;"><apex:commandButton action="{!Next}" value="Next" reRender="familyDtls,saveBtn" /></div>
+                    </apex:pageBlockButtons>
+
+
+
+                </apex:pageBlock>
+            </apex:form>
+        </apex:define>
+    </apex:composition>
+</apex:page>

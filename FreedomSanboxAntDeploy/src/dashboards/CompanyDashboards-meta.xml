@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DashboardFolder xmlns="http://soap.sforce.com/2006/04/metadata">
+    <accessType>Shared</accessType>
+    <name>Company Dashboards</name>
+    <publicFolderAccess>ReadOnly</publicFolderAccess>
+    <sharedTo>
+        <role>COO</role>
+        <role>ChiefFinancialPlanningResearch</role>
+        <role>HeadCompliance</role>
+        <role>HeadOperations</role>
+        <role>MgrMktg</role>
+        <role>Tech</role>
+    </sharedTo>
+</DashboardFolder>

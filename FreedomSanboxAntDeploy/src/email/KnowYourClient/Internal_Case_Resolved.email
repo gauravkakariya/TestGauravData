@@ -1,0 +1,15 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p class="MsoListParagraph" style="font-family: arial; font-size: 12pt; margin-left: 0.75in; "><br></p><p class="MsoListParagraph" style="margin-left: 0.75in; "><font face="Arial, sans-serif">Dear {!Case.OwnerFirstName},</font></p>
+
+<p class="MsoListParagraph" style="margin-left: 0.75in; "><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></p>
+
+<p class="MsoListParagraph" style="margin-left: 0.75in; "><font face="Arial, sans-serif">The case '{!Case.CaseNumber} : {!Case.Subject}' has been resolved.&nbsp;</font></p><p class="MsoListParagraph" style="margin-left: 0.75in; "><font face="Arial, sans-serif">Please verify the fix and mark
+the case status to 'Closed' if the issue has been resolved.</font></p>
+
+<p class="MsoListParagraph" style="margin-left: 0.75in; "><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></p>
+
+<p class="MsoListParagraph" style="margin-left: 0.75in; "><font face="Arial, sans-serif">Regards,</font></p><p class="MsoListParagraph" style="margin-left: 0.75in; "><font face="Arial, sans-serif">Technology Support</font></p><p class="MsoListParagraph" style="font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font class="Apple-style-span" face="Calibri, sans-serif"><span class="Apple-style-span" style="font-size: 15px;"><br></span></font></p>]]></td>
+</tr>
+</table>

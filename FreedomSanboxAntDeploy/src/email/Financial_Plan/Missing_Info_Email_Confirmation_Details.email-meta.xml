@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Missing Info Email &amp; Confirmation Details</name>
+    <style>freeForm</style>
+    <subject>Please fill in the missing details</subject>
+    <textOnly>Hello {!Account.Name},
+Welcome to Ffreedom Financial Planners. I hope this e-mail finds you in the best of health. My name is xyz and I am your assigned Financial Planner. Kindly provide the below mentioned documents so that I may get started with your Financial Plan creation. 
+1)
+2)
+3)
+Also, before proceeding with the Plan Writing process I would like to verify with you if the below stated estimates that you have provided to us are accurate,
+ Insurance Premium: 
+General Insurance Premium: 
+Monthly Surplus: 
+Please let me know if any changes need to be made to the stated and feel free to get in touch with me for any questions/concerns that you may have. Your Financial Plan is on its way to completion and you are one step closer to realizing and living your dreams. Please note that the quicker you send us the information that we require from you the faster the execution of your Financial Plan will be. 
+ 
+ 
+Best Regards,
+Your trusted Financial Planner</textOnly>
+    <type>html</type>
+</EmailTemplate>

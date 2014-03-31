@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Lead In Open Stage Overdue</name>
+    <style>freeForm</style>
+    <subject>Lead In Open Stage For More Than Two Days</subject>
+    <textOnly>Dear {!Lead.OwnerFullName},           
+                       The Lead {!Lead.Name} is in &quot;Open&quot; stage for more than two days. Please take appropriate actions on the Lead.
+
+ Also please update AF asap according to the action taken.
+
+Click on the following link to go to the Lead&apos;s page: {!Lead.Name}
+
+Regards,
+Ffreedom Team.</textOnly>
+    <type>html</type>
+</EmailTemplate>

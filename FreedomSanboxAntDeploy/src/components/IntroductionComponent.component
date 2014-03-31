@@ -1,0 +1,55 @@
+<!--
+/**
+Revision History:
+    
+    Version     Version Author     Date        Comments
+    1.0         --                 --           Initial Draft
+    
+   
+    2.0         Manasi Ranade      11/5/2012   Issue ID: 00001640: 
+                                                Removed the Name of the Entity Owner from Financial Plan
+                                                
+*/ -->
+<apex:component id="FPIntroComponent" selfClosing="true" >
+<!--  <apex:attribute name="accountName" type="String" description="Account Name" required="true"/> -->
+<!--  <apex:attribute name="emailId" type="String" description="Emailid" required="true"/> -->
+ <apex:attribute name="clientFullName" type="String" description="Client Full Name" required="true"/>
+    <apex:attribute name="spouseFullName" type="String" description="Spouse Full Name" />
+    <apex:attribute name="entityOwner" type="String" description="Entity Owner" required="true" />
+    <apex:outputPanel >
+    <apex:pageBlock >
+    <div class="divContainerStyle">
+        <div  class="divStyle" style="padding-left:10px;">INTRODUCTION</div>
+        <p ><b font-size="14px">Dear &nbsp;&nbsp; 
+               <apex:outputText value="  {!LOWER(clientFullName)}" styleClass="sentenceCase"/>
+               <apex:outputText value=" and " rendered="{!if(spouseFullName!=null,true,false)}" styleClass="textStyle"/>
+               <apex:outputText value="  {!LOWER(spouseFullName)}," rendered="{!if(spouseFullName!=null,true,false)}" styleClass="sentenceCase"/>
+               </b></p>
+         <p styleClass="textStyle" style="font-size:14px;">It gives me immense pleasure in presenting you your personalized financial plan. 
+            The financial plan is an attempt to lay a roadmap for helping you realize your financial aspirations in a systematic manner. </p>
+         <p styleClass="textStyle" style="font-size:14px;">It should be noted that the financial plan is based upon a set of assumptions which are constantly changing.  
+            At the same time your financial situation may change over time. 
+            You are advised to periodically review the financial plan to make sure you are on track.  
+            As such, this report should not be considered as definitive or final, but rather an ongoing exercise as part of your long term financial planning process. </p>
+         <p styleClass="textStyle" style="font-size:14px;">The action plan is a to-do list which lays down all the action points which, if acted upon, will enable you to be on track to achieve your financial aspirations. 
+            You are advised to act upon them in due course of time.</p>  
+         <p styleClass="textStyle" style="font-size:14px;">If you have any questions during or after the plan presentation, please feel free to engage us to get your queries resolved. 
+<!--             Also, during the course of the presentation, if you find any discrepancies or misrepresentations, feel free to contact our compliance team at {!emailId}. -->
+         </p>
+         <!--/** Eternus Solutions   **/
+        /** Author  : Manasi Ranade **/
+        /** Issue Id: 00001640      **/ 
+        /** Date    : 11/5/2012     **/
+        /** Purpose : Removed the Name of the Entity Owner from Financial Plan**/
+        /****************************************************/-->
+<!--     <b> -->
+<!--          <br/><br/> -->
+<!--              <apex:outputText value="Your Trusted Advisor," styleClass="textStyle"/> -->
+<!--          </b><br/><br/> -->
+<!--          <b> -->
+<!--              <apex:outputText value="{!entityOwner}" styleClass="textStyle"/> -->
+<!--      </b> -->
+         </div>
+    </apex:pageBlock>    
+    </apex:outputPanel>
+</apex:component>

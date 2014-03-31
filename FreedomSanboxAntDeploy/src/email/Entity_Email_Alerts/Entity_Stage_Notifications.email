@@ -1,0 +1,122 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<br><br><div align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hello,<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Entity Details of {!Account.Name}.<br><br><div align="left"><ul><li>Data Collection Completion : {!Account.Data_Collection_Date__c}</li><li>Plan Writing Completion&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {!Account.Plan_Writing_Date__c}</li><li>Plan Approved Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {!Account.Plan_Approved_Date__c}</li><li>Action Plan Generation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {!Account.Action_Plan_Generation_Date__c}</li><li>First Execution Completion : {!Account.First_Execution_Completion_Date__c}</li><li>Execution Completion Date&nbsp; : {!Account.Execution_Completion_Dates__c}<br></li></ul></div><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thank you!!<br></div><style>
+qtl {
+	position: absolute;
+	border: 1px solid #cccccc;
+	-moz-border-radius: 5px;
+	opacity: 0.2;
+	line-height: 100%;
+	z-index: 999;
+	direction: ltr;
+}
+
+qtl:hover,qtl.open {
+	opacity: 1;
+}
+
+qtl,qtlbar {
+	height: 22px;
+}
+
+qtlbar {
+	display: block;
+	width: 100%;
+	background-color: #cccccc;
+	cursor: move;
+}
+
+qtlbar img {
+	border: 0;
+	padding: 3px;
+	height: 16px;
+	width: 16px;
+	cursor: pointer;
+}
+
+qtlbar img:hover {
+	background-color: #aaaaff;
+}
+
+qtl>iframe {
+	border: 0;
+	height: 0;
+	width: 0;
+}
+
+qtl.open {
+	height: auto;	
+}
+
+qtl.open>iframe {
+	height: 200px;
+	width: 300px;
+}
+</style><qtl style="display: none; left: 51px; top: 130px;" class="">
+	<qtlbar name="bar"><img src="http://www.qtl.co.il/img/copy.png" title="Copy Selction"><a href="http://int.ask.com/web?siteid=10000861&amp;webqsrc=999&amp;l=dis&amp;q=Hello,
+
+       Entity Details of {!Account.Name}.
+
+
+
+       Thank you!!" title="Search With Ask" target="_blank"><img src="http://www.ask.com/favicon.ico"></a><img src="http://translate.google.com/favicon.ico" title="Translate With Google"></qtlbar>
+	<iframe name="content"></iframe>
+</qtl><style>
+qtl {
+	position: absolute;
+	border: 1px solid #cccccc;
+	-moz-border-radius: 5px;
+	opacity: 0.2;
+	line-height: 100%;
+	z-index: 999;
+	direction: ltr;
+}
+
+qtl:hover,qtl.open {
+	opacity: 1;
+}
+
+qtl,qtlbar {
+	height: 22px;
+}
+
+qtlbar {
+	display: block;
+	width: 100%;
+	background-color: #cccccc;
+	cursor: move;
+}
+
+qtlbar img {
+	border: 0;
+	padding: 3px;
+	height: 16px;
+	width: 16px;
+	cursor: pointer;
+}
+
+qtlbar img:hover {
+	background-color: #aaaaff;
+}
+
+qtl>iframe {
+	border: 0;
+	height: 0;
+	width: 0;
+}
+
+qtl.open {
+	height: auto;	
+}
+
+qtl.open>iframe {
+	height: 200px;
+	width: 300px;
+}
+</style><qtl style="display: none; left: 40px; top: 171px;" class="">
+	<qtlbar name="bar"><img src="http://www.qtl.co.il/img/copy.png" title="Copy Selction"><a href="http://int.ask.com/web?siteid=10000861&amp;webqsrc=999&amp;l=dis&amp;q=Date" title="Search With Ask" target="_blank"><img src="http://www.ask.com/favicon.ico"></a><img src="http://translate.google.com/favicon.ico" title="Translate With Google"></qtlbar>
+	<iframe name="content"></iframe>
+</qtl>]]></td>
+</tr>
+</table>

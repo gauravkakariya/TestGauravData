@@ -1,0 +1,48 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | Ffreedom Buzz">
+	<link rel="shortcut icon" href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+	<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+ <div class="hubtopleftimg"><img src="{!URLFOR($Resource.images,'images/Blog_01.jpg')}" width="42" height="478" alt="" /></div>
+ <div class="hubtoprightimg"><img src="{!URLFOR($Resource.images,'images/Blog_03.jpg')}" width="45" height="478" alt="" /></div>
+  <div id="blogmain">
+  <img src="{!URLFOR($Resource.images,'images/Blog_02.jpg')}" width="863" height="36" alt="" />
+ <!--<center><img src="{!URLFOR($Resource.images,'images/buzz.jpg')}" height="52" width="237"/></center>-->
+  <div id="bloginnerpage_thumbcontainer_left">
+  <img src="{!URLFOR($Resource.images,'images/buzz_read.jpg')}" alt="" width="304" height="285" border="0" usemap="#Map" />
+<map name="Map" id="Map"><area shape="rect" coords="9,6,290,280" href="buzzread" alt="Buzz Read" title="Buzz Read"/>
+</map>
+<div align="justify" style="font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#2f4f6b; ">
+Find out about what the Newspapers, Magazines around India are talking about Personal Finances, Ffreedom Financial Planners &amp; Financial Planning all at one place.
+</div>
+  </div>
+  <div class="blogborderimg">
+  &nbsp;
+  <!--<img src="{!URLFOR($Resource.images,'images/Blog_05.jpg')}" width="124" height="285" alt="" />-->
+  </div>
+  <div class="bloglineimg">
+  <img src="{!URLFOR($Resource.images,'images/Blog_06.jpg')}" width="6" height="285" alt="" />
+  </div>
+  <div class="blogborderimg" width="124">
+  &nbsp;
+  <!--<img src="{!URLFOR($Resource.images,'images/Blog_05.jpg')}" width="124" height="285" alt="" />-->
+  </div>
+  <div id="bloginnerpage_thumbcontainer_left">
+  <img src="{!URLFOR($Resource.images,'images/buzz_watch.jpg')}" alt="" width="304" height="285" border="0" usemap="#Map2" />
+<map name="Map2" id="Map2"><area shape="rect" coords="6,8,302,271" href="http://www.youtube.com/ffreedomin" alt="Buzz Watch" title="Buzz Watch" target="_blank"/>
+</map>
+<div align="justify" style="font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#2f4f6b; ">
+See Financial Planners in action helping people by giving them a Road map to Reach their Dreams, learn from their suggestions, Look what the experts are talking about Personal Finances &amp; Financial Services Industry here at BUZZ.
+</div>
+  </div>
+  </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

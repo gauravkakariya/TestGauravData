@@ -1,0 +1,15 @@
+<apex:page standardStylesheets="false" controller="PersonalInformationController" showHeader="false" sidebar="false">
+
+	<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript">
+			//Disable the right click after page load
+			$(document).ready(function(){
+				$(document).bind("contextmenu",function(e){
+					return false;
+				});
+			});
+		</script>
+	<apex:stylesheet value="{!$Resource.FFStyle}"/>
+	
+	<c:PersonalInformationComponent />
+</apex:page>

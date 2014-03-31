@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectSharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <ownerRules>
+        <fullName>ChiefFinancialPlanningResearchA</fullName>
+        <sharedTo>
+            <role>ChiefFinancialPlanningResearch</role>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>COO</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <accessLevel>Read</accessLevel>
+        <name>Chief - Financial Planning &amp; ResearchA</name>
+    </ownerRules>
+    <ownerRules>
+        <fullName>MgrMktgA</fullName>
+        <sharedTo>
+            <role>MgrMktg</role>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>COO</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <accessLevel>Read</accessLevel>
+        <name>Mgr. - Mktg.A</name>
+    </ownerRules>
+</CustomObjectSharingRules>

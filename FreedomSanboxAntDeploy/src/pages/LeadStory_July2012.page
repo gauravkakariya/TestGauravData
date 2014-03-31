@@ -1,0 +1,393 @@
+<apex:page showheader="false">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+	<table width="740" border="0" align="center" cellpadding="0"
+		cellspacing="0">
+		<tr>
+			<td><img src="{!URLFOR($Resource.images,'images/top_July12.gif')}" width="740" height="104" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+			  <table width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+						<td valign="top"><table width="98%" border="0" align="center"
+								cellpadding="0" cellspacing="0">
+								<tr>
+									<td valign="top"><table width="100%" border="0"
+											cellspacing="0" cellpadding="0">
+											<tr>
+												<td><table width="100%" border="0" cellspacing="0"
+														cellpadding="0">
+														<tr>
+															<td width="1%" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/headL.gif')}" width="9" height="40" />
+															</td>
+															<td width="98%" valign="top"
+																background="{!URLFOR($Resource.images,'images/headbg.gif')}" style="padding-top: 6px;"><font
+																face="Arial, Helvetica, sans-serif" color="#FFFFFF"
+																style="font-size: 14px;"><strong>STRUCTURED
+																		PRODUCTS - LOOKS CAN BE DECEPTIVE!</strong>
+															</font>
+															</td>
+															<td width="1%" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40"
+																align="right" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+
+											<tr>
+												<td><table width="100%" border="0" cellpadding="0"
+														cellspacing="0">
+														<tr>
+															<td width="9" valign="top"
+																background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img
+																src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" />
+															</td>
+															<td width="8" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" />
+															</td>
+															<td valign="top"><table width="98%" border="0"
+																	cellpadding="0" cellspacing="0">
+
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">Last
+																			month, we discussed as to why it makes sense to keep
+																			your finances simple and uncomplicated in “Keep It
+																			Simple Stupid”…. <br /> <br /> As an extension of
+																			this, a client shared with us a product, which though
+																			falls under the category of a Structured Product,
+																			looked promising than any other normal Plain Jane
+																			products like Mutual Funds, Fixed Deposits, etc.<br />
+																			<br /> <strong>This is what the product
+																				pitch says: </strong> <br /> The product gives the investor
+																			a chance to earn an interest of 16% p.a., with 100%
+																			capital protection. Only condition is that the Nifty
+																			should have appreciated by atleast 10% &nbsp;at
+																			specified target dates. <br /> <br /> It works like
+																			this, starting from the 15th month, on the 1st of
+																			every 3rd month (15th month, 18th month, 21st
+																			month... 36th month) Nifty levels will be
+																			checked.&nbsp;If at any time Nifty has appreciated by
+																			over 10%, the scheme concludes and 3 months from that
+																			date the investment along with a predefined fixed
+																			return is paid back. The chart below explains in
+																			detail how much will be paid back, depending on when
+																			the target is hit. <br /> <br /> The maximum tenure
+																			is 40 months i.e. 3.3 years. The minimum investment
+																			to be made is Rs.20 lacs. Investment fee of 3% has to
+																			be paid over and above the investment amount ie., for
+																			an investment of Rs. 20 lacs, you will have to pay
+																			Rs.20.6 lacs.<br /> <br /> <strong>Investor
+																				perception</strong> <br /> 16% sounds too appealing to be
+																			ignored and one would probably not hesitate to take
+																			some risk here. If Nifty has moved up by 10% on any
+																			of these target dates, you get your 16% per annum,
+																			and Bingo! You are home with returns higher than any
+																			FD or FMP in the market. If not, your capital is 100%
+																			protected. Cool! <br /> <br /> In a situation,
+																			where investors are facing a double whammy due to the
+																			falling interest rates and equity markets also show
+																			no signs of budging from the current range, this
+																			product looks like an angel in disguise! <br /> <br />
+																			<strong>Our analysis</strong> <br /> A little bit of
+																			analysis and we discovered that “All that Glitters is
+																			probably not Gold.” Though prima facie, the returns
+																			look attractive @ 16% p.a., the CAGR at any level
+																			would not be more than 11.8% p.a. as shown below!<br />
+																			<br />
+																			<table border="1" cellpadding="4" cellspacing="0"
+																				bordercolor="#CCCCCC">
+																				<tr>
+																					<td align="center" bgcolor="#E5E5E5"><strong>Date
+																							of target being hit </strong>
+																					</td>
+																					<td align="center" bgcolor="#E5E5E5"><strong>Redemption
+																							Date </strong>
+																					</td>
+																					<td align="center" bgcolor="#E5E5E5"><strong>Fixed
+																							Interest on investment</strong>
+																					</td>
+																					<td align="center" bgcolor="#E5E5E5"><strong>Maturity
+																							Amount </strong>
+																					</td>
+																					<td align="center" bgcolor="#E5E5E5"><strong>Tenure
+																							(Years) </strong>
+																					</td>
+																					<td align="center" bgcolor="#E5E5E5"><strong>Compounded
+																							annualized return </strong>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 15Months</td>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 18M</td>
+																					<td align="center" bgcolor="#F4F4F4">20.00%</td>
+																					<td align="center">24,00,000</td>
+																					<td align="center">1.50</td>
+																					<td align="center">10.72%</td>
+																				</tr>
+																				<tr>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 18Months</td>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 21M</td>
+																					<td align="center" bgcolor="#F4F4F4">24.00%</td>
+																					<td align="center">24,80,000</td>
+																					<td align="center">1.75</td>
+																					<td align="center">11.19%</td>
+																				</tr>
+																				<tr>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 21Months</td>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 24M</td>
+																					<td align="center" bgcolor="#F4F4F4">28.00%</td>
+																					<td align="center">25,60,000</td>
+																					<td align="center">2.00</td>
+																					<td align="center">11.48%</td>
+																				</tr>
+																				<tr>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 24Months</td>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 27M</td>
+																					<td align="center" bgcolor="#F4F4F4">32.00%</td>
+																					<td align="center">26,40,000</td>
+																					<td align="center">2.25</td>
+																					<td align="center">11.66%</td>
+																				</tr>
+																				<tr>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 27Months</td>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 30M</td>
+																					<td align="center" bgcolor="#F4F4F4">36.00%</td>
+																					<td align="center">27,20,000</td>
+																					<td align="center">2.50</td>
+																					<td align="center">11.76%</td>
+																				</tr>
+																				<tr>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 30Months</td>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 33M</td>
+																					<td align="center" bgcolor="#F4F4F4">40.00%</td>
+																					<td align="center">28,00,000</td>
+																					<td align="center">2.75</td>
+																					<td align="center">11.81%</td>
+																				</tr>
+																				<tr>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 33Months</td>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 36M</td>
+																					<td align="center" bgcolor="#F4F4F4">44.00%</td>
+																					<td align="center">28,80,000</td>
+																					<td align="center">3.00</td>
+																					<td align="center">11.82%</td>
+																				</tr>
+																				<tr>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 36Months</td>
+																					<td align="center" bgcolor="#F4F4F4">Trade
+																						Date + 40M</td>
+																					<td align="center" bgcolor="#F4F4F4">48.00%</td>
+																					<td align="center">29,60,000</td>
+																					<td align="center">3.33</td>
+																					<td align="center">11.49%</td>
+																				</tr>
+																			</table> <br /> <strong>What happens if Nifty does
+																				not go up by 10% on any of the target dates?</strong> <br />
+																			The investor gets the principal invested back which
+																			lets say, is 20 lacs. The Rs.60,000 – one time
+																			investment fee is gone and there is an interest loss
+																			for 3.3 years. If we assume a conservative interest
+																			of 6% p.a., the opportunity loss would&nbsp;be
+																			Rs.4,24,000.
+																			<p>The product offers returns
+																				which&nbsp;might&nbsp;be,&nbsp;at best 3%&nbsp;above
+																				the FMP returns (assuming 9% as FMP Returns) or 3%
+																				to 4% above the FD returns. If the condition is not
+																				met on trigger date, the returns&nbsp;would be 0%.</p> <strong>What
+																				happens if Nifty goes up by more than 10%?</strong> <br />
+																			Even if the Nifty gives returns of more than 10%, you
+																			will not get advantage of the upside of equity and
+																			will at best get the 11.82% returns. Even though it
+																			is a miniscule possibility, say the bull’s prediction
+																			of 25000 Sensex happens in the next 15 months, what
+																			then will the cost of opportunity lost be? <br /> <br />
+																			So, for an outflow of Rs.20.6 lacs, you could get
+																			back anywhere between Rs. 20 lacs to Rs.29.60 lacs
+																			anytime between 1.5 years to 3.3 years. <br /> <br />
+																			All in all, this is a complex product which gives
+																			debt+ returns (capped at 11.82% CAGR) by taking the
+																			risk of equity. You run the risk of losing the
+																			upfront charges of 3% and not earning any interest on
+																			your investment for 40 months if Nifty doesn't
+																			perform as expected. And if the Nifty performs well,
+																			you risk losing a good part of possible equity
+																			returns. <br /> <br /> We think, keeping it simple
+																			with a fair allocation to debt and equity in
+																			understandable and low cost products would benefit
+																			your financial health far better than these fancy
+																			confusers. <br /> <br /> - Vinita Somaiya, Sr.
+																			Manager - Research and Advisory</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">&nbsp;</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+														<tr>
+															<td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"
+																width="9" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table></td>
+								</tr>
+								<tr>
+									<td valign="top">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td><table width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+						<td valign="top"><table width="98%" border="0" align="center"
+								cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="76%" height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#035728"
+										style="font-size: 13px;"><strong>Ffreedom
+												Financial Planners</strong>
+									</font>
+									</td>
+									<td width="24%" rowspan="3"><table border="0"
+											align="center" cellpadding="0" cellspacing="0">
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong>
+															Follow us on&nbsp;&nbsp;&nbsp;</strong>
+												</font>
+												</td>
+												<td><a href="http://www.facebook.com/Ffreedom"
+													target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20"
+														height="20" border="0" />
+												</a><a href="http://twitter.com/_Ffreedom" target="_blank"><img
+														src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6"
+														border="0" />
+												</a><a
+													href="http://www.linkedin.com/companies/ffreedom-financial-planners"
+													target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}"
+														width="20" height="20" border="0" />
+												</a>
+												</td>
+											</tr>
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong>Watch
+															us on</strong>
+												</font>
+												</td>
+												<td><strong><a
+														href="http://www.youtube.com/user/ffreedomtube"
+														target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}"
+															width="20" height="20" vspace="6" border="0" />
+													</a>
+												</strong>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">506 / 507, Morya Landmark II,
+											Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font>
+									</td>
+								</tr>
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">Boardline: +91 22 4222 4333
+											&nbsp;|&nbsp; Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a
+											href="mailto:contact@ffreedom.in">contact@ffreedom.in</a>
+											&nbsp;|&nbsp; <a href="http://www.ffreedom.in"
+											target="_blank">www.ffreedom.in</a>
+									</font>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" valign="top"><div align="justify">
+											<font face="Arial, Helvetica, sans-serif" color="#333333"
+												style="font-size: 11px;">Disclaimer: This
+												communication from Ffreedom provides general information
+												existing at the time of preparation. This mailer is intended
+												as a news update and Ffreedom Financial Planners neither
+												assumes nor accepts any responsibility for any loss arising
+												to any person acting or refraining from acting as a result
+												of any material contained in this communication. It is
+												recommended that professional advice be taken based on the
+												specific facts and circumstances. This communication does
+												not substitute the need to refer to the original
+												pronouncements.</font>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" />
+			</td>
+		</tr>
+	</table>
+</body>
+	</html>
+</apex:page>

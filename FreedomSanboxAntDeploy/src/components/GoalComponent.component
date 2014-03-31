@@ -1,0 +1,677 @@
+<!--
+/**
+Revision History:
+	
+    Version     Version Author     Date        Comments
+    1.0         --           	   --	  		Initial Draft
+    
+    2.0			Manasi Ranade      12/10/2011  	Issue Id : FS0191 :
+    											For 'Fixed Income' and 'MF' the Growth rate should be N/A
+	2.0			Manasi Ranade	   13/10/2011   Issue ID: FS0194: 
+												1. Added Attribute to component
+												2. Fetched the value from attribute
+	2.0			Manasi Ranade	   2/11/2011    Issue ID: FS0237: 
+												If total Sip is zero then hide the table.
+	2.0			Manasi Ranade	   28/12/2011   Issue ID: FS0383:
+											  	In case of Mutual Fund, ‘Goal year value’ on Goal O/P page should be N/A
+	2.0			Manasi Ranade	   9/1/2011     Issue ID: FS0403:
+												Commented original code.As there is change in Liquidate Align to Goal relted calculations,
+							  					Removed N/A related part from the Goal Output Page
+	2.0			Manasi Ranade	   10/1/2011    Issue ID: FS0423:
+												Add XIRR for Expected Growth Rate if 'Liquidate Align to Goal is selected'
+	2.0			Manasi Ranade	   13/4/2012    Issue ID : 00001590 : Added output Filed to preserve new line characters
+*/ -->
+
+<apex:component controller="GoalComponentController">
+
+    <apex:stylesheet value="{!$Resource.FFStyle}"/>
+    <apex:attribute name="goalMappingBean" type="GoalMappingBean" description="goal bean"  required="true" assignTo="{!objGoalMappingBean}"/>
+    <apex:attribute name="showButton" type="Boolean" description="used to render navigation button" default="true"/>
+    <!--/** Eternus Solutions      **/
+	/** Author  : Manasi Ranade*/
+	/** Issue Id: FS0194      **/
+	/** Date    : 13/10/2011 **/
+	/** Purpose : Added Attribute to component**/
+	/****************************************************/-->
+    <apex:attribute name="dblTotalSIP" type="Double" required="true" description="Total Of SIP"/>
+    <apex:attribute name="dblEquitySIP" type="Double" required="true" description="dblEquitySIP SIP"/>
+    <apex:attribute name="dblGoldSIP" type="Double" required="true" description="dblGoldSIP SIP"/>
+    <apex:attribute name="dblDebtSIP" type="Double" required="true" description="dblDebtSIP SIP"/>
+<!--     <apex:attribute name="dblRetirementFV" type="Double" required="true" description="Retirement FV WithoutAllocation"/> -->
+    <apex:attribute name="dblReturnsExpected" type="Double" required="false" description="Returns expected c"/>
+    <!-- <apex:attribute name="singleYearGoal" type="Boolean" description="identifies whther goal is single year or multiyear" required="true"/>
+    <apex:attribute name="futureValueActual" type="Double" required="true" description="goal target amount is stored"/>-->
+    <apex:pageBlock >
+        <apex:outputPanel rendered="{!showButton}">
+            <div class="divNavigationContainerStyle">
+                <apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;  background-image:none;background-color:#A9C5EB !important; font-size:11px !important;padding-top:4px; padding-bottom:4px;" />
+                <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+                <apex:outputLabel value="Goals" styleclass="button" style=" width:10%;margin-left:20px;  background-image:none;background-color:#A9C5EB !important;font-size:11px !important; padding-top:4px; padding-bottom:4px;" />
+                <apex:image id="theImage2" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+                <apex:commandButton id="theCommandLink2" styleclass="button" value="{!goalMappingBean.goalObj.Description__c}" style="margin-left:20px; background-image:none;background-color:#A9C5EB !important; "   action="{!output}" reRender="GoalCalculationForm"/>
+                <apex:outputLabel id="theCommandLink1" styleclass="button" value="Output" style="margin-left:20px; background-image:none;background-color:#F5D0A9!important;font-size:11px !important;padding-top:4px; padding-bottom:4px;"   />
+            </div>
+        </apex:outputPanel>
+        <div class="divContainerStyle">
+            <div class="divStyle">
+                {!goalMappingBean.goalObj.Description__c}
+            </div><br/>
+            <div class="subHeader">
+                {!$Label.What_you_want} {!$Label.Objective}
+            </div>
+            
+            <!------- if single year goal render this panel ------>
+            <apex:outputPanel rendered="{!if(singleYearGoal,true,false) }" id="SingleYearPanel">
+                <ul class="TickList"><li>
+                Plan for <b>{!goalMappingBean.goalObj.Description__c}</b> in the year <b>{!goalMappingBean.goalObj.Goal_Start_Year__c}</b>.
+                        The cost of goal today is <b>
+                    <apex:outputText value="{0, number, ##,##0}" >
+                        <apex:param value="{!goalMappingBean.goalObj.Cost_of_Goal_Annual__c}"/>
+                    </apex:outputText> </b>.The same will rise to <b>
+                    <apex:outputText value="{0, number, ##,##0}" >
+                        <apex:param value="{!futureValueActual}"/>
+                    </apex:outputText> </b>
+                    assuming an inflation rate <b>
+                        <apex:outputText value="{0, number, ##,##0.00}%" > 
+                            <apex:param value="{!IF(ISNULL(goalMappingBean.goalObj.Inflation_Rate__c), goalMappingBean.GlobalAssumptionInflationRate , goalMappingBean.goalObj.Inflation_Rate__c)}"/>
+                        </apex:outputText>
+                    </b>
+                </li>
+                </ul>
+            </apex:outputPanel>
+            
+            <apex:outputPanel id="MultiYearPanel" rendered="{!if(NOT(singleYearGoal),true,false) }">
+                <p class="textStyle">
+                    <ul class="TickList"><li>
+                        Plan for <b>{!goalMappingBean.goalObj.Description__c} </b>starting year <b>{!goalMappingBean.goalObj.Goal_Start_Year__c} to {!goalMappingBean.goalObj.Goal_End_Year__c}</b>. 
+                    The cost of goal in future value is presented in the table below. 
+                    The future value is assumed based on an inflation rate of <b>{!If(ISNULL(goalMappingBean.goalObj.Inflation_Rate__c),goalMappingBean.GlobalAssumptionInflationRate, goalMappingBean.goalObj.Inflation_Rate__c) }%</b>.
+                    </li></ul>
+                </p>
+                <apex:outputPanel rendered="{!IF(goalMappingBean.goalDetailBeanListForOutput.size==1,true,false)}">
+                    <apex:repeat value="{!goalMappingBean.goalDetailBeanListForOutput}" var="detailBeanList">
+                    <table border="1" cellspacing="0" cellpadding="5" align="center" style="margin-bottom:10px;margin-left:auto;margin-right:auto;">                                                                               
+                        <tr class="tableHeader">
+                            <th class="textStyle" >Goal Year</th>
+                            <apex:repeat value="{!detailBeanList}" var="detailBean">   
+                                <th style="text-align:center;" class="textStyle">
+                                    {!detailBean.goalEndYear}
+                                </th>                                    
+                            </apex:repeat>                                                                        
+                        </tr>
+                        <tr>
+                            <td class="textStyle">Future Value</td>
+                            <apex:repeat value="{!detailBeanList}" var="detailBean">   
+                            
+                                <td style="text-align:right;" class="textStyle">
+                                    <apex:outputText value="{0, number, ##,##0}" >
+                                        <apex:param value="{!detailBean.targetAmountActual}"/>
+                                    </apex:outputText>             
+                                </td>
+                            </apex:repeat>                                                                    
+                        </tr>
+                   </table>
+                   </apex:repeat>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(goalMappingBean.goalDetailBeanListForOutput.size>1,true,false)}">   
+                <apex:repeat value="{!goalMappingBean.goalDetailBeanListForOutput}" var="detailBeanList">                        
+                    <table border="1" cellspacing="0" cellpadding="5" style="align:left;margin-bottom:10px;margin-left:20px;">                                                                               
+                        <tr class="tableHeader">
+                            <th class="textStyle" >Goal Year</th>
+                            <apex:repeat value="{!detailBeanList}" var="detailBean">   
+                                <th style="text-align:center;" class="textStyle">
+                                    {!detailBean.goalEndYear}
+                                </th>                                    
+                            </apex:repeat>                                                                        
+                        </tr>
+                        <tr>
+                            <td class="textStyle">Future Value</td>
+                            <apex:repeat value="{!detailBeanList}" var="detailBean">   
+                            
+                                <td style="text-align:right;" class="textStyle">
+                                    <apex:outputText value="{0, number, ##,##0}" >
+                                        <apex:param value="{!detailBean.targetAmountActual}"/>
+                                    </apex:outputText>             
+                                </td>
+                            </apex:repeat>                                                                    
+                        </tr>
+                   </table>
+                </apex:repeat> 
+                </apex:outputPanel>
+        </apex:outputPanel>
+   
+            <!--------------------  FOR RETIREMENT GOAL  -------------------->
+            <apex:outputPanel id="retirementPanel" rendered="{!if(goalMappingBean.goalObj.Goal_Type__c==$Label.Retirement,true,false) }">
+            <p>    <ul class="TickList"> 
+                    <li>   
+                        Plan for {!goalMappingBean.goalObj.Entity__r.Name}’s retirement starting year {!goalMappingBean.goalStartYear}.
+                    </li>
+                    <li>
+                        Your total annual expenses are currently <b> Rs. 
+                            <apex:outputText value="{0, number, ##,##0}" >
+                                <apex:param value="{!goalMappingBean.goalObj.Annual_Expenses__c}"/>
+                            </apex:outputText></b>.
+                    </li>
+                    <!--/** Eternus Solutions  **/
+					/** Author  : Manasi Ranade */
+					/** Issue Id: 00001540     **/
+					/** Date    : 9/3/2012     **/
+					/** Purpose : Added following line on Retirement related output page**/
+					/****************************************************/-->
+                    <li>
+                    	Annual expenses are assumed to be 
+                    	<b>Rs. 
+                    		<apex:outputText value="{0, number, ##,##0}" >
+                                <apex:param value="{!goalMappingBean.goalObj.Cost_of_Goal_Annual__c}"/>
+                            </apex:outputText>
+                    	</b>
+                    	for Retirement in today's value.
+                    </li>
+                    <li>
+                        In the year of retirement they will grow to <b> Rs. 
+                            <apex:outputText value="{0, number, ##,##0}" >
+                                <apex:param value="{!futureValueActual}"/>
+                            </apex:outputText>
+                        </b> annually.
+                    </li>
+                    <!--/** Eternus Solutions  **/
+					/** Author  : Manasi Ranade */
+					/** Issue Id: 00001540     **/ //00001715 Please comment the following part as it is not required 
+					/** Date    : 9/3/2012     **/
+					/** Purpose : commented following line from Retirement related output page**/
+					/****************************************************/-->
+				 <!-- 	<LI>     
+                       WE HAVE ESTIMATED THAT AT RETIREMENT YOU WILL REQUIRE <B> RS. 
+                            <APEX:OUTPUTTEXT VALUE="{0, NUMBER, ##,##0}" >
+                                <APEX:PARAM VALUE="{!goalMappingBean.retirmentFutureValue}"/> 
+<!-- 									<APEX:PARAM VALUE="{!dblRetirementFV}"/>    
+                            </APEX:OUTPUTTEXT>
+                        </B> TO TAKE CARE OF YOUR RETIREMENT DISTRIBUTION PHASE.
+                    </LI>  -->
+                </ul>
+                </p>
+            </apex:outputPanel>
+            </div>
+       </apex:pageBlock>
+   
+       <apex:pageBlock >        
+            <div class="divContainerStyle">
+                <div class="subHeader">
+                        {!$Label.What_you_need_to_do} <b>{!$Label.Analysis_and_Advice}</b>
+                </div>
+                <apex:outputPanel rendered="{!if(contains(goalMappingBean.goalObj.Saving_type__c,'Constant Risk Profile'),true,false)}">
+                    <ul class="TickList">
+                        <li>
+                            {!$Label.constantRiskPoint1} {!goalMappingBean.goalObj.Saving_type__c} portfolio allocation for this goal
+                        </li>
+                        <li>
+                            The {!goalMappingBean.goalObj.Saving_type__c} portfolio is expected to generate 
+                            <apex:outputText value=" {0, number, ##,##0.00}%" >
+<!--                                 <apex:param value="{!goalMappingBean.goalObj.SelectedGoalProfile__r.Returns_expected__c}"/> -->
+							<apex:param value="{!dblReturnsExpected}"/>
+                            </apex:outputText>
+                              returns.
+                        </li>
+                    </ul>
+                </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!if(contains(goalMappingBean.goalObj.Saving_type__c,'Progressive Risk Profile'),true,false)}">
+            <ul class="TickList">
+                <li>
+                   {!$Label.ProgressiveRiskPoint1}
+                </li>
+                <li>
+                   {!$Label.ProgressiveRiskPoint2}  
+                   <b> <apex:outputText value=" {!goalMappingBean.goalObj.SelectedGoalProfile__r.name}"></apex:outputText> </b>
+                </li>
+                <li>The
+                   <apex:outputText value=" {!goalMappingBean.goalObj.SelectedGoalProfile__r.name}" > </apex:outputText>  
+                    portfolio is expected to generate<b> 
+                        <apex:outputText value=" {0, number, ##,##0.00}%" >
+<!--                             <apex:param value="{!goalMappingBean.goalObj.SelectedGoalProfile__r.Returns_expected__c}"/> -->
+					<apex:param value="{!dblReturnsExpected}"/>
+                        </apex:outputText> 
+                    </b>
+                              
+                    returns while the overall portfolio is expected to generate a XIRR of 
+                        <apex:outputText value=" {0, number, ##,##0.00}%" >
+                            <apex:param value="{!goalMappingBean.goalObj.IRR__c}"/>
+                        </apex:outputText> .
+
+                </li>
+                <li>Based on the above portfolio allocation you are required to have<b> Rs.
+                 <apex:outputText value="{0, number, ##,##0}" >
+                     <apex:param value="{!goalMappingBean.goalObj.OriginalGoalPV__c}"/>
+                 </apex:outputText> </b> in year 
+                 <b> {!goalMappingBean.goalObj.SIP_Start_Year__c} </b>
+                 to achieve your goal amount. However, you can choose to save smaller amounts on a regular basis.
+                </li>
+                <li>
+                    {!$Label.goalAnalysisLabel3}
+                </li>
+            </ul>
+            <div style="page-break-inside:avoid;">
+            <table border="1" cellspacing="0" cellpadding="5" style="margin-left:auto;margin-right:auto;width:50%;">                      
+                <tr class="tableHeader">
+                    <th class="textStyle" style="text-align:center;">Confidence Interval</th>
+                    <th class="textStyle" style="text-align:center;">Maximum Returns</th>
+                    <th class="textStyle" style="text-align:center;">Minimum Returns</th>
+                </tr>
+                <tr class="tableData" >
+                    <td class="textStyle">68%</td>
+                    <td class="rightAlignData">
+                        <apex:outputText value="{0, number, ,##0.00}%" >
+                            <apex:param name="return1" value="{!goalMappingBean.goalObj.SelectedGoalProfile__r.Maximum_Returns68__c}"/>
+                         </apex:outputText>
+                    </td>
+                    <td class="rightAlignData">
+                        <apex:outputText value="{0, number, ,##0.00}%" >
+                            <apex:param name="return2" value="{!goalMappingBean.goalObj.SelectedGoalProfile__r.MinimumReturns68__c}"/>
+                         </apex:outputText>
+                    </td>
+                </tr>
+                <tr class="tableData">
+                    <td class="textStyle">95%</td>
+                    <td class="rightAlignData">
+                        <apex:outputText value="{0, number, ,##0.00}%" >
+                            <apex:param name="return2" value="{!goalMappingBean.goalObj.SelectedGoalProfile__r.Maximum_Returns95__c}"/>
+                         </apex:outputText>
+                    </td>
+                    <td class="rightAlignData">
+                        <apex:outputText value="{0, number, ,##0.00}%" >
+                            <apex:param name="return2" value="{!goalMappingBean.goalObj.SelectedGoalProfile__r.MinimumReturns95__c}"/>
+                         </apex:outputText>
+                    
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </apex:outputPanel>
+    </div>
+    </apex:pageBlock>
+    
+    <apex:pageBlock >
+    <div class="divContainerStyle">
+        <div class="subHeader">
+            {!$Label.How_to_do} <b>{!$Label.Action_Plan}</b>
+        </div>
+        
+        <!--  Actual Action plan Starts -->
+        <apex:outputPanel rendered="{!if(goalMappingBean.goalAssetMappingBeanList.size!=0,true,false)}">
+			<ul class="TickList">
+				<li>
+					We have allocated the following assets to {!goalMappingBean.goalObj.Description__c}. 
+					{!$Label.GoalActionPlanPoint3}
+				</li>
+			</ul>
+		
+			<table border="1" cellspacing="0" cellpadding="5" style="margin-left:auto;margin-right:auto;">
+				<tr class="tableHeader">
+					<td styleClass="textStyle" width="10%">
+						<apex:outputText value="Asset" styleClass="textStyle"/> <!-- Prajakta - FP Changes 2 - 06-05-2013 - Changes "Item" to "Asset" -->
+					</td>
+					<td styleClass="textStyle" width="10%">
+						<apex:outputText value="{!$Label.Description}" styleClass="textStyle"/>
+					</td>
+					<td styleClass="textStyle" width="10%">
+						<apex:outputText value="{!$Label.Owner}" styleClass="textStyle"/>
+					</td>
+					<td styleClass="textStyle" width="7%">
+						<apex:outputText value="{!$Label.Allocated_Amount}" styleClass="textStyle"/>
+					</td>
+					<td styleClass="textStyle" width="7%">
+						<apex:outputText value="Allocated Percent(%)" styleClass="textStyle"/>
+					</td>
+					<td styleClass="textStyle" width="10%">
+						<apex:outputText value="Expected Growth Rate" styleClass="textStyle"/>
+					</td>
+					<!-- Prajakta - FP Changes -->
+					<td styleClass="textStyle" width="10%">
+						<apex:outputText value="Maturity Value" styleClass="textStyle"/>
+					</td>
+					<td styleClass="textStyle" width="10%">
+						<apex:outputText value="Goal Year Value" styleClass="textStyle"/>
+					</td>
+					<td styleClass="textStyle" width="15%">
+						<apex:outputText value="Action To Be Taken" styleClass="textStyle"/>
+					</td>
+				</tr>
+				<apex:variable var="c" value="{!0}" />
+		        <apex:repeat value="{!goalMappingBean.goalAssetMappingBeanList }" var="goalasset">
+					<tr class="tableData">
+						<td >
+							<apex:outputText value="{!goalasset.description}" styleClass="textStyle"/>
+						</td>
+						<td>
+							<apex:outputText value="{!goalasset.newDescription}" styleClass="textStyle"/>
+						</td>
+						<td >
+							<apex:outputText value="{!goalasset.entityName}" styleClass="textStyle"/>
+						</td>
+						<td class="rightAlignData">
+						  <apex:outputText value="{0, number, ##,##0}" >
+							   <apex:param value="{!goalasset.allocatedAmount}"/>
+							   <apex:variable var="c" value="{! c + ROUND(goalasset.allocatedAmount,0)}" />
+						  </apex:outputText>
+						</td>
+						
+						<td class="rightAlignData">
+						  <apex:outputText value="{!goalasset.allocatedPercent}%" >
+						  </apex:outputText>
+						</td>
+						
+						<td class="rightAlignData" >
+						  <!-- /** Eternus Solutions       **/
+						  /** Author  : Manasi Ranade **/
+						  /** Issue Id: FS0191      	**/
+						  /** Date    : 12/10/2011 	**/
+						  /** Purpose : For 'Fixed Income' and 'MF' the Growth rate should be N/A
+						  /****************************************************/ -->
+						  <!-- FS0239 -->
+						  <!-- <apex:outputText value="{0, number, ##,##0.00}%" rendered="{!(if(goalasset.description=='Fixed Income' || goalasset.description=='Mutual Fund' || goalasset.action=='Liquidate (Align to goal)',false,true))}">
+							  <apex:param value="{!goalasset.growthRate}"/>
+						  </apex:outputText> 
+						  <apex:outputText value="N/A" rendered="{!(if(goalasset.description=='Fixed Income' || goalasset.description=='Mutual Fund' || goalasset.action=='Liquidate (Align to goal)',true,false))}">
+						  </apex:outputText> -->
+						  <!-- /** Eternus Solutions    **/
+						  /** Author  : Manasi Ranade   **/
+						  /** Issue Id: FS0403      	**/
+						  /** Date    : 9/1/2011 	    **/
+						  /** Purpose : Commented original code.As there is change in Liquidate Align to Goal relted calculations,
+										Removed N/A related part from the Goal Output Page
+						  /****************************************************/ -->
+						  <!-- /** Eternus Solutions    **/
+						  /** Author  : Manasi Ranade   **/
+						  /** Issue Id: FS0423      	**/
+						  /** Date    : 10/1/2011 	    **/
+						  /** Purpose : Add XIRR for Expected Growth Rate if 'Liquidate Align to Goal is selected'
+						  /****************************************************/ -->
+						  <apex:outputText value="{0, number, ##,##0.00}%" rendered="{!(if(goalasset.description=='Mutual Fund' || goalasset.action=='Liquidate (Align to goal)',false,true))}">
+							  <apex:param value="{!goalasset.growthRate}"/>
+						  </apex:outputText>
+						  <apex:outputText value="{0, number, ##,##0.00}%" rendered="{!(if(goalasset.description=='Mutual Fund' || goalasset.action=='Liquidate (Align to goal)',true,false))}">
+							  <apex:param value="{!goalMappingBean.goalObj.IRR__c}"/>
+						  </apex:outputText>
+						  
+						</td>
+						
+						<!-- Prajakta - FP changes - 28-03-2013  --> 
+						<td  class="rightAlignData">
+							<apex:outputText value="{0, number, ##,##0}">
+	                             <apex:param value="{!goalasset.maturityValue}"/>
+	                        </apex:outputText> 
+						</td> 
+						
+						<td  class="rightAlignData">
+						   <!-- FS0239 -->
+						  <!-- /** Eternus Solutions    **/
+						  /** Author  : Manasi Ranade 	**/
+						  /** Issue Id: FS0383      	**/
+						  /** Date    : 9/1/2011 	    **/
+						  /** Purpose : In case of Mutual Fund, ‘Goal year value’ on Goal O/P page should be N/A
+						  /****************************************************/ -->
+						  <!--<apex:outputText value="{0, number, ##,##0}" rendered="{!(if(goalasset.action=='Liquidate (Align to goal)' || goalasset.description=='Mutual Fund',false,true))}">
+							   <apex:param value="{!goalasset.goalYearValue }"/>
+						  </apex:outputText>
+						  <apex:outputText value="N/A" rendered="{!(if(goalasset.action=='Liquidate (Align to goal)' || goalasset.description=='Mutual Fund',true,false))}"></apex:outputText> -->
+						  <!-- /** Eternus Solutions       **/
+						  /** Author  : Manasi Ranade **/
+						  /** Issue Id: FS0403      	**/
+						  /** Date    : 28/12/2011 	**/
+						  /** Purpose : Commented original code.As there is change in Liquidate Align to Goal relted calculations,
+										Removed N/A related part from the Goal Output Page
+						  /****************************************************/ -->
+						  <apex:outputText value="{0, number, ##,##0}">
+							   <apex:param value="{!goalasset.goalYearValue }"/>
+						  </apex:outputText>
+						</td>
+						<td>
+							<apex:outputText value="{!goalasset.action}" styleClass="textStyle"/>
+						</td>
+					</tr>
+				</apex:repeat>
+				<tr>
+					<td class="textStyle" style="font-weight: bold;">
+						Total
+					</td>
+					<td colspan="2"></td>
+					<td class="textStyle" style="text-align: right; font-weight: bold;">
+		              	<apex:outputText value="{0, number, ,##,##0}" >
+		                        <apex:param value="{!c}"/>
+		                 </apex:outputText>
+		           </td>
+		           <td colspan="5"></td>
+				</tr>
+			</table>
+		               
+		</apex:outputPanel>
+		
+		<br/>
+		<!-- 		/* Prajakta - FP changes - 22-03-2013 */ -->
+		<apex:outputPanel rendered="{!IF((lstAllocationMsg.size > 0),true,false)}">
+			<table border="1" cellspacing="0" cellpadding="5" style="margin-left:auto;margin-right:auto;">
+				<tr class="tableHeader">
+                    <th class="textStyle" style="text-align:center;">Asset Utilization Details</th>
+                </tr>
+				<apex:repeat value="{!lstAllocationMsg}" var="lstAllocationMsg">
+<!-- 				<apex:repeat value="{!goalMappingBean.lstAllocatedString}" var="lstAllocationMsg"> -->
+					<tr class="tableData">
+						<td>{!lstAllocationMsg}</td>
+					</tr>
+             	</apex:repeat>
+            </table>
+		</apex:outputPanel>
+		
+		<!-- /*
+			  Updated By : Kiran Patil
+			  Updated At : 22-May-2013
+			  Summary    : FP changes-part2 - issue 5 
+		*/ -->
+		<apex:outputpanel rendered="{!goalMappingBean.goalObj.Include_SIP__c}">
+        <apex:outputPanel >
+        	<apex:outputtext value="Growing Annuity:  :" rendered="{!if(contains(goalMappingBean.goalObj.Saving_type__c,'Growing annuity'),true,false)}"/> 
+            <ul class="TickList">
+                <li>
+                <!-- Niket => Here on the Action plan we are sowing the Current SIP Amount total -->
+                   An Investment of <b>Rs.  <!-- Prajakta - FP Changes 2 - 06-05-2013 - Changes "SIP" to "Investment" -->
+                   <!--/** Eternus Solutions      **/
+					/** Author  : Manasi Ranade*/
+					/** Issue Id: FS0194      **/
+					/** Date    : 13/10/2011 **/
+					/** Purpose : Fetched value from component**/
+					/****************************************************/-->
+                   <!-- Original Code -->
+                   <!-- <apex:outputText value="{0, number, ##,##0}" ><apex:param value="{!goalMappingBean.currentSIP.SIP_Total__c }"/></apex:outputText></b> -->  
+                   
+                   <apex:outputText value="{0, number, ##,##0}" ><apex:param value="{!dblTotalSIP}"/></apex:outputText></b>
+                   
+                   {!$Label.GoalActionPlanPoint1} 
+                 
+                 <b>
+                 <apex:outputText value="{0, number, ##,##0}" >
+                              <apex:param value="{!goalMappingBean.goalObj.SelectedGoalProfile__r.Equity_Allocation__c}"/>
+                  </apex:outputText> :
+                 <apex:outputText value="{0, number, ##,##0}" >
+                              <apex:param value="{!goalMappingBean.goalObj.SelectedGoalProfile__r.Debt_Allocation__c}"/>
+                          </apex:outputText> :
+                 <apex:outputText value="{0, number, ##,##0}" >
+                              <apex:param value="{!goalMappingBean.goalObj.SelectedGoalProfile__r.Gold_allocation__c}"/>
+                          </apex:outputText>
+
+                 </b>
+                 respectively in order to accumulate the goal amount.
+                </li>
+                <apex:outputpanel rendered="{!if(dblTotalSIP!=0 ,true,false)}">
+                <li>
+                   <apex:outputText styleClass="textStyle" value="{!$Label.GoalActionPlanPoint1breakup}" > </apex:outputText> 
+                </li>
+                </apex:outputpanel>
+            </ul>
+            <div style="page-break-inside:avoid;">
+            <!--  Actual Action plan Ends -->
+            <!-- FS0237  -->
+            <!--/** Eternus Solutions      **/
+			/** Author  : Manasi Ranade*/
+			/** Issue Id: FS0237      **/
+			/** Date    : 2/11/2011 **/
+			/** Purpose : If total Sip is zero then hide the following table**/
+			/****************************************************/-->
+                    	<!-- Original Code -->
+                        <!--  <apex:param value="{!goalMappingBean.currentSIP.SIP_Equity__c }"/>-->
+            
+            <apex:outputPanel rendered="{!if(dblTotalSIP!=0 || dblTotalSIP!=0.0 || dblTotalSIP!=0.00,true,false)}">
+            <table border="1" cellspacing="0" cellpadding="5" style="margin-left:auto;margin-right:auto;width:50%;margin-top:10px;border-bottom:none;" rendered="false">
+                <tr class="tableHeader">
+                    <th style="text-align:center" class="textStyle">
+                        Asset Class
+                    </th>
+                    <th  class="textStyle" style="width:50%;text-align:center">
+                        Investment Amount			<!-- Prajakta - FP Changes 2 - 06-05-2013 - Changes "SIP" to "Investment" -->
+                    </th>
+                </tr>
+                <tr class="tableData">
+                    <td align="left" class="textStyle">
+                        Equity
+                    </td>
+                    <td class="rightAlignData" style="width:50%;">
+                        <apex:outputText value="{0, number, ##,##0}">
+                        	<!--/** Eternus Solutions      **/
+							/** Author  : Manasi Ranade*/
+							/** Issue Id: FS0194      **/
+							/** Date    : 13/10/2011 **/
+							/** Purpose : Fetched value from component**/
+							/****************************************************/-->
+                        	<!-- Original Code -->
+                            <!--  <apex:param value="{!goalMappingBean.currentSIP.SIP_Equity__c }"/>-->
+                            <apex:param value="{!dblEquitySIP}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr class="tableData">
+                    <td align="left" class="textStyle">
+                        Debt
+                    </td>
+                    <td class="rightAlignData" style="width:50%;">
+                        <apex:outputText value="{0, number, ##,##0}" >
+                            <!--/** Eternus Solutions      **/
+							/** Author  : Manasi Ranade*/
+							/** Issue Id: FS0194      **/
+							/** Date    : 13/10/2011 **/
+							/** Purpose : Fetched value from component**/
+							/****************************************************/-->
+                            <!-- Original Code -->
+                            <!-- <apex:param value="{!goalMappingBean.currentSIP.SIP_Debt__c}"/>-->
+                            <apex:param value="{!dblDebtSIP}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+            </table>
+            </apex:outputPanel>
+             	<!-- <apex:outputPanel rendered="{!if(goalMappingBean.currentSIP.SIP_Gold__c!=0.0 ,true,false)}"> -->
+             	<apex:outputPanel rendered="{!if(dblTotalSIP!=0 || dblTotalSIP!=0.0 || dblTotalSIP!=0.00,true,false)}">
+               	<table border="1" cellspacing="0" cellpadding="5" style="margin-left:auto;margin-right:auto;width:50%;border-bottom:none;">
+                    <tr class="tableData">
+                        <td align="left" class="textStyle">
+                            Gold
+                        </td>
+                        <td class="rightAlignData" style="width:50%;">
+                            <apex:outputText value="{0, number, ##,##0}" >
+                            	<!--/** Eternus Solutions      **/
+								/** Author  : Manasi Ranade*/
+								/** Issue Id: FS0194      **/
+								/** Date    : 13/10/2011 **/
+								/** Purpose : Fetched value from component**/
+								/****************************************************/-->
+                            	<!-- Original Code -->
+                                <!-- <apex:param value="{!goalMappingBean.currentSIP.SIP_Gold__c}"/>-->
+                                <apex:param value="{!dblGoldSIP}"/>
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+            <!-- FS0237 -->
+            <!--/** Eternus Solutions      **/
+			/** Author  : Manasi Ranade*/
+			/** Issue Id: FS0237      **/
+			/** Date    : 2/11/2011 **/
+			/** Purpose : If total Sip is zero then hide the following table**/
+			/****************************************************/-->
+            <apex:outputPanel rendered="{!if(dblTotalSIP!=0 || dblTotalSIP!=0.0 || dblTotalSIP!=0.00,true,false)}">
+            <table border="1" cellspacing="0" cellpadding="5" style="margin-left:auto;margin-right:auto;width:50%;">
+                <tr class="tableHeader">
+                    <th style="text-align:center;" class="textStyle">
+                        Total
+                    </th>
+                    <th class="rightAlignData" style="width:50%;">
+                        <apex:outputText value="{0, number, ##,##0}" >
+                            <!--/** Eternus Solutions      **/
+							/** Author  : Manasi Ranade*/
+							/** Issue Id: FS0194      **/
+							/** Date    : 13/10/2011 **/
+							/** Purpose : Fetched value from component**/
+							/****************************************************/-->
+                            <!-- Original Code -->
+                            <!-- <apex:param value="{!goalMappingBean.currentSIP.SIP_Total__c}"/>-->
+                            <apex:param value="{!dblTotalSIP}"/>
+                        </apex:outputText>
+                    </th>
+                </tr>
+            </table>
+            </apex:outputPanel>
+	        </div>
+            
+            <!-- Change By Niket -->
+            	 <!-- FS0237 -->
+            	 <!--/** Eternus Solutions      **/
+				/** Author  : Manasi Ranade*/
+				/** Issue Id: FS0237      **/
+				/** Date    : 2/11/2011 **/
+				/** Purpose : If total Sip is zero then hide the following table**/
+				/****************************************************/-->
+	            <apex:outputPanel rendered="{!if(dblTotalSIP!=0 || dblTotalSIP!=0.0 || dblTotalSIP!=0.00,true,false)}">
+	            	<apex:outputtext value="{!$Label.GrowingAnnuityLabel}" rendered="{!if(contains(goalMappingBean.goalObj.Saving_type__c,'Growing annuity'),true,false)}" />    
+	            <ul class="TickList">
+	                <li style="margin-top:10px;">
+	                    {!$Label.GoalActionPlanPoint2} {!goalMappingBean.goalObj.Description__c}. </li><br/>
+	                 <!--       Added on 26/7/2013 : Aditi/Gaurav -  If difference between Current year and Retirement
+               	 Start year or any Goals Start Year is greater than 25 yreas, then SIP chart was not visible - added chartData1 -->
+                     <center><apex:image url="{!goalMappingBean.chartData}" style="margin-top:10px;" ></apex:image></center>
+                   	 <center><apex:image url="{!goalMappingBean.chartData1}" style="margin-top:10px;" ></apex:image></center>
+	            </ul>
+	            </apex:outputPanel>
+	        </apex:outputPanel>
+	        
+		</apex:outputPanel>  
+
+           
+           <!-- FS0309 -->
+				<!-- /** Eternus Solutions      **/
+				  /** Author  : Manasi Ranade 	**/
+				  /** Issue Id: 00001590      	**/
+				  /** Date    : 13/4/2012 	 	**/
+				  /** Purpose : Added output field to preserve new line characters
+				  /****************************************************/ -->
+<!--                 <apex:outputPanel rendered="{!(if(goalMappingBean.goalObj.Remark__c=='',false,true))}"> -->
+<!-- 	         		<ul class="TickList"> -->
+<!-- 	                    <li> -->
+<!-- 	                        {!$Label.Remarks} -->
+<!-- 	                    </li> -->
+<!-- 	                </ul> -->
+<!-- 	                <div>  -->
+<!-- 	                	<apex:OutputField value="{!goalMappingBean.goalObj.Remark__c}"></apex:OutputField> -->
+<!-- 	                </div> -->
+<!--                 </apex:outputPanel> -->
+                
+                <!-- Prajakta - 20-03-2013  -->    
+                <apex:outputPanel rendered="{!(if(goalMappingBean.goalObj.Remark__c=='',false,true))}">
+	                <div class="subHeader">			
+	               		<b><apex:outputText value="{!$Label.Remarks} " escape="false" styleClass="textStyle" /></b>
+	                </div>
+	        	    <div>
+	        	   		<apex:OutputField value="{!goalMappingBean.goalObj.Remark__c}" />
+	        	   	</div>
+        	   	</apex:outputPanel>
+   </div>
+   </apex:pageBlock>
+</apex:component>

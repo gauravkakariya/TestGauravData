@@ -1,0 +1,226 @@
+<apex:page showHeader="false" sidebar="false"
+	title="Ffreedom Financial Planners | Why Do You Need A Plan">
+	<link rel="shortcut icon"
+		href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+	<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+	<apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />
+	<apex:stylesheet value="{!URLFOR($Resource.css)}" />
+	<apex:includeScript value="{!URLFOR($Resource.newMenu)}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}" />
+	<apex:composition template="WebsiteTemplate">
+		<apex:define name="bodycontent">
+			<div class="leftcontainer">
+				<div id="innerpage_textcontainer_left">
+					<div class="sidemenucontainer">
+						<div id="sidemenu">
+							<ul style="list-style-type: none">
+								<li><a href="What_is_financial_planning" title="" alt="">What
+										is financial planning?</a></li>
+								<div id="sidesaprate">
+									<apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}"
+										width="162" height="1" />
+								</div>
+								<li><a href="How_does_financial_planning_work" title=""
+									alt="">How does financial planning work?</a></li>
+								<div id="sidesaprate">
+									<apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}"
+										width="162" height="1" />
+								</div>
+								<li><a href="Who_can_be_your_financial_planner" title=""
+									alt="">Who can be your financial planner?</a></li>
+								<div id="sidesaprate">
+									<apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}"
+										width="162" height="1" />
+								</div>
+								<li><span class="selected_btn1">Why do you need a
+										plan?</span></li>
+							</ul>
+						</div>
+					</div>
+					<div id="innerpage_textcontainer_left">
+						<apex:image url="{!URLFOR($Resource.images,'images/result_img_new.png')}"
+							style="height:30%;width:100%;" />
+					</div>
+					<!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+				</div>
+				<div class="borderimg">
+					<!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+					<div class="leftlinkselectedimg"
+						style="margin-top: 144px; height: 193px; background-repeat: no-repeat;"></div>
+				</div>
+				<div id="innerpage_textcontainer_middle">
+					<!--<div class="innerpage_titletext"><span class="innerpagetopheading">Financial Planning</span></div>-->
+					<div class="innerpage_titletext">
+						<span class="innerpagetexttitle">Why do you need a plan?</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">The best time to
+							review your financial situation is today and you must do this as
+							regularly as you can since life brings with it some pleasant
+							surprises and some unforeseen mishaps.<br />
+						<br /> A financial plan makes you better equipped to meet the
+							unforeseeable future. It is something that is requisite for all
+							the stages of life. The earlier you start the better prepared you
+							can be.<br />
+						<br /> Whether you are about to kick start your career or want to
+							plan your retirement, there are concerns at each stage in life.
+							Financial planning can assist you in directing a right course of
+							action for your life.<br />
+						<br />A financial plan will help you to:
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>Wisely
+								allocate your wealth</strong></span>
+					</div>
+
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage">
+							<li>Are you investing as much as you need to?</li>
+							<li>To achieve more you need to make your money work for
+								you.</li>
+							<li>Financial planning allocates your funds to match your
+								desires.</li>
+						</span>
+					</div>
+
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">Financial planning
+							seeks to leverage on your existing wealth. The aim of financial
+							planning is not always to get you the best plan in the market but
+							rather one that is apt for your needs.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>Protect
+								yourself</strong></span>
+					</div>
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage">
+							<li>Financial Planning equips you to face all kinds of
+								events in your life.</li>
+							<li>Anticipate unforeseen events and prepare a financial
+								plan for them.</li>
+							<li>Know where you stand financially and in view of that
+								chart your path.</li>
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">Safety is a basic
+							human requirement. Financial Planning safeguards you and your
+							family and gives you the liberty to focus on other spheres of
+							your life.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>Achieve
+								your goals and objectives</strong></span>
+					</div>
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage">
+							<li>We all dream in life to achieve things that excite us.</li>
+							<li>Financial planning helps you convert your dreams into
+								concrete goals and objectives.</li>
+							<li>Gives you a roadmap guiding you to the path of success.</li>
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">The difference between
+							dreams and reality is creating a plan with fixed goals with a
+							time line. Financial planning encourages you to dream big and go
+							after them. So plan today for a better tomorrow.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">So plan today for a
+							better tomorrow.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>Goals</strong></span>
+					</div>
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage">
+							<li>Children Marriage</li>
+							<li>Children`s Education</li>
+							<li>Vacation</li>
+							<li>Buying a house</li>
+							<li>Buying a car</li>
+							<li>Retirement Planning</li>
+							<li>Starting a new venture</li>
+							<li>Starting a charity</li>
+							<li>Optimizing Investments/ Savings</li>
+							<li>Debt Management</li>
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>Life
+								Events</strong></span>
+					</div>
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage">
+							<li>Marriage</li>
+							<li>New Baby</li>
+							<li>Job Loss/Transition</li>
+							<li>Loss of spouse</li>
+							<li>Divorce</li>
+							<li>Unforeseen health related occurrences</li>
+							<li>Inheritance of wealth</li>
+						</span><br />
+						<br /> <a href="#top" class="otherslink">Top</a>
+					</div>
+				</div>
+
+				<div class="innerpageborderimg">
+					<apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}"
+						width="5" height="579" alt="" />
+				</div>
+
+				<div class="callmeheadingCall">
+					<img
+						src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}"
+						border="0" usemap="#Map2" />
+					<map name="Map2" id="Map2">
+						<area shape="rect" coords="3,0,230,50" href="Comp_Con"
+							alt="Let our advisor call" title="Let our advisor call" />
+					</map>
+				</div>
+				<div class="callmeheadingCall">
+					<span class="txtmatterbig_innerpage"><br />
+					<br /> People dream &amp; remain happy.<br /> Imagine people
+						dreaming &amp; living their dreams.<br />
+					<br /> <a href="Comp_Con"><strong>Sign up today!</strong></a> <br />
+					<br /> For a one to one session at the place convenient to you.<br />
+					<br />
+					<br /></span>
+				</div>
+				<div class="title123">
+					<span class="imgtext">Related Links</span>
+				</div>
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know
+								Our Financial Planners</strong></a></span>
+				</div>
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a href="our_process"><strong>Our
+								Process</strong></a></span>
+				</div>
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a
+						href="Client_Stories"><strong>Our Client stories</strong></a></span>
+				</div>
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a
+						href="Comprehensive_fp"><strong>Services Basket</strong></a></span>
+				</div>
+<!-- 				<div class="relatedinfoheading"> -->
+<!-- 					<span class="txtmatterbig_innerpage"><a href="why_fees"><strong> -->
+<!-- 								Financial Planning Fees</strong></a></span> -->
+<!-- 				</div> -->
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom
+								Hub</strong></a></span>
+				</div>
+			</div>
+		</apex:define>
+
+	</apex:composition>
+</apex:page>

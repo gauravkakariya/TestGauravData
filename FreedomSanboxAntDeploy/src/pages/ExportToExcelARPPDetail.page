@@ -1,0 +1,85 @@
+﻿<apex:page controller="ARPPDetailController" sidebar="false"  standardstylesheets="false" contenttype="application/vnd.ms-excel#ARPPDetail.xls">
+	<apex:pageBlock Title="RPP Details">
+		<apex:outputLabel value="Entity Name: " style="font-weight:bold;"/> 
+		<apex:outputText value="{!strEntityName}" 	/>
+		<apex:pageBlockSection rendered="{!lstOrderDetails.size > 0}">
+				<apex:outputField value="{!lstOrderDetails[0].Order_Number__c}" label="Order Number: "/> 
+				<apex:outputField value="{!lstOrderDetails[0].Payable_Amount__c}" label="Fees:"/>
+		</apex:pageBlockSection>
+			
+		<apex:variable var="expectedAmount" value="{!0}" />
+			<apex:variable var="actualAmount" value="{!0}" />
+			<apex:variable var="expectedUpfont" value="{!0}" />
+			<apex:variable var="expectedTrail" value="{!0}" />
+			<apex:variable var="actualUpfont" value="{!0}" />
+			<apex:variable var="actualTrail" value="{!0}" />
+			
+			<apex:repeat value="{!lstARPPDetails}" var="arppDetails">
+				<apex:variable var="expectedAmount" value="{! expectedAmount + arppDetails.Action_Plan_Amount__c}" />
+				<apex:variable var="actualAmount" value="{! actualAmount + arppDetails.Execution_Tracker_Amount__c}" />
+				
+				<apex:variable var="expectedUpfont" value="{! expectedUpfont + arppDetails.Action_Plan_Upfront_Comm_Amount__c}" />
+				<apex:variable var="expectedTrail" value="{! expectedTrail + arppDetails.Action_Plan_Trial_Comm_Amount__c}" />
+				<apex:variable var="actualUpfont" value="{! actualUpfont + arppDetails.Execution_Tracker_Upfront_Comm_Amount__c}" />
+				<apex:variable var="actualTrail" value="{! actualTrail + arppDetails.Execution_Tracker_Trial_Comm_Amount__c}" />
+			</apex:repeat>
+				
+		<table border ="1"> 
+			<tr>
+				<th style="text-align:center;">RPP Detail</th>
+  				<th style="text-align:center;">Product Name</th>
+				<th style="text-align:center;">Product Type</th>
+				<th style="text-align:center;">Expected Amount</th>
+				<th style="text-align:center;">Expected Upfront Comm</th>
+				<th style="text-align:center;">Expected Trail Comm</th>
+				<th style="text-align:center;">Remark</th>
+				<th style="text-align:center;">Actual Product</th>
+				<th style="text-align:center;">Actual Amount</th>
+				<th style="text-align:center;">Actual Upfront Comm</th>
+				<th style="text-align:center;">Actual Trail Comm</th>
+<!-- 				<th style="text-align:center;">Revenue Difference</th> -->
+				<th style="text-align:center;">Remark</th>
+			</tr>
+			<apex:repeat value="{!lstARPPDetails}" var="arppDetails" >
+				<tr>
+					<td>{!arppDetails.Name}</td>
+					<td>{!arppDetails.Product__r.Product_Name__c}</td>
+					<td>{!Case(arppDetails.Type__c, 
+					     'Life Insurance', 'LI', 'General Insurance', 'GI', 'SIP','SIP', 
+					     'Lumpsum','Lumpsum', 'Bond','Bond','Fixed Deposit','FD','Loan', 'Loan','')}</td>
+					<td>{!arppDetails.Action_Plan_Amount__c}</td>
+					<td>{!arppDetails.Action_Plan_Upfront_Comm_Amount__c}</td>
+					<td>{!arppDetails.Action_Plan_Trial_Comm_Amount__c}</td>
+					<td>{!arppDetails.Remark__c}</td>
+				    <td>{!arppDetails.Execution_Tracker_Actual_Product__r.Product_Name__c}</td>
+					<td>{!arppDetails.Execution_Tracker_Amount__c}</td>
+					<td>{!arppDetails.Execution_Tracker_upfront_Comm_Amount__c}</td>
+					<td>{!arppDetails.Execution_Tracker_Trial_Comm_Amount__c}</td>
+<!-- 					<td>{!arppDetails.Revenue_Difference__c}</td> -->
+					<td>{!arppDetails.ET_Remark__c}</td>
+					
+				</tr>	
+			</apex:repeat>
+			<tr>
+				<td> </td>
+				<td></td>
+				<td><b>Total</b></td>
+				<td><b>{!expectedAmount}</b></td>	
+				<td><b>{!expectedUpfont}</b></td>
+				<td><b>{!expectedTrail}</b></td>
+				<td></td>
+				<td></td>
+				<td><b>{!actualAmount}</b></td>	
+				<td><b>{!actualUpfont}</b></td>	
+				<td><b>{!actualTrail}</b></td>	
+									
+<!-- 			<td><b><apex:outputText value="{0, number,###,####}"> 
+						 <apex:param value="{!revenueDiffernece}" /> 
+						</apex:outputText>
+				</b></td>-->
+				
+			</tr>
+		</table>
+	</apex:pageBlock>
+
+</apex:page>

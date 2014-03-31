@@ -1,0 +1,64 @@
+<apex:page controller="UserLoginHistoryExportToExcelController" sidebar="false" readOnly="true" showHeader="false" contenttype="application/vnd.ms-excel#Login_History_Details.xls" standardStylesheets="false">
+<!-- contentType="application/vnd.ms-excel#test.xls" -->
+		<head>
+		 	<title>Login History</title>
+		</head>
+		
+		<table>
+			<tr>
+				<td>Start Date :</td>
+				<td>{!strStartDate}</td>
+			</tr>
+			<tr>
+				<td>End Date :</td> 
+				<td>{!strEndDate}</td>
+			</tr>
+			<tr></tr>
+		</table>
+		
+				
+		<apex:outputPanel id="loginHistoryId" rendered="{!strType == 'detail'}">
+			<table width="90%" border="1" cellpadding="2" cellspacing="0" id="dataTable1">
+				<tr>
+					<th>User Name</th>
+					<th>Login Date</th>
+					<th>Count</th>
+				</tr>
+				<apex:repeat value="{!lstLoginHistoryDetail}" var="loginHistory">
+					<tr>
+						<td>
+							{!loginHistory.UserName}
+						</td>
+						<td>
+							{!loginHistory.strDate}
+						</td>
+						<td>
+							{!loginHistory.countDate} 
+						</td>
+					</tr>
+				</apex:repeat>			
+			</table>
+		</apex:outputPanel>
+		
+		<apex:outputPanel id="calculatePercent" rendered="{!strType == 'percentage'}">	
+			<table width="90%" border="1" cellpadding="2" cellspacing="0" id="dataTable1">
+				<tr>
+					<th>User Name</th>
+					<th>Percentage(%)</th>
+				</tr>
+				<apex:repeat value="{!lstLoginHistoryDetailwithPercent}" var="loginHistory">
+					<tr>
+						<td>
+							{!loginHistory.UserName}
+						</td>
+						<td>
+							<apex:outputText value="{0, number,0.00}" >
+		                        <apex:param value="{!loginHistory.percentage}"/>
+		                    </apex:outputText>
+						</td>
+					</tr>
+				</apex:repeat>			
+			</table>
+		</apex:outputPanel>
+		
+</apex:page>

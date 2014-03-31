@@ -1,0 +1,10 @@
+<body >
+<div style="width:641px;height:971px;background-color: #F3F7DE" >
+
+<img src="https://emea.salesforce.com/servlet/servlet.ImageServer?id=01520000000sXIl&oid=00DW00000012h2l"/>
+<div style="font-family:Book Antiqua;font-size:16px;width:641px; height:30px;font-color:#000000;">
+<span style="padding-left:15px;">Dear  {!Lead.Name},</span></div>
+<img src="https://emea.salesforce.com/servlet/servlet.ImageServer?id=01520000000sXIq&oid=00DW00000012h2l"/>
+</div>
+
+</body>

@@ -1,0 +1,63 @@
+<messaging:emailTemplate subject="Happy Anniversary" recipientType="Lead" relatedToType="Lead">
+<messaging:htmlEmailBody >
+<table border="0">
+    <tr>
+        <td><br/></td>
+    </tr>
+
+    <tr>
+        <td width="5%"></td>
+        <td width="95%" align="center" style="font-size:24px;font-weight:bold;font-face:Arial;color:green;">
+            Remember the yesterdays
+        </td>
+    </tr>
+    <tr>
+        <td width="5%"></td>
+        <td width="95%" align="center" style="font-size:24px;font-weight:bold;font-face:Arial;color:green;">
+            Plan your tomorrows            
+        </td>
+    </tr>
+    <tr>
+        <td width="5%"></td>
+        <td width="95%" align="center" style="font-size:24px;font-weight:bold;font-face:Arial;color:green;">
+            And celebrate your today            
+        </td>
+    </tr>
+    <tr>
+        <td><br/></td>
+    </tr>
+
+    <tr>
+        <td width="5%"></td>
+        <td width="95%" align="center" style="font-size:30px;font-weight:bold;font-face:Arial;color:rgb(255,0,0);font-style:italic;">
+            Happy anniversary to a lovely couple            
+        </td>
+    </tr>
+
+    <tr>
+        <td><br/></td>
+    </tr>
+    <tr >
+        <td width="5%"></td>
+        <td width="95%" align="center" style="font-size:30px;font-weight:bold;font-face:Arial;font-style:italic;">
+          Ffreedom wishes you love n joy forever
+           
+        </td>
+        
+    </tr>
+   <tr>
+        <td><br/></td>
+    </tr>
+
+     <tr>
+        <td><br/></td>
+    </tr>
+    <tr>
+     <td width="5%"></td>
+        <td align="center">
+            <apex:image url="https://emea.salesforce.com/servlet/servlet.ImageServer?id=01520000000ribD&oid=00D20000000JZVv" width="320px;" height="100px;" style="align:center;"/>
+        </td>
+    </tr>
+</table>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

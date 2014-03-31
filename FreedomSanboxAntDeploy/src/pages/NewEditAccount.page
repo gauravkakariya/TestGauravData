@@ -1,0 +1,1000 @@
+<apex:page standardcontroller="Account" extensions="NewEditAccountController" id="Page" tabstyle="Account" >
+
+
+
+<style>
+     .hidePage{
+     position: absolute;
+      top: 0;
+      bottom: 0%;
+      left: 0;
+      right: 0%;
+      background-color: black;
+      opacity: .5;
+      z-index: 99; 
+     }
+
+</style>
+
+ <script type="text/javascript"> 
+ 
+    
+  function openLookup(baseURL, width, modified, searchParam){
+    var originalbaseURL = baseURL;
+    var originalwidth = width;
+    var originalmodified = modified;
+    var originalsearchParam = searchParam;
+    
+    var lookupType = baseURL.substr(baseURL.length-3, 3);
+    if (modified == '1') baseURL = baseURL + searchParam;
+ 
+    var isCustomLookup = false;
+ 
+    // Following "001" is the lookup type for accountObj object so change this as per your standard or custom object
+    if(lookupType == "001")
+    {
+      var urlArr = baseURL.split("&");
+      var txtId = '';
+      if(urlArr.length > 2) {
+        urlArr = urlArr[1].split('=');
+        txtId = urlArr[1];
+      }
+    
+      var  clientRecord = document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU:BU_LookUp_Client');
+      var  generalRecord = document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_General:BU_LookUp_General');
+      var  masterRecord = document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_Master:BU_LookUp_Master');
+      var  influencerRecord = document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_Influencer:BU_LookUp_Influencer');
+      
+      // Following is the url of Custom Lookup page. You need to change that accordingly
+      baseURL = "/apex/AccountLookUpCustom?txt=" + txtId;
+     /*
+      if((clientRecord == '' ||  clientRecord ==null || clientRecord.value == '') && ('{!isClient == true}') ){
+          baseURL = baseURL  + "&BU_Name=" + document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU:BU_LookUp_Client').value;
+          baseURL = baseURL  + "&RecordType=" + '{!$CurrentPage.parameters.RecordType}';
+      }
+     */
+      if((clientRecord != '' && clientRecord !=null  && clientRecord.value != '') && ('{!isClient}') ){
+          baseURL = baseURL  + "&BU_Name=" + document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU:BU_LookUp_Client').value;
+          baseURL = baseURL  + "&RecordType=" + '{!$CurrentPage.parameters.RecordType}';
+      }
+      if(generalRecord != '' && generalRecord !=null  && generalRecord.value != '' && '{!isGeneral == true}'){
+          baseURL = baseURL  + "&BU_Name=" + document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_General:BU_LookUp_General').value;
+          baseURL = baseURL  + "&RecordType=" + '{!$CurrentPage.parameters.RecordType}';
+      }
+      if(masterRecord != '' && masterRecord !=null && masterRecord.value != '' &&  '{!isMaster == true}'){
+          baseURL = baseURL  + "&BU_Name=" + document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_Master:BU_LookUp_Master').value;
+          baseURL = baseURL  + "&RecordType=" + '{!$CurrentPage.parameters.RecordType}';
+      }
+      if(influencerRecord != '' && influencerRecord !=null && influencerRecord.value != '' && '{!isInfluencer == true}'){
+          baseURL = baseURL  + "&BU_Name=" + document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_Influencer:BU_LookUp_Influencer').value;
+          baseURL = baseURL  + "&RecordType=" + '{!$CurrentPage.parameters.RecordType}';
+      }
+     
+      // Following is the id of apex:form control "myForm". You need to change that accordingly
+      baseURL = baseURL + "&frm=" + escapeUTF("{!$Component.myForm}");
+      if (modified == '1') {
+        baseURL = baseURL + "&lksearch=" + searchParam;
+      }
+ 
+      // Following is the ID of inputField that is the lookup to be customized as custom lookup
+      if(txtId.indexOf('accountObj') > -1 ){
+        isCustomLookup = true;
+      }
+    }else if(lookupType == "{!objPrefixTeamMember}")
+    {
+          var urlArr = baseURL.split("&");
+          var txtId = '';
+          if(urlArr.length > 2) {
+            urlArr = urlArr[1].split('=');
+            txtId = urlArr[1];
+          }
+        
+          // Following is the url of Custom Lookup page. You need to change that accordingly
+          baseURL = "/apex/TeamMemberLookup?txt=" + txtId;
+          
+          // Following is the ID of inputField that is the lookup to be customized as custom lookup
+          if(txtId.indexOf('PST_LookUp') > -1 ){
+            isCustomLookup = true;
+            baseURL = baseURL + "&TM_Type={!$Label.Team_Member_Type_PST}";
+          }else if(txtId.indexOf('MST_LookUp') > -1){
+             isCustomLookup = true;
+            baseURL = baseURL + "&TM_Type={!$Label.Team_Member_Type_MST}";
+          }else if(txtId.indexOf('MST2_LookUp') > -1){
+             isCustomLookup = true;
+            baseURL = baseURL + "&TM_Type={!$Label.Team_Member_Type_MST2}";
+          }else if(txtId.indexOf('FPA_LookUp') > -1){
+             isCustomLookup = true;
+            baseURL = baseURL + "&TM_Type={!$Label.Team_Member_Type_FPA}";
+          }
+          
+          
+          if(document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU:BU_LookUp_Client') != null && document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU:BU_LookUp_Client').value != ''){
+              baseURL = baseURL  + "&BU_Name=" + document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU:BU_LookUp_Client').value;
+          }
+          else if(document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_General:BU_LookUp_General') != null && document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_General:BU_LookUp_General').value != ''){
+              baseURL = baseURL  + "&BU_Name=" + document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_General:BU_LookUp_General').value;
+              baseURL = baseURL  + "&RecordType=" + '{!$CurrentPage.parameters.RecordType}';
+             }
+          else if(document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_Master:BU_LookUp_Master') != null && document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_Master:BU_LookUp_Master').value != ''){
+              baseURL = baseURL  + "&BU_Name=" + document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_Master:BU_LookUp_Master').value;
+              baseURL = baseURL  + "&RecordType=" + '{!$CurrentPage.parameters.RecordType}';
+          }
+          else if(document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_Influencer:BU_LookUp_Influencer') != null && document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_Influencer:BU_LookUp_Influencer').value != ''){
+              baseURL = baseURL  + "&BU_Name=" + document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU_Influencer:BU_LookUp_Influencer').value;
+              baseURL = baseURL  + "&RecordType=" + '{!$CurrentPage.parameters.RecordType}';
+          }
+        
+          // Following is the id of apex:form control "myForm". You need to change that accordingly
+          baseURL = baseURL + "&frm=" + escapeUTF("{!$Component.myForm}");
+          if (modified == '1') {
+            baseURL = baseURL + "&lksearch=" + searchParam;
+          }
+  
+    }
+ 
+ 
+    if(isCustomLookup == true){
+      openPopup(baseURL, "lookup", 350, 480, "width="+width+",height=480,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no", true);
+    }
+    else {
+      if (modified == '1') originalbaseURL = originalbaseURL + originalsearchParam;
+      openPopup(originalbaseURL, "lookup", 350, 480, "width="+originalwidth+",height=480,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no", true);
+    } 
+  }
+</script>
+
+<apex:form id="myForm">
+<apex:pageMessages id="MessageElement" showDetail="false"/>
+<apex:sectionHeader title="Accounts"/>
+    
+    <apex:pageBlock id="PageBlock">
+        <!--    Client RecordType--- -->
+   <!-- <apex:outputpanel rendered="{!OR(ISNULL(accountObj.RecordTypeId),CASESAFEID(accountObj.RecordTypeId)='01220000000DnK3AAK')}" > -->
+         <apex:outputpanel rendered="{!isClient}"> 
+                <apex:pageblocksection title="Entity Information" showheader="true" columns="2">
+                    
+<!--                      <apex:pageblocksectionitem > -->
+<!--                         <apex:outputlabel value="Entity Owner"/> -->
+<!--                         <apex:outputpanel > -->
+<!--                         <apex:outputfield value="{!currentUser.Name}"/> -->
+<!--                         </apex:outputpanel> -->
+<!--                      </apex:pageblocksectionitem> -->
+					<apex:pageblocksectionitem >
+					</apex:pageblocksectionitem> 
+                    
+                    
+                    <apex:pageblocksectionitem rendered="{!accountId == null}">
+                        <apex:outputlabel value="Entity RecordType"/>
+                        <apex:outputpanel >
+                        <apex:outputfield value="{!recordTypeforAcc.Name}"/>
+                        </apex:outputpanel>
+                     </apex:pageblocksectionitem>
+                     
+                     <apex:pageblocksectionitem rendered="{!accountId != null}">
+                        <apex:outputlabel value="Entity RecordType"/>
+                        <apex:outputpanel >
+                        <apex:outputfield value="{!accountObj.RecordType.Name}"/>
+                        </apex:outputpanel>
+                     </apex:pageblocksectionitem>
+                     
+                     <apex:pageblocksectionitem rendered="{!accountId == null}">
+                     <apex:outputlabel value="First Name"/>
+                        <apex:outputpanel >
+                            <apex:inputfield id="CreatePageFirstName" value="{!contTemp.Salutation}" required="false"/>
+                            <apex:inputfield value="{!contTemp.FirstName}" required="false"/>
+                        </apex:outputpanel>
+                      </apex:pageblocksectionitem>  
+                      <apex:pageblocksectionitem rendered="{!accountId != null}">
+                       
+                       <apex:outputlabel value="First Name"/>
+                        <apex:outputpanel >
+                            <apex:inputfield id="EditPageFirstName" value="{!accountObj.Salutation}" required="false"/>
+                            <apex:inputfield value="{!accountObj.FirstName}" required="false"/>
+                        </apex:outputpanel>
+                        </apex:pageblocksectionitem>
+                    
+                    <apex:inputfield value="{!accountObj.Related_To__c}" required="false"/>
+                    
+                    <apex:pageblocksectionitem rendered="{!accountId != null}">
+                         <apex:outputlabel value="Last Name"/>
+                        <apex:inputfield value="{!accountObj.LastName}" required="true"/>
+                    </apex:pageblocksectionitem>
+                    
+                    <apex:pageblocksectionitem rendered="{!accountId == null}">
+                         <apex:outputlabel value="Last Name"/>
+                        <apex:inputfield value="{!contTemp.LastName}" required="true"/>
+                    </apex:pageblocksectionitem>
+                    
+                    <apex:inputfield value="{!accountObj.Engagement_Status__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Plan_Generation_Date__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Gender__pc}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Channel_Manager__c}" required="false"/>
+                    <apex:inputField value="{!accountObj.Retirement_Age__c}" />
+                    <apex:inputfield value="{!accountObj.Marital_Status__pc}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonBirthdate}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Marriage_Date__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Client_Code__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonHomePhone}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PAN_ID__pc}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Office_Phone1__pc}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonMobilePhone}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Passport__pc}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Alternate_Mobile__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Fax}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Entity_Status__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.PersonEmail}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Entity_Type__c}" required="false"/>
+<!--                      <apex:inputfield value="{!accountObj.Entity_Type__c}" required="true"/> -->
+                    <apex:inputfield value="{!accountObj.Alternate_E_Mail_Address__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Critical_Notes__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingStreet}" required="false"/>
+<!--                     <apex:inputfield value="{!accountObj.IsUnsubscribe__c}" required="false"/> -->
+					<apex:inputfield value="{!accountObj.Residential_Status_del__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingCity}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Referred_by_Entity__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingState}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Referred_by_Lead__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingPostalCode}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Designation__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingCountry}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Company_Name__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Industry}" required="false"/>
+                    <apex:inputfield value="{!accountObj.To_set_Birthdate_Alert__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Has_Opted_For_Renewal__c}" required="false"/>
+<!--                     <apex:inputfield value="{!accountObj.IsExecutionTrackerGenerated__c}" required="false"/> -->
+                    <apex:inputfield value="{!accountObj.Renewal_SMS_Sent__c}" required="false"/>
+<!--                     <apex:inputfield value="{!accountObj.PlanGenerationDateFromSystem__c}" required="false"/> -->
+                    <apex:inputfield value="{!accountObj.Tribal_Activity_Flag__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Ffreedom_Score__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonHasOptedOutOfEmail}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Testimonial_Received__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Private_Access__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Website}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Stop_Escalation_Emails__c}" required="false"/>
+                    
+                    
+                </apex:pageblocksection>
+                    
+                <apex:pageblocksection title="Allocated Team Members" showheader="true" columns="2" id="PageBlockSection_BU">
+                    <apex:inputfield value="{!accountObj.Business_Unit__c}" required="true" id="BU_LookUp_Client"/>
+                    <apex:inputfield value="{!accountObj.Virtual_Partner__c}" required="true" id="accountObj"/>
+                    <apex:inputfield value="{!accountObj.PST_Team_Member__c}" required="false" id="PST_LookUp"/>
+                    <apex:inputfield value="{!accountObj.MST_Team_Member__c}" required="false" id="MST_LookUp"/>
+                    <apex:inputfield value="{!accountObj.FPA_Team_Member__c}" required="false" id="FPA_LookUp"/>
+                    <apex:inputfield value="{!accountObj.OPS_Team_Member__c}" required="false" id="MST2_LookUp" />
+<!--                     <apex:inputfield value="{!accountObj.PST_Allocated_Date__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.PST_Allocated_By__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.MST_Allocated_Date__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.MST_Allocated_By__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.FPA_Allocated_Date__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.FPA_Allocated_By__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.OPs_Allocated_Date__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.OPs_Allocated_By__c}" required="false"/> -->
+                    <apex:inputfield value="{!accountObj.Category__c}" required="false"/>
+<!--                     <apex:inputfield value="{!accountObj.Status__c}" required="false"/> -->
+                </apex:pageblocksection>
+                
+                <apex:pageblocksection title="Demat Details" showheader="true" columns="2">
+                    <apex:inputfield value="{!accountObj.Demat_Account_Name__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Demat_Branch_Name__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.DP_Id__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Demat_Account_Number__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Bank_Name__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.bank_Account_Number__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Bank_Account_Type__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Bank_Account_Number2__c}" required="false"/>
+                </apex:pageblocksection>
+                
+                <apex:pageblocksection title="Additional Information" showheader="true" columns="2">
+                    <apex:inputfield value="{!accountObj.Agreement_Structure__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Services_Offered__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Discount__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Recurring_Fees__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.TDS__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Agreement_Received__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.NDC_Payout__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Cheque_date__c}" required="false"/>
+                </apex:pageblocksection>
+                
+                <apex:pageblocksection title="Date Details" showheader="true" columns="2">
+                    <apex:inputfield value="{!accountObj.Data_Collection_Date__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Plan_Writing_Date__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Plan_Approved_Date__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Action_Plan_Generation_Date__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.First_Execution_Completion_Date__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Execution_Completion_Dates__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Entity_Stage__c}" required="false"/>
+<!--                     <apex:inputfield value="{!accountObj.Total_Cycle__c}" required="false"/> -->
+                </apex:pageblocksection>
+                
+                <apex:pageblocksection title="Client satisfaction" showheader="true" columns="2">
+                    <apex:inputfield value="{!accountObj.Client_Category__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Category_Description__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.PersonLeadSource}" required="false"/>
+                </apex:pageblocksection>
+                <apex:pageblocksection title="Description Information" showheader="true" columns="1">
+                    <apex:inputfield value="{!accountObj.Family_Picture__c}" required="false"/>
+                </apex:pageblocksection>
+                
+<!--                 <apex:pageblocksection title="Address Information" showheader="false" columns="2"> -->
+<!--                     <apex:inputfield value="{!accountObj.Company_Address__c}" required="false"/> -->
+<!--                     <apex:pageblocksectionitem /> -->
+<!--                 </apex:pageblocksection> -->
+
+                <apex:pageblocksection title="Financial Planning" showheader="true" columns="2">
+                    <apex:inputfield value="{!accountObj.Trust__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Life_Insurance_Suggested_Cover__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.POA__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Health_History_del__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Execution_Description__c}" required="false"/>
+                </apex:pageblocksection>
+                
+                <apex:pageblocksection title="Financial Plan Date Information" showheader="true" columns="2">
+                    <apex:inputfield value="{!accountObj.Membership_Start_Date__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Membership_End_Date__c}" required="false"/>
+                </apex:pageblocksection>
+                
+                <apex:pageblocksection title="RPP Details" showheader="true" columns="2">
+                    <apex:inputfield value="{!accountObj.Expected_RPP_Amount__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Actual_RPP_Amount__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Expected_Upfront_Commission__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Actual_Upfront_Commission__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Expected_Trail_Commission__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Actual_Trail_Commission__c}" required="false"/>
+                </apex:pageblocksection>
+                
+            </apex:outputpanel>
+
+                  <!-- ********** Output Panel for Record Type : Family Member **********  -->
+<!--             <apex:outputpanel rendered="{!CASESAFEID(accountObj.RecordTypeId)='01220000000HZ0HAAW'}"> -->
+            <apex:outputpanel rendered="{!isFamily}">
+                <apex:pageblocksection title="Entity Information" showheader="true" columns="2">
+                   
+                     <apex:pageblocksectionitem rendered="{!accountId == null}">
+                     <apex:outputlabel value="First Name"/>
+                        <apex:outputpanel >
+                            <apex:inputfield value="{!contTemp.Salutation}" required="false"/>
+                            <apex:inputfield value="{!contTemp.FirstName}" required="false"/>
+                        </apex:outputpanel>
+                      </apex:pageblocksectionitem>  
+                      
+                      <apex:pageblocksectionitem rendered="{!accountId != null}">
+                            <apex:outputlabel value="First Name"/>
+                            <apex:outputpanel >
+                                <apex:inputfield value="{!accountObj.Salutation}" required="false"/>
+                                <apex:inputfield value="{!accountObj.FirstName}" required="false"/>
+                            </apex:outputpanel>
+                        </apex:pageblocksectionitem>
+                        
+                    <apex:inputfield value="{!accountObj.PersonHomePhone}" required="false"/>
+                    
+                     <apex:pageblocksectionitem rendered="{!accountId != null}">
+                         <apex:outputlabel value="Last Name"/>
+                        <apex:inputfield value="{!accountObj.LastName}" required="true"/>
+                    </apex:pageblocksectionitem>
+                    
+                      <apex:pageblocksectionitem rendered="{!accountId == null}">
+                         <apex:outputlabel value="Last Name"/>
+                        <apex:inputfield value="{!contTemp.LastName}" required="true"/>
+                    </apex:pageblocksectionitem>
+                    
+                     <apex:pageblocksectionitem rendered="{!accountId == null}">
+                        <apex:outputlabel value="Entity RecordType"/>
+                        <apex:outputpanel >
+                            <apex:outputfield value="{!recordTypeforAcc.Name}"/>
+                        </apex:outputpanel>
+                     </apex:pageblocksectionitem>
+                     
+                     <apex:pageblocksectionitem rendered="{!accountId != null}">
+                        <apex:outputlabel value="Entity RecordType"/>
+                        <apex:outputpanel >
+                            <apex:outputfield value="{!accountObj.RecordType.Name}"/>
+                        </apex:outputpanel>
+                     </apex:pageblocksectionitem>
+                     
+                     <apex:inputfield value="{!accountObj.Age__c}" required="false"/>
+<!--                     <apex:outputfield value="{!recordTypeforAcc.Name}"/> -->
+                    <apex:inputfield value="{!accountObj.Related_To__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Gender__pc}" required="false"/>
+                    
+<!--                     <apex:inputfield value="{!accountObj.Synched_Date_Time__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Tribal_Activity_Flag__c}" required="false"/> -->
+<!--                     <apex:pageblocksectionitem > -->
+<!--                         <apex:outputlabel value="Entity Owner"/> -->
+<!--                         <apex:outputpanel > -->
+<!--                         <apex:outputfield value="{!currentUser.Name}"/> -->
+<!--                         </apex:outputpanel> -->
+<!--                      </apex:pageblocksectionitem> -->
+                    
+                    <apex:inputfield value="{!accountObj.Marital_Status__pc}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Marriage_Date__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Parent_Entity__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.PersonHomePhone}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonBirthdate}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Office_Phone1__pc}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PAN_ID__pc}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingStreet}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Passport__pc}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingCity}" required="false"/>
+                    <apex:inputfield value="{!accountObj.AnnualRevenue}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingState}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Entity_Status__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingPostalCode}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingCountry}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Client_Code__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonOtherStreet}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Phone}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonOtherCity}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Life_Insurance_Suggested_Cover__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonOtherState}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Testimonial_Received__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonOtherPostalCode}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Company_Address__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonOtherCountry}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Designation__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonMobilePhone}" required="false"/>
+<!--                     <apex:inputfield value="{!accountObj.PlanGenerationDateFromSystem__c}" required="false"/> -->
+                    <apex:inputfield value="{!accountObj.Alternate_Mobile__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Dependent__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Fax}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Total_Cycle__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonEmail}" required="false"/>
+                    <apex:inputfield value="{!accountObj.bank_Account_Number__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Alternate_E_Mail_Address__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Bank_Account_Number2__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Health_History_del__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Actual_RPP_Amount__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Website}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Actual_Upfront_Commission__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Trust__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Actual_Trail_Commission__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.POA__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Actual_Revenue__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.HUF__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.To_set_Birthdate_Alert__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.IsFfreedom_On_Leave__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+<!--                     <apex:inputfield value="{!accountObj.IsUnsubscribe__c}" required="false"/> -->
+<!--                     <apex:pageblocksectionitem /> -->
+                    <apex:inputfield value="{!accountObj.IsExecutionTrackerGenerated__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Ffreedom_Score__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Membership_Start_Date__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Membership_End_Date__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!accountObj.Ffreedom_Kit_Given__c}" required="false"/>
+                </apex:pageblocksection>
+                
+                <apex:pageblocksection title="Demat Details" showheader="true" columns="2">
+                    <apex:inputfield value="{!accountObj.Demat_Account_Name__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.DP_Id__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Demat_Branch_Name__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Demat_Account_Number__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                </apex:pageblocksection>
+                
+                <apex:pageblocksection title="Additional Information" showheader="true" columns="2">
+                    <apex:inputfield value="{!accountObj.Critical_Notes__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                </apex:pageblocksection>
+                <apex:pageblocksection title="Description Information" showheader="false" columns="1">
+                    <apex:inputfield value="{!accountObj.Description}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Services_Offered__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.CrossSell_Upsell_Opp_Sniezed__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Execution_Description__c}" required="false"/>
+                </apex:pageblocksection>
+            </apex:outputpanel>
+
+            <!-- ********** Output Panel for Record Type : General **********  -->
+           <!-- <apex:outputpanel rendered="{!CASESAFEID(accountObj.RecordTypeId)='01220000000Do0o'}"> -->
+                <apex:outputpanel rendered="{!isGeneral}"> 
+                <apex:pageblocksection title="Entity Information" showheader="true" columns="2">
+                	
+                	<apex:inputfield value="{!accountObj.Name}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Type}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Related_To__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Email_ID__c}" required="false"/>
+                    
+                    <apex:pageblocksectionitem rendered="{!accountId == null}">
+                        <apex:outputlabel value="Entity RecordType"/>
+                        <apex:outputpanel >
+                        <apex:outputfield value="{!recordTypeforAcc.Name}"/>
+                        </apex:outputpanel>
+                     </apex:pageblocksectionitem>
+                     
+                     <apex:pageblocksectionitem rendered="{!accountId != null}">
+                        <apex:outputlabel value="Entity RecordType"/>
+                        <apex:outputpanel >
+                        <apex:outputfield value="{!accountObj.RecordType.Name}"/>
+                        </apex:outputpanel>
+                     </apex:pageblocksectionitem>
+                    
+                    <apex:inputfield value="{!accountObj.Engagement_Status__c}" required="false"/> 
+                    <apex:inputfield value="{!accountObj.Channel_Manager__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.ParentId}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Email_Temp__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Entity_Status__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Alternate_Mobile__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Phone}" required="false"/>
+                    
+                    <apex:inputfield value="{!accountObj.Fax}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Website}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Will__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Entity_Stage__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.TDS__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Ffreedom_Kit_Given__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Trust__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!accountObj.Age__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.POA__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!accountObj.Company_Address__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Nomination__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Designation__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.HUF__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Private_Access__c}" required="false"/>   
+                    <apex:inputfield value="{!accountObj.Christmas_Flag__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Entity_Type__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.IsFfreedom_On_Leave__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Total_Flat_Commission__c}" required="false"/>    
+               
+<!--                      <apex:pageblocksectionitem > -->
+<!--                         <apex:outputlabel value="Entity Owner"/> -->
+<!--                         <apex:outputpanel > -->
+<!--                         <apex:outputfield value="{!currentUser.Name}"/> -->
+<!--                         </apex:outputpanel> -->
+<!--                      </apex:pageblocksectionitem>   -->     
+         
+<!--                     <apex:inputfield value="{!accountObj.Execution_Completion_Dates__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Referred_By__c}" required="false"/>   -->
+<!--                     <apex:inputfield value="{!accountObj.CrossSell_Upsell_Date__c}" required="false"/>   -->
+<!--                     <apex:inputfield value="{!accountObj.Client_Category__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Agreement_Structure__c}" required="false"/> -->
+<!-- 	          		 <apex:inputfield value="{!accountObj.Has_Opted_For_Renewal__c}" required="false"/> -->
+<!-- 	                 <apex:inputfield value="{!accountObj.Cheque_Received_Date_2__c}" required="false"/> -->
+<!-- 	                 <apex:inputfield value="{!accountObj.Testimonial_Received__c}" required="false"/> -->
+<!-- 	                 <apex:inputfield value="{!accountObj.Renewal_Due_Date__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Cheque_Received_Date__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Client_Code__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.IsUnsubscribe__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.IsExecutionTrackerGenerated__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.PlanGenerationDateFromSystem__c}" required="false"/> --> 
+<!--                     <apex:inputfield value="{!accountObj.Marriage_Date__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Recurring_Fees__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Agreement_Received__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Discount__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Amount_Received__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Cheque_date__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Cheque_Credited__c}" required="false"/>	 -->
+<!--                     <apex:inputfield value="{!accountObj.IsCustomerPortal__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Dependent__c}" required="false"/> -->
+                   
+<!--                     <apex:inputfield value="{!accountObj.Stop_Escalation_Emails__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Total_Cycle__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Bank_Account_Number2__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.bank_Account_Number__c}" required="false"/> -->
+                   
+                </apex:pageblocksection>
+                
+                <apex:pageblocksection title="Allocated Team Members" showheader="true" columns="2" id="PageBlockSection_BU_General">
+                    <apex:inputfield value="{!accountObj.Business_Unit__c}" required="true" id="BU_LookUp_General"/>
+                     <apex:pageblocksection />
+                    <apex:inputfield value="{!accountObj.PST_Team_Member__c}" required="true" id="PST_LookUp"/>
+                    <apex:inputfield value="{!accountObj.MST_Team_Member__c}" required="true" id="MST_LookUp"/>
+                    <apex:inputfield value="{!accountObj.FPA_Team_Member__c}" required="true" id="FPA_LookUp"/>
+                    <apex:inputfield value="{!accountObj.OPS_Team_Member__c}" required="false" id="MST2_LookUp" />
+                    <apex:inputfield value="{!accountObj.Category__c}" required="false"/>
+<!--                <apex:inputfield value="{!accountObj.Status__c}" required="false"/> -->
+                </apex:pageblocksection>
+                
+                 <apex:pageblocksection title="Entity Global Assumption Details" showheader="true" columns="2">
+                    <apex:inputfield value="{!accountObj.Default_Estimated_Life_Expectancy__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Default_Retirement_Age__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Expected_Return_on_Investment__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Income_Growth_Rate__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Inflation_Rate__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Number_Of_Months__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Equity__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Debt__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Gold__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Stock_Growth_Rate__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Gold_Growth_Rate__c}" required="false"/>
+                </apex:pageblocksection>
+                
+                
+                 <apex:pageblocksection title="Demat Details" showheader="true" columns="2">
+                    <apex:inputfield value="{!accountObj.Demat_Account_Name__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.DP_Id__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Demat_Branch_Name__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Demat_Account_Number__c}" required="false"/>
+                </apex:pageblocksection>
+                
+                
+              
+                
+                <apex:pageblocksection title="RPP Details" showheader="true" columns="2" >
+                 	<apex:inputfield value="{!accountObj.Actual_RPP_Amount__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Actual_Trail_Commission__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Actual_Upfront_Commission__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Expected_RPP_Amount__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Expected_Trail_Commission__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Expected_Upfront_Commission__c}" required="false"/>
+                
+                 </apex:pageblocksection>
+                    
+<!--                 <apex:pageblocksection title="Additional Information" showheader="true" columns="2"> -->
+<!--                     <apex:inputfield value="{!accountObj.Industry}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.NumberOfEmployees}" required="false"/> -->
+<!--                     <apex:pageblocksectionitem /> -->
+<!--                     <apex:inputfield value="{!accountObj.AnnualRevenue}" required="false"/> -->
+<!--                 </apex:pageblocksection> -->
+
+                <apex:pageblocksection title="Address Information" showheader="true" columns="2">
+                  
+                    <apex:inputfield value="{!accountObj.BillingStreet}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingCity}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingState}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingPostalCode}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingCountry}" required="false"/>
+                </apex:pageblocksection>
+                
+                <apex:pageblocksection title="Description Information" showheader="false" columns="1">
+                    <apex:inputfield value="{!accountObj.Description}" required="false"/>
+<!--                     <apex:inputfield value="{!accountObj.Services_Offered__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.CrossSell_Upsell_Opp_Sniezed__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Execution_Description__c}" required="false"/> -->
+<!--                     <apex:inputfield value="{!accountObj.Category_Description__c}" required="false"/> -->
+                    <apex:inputfield value="{!accountObj.Logo__c}" required="false"/>
+                </apex:pageblocksection>
+                
+            </apex:outputpanel>
+
+            <!-- ********** Output Panel for Record Type : Influencers **********  -->
+<!--             <apex:outputpanel rendered="{!CASESAFEID(accountObj.RecordTypeId)='012200000005do3AAA'}"> -->
+            <apex:outputpanel rendered="{!isInfluencer}">
+                <apex:pageblocksection title="Fields" showheader="false" columns="2">
+
+                    <apex:pageblocksectionitem rendered="{!accountId == null}">
+                        <apex:outputlabel value="Entity RecordType"/>
+                        <apex:outputpanel >
+                        <apex:outputfield value="{!recordTypeforAcc.Name}"/>
+                        </apex:outputpanel>
+                     </apex:pageblocksectionitem>
+                     
+                     <apex:pageblocksectionitem rendered="{!accountId != null}">
+                        <apex:outputlabel value="Entity RecordType"/>
+                        <apex:outputpanel >
+                        <apex:outputfield value="{!accountObj.RecordType.Name}"/>
+                        </apex:outputpanel>
+                     </apex:pageblocksectionitem>
+                     
+                     <apex:pageblocksectionitem rendered="{!accountId == null}">
+                     <apex:outputlabel value="First Name"/>
+                        <apex:outputpanel >
+                            <apex:inputfield value="{!contTemp.Salutation}" required="false"/>
+                            <apex:inputfield value="{!contTemp.FirstName}" required="false"/>
+                        </apex:outputpanel>
+                      </apex:pageblocksectionitem>  
+                      <apex:pageblocksectionitem rendered="{!accountId != null}">
+                       <apex:outputlabel value="First Name"/>
+                        <apex:outputpanel >
+                            <apex:inputfield value="{!accountObj.Salutation}" required="false"/>
+                            <apex:inputfield value="{!accountObj.FirstName}" required="false"/>
+                        </apex:outputpanel>
+                        </apex:pageblocksectionitem>
+                    
+                     <apex:pageblocksectionitem rendered="{!accountId != null}">
+                         <apex:outputlabel value="Last Name"/>
+                        <apex:inputfield value="{!accountObj.LastName}" required="true"/>
+                    </apex:pageblocksectionitem>
+                    
+                      <apex:pageblocksectionitem rendered="{!accountId == null}">
+                         <apex:outputlabel value="Last Name"/>
+                        <apex:inputfield value="{!contTemp.LastName}" required="true"/>
+                    </apex:pageblocksectionitem>
+                  
+                   <apex:inputfield value="{!accountObj.BillingStreet}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingCity}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonMobilePhone}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingState}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonEmail}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingPostalCode}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Office_Phone1__pc}" required="false"/>
+                    <apex:inputfield value="{!accountObj.BillingCountry}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonBirthdate}" required="false"/>
+                    <apex:inputfield value="{!accountObj.PersonDepartment}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Office_Phone2__pc}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Tribal_Activity_Flag__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Description}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Virtual_Partner__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Category__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Email_Temp__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Age__c}" required="true"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.IsFfreedom_On_Leave__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.IsUnsubscribe__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Company_Address__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Designation__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.IsExecutionTrackerGenerated__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.PlanGenerationDateFromSystem__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Ffreedom_Score__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Marriage_Date__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.MarriageDate__pc}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.IsCustomerPortal__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Dependent__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Stop_Escalation_Emails__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Total_Cycle__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Testimonial_Received__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    
+<!--                     <apex:inputfield value="{!accountObj.Membership_End_Date__c}" required="false"/> -->
+<!--                     <apex:pageblocksectionitem /> -->
+<!--                     <apex:inputfield value="{!accountObj.Membership_Start_Date__c}" required="false"/> -->
+<!--                     <apex:pageblocksectionitem /> -->
+<!--                     <apex:inputfield value="{!accountObj.Actual_RPP_Amount__c}" required="false"/> -->
+<!--                     <apex:pageblocksectionitem /> -->
+<!--                     <apex:inputfield value="{!accountObj.Actual_Trail_Commission__c}" required="false"/> -->
+<!--                     <apex:pageblocksectionitem /> -->
+<!--                     <apex:inputfield value="{!accountObj.Actual_Upfront_Commission__c}" required="false"/> -->
+<!--                     <apex:pageblocksectionitem /> -->
+<!--                     <apex:inputfield value="{!accountObj.Expected_RPP_Amount__c}" required="false"/> -->
+<!--                     <apex:pageblocksectionitem /> -->
+<!--                     <apex:inputfield value="{!accountObj.Expected_Trail_Commission__c}" required="false"/> -->
+<!--                     <apex:pageblocksectionitem /> -->
+<!--                     <apex:inputfield value="{!accountObj.Expected_Upfront_Commission__c}" required="false"/> -->
+<!--                     <apex:pageblocksectionitem /> -->
+                    
+                    <!--                  <apex:pageblocksectionitem > -->
+<!--                         <apex:outputlabel value="Entity Owner"/> -->
+<!--                         <apex:outputpanel > -->
+<!--                         <apex:outputfield value="{!currentUser.Name}"/> -->
+<!--                         </apex:outputpanel> -->
+<!--                      </apex:pageblocksectionitem> -->
+                     
+<!--                     <apex:outputfield value="{!accountObj.OwnerId}"/> -->
+
+                </apex:pageblocksection>
+            </apex:outputpanel>
+
+            <!-- ********** Output Panel for Record Type : Master **********  -->
+<!--             <apex:outputpanel rendered="{!CASESAFEID(accountObj.RecordTypeId)='012000000000000AAA'}"> -->
+        <apex:outputpanel rendered="{!isMaster}">
+                <apex:pageblocksection title="Entity Information" showheader="true" columns="2">
+                    <apex:inputfield value="{!accountObj.Email_ID__c}" required="false"/>
+                     <apex:outputfield value="{!recordTypeforAcc.Name}"/>
+                    <apex:outputfield value="{!accountObj.OwnerId}"/>
+                    <apex:inputfield value="{!accountObj.ParentId}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Name}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Type}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Phone}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Website}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Alternate_Mobile__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Channel_Manager__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Client_Code__c}" />
+                    <apex:inputfield value="{!accountObj.Related_To__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Agreement_Structure__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Alternate_E_Mail_Address__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Recurring_Fees__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Parent_User__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Agreement_Received__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Will__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Discount__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Trust__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Cheque_Credited__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Nomination__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Entity_Stage__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.POA__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Entity_Status__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.HUF__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Demat_Account_Name__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Christmas_Flag__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.DP_Id__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.IsFfreedom_On_Leave__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Demat_Account_Number__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.IsUnsubscribe__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Demat_Branch_Name__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.IsExecutionTrackerGenerated__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.TDS__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Private_Access__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Referred_By__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.IsCustomerPortal__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.CrossSell_Upsell_Date__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Stop_Escalation_Emails__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Client_Category__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.IsCreatedByPartner__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Ffreedom_Kit_Given__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.IsSynched__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Email_Temp__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Renewal_Due_Date__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Has_Opted_For_Renewal__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Age__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Company_Address__c}" required="true"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Designation__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.PlanGenerationDateFromSystem__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Ffreedom_Score__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Marriage_Date__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Dependent__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Entity_Type__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Total_Cycle__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Plan_Generation_Date__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Portal_Id__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Portal_Parent_Entity__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Synched_Date_Time__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.From_Portal__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.MST_Old_Value_For_Approval__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.MST2_Old_Value_For_Approval__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.PST_Old_Value_For_Approval__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.FPA_Old_Value_For_Approval__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                </apex:pageblocksection>
+                
+                <apex:pageblocksection title="Allocated Team Members" showheader="true" columns="2" id="PageBlockSection_BU_Master">
+                    <apex:inputfield value="{!accountObj.Business_Unit__c}" required="true" id="BU_LookUp_Master"/>
+                    <apex:inputfield value="{!accountObj.PST_Team_Member__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.MST_Team_Member__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.FPA_Team_Member__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.OPS_Team_Member__c}" required="true"/>
+                    <apex:inputfield value="{!accountObj.Category__c}" required="false"/>
+<!--                     <apex:inputfield value="{!accountObj.Status__c}" required="false"/> -->
+                </apex:pageblocksection>
+             
+               <apex:pageblocksection title="Additional Information" showheader="true" columns="2">
+                    <apex:inputfield value="{!accountObj.Agreement_Structure__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Recurring_Fees__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Discount__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Agreement_Received__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Amount_Received__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Cheque_date__c}" required="false"/>
+                </apex:pageblocksection>
+                <apex:pageblocksection title="Entity Details" showheader="true" columns="2">
+                    <apex:inputfield value="{!accountObj.Data_Collection_Date__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Plan_Writing_Date__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Plan_Approved_Date__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Action_Plan_Generation_Date__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.First_Execution_Completion_Date__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!accountObj.Cheque_Received_Date__c}" required="true"/>
+                    <apex:pageblocksectionitem />
+                </apex:pageblocksection>
+                <apex:pageblocksection title="Description Information" showheader="true" columns="1">
+                    <apex:inputfield value="{!accountObj.Description}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Services_Offered__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.CrossSell_Upsell_Opp_Sniezed__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Execution_Description__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Category_Description__c}" required="false"/>
+                    <apex:inputfield value="{!accountObj.Family_Picture__c}" required="false"/>
+                </apex:pageblocksection>
+                <apex:pageblocksection title="Subscriptions" showheader="true" columns="2">
+                    <apex:pageblocksectionitem />
+                    <apex:pageblocksectionitem />
+                    <apex:pageblocksectionitem />
+                </apex:pageblocksection>
+             
+             
+            </apex:outputpanel>
+                <apex:pageblockbuttons >
+                        
+                     <apex:outputpanel rendered="{!isGeneral == true && accountId != null}">    
+                        <!-- <input type="button" class="btn" value="Save Input" onclick="getClientLeadCountAF()" /> -->
+                        <apex:commandButton value="Save" status="loading"  action="{!getClientandLeadCount}" rerender="MessageElement,ShowClientCounterPanel" onComplete="displayClientandLead();"/>
+                        <apex:actionFunction status="loading" name="getClientLeadCountAF" action="{!getClientandLeadCount}"  onComplete="displayClientandLead();return false;" />
+                        <apex:outputPanel id="ShowClientCounterPanel" >
+                            <script>
+                            function displayClientandLead(){
+                                var conStatus;
+                                var isGeneralRecType = '{!isGeneral}';
+                                var relatedCount = '{!relatedClientandLeadCount}';
+                                var isClientCountDoneJS = '{!isClientCountDone}';
+                                //alert(isClientCountDoneJS);
+                                if((isGeneralRecType != null || isGeneralRecType !='') && isGeneralRecType == 'true' && relatedCount != '' )
+                                {
+                                    conStatus = confirm(relatedCount);
+                                    if(conStatus)
+                                    {
+                                        callSave();
+                                    }   
+                                }
+                            }
+                            
+                            function loading(val) {
+                                if (val) {
+                                  document.getElementById('contentLoading').style.display = 'block';
+                                  document.getElementById('contentLoading').className = 'hidePage';
+                                  
+                                }
+                                else {
+                                  document.getElementById('contentLoading').style.display = 'none';
+                                  document.getElementById('contentLoading').className = '';
+                                }
+                             }
+                            </script>
+                          </apex:outputPanel>
+                        <apex:actionFunction name="callSave" action="{!saveAccount}" status="loading"/>
+                        <apex:actionStatus id="loading" onstart="loading(true)" onstop="loading(false)" /> 
+                        <div id="contentLoading" style="display:none;">
+                            <div style="text-align: center;">
+                              <img src="/img/loading.gif" alt="Loading graphic" style="top:50px;" />
+                            </div>
+                        </div>
+                        
+                      </apex:outputpanel>
+                      
+                      
+                       <apex:outputpanel rendered="{!(accountId == null || accountId == '') || isClient == true || isFamily == true || isInfluencer == true || (isGeneral == true && (accountId == null || accountId == ''))}"> 
+                        <apex:commandButton status="saveLoading" value="Save" action="{!saveAccount}" rerender="MessageElement,hidePage" />
+<!--                         <input type="button" class= "btn" onclick="savePersonAccountAF();" value="Save" /> -->
+<!--                         <apex:actionFunction status="saveLoading" name="savePersonAccountAF" action="{!saveAccount}" rerender="MessageElement,hidePage" /> -->
+                        <apex:actionStatus id="saveLoading" onstart="loading(true)" onstop="loading(false)" /> 
+                        <div id="contentLoading" style="display:none;">
+                            <div style="text-align: center;">
+                              <img src="/img/loading.gif" alt="Loading graphic" style="top:50px;" />
+                            </div>
+                        </div>
+                        <apex:outputPanel id="hidePage">
+                            <script>
+                                function loading(val) {
+                                        if (val) {
+                                          document.getElementById('contentLoading').style.display = 'block';
+                                          document.getElementById('contentLoading').className = 'hidePage';
+                                          //document.getElementById('contentLoaded').style.display = 'none';
+                                        }
+                                        else {
+                                          document.getElementById('contentLoading').style.display = 'none';
+                                          document.getElementById('contentLoading').className = '';
+                                          //document.getElementById('contentLoaded').style.display = 'block';
+                                        }
+                                }
+                            
+                            </script>
+                        </apex:outputPanel>
+                      </apex:outputpanel>
+                      
+                    <apex:commandbutton value="Cancel" action="{!cancel}"/>
+                </apex:pageblockbuttons>
+        </apex:pageblock>
+    </apex:form>
+    
+</apex:page>

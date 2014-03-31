@@ -1,0 +1,257 @@
+<!-- ;
+    Version     Version Author     Date           Comments
+    1.0         Aditi            15/03/2013      Display all Pop Up fields on ET page for Life Insurance MET Member and Ops Team
+-->
+<apex:page controller="EditETforGeneralInsurance" showHeader="false" sidebar="false" tabStyle="Execution_Tracker__c">
+
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>  
+<!-- 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" /> -->
+<!-- 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+<!-- 	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>   -->
+
+		<link rel="stylesheet" href="{!URLFOR($Resource.AutoComplete, 'jqueyCss/jquery-ui.css')}" />
+		<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-1.9.1.js')}"></script>
+		<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-ui.js')}"></script>
+		
+		
+	<script language="javascript" type="text/javascript">
+       $(document).ready(function () {
+          //alert("hi");
+       });
+       
+       function checkAgreedAmountFilled()
+	    {
+	    	if($(".agreedAmount").val() == null || $(".agreedAmount").val() == 0.0){
+	    		alert('{!$Label.Agreed_Amount}');
+	    		$(".AssigntoOps").prop('checked', false);
+	    		return false;
+	    	}
+	    }
+       
+     </script> 
+	
+	<script>
+		function populateParent(value)
+	    {
+	       var isError = value;
+	       
+	        if('{!$CurrentPage.parameters.type}' == 'other')
+	    	{
+	    		if (isError == 'false')
+	               return false; 
+	    		window.close();
+	    	}
+	    	else
+	    	{ 
+	    	   if (isError == 'false')
+	               return false; 
+               window.close();
+	    	   //return top.window.opener.closeETWindow();
+	    	}
+	        return false;
+	        
+	    }
+	    
+	</script>
+	<style>
+		.inputProductName{
+            	padding: 0px;
+         }
+    </style>
+				
+	<apex:form id="frm">
+<!-- 		<apex:actionFunction name="changeProductName" action="{!getProductName}" reRender="pb" status="statusId"/> -->
+		<apex:pageBlock title="Execution Tracker" rendered="{!!isReadOnly}" id="pb">
+		 	<apex:pageMessages id="Pagemsg"/>	
+			<apex:pageBlockButtons > 
+            	<apex:commandButton value="Save" rendered="{!!isClosed}" action="{!updateExecutionTracker}" rerender="Pagemsg"  oncomplete="return populateParent('{!isError}');" status="statusId"/>
+               	<input type="button" class="btn" value="Cancel"  onClick="return window.close();" />
+            </apex:pageBlockButtons>
+             <apex:actionStatus stopText="" id="statusId">
+                	<apex:facet name="start">
+               			<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                    		<img src="/img/loading.gif" width="16" height="16"/>
+						</apex:outputPanel>
+                	</apex:facet>
+        	</apex:actionStatus>  
+            <!-- Pop Up for MET Team -->
+          	<apex:outputPanel rendered="{!isGeneralInsurance}">
+          	<apex:sectionHeader title="Edit Execution Tracker for MET Team"/>
+          	 	<apex:pageBlockSection title="General Insurance Advise" columns="2" id="pbs1">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insured__c}" label="Entity Name "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Sum_Assured_Rs__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Policy_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Premium_Amount_Rs__c}"/>
+			    </apex:pageBlockSection> 
+			    <apex:pageBlockSection title="Insurer Details" columns="2" id="pbs2">
+<!-- 					<apex:inputField value="{!objExecutionTracker.Insured_Name__c}"/> -->
+						<apex:pageBlockSectionItem >
+						 	<apex:outputLabel value="Insured "/> 
+							<apex:selectList value="{!objExecutionTracker.Insured_Name__c}" size="1"  >
+	                             <apex:selectOptions value="{!Entities}"></apex:selectOptions>
+	                   		</apex:selectList>
+					 </apex:pageBlockSectionItem>
+<!-- 					<apex:inputField value="{!objExecutionTracker.Sum_Assured__c}" label="Agreed Sum Assured " required="true"/> -->
+<!-- 				<apex:inputField value="{!objExecutionTracker.Policy_Name__c}" label="Policy Name "/> -->
+					<apex:inputField style="width:40%;" id="policyTypeId" value="{!objExecutionTracker.Asset_Class_Policy_Type__c}" label="Policy Type " />
+					<apex:inputField value="{!objExecutionTracker.Executed_Product_Name__c}" id="productNameId" label="Agreed Product Name " styleClass="inputProductName" required="true" />
+			      	<apex:outputText value="{!objExecutionTracker.Total_Remaining_Balance__c}" label="Balance Remaining" id="balance"/> 
+					<apex:inputField value="{!objExecutionTracker.Premium__c}" label="Premium " required="true"/>
+					<apex:inputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Agreed Sum Assured " required="true" id="agreedAmount" styleclass="agreedAmount"/>
+					<apex:inputField style="width:85%;" value="{!objExecutionTracker.Agreed_General_Insurance_Company_Name__c}" label="Agreed Insurance Company Name " required="true"/>
+					<apex:inputField value="{!objExecutionTracker.Policy_Punch_date__c}" required="true"/>
+					<apex:inputField style="width:40%;" value="{!objExecutionTracker.Mode__c}" label="Payment Mode" required="true"/>
+					<apex:inputField value="{!objExecutionTracker.Preferable_Medical_date__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Login_Date__c}"/> 
+<!-- 					<apex:pageBlockSectionItem rendered="{!IF(objExecutionTracker.Application_Status__c == $Label.Forms_Provided || objExecutionTracker.Application_Status__c == $Label.Forms_Handed,true,false)}"> -->
+<!-- 					 	<apex:outputLabel value="Application Status"/>  -->
+<!-- 						<apex:selectList value="{!objExecutionTracker.Application_Status__c}" size="1"  > -->
+<!--                              <apex:selectOptions value="{!applicationStatus}"></apex:selectOptions> -->
+<!--                    		</apex:selectList> -->
+<!-- 				 	</apex:pageBlockSectionItem> -->
+					<apex:inputField value="{!objExecutionTracker.Target_Revenue__c}"/>
+					<apex:inputField onClick="checkAgreedAmountFilled();" value="{!objExecutionTracker.AssignToOps__c}" label="Assign to Ops" rendered="{!IF(objExecutionTracker.AssignToOps__c == false, true,false)}" id="AssigntoOps" StyleClass="AssigntoOps"/>
+                    <apex:outputField value="{!objExecutionTracker.AssignToOps__c}" label="Assign to Ops" rendered="{!IF(objExecutionTracker.AssignToOps__c == true, true,false)}"/>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Assign Task"/>
+						<apex:commandLink action="{!assignTask}" value="Click here" id="theCommandLink"/>
+					</apex:pageBlockSectionItem>
+					<apex:inputField value="{!objExecutionTracker.Remarks__c}" label="MET Remark"/>
+				     <script>
+							$(document).ready(function()
+					        {
+					        	var availableProductName =[{!strProductName}];
+					            $(".inputProductName").autocomplete({
+					        		source: availableProductName,
+								  	select: function(event, ui) 
+								  	{
+									  	var strVal = ui.item.value;	  
+								  	} 
+								});		
+					        
+					        });
+				      </script>
+                </apex:pageBlockSection> 
+                
+          	 </apex:outputPanel>
+          	 <!-- End of Pop Up for MET Team -->
+          	
+			 <!-- Pop Up for Operations Team -->
+          	 <apex:outputPanel rendered="{!isGeneralInsuranceForOps}">
+          	 <apex:sectionHeader title="Edit Execution Tracker for Operations Team"/>
+          	 	<apex:pageBlockSection title="General Insurance Advise" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insured__c}" label="Entity Name "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Sum_Assured_Rs__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Policy_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Premium_Amount_Rs__c}"/>
+			    </apex:pageBlockSection>
+			    <apex:pageBlockSection title="Execution Tracker Details" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Insured_Name__c}"/>
+					<apex:outputText value="{!objExecutionTracker.Total_Remaining_Balance__c}" label="Balance Remaining" id="balance"/> 
+					<apex:inputField value="{!objExecutionTracker.Documents_received_date__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Agreed Sum Assured "/>
+					<apex:inputField value="{!objExecutionTracker.Login_Date__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Gross_Premium__c}" label="Gross Premium "/>
+					<apex:inputField value="{!objExecutionTracker.Net_Premium__c}" label="Net Premium "/>
+					<apex:inputField value="{!objExecutionTracker.Policy_Status__c}" label="Status "/>
+					<apex:outputField value="{!objExecutionTracker.Remarks__c}" label="MET Remark"/>
+					<apex:inputField value="{!objExecutionTracker.Cancelled_Reason__c}" label="Rejection Reason "/>
+					<apex:inputField value="{!objExecutionTracker.Remark_OpsTeam__c}" label="OPS Remark "/>
+					<apex:inputField value="{!objExecutionTracker.Policy_Number__c}" label="Policy No "/>
+					<apex:inputField value="{!objExecutionTracker.Policy_update_date__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Policy_document_received__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Risk_Commencement_Date__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Policy_Document_received_date__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Target_Revenue__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Booked_Revenue__c}" label="Booked Revenue "/>
+					<apex:inputField value="{!objExecutionTracker.Refund_Date__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Refund_Amount__c}"/>
+                </apex:pageBlockSection> 
+          	 </apex:outputPanel>
+          	<!--End of Pop Up for Operations Team -->
+		</apex:pageBlock>
+		 
+		 
+		<!--Read only page for MET member and Operation Team member when Application Status = 'Processed'-->
+		<apex:pageBlock title="Execution Tracker" rendered="{!isReadOnly}">
+		<apex:pageMessages id="Pagemsg1"/>
+			<apex:pageBlockButtons >
+				<apex:commandButton value="Save" rendered="{!isGeneralInsuranceForOps}" action="{!updateExecutionTracker}" rerender="Pagemsg1"  oncomplete="return populateParent('{!isError}');" status="statusId1"/>
+               	<input type="button" class="btn" value="Cancel"  onClick="return window.close();" />
+            </apex:pageBlockButtons>
+        	<apex:actionStatus stopText="" id="statusId1">
+                	<apex:facet name="start">
+               			<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                    		<img src="/img/loading.gif" width="16" height="16"/>
+						</apex:outputPanel>
+                	</apex:facet>
+        	</apex:actionStatus>  
+          	<apex:outputPanel rendered="{!isGeneralInsurance}">
+          	<apex:sectionHeader title="Edit Execution Tracker for MET Team"/>
+          	 	<apex:pageBlockSection title="General Insurance Advise" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insured__c}" label="Entity Name "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Sum_Assured_Rs__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Policy_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Premium_Amount_Rs__c}"/>
+			    </apex:pageBlockSection>
+			    <apex:pageBlockSection title="Insurer Details" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Insured_Name__c}"/>
+					<apex:outputText value="{!objExecutionTracker.Total_Remaining_Balance__c}" label="Balance Remaining" id="balance"/> 
+					<apex:outputField value="{!objExecutionTracker.Application_Status__c}" />
+					<apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Agreed Sum Assured "/>
+					<apex:outputField value="{!objExecutionTracker.Executed_Product_Name__c}" label="Agreed Product Name "/>
+					<apex:outputField style="width:85%;" value="{!objExecutionTracker.Asset_Class_Policy_Type__c}" label="Policy Type "/>
+					<apex:outputField value="{!objExecutionTracker.Premium__c}" label="Premium "/>
+					<apex:outputField style="width:85%;" value="{!objExecutionTracker.Agreed_General_Insurance_Company_Name__c}" label="Agreed Insurance Company Name "/>
+					<apex:outputField value="{!objExecutionTracker.Policy_Punch_date__c}"/>
+					<apex:outputField style="width:85%;" value="{!objExecutionTracker.Mode__c}" label="Payment Mode"/>
+					<apex:outputField value="{!objExecutionTracker.Preferable_Medical_date__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Login_Date__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Target_Revenue__c}"/>
+					<apex:outputField value="{!objExecutionTracker.AssignToOps__c}" label="Assign to Ops"/>
+					<apex:outputField value="{!objExecutionTracker.Remarks__c}" label="MET Remark"/>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Assign Task"/>
+						<apex:commandLink action="{!assignTask}" value="Click here" id="theCommandLink"/>
+					</apex:pageBlockSectionItem>
+                </apex:pageBlockSection> 
+          	 </apex:outputPanel>
+          	 
+          	 <apex:outputPanel rendered="{!isGeneralInsuranceForOps}">
+          	 <apex:sectionHeader title="Edit Execution Tracker for Operations Team"/>
+          	 	<apex:pageBlockSection title="General Insurance Advise" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insured__c}" label="Entity Name "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Sum_Assured_Rs__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Policy_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Premium_Amount_Rs__c}"/>
+			    </apex:pageBlockSection>
+			    <apex:pageBlockSection title="Execution Tracker Details" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Insured_Name__c}"/>
+					<apex:outputText value="{!objExecutionTracker.Total_Remaining_Balance__c}" label="Balance Remaining" id="balance"/> 
+					<apex:inputField value="{!objExecutionTracker.Documents_received_date__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Agreed Sum Assured "/>
+					<apex:inputField value="{!objExecutionTracker.Login_Date__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Gross_Premium__c}" label="Gross Premium "/>
+					<apex:inputField value="{!objExecutionTracker.Net_Premium__c}" label="Net Premium "/>
+					<apex:inputField value="{!objExecutionTracker.Policy_Status__c}" label="Status "/>
+					<apex:outputField value="{!objExecutionTracker.Remarks__c}" label="MET Remark"/>
+					<apex:inputField value="{!objExecutionTracker.Cancelled_Reason__c}" label="Rejection Reason "/>
+					<apex:inputField value="{!objExecutionTracker.Remark_OpsTeam__c}" label="OPS Remark "/>
+					<apex:inputField value="{!objExecutionTracker.Policy_Number__c}" label="Policy No "/>
+					<apex:inputField value="{!objExecutionTracker.Policy_update_date__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Policy_document_received__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Risk_Commencement_Date__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Policy_Document_received_date__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Target_Revenue__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Booked_Revenue__c}" label="Booked Revenue "/>
+					<apex:inputField value="{!objExecutionTracker.Refund_Date__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Refund_Amount__c}"/>
+                </apex:pageBlockSection> 
+          	 </apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

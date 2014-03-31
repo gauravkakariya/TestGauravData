@@ -1,0 +1,5 @@
+<apex:page controller="VCSSA.MailBoxController" showheader="false" sidebar="false" contentType="text/javascript">
+<apex:repeat value="{!JSItems}" var="m">
+{! m.email&'|'&m.sobjid&'|'&m.sobjtype&'|'&m.name }
+</apex:repeat>
+</apex:page>

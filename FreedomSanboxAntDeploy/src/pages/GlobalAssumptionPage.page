@@ -1,0 +1,237 @@
+<!--/*
+    Revision History:
+    
+    Version     Version Author     Date         Comments
+    1.0         Persistent         NA           Initial Draft
+   
+    2.0         Manasi Ranade      25/05/2011   Added two fields Default_Retirement_Age__c and Default_Estimated_Life_Expectancy__c
+                                                in Entity_Global_Assumption__c object.
+                                                so fetching those values in GlobalAssumptionController constructor.    
+                                                
+    2.0         Manasi Ranade     30/05/2011    Added cancel button to cancel the operation.                                            
+*/-->
+<apex:page id="globalAssumption" controller="GlobalAssumptionController" showHeader="false" >
+     <apex:composition template="TabPage">
+         <apex:define name="contents">
+             <apex:pageMessages rendered="true" /> 
+                 <apex:form id="gaForm">
+                     <apex:actionFunction name="saveGoalProfile" action="{!save}" />
+                         <apex:pageBlock id="mainBlock">
+                            
+                            <apex:outPutPanel id="gAssumptionPanel" style="width:80%">
+                                <apex:pageBlock title="Assumption"  id="gAssumptionBlock" >
+                                    <apex:pageBlockSection columns="2" rendered="true">
+<!--                                         <apex:outputLabel value="Number of Months savings required for Emergency Planning" /> -->
+                                        <apex:inputField value="{!entityAssumption.Number_Of_Months__c}"  label="Number of Months savings required for Emergency Planning" id="months"/>
+<!--                                         <apex:outputLabel value="Expected Return on Investment" /> -->
+                                        <apex:inputField value="{!entityAssumption.Expected_Return_on_Investment__c}"  id="return"/>
+<!--                                         <apex:outputLabel value="Inflation Rate" /> -->
+                                        <apex:inputField value="{!entityAssumption.Inflation_Rate__c}"  id="inflation"/>
+<!--                                         <apex:outputLabel value="Income Growth Rate" /> -->
+                                        <apex:inputField value="{!entityAssumption.Income_Growth_Rate__c}" id="growth"/> 
+                                        <!--/** Eternus Solutions      **/
+                                        /** Author  : Manasi Ranade*/
+                                        /** Issue Id: F0018      **/
+                                        /** Date    : 27/05/2011 **/
+                                        /** Purpose : Added two fields Default_Retirement_Age__c and Default_Estimated_Life_Expectancy__c
+                                                                in Entity_Global_Assumption__c object.So code to take values from user**/
+                                        /****************************************************/-->
+<!--                                         <apex:outputLabel value="Retirement Age" /> -->
+                                        <apex:inputField value="{!entityAssumption.Default_Retirement_Age__c}" label="Retirement Age" id="retirement"/> 
+<!--                                         <apex:outputLabel value="Estimated Life Expectancy" /> -->
+                                        <apex:inputField value="{!entityAssumption.Default_Estimated_Life_Expectancy__c}"  label="Estimated Life Expectancy" id="LifeExpectancy"/> 
+<!--                                         <apex:outputLabel value="Stock Growth Rate" /> -->
+                                        <apex:inputField value="{!entityAssumption.Stock_Growth_Rate__c}" id="stock"/>
+                                        <!--  Prajakta - FP changes - 01-04-2013  -->
+<!--                                         <apex:outputLabel value="Gold Growth Rate" /> -->
+                                        <apex:inputField value="{!entityAssumption.Gold_Growth_Rate__c}" id="gold"/>
+<!--                                         <apex:pageBlockSectionItem > -->
+<!--                                         <apex:outputlabel value="Cashflow projection end year" style="FONT-WEIGHT: bold;"> -->
+<!-- 	                                        <apex:selectlist value="{!entityassumption.CashFlow_Projection_End_Year__c}"  size="1" style="width:100px;"> -->
+<!-- 			                                 <apex:selectoptions value="{!cashflowprojectionpicklist}"/> -->
+<!-- 			                           		</apex:selectlist>  -->
+<!-- 			                           	</apex:outputlabel> -->
+<!-- 			                            </apex:pageBlockSectionItem> -->
+                                        <apex:inputfield value="{!entityAssumption.CashFlow_Projection_End_Year__c}" id="endyear"/>
+        <!--                             Commented Global Assumption Chnages  -->
+        <!--                            <apex:outputLabel value="Equity" /> -->
+        <!--                            <apex:inputText value="{!equity}" id="Equity"/>  -->
+        <!--                            <apex:outputLabel value="Debt" /> -->
+        <!--                            <apex:inputText value="{!debt}" id="Debt"/> -->
+        <!--                            <apex:outputLabel value="Gold" /> -->
+        <!--                            <apex:inputText value="{!gold}" id="Gold"/>  -->
+        
+                                    </apex:pageBlockSection>
+                                    <apex:pageBlockSection columns="2" rendered="true" title="Financial Plan Control Global Assumption">
+<!--                                      	<apex:outputLabel value="Number of Goals" /> -->
+                                        <apex:outputField value="{!entityAssumption.No_of_Goals__c}" /> 
+<!--                                         <apex:outputLabel value="Data Colletion Analysis Control" /> -->
+                                        <apex:outputField value="{!entityAssumption.Data_Collection_Analysis_Control__c}" /> 
+<!--                                         <apex:outputLabel value="Financial Planning Output Report" /> -->
+                                        <apex:outputField value="{!entityAssumption.Financial_Planing_Output_Report__c}" />
+<!--                                         <apex:outputLabel value="Goal Allowed List" />  -->
+                                        <apex:outputField value="{!entityAssumption.Goals_Allowed_List__c}" /> 
+                                     
+                                     </apex:pageBlockSection>
+                                    
+                                </apex:pageBlock>
+                            </apex:outPutPanel>
+                            
+                        <apex:outputPanel id="goaldProfilePanel">
+                            <apex:pageBlock title="{!goalProfileTitle}" id="goalProfileBlock" > 
+                                <apex:pageBlockTable value="{!stdGoalProfileList}" var="std" >
+                                    <apex:column HeaderValue="Goal Profile Name" >
+                                        <apex:outputField value="{!std.goalProfile.Name}" />
+                                    </apex:column>
+                                    <apex:column HeaderValue="Goal Profile Type" >
+                                        <apex:outputField value="{!std.goalProfile.Goal_Profile_Type__c}" />
+                                    </apex:column>
+                                    <apex:column HeaderValue="Equity Allocation" >
+                                        <apex:outputField value="{!std.goalProfile.Equity_Allocation__c}" />
+                                    </apex:column>
+                                    <apex:column HeaderValue="Debt Allocation" >
+                                        <apex:outputField value="{!std.goalProfile.Debt_Allocation__c}" />
+                                    </apex:column>
+                                    <apex:column HeaderValue="Gold Allocation" >
+                                        <apex:outputField value="{!std.goalProfile.Gold_allocation__c}" />
+                                    </apex:column>
+                                    <apex:column HeaderValue="Return Expected" >
+                                        <apex:outputField value="{!std.goalProfile.Returns_expected__c}" />
+                                    </apex:column>
+                                </apex:pageBlockTable> 
+                                <apex:outputPanel rendered="{!isDisplaySaveButton}"> 
+                                    <apex:commandButton value="Customize" id="customizeBtn" rendered="{!NOT(globalAssService.isDisplay)}" action="{!display}"  />
+                                </apex:outputPanel>
+                                <br></br>
+                                <apex:pageBlockTable value="{!customGoalProfileList}" var="custgoal"  id="customTable" rendered="{!globalAssService.isDisplay}" >
+                                    <apex:column HeaderValue="Goal Profile Name" >
+                                        <apex:outputLabel value="{!custgoal.goalProfile.Name}" />
+                                    </apex:column>
+                                    <apex:column HeaderValue="Goal Profile Type" >
+                                        <apex:outputLabel value="{!custgoal.goalProfile.Goal_Profile_Type__c}" />
+                                    </apex:column>
+                                    <apex:column HeaderValue="Equity Allocation" id="equityId" >
+                                        <apex:inputField id="equityAllc" value="{!custgoal.goalProfile.Equity_Allocation__c}"  onkeyup="getExpected({!custgoal.index},{!Equity},{!Debt},{!Gold});"/>
+                                    </apex:column>
+                                    <apex:column HeaderValue="Debt Allocation" id="debtId">
+                                        <apex:inputField id="bondAllc" value="{!custgoal.goalProfile.Debt_Allocation__c}"  onkeyup="getExpected({!custgoal.index},{!Equity},{!Debt},{!Gold});"/>
+                                    </apex:column>
+                                    <apex:column HeaderValue="Gold Allocation" id="goldId">
+                                        <apex:inputField id="goldAllc" value="{!custgoal.goalProfile.Gold_allocation__c}"  onkeyup="getExpected({!custgoal.index},{!Equity},{!Debt},{!Gold});"/>
+                                    </apex:column>
+                                    <apex:column HeaderValue="Return Expected" >
+                                        <apex:outputField id="expectedRtn"  style="background-color:white;" value="{!custgoal.goalProfile.Returns_expected__c}"/>
+                                    </apex:column>
+                                </apex:pageBlockTable>
+                            </apex:pageBlock>
+                        </apex:outputPanel> 
+                    <apex:pageBlockButtons >
+                        <apex:actionRegion >
+                            <apex:outputPanel rendered="{!isDisplaySaveButton}">  
+                                <apex:CommandButton value="Save"  onClick="checkPercentSum();" rerender="dummy" />
+                            </apex:outputPanel>
+                     <!--/** Eternus Solutions      **/
+                            /** Author  : Manasi Ranade*/
+                            /** Issue Id: F0023      **/
+                            /** Date    : 30/05/2011 **/
+                            /** Purpose : Added cancel button to cancel the operation**/
+                            /****************************************************/-->
+                            <apex:outputPanel rendered="{!isDisplaySaveButton}"> 
+                                <apex:CommandButton value="Cancel"  action="{!Cancel}" />
+                            </apex:outputPanel>
+                        </apex:actionRegion>
+                    </apex:pageBlockButtons>
+                </apex:pageBlock>
+            </apex:form>
+        </apex:define>
+    </apex:composition>
+    <script>
+    function getExpected(index,objEquity,objDebt,objGold)
+    {
+    
+         var equity=document.getElementById('globalAssumption:j_id0:j_id3:gaForm:mainBlock:goalProfileBlock:customTable:'+index+':equityAllc');
+         var bond=document.getElementById('globalAssumption:j_id0:j_id3:gaForm:mainBlock:goalProfileBlock:customTable:'+index+':bondAllc');
+         var gold=document.getElementById('globalAssumption:j_id0:j_id3:gaForm:mainBlock:goalProfileBlock:customTable:'+index+':goldAllc');
+         var expected=document.getElementById('globalAssumption:j_id0:j_id3:gaForm:mainBlock:goalProfileBlock:customTable:'+index+':expectedRtn');
+         if(equity.value=='' ||  equity.value==null)
+         {
+             equity.value=0;
+         }
+         if(bond.value=='' || bond.value==null)
+         {
+             bond.value=0;
+         }
+         if(gold.value=='' || gold.value==null)
+         {
+             gold.value=0;
+         }
+         if(equity.value!=0)
+         {
+             equity.value=equity.value.replace(/^0+/, '');
+         }
+         if(bond.value!=0)
+         {
+             bond.value=bond.value.replace(/^0+/, '');
+         }
+         if(gold.value!=0)
+         {
+             gold.value=gold.value.replace(/^0+/, '');
+         }
+         
+         expected.innerHTML=((objEquity*parseInt(equity.value))/100)+((objDebt*parseInt(bond.value))/100)+((objGold*parseInt(gold.value))/100);
+    }
+       
+    function checkPercentSum()
+    {
+         flag=0;
+         //Previous code
+         // var rowElementArray = document.getElementById('globalAssumption:j_id0:j_id3:gaForm:mainBlock:goalProfileBlock:customTable').rows;
+         /** Eternus Solutions      **/
+         /** Author  : Manasi Ranade*/
+         /** Issue Id: F0019      **/
+         /** Date    : 27/05/2011 **/
+         /** Purpose : Changed the id from j_id3 to j_id8  **/
+         /****************************************************/
+        if(document.getElementById('globalAssumption:j_id0:j_id8:gaForm:mainBlock:goalProfileBlock:customTable') != null)
+        {
+            var rowElementArray = document.getElementById('globalAssumption:j_id0:j_id8:gaForm:mainBlock:goalProfileBlock:customTable').rows;
+            for(var i=1;i<rowElementArray.length;i++)
+            {
+                equityAllocation=rowElementArray[i].cells[2];
+                debtAllocation=rowElementArray[i].cells[3];
+                goldAllocation=rowElementArray[i].cells[4];
+                
+                if(equityAllocation.id.search('equityId')!=-1)
+                {
+                   equityVal=equityAllocation.children[0].value;
+                }
+                if(debtAllocation.id.search('debtId')!=-1)
+                {
+                   debtVal=debtAllocation.children[0].value;
+                }
+                if(goldAllocation.id.search('goldId')!=-1)
+                {
+                   goldVal=goldAllocation.children[0].value;
+                }
+                var sum=parseInt(equityVal)+parseInt(debtVal)+parseInt(goldVal);
+                if((parseInt(sum))!=100)
+                {
+                   flag=1;
+                   break;
+                }
+            }
+        }
+        else
+            flag = 0;
+            
+        if(flag==1)
+        {
+            alert(' Sum of Equity,Debt and Gold must be equal to 100 for each goal profile');
+        }
+        else
+        {
+            saveGoalProfile();
+        }
+    }
+    </script>
+</apex:page>

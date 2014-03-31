@@ -1,0 +1,340 @@
+<apex:page showHeader="false" sidebar="false"
+	title="Ffreedom Financial Planners | What Is Financial Planning">
+	<link rel="shortcut icon"
+		href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+	<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+	<apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />
+	<apex:stylesheet value="{!URLFOR($Resource.css)}" />
+	<apex:includeScript value="{!URLFOR($Resource.newMenu)}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}" />
+	<apex:composition template="WebsiteTemplate">
+		<apex:define name="bodycontent">
+			<div class="leftcontainer">
+				<!-- Over leftcontainer -->
+				<div id="innerpage_textcontainer_left">
+					<!-- Over innerpage_textcontainer_left -->
+					<div class="sidemenucontainer">
+						<!-- Over sidemenucontainer -->
+						<div id="sidemenu">
+							<!-- Over sidemenu -->
+							<ul style="list-style-type: none">
+								<li><span class="selected_btn1">What is financial
+										planning?</span>
+								</li>
+								<div id="sidesaprate">
+									<apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}"
+										width="162" height="1" />
+								</div>
+								<li><a href="How_does_financial_planning_work" title=""
+									alt="">How does financial planning work?</a>
+								</li>
+								<div id="sidesaprate">
+									<apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}"
+										width="162" height="1" />
+								</div>
+								<li><a href="Who_can_be_your_financial_planner" title=""
+									alt="">Who can be your financial planner?</a>
+								</li>
+								<div id="sidesaprate">
+									<apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}"
+										width="162" height="1" />
+								</div>
+								<li><a href="Why_do_you_need_a_plan" title="" alt="">Why
+										do you need a plan?</a>
+								</li>
+							</ul>
+						</div>
+						<!-- sidemenu -->
+					</div>
+					<!-- sidemenucontainer -->
+					<!-- Old Image "result.jpg" is changed to "result_img_new.png" -->
+					<div id="innerpage_textcontainer_left">
+						<apex:image url="{!URLFOR($Resource.images,'images/result_img_new.png')}"
+							style="height:30%;width:100%;" />
+					</div>
+					<!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+				</div>
+				<!-- innerpage_textcontainer_left -->
+
+				<div class="borderimg">
+					<!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+					<div class="leftlinkselectedimg"
+						style="margin-top: 38px; height: 111px; background-repeat: no-repeat;"></div>
+				</div>
+
+				<div id="innerpage_textcontainer_middle">
+					<!-- Over innerpage_textcontainer_middle -->
+					<!-- <div class="innerpage_titletext"><span class="innerpagetopheading">Financial Planning</span></div>-->
+					<div class="innerpage_titletext">
+						<span class="innerpagetexttitle">What is financial
+							planning?</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">Financial planning is
+							the process of wisely managing your financial resources which
+							enables you to achieve your dreams and goals by negotiating the
+							financial barriers in your life. It outlines a financial roadmap
+							for you with information on your savings, spending and
+							investments.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>It is
+								for you and your life </strong>
+						</span>
+					</div>
+					<!---- <div class="innerpage_litext"><img src="{!URLFOR($Resource.images,'images/charttextimg.jpg')}" width="400" height="209" border="0" usemap="#Map2" />---->
+					<map name="Map2" id="Map2">
+						<area shape="poly" coords="10,185,31,148,186,149,205,188"
+							href="#contingency" alt="Contingency Planning" />
+						<area shape="poly" coords="184,148,166,112,51,110,31,148"
+							href="#risk" alt="Risk Planning" />
+						<area shape="poly" coords="144,72,164,110,51,109,70,73"
+							href="#financial" alt="Financial Goal Planning" />
+						<area shape="poly" coords="90,34,126,34,143,70,70,72"
+							href="#retirement" alt="Retirement Planning" />
+						<area shape="poly" coords="106,1,89,33,126,34" href="#estate"
+							alt="Succession Planning" />
+					</map>
+
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> A financial plan
+							needs to be specially designed to match your requirements. In
+							many cases the absence of serious efforts to achieve your goals
+							becomes the root cause of not realising ones dreams. The course
+							of financial planning compels you to probe your desires and
+							define your goals and objectives. A pertinent financial plan goes
+							beyond just managing your finances by providing you with a
+							blueprint for your future. </span>
+					</div>
+
+					<div class="innerpage_titletext">
+						<div id="innerpage_textcontainer_left" style="font-family: Verdana; font-size: 8.5px; font-weight: normal; text-align: center;">
+							<apex:image url="{!URLFOR($Resource.images,'images/FP_Triangle.png')}"
+								style="height:200px;" />
+								
+								Copyright Ffreedom Financial Planner<br/><br/>
+						</div>
+					</div>
+
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>The
+								five-step route:</strong><a name="contingency" id="contingency"></a>
+						</span>
+					</div>
+
+					<!-- "Contindency Planning" changed to "Emergency Planning" -->
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>Emergency
+								Planning</strong>
+						</span>
+					</div>
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage">
+							<li>Have you created a fund for unforeseen emergencies?</li>
+							<li>What if there is a sudden medical emergency?</li> </span>
+					</div>
+
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage"> Financial planning
+							begins with bracing yourself for such situations and reducing the
+							impact of adverse conditions in your life. </span> <a name="risk"
+							id="risk"></a>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>Risk
+								Planning</strong>
+						</span>
+					</div>
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage">
+							<li>Our planner helps you identify events that can affect
+								your family’s financial health and help you safeguard you and
+								your family against the unforeseen.</li>
+						<br />
+							<li>After doing adequate research and establishing a
+								thorough understanding of your requirements we recommend
+								products that are tailor made to suit your needs.</li> </span> <a
+							name="financial" id="financial"></a>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>Financial
+								Goal Planning</strong>
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">Do you know why you
+							want to save money? Why is it that you are running through life?</span>
+					</div>
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage">
+							<li>Financial Goals can be both basic &amp; aspirational.</li>
+						<br />
+							<li>Our advisor will help you identify and prioritise your
+								goals in life.</li>
+						<br />
+							<li>Besides a plethora of things the financial plan will act
+								as a road map for you to achieve your goals.</li>
+						<br /> </span> <a name="retirement" id="retirement"></a>
+					</div>
+
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>Retirement
+								Planning</strong>
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">Most of us forget that
+							at some point in our lives, we will cease working and with it so
+							will our monthly income. What does retirement mean? It means the
+							time when you stop working for money and you can do whatever you
+							wish to do to keep yu constrcutive and fulfill your dreams.</span>
+					</div>
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage">
+							<li>What do you want to do once you retire? Dream today and
+								decide.</li>
+						<br />
+							<li>People today opt for early retirement then retiring
+								late.</li>
+						<br />
+							<li>A financial plan can convert these dreams into reality.</li>
+						<br />
+							<li>Be confident that you will continue to remain
+								independent even post-retirement.</li>
+						<br /> </span><a name="estate" id="estate"></a>
+					</div>
+
+					<!-- "Succession Planning" changed to "Succession Planning" and "Estate Plan" changed to "Succession Plan"-->
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>Succession
+								Planning</strong>
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">Irrespective of the
+							current stage of your life it is always a good idea to plan for
+							your dependents since life sometimes takes unfortunate unexpected
+							turns. Talk to your financial planner about how you wish your
+							financial resources to be utilised and allocated.</span>
+					</div>
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage">
+							<li>Do not leave things to chance, prepare a will well in
+								advance to protect your family.</li>
+						<br />
+							<li>Identify causes that you may wish to donate to.</li>
+						<br />
+							<li>Your planner will help you control your financial
+								legacy.</li>
+						<br /> </span>
+					</div>
+
+					<div class="innerpage_titletextOE">
+						<span class="txtmatterbig_innerpage"><strong>Financial
+								Freedom</strong>
+						</span>
+					</div>
+					<div class="innerpage_titletextOE">
+						<span class="txtmatterbig_innerpage">The ultimate aim of
+							financial planning is to allow you to appreciate the finer things
+							in life. We shoulder your worries about managing finances to give
+							you more time to do things that you truly enjoy.</span>
+					</div>
+					<div class="innerpage_titletextOE">
+						<span class="txtmatterbig_innerpage">Just Imagine if you
+							have a emergency plan for your family, have done risk planning,
+							have also started investing for your basic &amp; aspirational
+							goals including retirement planning and finally you have taken
+							care of succession planing, WHAT WOULD IT FEEL LIKE. Its that
+							expression which is what we describe as Financial Freedom.</span>
+					</div>
+					<div class="innerpage_titletextOE">
+						<span class="txtmatterbig_innerpage">Financial planning
+							gives you freedom from the constant anxiety entwined with money
+							matters and puts you at ease.<br />
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><br />
+						<br />
+						<a href="#top" class="otherslink">Top</a>
+						</span>
+					</div>
+
+				</div>
+				<!-- innerpage_textcontainer_middle -->
+				<div>
+					<!-- mahesh -->
+					<div class="innerpageborderimg">
+						<apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}"
+							width="5" height="509" alt="" />
+					</div>
+
+					<!-- 			<div class="callmeheadingCall"> MAHESH<br/><br/><br/> -->
+					<div>
+						<img
+							src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}"
+							border="0" usemap="#Map2" />
+						<map name="Map2" id="Map2">
+							<area shape="rect" coords="3,0,230,50" href="Comp_Con"
+								alt="Let our advisor call" title="Let our advisor call" />
+						</map>
+					</div>
+					<div>
+						<!-- 			<div class="callmeheadingCall"> -->
+						<span class="txtmatterbig_innerpage"><br />
+						<br /> People dream &amp; remain happy.<br /> Imagine people
+							dreaming &amp; living their dreams.<br />
+						<br /> <a href="Comp_Con"><strong>Sign up today!</strong>
+						</a> <br />
+						<br /> For a one to one session at the place convenient to you.<br />
+						<br />
+						<br /> </span>
+					</div>
+
+					<div class="title123">
+						<span class="imgtext">Related Links</span>
+					</div>
+					<div class="relatedinfoheading">
+						<span class="txtmatterbig_innerpage"><a
+							href="Planning_Team"><strong>Know Our Financial
+									Planners</strong>
+						</a>
+						</span>
+					</div>
+					<div class="relatedinfoheading">
+						<span class="txtmatterbig_innerpage"><a href="our_process"><strong>Our
+									Process</strong>
+						</a>
+						</span>
+					</div>
+					<div class="relatedinfoheading">
+						<span class="txtmatterbig_innerpage"><a
+							href="Client_Stories"><strong>Our Client stories</strong>
+						</a>
+						</span>
+					</div>
+					<div class="relatedinfoheading">
+						<span class="txtmatterbig_innerpage"><a
+							href="Comprehensive_fp"><strong>Services Basket</strong>
+						</a>
+						</span>
+					</div>
+<!-- 					<div class="relatedinfoheading"> -->
+<!-- 						<span class="txtmatterbig_innerpage"><a href="why_fees"><strong> -->
+<!-- 									Financial Planning Fees</strong> -->
+<!-- 						</a> -->
+<!-- 						</span> -->
+<!-- 					</div> -->
+					<div class="relatedinfoheading">
+						<span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom
+									Hub</strong>
+						</a>
+						</span>
+					</div>
+				</div>
+		</apex:define>
+	</apex:composition>
+</apex:page>

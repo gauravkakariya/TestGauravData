@@ -1,0 +1,379 @@
+<apex:page showheader="false" title="Ffreedom Financial Planners | News Letters"	id="Houseview2_Dec12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/top_Dec12.gif')}" width="740" height="104" /></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                <tr>
+
+                  <td background="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headbg.gif')}"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/houseviewHIn.gif')}" width="132" height="40" /></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+                      <tr>
+
+                        <td width="9" valign="top" background="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="185" /></td>
+
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="8" height="1" /></td>
+
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+
+                            
+
+                            <tr>
+
+                              <td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Tax planning - the right way</em></strong></font></td>
+
+                            </tr>
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">Tax  planning is probably one of the few significant aspects of financial planning,  which is dreaded the most. Lack of awareness and confusion regarding complex tax  laws can be attributed to this. However, contrary to common belief, with  correct knowledge and guidance, tax planning can become hassle free and can  further your overall financial health.
+
+                                <br />
+
+                                <br />
+
+                                <strong>What is tax planning all about?</strong>
+
+                                <br />
+
+                                Tax  planning is done with the objective of reducing income tax liabilities by  utilising the various tax exemptions, deductions, rebates and allowances  permitted by law.<br />
+
+                                <br />
+
+  <strong>Myths and reality of tax planning</strong><strong>…</strong><br />
+
+  <br />
+
+  Tax  planning is not wrong 
+
+  <br />
+
+  Many  people still have this notion that tax planning is wrong and responsible  citizens should pay their taxes and not cheat. Tax planning is not tax evasion or  tax avoidance. Tax evasion or tax avoidance is illegal where the letter and  spirit of the law are broken. Tax planning is done well within the framework of  the law and the government actually encourages you to plan your taxes by  seeking investment in tax saving bonds, giving benefits under various sections  etc. So, tax planning is not wrong - in fact it is your right! 
+
+  <br />
+
+  <br />
+
+  There  is more to tax planning than 80C
+
+  <br />
+
+  Another  misconception about tax planning is that it is all about investing in 80C.  People come and ask us which is better PPF or ELSS for tax planning? Tax  planning is much more than 80C investments. It requires thoughtful planning of how  your income is accounted, how you spend and invest your money and a few more  nitty gritties.
+
+  <br />
+
+  <br />
+
+  Tax  planning is not difficult<br />
+
+                                  It is also a myth that tax planning is cumbersome  and quite tricky for an average person to comprehend. Of course the tax laws  are complex and dynamic, but what is applicable to the normal common person is  rather simple. Any financial planner or a CA can  help you save taxes.
+
+                                  <br />
+
+                                  <br />
+
+                                  Tax  planning is not a stand-alone activity
+
+                                  <br />
+
+                                  Tax  planning has to be integrated with your overall financial plan. In everything  you do, you have to find a tax efficient way of doing it. For eg: You can  invest in liquid funds or short term debt funds for emergency needs. But  depending on your tax bracket the short term funds can be more advantageous  than the liquid funds or vice versa. Hence tax efficiency should be considered  in risk planning, goal planning, retirement planning and everything else you do  with money.<br />
+
+                                  <br />
+
+                                  <strong>Some basic Income tax insights</strong><strong>…</strong><br />
+
+                                  Income  has to be declared and no proof is to be produced. But if you are claiming an  exemption or deduction, proof has to be given. It is charged on one’s  annual income earned during the financial year (Apr –  Mar) and is payable before July the subsequent financial year. Depending on  your residential status, your tax liability will change. 
+
+                                  <br />
+
+                                  <br />
+
+                                  The  Income tax Act specifies tax on income earned from the following five sources
+
+                                  <br />
+
+                                  <br />
+
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-  Income from salary drawn <br />
+
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-  Income earned from business and profession <br />
+
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-  Income from capital gain <br />
+
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-  Income from property <br />
+
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-  Income from other sources 
+
+                                  <br />
+
+                                  <br />
+
+                                  You will be exempt to pay tax on income  earned below a specified amount (basic exemption) and beyond that you will have  to pay tax according to slabs. As your income increases you will pay more taxes  as we follow the progressive taxation policy. Subject to certain limits, you  can claim exemptions and deduction to reduce your tax liability.
+
+                                  <br />
+
+                                  <br />
+
+                                  <strong>What all can you do to save tax?</strong>
+
+                                  <br />
+
+                                  <br />
+
+                                  Sec  80C 
+
+                                  <br />
+
+                                  <br />
+
+                                  Invest  your surplus savings or use your income in any of the following ways and your  total taxable income will come down to that extent subject to a maximum of Rs.  1 lac: 
+
+                                  <br />
+
+                                  <br />
+
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Repay  your home loan – the principal portion can be claimed for deductionn <br />
+
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Pay  tuition fees for children's education (maximum 2 children) <br />
+
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Pay  Life Insurance Premium <br />
+
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-  Invest in National Saving Certificate <br />
+
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Invest  in Public Provident Fund <br />
+
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Invest  in equity Linked Savings Schemes (ELSS) <br />
+
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Invest  in banks and post offices fixed deposits of five years. 
+
+                                  <br />
+
+                                  <br />
+
+                                  If you stay in a rented house
+
+                                  <br />
+
+                                  You can claim tax exemption on house rent  allowance received as part of your salary if you are staying in a rented house  and can produce a receipt for the amount paid.
+
+                                  <br />
+
+                                  <br />
+
+                                  If you have a home loan
+
+                                  <br />
+
+                                  If  it is a self occupied property, you can claim upto Rs.1.5 lacs paid as interest  as loss on house property. That will bring down your overall taxable income. If  your property is rented out, on one side you will have to add the rent with  your other income and pay tax, meanwhile you can deduct all the interest amount  (without any limit) from your overall income and bring down taxable income.
+
+                                  <br />
+
+                                  <br />
+
+                                  Take  a loan and study further
+
+                                  <br />
+
+                                  The  interest paid on an education loan taken for higher education of self, spouse or  children can be deducted under Section 80E and thereby your total taxable  income can come down. 
+
+                                  <br />
+
+                                  <br />
+
+                                  Protect  your health
+
+                                  <br />
+
+                                  If  you pay premium for a medical insurance policy for self or spouse or dependent  children/parents  you can claim tax  rebate under Section 80D. And from the current year, a sum of Rs.5000 can be  claimed if you or your dependants do a preventive health check up. 
+
+                                  <br />
+
+                                  <br />
+
+                                  Support  a social cause
+
+                                  <br />
+
+                                  Under  Section 80G donations to particular institutions/funds get tax benefits. 
+
+                                  <br />
+
+                                  <br />
+
+                                  <strong>The financial plan  is the guide</strong>
+
+                                  <br />
+
+                                  While it is true that tax planning is a  critical activity, a financial decision to buy a house or make an investment  should not be motivated by tax saving. It is the financial plan that should tell  you what to do with your money, but within the options you should choose the  most tax efficient one to get the best benefits.<br />
+
+                                  <br />
+
+                                  Regards,<br />
+
+                                  Bhuvana</td>
+
+                            </tr>
+
+                            
+
+                            
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+
+                            </tr>
+
+                            
+
+
+
+                         </table></td>
+
+                      </tr>
+
+                      <tr>
+
+                        <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+
+                      </tr>
+
+                  </table></td>
+
+                </tr>
+
+              </table>
+
+              </td>
+
+          </tr>
+
+          <tr>
+
+            <td valign="top">&nbsp;</td>
+
+            </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+
+        </tr>
+
+    </table></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+
+                </tr>
+
+            </table></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+
+          </tr>
+
+          <tr>
+
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+
+          </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+
+      </tr>
+
+    </table></td>
+
+  </tr>
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/footer.gif')}" width="740" height="15" /></td>
+
+  </tr>
+
+</table>
+
+</body>
+
+
+	</html>
+
+</apex:page>

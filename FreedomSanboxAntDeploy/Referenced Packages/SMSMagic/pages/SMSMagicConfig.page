@@ -1,0 +1,46 @@
+<apex:page controller="smagicbasic.SMSMagicConfigController" tabStyle="SMSMagic_Settings__tab">
+<apex:pageMessages id="pageMsg" /><br/>
+
+<apex:sectionHeader title="SMS Magic - {!$User.FirstName} {!$User.LastName}" subtitle="SMS Magic Configuration" />
+<apex:pageBlock id="main" title="SMS Magic Configuration" helpTitle="Help For this Page?" helpUrl="/apex/SMSMagic_Help?from=SMSMagicConfig">
+<apex:form >
+<apex:pageBlockSection id="section3" title="Country Information" columns="2">
+    <apex:pageBlockSectionItem rendered="{!IF (isSave,true, false)}">
+            <apex:selectList size="1"  value="{!countryCode}" multiselect="false"  >
+            <apex:selectOptions value="{!items}">
+            </apex:selectOptions>
+        </apex:selectList>
+         <apex:commandButton value="Save" action="{!saveCountry}" reRender="section3,pageMsg" />
+    </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem rendered="{!IF (isEdit,true, false)}">
+        <apex:outputLabel id="countryNameId">{!countryName}</apex:outputLabel>
+        <apex:commandButton value="Edit" action="{!edit}" reRender="section3" />
+    </apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+<apex:pageBlockSection id="section4" title="Api key Configuration - Update your api key" columns="1" rendered="{!hasPermissions}">
+	
+	<apex:outputLabel value="API Key" for="apiKey"/>
+	<apex:inputText value="{!apiKey}" id="apiKey" maxlength="32" disabled="{!IF (isApiKeyEdit,true, false)}"/>
+	
+    <apex:pageBlockSectionItem rendered="{!IF (isApiKeySave,true, false)}">
+	<apex:commandButton value="Update" action="{!updateApiKey}" />
+    </apex:pageBlockSectionItem>
+
+    <apex:pageBlockSectionItem rendered="{!IF (isApiKeyEdit,true, false)}">
+	<apex:commandButton value="Edit" action="{!editApiKey}" reRender="section4"/>
+    </apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+</apex:form>
+
+
+<apex:pageBlockSection id="section1" title="Sender Ids" >
+    <apex:ListViews type="smagicbasic__SMS_SenderId__c" />
+</apex:pageBlockSection>
+<apex:pageBlockSection id="section2" title="SMS Template Configuration" >
+    <apex:ListViews type="smagicbasic__SMS_Template_Type__c" />
+</apex:pageBlockSection>
+
+
+</apex:pageBlock>
+
+</apex:page>

@@ -1,0 +1,82 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Wealth Solutions" >
+  <apex:composition template="EventTemplate">
+    <apex:define name="rightcontent"> 
+   <br/>
+  <h2 > <span style="font:38px Brush Script MT;color:#FF8000;font-style:italic;padding-left:150px;">Ffreedom day </span><span style="font:34px Brush Script MT;color:green;font-style:italic;">Speakers </span></h2> <br/> 
+  <!---- <div> <img  src="{!URLFOR($Resource.EventImages,'EventImages/FfreedomDaySpeakers.png')}" style="align:middle; height:130px;" /> </div>---->
+     <div>  <span style="color:#FF8000;font-style:italic;"> Ffreedom</span><span style="color:green;font-style:italic;"> talks</span> will have power talks <i>by <b>speakers </b>who are our clients and certain leading speakers from the financial industry, who are  dreamers and some of the leading names in their fields.</i> Each speaker will give a short presentation focused around Happiness, Dreams &amp; Financial Ffreedom. So the entire event will be exciting and fast paced.</div>
+   <br/>   
+   <div>
+   
+    <table style="font-size:14px;">         
+
+           <tr> 
+            <td rowspan="2"><img src="{!URLFOR($Resource.EventImages,'EventImages/speakers/SumeetVaid.jpg')}" style="float:left;padding-right:10px;"  /> </td>
+            <td style=""><b> Mr Sumeet Vaid</b> - Founder, CEO, Ffreedom Financial Planners </td>
+          </tr>
+          <tr><td style=""><b>  Master Of Ceremony For The Ffreedom Day</b> </td></tr>     
+ 
+    </table>
+    Mr Sumeet Vaid - Founder, CEO, Ffreedom Financial Planners  Sumeet started his career with Bajaj Capital, where he was responsible for setting up the mutual fund desk. He then moved to Prudential ICICI Mutual, and was a part of the initial 10-member core team, which was responsible for setting up the fund. In 2005, Sumeet moved to ING’s start up venture in India, OptiMix as CMO, where his specialty was to supervise product, Domestic and International sales, distribution, brand and communication. He then moved to Networth Stock Broking Limited, as President and CEO of Networth Wealth Solutions. Finally, with all the expertise form the financial market, he started <b> Ffreedom Financial Planners </b> – a venture with a focus on making clients happy by  helping clients to live their dreams and achieve financial freedom.
+   <br/><br/>
+ 
+ <table style="font-size:14px;">         
+ 
+           <tr> 
+            <td rowspan="2"><img src="{!URLFOR($Resource.EventImages,'EventImages/speakers/BhupendraSharma.jpg')}" style="float:left;padding-right:10px;"  /> </td>
+            <td style=""><b> Mr. Bhupendra Sharma</b> - Founder of nxtlyf </td>
+          </tr>
+          <tr><td style=""><b>Ffreedom talk: </b> Talk on Happiness </td></tr>    
+     </table> 
+     <b>nXtlyf </b>is  a firm committed to increasing the success of Innovations in India. It is set to be the enterprise of tomorrow working collaboratively with the world’s experts and big ideas. Over 20 years of experience in the subject and having facilitated breakthrough initiatives at organization and team levels with companies in India, Asia-Pacific and Europe, have left Bhupendra in a unique position to identify Leadership, 
+         Organizational and Industry ‘Blind Spots’.  Bhupendra’s passion for innovation has had him leading initiatives to evangelize  innovation across the country, like talks across corporates and other public 
+         platforms. As part of this, in collaboration with CII, he conceptualized India’s first ever global innovation summit which is now in it’s 6th year of successful running.
+<br/> <br/>  
+   <b></b> 
+ 
+ 
+   
+   
+    <table style="font-size:14px;">         
+ 
+           <tr> 
+            <td rowspan="2"><img src="{!URLFOR($Resource.EventImages,'EventImages/speakers/RajniBakshi.jpg')}" style="float:left;padding-right:10px;"  /> </td>
+            <td style=""><b>Ms RajniBakshi</b> - Journalist and Writer </td>
+          </tr>
+          <tr><td style=""><b>Ffreedom talk: </b> From GDP (Gross Domestic Product) to GNH (Gross National Happiness) </td></tr>    
+     </table>  
+     Rajni Bakshi has been writing extensively about social and political movements in India for the last three decades. Her articles have appeared in a wide range of English and Hindi newspapers and magazines.Rajni went to school in Kingston, Jamaica and later studied at Indraprastha College (Delhi), George Washington University (Washington D.C.) and Rajasthan University (Jaipur). She is associated with the Centre for Education and Documentation, Citizens for Peace (CfP) and Child Rights and You (CRY). She has been an author of books like “Bapu Kuti”, “The Long Haul”, “The Dispute over Swami Vivekanand’s Legacy”, “An Economics for Wellbeing”.Her recent book which has made nations think is <b> “Bazaars, Conversations and Freedom - for a market culture beyond greed and fear”</b>
+  
+  
+  <br/><br/>
+  
+  <table style="font-size:14px;">         
+ 
+           <tr> 
+            <td rowspan="2"><img src="{!URLFOR($Resource.EventImages,'EventImages/speakers/Mani.jpg')}" style="float:left;padding-right:10px;"  /> </td>
+            <td style=""><b>Mr. V S S Mani </b> - Founder, CEO, Justdial – India’s No. one search engine </td>
+          </tr>
+          <tr><td style=""><b>Ffreedom talk: </b> Just dial – My Dream  </td></tr>    
+     </table> 
+           Starting with just Rs 50k, VSS Mani has built a business with an annual turnover of Rs 100 crore and a valuation in excess of Rs 500 crore. <b>Just Dial</b> is a case of getting it right the second time around. Not giving up after having to wind up Ask Me, VSS has taken his phone-based business model to print, online and SMS. He is now busy executing an international rollout with Justdail already having its presence in North America.
+ 
+  
+    <br/>  <br/> 
+     <table style="font-size:14px;">         
+ 
+           <tr> 
+            <td rowspan="2"><img src="{!URLFOR($Resource.EventImages,'EventImages/speakers/Brahmanand.jpg')}" style="float:left;padding-right:10px;"  /> </td>
+            <td style=""><b>Mr. Brahmanand Singh</b> - Film maker and Writer</td>
+          </tr>
+          <tr><td style=""><b>Ffreedom talk: </b>R D Burman – A musical Dream  </td></tr>    
+     </table> 
+     Brahmanand Singh is a Bombay-based filmmaker and writer. He has published stories, poems and essays extensively in India and abroad, written screenplays and made documentaries and short films.Prominent among his documentaries are <b>Pancham Unmixed</b>: Mujhe Chalte Jaana Hai (an unending journey), a feature-length documentary on legendary music composer RD Burman; Ragpickers, scavengers of a different graveyard; Uncaging the Body (Apsara Award for Best Short Film, 2003-2004); A Burden of Love (on Alzheimer's disease) and AshgariBai (on an octogenarian legendary dhrupad singer). In addition, he has made many commissioned corporate documentaries and other short films. Many of his films have been screened at various International film festivals as well as on national and international television channels, and been nominated for and won awards. Other than filmmaking, he has written a great deal on music, cinema and literature. 
+  
+  
+
+        
+       
+    </div>
+    </apex:define>
+ </apex:composition>
+</apex:page>

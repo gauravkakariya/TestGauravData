@@ -1,0 +1,64 @@
+<apex:page showHeader="false" sidebar="false" controller="WebFormController">
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+ <div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+        
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/result_img_new.png')}" style="height:30%;width:100%;" /></div>
+        <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+   </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+                  <!--<div class="leftlinkselectedimg" style="margin-top:144px; height:193px; background-repeat:no-repeat;"></div>-->
+              </div>
+   <div id="innerpage_textcontainer_middle">
+    <!--<div class="innerpage_titletext"><span class="innerpagetopheading">Financial Planning</span></div>-->
+        <div class="innerpage_titletext"><span class="innerpagetexttitle">Media</span> </div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">Journalists who want more information about Ffreedom Financial Planners are welcome to contact us by telephone or e-mail.
+</span></div>
+        <div class="innerpage_titletext" style="line-height:1.8"><div style="float:left;
+    text-align:justify;
+    width:200px;
+    padding-top:5px;
+    padding-left:10px;
+    padding-right:5px;
+    padding-bottom:5px;
+    overflow:hidden;"><span class="txtmatterbig_innerpage" ><strong>Mr. Ashwin Dew</strong><br />Head of Marketing<br />Tel: +91 22 42224333<br />Mob: +91 9987019898<br />Email: <a href="mailto:ashwin.dewan@ffreedom.in" style="text-decoration: underline;">ashwin.dewan@ffreedom.in</a><br /></span></div>
+    <div style="float:right;
+    text-align:justify;
+    width:220px;
+    padding-top:5px;
+    padding-left:10px;
+    padding-right:5px;
+    padding-bottom:5px;
+    overflow:hidden;"><span class="txtmatterbig_innerpage" ><strong>Mr. Mayank Sen</strong><br />Moe’s Art (PR Agency)<br />Mob: +91 9867974055<br />Email: <a href="mailto:mayank@moes-art.com" style="text-decoration: underline;">mayank@moes-art.com</a></span></div>
+       </div>
+       
+       <div class="innerpage_titletext" style="line-height:3"><span class="txtmatterbig_innerpage"><a href="Comming_Soon" style="color:#FF9834;"><strong>Go to Pressroom</strong></a></span><br /> </div>
+       
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>About Ffreedom Financial Planners</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{!URLFOR($Resource.AboutFfreedomFinancialPlanners1)}" target="_blank">View&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><a href="{!URLFOR($Resource.AboutFfreedomFinancialPlanners)}">Download</a></span><br /></div>
+          <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Profile of Sumeet Vaid</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{!URLFOR($Resource.mr_sumeet)}" target="_blank">View&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><a href="{!URLFOR($Resource.sumeet)}">Download</a></span> <br /></div>
+             <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Ffreedom Brochure</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{!URLFOR($Resource.FfreedomFinancialPlannersBrocher)}" target="_blank">View&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><a href="{!URLFOR($Resource.Brocherpdf)}">Download</a></span> </div>
+      
+      </div>
+     
+      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" />
+      </div>
+      
+    
+        <div class="title123"><span class="imgtext">Related Links</span></div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="about_ffreedom_overview"><strong>About Ffreedom</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Ffreedom_Culture"><strong>Ffreedom Culture</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Our Team"><strong>Our Team</strong></a></span> </div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="our_philosophy"><strong>Philosophy</strong></a></span> </div>
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

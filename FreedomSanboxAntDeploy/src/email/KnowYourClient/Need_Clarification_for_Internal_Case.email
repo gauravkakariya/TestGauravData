@@ -1,0 +1,20 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p class="MsoListParagraph" style="color: rgb(0, 0, 0); font-size: 12pt; font-family: arial; margin-left: 0.75in; "><br></p><p class="MsoListParagraph" style="color: rgb(0, 0, 0); font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font face="Arial, sans-serif">Dear {!Case.OwnerFirstName},</font></p>
+
+<p class="MsoListParagraph" style="color: rgb(0, 0, 0); font-size: 12pt; font-family: arial; margin-left: 0.75in; "><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></p>
+
+<p class="MsoListParagraph" style="color: rgb(0, 0, 0); font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font face="Arial, sans-serif">We require some clarification </font><span style="font-family: Arial, sans-serif; font-size: 12pt; ">regarding your case</span></p><p class="MsoListParagraph" style="margin-left: 0.75in; "><span style="color: rgb(0, 0, 0); font-family: Arial, sans-serif; font-size: 12pt; ">&nbsp;'&nbsp;</span><font face="Arial, sans-serif">{!Case.CaseNumber} :&nbsp;</font><span style="color: rgb(0, 0, 0); font-family: Arial, sans-serif; font-size: 12pt; ">{!Case.Subject} '.</span></p>
+
+<p class="MsoListParagraph" style="color: rgb(0, 0, 0); font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font face="Arial, sans-serif"><br></font></p>
+
+<p class="MsoListParagraph" style="color: rgb(0, 0, 0); font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font face="Arial, sans-serif">Please provide us the
+clarification in the ‘Case Comments’ section and change the status of the
+case to ‘Clarification Provided’.</font></p>
+
+<p class="MsoListParagraph" style="color: rgb(0, 0, 0); font-size: 12pt; font-family: arial; margin-left: 0.75in; "><o:p><font face="Arial, sans-serif">&nbsp;</font></o:p></p>
+
+<p class="MsoListParagraph" style="color: rgb(0, 0, 0); font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font face="Arial, sans-serif">Regards,</font></p><p class="MsoListParagraph" style="color: rgb(0, 0, 0); font-size: 12pt; font-family: arial; margin-left: 0.75in; "><font face="Arial, sans-serif">Technology Support</font></p>]]></td>
+</tr>
+</table>

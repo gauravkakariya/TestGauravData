@@ -1,0 +1,199 @@
+<apex:page showHeader="false" sidebar="false"
+	title="Ffreedom Financial Planners | Our Financial Planners">
+	<link rel="shortcut icon"
+		href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+	<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+	<apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />
+	<apex:stylesheet value="{!URLFOR($Resource.css)}" />
+	<apex:includeScript value="{!URLFOR($Resource.newMenu)}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}" />
+	<apex:composition template="WebsiteTemplate">
+		<apex:define name="bodycontent">
+			<div class="leftcontainer">
+				<div id="innerpage_textcontainer_left">
+					<div class="sidemenucontainer">
+						<div id="sidemenu1">
+							<ul style="list-style-type: none">
+								<li><a href="our_process">Our Process</a></li>
+								<div id="sidesaprate">
+									<apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}"
+										width="162" height="1" />
+								</div>
+								<li><span class="selected_btn">Our Financial
+										Planners</span></li>
+								<div id="sidesaprate">
+									<apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}"
+										width="162" height="1" />
+								</div>
+<!-- 								<li><a href="why_fees">Financial Planning Fees</a></li> -->
+<!-- 								<div id="sidesaprate"> -->
+<!-- 									<apex:image -->
+<!-- 										url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" -->
+<!-- 										width="162" height="1" /> -->
+<!-- 								</div> -->
+								<li><a href="Client_Stories">Our Client Stories</a></li>
+							</ul>
+						</div>
+					</div>
+					<div id="innerpage_textcontainer_left">
+						<apex:image url="{!URLFOR($Resource.images,'images/OurFP_img.jpg')}" />
+					</div>
+					<!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+				</div>
+				<div class="borderimg">
+					<!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+					<div class="leftlinkselectedimg"
+						style="margin-top: 67px; height: 107px; background-repeat: no-repeat;"></div>
+				</div>
+				<div id="innerpage_textcontainer_middle">
+					<!--<div class="innerpage_titletext"><span class="innerpagetopheading">Why Ffreedom</span></div>-->
+					<div class="innerpage_titletext">
+						<span class="innerpagetexttitle">Our Financial Planners</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">Financial planning is
+							not just about money, it’s about achieving your life goals &amp;
+							securing a safe future for your loved ones. </span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">We, at Ffreedom know
+							that trusting someone to plan that future with your hard earned
+							money is not an easy task. Keeping this in mind we have
+							experienced <strong>Certified Financial Planners</strong> along
+							with a wide array of other qualified and talented professionals
+							to handle your financial planning.
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="innerpagetexttitle"> Certified Financial
+							Planners to Plan for your Financial Freedom </span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> Our entire team
+							planners are certified by <strong>FPSB India (Financial
+								Planning Standards Board of India)</strong>, this premier body that
+							proactively guides the development and promotion of standards for
+							Financial Planning professionals to benefit and protect the
+							public in the country.
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">Besides CFPs some of
+							our Planners are also Masters in Business Administration, Masters
+							in Finance, Chartered Financial Analysts &amp; Chartered
+							Accountants. <strong><br />They all come together with
+								one aim in mind Financial Freedom for our Clients.</strong>
+						</span>
+					</div>
+
+					<div class="innerpage_titletext">
+						<span class="innerpagetexttitle">Your Dreams, Our Expertise</span>
+					</div>
+
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> Ffreedom Financial
+							Planners bring in a distinct knowledge and experience on the
+							table to design an adequate plan as per your Financial Goals and
+							assist you in journey towards Financial Freedom. </span>
+					</div>
+
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> It is the Knowledge
+							of the <strong>science</strong> of Financial Planning + the <strong>art</strong>
+							of writing Financial Plans + <strong>values</strong> of writing
+							plans according to ethical standards that <strong>make a
+								Ffreedom Financial Planner</strong>.
+
+						</span>
+					</div>
+
+					<div class="innerpage_titletext">
+						<span class="innerpagetexttitle">Financial Planning with
+							Passion &amp; Purpose </span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> The secret behind the
+							efficiency and results of our planners is the dedication and
+							passion they hold towards their profession. They are planners
+							because they choose to be, not because they had to be. </span>
+					</div>
+
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> Our planners believe
+							that they are in a position to assist and guide you through life,
+							by nurturing your finances, equipping you to negotiate with
+							adversity. </span>
+					</div>
+
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> The objective of our
+							Financial Planners is clearly to take care of your families
+							Financial Goals. Your dreams and goals are important to us as
+							they are to you and we believe by helping you achieve your goals
+							we will also be able to achieve our goal of Financial Freedom for
+							All. </span>
+					</div>
+
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> </span> <a href="#top"
+							class="otherslink">Top</a>
+					</div>
+
+				</div>
+
+				<div class="innerpageborderimg">
+					<apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}"
+						width="5" height="579" alt="" />
+				</div>
+
+				<div class="callmeheadingCall">
+					<img
+						src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}"
+						border="0" usemap="#Map2" />
+					<map name="Map2" id="Map2">
+						<area shape="rect" coords="3,0,230,50" href="Comp_Con"
+							alt="Let our advisor call" title="Let our advisor call" />
+					</map>
+				</div>
+				<div class="callmeheadingCall">
+					<span class="txtmatterbig_innerpage"><br />
+					<br /> People dream &amp; remain happy.<br /> Imagine people
+						dreaming &amp; living their dreams.<br />
+					<br /> <a href="Comp_Con"><strong>Sign up today!</strong></a> <br />
+					<br /> For a one to one session at the place convenient to you.<br />
+					<br />
+					<br /></span>
+				</div>
+				<div class="title123">
+					<span class="imgtext">Related Links</span>
+				</div>
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a
+						href="Comprehensive_fp"><strong>Services Basket</strong></a></span>
+				</div>
+				<!--- <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know our Financial Planers</strong></a></span> </div>--->
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a
+						href="Why_do_you_need_a_plan"><strong>Why do you need
+								a financial plan?</strong></a></span>
+				</div>
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a
+						href="Who_can_be_your_financial_planner"><strong>Who
+								can be a financial planner?</strong></a></span>
+				</div>
+<!-- 				<div class="relatedinfoheading"> -->
+<!-- 					<span class="txtmatterbig_innerpage"><a href="why_fees"><strong> -->
+<!-- 								Financial Planning Fees</strong></a></span> -->
+<!-- 				</div> -->
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom
+								Hub</strong></a></span>
+				</div>
+			</div>
+		</apex:define>
+
+	</apex:composition>
+</apex:page>

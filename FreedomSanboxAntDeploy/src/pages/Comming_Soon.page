@@ -1,0 +1,52 @@
+<apex:page showHeader="false" sidebar="false" controller="WebFormController">
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+ <div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+        
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/result_img.jpg')}" /></div>
+        <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+   </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+                  <!--<div class="leftlinkselectedimg" style="margin-top:144px; height:193px; background-repeat:no-repeat;"></div>-->
+              </div>
+   <div id="innerpage_textcontainer_middle">
+    <!--<div class="innerpage_titletext"><span class="innerpagetopheading">Financial Planning</span></div>-->
+        <div class="innerpage_titletext" style="padding-left:150px">            
+            <center>
+            <div class="middletopcontainer">
+  
+    <div class="middleleft">
+    
+      <div class="imgcontainer"><span class="imgaccess_txtUp">Sign in with your</span><br/><span class="imgaccess_txt">Ffreedom Account</span></div>
+      <div class="settable">
+          
+       <c:SiteLogin id="siteLogin"/>
+      </div>
+      </div>
+    </div></center></div> 
+      </div>
+     
+      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" />
+      </div>
+      
+    
+        <div class="title123"><span class="imgtext">Related Links</span></div>
+<!--          <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="why_fees"><strong>Financial Planning Fees</strong></a></span> </div> -->
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="our_process"><strong>Our process</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know Our Financial Planners</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Client_Stories"><strong>Our client stories</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Why_do_you_need_a_plan"><strong>Why do you need a plan?</strong></a></span> </div>
+       
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

@@ -1,0 +1,230 @@
+<apex:page showheader="false" title="Ffreedom Financial Planners | News Letters"	id="LeadStory_Oct12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.images,'images/top_Oct12.gif')}" width="740" height="104" /></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                <tr>
+
+                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                    <tr>
+
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.images,'images/headL.gif')}" width="9" height="40" /></td>
+
+                      <td width="98%" valign="top" background="{!URLFOR($Resource.images,'images/headbg.gif')}" style="padding-top:6px;"><font face="Arial, Helvetica, sans-serif" color="#FFFFFF" style="font-size:14px;"><strong>I UNDERSTAND – BUT I WILL STILL BUY THAT HOUSE!</strong></font></td>
+
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /></td>
+
+                    </tr>
+
+                  </table></td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+                      <tr>
+
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+
+
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">If you were shopping for a refrigerator,  more refrigerator TV commercials or hoardings come up visible and glaring on  your face. I keep wondering whether this was normal, or whether it was just I.  I am hearing and reading more and more news and articles about fraud in real  estate transactions, builders duping customers and running away with the money  and even a recent one where an old woman falls off her bed and lands three  levels below as the floor just gave way. <br />
+
+                                <br />
+
+                                Real estate investments are murky, we know  it but how is it that the sheen never goes away? The claim that it is a safe  investment is not true, as proved by the various articles that show up before  me these days. They are not forever increasing in value too. I bought a piece  of land in my home town some 5 years back. Today if I were to sell it, I might  realize just about the amount I invested. I tried. <br />
+
+                                <br />
+
+                                It is the only place where you can keep  black money – really? For normal people like us (read, non politicians) taking  or giving black money is a pain in the wrong place. We are so so used to using  plastic money, online transfer of funds etc that an extra 1000 Rs. as cash in  the purse puts a lot of pressure in the head. We even willingly ignore the fact  that real estate doesn’t give you money when you want it, at least not exactly  as much as you would need.  My parents  bought a small piece of land thinking of selling it during my sister’s wedding,  but were not able to. They ended up borrowing. <br />
+
+                                <br />
+
+                                Yet, what keeps real estate happening? When  a bonus or some bulk sized money comes in, why is it that a flat or buying a  land pops up in the mind first thing? We can’t even blame lack of knowledge.  Though financial planner, flag bearer for asset allocation and balanced  portfolios, my mind works that way too. <br />
+
+                                <br />
+
+                                Vinita, from our research and advisory team  who apart from technical brilliance also seems to have a deep insight of human  psychology has this to say about this phenomenon. &quot;Real estate is a very  unique asset class. It requires a sizeable amount to begin investment, is low  on liquidity and needs a lot of attention (maintenance). Despite these, we see  that every plan (and this is without any exaggeration) has a goal of buying  property. If the family has one property, they want to plan for a second one. If  they have two pieces of real estate, they are vying for the third one, and the  story goes on. In context of India, being wealthy is generally associated with  having loads of zameen zaydad. It is the most conventional way of parking  money. Also, the fact that it is low on liquidity and there is no way to  partially redeem it, works in its favor at times as the money gets locked in  for a long period with minimum exit options. This is unlike stocks or Fixed  Deposits or Mutual Funds, which are first things that go out when there is a  need for cash. <br />
+
+                                <br />
+
+                                So the first thing that comes to mind when  you have money is real estate and the first thing that comes to mind when you  need money are your mutual funds. For those of us who don’t have self imposed  discipline in our DNA – this is forced discipline. It works.<br />
+
+                                <br />
+
+                                The rental yield's are in the range of 2.5%  to 3% - but when you add it up with the appreciation, the returns work out to  be higher. Also, it has this unique feature of regular income combined with  appreciation. Now, with reverse mortgage available - it also can be an asset to  consider for your retirement kitty. All in all, it brings a lot of discipline  in terms of holding period and gives a deep sense of security. Isn't that what  financial planning aims at?&quot;<br />
+
+                                <br />
+
+                                Yes it is. So it is okay if you want that  piece of land or the new apartment if you have the money. Just don’t put  yourself through the trouble of heavy EMIs and throw in all your emergency  funds and cash reserves to pay for the down payment. And remember to sell it  off much before you might need the money.<br />
+
+                                <br />
+
+                                It  is good for tomorrow but what good is tomorrow if it is at the cost of today?</td>
+
+                            </tr>
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+
+                            </tr>
+
+                            
+
+                          </table></td>
+
+                      </tr>
+
+                      <tr>
+
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+
+                      </tr>
+
+                  </table></td>
+
+                </tr>
+
+              </table>
+
+              </td>
+
+          </tr>
+
+          <tr>
+
+            <td valign="top">&nbsp;</td>
+
+            </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        </tr>
+
+    </table></td>
+
+  </tr>
+
+  
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+
+                  <td><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></td>
+
+                </tr>
+
+            </table></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+
+          </tr>
+
+          <tr>
+
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+
+          </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+      </tr>
+
+    </table></td>
+
+  </tr>
+
+  
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+
+  </tr>
+
+</table>
+
+</body>
+	</html>
+</apex:page>

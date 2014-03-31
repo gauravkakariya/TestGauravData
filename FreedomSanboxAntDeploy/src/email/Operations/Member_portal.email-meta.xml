@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Customer_Portal_Letterhead</letterhead>
+    <name>Member portal</name>
+    <style>formalLetter</style>
+    <subject>New Look Member Portal</subject>
+    <textOnly>Dear {!Account.Salutation} {!Account.Name}
+
+Greetings from Freedom Financial Planners. Hope all well with you.
+
+
+We are happy to share with you that we have added a few interesting features to your member portal, which already maintains reports of your investments and details of your financial plan.
+
+
+Your member portal can be accessed on www.ffreedom.in - Member login section with you Member Id and Password.
+
+
+The following new features have been added under “My Portfolio” tab -
+
+
+
+Ø Allocation Tab - Percentage of investments in equity and debt
+
+ØSummary – Report on complete return on investment, including realized and unrealized gains.
+
+ØReturns – Report on unrealized gains only
+ØCapital Gain Statement – Report on realized gain, useful for tax   computations
+ØHolding – Scheme/Folio current balances
+ØDividend – Report on Dividend Reinvested / Payout
+ØA/c Statement – Transaction statement
+ØInsurance – Gives details of all your insurances.
+ØUtility: a) MF Tally - You can see trailing returns for your schemes or for    any other scheme as available in any other mutual fund research portal. b) NAV – Per Unit price of mutual fund schemes c) Latest indices d) ULIP’s  - unit price of unit linked insurance schemes
+
+To view you will have to
+
+- Click on the respective tab
+
+- Select the applicant name or choose all
+
+- Then click on show
+
+In case you are not able to log on or want to reset your password please mail in to praful.panchal@ffreedom.in
+
+Please feel free to contact us for any clarifications.</textOnly>
+    <type>html</type>
+</EmailTemplate>

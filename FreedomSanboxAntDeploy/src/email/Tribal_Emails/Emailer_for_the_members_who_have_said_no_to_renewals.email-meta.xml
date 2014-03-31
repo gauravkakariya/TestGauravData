@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Emailer for the members who have said no to renewals</name>
+    <style>freeForm</style>
+    <subject>Discontinuation of Ffreedom Membership</subject>
+    <textOnly>Dear {!Account.Name}
+
+Our continuous endeavor is to help you live your dream &amp; achieve financial freedom.
+
+To begin with, we would like to thank you for placing your trust with us. We immensely appreciate your continued support &amp; journey with us.
+
+It is very unfortunate that you have opted not to renew your membership with us.
+
+We would again like to reiterate that on renewal of your membership with us you can continue to avail of the following services.
+
+Dedicated Financial Planner [FP] 
+Conference calls/meetings with the FP at member’s discretion. 
+Dedicated FP will be the single point contact &amp; will act as the Financial coach 
+
+Restructuring of the plan, if required, due to changes in personal circumstances 
+
+Access to Member portal [www.ffreedom.in] 
+Consolidation &amp; Monitoring 
+Approved Financial Plan &amp; Action Plan will be uploaded 
+Goal Based reports [along with other reports] 
+
+Implementation 
+Ffreedom team will help the member to execute every single action plan 
+
+Member Update - At least once a Q 
+
+Annual review [Goal Based Reports] &amp; Rebalancing 
+
+Other Services 
+Monthly statements of your Financial Plan 
+SIP &amp; Premium reminders (through SMS &amp; Email). 
+Weekly update &amp; monthly Commentary mailers 
+
+Additional Offerings [at an extra price] 
+Estate Planning 
+Income Tax Filing 
+
+With immense regret we would like to state that we will not be able to provide you with the above services should you opt not to renew your membership with us.
+
+Please feel free to get in touch with us, if you change your mind and see value in our services.
+
+Warm Regards,
+
+Ffreedom Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

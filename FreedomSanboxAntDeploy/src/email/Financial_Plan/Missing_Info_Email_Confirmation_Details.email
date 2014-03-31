@@ -1,0 +1,19 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><FONT face=Calibri>Hello {!Account.Name},</FONT></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><FONT face=Calibri>Welcome to Ffreedom Financial Planners. I hope this e-mail finds you in the best of health. My name is xyz and I am your assigned Financial Planner. Kindly provide the below mentioned documents so that I may get started with your Financial Plan creation. </FONT></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><FONT face=Calibri>1)</FONT></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><FONT face=Calibri>2)</FONT></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><FONT face=Calibri>3)</FONT></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><FONT face=Calibri>Also, before proceeding with the Plan Writing process I would like to verify with you if the below stated estimates that you have provided to us are accurate,</FONT></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><FONT face=Calibri><SPAN style="mso-spacerun: yes">&nbsp;</SPAN>Insurance Premium: </FONT></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><FONT face=Calibri>General Insurance Premium: </FONT></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><FONT face=Calibri>Monthly Surplus: </FONT></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><FONT face=Calibri>Please let me know if any changes need to be made to the stated and feel free to get in touch with me for any questions/concerns that you may have. Your Financial Plan is on its way to completion and you are one step closer to realizing and living your dreams. Please note that the quicker you send us the information that we require from you the faster the execution of your Financial Plan will be. </FONT></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><FONT face=Calibri>Best Regards,</FONT></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><FONT face=Calibri>Your trusted Financial Planner </FONT></P>]]></td>
+</tr>
+</table>

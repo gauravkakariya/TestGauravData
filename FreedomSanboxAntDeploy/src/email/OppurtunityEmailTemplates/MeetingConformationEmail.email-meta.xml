@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Meeting Conformation Email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>MeetingConformationEmail</name>
+    <style>freeForm</style>
+    <subject>Thank You For Confirming Our Meeting - Ffreedom Wealth Solutions</subject>
+    <textOnly>Dear {!Lead.Name}  
+
+Thank you for conforming our meeting.  As mutually agreed we are meeting on {!Lead.Appointment_Time__c}
+
+As per our conversation, I have mentioned herein the agenda for our meeting.
+Understanding                     
+         --  You &amp; your lifestyle
+           --  Your dreams/aspirations in life
+           --   Your dreams/aspirations in life
+
+Explaining you What is Financial Planning &amp; how we can help you achieve financial freedom through our process of Financial Planning
+
+ Explaining our service basket &amp; fee structureExplaining the Financial Planning process that you we will undergo
+
+Addressing any other queries that you may haveI am also attaching The Ffreedom brochure &amp; some client stories for your perusal. 
+
+To know more about us visit www.ffreedom.in   
+
+Get a Financial Health checkup done at www.ffreedomscore.in   
+
+Read our blog on Economic Times here Economic Times Blog - Simplified Finance  
+
+Also, we love online social networking:
+Check out our Facebook activities &amp; updates here www.facebook.com/Ffreedom 
+
+Want to keep up to speed on how to achieve Financial Freedom? Follow us on Twitter by clicking here www.twitter.com/_Ffreedom  
+
+Have a great day ahead &amp; look forward to meeting you.
+
+Best Regards,
+{!Lead.OwnerFullName}</textOnly>
+    <type>html</type>
+</EmailTemplate>

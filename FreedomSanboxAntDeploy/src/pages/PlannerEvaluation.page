@@ -1,0 +1,200 @@
+<apex:page controller="PlannerEvaluation"  showHeader="true" sidebar="false" >
+    <apex:includeScript value="{!URLFOR($Resource.CalendarPopup)}"/>
+     <SCRIPT LANGUAGE="JavaScript" ID="jscal1x">
+              var cal = new CalendarPopup();
+     </SCRIPT>
+        <apex:form >
+ <apex:outputPanel >
+   
+      <br/>
+          <fieldset style="width:935px;">
+            <legend>Step 1: </legend>
+            <table width="935px;">
+                      <tr style="background-color:#8B9CD3;">
+                          <td style="color:#FFFFFF;width:935px;font-size:12px;padding-top:3px;padding-bottom:3px;padding-left:10px;" colspan="3">
+                              <b>Please select the Planner Name</b>
+                          </td>
+                      </tr>
+                    
+                          <tr>
+                              <td>
+                                  <apex:selectRadio value="{!plannerName}" layout="pageDirection">
+                                           <apex:selectOptions value="{!items}"/><br/>
+                                  </apex:selectRadio>
+                              </td>
+                          </tr>
+                    
+            </table>
+            <br/>
+          </fieldset>
+          <br/>
+          <fieldset style="width:935px;">
+            <legend>Step 2:</legend>
+
+      
+                  <table width="935px;">
+                      <tr style="background-color:#8B9CD3;">
+                          <td style="color:#FFFFFF;width:935px;font-size:12px;padding-top:3px;padding-bottom:3px;padding-left:10px;" colspan="3">
+                              <b>Please enter the date range</b>
+                          </td>
+                      </tr>
+                      <tr>
+                      <tr>
+                      </tr>
+                          <td>
+                                    <b>Start Date: </b><apex:inputText VALUE="{!startDate}" SIZE="15" id="startDate" required="true"/>
+                                    <A HREF="#" onClick="cal.select(document.getElementById('{!$Component.startDate}'),'anchor1','MM/dd/yyyy'); return false;" NAME="anchor1" ID="anchor1">select</A>
+                          </td>
+                          <td>     
+                                    <b>End Date: </b><apex:inputText VALUE="{!endDate}" SIZE="15" id="endDate" required="true"/>
+                                     <A HREF="#" onClick="cal.select(document.getElementById('{!$Component.endDate}'),'anchor1','MM/dd/yyyy'); return false;" NAME="anchor1" ID="anchor1">select</A>
+            
+                           </td>
+                           <td>        
+                              <apex:commandButton value="Get Report"  action="{!getReport}"/>         
+                               
+                           </td>
+                   </tr>
+                   </table>
+               </fieldset>
+          
+                   
+   </apex:outputPanel>    
+  <apex:outputPanel id="report" rendered="{!flag}">
+  
+<!---  <apex:outputText value="{!listSize}">HelloWrapperList</apex:outputText>--->
+                
+             <table  width="935px" height="auto">
+                       
+                       
+                      
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                                <apex:outputText value="{!TotalEntities}">Total Number Of Entities: </apex:outputText>
+                           </td>
+                       </tr>
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                                <br/>
+                           </td>
+                       </tr>
+                       
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                                <apex:outputText value="{!FavourableEntities}">Total entities having execution in the first six months:</apex:outputText>
+                           </td>
+                       </tr>
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                              <apex:outputText value="{!PercentageOfFavourableEntities}">%age of Total entities having execution in the first six months:</apex:outputText> %
+                           </td>
+                       </tr>
+                        <tr style="font-weight:bold;">
+                           <td colspan="4">
+                                <br/>
+                           </td>
+                       </tr>
+                       
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                                <apex:outputText value="{!FavourablePlanApprovals}">Total Entities Having Plan Approvals in 45 days: </apex:outputText>
+                           </td>
+                       </tr>
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                              <apex:outputText value="{!PercentageOfPlanApproval}">%age of Total entities having Plan Approvals in 45 days:</apex:outputText> %
+                           </td>
+                       </tr>
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                                <br/>
+                           </td>
+                       </tr>
+                       
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                                <apex:outputText value="{!idealReferrals}">Total Number of referrals Ideally: </apex:outputText>
+                           </td>
+                       </tr>
+                       
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                                <apex:outputText value="{!TotalReferrals}">Actual Number of referrals Obtained: </apex:outputText>
+                           </td>
+                       </tr>
+                       
+                       
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                                <apex:outputText value="{!percentageOfReferrals}">%age of actual referrals obtained: </apex:outputText> %
+                           </td>
+                       </tr>
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                                <apex:outputText value="{!ConvertedReferrals}">Total Number of referrals Converted: </apex:outputText>
+                           </td>
+                       </tr>
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                                <br/>
+                           </td>
+                       </tr>
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                                <apex:outputText value="{!numberOfTestimonialsReceived}">Total Number Of Testimonials: </apex:outputText>
+                           </td>
+                       </tr>
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                                <br/>
+                           </td>
+                       </tr>
+                <apex:repeat value="{!userMonthlyLeadsWrapperList}" var="wrapper">
+                       <tr style="font-weight:bold;">
+                           <td colspan="4">
+                               <apex:outputText value="{!wrapper.month}"/><br/>
+                           </td>
+                       </tr>
+                       <tr style="font-weight:bold;background-color:#E6E6E6">
+                           <td>
+                               <apex:outputText value="Lead Source"/><br/>
+                           </td>
+                           <td>
+                               <apex:outputText value="Total Leads"/><br/>
+                           </td>
+                           <td>
+                               <apex:outputText value="meetings done"/><br/>
+                           </td>
+                           <td>
+                               <apex:outputText value="conversions"/><br/>
+                           </td>
+                       </tr>
+                       <apex:repeat value="{!wrapper.plannerMonthlyLeadsWrapperList}" var="wrap">
+                           <tr style="border:1px solid black;">
+                               <td >
+                                   <apex:outputText value="{!wrap.leadSource}"/><br/>
+                               </td>
+                               <td >
+                                   <apex:outputText value="{!wrap.totalLeads}"/><br/>
+                               </td>
+                               <td >
+                                   <apex:outputText value="{!wrap.totalMeetingsDone}"/><br/>
+                               </td>
+                               <td >
+                                   <apex:outputText value="{!wrap.totalConversions}"/><br/>
+                               </td>
+                           </tr>
+                       </apex:repeat>
+                       <tr>
+                           <td colspan="4">
+                              <br/>
+                           </td>
+                           
+                       </tr>
+               </apex:repeat>
+             </table>
+      
+  
+       </apex:outputPanel> 
+    </apex:form>
+</apex:page>

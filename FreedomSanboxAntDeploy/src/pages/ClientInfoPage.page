@@ -1,0 +1,263 @@
+<apex:page showHeader="false" controller="ClientInfoContoller">
+    <apex:stylesheet value="{!$Resource.FFStyle}" />
+    <apex:composition template="TabPage">
+        <apex:define name="contents">
+            <apex:pageMessages rendered="true" />
+            <apex:form id="familyInfoForm">
+                <apex:pageBlock Title="Personal Information" id="block1" mode="Edit">
+                    <apex:pageBlockButtons >
+                        <apex:commandButton id="saveBtn" value="Save" action="{!save}"
+                            styleClass="standardFontStyle" />
+                        <apex:commandButton id="saveNextBtn" value="Save & Next"
+                            action="{!saveNext}" styleClass="standardFontStyle" />
+                        <apex:commandButton immediate="true" id="cancel" value="Cancel"
+                            action="{!cancell}" styleClass="standardFontStyle" />
+                    </apex:pageBlockButtons>
+                    <apex:pageBlockSection columns="2">
+                        <apex:inputField id="titleTxt" value="{!ciBean.acc.Salutation__c}"
+                            styleClass="standardFontStyle" />
+                        <apex:inputField id="middleNameTxt"
+                            value="{!ciBean.acc.Middle_Name__c}"
+                            styleClass="standardFontStyle" />
+                        <apex:inputField id="firstNameTxt" required="true"
+                            value="{!ciBean.acc.First_Name__c}"
+                            styleClass="standardFontStyle" />
+                        <apex:inputField required="true" id="genderLabel1"
+                            value="{!ciBean.acc.Gender__c}" styleClass="standardFontStyle" />
+                        <apex:inputField id="contactTxt" required="true"
+                            value="{!ciBean.acc.Last_Name__c}" styleClass="standardFontStyle" />
+                        <apex:inputField id="dateOfBirthTxt" required="true"
+                            value="{!ciBean.acc.Date_Of_Birth__c}"
+                            styleClass="standardFontStyle" />
+                        <apex:inputField id="maritalStatusTxt" required="true"
+                            value="{!ciBean.acc.Marital_Status__c}"
+                            styleClass="standardFontStyle" />
+                        <apex:inputField id="panIdTxt" required="true" rendered="{!NOT(ciBean.isFamily)}" 
+                            value="{!ciBean.acc.Pan_Id__c}"  styleClass="standardFontStyle"/>
+                            <apex:inputField id="familyPanIdTxt"  rendered="{!ciBean.isFamily}" 
+                            value="{!ciBean.acc.Pan_Id__c}"  styleClass="standardFontStyle"/>
+                    </apex:pageBlockSection>
+                    <apex:pageblockSection columns="2" rendered="{!ciBean.isFamily}">
+                        <apex:inputField id="relationshipToEntityTxt" required="true"
+                            value="{!ciBean.acc.Relationship_to_Entity__c}"
+                            styleClass="standardFontStyle" />
+                    </apex:pageblockSection>
+                    <apex:pageblockSection columns="2">
+                        <apex:inputField id="mobileNoTxt" value="{!ciBean.acc.Mobile__c}" />
+                        <apex:inputField id="homePhoneTxt"
+                            value="{!ciBean.acc.Home_Phone__c}"
+                            styleClass="standardFontStyle" />
+                        <apex:inputField id="emailIdTxt" value="{!ciBean.acc.Email__c}" />
+                        <apex:inputField id="passportNoTxt"
+                            value="{!ciBean.acc.Passport_Number__c}"
+                            styleClass="standardFontStyle" />
+                            <apex:pageBlockSectionItem >   
+                            <apex:outputLabel style=" color: #11111;font-weight: bold;" value="Do you have a will?" rendered="{!NOT(ciBean.isFamily)}"/>
+                        <apex:selectList id="Will" value="{!ciBean.acc.Will__c}" size="1" style="vertical-align:left;" rendered="{!NOT(ciBean.isFamily)}">
+                             <apex:selectOption itemValue="True" itemLabel="Yes"/>
+                              <apex:selectOption itemValue="False" itemLabel="No" />
+                        </apex:selectList>
+                        </apex:pageBlockSectionItem>   
+                     <!--   <apex:inputField id="Will" rendered="{!NOT(ciBean.isFamily)}"
+                            value="{!ciBean.acc.Will__c}" styleClass="standardFontStyle" />-->
+                    </apex:pageblockSection>
+                    <apex:pageBlockSection columns="1">
+                        <apex:inputField style="width:82%" id="healthHistoryTxt"
+                            value="{!ciBean.acc.Health_History__c}"
+                            styleClass="standardFontStyle" />
+                    </apex:pageBlockSection>
+                    
+                    <apex:pageBlockSection columns="5"
+                        rendered="{!NOT(ciBean.isFamily)}">
+                        <apex:pageBlockSection id="billingAddr" title="Billing Address"
+                            columns="1" collapsible="false">
+                            <apex:pageBlockSectionItem />
+                            <apex:pageBlockSection id="billingAddrSection" columns="2">
+                                <apex:outputlabel value="Street" styleClass="labelCol" />
+                                <apex:inputTextArea id="billingStreetTxt"
+                                    value="{!ciBean.acc.Billing_Street__c}"
+                                    styleClass="standardFontStyle" />
+                                <apex:outputlabel value="City" styleClass="labelCol" />
+                                <apex:inputText id="billingCityTxt"
+                                    value="{!ciBean.acc.Billing_City__c}"
+                                    styleClass="standardFontStyle" />
+                                <apex:outputlabel value="State" styleClass="labelCol" />
+                                <apex:inputText id="billingStateTxt"
+                                    value="{!ciBean.acc.Billing_State__c}"
+                                    styleClass="standardFontStyle" />
+                                <apex:outputlabel value="Country" styleClass="labelCol" />
+                                <apex:inputText id="billingCountryTxt"
+                                    value="{!ciBean.acc.Billing_Country__c}"
+                                    styleClass="standardFontStyle" />
+                                <apex:outputlabel value="Zip/Postal Code" styleClass="labelCol" />
+                                <apex:inputText id="billingZipCodeTxt"
+                                    value="{!ciBean.acc.Billing_Zip_Postal_Code__c}"
+                                    styleClass="standardFontStyle" />
+                            </apex:pageBlockSection>
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection id="mailingAddr" title="Mailing Address"
+                            columns="1" collapsible="false">
+                            <apex:pageBlockSectionItem >
+                                <apex:inputCheckbox id="copy1" onClick="copyValues(this);" />
+                                <apex:outputLabel value="Same as Billing" styleClass="labelCol" />
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSection id="mailingAddrSection" columns="2">
+                                <apex:outputlabel styleClass="labelCol"
+                                    value="Street" />
+                                <apex:inputTextArea id="personStreetTxt"
+                                    styleClass="requiredField standardFontStyle"
+                                    value="{!ciBean.acc.Mailing_Street__c}" />
+                                <apex:outputlabel value="City" styleClass="labelCol" />
+                                <apex:inputText id="personCityTxt"
+                                    styleClass="requiredField standardFontStyle"
+                                    value="{!ciBean.acc.Mailing_City__c}" />
+                                <apex:outputlabel value="State" styleClass="labelCol" />
+                                <apex:inputText id="personStateTxt"
+                                    styleClass="requiredField standardFontStyle"
+                                    value="{!ciBean.acc.Mailing_State__c}" />
+                                <apex:outputlabel value="Country" styleClass="labelCol" />
+                                <apex:inputText id="personCountryTxt"
+                                    styleClass="requiredField standardFontStyle"
+                                    value="{!ciBean.acc.Mailing_Country__c}" />
+                                <apex:outputlabel value="Zip/Postal Code" styleClass="labelCol" />
+                                <apex:inputText id="personZipCodeTxt"
+                                    styleClass="requiredField standardFontStyle"
+                                    value="{!ciBean.acc.Mailing_Zip_Postal_Code__c}" />
+                            </apex:pageBlockSection>
+                        </apex:pageBlockSection>
+
+                        <apex:pageBlockSection title="Office Address" columns="1"
+                            collapsible="false">
+                            <apex:pageBlockSectionItem />
+                            <apex:pageBlockSection columns="2">
+                                <apex:outputlabel value="Street" styleClass="labelCol" />
+                                <apex:inputTextArea id="otherStreetTxt"
+                                    value="{!ciBean.acc.Office_Street__c}"
+                                    styleClass="standardFontStyle" />
+                                <apex:outputlabel value="City" styleClass="labelCol" />
+                                <apex:inputText id="otherCityTxt"
+                                    value="{!ciBean.acc.Office_City__c}"
+                                    styleClass="standardFontStyle" />
+                                <apex:outputlabel value="State" styleClass="labelCol" />
+                                <apex:inputText id="otherStateTxt"
+                                    value="{!ciBean.acc.Office_State__c}"
+                                    styleClass="standardFontStyle" />
+                                <apex:outputlabel value="Country" styleClass="labelCol" />
+                                <apex:inputText id="otherCountryTxt"
+                                    value="{!ciBean.acc.Office_Country__c}"
+                                    styleClass="standardFontStyle" />
+                                <apex:outputlabel value="Zip/Postal Code" styleClass="labelCol" />
+                                <apex:inputText id="otherZipCodeTxt"
+                                    value="{!ciBean.acc.Office_Zip_Postal_Code__c}"
+                                    styleClass="standardFontStyle" />
+                            </apex:pageBlockSection>
+                        </apex:pageBlockSection>
+                        <script>
+                   function copyValues(input){
+                     var street=document.getElementById('{!$Component.mailingAddr.mailingAddrSection.personStreetTxt}');
+                     var city=document.getElementById('{!$Component.mailingAddr.mailingAddrSection.personCityTxt}');  
+                     var state=document.getElementById('{!$Component.mailingAddr.mailingAddrSection.personStateTxt}');
+                     var country=document.getElementById('{!$Component.mailingAddr.mailingAddrSection.personCountryTxt}'); 
+                     var zipCode=document.getElementById('{!$Component.mailingAddr.mailingAddrSection.personZipCodeTxt}');
+                     if(input.checked){
+                    
+                    
+                     street.value=document.getElementById('{!$Component.billingAddr.billingAddrSection.billingStreetTxt}').value;
+                     city.value=document.getElementById('{!$Component.billingAddr.billingAddrSection.billingCityTxt}').value;
+                     state.value=document.getElementById('{!$Component.billingAddr.billingAddrSection.billingStateTxt}').value;
+                     country.value=document.getElementById('{!$Component.billingAddr.billingAddrSection.billingCountryTxt}').value;
+                     zipCode.value=document.getElementById('{!$Component.billingAddr.billingAddrSection.billingZipCodeTxt}').value;
+                     }
+                     else{
+                     street.value='';
+                     city.value='';
+                     state.value='';
+                     country.value='';
+                     zipCode.value='';
+                     }
+                   }
+                 </script>
+                    </apex:pageBlockSection>
+                   
+                    <apex:pageBlock title="Bank Account Details">
+                        <apex:pageBlockButtons location="Bottom">
+
+                            <apex:commandButton id="addNewBankBtn" value="Add New"
+                                action="{!addNewRow}" reRender="dummy,bankTable"
+                                styleClass="standardFontStyle" style="margin-left:140px;">
+                                <apex:param name="financialRecordType"
+                                    value="{!ciBean.bankRec.name}" />
+                            </apex:commandButton>
+
+                        </apex:pageBlockButtons>
+
+                        <apex:pageBlockTable style="width:100%;" id="bankTable"
+                            value="{!ciBean.bankList}" var="bank" rowClasses="odd,even">
+                            <apex:column headerValue="Account Number"
+                                styleClass="standardFontStyle">
+                                <apex:inputField value="{!bank.Account_Number__c}"
+                                    styleClass="standardFontStyle" />
+                            </apex:column>
+                            <apex:column headerValue="Account Type" width="15%"
+                                styleClass="standardFontStyle">
+                                <apex:inputField value="{!bank.Account_type__c}"
+                                    styleClass="standardFontStyle" />
+                            </apex:column>
+                            <apex:column headerValue="Bank Name"
+                                styleClass="standardFontStyle">
+                                <apex:inputField value="{!bank.Bank_Name__c}"
+                                    style="height:16px;" styleClass="standardFontStyle" />
+                            </apex:column>
+                            <apex:column headerValue="Branch Details"
+                                styleClass="standardFontStyle">
+                                <apex:inputField value="{!bank.Branch_detail__c}"
+                                    style="height:16px;" styleClass="standardFontStyle" />
+                            </apex:column>
+                            <apex:column headerValue="MICR No" styleClass="standardFontStyle">
+                                <apex:inputField value="{!bank.MICR_No__c}"
+                                    styleClass="standardFontStyle" />
+                            </apex:column>
+                            <apex:column headerValue="IFSC No" styleClass="standardFontStyle">
+                                <apex:inputField style="width:80%;" value="{!bank.IFSC_No__c}"
+                                    styleClass="standardFontStyle" />
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </apex:pageBlock>
+                    <apex:pageBlock title="Demat Account Details">
+                        <apex:pageBlockButtons location="Bottom">
+
+                            <apex:commandButton id="addNewDematBtn" value="Add New"
+                                action="{!addNewRow}" reRender="dummy,dematTable"
+                                styleClass="standardFontStyle" style="margin-left:140px;">
+                                <apex:param name="financialRecordType"
+                                    value="{!ciBean.dematRec.name}" />
+                            </apex:commandButton>
+
+                        </apex:pageBlockButtons>
+                        <apex:pageBlockTable style="width:100%;" id="dematTable"
+                            value="{!ciBean.dematList}" var="demat" rowClasses="odd,even">
+                            <apex:column headerValue="Account Number"
+                                styleClass="standardFontStyle">
+                                <apex:inputField value="{!demat.Account_Number__c}"
+                                    styleClass="standardFontStyle" />
+                            </apex:column>
+                            <apex:column headerValue="DP Name" styleClass="standardFontStyle">
+                                <apex:inputField value="{!demat.DP_Name__c}"
+                                    style="height:16px;" styleClass="standardFontStyle" />
+                            </apex:column>
+                            <apex:column headerValue="DP ID" styleClass="standardFontStyle">
+                                <apex:inputField value="{!demat.DP_Id__c}" style="height:16px;"
+                                    styleClass="standardFontStyle" />
+                            </apex:column>
+                            <apex:column headerValue="Branch Details"
+                                styleClass="standardFontStyle">
+                                <apex:inputField value="{!demat.Branch_detail__c}"
+                                    style="height:16px;" styleClass="standardFontStyle" />
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </apex:pageBlock>
+                </apex:pageBlock>
+            </apex:form>
+        </apex:define>
+    </apex:composition>
+</apex:page>

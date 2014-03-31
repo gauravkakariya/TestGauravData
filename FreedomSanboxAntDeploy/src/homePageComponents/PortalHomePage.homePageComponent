@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <body>&lt;iframe src=&quot;/apex/Portal_homePage&quot;  =&quot;&quot; style=&quot;margin-top: 0px; border: 0px none; padding-top: 0px; padding-left: 0px;&quot; width=&quot;878px&quot; frameborder=&quot;0&quot; height=&quot;594px&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;</body>
+    <pageComponentType>htmlArea</pageComponentType>
+    <width>wide</width>
+</HomePageComponent>

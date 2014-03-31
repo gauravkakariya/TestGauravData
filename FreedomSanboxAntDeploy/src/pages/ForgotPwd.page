@@ -1,0 +1,15 @@
+<apex:page showHeader="false" sidebar="false" controller="customLoginController">
+
+	<apex:outputPanel id="PopupPanel">
+		<HTML>
+			<h3> Did you forget your password? Please enter your Username below.  </h3>
+			<form name= " PortViewLogin " action = "https://www.ffreedom.my-portfolio.in/ForgotPasswordDirect.aspx" method="post" >
+				<label >Username : </label>
+				<input type="text"  name="txtUserID"  value=""/>
+				<input type="hidden" name="txtBrokerID" value="11011"/>
+				<input type="Submit" value="Submit"/>
+			</form>
+		</HTML>
+	</apex:outputPanel>
+
+</apex:page>

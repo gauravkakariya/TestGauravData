@@ -1,0 +1,80 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | Ffreedpm Culture">
+<link rel="shortcut icon" href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+
+ <div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+        <div class="sidemenucontainer">
+         <div id="sidemenu1">
+            <ul style="list-style-type:none">
+              <li><a href="about_ffreedom_overview">Overview</a></li>
+              <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+              <li><span class="selected_btn">Ffreedom Culture</span></li>
+              <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+              <li><a href="our_philosophy">Philosophy</a></li>
+              <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+              <li><a href="Meet_The_Leaders">Meet The Leaders</a></li>
+              <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+              <li><a href="#">Pressroom</a></li>
+        </ul>
+        </div>
+        </div>
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/About_img.jpg')}" /></div>
+        <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+        </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+              <div class="leftlinkselectedimg" style="margin-top:67px; height:106px; background-repeat:no-repeat;"></div>
+      </div>
+      <div id="innerpage_textcontainer_middle">
+   <!-- <div class="innerpage_titletext"><span class="innerpagetopheading">Ffreedom Culture</span></div>-->
+    <div class="innerpage_titletext"><span class="innerpagetexttitle">Ffreedom Culture</span> </div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        Our name speaks for our culture. At Ffreedom we enable our clients to accomplish their financial goals and dreams by being involved with them every step of the way right from identification of goals to execution and staying on track. </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"> 
+        Ffreedom is not about us, it is about you. We take care of our clients like family and we do this because we want our clients to experience Ffreedom the way that we experience it every day, as a way of life. We love what we do and we work hard to ensure that you are involved and successful in the Financial Ffreedom movement.</span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"> 
+        We are a vibrant and energetic fun filled team.  At Ffreedom, we pride ourselves for having a work culture that is both quirky and out of the box. We believe that being able to express our individuality and uniqueness at work will enable us to be better performers and this will surely pass on to our clients by way of excellent service.</span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"> 
+        As pioneers in the Financial Planning Industry in India it is our endeavor to provide great service and make sure that the Financial Planning concept is executed in a precise and efficient manner so that people understand it and are able to benefit from it in its totality.</span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"> 
+        We are passionate about our quest to constantly innovate. For us, Financial Planning goes above and beyond just writing a Financial plan for our clients. Rather, our approach is of a comprehensive kind wherein we build upon creating an ongoing relationship with our clients and a promise that we will be available for them at all times.</span></div>
+ 
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+ At Ffreedom, we realize that it’s the little things that matter and we are dedicated to making sure that you are always connected with us and that any information that you may require is simply either a phone call or a click of your mouse away. We strive to understand our client and always put them first –this has and always will be our number one priority and that is the Ffreedom Financial Planners promise.</span><br/><br/>
+ <a href="#top" class="otherslink">Top</a></div>
+ 
+      </div>
+     
+      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" />
+      </div>
+     <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}" border="0" usemap="#Map2" />
+         <map name="Map2" id="Map2">
+           <area shape="rect" coords="3,0,230,50" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map>
+       </div>
+       <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+        
+         <div class="title123"><span class="imgtext">Related Links</span></div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know our Financial Planners</strong></a></span> </div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Comprehensive_fp"><strong>Services Basket</strong></a></span> </div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Careers"><strong>Careers</strong></a></span> </div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="What_is_financial_planning"><strong>What is financial planning?</strong></a></span> </div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Client_Stories"><strong>Our client stories</strong></a></span> </div>
+       <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

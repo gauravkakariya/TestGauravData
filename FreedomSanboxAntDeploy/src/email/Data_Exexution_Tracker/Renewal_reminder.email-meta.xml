@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Renewal reminder</name>
+    <style>freeForm</style>
+    <subject>Renewal of financial planning services</subject>
+    <textOnly>Dear &quot;{!Account.Name}&quot;
+
+It has been such a pleasure being your partner in your journey towards financial freedom.
+
+We have in the last year done the following:
+&lt;&lt;Drop down to choose&gt;&gt;
+- Identified the different goals you want to achieve in your life
+- Drawn up a workable financial plan that will help you achieve these goals
+- Protected your family against the various risks that you face
+- Begun an investment plan to achieve your goals &lt;&lt;Elaborate which goals&gt;&gt;
+- Better planned your taxes
+- Put together a proper Succession Plan
+
+We have come some distance, but we have a long way to go. We trust you found value and will consider it worthwhile to renew your relationship with us which is due on {!Renewal__c.Renewal_Date__c}.
+Look forward to a long term rewarding association with you.
+
+Thanks and regards
+{!Account.OwnerFullName}</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,124 @@
+<apex:page Controller="ComplimentaryDetailedAnalysis" standardStylesheets="true" sidebar="false" action="{!Init}" showHeader="false">
+<apex:stylesheet value="{!$Resource.FFStyle}"/>
+<script type="text/javascript">
+   function  CloseWindow(){
+       window.close();
+   }
+</script>
+
+<style type="text/css">
+		span.black {color:black;font-weight:bold}
+		span.spanStyle{font-family:Arial;font-size:12px;font-weight: bold;}
+		input.groovybutton{
+		   font-family:Verdana,sans-serif;
+		   border-top-style:outset;
+		   border-bottom-style:outset;
+		   border-left-style:outset;
+		   border-right-style:outset;
+		}
+</style>
+
+<apex:form id="idfrom">
+<span Style="color:red;font-weight:bold">
+        <apex:outputLabel value="No any Analysis is present" rendered ="{!NOT(lstAnalyasisMatrix.size > 0)}"></apex:outputLabel>
+</span>
+
+<apex:outputPanel rendered ="{!(lstAnalyasisMatrix.size > 0)}" id="opPanel">
+   <div style="page-break-after:always;">
+		<c:AnalysisHeaderComponent PartnerPortalLogo="{!Partnerlogo}" isFreedomUserProp="{!isFreedomUser}"/>
+		<div style="height:40px">
+		  <span style="font-family:Arial;font-size:14px;font-weight: bold">Date :  {!strDate}</span>
+		</div>
+		<div style="font-family:Arial;font-size:12px;text-align:left;height:50px">
+			Dear {!strName}  <br/><br/>
+			We congratulate you for taking the Financial X-Ray and taking the first step in your journey towards financial freedom. 
+			A financial X-ray or score card is a tool to examine how well you are doing financially right now and how you are poised to reach your goals and live your dreams. 
+			The analysis report will try to put in perspective your current situation on the following issues of importance:
+		</div>
+		<div style="height: 30px"></div>
+		<div style="font-family:Arial;font-size:12px;text-align:left;">		
+			<ol>
+			  <li><b>Articulation of Financial Goals : </b>The first step in the financial planning process is to articulate your financial goals and responsibilities. If goals are your destination, the financial plan is the road map. Naming the goals, giving it a time frame and determining the financial impact is for us, a sacrosanct exercise.<br/><br/> </li>
+			  <li><b>Contingency Planning : </b>Financial planning begins with bracing yourself for unforeseen events or emergencies and reducing the impact of adverse conditions in your life. A contingency plan is a backup for job loss/income loss or any other emergency. Everyone needs to plan for emergencies like health related expenses and other less desirable happenings in life.<br/><br/></li>
+			  <li><b>Risk Planning : </b> We believe that before we start our journey to build more wealth, it is important to protect what we already have. Risk Planning includes three areas: Life, Health and Asset. There are scientific approaches to project life insurance needs like the Human Life Value or the Need based approach.  Planning for health setbacks is another critical protection we all need which if not done well might have a huge financial impact. Similarly, assets need also be insured against natural disasters or accidents<br/><br/></li>
+			  <li><b>Retirement Goals : </b> Retirement is not just an event or just another goal. It is life changing, a new phase. It is in this period that you get to do all that have always interested you.
+<!-- 			  At {!Accname},  -->
+			  We strongly believe that our clients should say “Thank God I have retired” and never “Oh God, I have retired”. Therefore retirement planning to us doesn’t just mean financially being prepared, but mentally and socially too.<br/><br/></li>
+			  <li><b>Estate Planning : </b> Irrespective of the stage of your life, anything might happen. Once that realisation of reality sets in, it is easier to view things more objectively and practically.  To us, financial planning doesn’t end with investing, insuring or reaching goals during your lifetime but ensuring that your legacy lives on for long afterwards. Estate planning is a process of making sure that in case of disability or death your assets will be handled the way you would have always wanted to and with the least hassles.<br/><br/></li>
+			</ol>	
+		</div>
+	</div>
+	
+	<div style="page-break-after:always;">
+			<!--Partner Portal Aditi--> 
+	   <c:AnalysisHeaderComponent PartnerPortalLogo="{!Partnerlogo}" isFreedomUserProp="{!isFreedomUser}"/>
+	   <span style="font-family:Arial;font-size:14px;font-weight: bold">Questions and Answers </span><br/><br/> 
+	   <table border="1" align="center"  style="border-style: solid; " cellspacing ="0" cellpadding ="1" width="80%">
+		      <tr style="font-family:Arial;font-size:10px;text-align:center;background-color:#DCDCDC">
+			      <th> <span class="spanStyle" >Questions</span></th>
+			      <th> <span class="spanStyle">Answers</span></th>
+		      </tr>
+	           <apex:repeat value="{!lstInnerClstoBind}" var="item">
+				      <tr style="font-family:Arial;font-size:10px;text-align:left;">
+				       <td>
+				           <span style="font-family:Arial;font-size:12px;"><apex:outputText value="{!item.objScoreCardtoBind.Question_Bank_List__r.Question__c}"/> </span>
+				      </td>
+				         <td>
+				           <apex:repeat value="{!item.lstOptionDetailtoBind}" var="var">
+			                  <span style="font-family:Arial;font-size:12px"><apex:outputText value="{!var.Answer__r.Name}"/></span> 
+			                  <apex:outputText value="  " rendered="{!(item.lstOptionDetailtoBind.size >1)}"/>
+			               </apex:repeat>
+			             </td>
+				      </tr>
+			</apex:repeat>
+	    </table>
+   </div>
+  	<br/>
+	<br/>
+	<div>		
+		<c:AnalysisHeaderComponent PartnerPortalLogo="{!Partnerlogo}" isFreedomUserProp="{!isFreedomUser}"/>
+			<div style="font-family:Arial;font-size:14px">
+				<span class="black"><u><apex:outputText value="Analysis of current financial situation for  {!strName}" /></u></span><br/>
+			</div>
+			
+			<div style="height:20px"></div>
+		
+			<apex:repeat value="{!lstAnalyasisMatrix}" var="itmAnalysis" rendered = "{!IF(lstAnalyasisMatrix.size >0,true,false)}">
+				<div style="font-family:Arial;font-size:12px;text-align:left;">
+					<ul><li><span style="font-family:Arial;font-size:12px;">{!itmAnalysis.Analysis__c}</span> </li></ul>
+				</div><br/>
+			</apex:repeat>
+	</div>
+	<div style="font-family:Arial;font-size:12px;text-align:left;">
+			<span class ="black" style="font-style: italic;" ><u> Your 
+<!-- 			{!Accname}  -->
+			Financial X-Ray Score is  
+				<apex:outputText value=" {0} "><apex:param value="{!freedomScore}"/></apex:outputText> on 100  and we believe this can improve with time when concerted efforts are made.</u></span>
+	</div>
+	
+	<div style="height:40px;"></div>
+	<div style="font-family:Arial;font-size:12px;text-align:left;height: 135px;">
+		<span style="font-family:Arial;font-size:12px;text-align:left;"> The journey to a great destination begins with a small step! We look forward to be your partner in your journey towards financial freedom.<br/><br/>
+		Warm Regard<br/>
+<!-- 		{!Accname}  -->
+		Financial Planners </span>
+	</div>
+	</apex:outputPanel>	
+	<div style="height:20px;"></div>
+<apex:outputPanel id="opPanellast" rendered="{!DisplayButton=='1'}">
+	<apex:actionStatus stopText="" id="counterStatusData">
+		<div style="height: 30px;">
+		 <apex:facet name="start">
+		 		<apex:outputPanel style="padding-left:45%;">
+                	 <apex:image value="{!$Resource.loading_image}" width="3%" height="3%"/>
+				</apex:outputPanel>
+         </apex:facet>
+         </div>
+         </apex:actionStatus>
+         <div> 		
+		<apex:commandButton id="cmdBtnGenerateAPForET" value="Save Analysis"
+							style="margin-left:500px;" status="counterStatusData" reRender="idfrom"   action="{!createAnalysisAttachment}" onComplete=" return CloseWindow();" rendered="{!DisplayButton=='1'}" />
+		</div>					
+	</apex:outputPanel>	
+</apex:form>	
+</apex:page>

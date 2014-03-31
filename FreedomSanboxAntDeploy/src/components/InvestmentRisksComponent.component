@@ -1,0 +1,63 @@
+<apex:component id="FPInvestmentRisks" selfClosing="true">
+<apex:stylesheet value="{!$Resource.FFStyle}"/>
+<div class="divContainerStyle">
+    <div class="divStyle">INVESTMENT RISKS</div>
+    <br/>
+    <apex:outputText value="{!$Label.InvestmentRiskText}" styleClass="textStyle"></apex:outputText>
+    <ol class="olist" start="1">
+            <li>
+                <p style="margin-bottom:10px;">
+                    <apex:outputText value="{!$Label.MismatchRisk}" escape="false"></apex:outputText>
+                </p>
+            </li>
+            <li>
+                <p style="margin-bottom:10px;">
+                    <apex:outputText value="{!$Label.InflationRisk}" escape="false"></apex:outputText>
+                </p>
+                
+            </li>
+            <li>
+                <p style="margin-bottom:10px;">
+                    <apex:outputText value="{!$Label.ReinvestmentRisk}" escape="false"></apex:outputText>
+                </p>
+                
+            </li>
+            <li>
+                <p style="margin-bottom:10px;">
+                    <apex:outputText value="{!$Label.MarketRisk}" escape="false"></apex:outputText>
+                </p>
+                
+            </li>
+            <li>
+                <p style="margin-bottom:10px;">
+                    <apex:outputText value="{!$Label.MarketTimingRisk}" escape="false"></apex:outputText>
+               </p>
+            </li>
+            <li>
+                <p style="margin-bottom:10px;">
+                <apex:outputText value="{!$Label.Risk_of_not_Diversifying}" escape="False"></apex:outputText>
+               </p>
+            </li>
+            <li>
+                <p style="margin-bottom:10px;">
+                    <apex:outputText value="{!$Label.Liquidity_Risk}" escape="False"></apex:outputText>
+                </p>
+            </li>
+            <li>
+                <p style="margin-bottom:10px;">
+                    <apex:outputText value="{!$Label.Credit_Risk}" escape="False"></apex:outputText>
+                </p>
+            </li>
+            <li>
+                <p style="margin-bottom:10px;">
+                 <apex:outputText value="{!$Label.Legislative_Risk}" escape="False"></apex:outputText>
+               </p>
+            </li>
+            <li>
+                <p>
+                  <apex:outputText value="{!$Label.Gearing_Risk}" escape="False"></apex:outputText>
+                </p>           
+            </li>
+        </ol>
+</div>
+</apex:component>

@@ -1,0 +1,186 @@
+<!--
+Revision History:
+    Version     Version Author       Date           Comments
+    1.0         Prajakta Sanap	   21/02/2013	  Initial Draft - Financial Plan Enhancement
+ -->
+
+<apex:component controller="PersonalInformationController">
+	<apex:form >
+<!--  <apex:attribute name="accountName" type="String" description="Account Name" required="true"/> -->
+<!--  <apex:attribute name="emailId" type="String" description="Emailid" required="true"/> -->
+<!--  <apex:attribute name="clientFullName" type="String" description="Client Full Name" required="true"/> -->
+<!--     <apex:attribute name="spouseFullName" type="String" description="Spouse Full Name" /> -->
+<!--     <apex:attribute name="entityOwner" type="String" description="Entity Owner" required="true" /> -->
+    <apex:outputPanel >
+    <apex:pageBlock > 
+    
+	<div class="divContainerStyle">
+		<div class="divStyle" style="padding-left:10px;">PERSONAL INFORMATION WITH FAMILY DETAILS</div><br/>
+          	<apex:outputPanel >  
+                
+                <table style="padding-left:80px;">
+  					<tr style="page-break-after:always;">
+  					    <td>
+			  				<table  width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable7">
+						      	<tr >
+						      		<td class="personalInfo" style="width:300px;">Name</td>
+						      		<apex:repeat value="{!lstPersonalInfo}" var="info">
+			          					<td style="width:16%;">
+									    	<apex:outputText value="{!info.objAccount.Name}"  styleClass="textStyle">
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+						      	</tr>
+<!-- 						      	<tr > -->
+<!-- 						      		<td class="personalInfo" style="width:16%;">Gender</td> -->
+<!-- 						      		<apex:repeat value="{!lstPersonalInfo}" var="info"> -->
+<!-- 			          					<td style="width:16%;"> -->
+<!-- 									    	<apex:outputText value="{!info.objAccount.Gender__pc}"  styleClass="textStyle"> -->
+<!-- 									    	</apex:outputText>  -->
+<!-- 									    </td>  -->
+<!-- 									</apex:repeat> -->
+<!-- 						      	</tr> -->
+<!-- 							    <tr > -->
+<!-- 						      		<td class="personalInfo" style="width:16%;">Marital Status</td> -->
+<!-- 						      		<apex:repeat value="{!lstPersonalInfo}" var="info"> -->
+<!-- 			          					<td style="width:16%;"> -->
+<!-- 									    	<apex:outputText value="{!info.objAccount.Marital_Status__pc}"  styleClass="textStyle"> -->
+<!-- 									    	</apex:outputText>  -->
+<!-- 									    </td> -->
+<!-- 									</apex:repeat> -->
+<!-- 						      	</tr> -->
+						      	<tr >
+						      		<td class="personalInfo" style="width:16%;">Birthdate</td>
+						      		<apex:repeat value="{!lstPersonalInfo}" var="info">
+			          					<td style="width:16%;">
+									    	<apex:outputText value="{!info.strDate}"  styleClass="textStyle">
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+						      	</tr>
+						      	<tr >
+						      		<td class="personalInfo" style="width:16%;">Relationship To Entity</td>
+						      		<apex:repeat value="{!lstPersonalInfo}" var="info">
+			          					<td style="width:16%;">
+									    	<apex:outputText value="{!info.objAccount.Relationship_to_Entity__pc}"  styleClass="textStyle">
+									    	</apex:outputText> 
+									    </td>
+									</apex:repeat>
+						      	</tr>
+<!-- 						      	<tr > -->
+<!-- 						      		<td class="personalInfo" style="width:16%;">Dependent</td> -->
+<!-- 						      		<apex:repeat value="{!lstPersonalInfo}" var="info"> -->
+<!-- 			          					<td style="width:16%;"> -->
+<!-- 									    	<apex:outputText value="{!info.dependent}"  styleClass="textStyle"> -->
+<!-- 									    	</apex:outputText>  -->
+<!-- 									    </td> -->
+<!-- 									</apex:repeat> -->
+<!-- 						      	</tr> -->
+<!-- 						     	<tr > -->
+<!-- 						      		<td class="personalInfo" style="width:16%;">Will</td> -->
+<!-- 						      		<apex:repeat value="{!lstPersonalInfo}" var="info"> -->
+<!-- 			          					<td style="width:16%;"> -->
+<!-- 									    	<apex:outputText value="{!info.will}"  styleClass="textStyle"> -->
+<!-- 									    	</apex:outputText>  -->
+<!-- 									    </td> -->
+<!-- 									</apex:repeat> -->
+<!-- 						      	</tr> -->
+	                		</table>
+                		</td>
+                	</tr>
+                </table>
+          <br/>
+          <div  class="divStyle" style="padding-left:10px;">GLOBAL ASSUMPTIONS</div><br/>
+                
+                <table style="padding-left:80px;">
+  					<tr style="page-break-after:always;">
+  					    <td>
+			  				<table  width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable7">
+			  				
+						      	<tr >
+						      		<td class="personalInfo" style="width:300px;">Number of Months savings <br/>required for Emergency Planning</td>
+			          					<td style="text-align:center;width:16%;">
+									    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Number_Of_Months__c}"  styleClass="textStyle">
+									    	</apex:outputText> 
+									    </td>
+						      
+						      		<td class="personalInfo" style="width:300px;">Expected Return on Investment</td>
+			          					<td style="text-align:center;width:16%;">
+									    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Expected_Return_on_Investment__c}" styleClass="textStyle">
+									    	</apex:outputText> 
+									    </td>  
+						      	</tr>
+							    <tr >
+						      		<td class="personalInfo" >Inflation Rate</td>
+			          					<td style="text-align:center;width:16%;">
+									    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Inflation_Rate__c}"  styleClass="textStyle">
+									    	</apex:outputText> 
+									    </td>
+						      	
+									<td class="personalInfo" >Stock Growth Rate</td>
+			          					<td style="text-align:center;width:16%;">
+									    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Stock_Growth_Rate__c}"  styleClass="textStyle">
+									    	</apex:outputText> 
+									    </td>
+									    
+						      	</tr>
+						      	<tr >
+						      		<td class="personalInfo">Retirement Age</td>
+			          					<td style="text-align:center;width:16%;">
+									    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Default_Retirement_Age__c}"  styleClass="textStyle">
+									    	</apex:outputText> 
+									    </td>
+						      	
+						      		<td class="personalInfo" >Equity</td>
+			          					<td style="text-align:center;width:16%;">
+									    	<apex:outputText value="{!newGlobalAssumptions.Equity}"  styleClass="textStyle">
+									    	</apex:outputText> 
+									    </td>
+						      	</tr>
+						     	<tr >
+						      		<td class="personalInfo">Estimated Life Expectancy</td>
+			          					<td style="text-align:center;width:16%;">
+									    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Default_Estimated_Life_Expectancy__c}"  styleClass="textStyle">
+									    	</apex:outputText> 
+									    </td>
+						      	
+						      		<td class="personalInfo" >Debt</td>
+			          					<td style="text-align:center;width:16%;">
+									    	<apex:outputText value="{!newGlobalAssumptions.Debt}"  styleClass="textStyle">
+									    	</apex:outputText> 
+									    </td>
+						      	</tr>
+						      	<tr >
+						      		<td class="personalInfo" >Income Growth Rate</td>
+			          					<td style="text-align:center;width:16%;">
+									    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Income_Growth_Rate__c}"  styleClass="textStyle">
+									    	</apex:outputText> 
+									    </td>
+						      	
+						      		<td class="personalInfo" >Gold</td>
+			          					<td style="text-align:center;width:16%;">
+									    	<apex:outputText value="{!newGlobalAssumptions.Gold}"  styleClass="textStyle">
+									    	</apex:outputText> 
+									    </td>
+						      	</tr>
+						      	<tr >
+						      		<td class="personalInfo" >Gold Growth Rate</td>
+			          					<td style="text-align:center;width:16%;">
+									    	<apex:outputText value="{!newGlobalAssumptions.objGlobalAssumptions.Gold_Growth_Rate__c}"  styleClass="textStyle">
+									    	</apex:outputText> 
+									    </td>
+						      	
+						      		<td class="personalInfo" ></td>
+			          					<td style="text-align:center;width:16%;">
+									    </td>
+						      	</tr>
+						      	
+	                		</table>
+                		</td>
+                	</tr>
+                </table>
+             </apex:outputPanel>
+        </div>        
+    </apex:pageBlock>    
+    </apex:outputPanel></apex:form>
+</apex:component>

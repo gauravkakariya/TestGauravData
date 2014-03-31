@@ -1,0 +1,190 @@
+<apex:page showHeader="false" sidebar="false"
+	title="Ffreedom Financial Planners | Who Can Be Your Financial Planner">
+	<link rel="shortcut icon"
+		href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+	<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+	<apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />
+	<apex:stylesheet value="{!URLFOR($Resource.css)}" />
+	<apex:includeScript value="{!URLFOR($Resource.newMenu)}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}" />
+	<apex:composition template="WebsiteTemplate">
+		<apex:define name="bodycontent">
+			<div class="leftcontainer">
+				<div id="innerpage_textcontainer_left">
+					<div class="sidemenucontainer">
+						<div id="sidemenu">
+							<ul style="list-style-type: none">
+								<li><a href="What_is_financial_planning" title="" alt="">What
+										is financial planning?</a></li>
+								<div id="sidesaprate">
+									<apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}"
+										width="162" height="1" />
+								</div>
+								<li><a href="How_does_financial_planning_work" title=""
+									alt="">How does financial planning work?</a></li>
+								<div id="sidesaprate">
+									<apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}"
+										width="162" height="1" />
+								</div>
+								<li><span class="selected_btn1">Who can be your
+										financial planner?</span></li>
+								<div id="sidesaprate">
+									<apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}"
+										width="162" height="1" />
+								</div>
+								<li><a href="Why_do_you_need_a_plan" title="" alt="">Why
+										do you need a plan?</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- Old Image "result.jpg" is changed to "result_img_new.png" -->
+					<div id="innerpage_textcontainer_left">
+						<apex:image url="{!URLFOR($Resource.images,'images/result_img_new.png')}"
+							style="height:30%;width:100%;" />
+					</div>
+					<!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+				</div>
+				<div class="borderimg">
+					<!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+					<div class="leftlinkselectedimg"
+						style="margin-top: 109px; height: 152px; background-repeat: no-repeat;"></div>
+				</div>
+				<div id="innerpage_textcontainer_middle">
+					<!-- <div class="innerpage_titletext"><span class="innerpagetopheading">Financial Planning</span></div>-->
+					<div class="innerpage_titletext">
+						<span class="innerpagetexttitle">Who can be your financial
+							planner?</span>
+					</div>
+					<!-- Changed "So far, FPSB has certified less than 1000 financial planners across the country" to "So far, FPSB has certified around 1300 Financial Planners across the country (as of Feb'11]')" -->
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">Financial planning is
+							an important process for most of us and selecting an advisor is
+							as important as deciding to create a financial plan.<br /> <br />
+							Being a specialized job, going to a certified financial planner
+							is imperative. Currently, there are many who claim to have
+							‘knowledge’ of financial planning, yet few who are certified to
+							act as the same.<br />
+						<br /> The Financial Planning Standards Board (FPSB) is the
+							premier body to certify financial planners in India. So far, FPSB
+							has certified around 1300 Financial Planners across the country
+							(as of Feb'11]'). Therefore, it becomes fundamental for you to
+							ensure that the person handling your finances is well qualified
+							to execute your targets/objectives.
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>How
+								to select a financial planner?</strong></span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>Provide
+								clarity on your finances</strong></span>
+					</div>
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage">
+							<li>Ensure that your advisor is a FPSB certified financial
+								planner.</li>
+							<li>Try to enquire about his/her experience and background.</li>
+							<li>Check on how he/she has fared with earlier clients.</li>
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>What
+								kind of questions do they ask?</strong></span>
+					</div>
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage">
+							<li>Does he/she ask you about your dreams, goals and
+								targets?</li>
+							<li>The advisor should do enough research about you in order
+								to chalk out a comprehensive plan.</li>
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>How
+								will he help you?</strong></span>
+					</div>
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage">
+							<li>How will your advisor help you achieve your goals?</li>
+							<li>Will he/she help you track your progress?</li>
+							<li>How will he/she tackle a change in your goals?</li>
+							<li>Keep you informed about how often you need to review
+								your plan?</li>
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>Comfort
+								level?</strong></span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"><strong>Financial
+								planning is an on-going time-consuming process. So, it’s
+								important that you share a good comfort level with the advisor.
+								Unless, you are at ease about opening up your finances with him
+								the process will be in vain. Ensure that he/she is –</strong></span>
+					</div>
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage">
+							<li>Committed to maintaining confidentiality about your
+								finances.</li>
+							<li>Committed to covering risks intelligently.</li>
+							<li>And, not making false claims about assured results.</li> <br />
+						</span><br /> <a href="#top" class="otherslink">Top</a>
+					</div>
+				</div>
+
+				<div class="innerpageborderimg">
+					<apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}"
+						width="5" height="579" alt="" />
+				</div>
+
+				<div class="callmeheadingCall">
+					<img
+						src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}"
+						border="0" usemap="#Map2" />
+					<map name="Map2" id="Map2">
+						<area shape="rect" coords="3,0,230,50" href="Comp_Con"
+							alt="Let our advisor call" title="Let our advisor call" />
+					</map>
+				</div>
+				<div class="callmeheadingCall">
+					<span class="txtmatterbig_innerpage"><br />
+					<br /> People dream &amp; remain happy.<br /> Imagine people
+						dreaming &amp; living their dreams.<br />
+					<br /> <a href="Comp_Con"><strong>Sign up today!</strong></a> <br />
+					<br /> For a one to one session at the place convenient to you.<br />
+					<br />
+					<br /></span>
+				</div>
+				<div class="title123">
+					<span class="imgtext">Related Links</span>
+				</div>
+				<!--- <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know Our Financial Planners</strong></a></span> </div>---->
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a href="our_process"><strong>Our
+								Process</strong></a></span>
+				</div>
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a
+						href="Client_Stories"><strong>Our Client stories</strong></a></span>
+				</div>
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a
+						href="Comprehensive_fp"><strong>Services Basket</strong></a></span>
+				</div>
+<!-- 				<div class="relatedinfoheading"> -->
+<!-- 					<span class="txtmatterbig_innerpage"><a href="why_fees"><strong> -->
+<!-- 								Financial Planning Fees</strong></a></span> -->
+<!-- 				</div> -->
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom
+								Hub</strong></a></span>
+				</div>
+			</div>
+		</apex:define>
+
+	</apex:composition>
+</apex:page>

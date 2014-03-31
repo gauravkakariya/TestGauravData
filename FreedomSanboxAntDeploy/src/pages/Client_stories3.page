@@ -1,0 +1,100 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | Client Story | Saurabh Nathany">
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+<div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+      
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/result_img_new.png')}" style="height:30%;width:100%;" /></div>
+        <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+        </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+             
+      </div>
+      <div id="innerpage_textcontainer_middle"> 
+        <div class="innerpage_titletext"><span class="innerpagetexttitle">Client Stories 3</span></div>
+        <div class="innerpage_titletext"><img src="{!URLFOR($Resource.images,'images/no_image.jpg')}" border="0" width="75" height="100" /></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        <b>Client Name:</b> Saurabh Nathany&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Financial Planner:</b> Vinita Somaiya
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Description :</strong> Lawyer by profession. Family members consist of his parents, wife and sister. Saurabh’s wife is also a practicing lawyer.
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>My Story :</strong> I was always interested in the financial markets and investments ever since I started my first job. My insight and guide to investments were primarily financial magazines. 4 years into my professional practice left me with no time for furthering my knowledge on planning my finances, moreover I was left with little disposable wealth and more debts in my portfolio in the form of credit cards.  Little did I know that a Financial Plan could streamline not only my investments and financial goals, but could also help me repay all my debts in my portfolio simultaneously. 
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"> I needed help with my basic investments vis-à-vis my long term and short term goals when I met Sunitha from Ffreedom Financial Planners, who explained me in detail, the necessity and urgency of a Financial Plan for any individual. While I always knew the object of a Financial Plan, but what truly moved me to sign up for a plan was the importance and advantages of having a sound Financial Plan in one’s life, as opposed to investing in financial products blindly in a haphazard manner. That’s when I decided to delegate my wife and my personal Financial Planning to Ffreedom Financial Planners to try and see how best, my finances could be managed. 
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        The most interesting part was the process of the drafting of the Financial Plan. Vinita Somaiya, who was assigned as the Financial Planner noted our details, from a macro as well as a micro perspective, right from our basic remunerations and other incomes to the recurring and non-recurring expenses on an annual basis. With this data in hand, and in addition to our financial goals set by us, she was in a position to write a detailed plan for us. I was most amazed at the entire exercise in terms of the various aspects of an individual that are taken into account for writing a complete and a sound plan. 
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        Vinita made me realize that the interest I was earning through my investments were a fraction of the interest that was I was paying on the debt component. Further, after understanding my finances in depth she gave an excellent advice on how to set my goals, and churn my portfolio such that I could clear my debts in the shortest time span. This majorly boosted my interest in the Financial Plan! 
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+       Vinita went to the extent of following up with me, almost on a weekly basis, in respect of (a) repayment of debts and surrendering my credit cards, and (b) the status of the execution of my goals. This helped me tremendously, as I realized the seriousness of executing a Financial Plan in order to achieve my goal.
+        </span></div> 
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        I have now become much more aware as to where my money is going. I am very selective while spending money.
+        </span></div>         
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+       I believe that Ffreedom Financial Planners adopt a truly innovative methodology, in writing Financial Plans for each Client. The whole exercise of collating and obtaining data is an emotional and a wonderful experience in itself. After having in-depth details of an individual to the core, with respect to expenses, incomes, savings, investments, debts and loans, etc., a detailed plan is written, explaining exactly where the Client stands financially, how much insurance cover is required depending on the responsibilities and goals of the Client, and the investment strategy to be adopted for the Client to successfully achieve his/her goals. 
+       </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        During the presentation of the Plan, in a way Ffreedom demonstrates a deep sense of concern that they have, in order that their Clients achieve their Financial Goals. I was truly touched by the whole exercise, because it felt as if they treated my Financial Plan as theirs!
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        I think Ffreedom is exactly doing what individuals require out of today’s financial planners –</span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        1. A sound financial plan, being a reality check for the individual.
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        2. Suggestions on strategies to be adopted, for achieving financial goals, instead of just selling financial products.</span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        3. Ensuring the execution of the Financial Plan.</span></div>
+       
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+       All of the above give a whole new world of a definition to ‘Financial Planning’!</span></div>
+        
+        
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Excellent job done by Ffreedom, keep up the good work!
+        </strong></span> </div>  
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Mr. Saurabh Nathany
+        </strong></span> </div>  
+        
+          
+        <a href="#top" class="otherslink">Top</a>
+        <center><a href="Client_Stories" class="otherslink" alt="Client Stories"><strong>Back</strong></a>
+        </center>
+        <br /> 
+        </div>
+    
+    
+    
+      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" /></div>
+       
+       <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}"  border="0" usemap="#Map2" />
+         <map name="Map2" id="Map2">
+           <area shape="rect" coords="3,0,230,50" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map></div>
+       <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+          <div class="title123"><span class="imgtext">Related Links</span></div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Comprehensive_fp"><strong>Services Basket</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know our Financial Planers</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Why_do_you_need_a_plan"><strong>Why do you need a financial plan?</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Who_can_be_your_financial_planner"><strong>Who can be a financial planner?</strong></a></span> </div>
+<!--        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="why_fees"><strong> Financial Planning Fees</strong></a></span> </div> -->
+       <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

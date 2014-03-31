@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Welcome Letter</name>
+    <style>freeForm</style>
+    <subject>Welcome to Ffreedom Family</subject>
+    <textOnly>Dear &quot;{!Lead.LastName}&quot;,
+
+Greetings and welcome to the Ffreedom Family.
+
+I would like to thank you for choosing Ffreedom Wealth Solutions Pvt. Ltd. as a partner and guide in your journey towards financial freedom.
+
+You have entrusted upon us a huge responsibility and we assure you that we will leave no stone unturned to give you a personalized experience with unbiased world class financial advisory.
+
+{!Lead.OwnerFullName} will be your Ffreedom advisor.  He will be assisted by the following team, who would be working with you to put together your plan and implement the action points - to hand hold you till your dreams are realized.
+
+Name Department Email Direct Landline Mobile
+&lt;&lt;Reporting manager of Entitiy owner&gt;&gt; - Manager - Financial Planning _____.____@ffreedom.in
+
+Kiran Client Engagement kiran.n@@ffreedom.in
+
+Praful Operations praful.panchal@ffreedom.in
+
+Supriya Member Success supriya.gupta@ffreedom.in
+
+Bishnu Sahu COO Bishnu.sahu@ffreedom.in
+022 4222 4333 9867155668
+
+You may get in touch with any of the above mentioned members of the workstation assigned to you for any assistance.
+
+Thank you once again for the opportunity and we look forward to a long and rewarding relationship.
+
+Regards
+
+Sumeet Vaid
+CEO
+Ffreedom Financial Planners</textOnly>
+    <type>html</type>
+</EmailTemplate>

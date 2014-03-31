@@ -1,0 +1,55 @@
+<apex:component controller="GoalSummaryController">
+<apex:stylesheet value="{!$Resource.FFStyle}"/>
+ <div class="divContainerStyle">
+  <div class="divStyle" style="padding-left:10px;">GOAL SUMMARY</div>
+  <p class="textStyle">
+      <apex:outputText value="{!$Label.GoalSummaryText}"/>
+  </p>
+  <apex:outputText value="Goals" style="font-weight:bold;" styleclass="textStyle"/>
+  <table  border="1" cellspacing="0" cellpadding="5" class="textStyle" align="centre" >
+  <tr class="tableHeader">
+      <th>Description</th>
+      <th>Priority</th>
+      <th>Goal Start Year</th>
+      <th>Goal End Year</th>
+      <th>Inflation Rate</th>
+      <th>Annual Cost of Goal </th>
+      <th>Portfolio Allocation for the Goal</th>
+  </tr>
+  <apex:repeat value="{!financialGoalList}" var="goal">
+      <tr>
+          <td>
+              <apex:outputText value="{!goal.Description__c}"/>
+          </td>
+          <td>
+              <apex:outputText value="{!goal.Priority__c}"/>
+          </td>
+          <td class="rightAlignData">
+              <apex:outputText value="{!goal.Goal_Start_Year__c}"/>
+          </td>
+          <td class="rightAlignData">
+              <apex:outputText value="{!goal.Goal_End_Year__c}"/>
+          </td>
+          <td class="rightAlignData">
+              <apex:outputText value="{0, number, ,##0.00}%" styleClass="rightAlignData">
+              <!--  Change By Niket  (Date : 1 June 2011 )-->
+              <!--  If Inflation Rate from the Goal is Null or then we will show the 
+                    Inflataion from the Global assumption for that particular entity 
+               -->
+                  <apex:param name="annualcost" value="{!IF(ISNULL(goal.Inflation_Rate__c), GlobalAssumptionInflationRate, goal.Inflation_Rate__c)}"/>
+              </apex:outputText>
+              
+          </td>
+          <td class="rightAlignData">
+              <apex:outputText value="{0, number, ,##0}" styleClass="rightAlignData">
+                  <apex:param name="annualcost" value="{!goal.Cost_of_Goal_Annual__c}"/>
+              </apex:outputText>
+          </td>
+          <td>
+              <apex:outputText value="{!goal.SelectedGoalProfile__r.name}"/>
+          </td>
+      </tr>
+  </apex:repeat>
+  </table>
+  </div>
+</apex:component>

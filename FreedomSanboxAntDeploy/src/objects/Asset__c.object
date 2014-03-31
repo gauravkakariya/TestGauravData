@@ -1,0 +1,2491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Account_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Account Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Account_Number__c</fullName>
+        <description>Changed label from Account Number to Description</description>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Account Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>EPF</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gratuity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Superannuation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>National Saving Certificate (NSC)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kisan Vikas Patra (KVP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Indra Vikas Patra / Others (IVP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Monthly Income Plan (MIP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Post Office Recurring Deposit (RD)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Post Office Time Deposit (FD)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Public Provident Fund (PPF)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Senior Citizens Savings Scheme (SCSS)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Current A/c</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Savings A/c</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Certificate of Deposit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recurring Deposits</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash in hand</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Others…</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Accumulated_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Accumulated Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Acquisition_Year__c</fullName>
+        <externalId>false</externalId>
+        <label>Acquisition Year</label>
+        <length>4</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Action__c</fullName>
+        <externalId>false</externalId>
+        <label>Action</label>
+        <picklist>
+            <picklistValues>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Liquidate (Align to goal)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Liquidate (sell)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hold (Align to goal)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Allocated_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Allocated Amount</label>
+        <summarizedField>GoalAssetAssociation__c.Allocation__c</summarizedField>
+        <summaryForeignKey>GoalAssetAssociation__c.Asset__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Annual_Contribution__c</fullName>
+        <externalId>false</externalId>
+        <label>Annual Contribution</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Asset_Sub_Types__c</fullName>
+        <externalId>false</externalId>
+        <label>Asset Sub Types</label>
+        <picklist>
+            <controllingField>Asset_Types__c</controllingField>
+            <picklistValues>
+                <fullName>Primary</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Secondary</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Commercial</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vacation home</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rental property</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LLP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Private Limited</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Public Company</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vehicles</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jewelry</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Furniture</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Electronics</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Current A/c</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Savings A/c</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash in hand</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recurring</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Deposit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EPF</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gratuity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Superannuation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>National Saving Certificate (NSC)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kisan Vikas Patra (KVP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Indra Vikas Patra / Others (IVP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Monthly Income Plan (MIP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Post Office Recurring Deposit (RD)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Post Office Time Deposit (FD)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Public Provident Fund (PPF)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Senior Citizens Savings Scheme (SCSS)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recurring Deposit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Asset_Types__c</fullName>
+        <externalId>false</externalId>
+        <label>Asset Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>EPF</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gratuity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Superannuation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>National Saving Certificate (NSC)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kisan Vikas Patra (KVP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Indra Vikas Patra / Others (IVP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Monthly Income Plan (MIP)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Post Office Recurring Deposit (RD)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Post Office Time Deposit (FD)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Public Provident Fund (PPF)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Senior Citizens Savings Scheme (SCSS)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recurring Deposit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Current A/c</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Savings A/c</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash in hand</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Primary</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Secondary</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Commercial</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vacation home</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rental property</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LLP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Private Limited</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Public Company</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vehicles</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jewelry</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Furniture</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Electronics</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bank Deposits</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Business Assets</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cash and Cash Equivalents</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Personal Assets</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Post-office Savings Schemes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Retirement Accounts</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Others…</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Asset_value__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(RecordTypeId , 
+           &apos;01220000000HYzZ&apos; , Accumulated_Value__c,
+           &apos;01220000000HYzX&apos; , Accumulated_Value__c,
+           &apos;01220000000HYzV&apos;, Current_Balance__c,
+           &apos;01220000000HYzU&apos; , Current_Value__c ,
+           &apos;01220000000HYzT&apos;, Current_Value__c ,
+           &apos;01220000000HYzY&apos; , Current_Value__c ,
+           &apos;01220000000HYzW&apos;, Current_Value__c ,
+            0
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Asset_value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Bank_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Bank Name</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CalculatedInterestRate__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(RecordTypeId , 
+           &apos;01220000000HYzZ&apos; , CASE( Account_Type__c ,
+											&apos;EPF&apos; , 8.5,
+											&apos;Gratuity&apos; , 6 ,
+											&apos;Superannuation&apos; , 6 ,
+											0) ,
+           &apos;01220000000HYzX&apos; , CASE( Account_Type__c ,
+											&apos;National Saving Certificate (NSC)&apos;, 7.5 ,
+											&apos;Public Provident Fund (PPF)&apos;, 8 ,
+											&apos;Kisan Vikas Patra (KVP)&apos;, 7.5,
+											7.5),
+           &apos;01220000000HYzV&apos;,  NULLVALUE(Interest_Rate__c,  5 ),
+           &apos;01220000000HYzU&apos; , 0 , 
+           &apos;01220000000HYzT&apos;, 0 , 
+           &apos;01220000000HYzY&apos; , 0 , 
+           &apos;01220000000HYzW&apos;, 0 , 
+            0
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>DefaultInterestRate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Categories__c</fullName>
+        <externalId>false</externalId>
+        <label>Categories</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Current_Balance__c</fullName>
+        <externalId>false</externalId>
+        <label>Current Balance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Current_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Current Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>EmergencyFundAction__c</fullName>
+        <externalId>false</externalId>
+        <label>EmergencyFundAction</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>End_Year__c</fullName>
+        <externalId>false</externalId>
+        <label>End Year</label>
+        <length>4</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Entity__c</fullName>
+        <externalId>false</externalId>
+        <label>Entity</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Assets</relationshipLabel>
+        <relationshipName>Assets</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Expected_Growth_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Expected Growth Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Expected_Year_of_Sale__c</fullName>
+        <externalId>false</externalId>
+        <label>Expected Year of Sale</label>
+        <length>4</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>From_Portal__c</fullName>
+        <externalId>false</externalId>
+        <label>From Portal</label>
+        <precision>1</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Inserted_From_Portal__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Inserted From Portal</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Interest_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Interest Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>IsSynched__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>IsSynched</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Include_In_HLV_Asset__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>To include only checked assets in HLV calculations</description>
+        <externalId>false</externalId>
+        <label>Include In HLV</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Maturity_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Maturity Date</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Monthly_Asset__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE(RecordTypeId , 
+           &apos;01220000000HYzZ&apos; , Accumulated_Value__c,
+           &apos;01220000000HYzX&apos; , Accumulated_Value__c,
+           &apos;01220000000HYzV&apos;, Current_Balance__c,
+           &apos;01220000000HYzU&apos; , Current_Value__c ,
+           &apos;01220000000HYzT&apos;, Current_Value__c ,
+           &apos;01220000000HYzY&apos; , Current_Value__c ,
+           &apos;01220000000HYzW&apos;, Current_Value__c ,
+            0
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Monthly Asset</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Portal_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Portal Id</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Portal_Parent_Entity__c</fullName>
+        <externalId>false</externalId>
+        <label>Portal Parent Entity</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RemoveCheckbox__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>RemoveCheckbox</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Start_Year__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Year</label>
+        <length>4</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Synched_Date_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Synched Date Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <label>Asset</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>A-{00000}</displayFormat>
+        <label>Asset Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Assets</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Business_Assets</fullName>
+        <active>true</active>
+        <label>Business Assets</label>
+        <picklistValues>
+            <picklist>Account_Type__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Hold %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28sell%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Sub_Types__c</picklist>
+            <values>
+                <fullName>Cash in hand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Current A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Electronics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Furniture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gratuity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Indra Vikas Patra %2F Others %28IVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jewelry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kisan Vikas Patra %28KVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LLP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly Income Plan %28MIP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>National Saving Certificate %28NSC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Recurring Deposit %28RD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Time Deposit %28FD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Primary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Private Limited</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Provident Fund %28PPF%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rental property</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Savings A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secondary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Senior Citizens Savings Scheme %28SCSS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Superannuation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacation home</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vehicles</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Types__c</picklist>
+            <values>
+                <fullName>LLP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others%E2%80%A6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Private Limited</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Categories__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Cash_and_Cash_Equivalents</fullName>
+        <active>true</active>
+        <label>Cash and Cash Equivalents</label>
+        <picklistValues>
+            <picklist>Account_Type__c</picklist>
+            <values>
+                <fullName>Cash in hand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Current A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others%E2%80%A6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Savings A%2Fc</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Hold %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28sell%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Sub_Types__c</picklist>
+            <values>
+                <fullName>Cash in hand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Current A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Electronics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Furniture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gratuity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Indra Vikas Patra %2F Others %28IVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jewelry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kisan Vikas Patra %28KVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LLP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly Income Plan %28MIP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>National Saving Certificate %28NSC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Recurring Deposit %28RD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Time Deposit %28FD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Primary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Private Limited</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Provident Fund %28PPF%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rental property</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Savings A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secondary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Senior Citizens Savings Scheme %28SCSS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Superannuation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacation home</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vehicles</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Types__c</picklist>
+            <values>
+                <fullName>Cash in hand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Current A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others%E2%80%A6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Savings A%2Fc</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Categories__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Deposits_with_Bank</fullName>
+        <active>true</active>
+        <label>Deposits With Bank</label>
+        <picklistValues>
+            <picklist>Account_Type__c</picklist>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others%E2%80%A6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring Deposits</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Hold %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28sell%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Sub_Types__c</picklist>
+            <values>
+                <fullName>Cash in hand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Current A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Electronics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Furniture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gratuity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Indra Vikas Patra %2F Others %28IVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jewelry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kisan Vikas Patra %28KVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LLP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly Income Plan %28MIP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>National Saving Certificate %28NSC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Recurring Deposit %28RD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Time Deposit %28FD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Primary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Private Limited</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Provident Fund %28PPF%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rental property</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Savings A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secondary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Senior Citizens Savings Scheme %28SCSS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Superannuation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacation home</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vehicles</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Types__c</picklist>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others%E2%80%A6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring Deposit</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Categories__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Personal_Assets</fullName>
+        <active>true</active>
+        <label>Personal Assets</label>
+        <picklistValues>
+            <picklist>Account_Type__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Hold %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28sell%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Sub_Types__c</picklist>
+            <values>
+                <fullName>Cash in hand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Current A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Electronics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Furniture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gratuity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Indra Vikas Patra %2F Others %28IVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jewelry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kisan Vikas Patra %28KVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LLP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly Income Plan %28MIP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>National Saving Certificate %28NSC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Recurring Deposit %28RD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Time Deposit %28FD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Primary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Private Limited</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Provident Fund %28PPF%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rental property</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Savings A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secondary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Senior Citizens Savings Scheme %28SCSS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Superannuation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacation home</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vehicles</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Types__c</picklist>
+            <values>
+                <fullName>Electronics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Furniture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jewelry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others%E2%80%A6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vehicles</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Categories__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Post_Office_Saving_Schemes</fullName>
+        <active>true</active>
+        <label>Govt. Saving Schemes</label>
+        <picklistValues>
+            <picklist>Account_Type__c</picklist>
+            <values>
+                <fullName>Indra Vikas Patra %2F Others %28IVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kisan Vikas Patra %28KVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly Income Plan %28MIP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>National Saving Certificate %28NSC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Recurring Deposit %28RD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Time Deposit %28FD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Provident Fund %28PPF%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Senior Citizens Savings Scheme %28SCSS%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Hold %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28sell%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Sub_Types__c</picklist>
+            <values>
+                <fullName>Cash in hand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Current A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Electronics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Furniture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gratuity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Indra Vikas Patra %2F Others %28IVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jewelry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kisan Vikas Patra %28KVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LLP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly Income Plan %28MIP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>National Saving Certificate %28NSC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Recurring Deposit %28RD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Time Deposit %28FD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Primary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Private Limited</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Provident Fund %28PPF%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rental property</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Savings A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secondary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Senior Citizens Savings Scheme %28SCSS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Superannuation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacation home</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vehicles</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Types__c</picklist>
+            <values>
+                <fullName>Indra Vikas Patra %2F Others %28IVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kisan Vikas Patra %28KVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly Income Plan %28MIP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>National Saving Certificate %28NSC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Recurring Deposit %28RD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Time Deposit %28FD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Provident Fund %28PPF%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Senior Citizens Savings Scheme %28SCSS%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Categories__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Real_Estate_Assets</fullName>
+        <active>true</active>
+        <label>Real Estate Assets</label>
+        <picklistValues>
+            <picklist>Account_Type__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Hold %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28sell%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Sub_Types__c</picklist>
+            <values>
+                <fullName>Cash in hand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Current A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Electronics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Furniture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gratuity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Indra Vikas Patra %2F Others %28IVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jewelry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kisan Vikas Patra %28KVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LLP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly Income Plan %28MIP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>National Saving Certificate %28NSC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Recurring Deposit %28RD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Time Deposit %28FD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Primary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Private Limited</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Provident Fund %28PPF%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rental property</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Savings A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secondary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Senior Citizens Savings Scheme %28SCSS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Superannuation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacation home</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vehicles</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Types__c</picklist>
+            <values>
+                <fullName>Commercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others%E2%80%A6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Primary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rental property</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secondary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacation home</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Categories__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Retirement_Accounts</fullName>
+        <active>true</active>
+        <label>Retirement Accounts</label>
+        <picklistValues>
+            <picklist>Account_Type__c</picklist>
+            <values>
+                <fullName>EPF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gratuity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Superannuation</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Hold %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28sell%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Sub_Types__c</picklist>
+            <values>
+                <fullName>Cash in hand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Current A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Electronics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fixed Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Furniture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gratuity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Indra Vikas Patra %2F Others %28IVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jewelry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kisan Vikas Patra %28KVP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LLP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Land</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly Income Plan %28MIP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>National Saving Certificate %28NSC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Recurring Deposit %28RD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post Office Time Deposit %28FD%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Primary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Private Limited</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Provident Fund %28PPF%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recurring Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rental property</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Savings A%2Fc</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secondary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Senior Citizens Savings Scheme %28SCSS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Superannuation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vacation home</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vehicles</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Types__c</picklist>
+            <values>
+                <fullName>EPF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gratuity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Superannuation</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Categories__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

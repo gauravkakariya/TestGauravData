@@ -1,0 +1,347 @@
+<apex:page showHeader="false" sidebar="false"
+	title="Ffreedom Financial Planners | News Letters"
+	id="FinancialPlanners_June12">
+	<head>
+	<link rel="shortcut icon" href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+	<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+	</head>
+	<body>
+		<table width="740" border="0" align="center" cellpadding="0"
+			cellspacing="0">
+			<tr>
+				<td><img
+					src="{!URLFOR($Resource.images,'images/top_June12.gif')}"
+					width="740" height="104" />
+				</td>
+			</tr>
+			<tr>
+				<td><table width="100%" border="0" cellspacing="0"
+						cellpadding="0">
+						<tr>
+							<td width="2" valign="top" bgcolor="#9CB82B"><img
+								src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+								height="1" />
+							</td>
+							<td valign="top"><table width="98%" border="0"
+									align="center" cellpadding="0" cellspacing="0">
+									<tr>
+										<td valign="top"><table width="100%" border="0"
+												cellspacing="0" cellpadding="0">
+												<tr>
+													<td
+														background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img
+														src="{!URLFOR($Resource.images,'images/headR.gif')}"
+														width="9" height="40" align="right" /><img
+														src="{!URLFOR($Resource.images,'images/plannerHIn.gif')}"
+														width="218" height="40" />
+													</td>
+												</tr>
+												<tr>
+													<td><table width="100%" border="0" cellpadding="0"
+															cellspacing="0">
+															<tr>
+																<td width="9" valign="top"
+																	background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img
+																	src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"
+																	width="9" height="185" />
+																</td>
+																<td width="8" valign="top"><img
+																	src="{!URLFOR($Resource.images,'images/space.gif')}"
+																	width="8" height="1" />
+																</td>
+																<td valign="top"><table width="98%" border="0"
+																		cellpadding="0" cellspacing="0">
+																		<tr>
+																			<td height="25" valign="top"><font
+																				face="Arial, Helvetica, sans-serif" color="#683400"
+																				style="font-size: 14px;"><strong><em>Financial
+																							Planning</em>
+																				</strong>
+																			</font>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td valign="top"
+																				style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">
+																				When you have to travel over 15 kms by bike, after 8
+																				pm on a busy highway against the wishes and warnings
+																				of people at home to meet a prospect, you would
+																				reasonably expect to sign him up for your services
+																				somehow. You would rather leave the evangelist you
+																				back home, wear your salesman cap and go.<br /> <br />
+																				<strong>Lead: Mr. Mehta (Age: 38)</strong><br /> <br />
+																				<strong>Occupation:</strong> Service-ITWent for
+																				meeting on 17/2/12--8pm--At Wakad, Pune I was
+																				following up with hime for 3 months. Since Dec, 11
+																				the day before the meeting day called him, he said
+																				he can meet tomorrow after office hours i. e. after
+																				8pm. I agreed to him even though place was 15 kms
+																				away from my home and there is no other way than
+																				travelling by bike on Mumbai-Bangalore Highway with
+																				Trucks and cars plying with full speed. Of course
+																				parents are against such meetings in night specially
+																				where I have go via highway. But taking calculated
+																				risks is part of every profession. coming back to
+																				the main topic, I accepted the meeting time with
+																				great hopes that he is going to be my next member.
+																				next day, I went for the meeting and he was ready
+																				for the meeting, smiling and with such demeanour
+																				that he already knows what i'm going to tell him in
+																				the meeting. then i started with the general
+																				discussion and in turn moving towards the main part
+																				that is x-ray. <br /> <br /> <strong>Budget:</strong>
+																				He is preparing budget and has clear idea when the
+																				major expenses like premium etc are due. Has planned
+																				RDs in such a way that they mature at such a time
+																				that all the major expenses like Diwali, schooling
+																				expenses for children and insurance premium are
+																				taken care of. <br /> <br /> <strong>Emergency
+																					Planning:</strong> He said his wife is working in Infosys.
+																				his father is retired sales tax officer and even
+																				though retired is earning good amount just through
+																				Dividend on shares investment( around 60L investment
+																				in shares which are growing and giving good
+																				dividends as well) and he is also getting rental
+																				income from 3 houses thus additional sources of
+																				income apart from his salary are almost equal to his
+																				salary but not less. Has kept sufficient balance in
+																				Saving account and Fds to take care of emergencies.
+																				<br /> <br /> <strong>Life Insurance:</strong> He
+																				had a ULIP 5 years back and removed it after lock in
+																				period was over. Now he has a 25L term policy which
+																				he says is kind of buffer considering his additional
+																				income sources and investments and dependent's
+																				incomes. <br /> <br /> <strong>Health
+																					Insurance:</strong> He said he has already created a Medical
+																				fund for health emergencies for his family. Parents
+																				are completely independent and have already covered
+																				themselves. Company is also providing good cover and
+																				he has no plans to switch job till he retire at
+																				42!If at all required he can buy the policy on his
+																				own as he has good friends in insurance and he
+																				himself aware of terms and conditions of policies. <br />
+																				<br /> <strong>Kid education:</strong> He has
+																				already planned for different stages in education of
+																				his single child. One house is allocated for his
+																				higher studies. <br /> <br /> <strong>Investments:</strong>
+																				He said he has made investments in such a manner
+																				that the growth rate will be in line with Inflation
+																				or more than inflation. e. g Shares of good
+																				companies (with good track record after due research
+																				specially of his father who is an expert in shares
+																				investments), Mutual Funds and Real Estate. <br />
+																				<br /> Retirement: Planning to retire at 42-43
+																				which he had planned at 40 earlier but after
+																				analysis has decided to extend by 2 years. then he
+																				plans to enter into consultancy for which he has
+																				majority of plans ready. <br /> <br /> <strong>Tax
+																					Planning:&nbsp;</strong> He has planned very well to save
+																				his tax outgo. He has created an HUF (that too
+																				without the help of CA!!, which is commendable!!)
+																				All his investment in shares and few other
+																				investments are in the name of HUF, so income from
+																				these assets are the income of HUF. Looking at this
+																				planning we can imagine how he must have planned to
+																				save basic tax outgo. <br /> <br /> <strong>WiIl:</strong>
+																				This is the only thing he accepted that he has
+																				started thinking seriously after the presentation
+																				even though he is aware about it and its intricacies
+																				and has good friends as lawyers!At the end I asked
+																				him how come he is aware about so many things in
+																				Finance, he said it is just out of passion towards
+																				finance and continuous study and research on it,
+																				that too after working for IT company. . . simply
+																				gr8!<br /> <br /> After this entire discussion I
+																				didn't think of pushing him further and could just
+																				say that he is gr8 in handling his finances and all
+																				the best for future.<br /> <br /> Of course, I
+																				gave him my card and asked for references mentioning
+																				that he must be coming across people who are not
+																				that good in handling finances due to lack of
+																				awareness or time and would need the help of an
+																				expert. <br /> <br /> Then I left from meeting
+																				towards my home at 10pm. Though I did not get the
+																				cheque or any hopes of cheque from the meeting but
+																				it was an eye opener for me and how well aware I
+																				should be as a Financial Planner as compared to him.
+																				<br /> <br /> No need to mention that while
+																				driving back to home in that long night drive, I
+																				couldn't stop saying to myself that even though I
+																				had good take aways from the meeting, I hope not to
+																				come across such leads in future! <br /> <br />
+																				Thanks &amp; Regards,<br /> Rohit Bornarkar<br />
+																				Financial Planner</td>
+																		</tr>
+																		<tr>
+																			<td valign="top"
+																				style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;"></td>
+																		</tr>
+																		<tr>
+																			<td valign="top"
+																				style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">&nbsp;</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+															<tr>
+																<td valign="top"><img
+																	src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"
+																	width="9" height="1" />
+																</td>
+																<td valign="top" bgcolor="#BD6105"><img
+																	src="{!URLFOR($Resource.images,'images/space.gif')}"
+																	width="1" height="1" />
+																</td>
+																<td valign="top" bgcolor="#BD6105"><img
+																	src="{!URLFOR($Resource.images,'images/space.gif')}"
+																	width="1" height="1" />
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table></td>
+									</tr>
+									<tr>
+										<td valign="top">&nbsp;</td>
+									</tr>
+								</table>
+							</td>
+							<td width="2" valign="top" bgcolor="#9CB82B"><img
+								src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+								height="1" />
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td><table width="100%" border="0" cellspacing="0"
+						cellpadding="0">
+						<tr>
+							<td width="2" valign="top" bgcolor="#9CB82B"><img
+								src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+								height="1" />
+							</td>
+							<td valign="top"><table width="98%" border="0"
+									align="center" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="76%" height="20" valign="top"><font
+											face="Arial, Helvetica, sans-serif" color="#035728"
+											style="font-size: 13px;"><strong>Ffreedom
+													Financial Planners</strong>
+										</font>
+										</td>
+										<td width="24%" rowspan="3"><table border="0"
+												align="center" cellpadding="0" cellspacing="0">
+												<tr>
+													<td><font face="Arial, Helvetica, sans-serif"
+														color="#333333" style="font-size: 12px;"><strong>
+																Follow us on&nbsp;&nbsp;&nbsp;</strong>
+													</font>
+													</td>
+													<td><a href="http://www.facebook.com/Ffreedom"
+														target="_blank"><img
+															src="{!URLFOR($Resource.images,'images/fb.png')}"
+															width="20" height="20" border="0" />
+													</a><a href="http://twitter.com/_Ffreedom" target="_blank"><img
+															src="{!URLFOR($Resource.images,'images/tw.png')}"
+															width="20" height="20" hspace="6" border="0" />
+													</a><a
+														href="http://www.linkedin.com/companies/ffreedom-financial-planners"
+														target="_blank"><img
+															src="{!URLFOR($Resource.images,'images/LinkedIn.png')}"
+															width="20" height="20" border="0" />
+													</a>
+													</td>
+												</tr>
+												<tr>
+													<td><font face="Arial, Helvetica, sans-serif"
+														color="#333333" style="font-size: 12px;"><strong>Watch
+																us on</strong>
+													</font>
+													</td>
+													<td><font face="Arial, Helvetica, sans-serif"
+														color="#333333" style="font-size: 12px;"><strong><a
+																href="http://www.youtube.com/user/ffreedomtube"
+																target="_blank"><img
+																	src="{!URLFOR($Resource.images,'images/youtube.png')}"
+																	width="20" height="20" vspace="6" border="0" />
+															</a>
+														</strong>
+													</font>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td height="20" valign="top"><font
+											face="Arial, Helvetica, sans-serif" color="#333333"
+											style="font-size: 11px;">506 / 507, Morya Landmark II,
+												Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font>
+										</td>
+									</tr>
+									<tr>
+										<td height="20" valign="top"><font
+											face="Arial, Helvetica, sans-serif" color="#333333"
+											style="font-size: 11px;">Boardline: +91 22 4222 4333
+												&nbsp;|&nbsp; Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a
+												href="mailto:contact@ffreedom.in">contact@ffreedom.in</a>
+												&nbsp;|&nbsp; <a href="http://www.ffreedom.in"
+												target="_blank">www.ffreedom.in</a>
+										</font>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" valign="top"><div align="justify">
+												<font face="Arial, Helvetica, sans-serif" color="#333333"
+													style="font-size: 11px;">Disclaimer: This
+													communication from Ffreedom provides general information
+													existing at the time of preparation. This mailer is
+													intended as a news update and Ffreedom Financial Planners
+													neither assumes nor accepts any responsibility for any loss
+													arising to any person acting or refraining from acting as a
+													result of any material contained in this communication. It
+													is recommended that professional advice be taken based on
+													the specific facts and circumstances. This communication
+													does not substitute the need to refer to the original
+													pronouncements.</font>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td width="2" valign="top" bgcolor="#9CB82B"><img
+								src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+								height="1" />
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td><img src="{!URLFOR($Resource.images,'images/footer.gif')}"
+					width="740" height="15" />
+				</td>
+			</tr>
+		</table>
+	</body>
+</apex:page>

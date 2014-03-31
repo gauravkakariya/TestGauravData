@@ -1,0 +1,167 @@
+<!-- 
+						Eternus Solutions
+                        Author  : Trupti Gaikwad
+                        Issue Id: FS0266
+                        Date    : 11/10/2011
+                        Purpose : Newsletter for the Month of November   2011(website pages)     			--> 
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="Houseview1_Nov11">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script type="text/javascript">
+ 			var _gaq = _gaq || [];
+  			_gaq.push(['_setAccount', 'UA-26313496-1']);
+  			_gaq.push(['_trackPageview']);
+ 
+			  (function() {
+			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			  })();
+ 		</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.images5,'images5/top.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/houseviewHIn.gif')}" width="132" height="40" /></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>It is here, it is here and it is finally here…</em></strong></font></td>
+
+                          </tr>
+                            
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;"><p>For many of those disgruntled customers of health insurance companies who were given bad service and charged high premiums, health insurance portability was one of the eagerly expected regulations from IRDA in recent times.<br />
+                                <br />
+                                Health insurance portability permits moving from one insurer to another without losing out on accumulated benefits of cooling period, or pre-existing exemption up to 4 years, no claim bonus etc.<br />
+                                <br />
+                                But is it suitable for you? Should you use this facility?  <br />
+
+                                <br />
+                                It may be suitable for you if..<br />
+<ul>
+<li>
+<strong>You are below the age of 45. </strong>Insurance companies usually do not encourage or easily accept health insurance proposals for applicants over 45 years.
+</li>
+<br /><li>
+<strong>Your policy has so far been claim free. </strong>You are a client most insurance companies would love to have. If you are young, healthy, no adverse medical history, will pay your premiums on time and make the company richer, you are welcome.
+</li>
+<br /><li>
+<strong>You are moving for better service. </strong>If your insurance company is unresponsive, has funny rigid rules, doesn’t pick the customer service line at all and you have identified another company that is better on these counts, yes you should port your policy
+</li>
+
+<br /><li>
+If you are saddled with a policy that charges very <strong>high premiums</strong>, not in line with the market.<br />
+</li><br /><li>
+If you had <strong>so far solely relied on the group insurance cover provided by your employer</strong> and now want to have your own personal insurance policy that you can service.
+</li></ul>
+
+                                It may not suit you if..<br />
+<ul>
+<li>
+
+You are moving hoping <strong>to escape extra premium loading from existing insurance company. </strong>The insurance company to who you plan to port your policy will definitely check your medical history with your earlier insurer
+<br /></li>
+<br /><li>
+You have been in the <strong>high risk category. </strong>Your premiums are likely to be higher. Your proposal can be rejected also.
+<br /></li>
+<br /><li>
+You want to move out from the <strong>group cover into another insurance company’s individual cover. </strong>This cannot be done, from a group cover you can port to an individual cover but you should stick to the same insurance company for one year. Only after one year can you move out of the insurance company.
+<br /></li>
+<br /><li>
+Your policy is to be renewed in <strong>less than 45 days </strong>or if you have <strong>recently renewed the policy. </strong>Portability can be done only when your earlier policy is to be renewed in 45 days.
+
+<br /></li>
+<br /><li>
+If you have been <strong>holding your policy for a fairly long period, </strong>and you have been diagnosed of some medical conditions recently. Meaning, your current policy will still accept claims because these illnesses were not pre-existing at the time of taking the policy long time back. But when you port, the new company will call these pre-existing and exclude them, refuse claims, reject the proposal or load the premium.
+<br /></li>
+<br /><li>
+Thinking that you will get the benefit of <strong>cumulative or no claim bonus. </strong>You will actually be at a disadvantage if you port a policy where you are enjoying large cumulative bonuses. In the new policy you will have to pay the premium for the new sum insured including cumulative bonus. For eg: You have a policy for 2 lacs and have accumulated bonus of 1 lac on it. You are currently paying premium for 2 lacs and enjoying 3 lacs sum assured. But when you port this policy, you will have to pay premium for 3 lacs. 
+</li>
+</ul>
+
+On the whole, portability of health insurance may be useful for a small section of people who are young, healthy and move for better services or individual cover benefits. All applicants over age 36 will have to undergo medical tests while applying for portability and the insurance company, if they accept the proposal may reimburse 50% of the cost of medical tests. Accepting the policy is the prerogative of the insurance company and they can fix their own premiums, these things are not regulated. <br />
+
+  <br />
+  So, don’t act like a fish jumping out of the bowl hoping to find another one filled with water. There might be a nicer pond, or there might just be a hard rock out there.<br />
+
+</p></td>
+                            </tr>
+
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+</apex:page>

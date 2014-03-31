@@ -1,0 +1,43 @@
+<apex:page standardController="Account" extensions="UploadDocumentController">
+
+<apex:form enctype="multipart/form-data">
+    <apex:pageMessages />
+    <apex:outputLink value="/{!objAccount.Id}"> Back to Entity : {!objAccount.Name} </apex:outputLink>
+    <br></br><br></br>
+    <apex:pageBlock title="Upload a Attachment">
+ 
+      <apex:pageBlockButtons >
+        <apex:commandButton action="{!upload}" value="Save" />
+        <apex:commandButton value="Cancel" action="{!cancel}"/>
+      </apex:pageBlockButtons>
+ 
+      <apex:pageBlockSection showHeader="false" columns="2" id="block1" >
+ 
+        <apex:pageBlockSectionItem >
+          <apex:inputFile filename="{!attachment.name}" value="{!attachment.body}"  id="file" />
+          
+        </apex:pageBlockSectionItem>
+     </apex:pageBlockSection>
+     </apex:pageBlock>
+     
+     <apex:pageBlock title="Attachment" rendered="{!block}" >    
+      
+         <apex:repeat value="{!accDocLst}" var="doc">   
+           <apex:pageBlockTable value="{!doc.NotesAndAttachments}" var="d" styleClass="required" style="margin-left:48px;width:900px;" >        
+           
+              <apex:column headerValue="Account Name" width="15%">
+                            <apex:outputText value="{!doc.Name}" style="width:100px;"/>
+              </apex:column>
+              <apex:column headerValue="Title" width="15%">
+                            <apex:outputLink value="/{!d.Id}">{!d.Title}</apex:outputLink>
+              </apex:column>
+              <apex:column headerValue="Created Date" width="15%">
+                            <apex:outputText value="{!d.CreatedDate}" style="width:100px;"/>
+              </apex:column>
+          </apex:pageBlockTable>        
+        </apex:repeat> 
+       
+    </apex:pageBlock>    
+    
+  </apex:form>
+</apex:page>

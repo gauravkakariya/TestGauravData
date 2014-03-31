@@ -1,0 +1,10 @@
+<messaging:emailTemplate subject="Test Watermark" recipientType="User" relatedToType="Account">
+<messaging:htmlEmailBody >
+    <body>
+        <c:ChangePlannerLetterComponent UserId="{!recipient.Id}" AccountName="{!relatedTo.Name}">
+        </c:ChangePlannerLetterComponent>
+    </body>
+</messaging:htmlEmailBody>
+
+
+</messaging:emailTemplate>

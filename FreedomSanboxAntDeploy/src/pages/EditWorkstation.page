@@ -1,0 +1,27 @@
+<!-- 
+    Version     Version Author     Date           Comments
+    1.0         Anupam      27/12/2012         Added new column for Operations Member Team
+-->
+
+<apex:page standardController="Workstation__c" id="EditWorkstation" extensions="WorkstationExtension">
+<apex:pageMessages id="pgmessage"></apex:pageMessages>
+<apex:form >
+		<apex:pageBlock title="Edit Workstation" id="pgblock">
+			<apex:pageBlockButtons >
+					<apex:commandButton action="{!Save}" value="Save" reRender="pgblock,pgmessage"/>
+					<apex:commandButton action="{!Cancel}" value="Cancel" />
+			</apex:pageBlockButtons>
+		<apex:pageBlockSection columns="2">
+			<apex:outputField value="{!workstation.Financial_Planner__c}"/>
+			<apex:inputField value="{!workstation.Location__c}"/>
+			<apex:inputField value="{!workstation.Manager__c}"/>
+			<apex:inputField value="{!workstation.Business_Developer__c}"/>
+			<apex:inputField value="{!workstation.Compliance__c}"/>
+			<apex:inputField value="{!workstation.Tech__c}"/>
+			<apex:inputField value="{!workstation.Member_Engagement__c}"/>
+			<apex:inputField value="{!workstation.Advisory__c}"/>
+			<apex:inputField value="{!workstation.Operations__c}"/>
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,67 @@
+<!-- 
+    Page for entering product manufacturer records in the object Product_Manufacturer_Master__c 
+
+    Version     Version Author     Date           Comments
+    1.0         Prajakta Sanap     25/12/2012     To enter New Product Manufacturer details
+-->
+
+<apex:page standardController="Product_Manufacturer_Master__c"
+           extensions="AddProductManufacturersController" 
+           title="New Product Manufacturer"
+           sidebar="true"
+           tabStyle="Product_Manufacturer_Master__c">
+         
+    <apex:form id="PMform">
+
+        <apex:sectionHeader title="Product Manufacturers"/>
+        
+        <apex:pageBlock title="Add Product Manufacturer" mode="edit">
+        
+        	<apex:outputPanel id="pnlMsg">
+	            <apex:pageMessages id="pageMsgs"/>
+	        </apex:outputPanel>
+	        
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!saveProductManufacturer}" reRender="pageMsgs"/>
+                <apex:commandButton value="Cancel" action="{!cancelProductManufacturer}"/>
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection title="Details" columns="4" id="table">
+                <apex:pageBlockTable value="{!lstProductManufacturer}" var="PM" width="60%">
+                    <apex:column >
+                        <apex:facet name="header"><apex:inputCheckbox id="selectall" onclick="checkAll(this,'checkedone')"/></apex:facet>
+                        <apex:inputCheckbox value="{!PM.isRemove}" id="checkedone"/>
+                    </apex:column>
+                    <apex:column headerValue="Product Manufacturer Name" width="50%">
+                        <apex:inputField value="{!PM.objProductManufacturer.Name}" style="width:200px;"/>
+                    </apex:column>
+                    <apex:column headerValue="Short Code">
+                        <apex:inputField value="{!PM.objProductManufacturer.Short_Code__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Active" style="text-align:center;">
+                        <apex:inputField value="{!PM.objProductManufacturer.Is_Active__c}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection><br/>
+                
+            <apex:commandButton value="Add" action="{!addRow}" reRender="PMform" style="margin-left:180px;"/>
+            <apex:commandButton value="Remove" action="{!removeRows}" reRender="table,pageMsgs"/>
+        </apex:pageBlock>
+
+    </apex:form>
+    
+    <script type="text/javascript">
+    
+    	function checkAll(cb,cbid){
+        
+            var inputElem = document.getElementsByTagName("input");                    
+            for(var i=0; i<inputElem.length; i++){
+                 if(inputElem[i].id.indexOf(cbid)!=-1){                                       
+                    inputElem[i].checked = cb.checked;
+                }
+            }
+        }
+        
+    </script>
+    
+</apex:page>

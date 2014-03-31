@@ -1,0 +1,165 @@
+<!-- Following code is copied into ComplimentaryConsultationComponent Component page  
+						Eternus Solutions
+                        Author  : Trupti Gaikwad
+                        Issue Id: FS0145
+                        Date    : 12/09/2011
+                        Purpose : Newsletter for the Month of September  2011 (website pages)     	--> 
+
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="LeadStory_Sep3">
+<site:googleAnalyticsTracking />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.images3,'images3/top.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.images,'images/headL.gif')}" width="9" height="40" /></td>
+                      <td width="98%" valign="top" background="{!URLFOR($Resource.images,'images/headbg.gif')}" style="padding-top:6px;"><font face="Arial, Helvetica, sans-serif" color="#FFFFFF" style="font-size:14px;"><strong>	FEAR IS YOUR FRIEND</strong></font></td>
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /></td>
+                    </tr>
+                  </table></td>
+                </tr>
+                
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">
+                                 "The financial world is a mess, both in the United States and abroad. Its problems, moreover, have been leaking into the general economy and the leaks are turning into a gusher. In the near term, unemployment will rise, business activity will falter and headlines will continue to be scary. “I’ve been buying stocks.” So wrote one Warren E. Buffett the world’s most admired yet least imitated investor in a  <em>New York Times</em> op-ed piece published on October 18, 2008, about a month into the post Lehman Great Panic then engulfing the world. (For the record, October 18 was a Saturday; the S&P 500 had closed the night before at 940.55, on itsway to 677 five months later. And every day in between, somebody or other blogged that the old man had finally lost his touch. As I write, the S&P is trading at 1285, and the Buffett bashers are nowhere to be found. But I digress.) 
+
+                                 
+                                <br />
+                                <br />
+                                The point Buffett was trying to make and the point of the little meditation you are reading now is that periods of well publicized economic and financial distress have historically turned out to be periods of above average opportunity in equities. And why? Because such distress usually engenders widespread fear, which in turn leads to waves of panic selling, which in turn drives the prices of the great companies in America and the world down to very attractive valuations. 
+
+                                <br />
+                                <br />
+                                In just that sense, fear is the true friend of the long-term investor. And the corollary of that insight is that episodes when you are feeling the most fear and everyone around you is reflecting that same heightened sense of fear have historically been the worst possible times <strong><em>to give in to, and to act upon, that fear.</em></strong>
+
+                                
+                                <br />
+                                <br />
+                                No one is suggesting that you not <strong>feel</strong> fear, because it’s a response that’s hardwired into all of us. When some no-name catastrophist is suddenly all over the air waves, predicting that the debt ceiling crisis is insoluble, and that it must and will lead to a new Great Depression and especially when our friends and neighbors begin taking up this refrain, amid falling stock prices we would simply not be human if we didn’t feel some fear. 
+
+                                
+                                <br />
+                                <br />
+                                The trick is, at the very least, not to act on the fear, which in this context means: don’t panic out of the quality equity investments that you’ve accumulated for long-term goals such as education and (especially) retirement. And at best, of course, the optimum response to fear has been to recognize it as a breeder of enhanced opportunity indeed, the greater the fear, the greater the opportunity has always been and to continue accumulating shares in your quality portfolios at distressed prices. The latter is precisely what Buffett was doing in October 2008:<strong> he was recognizing that fear was his friend.</strong>
+
+                                
+                                <br />
+                                <br />
+                                The issue here isn’t just impulse control (“I may be feeling a lot of fear, but that doesn’t mean I have to act on it”). It’s the hard headed business judgment shared, I assure you, by all successful long-term investors that the current market prices of the great companies are inversely related to their long-term value as operating businesses. Lower stock prices the concomitant of widespread fear have always meant greater long-term enterprise value. Investment success is as rare as it is because this common sense realization is so terribly uncommon. 
+
+                                <br />
+                                <br />
+                                This leads us to the realization that if there’s one supremely reliable way of conquering fear in the context we’re discussing, it’s to think of our equity holdings not as “stocks” but as companies as rational, profit seeking businesses operating in an increasingly global economy. There were fewer than 300 million middle class people in Asia in 1980, according to studies by the United Nations and the World Bank. Today there are over two billion, and by 2025 there may be as many as 3.6 billion. Global spending by the middle class, according to the OECD, was recently just over US$21 trillion. It may be US$35 trillion by 2020, and US$55 trillion by 2030, with as much as 80% of the projected growth expected to come from Asia alone. 
+
+                                
+                                <br />
+                                <br />
+                                What must the long-term implications of these megatrends be for great businesses? How much more must their long-term enterprise values be driven by this unprecedented global surge in the quality of everyday life, as opposed to the volatility the sheer day-to-day irrationality of “the stock market”? 
+
+                                <br />
+                                <br />
+                                I’d be willing to bet that the price of your home, measured from its bubble top half a dozen years ago, is down about 30%. You haven’t sold you still need a place to live and you’re generally philosophical: the price probably went up too much back then, and it’s probably down too much now. Long-term, a home’s price will probably track its replacement cost, which tends to rise gradually over time with inflation in land, labor and material costs. So be it. But let your equity portfolio go down 30% which the S&P 500 has done, on average, one year in five since the end of WWII and you’re ready to jump out a window, if only to get away from doom and gloom shrieking commentators, howling “It’s different this time.”
+
+                                
+                                <br />
+                                <br />
+                                You have a choice. You always have a choice. Believe the doomsayers, give in to the fear…and wonder, a year or two later, what you could possibly have been thinking. Or choose to see fear as the driver of lower prices and therefore of increased values a 30% off sale on the great companies and prosper in the long run.
+                                <br />
+                                <br />
+                                <strong>Fear is your friend…if you’ll let it be.</strong>
+                                <br />
+                                <br />
+                                © 2011 Nick Murray. All rights reserved. Reprinted by permission.
+                                </br>
+                                </br>
+                                </td>
+                                </tr>
+                               
+                                 
+                            
+                          </table></td>
+                      </tr>
+                       <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="images/space.gif" width="2" height="1" /></td>
+        </tr>
+    </table>
+    </td>
+  </tr>
+  
+ <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333      &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; 
+            <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+</apex:page>

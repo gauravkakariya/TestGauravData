@@ -1,0 +1,70 @@
+<apex:page controller="VCSSA.Installation" showheader="false" sidebar="false" action="{!init}" standardStylesheets="true" cache="false" tabStyle="VCSSA__VCSEmail__c">
+<apex:variable var="url_inboxpage"  value="{!URLFOR($Page.VCSSA__Inbox, null)}" />
+<apex:variable var="url_settings"  value="{!URLFOR($Page.VCSSA__MailboxSettings, null)}?inboxurl={!URLENCODE(url_inboxpage)}" />
+<style type="text/css">
+.status_ok { font-weight: bold; background-color: lightgreen; padding: 3px; }
+.status_error { font-weight: bold; background-color: red; color: white; padding: 3px; }
+#alldoneMessage   { position: absolute; top:0px; left: 45%; right: 45%; padding: 5px; background-color: lightblue; color: white; text-align: center; font-weight: bold; -moz-border-radius-bottomleft: 8px; -webkit-border-bottom-left-radius: 8px; -moz-border-radius-bottomright: 8px; -webkit-border-bottom-right-radius: 8px; }
+#stitems li { margin:0px; padding: 5px; }
+</style>
+
+<apex:pageBlock >
+	<span id="alldoneMessage" style="display: {!if($CurrentPage.parameters.msg!='','block','none')}">{!htmlencode($CurrentPage.parameters.msg)}</span>
+	<table width="100%"><tr>
+	    <td><h1>Before you begin</h1></td>
+	    <td align="right"><a href="{!url_settings}&cinst=1&msg=The+set-up+window+will+be+below+settings">[X] close this window</a></td>
+	</tr></table>
+
+	<apex:outputPanel >
+		<ol id="stitems">
+	    <li>Copy this email service address listed below and paste it in the redirection rule of your mail client ( <b><a href="http://smartemail.vcs.com.ar/rec-videoinstal.html#emailservice" target="new">open video tutorial</a></b> , <b><a href="http://smartemail.vcs.com.ar/help/" target="new">open help page</a></b> )</li>
+	    <li>After you set up the redirection rule, you can press the test email to check the email redirection by clicking the following link:
+	    	<br/><center><br/><a href="?sendtest=1&msg=The+test+message+was+sent"><b>SEND A TEST EMAIL TO vcs.smart.setup@virtualcompanyservices.com</b></a><br/></center>
+	    </li>
+	    <li>Wait a few moments refresh your Inbox. If everything is correctly configured, you should receive an email message directed to {!UserData.Email}</li>
+	    <li>Congratulations! the Email Service AND the redirection rule are correctly configured.</li>
+	    </ol>
+	    <br/>
+	    <p>Saleforce.com Email Service Address: 
+	        <a href="mailto:{!emailServiceAddress.LocalPart}@{!emailServiceAddress.EmailDomainName}"><b>{!emailServiceAddress.LocalPart}@{!emailServiceAddress.EmailDomainName}</b></a>
+	    </p>
+	    <br/>
+	    <p>Also remember to view the <a href="{!url_settings}"><b>Settings</b></a> page to customize the look and feel of the application.</p>
+	</apex:outputPanel>
+
+	<apex:outputPanel rendered="{!IsAdministrator}">
+		<br/><br/>
+		<apex:outputPanel rendered="{!emailServiceStatus}">
+		    <p>Email Service Status:  <span class="status_ok">OK</span></p>
+		    <p><a href="?sendtest=2&msg=The+test+message+was+sent"><b>SEND A TEST EMAIL DIRECTLY TO THE EMAIL SERVICE ADDRESS</b></a>
+		    	<span>- If you receive this email, it means the Email Service is correctly configured.</span>
+		    </p>
+		    <br/>
+		</apex:outputPanel>
+		<apex:outputPanel rendered="{! not(emailServiceStatus)}">
+		    <p>Email Service Status: <span class="status_error">ERRORS</span></p>
+		    <p>Error messages:
+		        <apex:repeat value="{!errorMessages}" var="msg">
+		            <li><apex:outputText value="{!msg}" escape="false"/></li>
+		        </apex:repeat>
+		    </p>
+		    <p>
+		    <apex:outputPanel rendered="{! isnull(emailService) }">
+		        <a href="/email/admin/listEmailServicesFunction.apexp">Create the "Email Service" here.</a>
+		        &nbsp; &nbsp; &nbsp; &nbsp;
+		    </apex:outputPanel>
+		    </p>
+		</apex:outputPanel>
+		<br/>
+		<br/>
+	    <apex:outputPanel rendered="{! not(isnull(emailService)) }">
+	        <a href="/email/admin/detailEmailServicesFunction.apexp?id={! emailService.Id }">View the "Email Service"</a>
+	        &nbsp; &nbsp; &nbsp; &nbsp; 
+	    </apex:outputPanel>
+	    <apex:outputPanel rendered="{! not(isnull(emailServiceAddress)) }">
+	        <a href="/email/admin/detailEmailServicesAddress.apexp?id={! emailServiceAddress.Id }">View the "Email Service Address"</a>
+	    </apex:outputPanel>
+	</apex:outputPanel>
+</apex:pageBlock>
+
+</apex:page>

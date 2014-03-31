@@ -1,0 +1,202 @@
+<apex:page standardcontroller="Lead" extensions="NewEditLeadController" id="Page" tabstyle="Lead" >
+<style>
+	 .hidePage{
+	 position: absolute;
+	  top: 0;
+	  bottom: 0%;
+	  left: 0;
+	  right: 0%;
+	  background-color: black;
+	  opacity: .5;
+	  z-index: 99; 
+	 }
+
+</style>
+
+ <script type="text/javascript"> 
+  function openLookup(baseURL, width, modified, searchParam){
+  	
+    var originalbaseURL = baseURL;
+    var originalwidth = width;
+    var originalmodified = modified;
+    var originalsearchParam = searchParam;
+    
+    var lookupType = baseURL.substr(baseURL.length-3, 3);
+    if (modified == '1') baseURL = baseURL + searchParam;
+ 
+    var isCustomLookup = false;
+ 
+    // Following "001" is the lookup type for Account object so change this as per your standard or custom object
+    if(lookupType == "{!objPrefix}"){
+      
+      var urlArr = baseURL.split("&");
+      var txtId = '';
+      if(urlArr.length > 2) {
+        urlArr = urlArr[1].split('=');
+        txtId = urlArr[1];
+       // alert('txtId'+txtId);
+      }
+    
+      // Following is the url of Custom Lookup page. You need to change that accordingly
+      baseURL = "/apex/AccountLookupCustom?txt=" + txtId;
+      if(document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU:BU_LookUp').value != ''){
+          baseURL = baseURL  + "&BU_Name=" + document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU:BU_LookUp').value;
+      }
+     
+      // Following is the id of apex:form control "myForm". You need to change that accordingly
+      baseURL = baseURL + "&frm=" + escapeUTF("{!$Component.myForm}");
+      if (modified == '1') {
+        baseURL = baseURL + "&lksearch=" + searchParam;
+      }
+ 
+      // Following is the ID of inputField that is the lookup to be customized as custom lookup
+      if(txtId.indexOf('Account') > -1 ){
+        isCustomLookup = true;
+      }
+    }
+    else if(lookupType == "{!objPrefixTeamMember}")
+    {
+          var urlArr = baseURL.split("&");
+          var txtId = '';
+          if(urlArr.length > 2) {
+            urlArr = urlArr[1].split('=');
+            txtId = urlArr[1];
+          }
+        
+          // Following is the url of Custom Lookup page. You need to change that accordingly
+          baseURL = "/apex/TeamMemberLookup?txt=" + txtId;
+          
+          // Following is the ID of inputField that is the lookup to be customized as custom lookup
+          if(txtId.indexOf('PST_LookUp') > -1 ){
+            isCustomLookup = true;
+            baseURL = baseURL + "&TM_Type={!$Label.Team_Member_Type_PST}";
+          }
+          
+     	  if(document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU:BU_LookUp').value != ''){
+          baseURL = baseURL  + "&BU_Name=" + document.getElementById('Page:myForm:PageBlock:PageBlockSection_BU:BU_LookUp').value;
+          }
+        
+        
+          // Following is the id of apex:form control "myForm". You need to change that accordingly
+          baseURL = baseURL + "&frm=" + escapeUTF("{!$Component.myForm}");
+          if (modified == '1') {
+            baseURL = baseURL + "&lksearch=" + searchParam;
+          }
+  
+    }
+   
+ 
+    if(isCustomLookup == true){
+      openPopup(baseURL, "lookup", 350, 480, "width="+width+",height=480,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no", true);
+    }
+    else {
+      if (modified == '1') originalbaseURL = originalbaseURL + originalsearchParam;
+      openPopup(originalbaseURL, "lookup", 350, 480, "width="+originalwidth+",height=480,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no", true);
+    } 
+  }
+</script>
+
+<apex:form id="myForm">
+<apex:pageMessages id="MessageElement" showDetail="false"/>
+ <apex:sectionHeader title="Lead"/>
+    <apex:pageBlock id="PageBlock">
+               <apex:pageblocksection title="Lead Information" showheader="true" columns="2" id="PageBlockSection_BU">
+                    <apex:inputfield value="{!Lead.Business_Unit__c}" required="true" id="BU_LookUp"/>
+                    <apex:inputfield value="{!Lead.Related_To__c}" required="false"/>
+                     <apex:inputfield value="{!Lead.PST_Team_Member__c}" required="true" id="PST_LookUp"/>
+<!--                     <apex:pageblocksectionitem > -->
+<!--                         <apex:outputlabel value="Lead Owner"/> -->
+<!--                         <apex:outputpanel > -->
+<!-- <!--                     	<apex:outputfield value="{!currentUser.Name}"/> --> 
+<!-- 							<apex:outputfield value="{!lead.Owner.Name}"/> -->
+<!--                     	</apex:outputpanel> -->
+<!--                      </apex:pageblocksectionitem> -->
+                    <apex:inputfield value="{!Lead.Status}" required="true"/>
+                    <apex:inputfield value="{!Lead.Virtual_Partner__c}" required="true" id="Account" />
+                    <apex:inputfield value="{!Lead.Rating}" required="false"/>
+                    
+                    <apex:pageblocksectionitem >
+                        <apex:outputlabel value="First Name"/>
+                        <apex:outputpanel >
+                            <apex:inputfield value="{!Lead.Salutation}" required="false"/>
+                            <apex:inputfield value="{!Lead.FirstName}" required="false"/>
+                        </apex:outputpanel>
+                    </apex:pageblocksectionitem>
+                    
+                    <apex:inputfield value="{!Lead.LastName}" required="true"/>
+                    <apex:inputfield value="{!Lead.Probability__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.Company_Name__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.Close_Date__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.Role_Position__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.Appointment_Time__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.Occupation__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.Email}" required="true"/>
+                    <apex:inputfield value="{!Lead.Interested_In__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.MobilePhone}" required="false"/>
+                    <apex:inputfield value="{!Lead.Lead_Engine_Type__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.Alternate_Mobile__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.Age__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.HasOptedOutOfEmail}" required="false"/>
+                    <apex:inputfield value="{!Lead.IsUnsubscribe__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.Tribal_Activity_Flag__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.Preferred_location__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.DoNotCall}" required="false"/>
+                    <apex:inputfield value="{!Lead.Ffreedom_Score__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.smagicbasic__SMSOptOut__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.IsLeadCreatedByPartner__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                </apex:pageblocksection>
+                <apex:pageblocksection title="Address Information" showheader="true" columns="2">
+                    <apex:inputfield value="{!Lead.Street}" required="false"/>
+                    <apex:inputfield value="{!Lead.Description}" required="false"/>
+                    <apex:inputfield value="{!Lead.City}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!Lead.State}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!Lead.PostalCode}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!Lead.Country}" required="false"/>
+                    <apex:pageblocksectionitem />
+                    <apex:inputfield value="{!Lead.Location__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                </apex:pageblocksection>
+                <apex:pageblocksection title="Additional Information" showheader="true" columns="2">
+                    <apex:inputfield value="{!Lead.Referred_by_Entity__c}" required="false"/>
+                    <apex:inputfield value="{!Lead.LeadSource}" required="true"/>
+                    <apex:inputfield value="{!Lead.Referred_by_Lead__c}" required="false"/>
+                     <apex:inputfield value="{!Lead.is_Pathfinder__c}" required="false"/>
+                    <apex:pageblocksectionitem />
+                </apex:pageblocksection>
+            
+            	<apex:pageblockbuttons >
+					<apex:commandbutton value="Save" action="{!SaveLead}" status="loading" reRender="hidePage,MessageElement"/>
+					
+					<apex:actionStatus id="loading" onstart="loading(true)" onstop="loading(false)" /> 
+					<div id="contentLoading" style="display:none;">
+					    <div style="text-align: center;">
+					      <img src="/img/loading.gif" alt="Loading graphic" style="top:50px;" />
+					    </div>
+					</div>
+					<apex:outputPanel id="hidePage">
+					<script>
+						function loading(val) {
+							    if (val) {
+							      document.getElementById('contentLoading').style.display = 'block';
+							      document.getElementById('contentLoading').className = 'hidePage';
+							      //document.getElementById('contentLoaded').style.display = 'none';
+							    }
+							    else {
+							      document.getElementById('contentLoading').style.display = 'none';
+							      document.getElementById('contentLoading').className = '';
+							      //document.getElementById('contentLoaded').style.display = 'block';
+							    }
+						}
+					
+					</script>
+					</apex:outputPanel>
+					<apex:commandbutton value="Cancel" action="{!Cancel}"/>
+			   </apex:pageblockbuttons>
+        </apex:pageblock>
+    </apex:form>
+    
+</apex:page>

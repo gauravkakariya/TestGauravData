@@ -1,0 +1,304 @@
+<apex:page showHeader="false" sidebar="false"
+	title="Ffreedom Financial Planners | News Letters"
+	id="FinancialPlanners_Feb12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+	<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+		<tr>
+			<td><img src="{!URLFOR($Resource.images,'images/top_Feb2012.gif')}" width="740" height="104" />
+			</td>
+		</tr>
+
+		<tr>
+			<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B">
+							<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+						<td valign="top">
+							<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+								<tr>
+									<td valign="top">
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img
+													src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img
+													src="{!URLFOR($Resource.images,'images/plannerHIn.gif')}" width="218" height="40" />
+												</td>
+											</tr>
+
+											<tr>
+												<td>
+													<table width="100%" border="0" cellpadding="0" cellspacing="0">
+														<tr>
+															<td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}">
+																<img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" />
+															</td>
+
+															<td width="8" valign="top">
+																<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" />
+															</td>
+
+															<td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td height="25" valign="top">
+																		<font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size: 14px;">
+																			<strong><em>The moment of reckoning</em></strong>
+																		</font>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top" style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;"><p>
+																				This is a pretty personal experience, but I want to
+																				share it here, because it was a great learning piece
+																				too. This experience reiterated the fact it is not
+																				just the company’s credentials, not your technical
+																				expertise or for that matter not even the actual
+																				financial plan that a client is looking for. There
+																				is a part of you, your personal characteristics,
+																				your faith and sense of ethics which you bring on
+																				the table for the client to see, for him to trust
+																				that you would be a worthy partner in his journey.
+																				And this cannot be faked. It is just there, or not
+																				there. That’s it!<br /> <br /> There was this
+																				really high net worth client I was trying to engage
+																				with. He was a professional, well read, well placed,
+																				middle aged person who was referred to me by another
+																				member. The client was clean, all money was
+																				accounted for, he diligently paid his taxes, had a
+																				great accountant who maintained his books well. He
+																				clearly believed in doing things only within the
+																				legal framework.<br /> <br /> The initial meeting
+																				was cool – in the literal sense, the prospect did
+																				not warm up at all! I somehow liked him and was sure
+																				I would learn a lot if I got an opportunity to
+																				enroll him and so was really desperate to use the
+																				opportunity well. I forced him into meeting me once
+																				again, did his diagnostics, went well prepared and
+																				this time he seemed to turn around a bit but was
+																				still unwilling to take the plunge. So I insisted on
+																				him meeting me again along with a senior in my
+																				organization.<br /> <br /> So it was, the next
+																				meeting with Vinita our Sr. Manager – Financial
+																				planning. She was her usual self - full of common
+																				sense and conviction. The client seemed to get the
+																				drift and realized that professional, unbiased help
+																				with his money would be of great use - but should it
+																				be Ffreedom, should it be Bharti were things he
+																				wasn’t sure about yet.<br /> <br /> And then came
+																				this..<br /> <br /> He told Vinita that if it was
+																				going to be this young girl who will be my planner,
+																				I want her to answer a question. You stay off this
+																				and don’t give your opinion. Vinita retreated. He
+																				turned to me and asked, “Bharti, like I told you I
+																				am clean, maintain my books neatly and pay all taxes
+																				due on time. But let’s assume, based on some
+																				information the income tax office reopens my
+																				accounts and rechecks some documents. There is this
+																				inspector who comes to me and says that I owe the IT
+																				department Rs. 20 lacs, as it has been detected that
+																				I concealed some income. After a while he says he
+																				would overlook this, if I paid him a bribe of Rs 2
+																				lacs. What do you think I should do? If this
+																				happened to you what would you do?”<br /> <br />
+
+																				Usually I would have looked back at Vinita to
+																				understand what she thought, but somehow this time I
+																				did not think much. I just blurted out, “What? Why
+																				would you pay this guy Rs. 2 lacs? If it were me, I
+																				would contest his claim that I owe the IT department
+																				any money at all. I would take it up appropriately
+																				and clear up my books, if necessary. Otherwise, this
+																				would become a precedence. No way would I pay bribe
+																				like this”<br /> <br /> There was silence. And
+																				then there were smiles. He signed up the very day
+																				and continues to be a very valuable WOW client. <br />
+
+																				<br /> <strong>Bharti Punjabi, Financial
+																					Planner @ Ffreedom</strong>
+																			</p>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td valign="top" style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;"></td>
+																	</tr>
+
+																	<tr>
+																		<td valign="top" style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;"></td>
+																	</tr>
+
+																	<tr>
+																		<td valign="top" style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">&nbsp;</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+
+														<tr>
+															<td valign="top">
+																<img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" />
+															</td>
+
+															<td valign="top" bgcolor="#BD6105">
+																<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+
+															<td valign="top" bgcolor="#BD6105">
+																<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table></td>
+								</tr>
+
+								<tr>
+									<td valign="top">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+
+						<td width="2" valign="top" bgcolor="#9CB82B">
+							<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B">
+							<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+
+						<td valign="top">
+							<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="76%" height="20" valign="top">
+										<font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size: 13px;">
+											<strong>Ffreedom Financial Planners</strong>
+									</font>
+									</td>
+
+									<td width="24%" rowspan="3">
+										<table border="0" align="center" cellpadding="0" cellspacing="0">
+											<tr>
+												<td>
+													<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;">
+														<strong>Follow us on&nbsp;&nbsp;&nbsp;</strong>
+												</font>
+												</td>
+												<td>
+													<a href="http://www.facebook.com/Ffreedom" target="_blank">
+														<img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" />
+													</a>
+													<a href="http://twitter.com/_Ffreedom" target="_blank">
+														<img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" />
+													</a>
+													<a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank">
+														<img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" />
+													</a>
+												</td>
+											</tr>
+
+											<tr>
+
+												<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;">
+													<strong>Watch us on</strong>
+												</font>
+												</td>
+
+												<td>
+													<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 12px;">
+														<strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank">
+															<img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" />
+														</a>
+													</strong>
+												</font>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+
+								<tr>
+									<td height="20" valign="top">
+										<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 11px;">506 / 507, Morya Landmark II,
+											Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font>
+									</td>
+								</tr>
+
+								<tr>
+									<td height="20" valign="top">
+									<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 11px;">Boardline: +91 22 4222 4333
+											&nbsp;|&nbsp; Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a
+											href="mailto:contact@ffreedom.in">contact@ffreedom.in</a>
+											&nbsp;|&nbsp; 
+											<a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a>
+									</font>
+									</td>
+								</tr>
+
+								<tr>
+									<td colspan="2" valign="top">
+										<div align="justify">
+											<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size: 11px;">
+												Disclaimer: This communication from Ffreedom provides general information
+												existing at the time of preparation. This mailer is intended
+												as a news update and Ffreedom Financial Planners neither
+												assumes nor accepts any responsibility for any loss arising
+												to any person acting or refraining from acting as a result
+												of any material contained in this communication. It is
+												recommended that professional advice be taken based on the
+												specific facts and circumstances. This communication does
+												not substitute the need to refer to the original
+												pronouncements.</font>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</td>
+
+						<td width="2" valign="top" bgcolor="#9CB82B">
+							<img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" />
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
+</apex:page>

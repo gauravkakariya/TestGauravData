@@ -1,0 +1,442 @@
+<apex:page showHeader="false" title="Ffreedom Financial Planners | News Letters" cache="true"	id="NewsLetter_April13">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+		_gaq.push([ '_trackPageview' ]);
+	
+		(function() {
+			var ga = document.createElement('script');
+			ga.type = 'text/javascript';
+			ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+					: 'http://www')
+					+ '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/top_April13.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="70%" valign="top"><table width="50%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headL.gif')}" width="9" height="40" /></td>
+                      <td width="98%" valign="top" background="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headbg.gif')}"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td height="30" bgcolor="#BD6105"><font face="Arial, Helvetica, sans-serif" color="#FFFFFF" style="font-size:14px;"><strong>MARKET COMMENTARY</strong></font></td>
+                        </tr>
+                        <tr>
+                          <td><a href="http://articles.economictimes.indiatimes.com/2011-10-27/news/30328344_1_fear-financial-plan-financial-stability" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/leadHbgFade.gif')}" width="452" height="10" border="0" title="Read More" /></a></td>
+                        </tr>
+                      </table></td>
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headR.gif')}" width="9" height="40" align="right" /></td>
+                    </tr>
+                  </table>
+                    </td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="210" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="443" border="0" cellpadding="0" cellspacing="0">
+                            
+                            <tr>
+                              <td valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">The month of March was not an eventful one for the markets. The Sensex closed more or less flat for the month. The broader indices were bleeding throughout the month and closed in negative for the month of March. The budget did not give much to cheer the markets which became evident from the performances of the major indices. Corporate India was facing a liquidity crunch due to the March end effect. Hence the yields on the short term papers went up and yields for long term papers fell down. The Inflation rate for February was 6.84% thus showing a downward trajectory. But the Consumer Price Index (CPI) was above 10% for the month of February. Thus the common man found his basic necessities to be slightly expensive. Things were not the same last year at this time around. The sentiment in the market was not that great last. Credit supply had dried up...</font></div></td>
+                            </tr>
+                            
+                            
+                            
+                            <tr>
+                              <td height="30" valign="bottom"><a href="LeadStory_April13" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/ReadMore.gif')}" width="83" height="22" border="0" title="Read More" /></a></td>
+                            </tr>
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              <br />
+              <table width="50%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headL.gif')}" width="9" height="40" /></td>
+                      <td width="98%" valign="top" background="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headbg.gif')}"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td height="30" bgcolor="#BD6105"><font face="Arial, Helvetica, sans-serif" color="#FFFFFF" style="font-size:14px;"><strong>MY FINANCIAL PLANNER</strong></font></td>
+                        </tr>
+                        <tr>
+                          <td><a href="http://articles.economictimes.indiatimes.com/2011-10-27/news/30328344_1_fear-financial-plan-financial-stability" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/leadHbgFade.gif')}" width="452" height="10" border="0" title="Read More" /></a></td>
+                        </tr>
+                      </table></td>
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headR.gif')}" width="9" height="40" align="right" /></td>
+                    </tr>
+                  </table></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="9" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="230" /></td>
+                      <td width="8" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="8" height="1" /></td>
+                      <td valign="top"><table width="443" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Are you teaching your child the basics of  financial planning?</em></strong></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="5" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">As adults, we know the importance that money and finances play in our lives. Yet, many of us learn the hard way that we need to be wise with our investments and expenditures to lead a financially stables life. With the infusion of financial planning we are able to define our dreams into goals, and then articulate these goals in financial terms, giving us targets that we strive to achieve.
+                            
+                            Yet, while we ourselves try to imbibe financial planning into our lives, how many of us have actually thought about the next generation by taking an effort to teach kids about the value of money or the basics of financial planning.
+                            
+                            If you have a child dependent on you, start sharing lessons on money management with the kid from an early stage, so that by the time the child becomes an adult he/she will not make the kind of mistakes that one normally makes in youth.
+                            
+                            To start your...</font></div></td>
+                        </tr>
+                        <tr>
+                          <td height="30" valign="bottom"><a href="FinancialPlanners_April13" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/ReadMore.gif')}" width="83" height="22" border="0" title="Read More" /></a></td>
+                        </tr>
+                        </table></td>
+                    </tr>
+                    <tr>
+                      <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="1" /></td>
+                      <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                      <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                    </tr>
+                  </table></td>
+                </tr>
+              </table>
+              <br />
+              <table width="50%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headL.gif')}" width="9" height="40" /></td>
+                      <td width="98%" valign="top" background="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headbg.gif')}"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td height="30" bgcolor="#BD6105"><font face="Arial, Helvetica, sans-serif" color="#FFFFFF" style="font-size:14px;"><strong>HOUSEVIEW</strong></font></td>
+                        </tr>
+                        <tr>
+                          <td><a href="http://articles.economictimes.indiatimes.com/2011-10-27/news/30328344_1_fear-financial-plan-financial-stability" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/leadHbgFade.gif')}" width="452" height="10" border="0" title="Read More" /></a></td>
+                        </tr>
+                      </table></td>
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headR.gif')}" width="9" height="40" align="right" /></td>
+                    </tr>
+                  </table></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="9" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="230" /></td>
+                      <td width="8" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="8" height="1" /></td>
+                      <td valign="top"><table width="443" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Real Estate – The way ahead!</em></strong></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="5" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">Recently we crossed an important milestone. Writing 1000 Financial Plans! Having achieved this milestone, we’ve got a beautiful opportunity to get a glimpse of the goals and aspirations of 1000 families. One common insight about Indian families is that they give topmost priority to the goals set for their children – like education, marriage and so on. The goal which comes the closest to this, is that of buying a property – be it planning for the primary dream house, or a vacation home, or a piece of land as an investment.
+
+Recently there was piece of headlines which brings a sigh of relief and a ray of hope to the long hauled investors –“After stubbornly holding on to high prices for four years in the face of sluggish sales, a crippling liquidity crunch and rising cost of capital, Mumbai’s real estate industry has just blinked!” 
+
+This piece of news was neither a shock nor a surprise. For....</font></div></td>
+                        </tr>
+                        <tr>
+                          <td height="30" valign="bottom"><a href="Houseview1_April13" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/ReadMore.gif')}" width="83" height="22" border="0" title="Read More" /></a></td>
+                        </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="1" /></td>
+                      <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                      <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                    </tr>
+                  </table></td>
+                </tr>
+              </table>
+              <br />
+              <table width="50%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headL.gif')}" width="9" height="40" /></td>
+                      <td width="98%" valign="top" background="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headbg.gif')}"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td height="30" bgcolor="#BD6105"><font face="Arial, Helvetica, sans-serif" color="#FFFFFF" style="font-size:14px;"><strong>TOP NEWS OF THE MONTH</strong></font></td>
+                        </tr>
+                        <tr>
+                          <td><a href="http://articles.economictimes.indiatimes.com/2011-10-27/news/30328344_1_fear-financial-plan-financial-stability" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/leadHbgFade.gif')}" width="452" height="10" border="0" title="Read More" /></a></td>
+                        </tr>
+                      </table></td>
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headR.gif')}" width="9" height="40" align="right" /></td>
+                    </tr>
+                  </table></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="9" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="200" /></td>
+                      <td width="8" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="8" height="1" /></td>
+                      <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td width="50%" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td colspan="2" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>NATIONAL NEWS</em></strong></font></td>
+                            </tr>
+                            <tr>
+                              <td colspan="2" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="5" /></td>
+                            </tr>
+                            <tr>
+                              <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/bullate.gif')}" width="12" height="10" hspace="8" vspace="2" /></td>
+                              <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><a href="http://articles.timesofindia.indiatimes.com/2013-03-25/personal-finance/38009637_1_sbi-infrastructure-fund-diversified-equity-funds-thematic-funds" target="_blank">Dump funds that do not perform</a></font></td>
+                            </tr>
+                            <tr>
+                              <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/bullate.gif')}" width="12" height="10" hspace="8" vspace="2" /></td>
+                              <td height="35" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><a href="http://articles.timesofindia.indiatimes.com/2013-03-18/personal-finance/37813497_1_section-80c-premium-options-regular-premium-policies" target="_blank">Five tips to ensure you buy the right cover </a></font></td>
+                            </tr>
+                            <tr>
+                              <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/bullate.gif')}" width="12" height="10" hspace="8" vspace="2" /></td>
+                              <td height="50" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><a href="http://articles.economictimes.indiatimes.com/2013-03-20/news/37872612_1_repo-rate-rbi-move-indranil-pan" target="_blank">RBI's repo rate cut is unlikely to have any immediate impact on your personal finance</a></font></td>
+                            </tr>
+                            <tr>
+                              <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/bullate.gif')}" width="12" height="10" hspace="8" vspace="2" /></td>
+                              <td height="35" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><a href="http://articles.economictimes.indiatimes.com/2013-03-11/news/37623963_1_international-women-s-day-show-women-bank-accounts" target="_blank">Why don't women make investment decisions?</a></font></td>
+                            </tr>
+                            <tr>
+                              <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/bullate.gif')}" width="12" height="10" hspace="8" vspace="2" /></td>
+                              <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><a href="http://articles.timesofindia.indiatimes.com/2013-03-04/personal-finance/37435882_1_chip-and-pin-cards-card-data-card-companies" target="_blank">Is your credit card at risk?</a></font></td>
+                            </tr>
+                          </table></td>
+                          <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="8" height="1" /></td>
+                          <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                          <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="8" height="1" /></td>
+                          <td width="50%" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td colspan="2" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>INTERNATIONAL NEWS</em></strong></font></td>
+                            </tr>
+                            <tr>
+                              <td colspan="2" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="5" /></td>
+                            </tr>
+                            <tr>
+                              <td width="1%" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/bullate.gif')}" width="12" height="10" hspace="8" vspace="2" /></td>
+                              <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><a href="http://www.moneyobserver.com/issue/features/should-i-buy-shares-esure" target="_blank">Should I buy shares in esure?</a></font></td>
+                            </tr>
+                            <tr>
+                              <td width="1%" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/bullate.gif')}" width="12" height="10" hspace="8" vspace="2" /></td>
+                              <td height="35" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><a href="http://online.wsj.com/article/SB10001424127887323393304578358082843452410.html?KEYWORDS=personal+finance+" target="_blank">South Dakota Shelters Assets in Divorce</a></font></td>
+                            </tr>
+                            <tr>
+                              <td width="1%" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/bullate.gif')}" width="12" height="10" hspace="8" vspace="2" /></td>
+                              <td height="35" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><a href="http://www.moneyweek.com/personal-finance/don-t-get-caught-in-the-courier-scam-63326" target="_blank">Don't get caught in the courier scam </a></font></td>
+                            </tr>
+                            <tr>
+                              <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/bullate.gif')}" width="12" height="10" hspace="8" vspace="2" /></td>
+                              <td height="35" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><a href="http://www.telegraph.co.uk/finance/personalfinance/savings/9997297/Money-MoT-should-I-tie-up-my-savings-for-five-years-at-less-than-3pc.html" target="_blank">Money MoT: should I tie up my savings for five years at less than 3pc?</a></font></td>
+                            </tr>
+                            </table></td>
+                        </tr>
+                      </table></td>
+                    </tr>
+                    <tr>
+                      <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="1" /></td>
+                      <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                      <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                    </tr>
+                  </table></td>
+                </tr>
+              </table></td>
+            <td width="5%" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="10" height="1" /></td>
+            <td width="25%" valign="top"><table width="50%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/FNewsH.gif')}" width="243" height="40" /></td>
+              </tr>
+              <tr>
+                <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td width="9" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="1050" /></td>
+                    <td width="8" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="8" height="1" /></td>
+                    <td valign="top"><table width="220" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Sector funds are quite diverse</strong></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="3" /></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">Sample this, DSPBR TIGER, a mutual fund scheme, has invested over 28 per cent in financial stocks and more than 16 per cent in energy sector stocks, as on January 31, 2013. The story is repeated with Birla Sun Life Infrastructure, which has put over 30 per cent of money in financial and more than 20 per cent in energy. Take a look at Franklin Build India and you will see financial and energy sector as top....</font></div></td>
+                      </tr>
+                      <tr>
+                        <td height="30" valign="bottom"><a href="http://www.business-standard.com/article/pf/sector-funds-are-quite-diverse-113030300362_1.html" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/ReadMore.gif')}" width="83" height="22" border="0" title="Read More" /></a></td>
+                      </tr>
+                        <tr>
+                          <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="15" /></td>
+                        </tr>
+                        
+                        <tr>
+                          <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Good time to lock into tax-free bonds at 7%-plus</strong></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="3" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">With the fiscal year almost coming to an end, there is a clamour to raise money through last-minute bond issues. Dredging Corp. of India Ltd, Jawaharlal Nehru Port Trust (JNPT) and National Housing Bank (NHB) are first-timers raising money through secured, redeemable, non-convertible and tax-free debentures....</font></div></td>
+                        </tr>
+                        <tr>
+                          <td height="30" valign="bottom"><a href="http://www.livemint.com/Money/tlStNUVt2PdjzinSNdGjgO/Good-time-to-lock-into-taxfree-bonds-at-7plus.html" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/ReadMore.gif')}" width="83" height="22" border="0" title="Read More" /></a></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="15" /></td>
+                        </tr>
+                        
+                        <tr>
+                          <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Family finances: Savvy investments call for minor changes</strong></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="3" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">The Reddys present a welcome change from the families that we feature in this section. While most people shy away from equity, the Reddys have relied on it to realise their goals. They not only have a good asset allocation, but also realistic goals, which makes their portfolio a financial planner's delight....</font></div></td>
+                        </tr>
+                        <tr>
+                          <td height="30" valign="bottom"><a href="http://articles.economictimes.indiatimes.com/2013-03-25/news/38010068_1_reddy-contingency-fund-mutual-fund" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/ReadMore.gif')}" width="83" height="22" border="0" title="Read More" /></a></td>
+                        </tr>
+                        </table>
+                      <br />
+                      <table width="220" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong>WATCH OUR VIDEOS</strong></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="5" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><iframe width="219" height="200" src="http://www.youtube.com/embed/PoePaBfb6Os" frameborder="0" allowfullscreen="allowfullscreen"></iframe></td>
+                        </tr>
+                        <tr>
+							<td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><a href="http://www.youtube.com/watch?v=PoePaBfb6Os&feature=player_embedded"
+									target="_blank">Click here to view CNBC Aawaz</a>
+							</font>
+							</td>
+						</tr>
+                        <tr>
+                          <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="5" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/watch?v=PoePaBfb6Os" target="_blank">16380 CNBC Markets &amp; Macros</a></strong></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">March 4, 2013 at YouTube</font></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="5" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/watch?v=Zl1UEkxqNh8" target="_blank">16984 CNBC Markets &amp; Macros</a></strong></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">March 13, 2013 at YouTube</font></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="5" /></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.moneycontrol.com/video/investing/why-dormant-account-policies-should-be-closed-asap-_843273.html" target="_blank">Why dormant account, policies should be closed ASAP</a></strong></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">March 26, 2013 at Moneycontrol</font></td>
+                        </tr>
+                        <tr>
+                          <td valign="top">&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td valign="bottom"><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/ViewMore.gif')}" width="83" height="22" border="0" /></a></td>
+                        </tr>
+                        
+                    </table></td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="1" /></td>
+                    <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                    <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                  </tr>
+                </table></td>
+              </tr>
+              </table></td>
+          </tr>
+          <tr>
+            <td width="70%" valign="top">&nbsp;</td>
+            <td width="5%" valign="top">&nbsp;</td>
+            <td width="25%" valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+            
+            <tr>
+              <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+              <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                    <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                    </tr>
+                  <tr>
+                    <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                    <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                  </tr></table></td>
+            </tr>
+            <tr>
+              <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+              </tr>
+            <tr>
+              <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+              </tr>
+            <tr>
+              <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+              </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+
+
+
+	</html>
+</apex:page>

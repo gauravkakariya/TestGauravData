@@ -1,0 +1,166 @@
+<!--
+/**
+Revision History:
+	
+    Version     Version Author     Date        Comments
+    1.0         --           	   --	  		Initial Draft
+    
+   
+	2.0			Manasi Ranade	   31/10/2011   Issue ID: FS0230: 
+												Passed the SIP values to the component : "GoalComponent"
+												
+*/ -->
+<apex:page standardStylesheets="false" controller="GeneratePDFController" renderAs="pdf">
+<apex:stylesheet value="{!$Resource.FFStyle}"/>
+
+   <div class="header">
+       <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent>
+   </div>
+	<div style="page-break-after:always;">
+      <c:CoverComponent isFreedomUserProp="{!isFreedomUser}" addressInComponent="{!address}" Logo_partner="{!Partnerlogo}" client="{!bean.client}"  spouse="{!bean.spouse}" generationDate="{!planGenerationDate}"></c:CoverComponent>
+   </div>
+   <div style="page-break-after:always;">
+   		<!--             TABLE OF CONTENTS STARTS              -->
+       <c:TableOfContentsComponent >
+            <apex:repeat value="{!goalMappingBeanList}" var="goalBean">
+                <tr class="textStyle">
+                    <td class="upperCase"><apex:outputText value="{!goalBean.goalObj.Description__c}"/></td>
+                </tr>
+            </apex:repeat>
+           <apex:repeat value="{!lstHLVDetails}" var="insurance">
+                <tr class="textStyle">
+                    <td class="upperCase"><apex:outputText value="LIFE INSURANCE ANALYSIS FOR {!insurance.Selected_Entity_Name__c}"/></td>
+                </tr>
+            </apex:repeat>
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.General_Insurance}"/></td>
+            </tr>
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.Estate_Planning}"/></td>
+            </tr>
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.Summary_Action_Plan}"/></td>
+            </tr>
+           <apex:variable var="counter" value="1"/>
+          <apex:repeat value="{!lstHLVDetails}" var="insurance">
+                <tr class="textStyle">
+                    <td class="upperCase"><apex:outputText value="ANNEXURE {!counter}: INSURANCE CALCULATION FOR {!insurance.Selected_Entity_Name__c}"/></td>
+                </tr>
+                <apex:variable var="counter" value="{!VALUE(counter) + 1}"/>
+           </apex:repeat>
+        </c:TableOfContentsComponent>   
+    </div>
+   	 <!-----------------------TABLE OF CONTENTS ENDS-------------->
+   	 
+     <!---------------------- INTRODUCTION STARTS ---------------->
+   <div style="page-break-after:always;">
+      <c:IntroductionComponent clientFullName="{!bean.client.name}" spouseFullName="{!bean.spouse.name}" entityOwner="{!bean.client.owner.name}" />
+   </div>
+	<!---------------------- INTRODUCTION ENDS ---------------->
+	
+	<!---------------------- DISCLOSURE STATEMENT STARTS ---------------->
+   <div style="page-break-after:always;">
+      <c:DisclosureComponent />
+   </div>
+	<!---------------------- DISCLOSURE STATEMENT ENDS ---------------->
+	
+	<!-- ---------------------GOAL SUMMARY STARTS ---------------->
+   <div style="page-break-after:always;">
+     <c:GoalSummaryComponent ></c:GoalSummaryComponent>
+   </div>
+   <!-- ---------------------GOAL SUMMARY ENDS ---------------->
+   
+   <!------------------------ SUMMARIZING YOUR ASSET ALLOCATION: CURRENT AND SUGGESTED STARTS ---------------------->
+   <div style="page-break-after:always;">
+      <apex:form >
+           <c:PortolioComponent showButton="false"></c:PortolioComponent>
+       </apex:form>
+   </div>
+   <!------------------------ SUMMARIZING YOUR ASSET ALLOCATION: CURRENT AND SUGGESTED ENDS ---------------------->
+   
+   <!------------------------ FINANCIAL STATEMENTS STARTS ---------------------->
+   <div style="page-break-after:always;">
+       <apex:form >
+          <c:NetworthPageComponent showButton="false"></c:NetworthPageComponent> 
+       </apex:form>
+   </div>
+   <!------------------------ FINANCIAL STATEMENTS ENDS ---------------------->
+   
+   <!------------------------ CASH FLOW STARTS ---------------------->
+   <div style="page-break-after:always;">
+      <apex:form >
+         <c:CashFlowComponent showButton="false"></c:CashFlowComponent>
+      </apex:form> 
+   </div>
+   <!------------------------ CASH FLOW ENDS ---------------------->
+   
+   <!------------------------- Emergency Fund Starts ---------------->
+   <div style="page-break-after:always;">
+       <apex:form >
+             <c:EmergencyFundComponent showButton="false"></c:EmergencyFundComponent>
+       </apex:form>
+   </div>
+	<!------------------------- Emergency Fund Starts ---------------->
+	
+	<!------------------- GOAL RELATED WITH ENTITY STARTS ------------->
+  <apex:outputPanel rendered="{!IF(goalMappingBeanList.size>0,true,false)}">
+    <apex:repeat value="{!goalMappingBeanList}" var="goalBean">
+        <div style="page-break-after:always;"> 
+            <apex:form >
+             	<!--/** Eternus Solutions      **/
+				/** Author  : Manasi Ranade*/
+				/** Issue Id: FS0230      **/
+				/** Date    : 31/10/2011 **/
+				/** Purpose : Passed the SIP values to the component**/
+				/****************************************************/-->
+                <c:GoalComponent goalMappingBean="{!goalBean}" showButton="false" dblTotalSIP="{!goalBean.dblTotalSIP}" dblEquitySIP="{!goalBean.dblEquitySIP}"
+            			dblGoldSIP="{!goalBean.dblGoldSIP}" dblDebtSIP="{!goalBean.dblDebtSIP}"></c:GoalComponent>
+            </apex:form>
+        </div>
+    </apex:repeat>
+    </apex:outputPanel>
+    <!------------------- GOAL RELATED WITH ENTITY STARTS ------------->
+
+   <apex:outputPanel rendered="{!IF(lstHLVDetails.size>0,true,false)}">
+       <apex:repeat value="{!lstHLVDetails}" var="ins">
+			<c:LifeInsuranceOutputComponentRefactored HlvDetails="{!ins}" > 
+			</c:LifeInsuranceOutputComponentRefactored>
+	   </apex:repeat>
+	</apex:outputPanel>
+
+    <div style="page-break-after:always;">
+        <apex:form >
+         <c:GeneralInsuranceComponent showButton="false"></c:GeneralInsuranceComponent>
+        </apex:form>
+   </div>
+   
+   <div style="page-break-after:always;">
+       <c:EstatePlanningComponent showButton="false"/>
+   </div>
+   
+   <div style="page-break-after:always;">
+       <c:SumActionPlanComp showButton="false" ></c:SumActionPlanComp>
+   </div>
+   
+  <apex:outputPanel rendered="{!IF(lstHLVDetails.size>0,true,false)}">
+       <apex:variable var="counter" value="1"/>
+       <apex:repeat value="{!lstHLVDetails}" var="HLVDetails">
+            <div style="page-break-after:always;">
+ 				<c:LifeInsurancePlanningComponentRefactored HLVDetails="{!HLVDetails}" count="{!counter}">
+                </c:LifeInsurancePlanningComponentRefactored>
+           </div>
+           <apex:variable var="counter" value="{!VALUE(counter) + 1}"/>
+        </apex:repeat>
+    </apex:outputPanel>
+   
+    <div style="page-break-after:always;">
+        <c:ReviewComponent />
+    </div>
+
+    <div style="page-break-after:always;">
+      <c:InvestmentRisksComponent />
+    </div>
+
+    <c:DeliveryAcknowledgementComponent />
+
+</apex:page>

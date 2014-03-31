@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Official</letterhead>
+    <name>Netscribes Ffreedom Score</name>
+    <style>freeForm</style>
+    <subject>Your Financial Health Check-up - Results</subject>
+    <textOnly>Dear {!Lead.Name},
+
+ 
+
+Thank you for taking the Ffreedom Score [Financial Health Checkup Questionnaire] at
+Netscribes during the Financial
+Planning Presentation on the 15th
+September 2010, by doing so you have taken the first step towards
+achieving complete financial freedom. You will find below your personal &quot;Ffreedom Score&quot; generated on
+the basis of the financial health checkup questionnaire.
+
+ 
+
+Your score is an indicator of how far you
+are in realizing complete Financial Freedom.
+
+ 
+
+What
+is Financial Freedom?
+
+Financial Freedom is equal to having enough
+resources to achieve ones financial goals, having all your risks covered and
+also being prepared for any type of contingency or life event. This is the time
+on one is free from financial stress &amp; is experiencing peace of mind.
+
+ 
+
+Based on your answers, you have scored {!Lead.Ffreedom_Score__c} compared to the ideal
+Ffreedom Score of 100 which is an indicator of complete Financial Freedom.
+
+ 
+
+You will  shortly be receiving (email) a personalized &amp; detailed analysis of your Ffreedom Score. 
+
+Incase there are any questions or feedback feel free to contact “The
+Ffreedom Representatives” Ashwin Dewan – ashwin.dewan@ffreedom.in or Hemal Majithia – hemal.majithia@ffreedom.in &amp; you can also
+contact us on 022 4222 4333.
+
+ 
+
+You can also avail a Complimentary Consultation with a *Certified
+Financial Planner. To know the agenda of the Consultation &amp; fix up an
+appointment click here
+
+ 
+
+[* There are currently only 1031 Certified Financial
+Planners in India as per the Financial Planning Standards Board of India
+Journal, August 2010.]
+
+ 
+
+Regards 
+
+Sumeet
+Vaid,
+
+Founder, CEO
+
+Ffreedom
+Financial Planners
+
+Dream
+&gt; Decide &gt; Do
+
+ 
+
+Join
+the Ffreedom Tribe, Connect with Ffreedom Financial Planners at:
+
+www.ffreedom.in wwww.facebook.com/Ffreedom
+w www.twitter.com/_ffreedom
+
+www.youtube.com/ffreedomin  wwww.youtube.com/ffreedomtube</textOnly>
+    <type>html</type>
+</EmailTemplate>

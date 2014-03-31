@@ -1,0 +1,126 @@
+<apex:page controller="KPIReportForFP">
+<apex:pageBlock >
+<apex:pageBlockTable value="{!lstKPI}" var="kpi">
+<apex:column headerValue="Name" value="{!kpi.Planner_Name__r.Name}"/>
+<apex:column headerValue="KPI Parameters">
+	<table width="100%">
+		<tr>
+			<td>
+				New Entities				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Execution				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Plan Approval				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Client Referral				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Lead Conversion				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Lead Meeting Fixed				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Testimonial				
+			</td>
+		</tr>		
+	</table>	
+</apex:column>
+<apex:column headerValue="Required">
+	<table width="100%">
+		<tr>
+			<td>
+				{!kpi.New_Entities_Required__c}				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{!kpi.Executions_Required__c}				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{!kpi.Plan_Approval_Required__c}				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{!kpi.Client_Referral_Required__c}			
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{!kpi.Lead_Conversion_Required__c}			
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{!kpi.Lead_Meeting_Fixed_Required__c}				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{!kpi.Testimonial_Required__c}				
+			</td>
+		</tr>		
+	</table>	
+</apex:column>
+<apex:column headerValue="%">
+	<table width="100%">
+		<tr>
+			<td>
+				{!kpi.New_Entities__c}				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{!kpi.Executions__c}				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{!kpi.Plan_Approval__c}				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{!kpi.Client_Referral__c}			
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{!kpi.Lead_Conversion__c}			
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{!kpi.Lead_Meeting_Fixed__c}				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{!kpi.Testimonial__c}				
+			</td>
+		</tr>		
+	</table>	
+		
+
+</apex:column>
+</apex:pageBlockTable>
+</apex:pageBlock>
+</apex:page>

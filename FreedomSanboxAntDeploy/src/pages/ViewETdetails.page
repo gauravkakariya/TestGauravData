@@ -1,0 +1,34 @@
+<apex:page standardController="Execution_Tracker__c" extensions="ViewETdetailsController"  showHeader="false" sidebar="false">
+	<apex:form > 
+		<apex:outputPanel id="optPanel1" rendered="{!isInsuracne}" >
+			<apex:pageBlock title="Insurance Details" id="pbId">
+				<apex:pageblocksection columns="2">
+					<apex:repeat value="{!$ObjectType.Execution_Tracker__c.FieldSets.Insurance_fields}" var="f">
+						<apex:outputfield value="{!Execution_Tracker__c[f]}">
+						</apex:outputfield>
+					</apex:repeat>
+				</apex:pageblocksection>
+			</apex:pageBlock>
+		</apex:outputPanel>	
+		<apex:outputPanel id="optPanel2" rendered="{!!isInsuracne && !isOtherProducts}" >
+			<apex:pageBlock title="Mutual Fund Details" id="pbId1">
+				<apex:pageblocksection columns="2">
+					<apex:repeat value="{!$ObjectType.Execution_Tracker__c.FieldSets.Mutual_Fund_fields}" var="f">
+						<apex:outputfield value="{!Execution_Tracker__c[f]}">
+						</apex:outputfield>
+					</apex:repeat>
+				</apex:pageblocksection>
+			</apex:pageBlock>
+		</apex:outputPanel>	
+		<apex:outputPanel id="optPanel3" rendered="{!isOtherProducts}" >
+			<apex:pageBlock title="Other Product Details" id="pbId2">
+				<apex:pageblocksection columns="2">
+					<apex:repeat value="{!$ObjectType.Execution_Tracker__c.FieldSets.Other_Products}" var="f">
+						<apex:outputfield value="{!Execution_Tracker__c[f]}">
+						</apex:outputfield>
+					</apex:repeat>
+				</apex:pageblocksection>
+			</apex:pageBlock>
+		</apex:outputPanel>	
+	</apex:form>
+</apex:page>

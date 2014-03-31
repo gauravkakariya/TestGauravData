@@ -1,0 +1,380 @@
+<!-- /*
+    
+Revision History:
+
+   Version     Version Author     Date          Comments
+   1.0         Persistent         NA            Initial Draft
+   
+   2.0         Mahesh Hirugade    03/05/2012    Issue Id : 00001618 : Commented the code related to Remarks
+-->
+<apex:component >
+    <apex:attribute name="entity" required="true" type="Account" description="Entity Account"/> 
+    <apex:attribute name="spouse" required="true" type="Account" description="Spouse Account"/> 
+    <apex:attribute name="adjustmentFactor" required="true" type="String" description="Adjustment Factor"/> 
+    <apex:attribute name="insuranceBean" required="true" type="LifeInsurancePlanningBean" description="LifeInsurancePlanningBean"/> 
+    <apex:attribute name="showOnPage" type="Boolean" description="Show save button and checkbox on page" default="true"/> 
+    <apex:attribute name="count" type="Integer" description="to show count in annexure"/>
+    <!-- FS0309 -->
+<!--     00001613 -->
+<!--     Issue Id : 00001618 : Commented below code : mahesh -->
+<!--     <apex:attribute name="ObjRemark" type="Remarks__c" description="to show Remark of LI"/> -->
+    <apex:outputPanel id="analysisComponent">
+    
+    
+      
+    <apex:pageBlock >
+    <div class="divContainerStyle">
+    <div class="divStyle">
+        <apex:outputText value="ANNEXURE {!count}: " rendered="{!NOT(showOnPage)}"/>
+        <apex:outputText value="INSURANCE CALCULATION FOR {!entity.Name}"/> 
+    </div>
+    <br/>
+   
+    <apex:outputPanel rendered="{!showOnpage}">
+        <apex:pageMessages ></apex:pageMessages>
+    </apex:outputPanel>
+    
+    <div style="padding:0 7% 0;" >
+        <apex:outputText value="{!entity.Name}'s Insurance Needs" style="font-weight:bold;" styleClass="upperCase"/><br/>
+        <apex:variable value="{!insuranceBean.entityAssumptions}" var="entityAssumptions"/>    
+        <apex:outputPanel rendered="{!IF(ISNULL(entityAssumptions.detailList),false,true)}">
+            <table class="tableClass" id="assumptionTable" cellspacing="0" cellpadding="5" border="1" style="width:70%;">
+                <tr class="tableHeader">
+                    <td class="textStyle"><apex:outputText value="{!entity.Name}"/></td>
+                    <td></td>
+                </tr>
+                
+                <apex:repeat value="{!entityAssumptions.detailList}" var="iList">
+                    <tr class="tableData">
+                         <td class="textStyle"><apex:outputText value="{!iList.accountName}"/></td>
+                         <td class="rightAlignData" style="width:30%;">
+                             <apex:outputText value="{0, number, ,##0}">
+                                 <apex:param name="value" value="{!iList.amountvalue}"/>
+                             </apex:outputText>
+                         </td>
+                    </tr>
+                    </apex:repeat>
+                    </table><br/>
+                </apex:outputPanel>
+
+                <apex:variable value="{!insuranceBean.spouseAssumptions}" var="spouseAssumptions"/>    
+                <apex:outputPanel rendered="{!IF((spouseAssumptions.detailList.size==0),false,true)}">
+                    <table id="assumptionTable1" cellspacing="0" cellpadding="5" border="1" style="width:70%;">
+                        <tr class="tableHeader">
+                            <td class="textStyle">
+                                <apex:outputText value="{!spouse.Name}"/> 
+                            </td>
+                            <td></td>
+                        </tr>    
+                        <apex:repeat value="{!spouseAssumptions.detailList}" var="iList">
+                            <tr class="tableData">
+                                <td class="textStyle"><apex:outputText value="{!iList.accountName}"/>
+                                </td>
+                                <td class="rightAlignData" style="width:30%;">
+                                    <apex:outputText value="{0, number, ,##0}">
+                                        <apex:param name="value" value="{!iList.amountvalue}"/>
+                                    </apex:outputText>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </table><br/>
+                </apex:outputPanel>
+    
+                <apex:variable value="{!insuranceBean.investAssumptions}" var="investAssumptions"/>    
+                <apex:outputPanel rendered="{!IF(ISNULL(investAssumptions.detailList),false,true)}">
+                     <table id="assumptionTable2" cellspacing="0" cellpadding="5" border="1" style="width:70%;">
+                        <tr class="tableHeader">
+                            <td class="textStyle" >
+                                <apex:outputText value="Inflation Adjusted Return"/>
+                            </td>
+                            <td></td>
+                        </tr>    
+                        <apex:repeat value="{!investAssumptions.detailList}" var="iList">
+                            <tr class="tableData">
+                                <td class="textStyle"><apex:outputText value="{!iList.accountName}"/>
+                                </td>
+                                <td class="rightAlignData" style="width:30%;">
+                                    <apex:outputText value="{0, number, ##.00 %}">
+                                        <apex:param name="value" value="{!iList.amountvalue}"/>
+                                    </apex:outputText>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </table><br/>
+                </apex:outputPanel>
+                
+                <apex:variable value="{!insuranceBean.incomeAssumptions}" var="incomeAssumptions"/>    
+                <!-- FS0245 -->
+                <!--  <apex:outputPanel rendered="{!IF(ISNULL(incomeAssumptions.detailList),false,true)}">-->
+                <apex:outputPanel rendered="false">
+                 <table id="assumptionTable3" cellspacing="0" cellpadding="5" border="1" style="width:70%;">
+                    <tr class="tableHeader">
+                        <td class="textStyle">
+                            <apex:outputText value="Inflation Adjusted Income"/>
+                        </td>
+                        <td></td>
+                    </tr>    
+                    <apex:repeat value="{!incomeAssumptions.detailList}" var="iList">
+                        <tr class="tableData">
+                            <td class="textStyle"><apex:outputText value="{!iList.accountName}"/></td>
+                            <td class="rightAlignData" style="width:30%;">
+                                <apex:outputText value="{0, number, ##.00 %}">
+                                    <apex:param name="value" value="{!iList.amountvalue}"/>
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                    </apex:repeat>
+                    </table>
+                </apex:outputPanel>
+            <br/>
+            
+            <table id="planTable" class="" cellspacing="0" cellpadding="5" border="1" style="width:100%;">
+                <tr class="tableHeader">
+                    <td class="textStyle" rowspan="2" style="text-align:left;">{!$Label.Particulars}</td>
+                    <td class="textStyle">{!$Label.Required_Amount}</td>
+                    <td class="textStyle">{!$Label.Present_Value}</td>
+                </tr>
+                <tr class="tableHeader">
+                    <td class="textStyle">{!$Label.Rs}</td>
+                    <td class="textStyle">{!$Label.Rs}</td>
+                </tr>    
+                <tr class="tableData">
+                    <td class="textStyle" style="font-weight:bold;">
+                        {!$Label.OneTimeFinalCosts}
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>    
+                <tr class="tableData">
+                    <td>
+                        <apex:outputText value="{!$Label.Liabilities}" styleClass="textStyle"/>
+                    </td>
+                    <td class="rightAlignData">
+                        <apex:outputText value="{0, number, ,##0}">
+                            <apex:param name="value" value="{!insuranceBean.LiabilitiesTotal}"/>
+                        </apex:outputText>
+                    </td>
+                    <td></td>
+                </tr>
+                
+                <tr class="tableData">
+                    <td class="textStyle">{!$Label.Present_Value}</td>
+                    <td></td>
+                    <td class="rightAlignData">
+                        <apex:outputText value="{0, number, ,##0}">
+                            <apex:param name="value" value="{!insuranceBean.LiabilitiesTotal}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr class="tableData"><td class="textStyle">&nbsp;</td><td></td><td></td></tr>
+                <tr class="tableData">
+                    <td class="textStyle" style="font-weight:bold;">
+                        {!$Label.DependentNeeds}
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>    
+                <apex:variable value="{!insuranceBean.expense}" var="expense"/>    
+                <apex:repeat value="{!expense.detailList}" var="iList">
+                <tr class="tableData">
+                    <td class="textStyle"><apex:outputText value="{!iList.accountName}"/></td>
+                    <td class="rightAlignData">
+                        <apex:outputText value="{0, number, ,##0}">
+                            <apex:param name="value" value="{!iList.amountValue}"/>
+                        </apex:outputText>
+                    </td>
+                    <td></td>
+                </tr>
+                </apex:repeat>
+                <tr class="tableData">
+                    <td class="textStyle">{!$Label.TotalLivingExpensesOfDependant}</td>
+                    <td class="rightAlignData">
+                        <apex:outputText value="{0, number, ,##0}">
+                            <apex:param name="value" value="{!expense.Total}"/>
+                        </apex:outputText>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr class="tableData">
+                    <td class="textStyle">{!$Label.Present_Value}</td>
+                    <td></td>                
+                    <td class="rightAlignData">
+                        <apex:outputText value="{0, number, ,##0}">
+                            <apex:param name="value" value="{!expense.PresentValue}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+                
+                <tr class="tableData"><td class="textStyle">&nbsp;</td><td></td><td></td></tr>
+                <tr>
+                    <td class="textStyle" style="font-weight:bold;">
+                        {!$Label.GoalsToBeMet}
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>    
+                <apex:variable value="{!insuranceBean.goal}" var="goal"/>    
+                <apex:repeat value="{!goal.detailList}" var="iList">
+                <tr class="tableData">
+                    <td class="textStyle"><apex:outputText value="{!iList.accountName}"/></td>
+                    <td class="rightAlignData">
+                        <apex:outputText value="{0, number, ,##0}">
+                            <apex:param name="value" value="{!iList.amountValue}"/>
+                        </apex:outputText>
+                    </td>
+                    <td></td>
+                </tr>
+                </apex:repeat>
+               
+                <tr class="tableData">
+                    <td class="textStyle" style="font-weight:bold;">
+                        {!$Label.Total}
+                    </td>
+                    <td></td>
+                    <td class="rightAlignData">
+                        <apex:outputText value="{0, number, ,##0}">
+                            <apex:param name="value" value="{!goal.Total}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+                 <!--*************************DONE Refactoring***************************************-->
+                <tr class="tableData"><td class="textStyle">&nbsp;</td><td></td><td></td></tr>
+                <tr class="tableData">
+                    <td class="textStyle" style="font-weight:bold;">
+                        {!$Label.GrossLifeInsuranceRequired}
+                    </td>
+                    <td></td>
+                    <td class="rightAlignData">
+                        <apex:outputText value="{0, number, ,##0}">
+                            <apex:param name="value" value="{!insuranceBean.grossLifeInsRequired}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr class="tableData"><td class="textStyle">&nbsp;</td><td></td><td></td></tr>
+                <tr class="tableData">
+                    <td class="textStyle" style="font-weight:bold;">
+                        {!$Label.Existing_Life_Insurance}
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr class="tableData">
+                    <td class="textStyle"><apex:outputText value="{!entity.Name}"/></td>
+                    <td></td>
+                    <td class="rightAlignData">
+                        <apex:outputText value="{0, number, ,##0}">
+                            <apex:param name="value" value="{!insuranceBean.existingInsuranceTotal}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr class="tableData"><td class="textStyle">&nbsp;</td><td></td><td></td></tr>
+                <tr class="tableData">
+                    <td class="textStyle" style="font-weight:bold;">
+                        {!$Label.Continuing_Income_Sources}
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>    
+                <apex:variable value="{!insuranceBean.income}" var="income"/>
+                <apex:outputText value="{!income}">
+                              
+                </apex:outputText>
+                
+                <apex:repeat value="{!income.detailList}" var="iList">
+                    <tr class="tableData">
+                        <td class="textStyle"><apex:outputText value="{!iList.accountName}"/></td>
+                        <td class="rightAlignData"> 
+                            <apex:outputText value="{0, number, ,##0}">
+                                <apex:param name="value" value="{!iList.amountValue}"/>
+                            </apex:outputText>
+                        </td>
+                        <td></td>
+                    </tr>
+                </apex:repeat>
+                    <!-- ****************************************************************************************************** -->
+                    <tr class="tableData">
+                        <td class="textStyle">{!$Label.Present_Value}</td>
+                        <td></td>
+                        <td class="rightAlignData">
+                            <apex:outputText value="{0, number, ,##0}">
+                                <apex:param name="value" value="{!income.PresentValue}"/>
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                    <!-- ****************************************************************************************************** -->
+                    
+                    <tr class="tableData"><td class="textStyle">&nbsp;</td><td></td><td></td></tr>
+                    <tr class="tableData">
+                        <td class="textStyle" style="font-weight:bold;">
+                            {!$Label.Existing_Investments}
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    
+                    <apex:variable value="{!insuranceBean.asset}" var="asset"/>    
+                    <apex:repeat value="{!asset.detailList}" var="iList">
+                        <tr class="tableData">
+                            <td class="textStyle"><apex:outputText value="{!iList.accountName}"/></td>
+                            <td class="rightAlignData">
+                                <apex:outputText value="{0, number, ,##0}">
+                                    <apex:param name="value" value="{!iList.amountValue}"/>
+                                </apex:outputText>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </apex:repeat>
+                    
+                    <tr class="tableData">
+                        <td class="textStyle" style="font-weight:bold;">
+                            {!$Label.Existing_Investments}{!$Label.Total}
+                        </td>
+                        <td></td>
+                        <td class="rightAlignData">
+                            <apex:outputText value="{0, number, ,##0}">
+                                <apex:param name="value" value="{!asset.Total}"/>
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                    <tr class="tableData"><td class="textStyle">&nbsp;</td><td></td><td></td></tr>
+                    <tr class="tableData">
+                        <td class="textStyle" style="font-weight:bold;">
+                            {!$Label.AdditionalLifeInsurancerRequired}
+                        </td>
+                        <td></td>
+                        <td class="rightAlignData">
+                            <apex:outputText value="{0, number, ,##0}">
+                                <apex:param name="value" value="{!insuranceBean.addLifeInsRequired}"/>
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                    <tr class="tableHeader">
+                        <td class="textStyle" style="text-align:left;">
+                            {!$Label.RoundOff}
+                        </td>
+                        <td></td>
+                        <td class="rightAlignData">
+                            <apex:outputText value="{0, number, ,##0}">
+                                <apex:param name="value" value="{!insuranceBean.roundTotalLifeInsRequired}"/>
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            </div>
+<!-- FS0309 -->
+<!--            Issue Id : 00001618 : Commented below code : mahesh -->
+<!--            <apex:outputPanel rendered="{!(if(ObjRemark.Remark__c=='',false,true))}" id="panRemark"> -->
+<!--                <ul class="TickList"> -->
+<!--                     <li> -->
+<!--                         {!$Label.Remarks} -->
+<!--                    </li> -->
+<!--                </ul> -->
+<!--             <div> -->
+<!--                00001613 -->
+<!--                <apex:OutputField value="{!ObjRemark.Remark__c}"></apex:OutputField> -->
+<!--             </div> -->
+<!--             </apex:outputPanel> -->
+        </apex:pageBlock>
+    </apex:outputPanel>
+</apex:component>

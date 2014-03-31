@@ -1,0 +1,88 @@
+<!-- 
+	Page for entering product master records in the object Product_Manufacturer_Master__c 
+
+    Version     Version Author     Date           Comments
+    1.0         Prajakta Sanap     28/12/2012     To enter New Product Master details
+-->
+
+<apex:page standardController="Product_Master__c"
+		   extensions="EditProductsController" 
+    	   title="Edit Products"
+    	   sidebar="false"
+    	   tabStyle="Product_Master__c">
+    	   
+   	<script type="text/javascript">
+    	function checkAll(cb,cbid)
+        {
+            var inputElem = document.getElementsByTagName("input");                    
+            for(var i=0; i<inputElem.length; i++)
+            {            
+                 if(inputElem[i].id.indexOf(cbid)!=-1){                                       
+                    inputElem[i].checked = cb.checked;
+                }
+            }
+        }
+	</script>
+    	
+	<apex:form id="PMform">
+		
+		<apex:sectionHeader title="Products"/>
+		
+		<apex:pageBlock title="Edit Products" mode="edit">
+		
+			<apex:outputPanel id="pnlMsg">
+				<apex:pageMessages id="pageMsgs"/>
+			</apex:outputPanel>
+			
+			<apex:pageBlockButtons >
+		        <apex:commandButton value="Save" action="{!saveProduct}" reRender="pageMsgs"/>
+		        <apex:commandButton value="Cancel" action="{!cancelProduct}"/>
+      		</apex:pageBlockButtons>
+
+			<apex:pageBlockSection title="Details" columns="12" id="table">
+                <apex:pageBlockTable value="{!lstProductMaster}" var="Prod">
+                    
+                    <apex:column headerValue="Product Code" >
+                        <apex:outputField value="{!Prod.Name}" style="width:100px;"/>
+                    </apex:column>
+                    <apex:column headerValue="Product Name" >
+                        <apex:inputField value="{!Prod.Product_Name__c}" required="true" style="width:180px;"/>
+                    </apex:column>
+                    <apex:column headerValue="Product Manufacturer" style="text-align:left;">
+                    	<apex:outputField value="{!Prod.Product_Manufacturer__c}"/>
+                    </apex:column>
+<!--                     <apex:column headerValue="Product Manufacturer" style="text-align:center;"> -->
+<!--                     	<apex:selectList value="{!Prod.Product_Manufacturer__c}" size="1" required="true"> -->
+<!-- 							<apex:selectOptions value="{!ProductManufacturerName}" /> -->
+<!-- 						</apex:selectList> -->
+<!--                     </apex:column> -->
+                    <apex:column headerValue="Type">
+                        <apex:inputField value="{!Prod.ProductType__c}" style="width:90px;" required="true"/>
+                    </apex:column>
+                    <apex:column headerValue="Active" style="text-align:center;">
+                        <apex:inputField value="{!Prod.Is_Active__c}" style="width:50px;"/>
+                    </apex:column>
+                    <apex:column headerValue="Currently Recommended" style="text-align:center;">
+                        <apex:outputField value="{!Prod.Currently_Recommended__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="SIP Allowed?" style="text-align:center;">
+                        <apex:inputField value="{!Prod.SIP_Allowed__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Fees in Advance" style="text-align:center;">
+                        <apex:inputField value="{!Prod.Fees_in_Advance_or_On_Service_Delivery__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Earn One Time Fees" style="text-align:center;">
+                        <apex:inputField value="{!Prod.Earn_One_Time_Fees__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Earn Trail Fees" style="text-align:center;">
+                        <apex:inputField value="{!Prod.Earn_Trail_Fees__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Earn Upfront Fees" style="text-align:center;">
+                        <apex:inputField value="{!Prod.Earn_Upfront_Fees__c}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection><br/>
+	    </apex:pageBlock>
+
+	</apex:form>
+</apex:page>

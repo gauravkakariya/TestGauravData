@@ -1,0 +1,28 @@
+<table height="400" width="600" cellpadding="5" border="0" cellspacing="5" >
+<tr height="50" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Dear {!Account.FirstName}&nbsp;</font><font face="arial">{!Account.LastName},</font>]]></td>
+</tr>
+<tr height="300" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r2" locked="0" aEditID="c1r2" >
+<![CDATA[<div style="font-family: arial; color: rgb(0, 0, 0); font-size: 12pt;">
+						<p class="MsoNormal">
+							<font face="Arial">Greetings!</font></p>
+					</div>
+					<div style="font-family: arial; color: rgb(0, 0, 0); font-size: 12pt;">
+						<p class="MsoNormal">
+							<br>
+						</p>
+					</div>
+					<div style="font-family: arial; color: rgb(0, 0, 0); font-size: 12pt;">
+						<p class="MsoNormal">
+							<font face="Arial">We have initiated a little exercise 
+to better understand how much financial planning has helped in your life
+ and how confident you are feeling about your financial life. It might 
+be some realisation for you too.</font></p></div><a href="http://http://ffreedom1.ffreedom.cs13.force.com/financial_wellness?id=001W00000087RaJ" style="font-family: arial; color: rgb(0, 0, 0); font-size: 12pt;"><br></a><div style="font-family: arial; color: rgb(0, 0, 0); font-size: 12pt;"><span style="font-family: Arial;">Please take this test here</span><font size="3">&nbsp; </font><a href="http://ffreedom1.ffreedom.cs13.force.com/financialwellness?id={!Account.Id}" style="font-size: 12pt;">Freedom Scale&nbsp;</a></div>]]></td>
+</tr>
+<tr height="50" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r3" locked="0" aEditID="c1r3" >
+<![CDATA[<font face="Arial">Thanks and regards</font><div><font face="Arial">Member Success Team</font></div><div style="font-size: 12pt;"><font size="2" face="Arial"><br></font></div>]]></td>
+</tr>
+</table>

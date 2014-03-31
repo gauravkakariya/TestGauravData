@@ -1,0 +1,8 @@
+<apex:page showHeader="false" standardStylesheets="true">
+    <apex:composition template="TabPage">
+        <apex:define name="contents">
+<!--             <c:SumActionPlanComp /> -->
+			<c:HeaderActionPlanComp />
+        </apex:define>
+    </apex:composition>
+</apex:page>

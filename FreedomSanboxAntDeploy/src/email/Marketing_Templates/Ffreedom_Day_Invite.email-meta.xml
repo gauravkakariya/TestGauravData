@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Ffreedom Day Invite</name>
+    <style>none</style>
+    <subject>Special Invitation for The Ffreedom Day</subject>
+    <textOnly>Dear {!Registration__c.Name}}
+
+On behalf of Ffreedom Financial Planners I would like to take this opportunity to invite you for The Ffreedom Day to be held on Sunday the 22nd of August 2010 at the Hotel Novotel Mumbai Juhu Beach.
+
+The Ffreedom Day is a conference where we believe passionately in the power of sharing ideas, experiences and knowledge to change attitudes and lives.
+So we&apos;re building here a powerhouse that offers knowledge and inspiration from some of the most passionate, driven and inspired thinkers, and also a community of curious souls to engage with ideas and each other.
+
+To Know More About The Speakers &amp; The Topics, please visit www.ffreedomday.in/EventSpeakers?Id={!Registration__c.Id}
+
+The conference will feature &quot;Ffreedom Talks&quot; by speakers from various fields and expertise who will come together to share their ideas, experiences and knowledge revolving around the theme of Happiness, Dreams and Financial Freedom.
+
+To Check The Event Program Schedule, please visit
+ www.ffreedomday.in/EventItinerary?Id={!Registration__c.Id}
+
+The Ffreedom Day is conceived &amp; hosted by Ffreedom Financial Planners a financial planning firm which believes that financial ffreedom stands for people, their dreams &amp; their goals.
+
+Kindly Click on the link below
+www.ffreedomday.in/EventRegistration?Id={!Registration__c.Id} 
+To RSVP/ Confirm Your Attendance For The Event
+
+Help Desk:
+For any &amp; all assistance you can email us at contact@ffreedom.in or call us at 022 4222 4333.
+
+To know more about the event &amp; Ffreedom Financial Planners kindly visit
+www.ffreedomday.in or www.ffreedom.in
+
+Looking forward to meeting you at the Ffreedom Day.
+
+Thank you on behalf of the team at Ffreedom Financial Planners.
+
+Sincerely,
+
+Sumeet Vaid 
+Founder &amp; CEO Ffreedom Financial Planners</textOnly>
+    <type>custom</type>
+</EmailTemplate>

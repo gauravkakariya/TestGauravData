@@ -1,0 +1,38 @@
+<apex:page controller="ChequeDetailController">
+    <apex:sectionHeader title="New Cheque Details"/>
+    <apex:pageMessages id="pMsg"/>
+    <apex:outputPanel rendered="{!isRender}">
+        <a href="/{!entityId}"> back </a>
+    </apex:outputPanel>
+    
+    <apex:form id="formId" rendered="{!!isRender}">
+        <apex:pageBlock title="Cheque Details Edit" id="pageBlockId"> 
+        
+            <apex:pageBlockButtons > 
+                <apex:commandButton value="Save" action="{!saveDetail}" rerender="pMsg" status="statusId"/>
+                <apex:commandButton value="Cancel" action="{!cancelDetail}"  status="statusId"/>
+                <apex:actionStatus stopText="" id="statusId">
+                    <apex:facet name="start">
+                        <apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                            <img src="/img/loading.gif" width="16" height="16"/>
+                        </apex:outputPanel>
+                    </apex:facet>
+               </apex:actionStatus>  
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection title="Information"> 
+<!--                <apex:outputText label="Entity Name " value="{!entityName}" /> -->
+                <apex:outputField value="{!objChequeDetail.Account__c}" />
+                <apex:selectList id="productNameId"  value="{!orderNumber}" size="1" label="Order Number">
+                   <apex:selectOptions value="{!productOrderOptions}"></apex:selectOptions>
+                </apex:selectList> 
+                     
+                <apex:inputField value="{!objChequeDetail.Amount_Received__c}" />
+                <apex:inputField value="{!objChequeDetail.Cheque_Date__c}" />
+                <apex:inputField value="{!objChequeDetail.Cheque_No__c}" />
+                <apex:inputField value="{!objChequeDetail.Cheque_Status__c}" />
+                <apex:inputField value="{!objChequeDetail.Installment__c}" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

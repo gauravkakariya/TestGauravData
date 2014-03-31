@@ -1,0 +1,245 @@
+<apex:page showheader="false" title="Ffreedom Financial Planners | News Letters"	id="Houseview1_Dec12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/top_Dec12.gif')}" width="740" height="104" /></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                <tr>
+
+                  <td background="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headbg.gif')}"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/houseviewHIn.gif')}" width="132" height="40" /></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+                      <tr>
+
+                        <td width="9" valign="top" background="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="185" /></td>
+
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="8" height="1" /></td>
+
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+
+                          <tr>
+
+                            <td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Market Commentary</em></strong></font></td>
+
+                          </tr>
+
+                            
+
+                            <tr>
+
+                              <td height="20" valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">The month of November turned out to be an eventful one for  the markets. Important happenings were:</td>
+
+                            </tr>
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;"><ul>
+
+                                <li>BSE Sensex was in negative for most part of the  month but late month rally ensured that markets closed on a positive mode on a  monthly basis. </li>
+
+                                <li>Inflation stopped its earlier upward trend and  came down from 7.81% to 7.45%.</li>
+
+                                <li>Gold remained flat</li>
+
+                                <li>RBI has reduced the Cash reserve ratio further  by 25bps which would mean infusion of money in the system which is anyways  facing liquidity pressures.</li>
+
+                              </ul>                              </td>
+
+                            </tr>
+
+                            
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">FII’s have continued to be positive on the Indian markets  throughout the month of November. The BSE Sensex managed to hold on to its  gains and continued trade above its 1 year high. This has led various experts  to speculate about the BSE Sensex going beyond its all-time high. On the  political front, uncertainty around implementation of certain reforms has been  cleared as the Parliament has finally voted in favour of the FDI being allowed  in India. We can safely conclude that the environment is very bullish. <br />
+
+                                  <br />
+
+                                  But the news to keep in mind is the fact that insurance  companies have been net sellers in the market and also equity mutual funds are  facing continuous pressure as redemptions have continued. <br />
+
+                                  <br />
+
+                                  The dollar after appreciating for the last few months has  gone flat. With India importing almost 80% of its annual oil consumption, if  the dollar depreciates from here it will help reduce the burden of the  government on subsidising oil <br />
+
+                                  Gold was flat in the month of November, after rising in  October. Some relief in the marriage season!<br />
+
+                                  <br />
+
+                                  FDI is finally here thus bringing in more competition which  can help in reducing the prices of household commodities. Inflation still  remains a cause for concern but unlike earlier steps taken to curb it seem to have  borne some fruits. We hope the trend continues. <br />
+
+                                  <br />
+
+                                  Going by the recent steps taken by the government on  reforms, and the hope that with elections of 2014 in mind the government might do  its best to revive the economy is likely to keep the sentiments positive for a  longer time.<br />
+
+                                  <br />
+
+                                  Regards,<br />
+
+                                  Satish Ghanshani</td>
+
+                            </tr>
+
+                            
+
+                            
+
+
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+
+                            </tr>
+
+                            
+
+                            
+
+                         </table></td>
+
+                      </tr>
+
+                      <tr>
+
+                        <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+
+                      </tr>
+
+                  </table></td>
+
+                </tr>
+
+              </table>
+
+              </td>
+
+          </tr>
+
+          <tr>
+
+            <td valign="top">&nbsp;</td>
+
+            </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+
+        </tr>
+
+    </table></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+
+                </tr>
+
+            </table></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+
+          </tr>
+
+          <tr>
+
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+
+          </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+
+      </tr>
+
+    </table></td>
+
+  </tr>
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/footer.gif')}" width="740" height="15" /></td>
+
+  </tr>
+
+</table>
+
+</body>
+
+
+
+	</html>
+</apex:page>

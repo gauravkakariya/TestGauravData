@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Continuation Of Membership Email</name>
+    <style>freeForm</style>
+    <subject>Membership Renewal</subject>
+    <textOnly>Dear {!Account.Name},
+
+At the onset, we would like to thank you for placing your trust with us and are pleased to inform you that your membership has been renewed.
+
+You will continue to avail the following services:
+•	Dedicated Certified Financial Planner [CFP]
+       o	Conference calls/meetings at your discretion with your Financial Planner
+       o	Single point contact [who will act as a coach] for any queries
+•	Restructuring of the plan, if required, due to changes in personal circumstances
+•	Access to Member portal
+       o	will help in Consolidation &amp; tracking
+•	Implementation
+       o	Ffreedom team will help you to execute every single action plan
+       o	Help get the best possible rates, wherever possible
+•	Reviews
+       o	Ongoing Review
+       o	Annual review
+•	Other Services
+       o	Monthly statements &amp; updates on your Financial Plan
+       o	Ffreedom Team proactively interacting with you on an ongoing basis
+       o	SIP &amp; Premium reminders 
+       o	You will be part of our weekly update &amp; monthly Commentary mailers [to keep you updated on the environment]
+•	Additional Offerings [at an extra price]
+       o	Estate Planning
+       o	Income Tax Planning
+        We understand the importance of the responsibility that you have entrusted upon us and we assure you that our continuous endeavor will be to empower you in achieving your financial goals.
+
+       We, at Ffreedom, believe that each one of us is entitled to a life void of financial worries and strains. Whether it is planning for your child’s education or marriage, starting up a new business or buying a new house etc, we will direct and guide you in making appropriate and wise Financial Planning decisions to help you accomplish your financial goals.
+
+       Looking forward for a long &amp; mutually beneficial relationship and assuring you of best services.
+
+Warm Regards,
+Team Ffreedom.</textOnly>
+    <type>html</type>
+</EmailTemplate>

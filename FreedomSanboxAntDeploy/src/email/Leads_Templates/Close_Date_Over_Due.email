@@ -1,0 +1,6 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p style="font-family: 'Times New Roman'; font-size: medium; ">Dear {!Lead.OwnerFullName},</p><p style="font-family: 'Times New Roman'; font-size: medium; "><br></p><p style="font-family: 'Times New Roman'; font-size: medium; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Close Date for the Lead {!Lead.Name} is Over due by a couple of days. Please take the necessary action on the lead to accomplish conversion of the lead.</p><p style="font-family: 'Times New Roman'; font-size: medium; "><br></p><p style="font-family: 'Times New Roman'; font-size: medium; ">Click on the following link to go to the Lead's page:&nbsp;<a href="https://ffreedom--ffreedomqa.cs4.my.salesforce.com/p/email/template/EmailTemplateEditorUi/{!Lead.Link}">{!Lead.Name}</a></p><p style="font-family: 'Times New Roman'; font-size: medium; "><br></p><p style="font-family: 'Times New Roman'; font-size: medium; ">Regards,<br>FFreedom Team.</p>]]></td>
+</tr>
+</table>

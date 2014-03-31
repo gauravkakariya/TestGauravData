@@ -1,0 +1,16 @@
+<apex:page sidebar="false" controller="InvestwellPortfolioControllerNew" showHeader="true">
+       <HTML>
+              <head></head>
+              <body>
+                     <form name= "PortViewLogin" action = "https://ffreedom.my-portfolio.in/BrokerVerificationWithPwd.aspx" method="post" >
+                           <input type="hidden" name="txtUserID"  value="{!InvestUserId}"></input>
+                           <input type="hidden" name="txtUserPass" value="{!InvestUserPass}"></input>
+                           <input type="hidden" name="txtBrokerID" value="{!InvestwellBrokId}"></input>
+<!--                            <input type="hidden"  name="txtSessionID" value="<%=Session.SessionID%>"></input> -->
+                     </form>
+              </body>
+             <script type="text/javascript">
+                     document.PortViewLogin.submit();
+              </script>
+       </HTML>
+</apex:page>

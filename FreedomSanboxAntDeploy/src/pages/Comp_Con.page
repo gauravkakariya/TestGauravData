@@ -1,0 +1,155 @@
+<apex:page showHeader="false" sidebar="false" controller="WebFormController" title="Ffreedom Financial Planners | Complimentary Consultation">
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+ <div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+        
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/result_img_new.png')}" style="height:30%;width:100%;" /></div>
+        <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+   </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+                  <!--<div class="leftlinkselectedimg" style="margin-top:144px; height:193px; background-repeat:no-repeat;"></div>-->
+              </div>
+   <div id="innerpage_textcontainer_middle">
+    <!--<div class="innerpage_titletext"><span class="innerpagetopheading">Financial Planning</span></div>-->
+      <div class="innerpage_titletext"><span class="innerpagetexttitle">            
+            Complimentary Consultation with a ‘Ffreedom Financial Planner’:</span></div><br/>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+            <center>People Dream &amp; Remain Happy,<br/>
+            Imagine people dreaming and living their dreams.</center><br />
+
+            We have been helping our clients live their dreams, Now let us help you – starting with a Complimentary Consultation Session.<br/><br/>
+
+            <strong>What to expect?</strong><br/><br/>
+
+            <b>The consulting session shall include the following:</b><br/><br/>
+    
+            <strong>A Financial Health Check up:</strong> It will give you an indication about how healthy your financial situation is. This assessment measures the quality of your personal finance habits &amp; your results are based on your own expectations.
+    <br/><br/>
+            <strong>Your goals:</strong> Our Financial Planner shall concentrate on understanding your lifestyle, needs and goals, rather than on promoting specific products or investments. And hence helps you create a road map to start living your dreams.
+    <br/><br/>
+            <strong>Guidance:</strong> Trained in a wide variety of retirement and investment strategies, our Financial Planner can lay out the facts and provide you with guidance. They are a good resource for discussing things like reducing taxes, college planning or preparing for a more secure retirement.
+    <br/><br/>
+            <strong>Our Approach:</strong> The <i>Dream > Decide > Do</i> approach to financial planning is collaborative and exclusive to Ffreedom Financial Planners. We shall also help you address &amp; understand all concerns in regards to financial planning.
+    <br/>
+    <center>
+    <br />
+            <b>Its Complimentary, Our First consultation is complimentary and hence there is no fees or obligation, just Financial Guidance.</b>
+    </center>
+            <br/>
+            Thank you for your interest in Ffreedom Financial Planners.<br/> Sign up today! Fill out the form and we will have a Ffreedom Financial Planner contact you to arrange a one to one meeting with you at your convenience.<br/>
+    <br />  <br/>       
+            
+            Request a Complimentary Consultation with a Ffreedom Financial Planner. 
+            [All fields required]
+            
+            <br/>
+            <br/>
+            </span></div>
+            
+      <apex:form id="Complimentary" >
+            
+       <div class="settable">
+        <table class="textmatter" width="400px;">        
+          <tr>
+            <td >&nbsp;&nbsp;First Name :</td>
+            <td><apex:inputField id="FirstName" required="true" value="{!lead.FirstName}" style="font-size:12px;width:100px" /></td>
+          </tr> 
+           <tr>
+            <td >&nbsp;&nbsp;Last Name :</td>
+            <td><apex:inputField id="LastName" value="{!lead.LastName}" style="font-size:12px;width:100px" /></td>
+          </tr>               
+          <tr>
+            <td>&nbsp;&nbsp;Address:</td>
+            <td><apex:inputField id="Address" required="true" value="{!lead.Street}" style="font-size:12    px;width:100px" /></td>
+          </tr>
+           <tr>
+            <td>&nbsp;&nbsp;City:</td>
+            <td><apex:inputField id="City" required="true" value="{!lead.City}" style="font-size:12 px;width:100px" /></td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;Zip Code:</td>
+            <td><apex:inputField id="Zip" required="true" value="{!lead.PostalCode}" style="font-size:12    px;width:100px" /></td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;State:</td>
+            <td><apex:inputField id="State" value="{!lead.State}" style="font-size:12   px;width:100px"/></td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;Country:</td>
+            <td><apex:inputField id="Country" value="{!lead.Country}" style="font-size:12   px;width:100px" /></td>
+          </tr>
+           <tr>
+            <td>&nbsp;&nbsp;Mobile number:</td>
+            <td><apex:inputField id="Mobilenumber" required="true" value="{!lead.MobilePhone}" style="font-size:12  px;width:100px" /></td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;Email id:</td>
+            <td><apex:inputField id="youremail" required="true" value="{!lead.Email}" style="font-size:12   px;width:100px" /></td>
+          </tr> 
+          <tr>
+            <td style="white-space:nowrap;width:22%">&nbsp;&nbsp;Appointment  Time:</td>
+            
+            <td style="white-space: nowrap"><apex:inputField required="true" value="{!lead.tempReportDate__c}" />
+            <apex:selectList id="display"  value="{!reportTimeValue}" size="1">
+                <apex:selectOptions value="{!reportTime}"/>
+            </apex:selectList></td>
+          </tr>  
+          <tr>
+            <td>&nbsp;&nbsp;Description:</td>
+            <td><apex:inputField id="Desc" value="{!lead.Description}" style="font-size:12  px;width:200px"  /></td>
+          </tr>         
+          <tr >
+         <td colspan="2" align="center">
+        <apex:commandButton value="Send" id="sendButton" onclick="validate()" action="{!insertComplConsInfo}"/>
+
+      <!--   <apex:actionFunction id="dataSendFunction" name="sendData" action="{!send}">
+           <apex:param name="FullName" assignTo="{!FullName}" value=""/>
+            <apex:param name="Occupation" assignTo="{!Occupation}" value=""/> 
+            <apex:param name="Location" assignTo="{!Location}" value=""/>
+            <apex:param name="youremail" assignTo="{!youremail}" value=""/>
+            <apex:param name="Mobilenumber" assignTo="{!Mobilenumber}" value=""/>
+        </apex:actionFunction>
+        -->
+        </td></tr>            
+         </table>         
+      </div>             
+    </apex:form>   
+    <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">  
+    <i>* The initial consultation provides an overview of financial planning concepts. You will not receive written analysis and/or recommendations.</i>
+    <br/><br/><font size="-4">People outside India can also signup and we will contact you either by Phone or by sending you a link for Video conferencing.</font>
+    <br/><br/></span></div>   
+                       
+ </div><!-- innerpage_textcontainer_middle -->
+     
+ <div class="innerpageborderimgAdd"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" /></div>
+ <!-- <div class="callmeheadingCall"><span class="headertxtCall">Complimentary Consultation</span><br /><br /></div> -->
+ 
+ <!--<div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.jpg')}"  width="215" height="38" border="0" usemap="#Map2" />
+         <map name="Map2" id="Map2">
+           <area shape="rect" coords="3,0,230,36" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map>
+       </div>
+
+ <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div>  -->
+        <div class="title123"><span class="imgtext">Related Links</span></div>
+        
+         <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Comprehensive_fp"><strong>Services Basket</strong></a></span> </div>
+<!--          <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="why_fees"><strong>Financial Planning Fees</strong></a></span> </div> -->
+         <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

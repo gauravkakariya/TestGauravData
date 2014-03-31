@@ -1,0 +1,146 @@
+<!--  
+						Eternus Solutions
+                        Author  : Trupti Gaikwad
+                        Issue Id: FS0291
+                        Date    : 11/18/2011
+                        Purpose : Show Header for this page     			-->   
+<apex:page sidebar="false" showheader="true" controller="TransactionController" >
+	<apex:outputPanel >
+		<apex:pageMessages rendered="true" />
+	</apex:outputPanel>
+	<apex:composition template="PortalFinancialMgrTemp">
+		<apex:define name="rightcontent">
+		    <!--  
+						Eternus Solutions
+                        Author  : Trupti Gaikwad
+                        Issue Id: FS0291
+                        Date    : 11/18/2011
+                        Purpose : Remove the link     			-->   
+			<!-- <a href="Portal_TransactionReport" class="printreport"><apex:outputText >Print Report</apex:outputText></a> -->
+			 <a href="Poratl_PrintTransactionReport" class="printreport" target="_blank"><apex:outputText rendered="{!(SummaryDataList.size != 0)}">Print Report</apex:outputText></a>
+			<br />
+			<br />
+			<apex:outputPanel style="font-size:bold;"  rendered="{!(SummaryDataList.size = 0)}">Currently you do not have any Investments</apex:outputPanel> <!-- rendered="{!(SummaryDataList.size = 0)}" -->
+			<div class="scrollSection" style="font-size: 11px;">
+				<apex:outputPanel rendered="{!(SummaryDataList.size != 0)}">
+					<table border="1" class="mainTable" width="100%;">
+						<tr>
+							<td>
+								<table width="100%;" height="50">
+									<!----HEADERS START-->
+									<tr class="lightPistaGreen" style="text-align: center;">
+<!-- 										<td width="4%">Port folio Type</td> -->
+<!-- 										<td width="8%">Name</td> -->
+										<td width="9%">Scheme/ Scrip</td>
+										<td width="10%">Folio No</td>
+<!-- 										<td width="8%">Asset Class</td> -->
+<!-- 										<td width="5%">Units/ Quantity</td> -->
+										<td width="5%">Purchase Price</td>
+<!-- 										<td width="5%">CURR PRICE</td> -->
+										<td width="5%">Current Value</td>
+<!-- 										<td width="3%">Transaction Type</td> -->
+<!-- 										<td width="2%">DR</td> -->
+										<td width="8%">Purchase Amount</td>
+										<td width="8%">Purchase Start Date</td>
+										<td width="8%">Current Date</td>
+<!-- 										<td width="4%">Div.(RS)</td> -->
+										<td width="4%">Gain</td>
+										<td width="5%">Absolute Return%</td>
+										<td width="3%">Average Days</td>
+										<td width="4%">CAGR %</td>
+									</tr>
+								</table>
+								<table width="100%;" style="background-color: #FFFFFF">
+									<!----HEADERS END-->
+									<tr class="accountName">
+										<td colspan="13"><apex:outputText value="{!Account.Name}" />
+										</td>
+									</tr>
+									<apex:repeat value="{!SummaryDataList}" var="allData">
+										<tr>
+											<td class="boldStyle" Style="text-align: left;" colspan="13">
+												<apex:outputText value="{!allData.asset_Class}"></apex:outputText>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<table width="100%" cellspacing="5px;" border="1px">
+													<apex:repeat value="{!allData.transactionList}" var="purchase">
+														<tr>
+<!-- 															<td width="4%" style="text-align: left"><apex:outputField value="{!purchase.Portfolio_Type__c}" /></td> -->
+<!-- 															<td width="8%" style="text-align: left"><apex:outputField value="{!purchase.Owner__c}" /></td> -->
+															<td width="9%" style="text-align: left"><apex:outputField value="{!purchase.Scheme_Scrip__c}" /></td>
+															<td width="10%" style="text-align: center"><apex:outputField value="{!purchase.Folio_Number__c}" /></td>
+<!-- 															<td width="8%" style="text-align: left"><apex:outputField value="{!purchase.Asset_Class__c}" /></td> -->
+<!-- 															<td width="5%" style="text-align: right"><apex:outputField value="{!purchase.Units_Quantity__c}" /></td> -->
+															<td width="5%" style="text-align: right"><apex:outputField value="{!purchase.Purchase_Price__c}" /></td>
+<!-- 															<td width="5%" style="text-align: right"><apex:outputField value="{!purchase.Current_Price__c}" /></td> -->
+															<td width="5%" style="text-align: right"><apex:outputField value="{!purchase.current_Value__c}" /></td>
+<!-- 															<td width="3%" style="text-align: center"><apex:outputField value="{!purchase.Transaction_Type__c}" /></td> -->
+<!-- 															<td width="2%" style="text-align: center"><apex:outputField value="{!purchase.DR__c}" /></td> -->
+															<td width="8%" style="text-align: right"><apex:outputField value="{!purchase.Purchase_Amount__c}" /></td>
+															<td width="8%" style="text-align: right"><apex:outputField value="{!purchase.Purchase_Date__c}" /></td>
+															<td width="8%" style="text-align: right"><apex:outputField value="{!purchase.Current_Date__c}" /></td>
+<!-- 															<td width="4%" style="text-align: right"><apex:outputField value="{!purchase.DIV_RS__c}" /></td> -->
+															<td width="4%" style="text-align: right"><apex:outputField value="{!purchase.Gain__c}" /></td>
+															<td width="5%" style="text-align: right"><apex:outputField value="{!purchase.ABS_RET__c}" /></td>
+															<td width="3%" style="text-align: right"><apex:outputField value="{!purchase.Days__c}" /></td>
+															<td width="4%" style="text-align: right"><apex:outputField value="{!purchase.CAGR__c}" /></td>
+														</tr>
+													</apex:repeat>
+												</table>
+											</td>
+										</tr>
+									</apex:repeat>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</apex:outputPanel>
+				<!--  -->
+				<apex:outputPanel rendered="{!(AllChildSummaryRecords.size != 0)}">
+					<table width="100%" class="mainTable" cellspacing="5px;">
+						<apex:repeat value="{!AllChildSummaryRecords}" var="OuterWrapper">
+							<tr class="accountName">
+								<td colspan="13" style="text-align:left;">  
+								<apex:outputText value="{!OuterWrapper.childEntity.Name}"/><br/></td>
+							</tr>
+							<apex:repeat value="{!OuterWrapper.summaryReportWrapperList}" var="innerWrapper">
+								<tr><td colspan="13" style="text-align:left;"><apex:outputText style="font-weight:bold;text-align:left;" value="{!innerWrapper.asset_Class}"/></td></tr>
+								<tr><td></td></tr>
+								<apex:repeat value="{!innerWrapper.transactionList}" var="rec">
+									<tr>
+<!-- 										<td width="4%" style="text-align: left"><apex:outputField value="{!rec.Portfolio_Type__c}" /></td> -->
+<!-- 										<td width="8%" style="text-align: left"><apex:outputField value="{!rec.Owner__c}" /></td> -->
+										<td width="9%" style="text-align: left"><apex:outputField value="{!rec.Scheme_Scrip__c}" /></td>
+										<td width="7%" style="text-align: center"><apex:outputField value="{!rec.Folio_Number__c}" /></td>
+<!-- 										<td width="8%" style="text-align: left"><apex:outputField value="{!rec.Asset_Class__c}" /></td> -->
+<!-- 										<td width="5%" style="text-align: left"><apex:outputField value="{!rec.Units_Quantity__c}" /></td> -->
+										<td width="5%" style="text-align: right"><apex:outputField value="{!rec.Purchase_Price__c}" /></td>
+<!-- 										<td width="5%" style="text-align: left"><apex:outputField value="{!rec.Current_Price__c}" /></td> -->
+										<td width="5%" style="text-align: right"><apex:outputField value="{!rec.current_Value__c}" /></td>
+<!-- 										<td width="3%" style="text-align: left"><apex:outputField value="{!rec.Transaction_Type__c}" /></td> -->
+<!-- 										<td width="2%" style="text-align: left"><apex:outputField value="{!rec.DR__c}" /></td> -->
+										<td width="8%" style="text-align: right"><apex:outputField value="{!rec.Purchase_Amount__c}" /></td>
+										<td width="6%" style="text-align: right"><apex:outputField value="{!rec.Purchase_Date__c}" /></td>
+										<td width="6%" style="text-align: right"><apex:outputField value="{!rec.Current_Date__c}" /></td>
+<!-- 										<td width="4%" style="text-align: left"><apex:outputField value="{!rec.DIV_RS__c}" /></td> -->
+										<td width="4%" style="text-align: right"><apex:outputField value="{!rec.Gain__c}" /></td>
+										<td width="4%" style="text-align: right"><apex:outputField value="{!rec.ABS_RET__c}" /></td>
+										<td width="3%" style="text-align: right"><apex:outputField value="{!rec.Days__c}" /></td>
+										<td width="4%" style="text-align: right"><apex:outputField value="{!rec.CAGR__c}" /></td>
+									</tr>
+								</apex:repeat>  
+								<tr><td></td></tr>
+							</apex:repeat>
+						</apex:repeat>  
+					</table>
+				</apex:outputPanel>
+				<!--  -->
+				
+				
+				
+			</div>
+		</apex:define>
+	</apex:composition>
+</apex:page>

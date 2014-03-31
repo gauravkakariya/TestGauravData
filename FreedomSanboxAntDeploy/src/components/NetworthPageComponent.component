@@ -1,0 +1,209 @@
+<!-- /*
+    
+Revision History:
+
+   Version     Version Author     Date          Comments
+   1.0         Persistent         NA            Initial Draft
+   
+   2.0         Niket Chandane     05/06/2011    Added the New repeat for the issue F0035. 
+                                                To show the list of liabilities on the NetworthPage
+   2.0          Manasi Ranade     30/04/2012    Issue ID : 00001613 : Added output Filed to preserve new line characters 
+                                                                
+*/-->
+<apex:component controller="NetworthController" >
+<apex:stylesheet value="{!$Resource.FFStyle}"/>
+    <apex:attribute name="showButton" type="Boolean" description="Used to decide navigation button should be visible or not" default="true" />
+           <apex:messages />
+           <apex:pageBlock >
+           <apex:outputPanel rendered="{!showButton}">
+            <div style="margin:bottom:20px; width:50%;margin-left:60px;">
+                 <apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;  background-image:none;background-color:#A9C5EB !important; font-size:11px !important;padding-top:4px; padding-bottom:4px;" />
+                 <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+                 <apex:outputLabel value="Net Worth" styleclass="button" style=" width:10%;margin-left:20px;  background-image:none;background-color:#A9C5EB !important;font-size:11px !important; padding-top:4px; padding-bottom:4px;" />
+            </div><br/>
+            </apex:outputPanel>
+            <div class="divContainerStyle"> 
+                <div class="divStyle">
+                    <apex:outputText value="FINANCIAL STATEMENTS" styleClass="textStyle"/>
+                </div><br/>
+                <div  class="subHeader">
+                    <apex:outputText value="CURRENT NETWORTH" styleClass="textStyle"/>
+                </div><br/>
+                    <apex:outputText value="{!$Label.Networth_text}" styleClass="textStyle" escape="false"/>
+                <br/> <br/>     
+                <center>
+                    <apex:image url="{!chartData}"></apex:image>
+                </center>
+                <br/>
+                
+                <table id="DataTable" border="1" cellspacing="0" cellpadding="5" align="center" width="90%" style="margin-top:20px;margin-left:auto;margin-right:auto;"  >
+                    <tr class="tableHeader">
+                        <th>
+                        </th>
+                        <th style="text-align:center;">
+                            <apex:outputText value="Amount" styleClass="textStyle"/>
+                        </th>
+                        <th style="text-align:center;">
+                            <apex:outputText value="%" styleClass="textStyle"/>
+                        </th>
+                        <th>
+                        </th>
+                        <th style="text-align:center;">
+                            <apex:outputText value="Amount" styleClass="textStyle"/>
+                        </th>
+                        <th style="text-align:center;">
+                            <apex:outputText value="%" styleClass="textStyle"/>
+                        </th>
+                    </tr>
+                    
+                    <tr class="tableData">
+                        <td class="textStyle" style="text-align:left;font-weight:bold;">
+                            <apex:outputText value="Assets" styleClass="textStyle"/>
+                        </td>
+                        <td class="tableData"></td>
+                        <td class="tableData"></td>
+                        <td class="textStyle" style="text-align:left; font-weight:bold;">
+                            <apex:outputText value="Networth" styleClass="textStyle"/>
+                        </td>
+                        <td class="rightAlignData" style="font-weight:bold;">
+                            <apex:outputText value="{0, number, ,##,##0}" styleClass="rightAlignData">
+                                <apex:param value="{!getTotalNetworth}"/>
+                            </apex:outputText>
+                        </td>
+                        <td class="rightAlignData" style="font-weight:bold;">
+                            <apex:outputText value="100.00%" styleClass="rightAlignData"/>
+                        </td>
+                    </tr>
+                    
+                     <!-- Change to See the Loop On Page  -->
+                    <apex:repeat value="{!getNetworthSummaryList}" var="assets"  >
+                       <tr class="tableData">
+                           <td class="textStyle">
+                               <apex:outputText value="{!assets.name}" styleClass="textStyle"/>
+                           </td>
+                           <td class="rightAlignData">
+                               <apex:outputText value="{0, number, ,##,##0}" styleClass="rightAlignData">
+                                   <apex:param value="{!assets.summaryValue}"/>
+                               </apex:outputText>
+                           </td>
+                           <td class="rightAlignData">                        
+                               <apex:outputText value="{0, number, ,##,##0.00}%" styleClass="rightAlignData">
+                                   <apex:param value="{!assets.summaryPercent}"/>
+                               </apex:outputText>
+                           </td>
+                           <td class="tableData"></td>
+                           <td class="tableData"></td>
+                           <td class="tableData"></td>
+                       </tr>
+                    </apex:repeat>
+                    
+                     <tr class="tableData">
+                       <td class="tableData"></td>
+                       <td class="tableData"></td>
+                       <td class="tableData"></td>
+                       <td class="textStyle" style="font-weight:bold;">
+                            <apex:outputText value="Liabilities" styleClass="textStyle"/>
+                       </td>
+                       <td class="rightAlignData" style="font-weight:bold;"></td>
+                       <td class="rightAlignData"></td>
+                     </tr>
+                    
+                    <!-- Niket 
+                     * Summary of modification : This change is done for the [issue F0035]
+                     * This repeat show the List of the liablities on the NetworthPage.
+                     * repeat is binded to the getLiabilitiesList which is comes from the NetworthController which is newly added for the Issue.
+                    -->
+                     <apex:repeat value="{!getLiabilitiesList}" var="liablity">
+                        <tr class="tableData">
+                           <td class="tableData"></td>
+                            <td class="tableData"></td>
+                            <td class="tableData"></td>
+                            <td class="textStyle" style="font-weight:bold;">
+                                <apex:outputText value="{!liablity.name}" styleClass="textStyle"/>
+                            </td>
+                            <td class="rightAlignData" style="font-weight:bold;">
+                               <apex:outputText value="{0, number, ,##,##0}" styleClass="rightAlignData"> 
+                                    <apex:param value="{!liablity.summaryValue}"/> 
+                              </apex:outputText>
+                            </td>
+                            <td class="rightAlignData">
+                                <apex:outputText value="{0, number, ,##,##0.00}%" styleClass="rightAlignData">
+                                    <apex:param value="{!liablity.summaryPercent}" />
+                                 </apex:outputText>
+                            </td>
+                        </tr>
+                    </apex:repeat>
+                    
+                    <tr class="tableData">
+                        <td class="textStyle" style="font-weight:bold;">
+                            <apex:outputText value="Total Assets" styleClass="textStyle"/>
+                        </td>
+                        <td class="rightAlignData" style="font-weight:bold;">
+                            <apex:outputText value="{0, number, ,##,##0}" styleClass="rightAlignData">
+                            <apex:param value="{!getTotalAssets}"/>
+                          </apex:outputText>
+                        </td>
+                        <td class="rightAlignData" style="font-weight:bold;">
+                            <apex:outputText value="100.00%" styleClass="rightAlignData"/>
+                        </td>
+                        <td class="textStyle" style="font-weight:bold;">
+                            <apex:outputText value="Total Liabilities" styleClass="textStyle"/>
+                        </td>
+                        <td class="rightAlignData" style="font-weight:bold;">
+                           <apex:outputText value="{0, number, ,##,##0}" styleClass="rightAlignData">
+                               <apex:param value="{!getTotalLiabilities}"/>
+                          </apex:outputText>
+                        </td >
+                        <td class="rightAlignData" style="font-weight:bold;">
+                            <apex:outputText value="100.00%" styleClass="rightAlignData"/>
+                        </td>
+                    </tr>   
+                </table>  
+               </div>
+               <!-- FS0309 -->
+<!--                /* Setty Networth Remarks not Displayed in Generate Plan PDF 22/06/2012 00001681*/ -->
+               <apex:outputPanel rendered="{!(if(Remark=='',false,true))}">
+                    <ul class="TickList">
+                        <li>
+                            {!$Label.Remarks}
+                        </li>
+                    </ul>
+                    <div>
+<!--                     /** Eternus Solutions      **/  -->
+<!--                      /** Author  : Manasi Ranade   **/ -->
+<!--                      /** Issue Id: 00001613        **/ -->
+<!--                      /** Date    : 30/4/2012       **/ -->
+<!--                      /** Purpose : Commented previous Remark -->
+<!--                                    Added output field to preserve new line characters -->
+<!--                      /****************************************************/ -->
+<!--                      {!Remark} -->
+                      <ul>
+                        <apex:OutputField value="{!SelectedRemark.Remark__c}"/>
+                      </ul>
+                    </div>
+                </apex:outputPanel>
+<!--                 /* Setty Networth Remarks not Displayed in Generate Plan PDF 22/06/2012 00001681*/ -->
+            </apex:pageBlock>
+     <script>
+    <!-- This is for styling alternate rows of SummaryTable -->
+        function altRows(id)
+        {
+            if(document.getElementsByTagName) {  
+                var table = document.getElementById(id);  
+                var rows = table.getElementsByTagName("tr"); 
+                for(i = 1; i < rows.length; i++)
+                {  
+                    if(i % 2 == 0)
+                    {
+                        rows[i].className = "DataTableEven";
+                    }
+                    else
+                    {
+                        rows[i].className = "DataTableOdd";
+                    }      
+                }
+            }
+        }
+        window.onload =   altRows('DataTable');
+    </script>
+</apex:component>

@@ -1,0 +1,347 @@
+<apex:page showHeader="false" sidebar="false"
+	title="Ffreedom Financial Planners | News Letters"
+	id="Houseview1_Mar12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+	<table width="740" border="0" align="center" cellpadding="0"
+		cellspacing="0">
+		<tr>
+			<td><img
+				src="{!URLFOR($Resource.Images,'images/top_Mar2012.gif')}"
+				width="740" height="104" />
+			</td>
+		</tr>
+		<tr>
+
+			<td><table width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+						<td valign="top"><table width="98%" border="0" align="center"
+								cellpadding="0" cellspacing="0">
+								<tr>
+									<td valign="top"><table width="100%" border="0"
+											cellspacing="0" cellpadding="0">
+											<tr>
+												<td
+													background="{!URLFOR($Resource.Images,'images/headbg.gif')}"><img
+													src="{!URLFOR($Resource.Images,'images/headR.gif')}"
+													width="9" height="40" align="right" /><img
+													src="{!URLFOR($Resource.Images,'images/houseviewHIn.gif')}"
+													width="132" height="40" />
+												</td>
+											</tr>
+
+											<tr>
+												<td><table width="100%" border="0" cellpadding="0"
+														cellspacing="0">
+														<tr>
+															<td width="9" valign="top"
+																background="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}"><img
+																src="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}"
+																width="9" height="185" />
+															</td>
+															<td width="8" valign="top"><img
+																src="{!URLFOR($Resource.Images,'images/space.gif')}"
+																width="8" height="1" />
+															</td>
+															<td valign="top"><table width="98%" border="0"
+																	cellpadding="0" cellspacing="0">
+																	<tr>
+																		<td height="25" valign="top"><font
+																			face="Arial, Helvetica, sans-serif" color="#683400"
+																			style="font-size: 14px;"><strong><em>Everything
+																						you wanted to know about Asset allocation <strong
+																						id="internal-source-marker_0.8040740366559476">(and
+																							didn’t know whom to ask)</strong> </em>
+																			</strong>
+																		</font>
+																		</td>
+
+																	</tr>
+
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;"><p
+																				dir="ltr">
+																				All of us, at some point in life, have been advised
+																				to never put all our eggs in one basket. Have a
+																				back-up in case your original idea does not work
+																				out. Over the years, I have come across many people
+																				who follow this advice to ‘T’ and many who believe
+																				they do not need options as their plan is fool
+																				proof. <br /> <br /> And while it should come as
+																				common sense that one needs to follow the same
+																				approach to investing too, people often get carried
+																				away with emotions while investing. When one asset
+																				class starts yielding good returns, we want to
+																				transfer all our wealth there without thoroughly
+																				analyzing the possibility of a downside.<br /> <br />
+																				This is where asset allocation is vital to ensuring
+																				that your portfolio remains balanced. Asset
+																				allocation simply means distributing your wealth and
+																				resources across various instruments such as mutual
+																				funds, equity, debt, life insurance, fixed deposits,
+																				real estate, gold, etc. Each instrument that you
+																				invest in, is a part of the entire portfolio. The
+																				idea of diversifying your resources into various
+																				asset classes is to maximize your returns and
+																				minimize the risk involved.<br /> <br /> The steps
+																				below can guide you on how to choose the right asset
+																				allocation for your investments -
+																			</p> <strong>Why?</strong><br /> Before you put away a
+																			single pie as investment, make up your mind on why
+																			you are doing it. What is the purpose of this
+																			investment? When the investment matures what will I
+																			do with it? Unless you know what the money is going
+																			to be used for, you will never be able to decide
+																			where to put it. For eg: If you are retired and want
+																			to allocate your corpus to fund your next few years
+																			living expenses, you would probably choose a less
+																			risky asset class, whereas if you want to invest part
+																			of your estate for your grandchildren and their
+																			future then your choice of asset classes may be
+																			different. <br /> <br /> <strong>How long?</strong><br />
+																			Next step would be - how long do you have for the
+																			goal to fall due? For eg: If you are investing to
+																			fund your child’s hefty school fee falling due every
+																			April you have less than a year. And if you are
+																			investing for the same child’s post graduation you
+																			have over 15 years. Risk and return are both
+																			functions of time spent invested – in debt
+																			investments, risk increases as tenure increases and
+																			in equity investments, risk reduces as tenure
+																			increases. So, what assets your portfolio will
+																			consist of is clearly a reflection of time available
+																			till you will have to use the money.<br /> <br /> <strong>How
+																				much?</strong><br /> How much returns is necessary to reach
+																			the goal is the next question to be answered. Say you
+																			have Rs. 1 lac stashed away to fund your child’s
+																			education and are willing to invest Rs. 5000/- every
+																			month for the next 15 years and you require Rs. 25
+																			lacs at that time for the goal – your portfolio
+																			should generate close to 10%. If your portfolio
+																			should generate 10% compounded annually, and you have
+																			a choice between two asset classes A that will
+																			generate 8% and B that will generate 12% you should
+																			can choose 40% of A and 60% of B. <br /> <br /> But
+																			if you need Rs. 30 lacs at the end of 15 years you
+																			will need a return of at least 11.5% and you will
+																			have to choose 15% of A and 85% of B. <br /> <br />
+																			<strong>Choosing non-correlated assets</strong><br />
+
+																			When a group discussion happens, decisions can be
+																			made only when contrary views are expressed and
+																			debated. Similarly a portfolio serves its purpose
+																			only when assets in there move contrary to each
+																			other. Traditionally debt markets have performed well
+																			when equities have not. Gold has held up when equity
+																			markets turn bearish. When interest rates go up which
+																			may be good for investments in FDs, real estate
+																			markets take a hit. So if the portfolio has assets
+																			that move in opposite directions, even though not
+																			perfectly, risk comes down and overall returns hold
+																			up. <br /> <br /> <strong>Rebalance</strong><br />
+																			Getting the asset allocation right at the beginning
+																			is probably easier than maintaining the asset
+																			allocation for a longer period. As markets move and
+																			when you choose assets that move unrelated to each
+																			other, rebalancing is the next big challenge. Say you
+																			chose 40% of A and 60% of B, at the end of the year
+																			you might find your investment market values
+																			translating to 48% - A and 52% - B. You will have to
+																			sell off A and buy B to return to equilibrium. You
+																			will inadvertently sell high and buy low. You can’t
+																			do this too often, neither can you do it once a
+																			while. That’s a tough but essential one.<br /> <br />
+																			Quoting Nick Murray, “With asset allocation you can’t
+																			make a killing, but neither will you get killed.
+																			That’s a pact you make with God.”</td>
+																	</tr>
+
+
+
+
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">&nbsp;</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+														<tr>
+															<td valign="top"><img
+																src="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}"
+																width="9" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.Images,'images/space.gif')}"
+																width="1" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.Images,'images/space.gif')}"
+																width="1" height="1" />
+															</td>
+
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table></td>
+								</tr>
+								<tr>
+									<td valign="top">&nbsp;</td>
+								</tr>
+
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td><table width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+
+						<td valign="top"><table width="98%" border="0" align="center"
+								cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="76%" height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#035728"
+										style="font-size: 13px;"><strong>Ffreedom
+												Financial Planners</strong>
+									</font>
+									</td>
+									<td width="24%" rowspan="3"><table border="0"
+											align="center" cellpadding="0" cellspacing="0">
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong>
+															Follow us on&nbsp;&nbsp;&nbsp;</strong>
+												</font>
+												</td>
+												<td><a href="http://www.facebook.com/Ffreedom"
+													target="_blank"><img
+														src="{!URLFOR($Resource.Images,'images/fb.png')}"
+														width="20" height="20" border="0" />
+												</a><a href="http://twitter.com/_Ffreedom" target="_blank"><img
+														src="{!URLFOR($Resource.Images,'images/tw.png')}"
+														width="20" height="20" hspace="6" border="0" />
+												</a><a
+													href="http://www.linkedin.com/companies/ffreedom-financial-planners"
+													target="_blank"><img
+														src="{!URLFOR($Resource.Images,'images/LinkedIn.png')}"
+														width="20" height="20" border="0" />
+												</a>
+												</td>
+
+											</tr>
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong>Watch
+															us on</strong>
+												</font>
+												</td>
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong><a
+															href="http://www.youtube.com/user/ffreedomtube"
+															target="_blank"><img src="{!URLFOR($Resource.Images,'images/youtube.png')}"
+																width="20" height="20" vspace="6" border="0" />
+														</a>
+													</strong>
+												</font>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">506 / 507, Morya Landmark II,
+											Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font>
+									</td>
+								</tr>
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">Boardline: +91 22 4222 4333
+											&nbsp;|&nbsp; Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a
+											href="mailto:contact@ffreedom.in">contact@ffreedom.in</a>
+											&nbsp;|&nbsp; <a href="http://www.ffreedom.in"
+											target="_blank">www.ffreedom.in</a>
+									</font>
+									</td>
+
+								</tr>
+								<tr>
+									<td colspan="2" valign="top"><div align="justify">
+											<font face="Arial, Helvetica, sans-serif" color="#333333"
+												style="font-size: 11px;">Disclaimer: This
+												communication from Ffreedom provides general information
+												existing at the time of preparation. This mailer is intended
+												as a news update and Ffreedom Financial Planners neither
+												assumes nor accepts any responsibility for any loss arising
+												to any person acting or refraining from acting as a result
+												of any material contained in this communication. It is
+												recommended that professional advice be taken based on the
+												specific facts and circumstances. This communication does
+												not substitute the need to refer to the original
+												pronouncements.</font>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+
+		</tr>
+		<tr>
+			<td><img src="{!URLFOR($Resource.Images,'images/footer.gif')}" width="740" height="15" />
+			</td>
+		</tr>
+	</table>
+</body>
+
+	</html>
+</apex:page>

@@ -1,0 +1,356 @@
+<apex:page controller="FinancialWellnessController"  action="{!Init}" sidebar="false"
+	showheader="false" id="pageId">
+	
+	<link rel="shortcut icon"
+		href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	
+
+
+	<!--    <apex:stylesheet value="{!$Resource.FFStyle}"/> -->
+	<apex:stylesheet value="{!$Resource.Wellness}" />
+	
+	 <script type="text/javascript">
+		function showProgress(Percentage) {
+			$("#progressbar").progressbar({
+				value : parseInt(Percentage)
+			});
+			var txtPercentage = Percentage + '%';
+			$("#progresstext").html(txtpercentage);
+		}
+		
+		
+// 		var j$ = jquery.noconflict();
+ 
+//         j$(document).ready(function(){
+        
+//         	alert("****hi");
+        	
+// 			j$(".radioclass").click(function (){
+			
+// 				document.getelementbyid("{!$component.block.criteria.thegrid}").innerhtml,
+				
+// 				var answer = j$(this).closest("valueclass").children('input[type="hidden"]');
+// 				//alert("****answer"+answer);
+// 				j$(answer).val(j$(this).val());
+// 				//alert("****answer"+j$(answer).val());
+// 				alert("****answer"+j$(answer).length);
+// 			});
+			
+// 	});
+
+		
+				
+			
+			
+		
+		
+	</script>
+
+	<style type="text/css">
+.ui-progressbar {
+	height: 1em;
+	text-align: center;
+}
+
+.ui-widget-header {
+	background-image: url('{!URLFOR($Resource.FWell,' download.jpg ')}');
+}
+
+.TextFieldStyle {
+	width: 190px;
+}
+
+.ageTextFieldStyle {
+	width: 50px;
+}
+
+.TextStyle {
+	font-weight: bold;
+	font-family: Verdana, sans-serif;
+	font-size: 13px;
+}
+
+.TextStyleNote {
+	color: #5842f4;
+	font-size: 11px;
+	font-family: Verdana, sans-serif;
+	font-style: Italic;
+}
+
+.TextExplain {
+	font-weight: bold;
+	color: #4285F4;
+}
+
+input.groovybutton {
+	font-family: Verdana, sans-serif;
+	border-top-style: outset;
+	border-bottom-style: outset;
+	border-left-style: outset;
+	border-right-style: outset;
+}
+/*input.nextButton{
+    background-image:url('/resource/1327056519000/FWell/next1.png');
+    }*/
+</style>
+
+	<apex:form id="outerForm">
+		<div class="topcontainer" align="left" style="height: 100px;">
+			<div class="logo" style="float: left; position: absolute;">
+				<img src="{!URLFOR($Resource.images,'images/logobg.PNG')}"
+					usemap="#Map5" alt="Ffreedom Financial Planners"
+					title="Ffreedom Financial Planners" />
+				<map name="Map5" id="Map5">
+					<area shape="rect" coords="3,4,200,78" href="index" />
+				</map>
+			</div>
+
+			<div style="float: right; position: relative;">
+				<img
+					src="{!URLFOR($Resource.WellnessImage,'wellnessImage/FinancialWellness.jpeg')}"
+					style="margin-right: 90px;" />
+			</div>
+		</div>
+
+			<apex:pageBlock id="pbMain">	
+				<table border="2" cellpadding="0" cellspacing="0">
+                 
+					<apex:repeat var="qa" value="{!lstOfQuestionAnswer}" id="idRepeat">
+
+							<tr>
+								<apex:outputText value="{!qa.objQuestionnaire.Display_Sequence__c}.  " />
+								<apex:outputText value="{!qa.objQuestionnaire.Question_Bank_List__r.Question__c}" />
+							</tr>
+							
+							<tr>
+								<apex:outputPanel >
+								   <table border="1">
+									 <tr>
+									 	<div styleClass="valueClass" >
+											<apex:inputHidden value="{!qa.selectedAnswer}" id="dSelectedid"/>
+										</div>
+										 <apex:repeat var="Option1" value="{!qa.strAnswer}" id="idRepeat" rendered="{!NOT(qa.isMultiChoice)}">
+										 	 
+											 <td>
+											     <input type = "radio" class="radioClass" name="{!qa.objQuestionnaire.Display_Sequence__c}" value="{!Option1.value}"  id="idRadio" onchange="doSomething('{!Option1.value}');">{!Option1.label}</input>
+											
+											 
+											 <script type="text/javascript">
+											 
+											  function doSomething(value) {
+											  
+												  var hiddenSec = document.getElementById('idRadio');
+												  alert('value'+hiddenSec.value);
+												  '{!qa.selectedAnswer}'.value = hiddenSec.value;
+											  }
+											  
+											  
+										    </script>
+										   </td>   
+										</apex:repeat>
+								 	  </tr>
+									</table>
+								</apex:outputPanel>	
+	                       </tr>	
+									
+									 
+	<!-- 								     <apex:selectRadio value="{!qa.selectedAnswer}" rendered="{!NOT(qa.isMultiChoice)}" id="idCheckRadio"> -->
+	<!-- 								          <apex:selectOption itemValue="" itemLabel=""/> -->
+	<!-- 								          <apex:repeat var="Option1" value="{!qa.strAnswer}" id="idRepeat2">  -->
+	<!-- 								           <td width="100"> -->
+	<!-- 										     <apex:selectOption itemValue="{!Option1.value}" itemLabel="{!Option1.label}"/> -->
+	<!-- 										   </td> -->
+	<!-- 								         </apex:repeat> -->
+	<!-- 								     </apex:selectRadio> 
+												styleClass="valueClass" 
+	-->
+	
+							<br />
+	
+						 	<div style="height: 20px;"> 
+								<apex:actionStatus id="counterStatusData">
+									<apex:facet name="start">
+										<img src="{!URLFOR('/img/loading.gif')}" />
+										<span style="font-weight: bold"> Processing....</span>
+									</apex:facet>
+								</apex:actionStatus>
+							</div>
+	
+	
+							<span style="color: red;"> <apex:PageMessages id="pgMsg" />
+							</span>
+						
+						<apex:commandButton value="Submit" action="{!showPopUp}"
+								reRender="pgMsg,PopupPanel" status="counterStatusData"
+								style="margin-left: 20px;"
+								rendered="{!IF(lstOfQuestionAnswer.size - 1 == qa.qno, true, false)}"
+								styleclass="groovybutton" />
+ 
+					</apex:repeat>
+					
+					<div id="theHiddenInput" style="display: none;">{!quesSequence}</div>
+				</table>
+			</apex:pageBlock>
+			
+
+		
+
+<!--**** Pop up panel of Lead ****-->
+		<apex:outputPanel id="PopupPanel">
+			<apex:outputPanel styleClass="popupBackground" layout="block"
+				rendered="{!displayPopUp}" />
+			<apex:outputPanel styleClass="investmentAssetpopupForeground"
+				layout="block" rendered="{!displayPopUp}" id="innerPanel"
+				Style="width:60%;height:80%;overflow:hidden;margin-left: 250px;margin-top:40px;">
+				<apex:actionStatus id="counter">
+					<apex:facet name="start">
+						<img src="{!URLFOR('/img/loading.gif')}" />
+						<span style="font-weight: bold"> Processing....</span>
+					</apex:facet>
+				</apex:actionStatus>
+				<div align="center">
+
+					<apex:pageBlock title="Please let us know you a bit more…">
+
+						<br />
+
+						<table>
+							<tr>
+								<td><span style="font-weight: bold;"><apex:outputLabel value="{!$Label.Wellness_First_Name}" /></span><span
+									style="color: red;">*</span></td>
+								<td><apex:inputField value="{!objLead.FirstName}"
+										required="true" styleClass="TextFieldStyle"
+										rendered="{!!strEntityCheck}" /> <apex:outputLabel value="{!objAccount.FirstName }" styleClass="TextFieldStyle"
+										rendered="{!strEntityCheck}" /></td>
+							</tr>
+
+							<tr>
+								<td><span style="font-weight: bold;">&nbsp;&nbsp;&nbsp;<apex:outputLabel value="{!$Label.Wellness_Last_Name}" />
+								</span><span style="color: red;">*</span></td>
+								<td><apex:inputField value="{!objLead.LastName}"
+										styleClass="TextFieldStyle" rendered="{!!strEntityCheck}" />
+									<apex:outputLabel value="{!objAccount.LastName}"
+										styleClass="TextFieldStyle" rendered="{!strEntityCheck}" /></td>
+
+							</tr>
+
+							<tr>
+								<td><span style="font-weight: bold;"><apex:outputLabel value="{!$Label.Wellness_Age}" /> </span><span style="color: red;">*</span></td>
+								<td><apex:inputField value="{!objLead.Age__c}"
+										required="true" styleClass="ageTextFieldStyle"
+										rendered="{!!strEntityCheck}" /> <apex:outputLabel value="{!objAccount.Age__c }" styleClass="ageTextFieldStyle"
+										rendered="{!strEntityCheck}" /></td>
+							</tr>
+
+							<tr>
+								<td><span style="font-weight: bold;"><apex:outputLabel value="{!$Label.Wellness_Income_Source}" /></span></td>
+								<td><apex:selectRadio value="{!objLead.Income_Source__c}"
+										id="incomeSourceValue" onclick="displayTextBox(this);"
+										rendered="{!!strEntityCheck}">
+										<apex:selectoptions value="{!incomeTypes}"></apex:selectoptions>
+									</apex:selectRadio> <apex:outputpanel id="pIncomeSource" style="display:none">
+										<apex:inputField id="fOccupation"
+											value="{!objLead.Occupation__c}" styleClass="TextFieldStyle" />
+										<br />
+										<br />
+									</apex:outputpanel> <script>
+										function displayTextBox(
+												incomeSourceValue) {
+											var pickVal = incomeSourceValue.value;
+											if (pickVal == 'Others') {
+												document
+														.getElementById('{!$Component.fOccupation}').disabled = false;
+												document
+														.getElementById('{!$Component.pIncomeSource}').style.display = '';
+												document
+														.getElementById('{!$Component.fOccupation}').value = '';
+											} else if (pickVal == 'Salaried') {
+												document
+														.getElementById('{!$Component.fOccupation}').disabled = true;
+												document
+														.getElementById('{!$Component.pIncomeSource}').style.display = '';
+												document
+														.getElementById('{!$Component.fOccupation}').value = 'Salaried';
+
+											} else if (pickVal == 'Business / Profession') {
+												document
+														.getElementById('{!$Component.fOccupation}').disabled = true;
+												document
+														.getElementById('{!$Component.pIncomeSource}').style.display = '';
+												document
+														.getElementById('{!$Component.fOccupation}').value = ' Business / Profession';
+
+											} else {
+												//alert('jjj');
+												document
+														.getElementById('{!$Component.pIncomeSource}').style.display = 'none';
+											}
+										}
+									</script></td>
+
+							</tr>
+
+							<tr>
+								<td><span style="font-weight: bold;"><apex:outputLabel value="{!$Label.Wellness_Email}" /></span><span style="color: red;">*</span></td>
+								<td><apex:inputField value="{!objLead.Email}"
+										required="true" id="Email" styleClass="TextFieldStyle"
+										rendered="{!!strEntityCheck}" /> <apex:outputLabel value="{!objAccount.PersonEmail}" styleClass="TextFieldStyle"
+										rendered="{!strEntityCheck}" /></td>
+							</tr>
+
+							<tr>
+								<td><span style="font-weight: bold;"><apex:outputLabel value="{!$Label.Wellness_Phone_Number}" /> </span></td>
+								<td><apex:outputLabel value="{!objAccount.Phone}"
+										styleClass="TextFieldStyle" rendered="{!strEntityCheck}" /> <apex:inputField value="{!objLead.MobilePhone}" required="true" id="Mobile"
+										styleClass="TextFieldStyle" rendered="{!!strEntityCheck}" />
+								</td>
+							</tr>
+						</table>
+						<br />
+						<div Class="TextStyleNote">
+							<apex:outputText >
+								<div style="color: green;">Our financial planners will
+									call you to offer you a complimentary financial health check
+									meeting. Meet them if they talk nicely to you.</div>
+								<div style="color: black;">WE DON’T SELL OUR DATABASE AND
+									HATE SPAMMING MAILBOXES. PROMISE, NO SPAM!</div>
+								<div style="color: red;">Try us - Get a one goal plan for
+									just Rs.499/-!</div>
+								<div style="color: blue;">If you want to meet our
+									financial planner for a no obligation, complimentary meeting
+									and check out how you can earn your financial freedom – leave
+									your phone number here Or call us on 022-42224333 /
+									022-42224332</div>
+							</apex:outputText>
+
+						</div>
+						<br />
+
+
+						<!--                                   oncomplete="methodSendMail();" -->
+						<apex:pageblockButtons location="bottom">
+							<apex:commandButton value="Submit"
+								action="{!saveDetailsOfCustomer}"
+								reRender="pgMsg,innerpgMsg,PopupPanel" status="counter"
+								style="margin-left: 20px;" styleclass="groovybutton">
+							</apex:commandButton>
+
+							<apex:commandButton value="Cancel" immediate="true"
+								action="{!closePopup}" status="counter"
+								style="margin-left: 20px;" styleclass="groovybutton" />
+							<!-- styleclass="button" -->
+						</apex:pageblockButtons>
+						<!--                                     <apex:actionFunction action="{!sendMail}" name="methodSendMail"/> -->
+
+
+					</apex:pageBlock>
+
+
+				</div>
+			</apex:outputPanel>
+		</apex:outputPanel>
+	</apex:form>
+</apex:page>

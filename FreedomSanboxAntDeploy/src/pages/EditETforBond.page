@@ -1,0 +1,295 @@
+<apex:page controller="EditETforBondController" showHeader="false" sidebar="false" tabStyle="Execution_Tracker__c">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>  
+	<link rel="stylesheet" href="{!URLFOR($Resource.AutoComplete, 'jqueyCss/jquery-ui.css')}" />
+	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-1.9.1.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-ui.js')}"></script>
+	<script language="javascript" type="text/javascript">
+       $(document).ready(function () {
+          //alert("hi");
+       });
+       
+       function checkAgreedAmountFilled()
+	    {
+	    	if($(".agreedAmount").val() == null || $(".agreedAmount").val() == 0.0){
+	    		alert('{!$Label.Agreed_Amount}');
+	    		$(".AssigntoOps").prop('checked', false);
+	    		return false;
+	    	}
+	    } 
+       
+     </script> 
+	
+	 <script>
+		function populateParent(value)
+	    {
+	       var isError = value;
+	       
+	        if('{!$CurrentPage.parameters.type}' == 'other')
+	    	{
+	    		if (isError == 'false')
+	               return false; 
+	    		window.close();
+	    	}
+	    	else
+	    	{ 
+	    	   if (isError == 'false')
+	               return false; 
+               window.close();
+	    	   //return top.window.opener.closeETWindow();
+	    	}
+	        return false;
+	        
+	    }
+	     function calljs()
+	    {
+	    	callAf();
+	    }
+	    
+	 </script>
+	 <style>
+		.inputProductName{
+            	padding: 0px;
+         }
+          .inputBond{
+            	padding: 0px;
+         }
+         
+     </style>
+				
+	<apex:form id="frm">
+		<apex:pageBlock title="Execution Tracker" rendered="{!!isReadOnly}" id="pb">
+		 	<apex:pageMessages id="Pagemsg"/>	
+			<apex:pageBlockButtons > 
+            	<apex:commandButton value="Save" rendered="{!!isClosed}" action="{!updateExecutionTracker}" rerender="Pagemsg"  oncomplete="return populateParent('{!isError}');" status="statusId"/>
+               	<input type="button" class="btn" value="Cancel"  onClick="return window.close();" />
+            </apex:pageBlockButtons>
+             <apex:actionStatus stopText="" id="statusId">
+                	<apex:facet name="start">
+               			<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                    		<img src="/img/loading.gif" width="16" height="16"/>
+						</apex:outputPanel>
+                	</apex:facet>
+        	</apex:actionStatus>  
+            <!-- Pop Up for MET Team -->
+          	<apex:outputPanel rendered="{!isBond}">
+          	<apex:sectionHeader title="Edit Execution Tracker for MET Team"/>
+          	 	<apex:pageBlockSection title="Bond Details" columns="2" id="pbs1">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insured__c}" label="Applicant "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Goal_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Company_Name__r.Name}" label="Company Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" label="Category"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Bond_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" label="Bond Amount"/>
+			    </apex:pageBlockSection> 
+			    <apex:pageBlockSection title="Bond Execution Tracker Details" columns="2" id="pbs2">
+<!-- 					<apex:inputField value="{!objExecutionTracker.Insured_Name__c}"/> -->
+					<apex:pageBlockSectionItem >
+					 	<apex:outputLabel value="Applicant"/> 
+						<apex:selectList value="{!objExecutionTracker.Insured_Name__c}" size="1"  >
+                             <apex:selectOptions value="{!Entities}"></apex:selectOptions>
+                   		</apex:selectList>
+					 </apex:pageBlockSectionItem>
+					<apex:inputField value="{!objExecutionTracker.Company_Name__c}" required="true" onchange="calljs();">
+						<apex:actionFunction name="callAf" action="{!getProductName}" status="statusId_1">
+                                    <apex:param name="strPolicyType" value="{!objExecutionTracker.Company_Name__c}"/>	
+						</apex:actionFunction>	
+						<apex:actionStatus stopText="" id="statusId_1">
+				                	<apex:facet name="start">
+				               			<apex:outputPanel style="padding-right:1%;padding-top:2px;">
+				                    		<img src="/img/loading.gif" width="16" height="16"/>
+										</apex:outputPanel>
+				                	</apex:facet>
+	        			</apex:actionStatus>  	
+					</apex:inputField>
+<!-- 					<apex:pageBlockSectionItem > -->
+<!-- 					 	<apex:outputLabel value="Goal Type"/>  -->
+<!-- 						<apex:selectList value="{!objExecutionTracker.Goal_Type__c}"  required="true" size="1"  > -->
+<!--                              <apex:selectOptions value="{!goalType}"></apex:selectOptions> -->
+<!--                    		</apex:selectList> -->
+<!-- 					</apex:pageBlockSectionItem>	 -->
+					<apex:pageBlockSectionItem >
+					 	<apex:outputLabel value="Bond Type"/> 
+						<apex:selectList value="{!objExecutionTracker.Bond_Type__c}" size="1"  >
+                             <apex:selectOptions value="{!bondType}"></apex:selectOptions>
+                   		</apex:selectList>
+					 </apex:pageBlockSectionItem>
+					<apex:inputField value="{!objExecutionTracker.Executed_Product_Name__c}" id="productNameId" label="Category " required="true" styleclass="inputBond">
+					
+					</apex:inputField>
+					<apex:inputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Amount Applied" required="true" id="agreedAmount" styleclass="agreedAmount"/>
+					<apex:inputField value="{!objExecutionTracker.Interest_Rate__c}" label="Interest Rate"/> 
+					<apex:inputField value="{!objExecutionTracker.No_of_Bonds_Applied__c}"/> 
+					<apex:inputField onClick="checkAgreedAmountFilled();" value="{!objExecutionTracker.AssignToOps__c}" label="Assign to Ops" rendered="{!IF(objExecutionTracker.AssignToOps__c == false, true,false)}" id="AssigntoOps" StyleClass="AssigntoOps"/>
+                    <apex:outputField value="{!objExecutionTracker.AssignToOps__c}" label="Assign to Ops" rendered="{!IF(objExecutionTracker.AssignToOps__c == true, true,false)}"/>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Assign Task"/>
+						<apex:commandLink action="{!assignTask}" value="Click here" id="theCommandLink"/>
+					</apex:pageBlockSectionItem>
+					<apex:inputField value="{!objExecutionTracker.Remarks__c}" label="MET Remark"/>
+					<script>
+						$(document).ready(function()
+				        {
+				        	var availableProductName =[{!strProductName}];
+				            $(".inputBond").autocomplete({
+				        		source: availableProductName,
+							  	select: function(event, ui) 
+							  	{
+								  	var strVal = ui.item.value;	  
+							  	} 
+							});		
+				        
+				        });
+			      	</script>
+                </apex:pageBlockSection>  
+          	 </apex:outputPanel>
+          	 <!-- End of Pop Up for MET Team -->
+          	
+			 <!-- Pop Up for Operations Team -->
+          	 <apex:outputPanel rendered="{!isBondForOps}">
+          	 <apex:sectionHeader title="Edit Execution Tracker for Operations Team"/>
+          	 	<apex:pageBlockSection title="Bond Details" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insured__c}" label="Applicant "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Goal_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Company_Name__r.Name}" label="Company Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" label="Category"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Bond_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" label="Bond Amount"/>
+			    </apex:pageBlockSection>
+			    <apex:pageBlockSection title="Bond Execution Tracker Details" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Insured_Name__c}" label="Applicant"/>
+<!-- 				<apex:outputField value="{!objExecutionTracker.Goal_Type__c}" label="Goal Type"/> -->
+					<apex:outputText value="{!objExecutionTracker.Company_Name__r.Name}" label="Company Name"/>
+					<apex:outputField value="{!objExecutionTracker.Executed_Product_Name__c}" label="Category"/>
+					<apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Amount Applied"/>
+					<apex:outputField value="{!objExecutionTracker.Bond_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Interest_Rate__c}" label="Interest Rate"/> 
+					<apex:outputField value="{!objExecutionTracker.No_of_Bonds_Applied__c}"/> 
+					<apex:inputField value="{!objExecutionTracker.Application_No__c}"/>
+					<apex:pageBlockSectionItem >
+					 	<apex:outputLabel value="Status"/> 
+						<apex:selectList value="{!objExecutionTracker.Add_on_Status__c}" size="1"  >
+                             <apex:selectOptions value="{!addOnStatus}"></apex:selectOptions>
+	                        <apex:actionSupport event="onchange" rerender="bookRevnueId"  status="statusIdforBooked"/>
+								<apex:actionStatus stopText="" id="statusIdforBooked">
+				                	<apex:facet name="start">
+				               			<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+				                    		<img src="/img/loading.gif" width="16" height="16"/>
+										</apex:outputPanel>
+				                	</apex:facet>
+				        		</apex:actionStatus>  
+				       </apex:selectList> 	
+				    </apex:pageBlockSectionItem>   	
+					<apex:outputPanel id="bookRevnueId" >
+						<apex:outputLabel value="Booked Revenue" styleClass="labelCol vfLabelColTextWrap" style="padding-left: 130px;"/>
+						<apex:inputField value="{!objExecutionTracker.Booked_Revenue__c}"   label="Booked Revenue" rendered="{!objExecutionTracker.Add_on_Status__c =='Completed'}" 
+										 style="BORDER-LEFT: #c11b17 3px solid;  margin-left: 7px;" />
+					 
+						<apex:inputField value="{!objExecutionTracker.Booked_Revenue__c}"   label="Booked Revenue" rendered="{!objExecutionTracker.Add_on_Status__c !='Completed'}"  style="margin-left: 7px;"/>
+					</apex:outputPanel>
+<!-- 					<apex:inputField value="{!objExecutionTracker.Add_on_Status__c}" label="Status"/> -->
+					<apex:outputField value="{!objExecutionTracker.Remarks__c}" label="MET Remark"/>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Assign Task"/>
+						<apex:commandLink action="{!assignTask}" value="Click here" id="theCommandLink"/> 
+					</apex:pageBlockSectionItem>
+					<apex:inputField value="{!objExecutionTracker.Remark_OpsTeam__c}" label="OPS Remark "/>
+                </apex:pageBlockSection> 
+          	 </apex:outputPanel>
+          	<!--End of Pop Up for Operations Team -->
+		</apex:pageBlock>
+		 
+		 
+		<!--Read only page for MET member and Operation Team member when Application Status = 'Processed'-->
+		<apex:pageBlock title="Execution Tracker" rendered="{!isReadOnly}">
+		<apex:pageMessages id="Pagemsg1"/>
+			<apex:pageBlockButtons >
+				<apex:commandButton value="Save" rendered="{!isBondForOps}" action="{!updateExecutionTracker}" rerender="Pagemsg1"  oncomplete="return populateParent('{!isError}');" status="statusId1"/>
+               	<input type="button" class="btn" value="Cancel"  onClick="return window.close();" />
+            </apex:pageBlockButtons>
+        	<apex:actionStatus stopText="" id="statusId1">
+                	<apex:facet name="start">
+               			<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                    		<img src="/img/loading.gif" width="16" height="16"/>
+						</apex:outputPanel>
+                	</apex:facet>
+        	</apex:actionStatus>  
+          	<apex:outputPanel rendered="{!isBond}">
+          	<apex:sectionHeader title="Edit Execution Tracker for MET Team"/>
+          	 	<apex:pageBlockSection title="Bond Details" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insured__c}" label="Applicant "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Goal_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Company_Name__r.Name}" label="Company Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" label="Category"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Bond_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" label="Bond Amount"/>
+			    </apex:pageBlockSection>
+			    <apex:pageBlockSection title="Bond Execution Tracker Details" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Insured_Name__c}" label="Applicant"/>
+					<apex:outputText value="{!objExecutionTracker.Company_Name__r.Name}" label="Company Name" />
+					<apex:outputField value="{!objExecutionTracker.Executed_Product_Name__c}" label="Category"/>
+					<apex:outputField value="{!objExecutionTracker.Bond_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Amount Applied"/>
+					<apex:outputField value="{!objExecutionTracker.Interest_Rate__c}" label="Interest Rate"/> 
+					<apex:outputField value="{!objExecutionTracker.No_of_Bonds_Applied__c}"/> 
+                    <apex:outputField value="{!objExecutionTracker.AssignToOps__c}" label="Assign to Ops"/>
+                    <apex:pageBlockSectionItem >
+						<apex:outputLabel value="Assign Task"/>
+						<apex:commandLink action="{!assignTask}" value="Click here" id="theCommandLink"/>
+					</apex:pageBlockSectionItem>
+					<apex:outputField value="{!objExecutionTracker.Remarks__c}" label="MET Remark"/>
+                </apex:pageBlockSection> 
+          	 </apex:outputPanel> 
+          	 
+          	 <apex:outputPanel rendered="{!isBondForOps}">
+          	 <apex:sectionHeader title="Edit Execution Tracker for Operations Team"/>
+          	 	<apex:pageBlockSection title="Bond Details" columns="2">
+				<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insured__c}" label="Applicant "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Goal_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Company_Name__r.Name}" label="Company Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" label="Category"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Bond_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" label="Bond Amount"/>
+			    </apex:pageBlockSection>
+			    <apex:pageBlockSection title="Bond Execution Tracker Details" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Insured_Name__c}" label="Applicant"/>
+<!-- 				<apex:outputField value="{!objExecutionTracker.Goal_Type__c}" label="Goal Type"/> -->
+					<apex:outputText value="{!objExecutionTracker.Company_Name__r.Name}" label="Company Name"/>
+					<apex:outputField value="{!objExecutionTracker.Executed_Product_Name__c}" label="Category"/>
+					<apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Amount Applied"/>
+					<apex:outputField value="{!objExecutionTracker.Bond_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Interest_Rate__c}" label="Interest Rate"/> 
+					<apex:outputField value="{!objExecutionTracker.No_of_Bonds_Applied__c}"/> 
+					<apex:inputField value="{!objExecutionTracker.Application_No__c}"/>
+					<apex:pageBlockSectionItem >
+					 	<apex:outputLabel value="Status"/> 
+						<apex:selectList value="{!objExecutionTracker.Add_on_Status__c}" size="1"  >
+                             <apex:selectOptions value="{!addOnStatus}"></apex:selectOptions>
+                             <apex:actionSupport event="onchange" rerender="bookRevnueId1"  status="statusIdforBooked1"/>
+								<apex:actionStatus stopText="" id="statusIdforBooked1">
+				                	<apex:facet name="start">
+				               			<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+				                    		<img src="/img/loading.gif" width="16" height="16"/>
+										</apex:outputPanel>
+				                	</apex:facet>
+				        		</apex:actionStatus> 
+                   		</apex:selectList>
+					 </apex:pageBlockSectionItem>
+<!-- 					<apex:inputField value="{!objExecutionTracker.Add_on_Status__c}" label="Status"/> -->
+					<apex:outputPanel id="bookRevnueId1" >
+						<apex:outputLabel value="Booked Revenue" styleClass="labelCol vfLabelColTextWrap" style="padding-left: 130px;"/>
+						<apex:inputField value="{!objExecutionTracker.Booked_Revenue__c}"   label="Booked Revenue" rendered="{!objExecutionTracker.Add_on_Status__c =='Completed'}" 
+										 style="BORDER-LEFT: #c11b17 3px solid;  margin-left: 7px;" />
+					 
+						<apex:inputField value="{!objExecutionTracker.Booked_Revenue__c}"   label="Booked Revenue" rendered="{!objExecutionTracker.Add_on_Status__c !='Completed'}"  style="margin-left: 7px;"/>
+					</apex:outputPanel>
+					<apex:outputField value="{!objExecutionTracker.Remarks__c}" label="MET Remark" />
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Assign Task"/>
+						<apex:commandLink action="{!assignTask}" value="Click here" id="theCommandLink"/>
+					</apex:pageBlockSectionItem>
+					<apex:inputField value="{!objExecutionTracker.Remark_OpsTeam__c}" label="OPS Remark "/>
+                </apex:pageBlockSection> 
+          	 </apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

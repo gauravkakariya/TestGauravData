@@ -1,0 +1,2419 @@
+<!-- 
+	Page for displaying Read Only Ap with Open links for ET records
+    Version     Version Author     Date           Comments
+    1.0         Aditi/Anupam      27/12/2012      Open link and Assign to Operations functionality
+    2.0         Prajakta          13/02/2013      Changed UI according to new Action Plan
+-->
+
+<apex:page controller="ExecutionTrackerController" showHeader="false" standardStylesheets="true">
+<!-- action="{!createExecutionTracker}"> -->
+<!-- rerender="readOnlyPanel, msg"> -->
+    <apex:composition template="TabPage">
+        <apex:define name="contents">
+        <apex:form >
+    	<apex:stylesheet value="{!$Resource.FFStyle}"/>
+    	
+    	
+	    <style type="text/css">
+            .DataTableEven  { background-color:#FFFFFF; }
+            .DataTableOdd    { background-color:#E4FBC5; }
+            .actionPlan
+            {
+            	width:10%;
+            	margin-left:20px;  
+				background-image:none;
+				background-color:#F5D0A9!important; 
+				font-size:11px !important; 
+				padding-top:4px;
+				padding-bottom:4px;
+            } 
+            
+            .saveActionPlan
+            {
+            	margin-left:20px;
+            	background-image:none;
+            	background-color:#A9C5EB !important;
+            }
+            
+             .custPopup
+	        {
+	            background-color: white;
+	            border-width: 2px;
+	            border-style: solid;
+	            z-index: 9999;
+	            left: 32%;
+	            top: 20%;
+	            padding:15px;
+	            position: fixed;
+	            /* These are the 3 css properties you will need to change so the popup 
+	            displays in the center of the screen. First set the width. Then set 
+	            margin-left to negative half of what the width is. You can add 
+	            the height property for a fixed size pop up if you want.*/
+	            width: 885px;
+	            margin-left: -200px;
+	            top:80px;
+	        }
+	        .popupBackground{
+	            background-color:black;
+	            opacity: 0.20;
+	            filter: alpha(opacity = 2);
+	            position: absolute; 
+				width: 100%; 
+				height: 100%; 
+	            top: 0;
+	            left: 0;
+	            z-index: 9000;
+	            cursor: inherit;
+	        }
+	        .height250 
+			{
+				height: 245px;
+				width :102%;				
+				overflow-y: auto;
+			}
+			p.test2
+			{
+				width:100px; 
+				border:1px solid #000000;
+				text-wrap:normal;
+			}
+			
+			.width{
+				width: 100%;
+				border-width: 0.5px;
+			}
+			.right{
+				margin-right: 100%;
+	}
+			
+	    </style>
+	    
+	    <script>
+	    	var actionPlanId;
+	    	var saveActionPlanId;
+	    	
+	    	function changeCssActionPlan(val)
+	    	{
+	    		//alert(val);
+	    		if(val == 'Action Plan')
+	    		{
+					document.getElementById(actionPlanId).style.backgroundColor = '#F5D0A9';
+					document.getElementById(saveActionPlanId).style.backgroundColor = '#A9C5EB';
+				}
+				else
+				{
+					document.getElementById(actionPlanId).style.backgroundColor = '#A9C5EB';
+					document.getElementById(saveActionPlanId).style.backgroundColor = '#F5D0A9';
+				}
+				    	
+	    	}
+			function DynamicDatePicker(d_id) 
+			{
+			    DatePicker.pickDate(false, d_id.id, false);
+			}
+			
+			var curPopupWindow;
+			function openEditExecutionTracker(eId, valId, valType)
+			{
+				url = 'EditExecutionTracker?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			function openRelatedExecutionTracker(apId, valType)
+			{
+				url = 'RelatedExecutionTracker?apid='+ apId + '&type=' + valType;
+				openRelatedETWindow(url);
+				return false;
+			}
+			/* Prajakta - ET Screen Enhancement - 08-03-2013 */
+			function openETforSwitch(eId, valId, valType)
+			{
+				url = 'EditETforSwitch?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			/* Aditi - ET Screen Enhancement - 15-03-2013 */
+			function openEditETforLifeInsurance(eId, valId, valType)
+			{
+				url = 'EditETforLifeInsurance?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			
+			/* Aditi - ET Screen Enhancement - 19-03-2013 */
+			function openEditETforGeneralInsurance(eId, valId, valType)
+			{
+				url = 'EditETforGeneralInsurance?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			
+			/* Aditi - ET Screen Enhancement - 20-03-2013 */
+			function openEditSTPExecutionTracker(eId, valId, valType)
+			{
+				url = 'EditETforSTP?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			
+			/* Aditi - ET Screen Enhancement - 26-03-2013 */
+			function openEditSwitchExecutionTracker(eId, valId, valType)
+			{
+				url = 'EditETforSwitch?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			
+			/* Aditi - ET Screen Enhancement - 29-03-2013 */
+			function openEditRedemptionExecutionTracker(eId, valId, valType)
+			{
+				url = 'EditETforRedemption?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			
+			/* Aditi - ET Screen Enhancement - 01-04-2013 */
+			function openEditHoldCOBExecutionTracker(eId, valId, valType)
+			{
+				url = 'EditETforHoldCOB?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			
+			/* Aditi - ET Screen Enhancement - 02-04-2013 */
+			function openEditSurrenderInsuranceExecutionTracker(eId, valId, valType)
+			{
+				url = 'EditETforSurrenderLifeInsurance?eid='+ eId +'&id=' + valId +'&type=' + valType;
+				openWindow(url);
+				return false;
+			}
+			
+			function openRelatedETWindow(URL)
+			{
+				if(curPopupWindow != null)
+				{	
+					curPopupWindow.close();
+					curPopupWindow  = window.open(URL, "_blank","width=750, height=400,dependent=no,toolbar=no,status=no,directories=no,menubar=no,scrollbars=1,resizable=yes", true);
+				}
+				else
+					curPopupWindow  = window.open(URL, "_blank","width=750, height=400,dependent=no,toolbar=no,status=no,directories=no,menubar=no,scrollbars=1,resizable=yes", true);
+			} 	
+			function openWindow(URL)
+			{
+				if(curPopupWindow != null)
+				{	
+					curPopupWindow.close();
+					curPopupWindow  = window.open(URL, "_blank","width=650, height=600,dependent=no,toolbar=no,status=no,directories=no,menubar=no,scrollbars=1,resizable=yes", true);
+				}
+				else
+					curPopupWindow  = window.open(URL, "_blank","width=650, height=600,dependent=no,toolbar=no,status=no,directories=no,menubar=no,scrollbars=1,resizable=yes", true);
+			} 	
+			
+			function closeETWindow()
+			{
+				curPopupWindow.close();
+			} 
+			
+			//called on mouseout event and assign id of current cell to local variable.
+    	function hideAddContact(contactCell)
+    	{	
+    	
+    		if (contactCell.substring(0,8) == 'td____Id' && document.getElementById(contactCell).children.length == 1   )
+    		{	    			  	
+    			//alert('Hide If');		
+    			tempId = contactCell;
+    		} 
+    		else if(tempId != null)
+    		{
+    			//alert('Hide else');
+    			document.getElementById(tempId).innerHTML ='';
+    		}   			    			
+    	}	
+    	
+    	
+    	//remove button     	
+    	function removeButton(a)
+    	{
+    		if(a == null && tempId != null)
+    		{
+    		 	//alert('remove If');
+    			document.getElementById(tempId).innerHTML ='';
+    		}	    		
+     	}	
+	    </script>
+	    
+	    
+	<apex:pageMessages id="msg"/>
+	
+		<apex:outputPanel id="PopupPanel">
+            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopup}"/>
+             <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopup}" >
+	             <apex:pageBlock title="Assigned Records" id="pbId">
+					<apex:pageBlockButtons location="top">
+						<apex:outputPanel id="pbButtonId"> 
+							<apex:commandButton style="align:center" value="OK" action="{!closePopUp}" rerender="PopupPanel,frmId" status="topStatusEtDisplay"/>
+							<apex:actionStatus stopText="" id="topStatusEtDisplay">
+				                <apex:facet name="start">
+				               		<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+				                    	<img src="/img/loading.gif" width="16" height="16"/>
+									</apex:outputPanel>
+				                </apex:facet>
+				           </apex:actionStatus>  
+						</apex:outputPanel>
+					</apex:pageBlockButtons>
+					
+					<apex:outputPanel id="optPanel1"> 
+						<apex:outputPanel rendered="{!lstAssignToOpsETRecords.size > 0}">
+							<apex:pageBlockTable value="{!lstAssignToOpsETRecords}" var="rec">
+								<apex:column headerValue="Goal Name" >
+									<apex:outputText value="{!rec.Goal_Name__c}"/>
+				                </apex:column>
+				                <apex:column headerValue="Executed Product Name" >
+				                	{!rec.Executed_Product_Name__c}
+				                </apex:column>  
+				            	<apex:column headerValue="Application Status" >
+				            		{!rec.Application_Status__c}
+				                </apex:column> 
+			                	<apex:column headerValue="Agreed Amount" rendered="{!IF(rec.Type__c == $Label.Surrender_Insurance,false,true)}">
+				            		{!rec.Agreed_Amount__c}
+				                </apex:column> 
+				             </apex:pageBlockTable>    
+				          
+			            <!-- 	<apex:repeat value="{!lstAssignToOpsETRecords}" var="rec">
+			            	type : {!rec.Type__c}
+	 							<table width="100%" class="list tableCls" id="tableId">
+		 							<thead onmouseout="removeButton(null);" onmouseover="removeButton(null);">
+					 					<tr class="headerRow">
+											<td width="15%" align="left"><b>Goal Name</b></td>
+								 			<td width="11%" align="left"><b>Executed Product Name</b></td>
+								 			<apex:outputPanel rendered="{!IF(rec.Type__c == 'Recommended Insurance',false,true)}">
+							 					<td width="11%" align="left"><b>Agreed Amount</b> </td>
+							 				</apex:outputPanel>
+							 				<td width="20%" align="left"><b>Application Status</b> </td>
+					 					</tr>
+				 					</thead>
+				 					<tbody>
+					 					<tr class="dataRow even first rowHieght"  onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onmouseover="if (window.hiOn){hiOn(this);}">
+					 						<td width="15%" align="left" class=" dataCell"><apex:outputText value="{!rec.Goal_Name__c}"/></td>
+					 						<td width="15%" align="left" class=" dataCell"><apex:outputText value="{!rec.Executed_Product_Name__c}"/></td>
+					 						<apex:outputPanel rendered="{!IF(rec.Type__c != 'Recommended Insurance',true,false)}">
+					 							<td width="15%" align="left" class=" dataCell"><apex:outputText value="{!rec.Agreed_Amount__c}"/></td>
+					 						</apex:outputPanel>	
+					 						<td width="15%" align="left" class=" dataCell"><apex:outputText value="{!rec.Application_Status__c}"/></td>
+					 					</tr>
+				 					</tbody>
+			 					</table>
+		 					</apex:repeat> -->
+						</apex:outputPanel>
+					</apex:outputPanel>
+				</apex:pageBlock>
+            </apex:outputPanel>
+	    </apex:outputPanel>
+		
+	    <apex:outputPanel id="readOnlyPanel">
+        	<apex:outputPanel rendered="{!isSidebar}">
+			    <apex:pageBlock tabStyle="account" >
+		        <div style="margin:bottom:20px; width:100%;margin-left:10px;">
+		            <apex:commandButton id="theCommandLink3" styleclass="button" value="Assign to Operations" action="{!assignToOperations}" status="topStatus" rendered="true"
+		            					style="margin-left:20px; background-image:none;background-color:#A9C5EB !important; padding-bottom:2px" rerender=" messages,PopupPanel"/> 
+		           					
+					<apex:actionStatus stopText="" id="topStatus">
+		                <apex:facet name="start">
+		               		<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+		                    	<img src="/img/loading.gif" width="16" height="16"/>
+							</apex:outputPanel>
+		                </apex:facet>
+		           </apex:actionStatus>  
+		            <apex:pageMessages id="messages"/>
+		        </div>
+	        </apex:pageBlock>
+	        
+	    <apex:pageBlock id="block1"> 
+	    
+<!-- =====================================================Prajakta - 20-08-2013========CURRENT - LUMPSUM=======================================        	 -->       
+ 		<apex:outputPanel id="pageBlockSection1a">
+			<apex:pageBlockSection title="CURRENT INVESTMENT ASSETS - LUMPSUM" collapsible="true" columns="1" id="section8">
+            	
+<!-- =============================================================CURRENT MUTUAL FUNDS - LUMPSUM=====================================================        	 -->
+				<apex:pageBlockSection title="MUTUAL FUNDS - LUMPSUM" columns="1" collapsible="true" >
+					<apex:repeat value="{!beanObj.mapIdToCurrentFunds}" var="curLumpMap"> 
+		                
+		                <div style="margin-left:50px;">
+			                <apex:pageBlockTable value="{!beanObj.mapIdToCurrentFunds[curLumpMap]}" var="curLumpObj" styleClass="required" style="margin-left:20px;width:950px;">
+		                		
+		                		<apex:column headerValue="Forms Provided" width="10%" style="text-align:center;">
+			                        <apex:facet name="header">Forms <br/> Provided</apex:facet>
+			                        <apex:outputPanel rendered="{!IF(curLumpObj.executionTracker == 'Yes',true,false)}"  >
+                                		<apex:outputText value="{!curLumpObj.strFormsProvided}" />
+                               		</apex:outputPanel>
+			                    </apex:column>
+			                    <apex:column headerValue="Assigned To Ops" width="10%" style="text-align:center;">
+			                        <apex:facet name="header">Assigned <br/> To Ops</apex:facet>
+			                        <apex:outputPanel rendered="{!IF(curLumpObj.executionTracker == 'Yes',true,false)}"  >
+                         				<apex:outputText value="{!curLumpObj.strAssignedToOps}"/>
+                        			</apex:outputPanel>
+			                    </apex:column>
+			                    <apex:column headerValue="Scheme Name" width="22%">
+			                        <apex:outputText value="{!curLumpObj.schemeName}" style="width:100px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Asset Class" width="15%">
+			                        <apex:outputText value="{!curLumpObj.assetClass}" style="width:180px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Amount" style="text-align:right; padding-right: 15px;" width="10%">
+			                    	<apex:outputText value="{0, number, ,##,##0}" >
+		                                 <apex:param value="{!curLumpObj.amount}"/>
+		                             </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Owner" width="18%">
+			                        <apex:outputText value="{!curLumpObj.owner}" style="width:190px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Action" style="text-align:center;" width="10%">
+			                        <apex:outputText value="{!curLumpObj.lumpsumAction}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Action Amount" style="text-align:right;">
+			                        <apex:outputText value="{!curLumpObj.actionAmount}" styleClass="textStyle" style="width:70px;"/>
+			                    </apex:column>
+			                     <apex:column headerValue="Execution Tracker To Be Opened" style="text-align:center;">
+			                     	<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+			                     	<apex:outputText value="{!curLumpObj.executionTracker}" />
+			                     </apex:column>
+			                    <apex:column headerValue="Execution Tracker" style="text-align:center;">
+			                    	<apex:facet name="header">Execution<br/> Tracker</apex:facet>
+				                    <apex:outputPanel rendered="{!IF(curLumpObj.executionTracker == 'Yes',true,false)}"  >
+				                        <apex:outputPanel rendered="{!IF(((curLumpObj.lumpsumAction == 'STP To') ||(curLumpObj.lumpsumAction == 'STP From')),true,false)}">
+<!-- 											<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSTPExecutionTracker('{!beanObj.entityId}','{!curLumpObj.actionPlanMFLumpsumId}', 'Lumpsum')"> -->
+<!-- 												Open -->
+<!-- 										   	</a> -->
+										   	<a href="EditETforSTP?eid={!beanObj.entityId}&id={!curLumpObj.actionPlanMFLumpsumId}&type=Lumpsum" 
+									 	 		target="_blank" style="cursor: pointer;text-decoration:underline;"> 
+									 	 		Open
+									 	 	</a>
+									    </apex:outputPanel>
+									    <apex:outputPanel rendered="{!IF(((curLumpObj.lumpsumAction == 'Switch In') ||(curLumpObj.lumpsumAction == 'Switch Out')),true,false)}">
+<!-- 											<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSwitchExecutionTracker('{!beanObj.entityId}','{!curLumpObj.actionPlanMFLumpsumId}', 'Lumpsum')"> -->
+<!-- 												Open -->
+<!-- 										   	</a> -->
+										   	<a href="EditETforSwitch?eid={!beanObj.entityId}&id={!curLumpObj.actionPlanMFLumpsumId}&type=Lumpsum" 
+									 			target="_blank" style="cursor: pointer;text-decoration:underline;">  
+										 		Open 
+										 	</a>
+									    </apex:outputPanel>
+								      	<apex:outputPanel rendered="{!IF((curLumpObj.lumpsumAction == 'Redeem'),true,false)}">
+<!-- 											<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditRedemptionExecutionTracker('{!beanObj.entityId}','{!curLumpObj.actionPlanMFLumpsumId}', 'Lumpsum')"> -->
+<!-- 												Open -->
+<!-- 										   	</a> -->
+										   	<a href="EditETforRedemption?eid={!beanObj.entityId}&id={!curLumpObj.actionPlanMFLumpsumId}&type=Lumpsum" 
+										   		target="_blank" style="cursor: pointer;text-decoration:underline;">
+												Open
+											</a>
+									    </apex:outputPanel>
+									    <apex:outputPanel rendered="{!IF(((curLumpObj.lumpsumAction == 'Hold - Change of broker') || (curLumpObj.lumpsumAction == 'Hold')),true,false)}">
+<!-- 											<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditHoldCOBExecutionTracker('{!beanObj.entityId}','{!curLumpObj.actionPlanMFLumpsumId}', 'Lumpsum')"> -->
+<!-- 												Open -->
+<!-- 										   	</a> -->
+										   	<a href="EditETforHoldCOB?eid={!beanObj.entityId}&id={!curLumpObj.actionPlanMFLumpsumId}&type=Lumpsum" 
+													target="_blank" style="cursor: pointer;text-decoration:underline;"> 
+												Open
+											</a>
+									    </apex:outputPanel>
+									</apex:outputPanel>
+			                    </apex:column>
+			                    
+			                    <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;">
+			                     	<apex:outputText value="{!curLumpObj.ETStatus}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Related Records" style="text-align:center;">
+			                    	<apex:outputPanel rendered="{!IF(curLumpObj.executionTracker == 'Yes',true,false)}"  >
+									   <a href="" style="cursor: pointer;text-decoration:underline;" 
+										onClick="javascript:return  openRelatedExecutionTracker('{!curLumpObj.actionPlanMFLumpsumId}','Lumpsum')">
+										View
+									   </a>
+					               </apex:outputPanel>
+			                    </apex:column>
+			                </apex:pageBlockTable>
+			                
+		                </div>
+		            </apex:repeat>
+		            
+		            <div class="space" style="text-align:left;" >
+                       	<table style="width:100%;">
+							<tr style="width:100%;">
+		           				<td style="width:8%; FONT-FAMILY: Calibri; FONT-SIZE: 15px; FONT-WEIGHT: bold; COLOR: #236EBC">Remarks : </td>
+		           				<td class="test2"><apex:outputText value="{!mfLumpsumRemark}" style="width:300px;height:55px;" escape="false" /></td>
+		           			</tr>
+		           		</table>
+	           		</div>
+	            </apex:pageBlockSection>            	
+            	
+<!-- =============================================================CURRENT GOLD AND SILVER - LUMPSUM=====================================================        	 -->
+				<apex:pageBlockSection title="GOLD AND SILVER - LUMPSUM" columns="1" collapsible="true">
+					<apex:repeat value="{!beanObj.mapIdToCurrentGold}" var="curLumpMap"> 
+		                
+		                <div style="margin-left:50px;">
+			                <apex:pageBlockTable value="{!beanObj.mapIdToCurrentGold[curLumpMap]}" var="curLumpObj" styleClass="required" style="margin-left:20px;width:950px;">
+		                		
+		                		<apex:column headerValue="Forms Provided" width="10%" style="text-align:center;">
+			                        <apex:facet name="header">Forms <br/> Provided</apex:facet>
+			                        <apex:outputPanel rendered="{!IF(curLumpObj.executionTracker == 'Yes',true,false)}"  >
+                                		<apex:outputText value="{!curLumpObj.strFormsProvided}" />
+                               		</apex:outputPanel>
+			                    </apex:column>
+			                    <apex:column headerValue="Assigned To Ops" width="10%" style="text-align:center;">
+			                        <apex:facet name="header">Assigned <br/> To Ops</apex:facet>
+			                        <apex:outputPanel rendered="{!IF(curLumpObj.executionTracker == 'Yes',true,false)}"  >
+                         				<apex:outputText value="{!curLumpObj.strAssignedToOps}"/>
+                        			</apex:outputPanel>
+			                    </apex:column>
+			                    <apex:column headerValue="Asset Name" width="22%">
+			                        <apex:outputText value="{!curLumpObj.schemeName}" style="width:100px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Asset Class" width="15%">
+			                        <apex:outputText value="{!curLumpObj.assetClass}" style="width:180px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Amount" style="text-align:right; padding-right: 15px;" width="10%">
+			                    	<apex:outputText value="{0, number, ,##,##0}" >
+		                                 <apex:param value="{!curLumpObj.amount}"/>
+		                             </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Owner" width="18%">
+			                        <apex:outputText value="{!curLumpObj.owner}" style="width:190px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Action" style="text-align:center;" width="10%">
+			                        <apex:outputText value="{!curLumpObj.lumpsumAction}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Action Amount" style="text-align:right;">
+			                        <apex:outputText value="{!curLumpObj.actionAmount}" styleClass="textStyle" style="width:70px;"/>
+			                    </apex:column>
+			                     <apex:column headerValue="Execution Tracker To Be Opened" style="text-align:center;">
+			                     	<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+			                     	<apex:outputText value="{!curLumpObj.executionTracker}" />
+			                     </apex:column>
+			                    <apex:column headerValue="Execution Tracker" style="text-align:center;">
+			                    	<apex:facet name="header">Execution<br/> Tracker</apex:facet>
+				                    <apex:outputPanel rendered="{!IF(curLumpObj.executionTracker == 'Yes',true,false)}"  >
+				                        <apex:outputPanel rendered="{!IF(((curLumpObj.lumpsumAction == 'STP To') ||(curLumpObj.lumpsumAction == 'STP From')),true,false)}">
+<!-- 											<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSTPExecutionTracker('{!beanObj.entityId}','{!curLumpObj.actionPlanGSLumpsumId}', 'Lumpsum')"> -->
+<!-- 												Open -->
+<!-- 										   	</a> -->
+										   	 <a href="EditETforSTP?eid={!beanObj.entityId}&id={!curLumpObj.actionPlanGSLumpsumId}&type=Lumpsum" 
+									 	 		target="_blank" style="cursor: pointer;text-decoration:underline;"> 
+									 	 		Open
+									 	 	</a>
+									    </apex:outputPanel>
+									    <apex:outputPanel rendered="{!IF(((curLumpObj.lumpsumAction == 'Switch In') ||(curLumpObj.lumpsumAction == 'Switch Out')),true,false)}">
+<!-- 											<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSwitchExecutionTracker('{!beanObj.entityId}','{!curLumpObj.actionPlanGSLumpsumId}', 'Lumpsum')"> -->
+<!-- 												Open -->
+<!-- 										   	</a> -->
+										   	<a href="EditETforSwitch?eid={!beanObj.entityId}&id={!curLumpObj.actionPlanGSLumpsumId}&type=Lumpsum" 
+									 			target="_blank" style="cursor: pointer;text-decoration:underline;">  
+										 		Open 
+										 	</a>
+									    </apex:outputPanel>
+								      	<apex:outputPanel rendered="{!IF((curLumpObj.lumpsumAction == 'Redeem'),true,false)}">
+<!-- 											<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditRedemptionExecutionTracker('{!beanObj.entityId}','{!curLumpObj.actionPlanGSLumpsumId}', 'Lumpsum')"> -->
+<!-- 												Open -->
+<!-- 										   	</a> -->
+										   	<a href="EditETforRedemption?eid={!beanObj.entityId}&id={!curLumpObj.actionPlanGSLumpsumId}&type=Lumpsum" 
+										   		target="_blank" style="cursor: pointer;text-decoration:underline;">
+												Open
+											</a>
+									    </apex:outputPanel>
+									    <apex:outputPanel rendered="{!IF(((curLumpObj.lumpsumAction == 'Hold - Change of broker') || (curLumpObj.lumpsumAction == 'Hold')),true,false)}">
+<!-- 											<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditHoldCOBExecutionTracker('{!beanObj.entityId}','{!curLumpObj.actionPlanGSLumpsumId}', 'Lumpsum')"> -->
+<!-- 												Open -->
+<!-- 										   	</a> -->
+										   	<a href="EditETforHoldCOB?eid={!beanObj.entityId}&id={!curLumpObj.actionPlanGSLumpsumId}&type=Lumpsum" 
+													target="_blank" style="cursor: pointer;text-decoration:underline;">
+												Open
+											</a>
+									    </apex:outputPanel>
+									</apex:outputPanel>
+			                    </apex:column>
+			                    
+			                    <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;">
+			                     	<apex:outputText value="{!curLumpObj.ETStatus}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Related Records" style="text-align:center;">
+			                    	<apex:outputPanel rendered="{!IF(curLumpObj.executionTracker == 'Yes',true,false)}"  >
+									   <a href="" style="cursor: pointer;text-decoration:underline;" 
+										onClick="javascript:return  openRelatedExecutionTracker('{!curLumpObj.actionPlanGSLumpsumId}','Lumpsum')">
+										View
+									   </a>
+					               </apex:outputPanel>
+			                    </apex:column>
+			                </apex:pageBlockTable>
+			                
+		                </div>
+		            </apex:repeat>
+		            
+		            <div class="space" style="text-align:left;" >
+                       	<table style="width:100%;">
+							<tr style="width:100%;">
+		           				<td style="width:8%; FONT-FAMILY: Calibri; FONT-SIZE: 15px; FONT-WEIGHT: bold; COLOR: #236EBC">Remarks : </td>
+		           				<td class="test2"><apex:outputText value="{!gsLumpsumRemark}" style="width:300px;height:55px;" escape="false" /></td>
+		           			</tr>
+		           		</table>
+	           		</div>
+	            </apex:pageBlockSection>
+	        
+	            </apex:pageBlockSection></apex:outputPanel>
+	            
+    
+        	    
+	      
+	      <apex:outputPanel id="pageBlockSection1">
+			<apex:pageBlockSection title="CURRENT INVESTMENT ASSETS - RUNNING SIPs" collapsible="true" columns="1" id="section1">
+<!-- =============================================================CURRENT MUTUAL FUNDS - RUNNING SIPs=============================================        	 -->
+        	
+        		<apex:pageBlockSection title="MUTUAL FUNDS - RUNNING SIPs" columns="1" id="section13">
+	                
+	                <div style="margin-left:50px;">
+		                <apex:pageBlockTable value="{!beanObj.lstSIPCurrentFunds}" var="curSIPObj" styleClass="required" style="margin-left:20px;width:950px;">
+		                    
+		                    <apex:column headerValue="Forms Provided" width="10%" style="text-align:center;">
+		                        <apex:facet name="header">Forms <br/> Provided</apex:facet>
+		                        <apex:outputPanel rendered="{!IF(curSIPObj.SIPexecutionTracker == 'Yes',true,false)}"  >
+                    				<apex:outputText value="{!curSIPObj.strFormsProvided}" />
+                   				</apex:outputPanel>
+		                    </apex:column>
+		                    <apex:column headerValue="Assigned To Ops" width="10%" style="text-align:center;">
+		                        <apex:facet name="header">Assigned <br/> To Ops</apex:facet>
+		                        <apex:outputPanel rendered="{!IF(curSIPObj.SIPexecutionTracker == 'Yes',true,false)}" >
+                        			<apex:outputText value="{!curSIPObj.strAssignedToOps}"/>
+                       			</apex:outputPanel>
+		                    </apex:column>
+		                    <apex:column headerValue="Scheme Name" width="22%">
+		                        <apex:outputText value="{!curSIPObj.schemeName}" style="width:100px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Asset Class" width="15%">
+		                        <apex:outputText value="{!curSIPObj.assetClass}" style="width:180px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Current SIP" style="text-align:right; padding-right: 15px;" width="10%">
+		                    	<apex:outputText value="{!curSIPObj.currentSIP}"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Owner" width="18%">
+		                        <apex:outputText value="{!curSIPObj.owner}" style="width:190px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="SIP Action" style="text-align:right;" width="15%">
+		                        <apex:outputText value="{!curSIPObj.SIPaction}" />
+		                    </apex:column>
+		                    <apex:column headerValue="Action Amount" style="text-align:right;" >
+		                        <apex:outputText value="{!curSIPObj.SIPactionAmount}" style="width:70px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Execution Tracker To Be Opened" style="text-align:center;">
+			                     	<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+			                     	<apex:outputText value="{!curSIPObj.SIPexecutionTracker}" />
+			                     </apex:column>
+		                    <apex:column headerValue="Execution Tracker" style="text-align:center;">
+		                    	<apex:facet name="header">Execution<br/> Tracker</apex:facet>
+		                    	<apex:outputPanel rendered="{!IF(curSIPObj.SIPexecutionTracker == 'Yes',true,false)}"  >
+									<apex:outputPanel rendered="{!IF((curSIPObj.SIPaction == 'Stop'),true,false)}">
+<!-- 										<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditRedemptionExecutionTracker('{!beanObj.entityId}','{!curSIPObj.actionPlanMFSipId}', 'SIP')"> -->
+<!-- 											Open -->
+<!-- 										</a> -->
+										<a href="EditETforRedemption?eid={!beanObj.entityId}&id={!curSIPObj.actionPlanMFSipId}&type=SIP" 
+										   		target="_blank" style="cursor: pointer;text-decoration:underline;">
+											Open
+										</a>
+									</apex:outputPanel>
+									<apex:outputPanel rendered="{!IF(((curSIPObj.SIPaction == 'Continue') || (curSIPObj.SIPaction == 'Existing SIP - COB')),true,false)}">
+<!-- 										<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditHoldCOBExecutionTracker('{!beanObj.entityId}','{!curSIPObj.actionPlanMFSipId}', 'SIP')"> -->
+<!-- 											Open -->
+<!-- 										</a> -->
+										<a href="EditETforHoldCOB?eid={!beanObj.entityId}&id={!curSIPObj.actionPlanMFSipId}&type=SIP" 
+													target="_blank" style="cursor: pointer;text-decoration:underline;"> 
+											Open
+										</a>
+									</apex:outputPanel>
+					         	</apex:outputPanel>
+		                    </apex:column>
+		                    <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;">
+			                    <apex:outputText value="{!curSIPObj.ETStatus}" />
+			                </apex:column>
+		                    <apex:column headerValue="Related Records" style="text-align:center;">
+		                    	<apex:outputPanel rendered="{!IF(curSIPObj.SIPexecutionTracker == 'Yes',true,false)}" >
+								   <a href="" style="cursor: pointer;text-decoration:underline;" 
+									onClick="javascript:return  openRelatedExecutionTracker('{!curSIPObj.actionPlanMFSipId}','SIP')">
+									View
+								   </a>
+				              	</apex:outputPanel>
+		                    </apex:column>
+		                </apex:pageBlockTable>
+		            
+		             	<div class="space" style="text-align:left;">
+	                        <table style="width:100%;">
+								<tr style="width:100%;">
+			           				<td style="width:8%; FONT-FAMILY: Calibri; FONT-SIZE: 15px; FONT-WEIGHT: bold; COLOR: #236EBC">Remarks : </td>
+			           				<td class="test2"><apex:outputText value="{!mfSIPRemark}" style="width:300px;height:55px;" escape="false" /></td>
+			           			</tr>
+			           		</table>
+		           		</div>
+		           	</div>
+	            </apex:pageBlockSection>
+	      
+    <!-- =============================================================CURRENT GOLD AND SILVER - RUNNING SIPs=============================================        	 -->
+        	
+        		<apex:pageBlockSection title="GOLD AND SILVER - RUNNING SIPs" columns="1" id="section12">
+	                
+	                <div style="margin-left:50px;">
+		                <apex:pageBlockTable value="{!beanObj.lstSIPCurrentgOLD}" var="curSIPObj" styleClass="required" style="margin-left:20px;width:950px;">
+		                    
+		                    <apex:column headerValue="Forms Provided" width="10%" style="text-align:center;">
+		                        <apex:facet name="header">Forms <br/> Provided</apex:facet>
+		                        <apex:outputPanel rendered="{!IF(curSIPObj.SIPexecutionTracker == 'Yes',true,false)}"  >
+                    				<apex:outputText value="{!curSIPObj.strFormsProvided}" />
+                   				</apex:outputPanel>
+		                    </apex:column>
+		                    <apex:column headerValue="Assigned To Ops" width="10%" style="text-align:center;">
+		                        <apex:facet name="header">Assigned <br/> To Ops</apex:facet>
+		                        <apex:outputPanel rendered="{!IF(curSIPObj.SIPexecutionTracker == 'Yes',true,false)}" >
+                        			<apex:outputText value="{!curSIPObj.strAssignedToOps}"/>
+                       			</apex:outputPanel>
+		                    </apex:column>
+		                    <apex:column headerValue="Asset Name" width="22%">
+		                        <apex:outputText value="{!curSIPObj.schemeName}" style="width:100px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Asset Class" width="15%">
+		                        <apex:outputText value="{!curSIPObj.assetClass}" style="width:180px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Current SIP" style="text-align:right; padding-right: 15px;" width="10%">
+		                    	<apex:outputText value="{!curSIPObj.currentSIP}"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Owner" width="18%">
+		                        <apex:outputText value="{!curSIPObj.owner}" style="width:190px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="SIP Action" style="text-align:right;" width="15%">
+		                        <apex:outputText value="{!curSIPObj.SIPaction}" />
+		                    </apex:column>
+		                    <apex:column headerValue="Action Amount" style="text-align:right;" >
+		                        <apex:outputText value="{!curSIPObj.SIPactionAmount}" style="width:70px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Execution Tracker To Be Opened" style="text-align:center;">
+			                     	<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+			                     	<apex:outputText value="{!curSIPObj.SIPexecutionTracker}" />
+			                     </apex:column>
+		                    <apex:column headerValue="Execution Tracker" style="text-align:center;">
+		                    	<apex:facet name="header">Execution<br/> Tracker</apex:facet>
+		                    	<apex:outputPanel rendered="{!IF(curSIPObj.SIPexecutionTracker == 'Yes',true,false)}"  >
+									<apex:outputPanel rendered="{!IF((curSIPObj.SIPaction == 'Stop'),true,false)}">
+<!-- 										<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditRedemptionExecutionTracker('{!beanObj.entityId}','{!curSIPObj.actionPlanGSSipId}', 'SIP')"> -->
+<!-- 											Open -->
+<!-- 										</a> -->
+										<a href="EditETforRedemption?eid={!beanObj.entityId}&id={!curSIPObj.actionPlanGSSipId}&type=SIP" 
+										   		target="_blank" style="cursor: pointer;text-decoration:underline;">
+											Open
+										</a>
+									</apex:outputPanel>
+									<apex:outputPanel rendered="{!IF(((curSIPObj.SIPaction == 'Continue') || (curSIPObj.SIPaction == 'Existing SIP - COB')),true,false)}">
+<!-- 										<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditHoldCOBExecutionTracker('{!beanObj.entityId}','{!curSIPObj.actionPlanGSSipId}', 'SIP')"> -->
+<!-- 											Open -->
+<!-- 										</a> -->
+										<a href="EditETforHoldCOB?eid={!beanObj.entityId}&id={!curSIPObj.actionPlanGSSipId}&type=SIP" 
+													target="_blank" style="cursor: pointer;text-decoration:underline;"> 
+											Open
+										</a>
+									</apex:outputPanel>
+					         	</apex:outputPanel>
+		                    </apex:column>
+		                    <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;">
+			                    <apex:outputText value="{!curSIPObj.ETStatus}" />
+			                </apex:column>
+		                    <apex:column headerValue="Related Records" style="text-align:center;">
+		                    	<apex:outputPanel rendered="{!IF(curSIPObj.SIPexecutionTracker == 'Yes',true,false)}" >
+								   <a href="" style="cursor: pointer;text-decoration:underline;" 
+									onClick="javascript:return  openRelatedExecutionTracker('{!curSIPObj.actionPlanGSSipId}','SIP')">
+									View
+								   </a>
+				              	</apex:outputPanel>
+		                    </apex:column>
+		                </apex:pageBlockTable>
+		            
+		             	<div class="space" style="text-align:left;">
+	                        <table style="width:100%;">
+								<tr style="width:100%;">
+			           				<td style="width:8%; FONT-FAMILY: Calibri; FONT-SIZE: 15px; FONT-WEIGHT: bold; COLOR: #236EBC">Remarks : </td>
+			           				<td class="test2"><apex:outputText value="{!gsSIPRemark}" style="width:300px;height:55px;" escape="false" /></td>
+			           			</tr>
+			           		</table>
+		           		</div>
+		           	</div>
+	            </apex:pageBlockSection>
+
+	       </apex:pageBlockSection>
+	   </apex:outputPanel>      
+            
+<!-- =====================================================End - Gold & Silver========Prajakta===================================================        	 -->   
+
+		<apex:outputPanel id="GoalDetailsPannel">
+		    <apex:pageBlockSection title="GOALWISE ADVICE" collapsible="true" columns="1" id="section7">
+		    
+			<!-- 	 =========================Emergency Funds============================== -->	    
+		    
+		    <apex:pageBlockSection title="{!beanObj.objEmergencyFundGoalDetails.description}" columns="1" collapsible="true" id="section11" >
+					
+				<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Goal Details</div>
+					<apex:pageBlockSection collapsible="false" columns="6">
+			        	
+			        	<apex:pageBlockTable value="{!beanObj.objEmergencyFundGoalDetails}" var="goal" width="120%" 
+			        						id="MyTable_001" styleClass="style,required" style="margin-left:48px;width:800px;">
+			        	
+			        		<apex:column headerValue="Start Year" width="15%">
+		                        <apex:outputText value="{!goal.startYear}" style="text-align:center;width:100px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="End Year" width="15%">
+		                        <apex:outputText value="{!goal.endYear}"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Annual Cost of Goal" width="15%">
+		                        <apex:outputText value="{!TEXT(goal.annualGoalCost)}"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Risk Profile" width="20%">
+		                        <apex:outputText value="{!goal.goalProfile}"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Remarks" width="30%">
+		                        <apex:outputText value="{!goal.remark}"/>
+		                    </apex:column>
+	                    </apex:pageBlockTable> 
+                   	</apex:pageBlockSection>
+		    
+		    <!-- 	========================================================Emergency=========Assets Allocated====================================================         -->
+
+				<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Assets Allocated</div>
+		        	<apex:pageBlockSection collapsible="false" columns="12">
+		        	
+			        	<apex:pageBlockTable value="{!beanObj.objEmergencyFundGoalDetails.lstAssests}" width="80%" var="allocatedAssets" 
+			        							styleClass="required" style="margin-left:48px; width:800px;">
+			        	
+			        		<apex:column headerValue="Type" width="15%">
+		                        <apex:outputText value="{!allocatedAssets.Type}"/>
+		                        <apex:facet name="footer"><apex:outputText value="Total" /></apex:facet>
+		                    </apex:column>
+		                    <apex:column headerValue="Description" width="20%">
+		                        <apex:outputText value="{!allocatedAssets.Description}" style="width:200px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Owner" style="width:15%;">
+		                        <apex:outputText value="{!allocatedAssets.owner}"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Allocated Amount" style="text-align:right;">
+                    			<apex:outputText value="{0, number, ,##,##0}" style="text-align:right;">
+                                     <apex:param value="{!allocatedAssets.allocatedAmount}"/>
+                                </apex:outputText>
+                                <apex:facet name="footer">
+                                   	<apex:outputText value="{0, number, ,##,##0}" style="float:right;padding-right:" styleClass="required">
+                                            <apex:param value="{!beanObj.objEmergencyFundGoalDetails.AssetsTotal}"/>
+                                   	</apex:outputText>
+                                </apex:facet>
+		                    </apex:column>
+		                    <apex:column headerValue="Expected Growth rate" style="text-align:center;" width="12%">
+		                    	<apex:facet name="header">Expected<br/> Growth rate</apex:facet>
+							  	<apex:outputText value="{0, number, ##,##0.00}%" rendered="{!((if(allocatedAssets.Type=='Mutual Fund' || allocatedAssets.action=='Liquidate (Align to goal)',false,true)))}">
+                                    <apex:param value="{!allocatedAssets.expectedGrowthRate}"/>
+                                </apex:outputText>
+                                <apex:outputText value="{0, number, ##,##0.00}%" rendered="{!((if(allocatedAssets.Type=='Mutual Fund' ||allocatedAssets.action=='Liquidate (Align to goal)',true,false)))}">
+                                    <apex:param value="{!beanObj.objEmergencyFundGoalDetails.IRR}"/>
+                                </apex:outputText>
+		                    </apex:column>
+		                    <apex:column headerValue="Goal Year Value" style="text-align:right;">
+		                        <apex:outputText value="{0, number, ,##,##0}" >
+                                     <apex:param value="{!allocatedAssets.goalYearValue}"/>
+                                </apex:outputText>
+		                    </apex:column>
+		                    <apex:column headerValue="Action to be taken" width="20%">
+		                        <apex:outputText value="{!allocatedAssets.action}"/>
+		                    </apex:column>
+	                     </apex:pageBlockTable> 
+                    </apex:pageBlockSection>
+        
+  <!-- =====================================================================SIP================================================================== -->                       
+                    
+		        	<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">SIP</div>
+		        	<apex:pageBlockSection collapsible="false" columns="6">
+			        	<apex:pageBlockTable value="{!beanObj.objEmergencyFundGoalDetails}" var="goal" styleClass="required" style="margin-left:48px;width:800px;">
+			        	
+			        		<apex:column headerValue="SIP" style="text-align:right; padding-right:15px;" width="20%">
+		                        <apex:outputText value="{0, number, ,##,##0}" >
+                                     <apex:param value="{!beanObj.objEmergencyFundGoalDetails.SIP}"/>
+                                </apex:outputText>
+		                    </apex:column>
+		                    <apex:column headerValue="Equity Amount">
+		                        <apex:outputText value="{!beanObj.objEmergencyFundGoalDetails.equityAmt}" style="width:70px;text-align:right; padding-right:15px;;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Equity(%)" style="text-align:right; padding-right:15px;">
+		                        <apex:outputText value="{0, number,0.000}" >
+                                    <apex:param value="{!beanObj.objEmergencyFundGoalDetails.equityPerc}"/>
+                                </apex:outputText>
+		                    </apex:column>
+		                    <apex:column headerValue="Debt Amount" >
+		                        <apex:outputText value="{!beanObj.objEmergencyFundGoalDetails.debtAmt}" style="width:70px;text-align:right; padding-right:15px;;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Debt(%)" style="text-align:right; padding-right:15px;">
+		                        <apex:outputText value="{0, number,0.000}" >
+                                    <apex:param value="{!beanObj.objEmergencyFundGoalDetails.debtPerc}"/>
+                                </apex:outputText>
+		                    </apex:column>
+		                    <apex:column headerValue="Gold Amount">
+		                        <apex:outputText value="{!beanObj.objEmergencyFundGoalDetails.goldAmt}" style="width:70px;text-align:right; padding-right:15px;;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Gold(%)" style="text-align:right; padding-right:15px;">
+		                        <apex:outputText value="{0, number,0.000}" >
+                                     <apex:param value="{!beanObj.objEmergencyFundGoalDetails.goldPerc}"/>
+                                </apex:outputText>
+		                    </apex:column>
+	                     </apex:pageBlockTable>   
+                    </apex:pageBlockSection>	
+                    
+<!-- ============================================================Emergency=========SIP Funds================================================================== -->                         
+                
+		        <div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">SIP Funds</div>
+		        <apex:outputPanel id="SipFundOutputPannel" >
+		        	<apex:pageBlockSection collapsible="false" columns="6">
+			        	<apex:pageBlockTable value="{!beanObj.objEmergencyFundGoalDetails.lstSIPFunds}" var="lstSIPFunds" 
+			        				styleClass="required" style="margin-left:48px;width:800px;">
+			        	
+			        	
+			        		<apex:column headerValue="Forms Provided" width="10%" style="text-align:center;">
+		                        <apex:facet name="header">Forms <br/> Provided</apex:facet>
+		                        <apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}"  >
+                    				<apex:outputText value="{!lstSIPFunds.strFormsProvided}" />
+                   				</apex:outputPanel>
+		                    </apex:column>
+		                    <apex:column headerValue="Assigned To Ops" width="10%" style="text-align:center;">
+		                        <apex:facet name="header">Assigned <br/> To Ops</apex:facet>
+		                        <apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}"  >
+                        			<apex:outputText value="{!lstSIPFunds.strAssignedToOps}"/>
+                       			</apex:outputPanel>
+		                    </apex:column>
+			        		
+		                    <apex:column headerValue="SIP Funds" style="text-align:center;" width="20%">
+		                        <apex:outputText value="{!lstSIPFunds.productName}" />
+		                    </apex:column>
+		                    <apex:column headerValue="Transaction Type" style="text-align:center;">
+		                        <apex:outputText value="{!lstSIPFunds.transactionType}" />
+		                    </apex:column>
+		                    <apex:column headerValue="Amount" >
+		                        <apex:outputText value="{!lstSIPFunds.amount}" style="width:95%;text-align:right;" />
+		                        <apex:facet name="footer">
+                                   	<apex:outputText value="{0, number, ,##,##0}" style="float:right;" styleClass="textStyle">
+                                            <apex:param value="{!beanObj.objEmergencyFundGoalDetails.SIPTotal}"/>
+                                   	</apex:outputText>
+                                   </apex:facet> 
+		                    </apex:column>
+		                    <apex:column headerValue="Installments" >
+		                        <apex:outputText value="{!lstSIPFunds.installments}" style="width:95%;text-align:right;padding-right:15px;" />
+		                    </apex:column>
+		                    <apex:column headerValue="Category" style="text-align:center;">
+		                        <apex:outputText value="{!lstSIPFunds.category}" />
+		                    </apex:column>
+		                    <apex:column headerValue="Options" style="text-align:center;">
+		                        <apex:outputText value="{!lstSIPFunds.option}" />
+		                    </apex:column>
+		                    <apex:column headerValue="Remark" style="text-align:center;">
+		                    	<apex:outputText value="{!lstSIPFunds.remarks}" />
+                            </apex:column>
+		                    <apex:column headerValue="Execution Tracker to be opened" style="text-align:center;">
+		                    	<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+		                        <apex:outputText value="{!lstSIPFunds.executionTracker}" />
+		                    </apex:column>
+		                    <apex:column headerValue="Execution Tracker" style="text-align:center;">
+		                    	<apex:facet name="header">Execution <br/> Tracker</apex:facet>
+		                    	<apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}"  >
+									<apex:outputPanel rendered="{!IF((lstSIPFunds.transactionType == 'New SIP'),true,false)}">
+<!-- 										<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSTPExecutionTracker('{!beanObj.entityId}','{!lstSIPFunds.SIPFundId}', 'GoalSIP')"> -->
+<!-- 											Open -->
+<!-- 										</a> -->
+									 	<a href="EditETforSTP?eid={!beanObj.entityId}&id={!lstSIPFunds.SIPFundId}&type=GoalSIP" 
+								 	 		target="_blank" style="cursor: pointer;text-decoration:underline;"> 
+								 	 		Open
+								 	 	</a>
+									</apex:outputPanel>
+									<apex:outputPanel rendered="{!IF(((lstSIPFunds.transactionType == 'Existing SIP- COB')||(lstSIPFunds.transactionType == 'Existing SIP')),true,false)}">
+<!-- 										<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditHoldCOBExecutionTracker('{!beanObj.entityId}','{!lstSIPFunds.SIPFundId}', 'GoalSIP')"> -->
+<!-- 											Open -->
+<!-- 										</a> -->
+										<a href="EditETforHoldCOB?eid={!beanObj.entityId}&id={!lstSIPFunds.SIPFundId}&type=GoalSIP" 
+													target="_blank" style="cursor: pointer;text-decoration:underline;"> 
+											Open
+										</a>
+									</apex:outputPanel>
+					            </apex:outputPanel>
+		                     </apex:column>
+		                     <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;">
+		                    	<apex:outputText value="{!lstSIPFunds.ETStatus}" />
+                             </apex:column>
+		                     <apex:column headerValue="Related Records" style="text-align:center;">
+		                     	<apex:facet name="header">Related <br/> Records</apex:facet>
+		                     	<apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}">
+								   <a href="" style="cursor: pointer;text-decoration:underline;" 
+										onClick="javascript:return  openRelatedExecutionTracker('{!lstSIPFunds.SIPFundId}','SIP')">
+										View
+								   </a>
+				               </apex:outputPanel>
+		                     </apex:column>
+	                     </apex:pageBlockTable>  
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
+	          
+		 <!-- =====================================================================Lumpsum================================================================== -->                       
+			        	
+		        	<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Lumpsum</div>
+		        	<apex:pageBlockSection collapsible="false" columns="6">
+			        	<apex:pageBlockTable value="{!beanObj.objEmergencyFundLumpsum}" var="goalList"  styleClass="required" style="margin-left:48px;width:800px;">
+			        	
+			        		<apex:column headerValue="Lumpsum" style="text-align:right; padding-right:15px;;" width="20%">
+		                        <apex:outputText value="{0, number, ,##,##0}" >
+                                     <apex:param value="{!beanObj.objEmergencyFundLumpsum.lumpsum}"/>
+                                </apex:outputText>
+		                    </apex:column>
+		                    <apex:column headerValue="Equity Amount" >
+		                        <apex:outputText value="{!beanObj.objEmergencyFundLumpsum.lumpsumEquityAmt}" style="width:70px;text-align:right; padding-right:15px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Equity(%)" style="text-align:right; padding-right:15px;">
+		                        <apex:outputText value="{0, number,0.000}" >
+                                     <apex:param value="{!beanObj.objEmergencyFundLumpsum.lumpsumEquityPerc}"/>
+                                </apex:outputText>
+		                    </apex:column>
+		                    <apex:column headerValue="Debt Amount" >
+		                        <apex:outputText value="{!beanObj.objEmergencyFundLumpsum.lumpsumDebtAmt}" style="width:70px;text-align:right; padding-right:15px;" />
+		                    </apex:column>
+		                    <apex:column headerValue="Debt(%)" style="text-align:right; padding-right:15px;">
+		                        <apex:outputText value="{0, number,0.000}" >
+                                     <apex:param value="{!beanObj.objEmergencyFundLumpsum.lumpsumDebtPerc}"/>
+                                 </apex:outputText>
+		                    </apex:column>
+		                    <apex:column headerValue="Gold Amount" >
+		                        <apex:outputText value="{!beanObj.objEmergencyFundLumpsum.lumpsumGoldAmt}" style="width:70px;text-align:right; padding-right:15px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Gold(%)" style="text-align:right; padding-right:15px;">
+		                         <apex:outputText value="{0, number,0.000}" >
+                                      <apex:param value="{!beanObj.objEmergencyFundLumpsum.lumpsumGoldPerc}"/>
+                                 </apex:outputText>
+		                    </apex:column>
+	                     </apex:pageBlockTable>   
+                    </apex:pageBlockSection>
+                    
+<!-- =====================================================================Lumpsum Funds================================================================== -->        
+               
+                  <div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Lumpsum Funds</div>
+                  <apex:outputPanel id="LumpsumFundOutputPannel" style="margin-left:100px;">
+		        	
+		        	<apex:pageBlockSection collapsible="false" columns="6">
+			        	<apex:pageBlockTable value="{!beanObj.objEmergencyFundGoalDetails.lstLumpsumFunds}" var="lumpsumFunds" 
+			        							styleClass="required" style="margin-left:48px;">
+			        		
+			        		<apex:column headerValue="Forms Provided" width="8%" style="text-align:center;">
+		                        <apex:facet name="header">Forms <br/> Provided</apex:facet>
+		                        <apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}"  >
+                    				<apex:outputText value="{!lumpsumFunds.strFormsProvided}" />
+                   				</apex:outputPanel>
+		                    </apex:column>
+		                    <apex:column headerValue="Assigned To Ops" width="8%" style="text-align:center;">
+		                        <apex:facet name="header">Assigned <br/> To Ops</apex:facet>
+		                        <apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}"  >
+                        			<apex:outputText value="{!lumpsumFunds.strAssignedToOps}"/>
+                       			</apex:outputPanel>
+		                    </apex:column>
+		                    <apex:column headerValue="Lumpsum Funds" width="20%">
+		                        <apex:outputText value="{!lumpsumFunds.lumpsumProductName}" style="width:90%;text-align:left;" />
+		                    </apex:column>
+		                    <apex:column headerValue="Transaction Type" style="text-align:center;">
+		                    	<apex:facet name="header">Transaction <br/> Type</apex:facet>
+		                        <apex:outputText value="{!lumpsumFunds.lumpsumTransactionType}" />
+		                    </apex:column>
+		                    <apex:column headerValue="Fund" style="text-align:right;">
+		                        <apex:outputText value="{!lumpsumFunds.lumpsumFund}" style="width:95%;text-align:left;" />
+		                    </apex:column>
+		                    <apex:column headerValue="Amount" style="text-align:right;" >
+		                        <apex:outputText value="{!lumpsumFunds.lumpsumAmount}" style="width:95%;text-align:left;" />
+                                <apex:facet name="footer">
+                                	<apex:outputText value="{0, number, ,##,##0}" style="float:right;" styleClass="text-align:right;">
+                                         <apex:param value="{!beanObj.objEmergencyFundGoalDetails.LumpsumTotal}"/>
+                                	</apex:outputText>
+                                </apex:facet>
+		                    </apex:column>
+		                    <apex:column headerValue="Installments">
+		                        <apex:outputText value="{!lumpsumFunds.lumpsumInstallments}" style="width:95%;text-align:left;" />
+		                    </apex:column>
+		                    <apex:column headerValue="Amount Per Installments">
+		                    	<apex:facet name="header">Amount Per <br/> Installments</apex:facet>
+		                        <apex:outputText value="{!lumpsumFunds.lumpsumAmountPerInstall}" style="width:95%;text-align:left;" />
+		                    </apex:column>
+		                    <apex:column headerValue="Category" style="text-align:center;">
+		                        <apex:outputText value="{!lumpsumFunds.lumpsumCategory}" />
+		                    </apex:column>
+		                    <apex:column headerValue="Option" style="text-align:center;">
+		                        <apex:outputText value="{!lumpsumFunds.lumpsumOption}" />
+		                    </apex:column>
+		                    <apex:column headerValue="Remarks" style="text-align:center;">
+		                        <apex:outputText value="{!lumpsumFunds.lumpsumRemarks}" style="width:95%;text-align:left;" />
+		                    </apex:column>
+		                    <apex:column headerValue="Execution Tracker to be opened" style="text-align:center;">
+		                    	<apex:facet name="header">Execution <br/>Tracker To <br/> Be Opened</apex:facet>
+		                        <apex:outputText value="{!lumpsumFunds.lumpsumExecutionTracker}" />
+		                    </apex:column>
+		                    <apex:column headerValue="Execution Tracker" style="text-align:center;">
+		                    	<apex:facet name="header">Execution <br/> Tracker</apex:facet>
+		                    	<apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}"  >
+									<apex:outputPanel rendered="{!IF(((lumpsumFunds.lumpsumTransactionType == 'Lumpsum') || (lumpsumFunds.lumpsumTransactionType == 'STP To') || (lumpsumFunds.lumpsumTransactionType == 'STP From')),true,false)}">
+<!-- 										<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSTPExecutionTracker('{!beanObj.entityId}','{!lumpsumFunds.LumpsumFundId}', 'GoalLumpsum')"> -->
+<!-- 											Open -->
+<!-- 										</a> -->
+									 	<a href="EditETforSTP?eid={!beanObj.entityId}&id={!lumpsumFunds.LumpsumFundId}&type=GoalLumpsum" 
+								 	 		target="_blank" style="cursor: pointer;text-decoration:underline;"> 
+								 	 		Open
+								 	 	</a>
+									</apex:outputPanel>
+									<apex:outputPanel rendered="{!IF(((lumpsumFunds.lumpsumTransactionType == 'Switch To') ||(lumpsumFunds.lumpsumTransactionType == 'Switch From')),true,false)}">
+<!-- 										<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSwitchExecutionTracker('{!beanObj.entityId}','{!lumpsumFunds.LumpsumFundId}', 'GoalLumpsum')"> -->
+<!-- 											Open -->
+<!-- 									   	</a> -->
+								   	 	<a href="EditETforSwitch?eid={!beanObj.entityId}&id={!lumpsumFunds.LumpsumFundId}&type=GoalLumpsum" 
+									 			target="_blank" style="cursor: pointer;text-decoration:underline;">  
+									 		Open 
+									 	</a>
+								    </apex:outputPanel>
+								    <apex:outputPanel rendered="{!IF(((lumpsumFunds.lumpsumTransactionType == 'Hold') ||(lumpsumFunds.lumpsumTransactionType == 'Hold - COB')),true,false)}">
+<!-- 										<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditHoldCOBExecutionTracker('{!beanObj.entityId}','{!lumpsumFunds.LumpsumFundId}', 'GoalLumpsum')"> -->
+<!-- 											Open -->
+<!-- 									   	</a> -->
+										<a href="EditETforHoldCOB?eid={!beanObj.entityId}&id={!lumpsumFunds.LumpsumFundId}&type=GoalLumpsum" 
+													target="_blank" style="cursor: pointer;text-decoration:underline;"> 
+												Open
+										</a>
+								    </apex:outputPanel>
+					            </apex:outputPanel>
+		                    </apex:column>
+		                    <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;">
+		                    	<apex:outputText value="{!lumpsumFunds.ETStatus}" />
+                            </apex:column>
+		                    <apex:column headerValue="Related Records" style="text-align:center;">
+		                    	<apex:facet name="header">Related <br/> Records</apex:facet>
+		                     	<apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}">
+								   <a href="" style="cursor: pointer;text-decoration:underline;" 
+									onClick="javascript:return  openRelatedExecutionTracker('{!lumpsumFunds.LumpsumFundId}','Lumpsum')">
+									View
+								   </a>
+				               </apex:outputPanel>
+		                    </apex:column>
+	                    </apex:pageBlockTable>  
+	                     
+                    </apex:pageBlockSection>
+                 </apex:outputPanel>
+            </apex:pageBlockSection>
+
+		    
+<!-- 	=================================================================Goal details==================================================         -->
+		    
+		    	<apex:repeat value="{!beanObj.lstGoalDetails}" var="goalList">
+		    
+		        	<apex:pageBlockSection title="{!goalList.description}" columns="1" collapsible="true" id="section11">
+					
+						<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Goal Details</div>
+						<div style="margin-left:50px;">
+							<apex:pageBlockSection collapsible="false" columns="6">
+					        	
+					        	<apex:pageBlockTable value="{!goalList}" var="goal" width="120%" styleClass="required" style="margin-left:48px;width:800px;">
+					        	
+					        		<apex:column headerValue="Start Year" width="15%">
+				                        <apex:outputText value="{!goal.startYear}" style="text-align:center;width:100px;"/>
+				                    </apex:column>
+				                    <apex:column headerValue="End Year" width="15%">
+				                        <apex:outputText value="{!goal.endYear}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Annual Cost of Goal" width="15%">
+				                        <apex:outputText value="{!TEXT(goal.annualGoalCost)}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Risk Profile" width="20%">
+				                        <apex:outputText value="{!goal.goalProfile}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Remarks" width="30%">
+				                        <apex:outputText value="{!goal.remark}"/>
+				                    </apex:column>
+			                    </apex:pageBlockTable> 
+	                    	</apex:pageBlockSection>
+	        			</div>
+	        			
+<!-- 	=================================================================Assets Allocated====================================================         -->
+
+					<apex:outputPanel rendered="{!IF(goalList.lstAssests.size>0,true,false)}" >
+					<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Assets Allocated</div>
+			        	<apex:pageBlockSection collapsible="false" columns="12">
+			        	
+				        	<apex:pageBlockTable value="{!goalList.lstAssests}" width="80%" var="allocatedAssets" styleClass="required" style="margin-left:48px;width:800px;">
+				        	
+				        		<apex:column headerValue="Type" width="15%">
+			                        <apex:outputText value="{!allocatedAssets.Type}"/>
+			                        <apex:facet name="footer"><apex:outputText value="Total"/></apex:facet>
+			                    </apex:column>
+			                    <apex:column headerValue="Description" width="15%">
+			                        <apex:outputText value="{!allocatedAssets.Description}" style="width:200px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Owner" style="width:80px;">
+			                        <apex:outputText value="{!allocatedAssets.owner}"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Allocated Amount" style="text-align:right;">
+	                    			<apex:outputText value="{0, number, ,##,##0}" style="text-align:right;">
+	                                     <apex:param value="{!allocatedAssets.allocatedAmount}"/>
+	                                </apex:outputText>
+	                                <apex:facet name="footer">
+                                    	<apex:outputText value="{0, number, ,##,##0}" style="float:right;" styleClass="textStyle">
+                                             <apex:param value="{!goalList.AssetsTotal}"/>
+                                    	</apex:outputText>
+                                    </apex:facet>
+			                    </apex:column>
+			                    <apex:column headerValue="Expected Growth rate" style="text-align:center;">
+								 	 <apex:outputText value="{0, number, ##,##0.00}%" rendered="{!((if(allocatedAssets.Type=='Mutual Fund' || allocatedAssets.action=='Liquidate (Align to goal)',false,true)))}">
+                                        <apex:param value="{!allocatedAssets.expectedGrowthRate}"/>
+                                     </apex:outputText>
+                                     <apex:outputText value="{0, number, ##,##0.00}%" rendered="{!((if(allocatedAssets.Type=='Mutual Fund' ||allocatedAssets.action=='Liquidate (Align to goal)',true,false)))}">
+                                        <apex:param value="{!goalList.IRR}"/>
+                                     </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Goal Year Value" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+	                                     <apex:param value="{!allocatedAssets.goalYearValue}"/>
+	                                </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Action to be taken" width="20%">
+			                        <apex:outputText value="{!allocatedAssets.action}"/>
+			                    </apex:column>
+		                     </apex:pageBlockTable> 
+		                     
+	                    </apex:pageBlockSection>
+                    </apex:outputPanel>
+	        
+	        <!-- =====================================================================SIP================================================================== -->                       
+                    
+			        	<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">SIP</div>
+			        	<apex:pageBlockSection collapsible="false" columns="6">
+				        	<apex:pageBlockTable value="{!goalList}" var="goalList" styleClass="required" style="margin-left:48px;width:800px;">
+				        	
+				        		<apex:column headerValue="SIP" style="text-align:center;" width="20%">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                    	<apex:param value="{!goalList.SIP}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Equity Amount" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                    	<apex:param value="{!goalList.equityAmt}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Equity(%)" style="text-align:center;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                        <apex:param value="{!goalList.equityPerc}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Debt Amount" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                        <apex:param value="{!goalList.debtAmt}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Debt(%)" style="text-align:center;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                    	<apex:param value="{!goalList.debtPerc}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Gold Amount" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                    	<apex:param value="{!goalList.goldAmt}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Gold(%)" style="text-align:center;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                    	<apex:param value="{!goalList.goldPerc}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+		                     </apex:pageBlockTable>   
+	                    </apex:pageBlockSection>
+	        
+	        <!-- =====================================================================SIP Funds================================================================== -->                         
+                 <apex:outputPanel id="pageBlockSection4">   
+			        <div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">SIP Funds</div>
+			        <apex:outputPanel id="SipFundOutputPannel">
+			        	<apex:pageBlockSection collapsible="false" columns="6">
+				        	<apex:pageBlockTable value="{!goalList.lstSIPFunds}" var="lstSIPFunds" styleClass="required" style="margin-left:48px;width:800px;">
+				        		
+				        		<apex:column headerValue="Forms Provided" width="10%" style="text-align:center;">
+			                        <apex:facet name="header">Forms <br/> Provided</apex:facet>
+			                        <apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}"  >
+	                    				<apex:outputText value="{!lstSIPFunds.strFormsProvided}" />
+	                   				</apex:outputPanel>
+			                    </apex:column>
+			                    <apex:column headerValue="Assigned To Ops" width="10%" style="text-align:center;">
+			                        <apex:facet name="header">Assigned <br/> To Ops</apex:facet>
+			                        <apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}"  >
+	                        			<apex:outputText value="{!lstSIPFunds.strAssignedToOps}"/>
+	                       			</apex:outputPanel>
+			                    </apex:column>
+			                    <apex:column headerValue="SIP Funds" style="text-align:center;" width="20%">
+			                        <apex:outputText value="{!lstSIPFunds.productName}" style="width:90%;text-align:left;" />
+			                    </apex:column>
+			                    <apex:column headerValue="Transaction Type" style="text-align:center;">
+			                        <apex:outputText value="{!lstSIPFunds.transactionType}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Amount">
+			                        <apex:outputText value="{!lstSIPFunds.amount}" style="width:95%;text-align:left;" />
+                                    <apex:facet name="footer">
+                                    	<apex:outputText value="{0, number, ,##,##0}" style="float:right;" styleClass="textStyle">
+                                             <apex:param value="{!goalList.SIPTotal}"/>
+                                    	</apex:outputText>
+                                    </apex:facet> 
+			                    </apex:column>
+			                    <apex:column headerValue="Installments">
+			                        <apex:outputText value="{!lstSIPFunds.installments}" style="width:95%;text-align:right;padding-right:20px;" >
+                                      </apex:outputText> 
+			                    </apex:column>
+			                    <apex:column headerValue="Category" style="text-align:center;">
+			                        <apex:outputText value="{!lstSIPFunds.category}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Options" style="text-align:center;">
+			                        <apex:outputText value="{!lstSIPFunds.option}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Remark" style="text-align:center;">
+			                    	<apex:outputText value="{!lstSIPFunds.remarks}" style="width:95%;text-align:left;" />
+                                </apex:column>
+			                    <apex:column headerValue="Execution Tracker to be opened" style="text-align:center;">
+			                    	<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+			                        <apex:outputText value="{!lstSIPFunds.executionTracker}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Execution Tracker" style="text-align:center;">
+			                    	<apex:facet name="header">Execution <br/> Tracker</apex:facet>
+			                    	<apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}"  >
+										<apex:outputPanel rendered="{!IF((lstSIPFunds.transactionType == 'New SIP'),true,false)}">
+<!-- 											<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSTPExecutionTracker('{!beanObj.entityId}','{!lstSIPFunds.SIPFundId}', 'GoalSIP')"> -->
+<!-- 												Open -->
+<!-- 											</a> -->
+										 	<a href="EditETforSTP?eid={!beanObj.entityId}&id={!lstSIPFunds.SIPFundId}&type=GoalSIP" 
+									 	 		target="_blank" style="cursor: pointer;text-decoration:underline;"> 
+									 	 		Open
+									 	 	</a>
+										</apex:outputPanel>
+										<apex:outputPanel rendered="{!IF(((lstSIPFunds.transactionType == 'Existing SIP- COB')||(lstSIPFunds.transactionType == 'Existing SIP')),true,false)}">
+<!-- 											<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditHoldCOBExecutionTracker('{!beanObj.entityId}','{!lstSIPFunds.SIPFundId}', 'GoalSIP')"> -->
+<!-- 												Open -->
+<!-- 											</a> -->
+											<a href="EditETforHoldCOB?eid={!beanObj.entityId}&id={!lstSIPFunds.SIPFundId}&type=GoalSIP" 
+													target="_blank" style="cursor: pointer;text-decoration:underline;"> 
+												Open
+											</a>
+										</apex:outputPanel>
+						            </apex:outputPanel>
+			                    </apex:column>
+			                    <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;">
+			                    	<apex:outputText value="{!lstSIPFunds.ETStatus}" />
+	                            </apex:column>
+			                    <apex:column headerValue="Related Records" style="text-align:center;">
+			                    	<apex:facet name="header">Related <br/> Records</apex:facet>
+			                    	<apex:outputPanel rendered="{!IF(lstSIPFunds.executionTracker == 'Yes',true,false)}" >
+									   <a href="" style="cursor: pointer;text-decoration:underline;" 
+										onClick="javascript:return  openRelatedExecutionTracker('{!lstSIPFunds.SIPFundId}','SIP')">
+										View
+									   </a>
+					               </apex:outputPanel>
+			                    </apex:column>
+		                     </apex:pageBlockTable>  
+	                    </apex:pageBlockSection>
+	                    </apex:outputPanel>
+	                </apex:outputPanel>    
+	                    
+	               
+            
+<!-- =====================================================================Lumpsum================================================================== -->                       
+			        	
+			        	<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Lumpsum</div>
+			        	<apex:pageBlockSection collapsible="false" columns="6">
+				        	<apex:pageBlockTable value="{!goalList}" var="goalList"  styleClass="required" style="margin-left:48px;width:800px;">
+				        	
+				        		<apex:column headerValue="Lumpsum" style="text-align:center;" width="20%">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                         <apex:param value="{!goalList.lumpsum}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Equity Amount" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                    	<apex:param value="{!goalList.lumpsumEquityAmt}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Equity(%)" style="text-align:center;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                    	<apex:param value="{!goalList.lumpsumEquityPerc}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Debt Amount" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                    	<apex:param value="{!goalList.lumpsumDebtAmt}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Debt(%)" style="text-align:center;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                        <apex:param value="{!goalList.lumpsumDebtPerc}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Gold Amount" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                    	<apex:param value="{!goalList.lumpsumGoldAmt}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Gold(%)" style="text-align:center;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                    	<apex:param value="{!goalList.lumpsumGoldPerc}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+		                     </apex:pageBlockTable>   
+	                    </apex:pageBlockSection>
+	                    
+<!-- =====================================================================Lumpsum Funds================================================================== -->                         
+                <apex:outputPanel id="pageBlockSection5">   
+                   <div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Lumpsum Funds</div>
+                   <apex:outputPanel id="LumpsumFundOutputPannel" style="margin-left:100px;">
+			        	
+			        	<apex:pageBlockSection collapsible="false" columns="6">
+				        	<apex:pageBlockTable value="{!goalList.lstLumpsumFunds}" var="lumpsumFunds" styleClass="required" style="margin-left:48px;">
+				        		
+				        		<apex:column headerValue="Forms Provided" width="8%" style="text-align:center;">
+			                        <apex:facet name="header">Forms <br/> Provided</apex:facet>
+			                        <apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}"  >
+	                    				<apex:outputText value="{!lumpsumFunds.strFormsProvided}" />
+	                   				</apex:outputPanel>
+			                    </apex:column>
+			                    <apex:column headerValue="Assigned To Ops" width="8%" style="text-align:center;">
+			                        <apex:facet name="header">Assigned <br/> To Ops</apex:facet>
+			                        <apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}"  >
+	                        			<apex:outputText value="{!lumpsumFunds.strAssignedToOps}"/>
+	                       			</apex:outputPanel>
+			                    </apex:column>
+			                    <apex:column headerValue="Lumpsum Funds" width="20%">
+			                        <apex:outputText value="{!lumpsumFunds.lumpsumProductName}" style="width:90%;text-align:left;" />
+			                    </apex:column>
+			                    <apex:column headerValue="Transaction Type" style="text-align:center;">
+			                    	<apex:facet name="header">Transaction <br/> Type</apex:facet>
+			                        <apex:outputText value="{!lumpsumFunds.lumpsumTransactionType}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Fund">
+			                        <apex:outputText value="{!lumpsumFunds.lumpsumFund}" style="width:95%;text-align:left;" /> 
+			                    </apex:column>
+			                    <apex:column headerValue="Amount" style="text-align:right;">
+			                        <apex:outputText value="{!lumpsumFunds.lumpsumAmount}" style="width:95%;" 	/>
+                                    <apex:facet name="footer"> 
+                                    	<apex:outputText value="{0, number, ,##,##0}" style="float:right;" styleClass="textStyle">
+                                             <apex:param value="{!goalList.LumpsumTotal}"/>
+                                    	</apex:outputText>
+                                    </apex:facet>
+			                    </apex:column>
+			                    <apex:column headerValue="Installments">
+			                        <apex:outputText value="{!lumpsumFunds.lumpsumInstallments}" style="width:95%;" />
+			                    </apex:column>
+			                    <apex:column headerValue="Amount Per Installments">
+			                    	<apex:facet name="header">Amount Per <br/> Installments</apex:facet>
+			                        <apex:outputText value="{!lumpsumFunds.lumpsumAmountPerInstall}" style="width:95%;" />
+			                    </apex:column>
+			                    <apex:column headerValue="Category" style="text-align:center;">
+			                        <apex:outputText value="{!lumpsumFunds.lumpsumCategory}" style="width:95%;" />
+			                    </apex:column>
+			                    <apex:column headerValue="Option" style="text-align:center;">
+			                        <apex:outputText value="{!lumpsumFunds.lumpsumOption}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Remarks" style="text-align:left;">
+			                        <apex:outputText value="{!lumpsumFunds.lumpsumRemarks}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Execution Tracker to be opened" style="text-align:center;">
+			                    	<apex:facet name="header">Execution <br/> Tracker To<br/> Be Opened</apex:facet>
+			                        <apex:outputText value="{!lumpsumFunds.lumpsumExecutionTracker}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Execution Tracker" style="text-align:center;">
+			                    	<apex:facet name="header">Execution <br/> Tracker </apex:facet>
+			                    	<apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}"  >
+										<apex:outputPanel rendered="{!IF(((lumpsumFunds.lumpsumTransactionType == 'Lumpsum') || (lumpsumFunds.lumpsumTransactionType == 'STP To') || (lumpsumFunds.lumpsumTransactionType == 'STP From')),true,false)}">
+<!-- 											<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSTPExecutionTracker('{!beanObj.entityId}','{!lumpsumFunds.LumpsumFundId}', 'GoalLumpsum')"> -->
+<!-- 												Open -->
+<!-- 											</a> -->
+										 	<a href="EditETforSTP?eid={!beanObj.entityId}&id={!lumpsumFunds.LumpsumFundId}&type=GoalLumpsum" 
+									 	 		target="_blank" style="cursor: pointer;text-decoration:underline;"> 
+									 	 		Open
+									 	 	</a>
+										</apex:outputPanel>
+										 <apex:outputPanel rendered="{!IF(((lumpsumFunds.lumpsumTransactionType == 'Switch To') ||(lumpsumFunds.lumpsumTransactionType == 'Switch From')),true,false)}">
+<!-- 											<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSwitchExecutionTracker('{!beanObj.entityId}','{!lumpsumFunds.LumpsumFundId}', 'GoalLumpsum')"> -->
+<!-- 												Open -->
+<!-- 										   	</a> -->
+										   	<a href="EditETforSwitch?eid={!beanObj.entityId}&id={!lumpsumFunds.LumpsumFundId}&type=GoalLumpsum" 
+										 			target="_blank" style="cursor: pointer;text-decoration:underline;">  
+										 		Open 
+										 	</a>
+								    	</apex:outputPanel>
+								    	<apex:outputPanel rendered="{!IF(((lumpsumFunds.lumpsumTransactionType == 'Hold') ||(lumpsumFunds.lumpsumTransactionType == 'Hold - COB')),true,false)}">
+<!-- 											<a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditHoldCOBExecutionTracker('{!beanObj.entityId}','{!lumpsumFunds.LumpsumFundId}', 'GoalLumpsum')"> -->
+<!-- 												Open -->
+<!-- 										   	</a> -->
+										   	<a href="EditETforHoldCOB?eid={!beanObj.entityId}&id={!lumpsumFunds.LumpsumFundId}&type=GoalLumpsum" 
+													target="_blank" style="cursor: pointer;text-decoration:underline;"> 
+												Open
+											</a>
+									    </apex:outputPanel>
+						            </apex:outputPanel>
+			                    </apex:column>
+			                    <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;">
+			                    	<apex:outputText value="{!lumpsumFunds.ETStatus}" />
+	                            </apex:column>
+			                    <apex:column headerValue="Related Records" style="text-align:center;">
+			                    	<apex:facet name="header">Related <br/> Records</apex:facet>
+			                    	<apex:outputPanel rendered="{!IF(lumpsumFunds.lumpsumExecutionTracker == 'Yes',true,false)}">
+									   <a href="" style="cursor: pointer;text-decoration:underline;" 
+										onClick="javascript:return  openRelatedExecutionTracker('{!lumpsumFunds.LumpsumFundId}','Lumpsum')">
+										View
+									   </a>
+					               </apex:outputPanel>
+			                    </apex:column>
+		                     </apex:pageBlockTable>   
+	                    </apex:pageBlockSection>
+	                </apex:outputPanel>
+	               		</apex:outputPanel>
+	<!-- =====================================================================End of Lumpsum Funds================================================================== -->                    
+	                    
+	        		</apex:pageBlockSection>
+	        	</apex:repeat>
+	        </apex:pageBlockSection>
+
+<!-- ================================================SUMMARY OF RECOMMENDED INVESTMENTS (MUTUAL FUNDS)================================================================================ -->              
+
+<!--        =========================================================SIP Summary ========================================================        -->
+        	<apex:outputPanel id="pageBlockSectionSummary">
+              	<apex:pageBlockSection title="SUMMARY OF RECOMMENDED INVESTMENTS (MUTUAL FUNDS)" collapsible="true" columns="1" id="section6"><br/>
+              		<div class="subHeader" style="width:85%;padding-left:10px;margin-left:40px;background-color:#A9C5EB;">SIP SUMMARY</div>
+              			<apex:pageBlockSection collapsible="true" columns="1" >
+              				<apex:repeat value="{!mapSIPFundsAlreadyExists}" var="sipFundsMap"> 
+		                		<apex:variable var="total" value="{!0}"/>
+		                		<apex:repeat value="{!mapSIPFundsAlreadyExists[sipFundsMap]}" var="varSipFundsMap">
+										<apex:variable var="total" value="{!total + ROUND(varSipFundsMap.amount,0)}"/>		                			
+		                		</apex:repeat>
+	                			<div class="subHeader" style="width:15%;padding-left:10px;margin-left:40px;background-color:#A9C5EB;">{!sipFundsMap}</div>
+		               			<apex:pageBlockTable value="{!mapSIPFundsAlreadyExists[sipFundsMap]}" var="sipFundsObj" styleClass="required" style="margin-left:48px;width:850px;">
+<!-- 				        	<apex:pageBlockTable value="{!lstSummarySIPFunds}" var="lstSIPFunds" styleClass="required" style="margin-left:48px;width:800px;"> -->
+					        		<apex:column headerValue="SIP Summary"  width="20%" style="text-align:left;">
+				                        <apex:outputText value="{!sipFundsObj.productName}"/>
+				                        <apex:facet name="footer"><apex:outputText value="Total"/></apex:facet>
+				                    </apex:column>
+				                    <apex:column headerValue="Transaction Type" width="12%" style="text-align:left;">
+				                        <apex:outputText value="{!sipFundsObj.transactionType}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Amount" style="text-align:right;width:15%">
+				                        <apex:outputText value="{0, number, ,##,##0}" style="width:95%;text-align:right;" styleClass="textStyle">
+	                                             <apex:param value="{!sipFundsObj.amount}"/>
+	                                    </apex:outputText>
+	                                    <apex:facet name="footer">
+	                                      	<apex:outputText value="{0, number, ,##,##0}" style="float:right;" styleClass="textStyle">
+	                                             <apex:param value="{!total}"/>
+	                                     	</apex:outputText>
+	                                    </apex:facet>
+				                    </apex:column>
+				                    <apex:column headerValue="Installments" style="text-align:right; width:10%">
+				                        <apex:outputText value="{!sipFundsObj.installments}"/>  
+				                    </apex:column>
+				                    <apex:column headerValue="Category" style="text-align:center;width:10%">
+				                        <apex:outputText value="{!sipFundsObj.category}"/>  
+				                    </apex:column>
+				                    <apex:column headerValue="Option" style="text-align:left;width:10%">
+				                        <apex:outputText value="{!sipFundsObj.option}"/>  
+				                    </apex:column>
+				                    <apex:column headerValue="Remarks" style="text-align:left;padding-right:10px;">
+				                        <apex:outputText value="{!sipFundsObj.remarks}"/>  
+				                    </apex:column>
+								</apex:pageBlockTable>
+							</apex:repeat>
+						</apex:pageBlockSection>
+					
+<!--        =========================================================Lumpsum Summary ========================================================        -->					
+						<br/>
+						<div class="subHeader" style="width:85%;padding-left:10px;margin-left:40px;background-color:#A9C5EB;">LUMPSUM SUMMARY</div>
+				    	<apex:pageBlockSection collapsible="true" columns="1" >
+					    	<apex:repeat value="{!mapLumpsumFundsAlreadyExists}" var="lumpsumFundsMap"> 
+					    		<apex:variable var="total" value="{!0}"/>
+			                		<apex:repeat value="{!mapLumpsumFundsAlreadyExists[lumpsumFundsMap]}" var="varLumpsumFundsMap">
+											<apex:variable var="total" value="{!total + ROUND(varLumpsumFundsMap.Amount__c,0)}"/>		                			
+			                		</apex:repeat>
+	                			<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">{!lumpsumFundsMap}</div>
+					        	<apex:pageBlockTable value="{!mapLumpsumFundsAlreadyExists[lumpsumFundsMap]}" var="lumpsumFundsObj" styleClass="required" style="margin-left:48px;width:850px;">
+					        		<apex:column headerValue="Lumpsum Summary"  width="20%" style="text-align:left;">
+				                        <apex:outputText value="{!lumpsumFundsObj.Product_Name__c}"/>
+				                        <apex:facet name="footer"><apex:outputText value="Total"/></apex:facet>
+				                    </apex:column>
+				                    <apex:column headerValue="Transaction Type" width="12%">
+				                        <apex:outputText value="{!lumpsumFundsObj.Transaction_Type__c}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Fund" style="text-align:center;width:15%">
+				                        <apex:outputText value="{!lumpsumFundsObj.Fund__c}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Amount" style="text-align:right;">
+				                        <apex:outputText value="{0, number, ,##,##0}" style="width:95%;text-align:left;" styleClass="textStyle">
+	                                             <apex:param value="{!lumpsumFundsObj.Amount__c}"/>
+	                                      </apex:outputText>
+	                                      <apex:facet name="footer">
+	                                      <apex:outputText value="{0, number, ,##,##0}" style="float:right;" styleClass="textStyle">
+	                                             <apex:param value="{!total}"/>
+	                                      </apex:outputText></apex:facet>
+				                    </apex:column>
+				                    <apex:column headerValue="Installments" style="text-align:right;width:10%">
+				                        <apex:outputText value="{!lumpsumFundsObj.Installments__c}"/>  
+				                    </apex:column>
+	<!-- 			                    <apex:column headerValue="Amount per Installments" style="text-align:right; padding-right:15px;"> -->
+	<!-- 			                        <apex:outputText value="{!lstLumpsumFunds.Amount_Per_Installment__c}"/>   -->
+	<!-- 			                    </apex:column> -->
+				                    <apex:column headerValue="Category" style="text-align:center;width:10%">
+				                        <apex:outputText value="{!lumpsumFundsObj.Category__c}"/>  
+				                    </apex:column>
+				                    <apex:column headerValue="Option" style="text-align:left;width:10%">
+				                        <apex:outputText value="{!lumpsumFundsObj.Option__c}"/>  
+				                    </apex:column>
+				                    <apex:column headerValue="Remarks" style="text-align:left;">
+				                        <apex:outputText value="{!lumpsumFundsObj.Remarks__c}"/>  
+				                    </apex:column>
+								</apex:pageBlockTable>
+							</apex:repeat>
+						</apex:pageBlockSection>
+				</apex:pageBlockSection>
+				
+			</apex:outputPanel>
+			
+			
+<!-- ================================================RECOMMNEDATION ON EXISTING INSURANCE================================================================ -->       
+        
+        <apex:outputpanel rendered="{!beanObj.lstRecommendedInsurance.size > 0}">
+       	<apex:pageBlockSection title="RECOMMENDATION ON EXISTING INSURANCE" collapsible="true" columns="1" id="section2">
+           	<div class="space">
+                <apex:outputPanel >
+                <div style="overflow:auto;height:100%;width:900px; margin-left:50px;"> 
+                    <table  width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable7">
+                    <tr >
+                        <td class="tableHeaderLight"  style="font-size:14px;font-weight:bold;text-align:left;width:20%;background-color:#A9C5EB;">Policy Number</td>
+                        <apex:repeat id="hdpolicyNumber" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.policyNumber}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Insured</td>
+                        <apex:repeat id="hdinsured" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.insured}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Nominee</td>
+                        <apex:repeat id="hdnominee" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.nominee}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Insurance Company</td>
+                        <apex:repeat id="hdinsuranceCompany" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.insuranceCompany}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Policy Type</td>
+                        <apex:repeat id="hdpolicyType" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.policyType}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Policy Name</td>
+                        <apex:repeat id="hdpolicyName" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.policyName}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Commencement Date</td>
+                        <apex:repeat id="hdcommencementDate" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" style="text-align:right;" styleClass="textStyle">
+                                    <apex:param value="{!recommendedInsurance.commencementDate}" /> 
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Next Premium Due Date</td>
+                        <apex:repeat id="hdnextPremiumDueDate" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" style="text-align:right;" styleClass="textStyle">
+                                    <apex:param value="{!recommendedInsurance.nextPremiumDueDate}" /> 
+                                </apex:outputText>
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Death Benefit (Rs.)</td>
+                        <apex:repeat id="hddeathBenefitRs" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.deathBenefitRs}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Premium Amount (Rs.)</td>
+                        <apex:repeat id="hdpremiumAmountRs" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.premiumAmountRs}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Premium Payment Frequency</td>
+                        <apex:repeat id="hdpremiumPaymentFrequency" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.premiumPaymentFrequency}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Tenure of Insurance</td>
+                        <apex:repeat id="hdtenureofInsurance" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.tenureofInsurance}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Premium Paying Term</td>
+                        <apex:repeat id="hdpremiumPayingTerm" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.premiumPayingTerm}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Surrender Cash Value</td>
+                        <apex:repeat id="hdsurrenderCashValue" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.surrenderCashValue}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Current Amount</td>
+                        <apex:repeat id="hdcurrentAmount" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{0, number, ,##,##0}" styleClass="textStyle" >
+                                      <apex:param value="{!recommendedInsurance.currentAmount}"/>
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Maturity Amount</td>
+                        <apex:repeat id="hdmaturityAmount" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                 <apex:outputText value="{0, number, ,##,##0}" styleClass="textStyle" >
+                                         <apex:param value="{!recommendedInsurance.maturityAmount}"/>
+                                  </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Action to be taken</td>
+                        <apex:repeat id="hdaction" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.action}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Execution Tracker<br/> to be Opened</td>
+                        <apex:repeat id="hdrecIns" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+	                             <apex:outputPanel rendered="{!IF(((recommendedInsurance.action == 'To be grown till maturity but stop saving more')|| (recommendedInsurance.action == 'Liquidate (Align to goal)')),true,false)}">
+	                            	<apex:outputText value="{!recommendedInsurance.recInsuranceExecutionTracker}"  styleClass="textStyle"/>
+	                            </apex:outputPanel>
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                     <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Execution Tracker</td>
+                        <apex:repeat id="hdrecommendedInsurance" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+							<td style="text-align:right;">	
+	                            <apex:outputPanel rendered="{!IF(recommendedInsurance.recInsuranceExecutionTracker == 'Yes',true,false)}"  >
+<!-- 		                            <a href="" style="cursor: pointer;text-decoration:underline;" onClick="javascript:return  openEditSurrenderInsuranceExecutionTracker('{!beanObj.entityId}','{!recommendedInsurance.approveActionPlanId}', 'Recommended Insurance')"> -->
+<!-- 										Open -->
+<!-- 									</a> -->
+									<a href="EditETforSurrenderLifeInsurance?eid={!beanObj.entityId}&id={!recommendedInsurance.approveActionPlanId}&type={!$Label.Surrender_Insurance}" 
+								 				target="_blank" style="cursor: pointer;text-decoration:underline;" > 
+								 		Open 
+								 	</a>
+								</apex:outputPanel>
+							</td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Assigned To Ops</td>
+                        <apex:repeat id="hdrecAssignToOps" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+							<td style="text-align:right;">	
+	                            <apex:outputPanel rendered="{!IF(recommendedInsurance.recInsuranceExecutionTracker == 'Yes',true,false)}"  >
+                               			{!recommendedInsurance.strAssignedToOps}
+								</apex:outputPanel>
+							</td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">ET Status</td>
+                        <apex:repeat id="hdrecETStatus" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+							<td class="tableHeaderLight" style="text-align:right;FONT-WEIGHT: bold;background-color:#A9C5EB;">
+                           		<apex:outputText value="{!recommendedInsurance.ETStatus}" />
+                       		</td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Related Records</td>
+                        <apex:repeat id="hdrecViewAssignedRecs" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+							<td style="text-align:right;">	
+	                            <apex:outputPanel rendered="{!IF(recommendedInsurance.recInsuranceExecutionTracker == 'Yes',true,false)}"  >
+								   <a href="" style="cursor: pointer;text-decoration:underline;" 
+									onClick="javascript:return  openRelatedExecutionTracker('{!recommendedInsurance.approveActionPlanId}','{!$Label.Surrender_Insurance}')">
+									View
+								   </a>
+								</apex:outputPanel>
+							</td>
+                        </apex:repeat>
+                    </tr>
+                    </table>
+                </div>
+            </apex:outputPanel>
+         </div>
+         </apex:pageBlockSection>
+         
+		</apex:outputpanel>	
+<!-- ===================================================================RECOMMENDED INSURANCE=================================================================== --> 
+
+<!--        =========================================================LIFE INSURANCE========================================================= -->
+		<apex:outputPanel id="pageBlockSection6">
+        	<apex:pageBlockSection title=" RECOMMENDED INSURANCE" collapsible="true" columns="1" id="section3"><br/>
+        	
+        		<apex:outputPanel rendered="{!isLifeInsurancePlanning}">
+           			<div class="subHeader" style="width:90%;padding-left:10px;margin-left:40px;background-color:#A9C5EB;">LIFE INSURANCE</div><br/>
+                	<apex:outputPanel id="LifeInsuranceOutputPannel">
+                		<apex:pageBlockSection collapsible="true" columns="1" >
+				        	<apex:pageBlockTable value="{!beanObj.lstLifeInsurance}" var="liObj" styleClass="required" style="margin-left:48px; width:900px;">
+				        	
+				        		<apex:column headerValue="Assigned To Ops" style="text-align:center;">
+				        			<apex:facet name="header">Assigned <br/>To Ops</apex:facet>
+				        			<apex:outputPanel rendered="{!IF(liObj.executionTracker == 'Yes',true,false)}"  >
+                               			<apex:outputText value="{!liObj.strAssignedToOps}"/>
+                            		</apex:outputPanel>
+			                    </apex:column>
+				        		<apex:column headerValue="Insured" style="text-align:left;">
+			                        <apex:outputText value="{!liObj.insured}"/>
+			                    </apex:column>
+<!-- 			                    <apex:column headerValue="Suggested Cover" width="20%" style="text-align:right;"> -->
+<!-- 			                        <apex:outputText value="{!liObj.strSuggestedCover}"/> -->
+<!-- 			                    </apex:column> -->
+			                    <apex:column headerValue="Sum Assured (Rs.)" width="20%" style="text-align:right;padding-right:5px;">
+			                    	<apex:facet name="header">Sum Assured <br/>(Rs.)</apex:facet>
+			                        <apex:outputText value="{!liObj.sumAssured}" style="width:50px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Policy Name" width="20%">
+			                        <apex:outputText value="{!liObj.policyName}"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Premium Amount" style="text-align:right;padding-right:5px;">
+			                    	<apex:facet name="header">Premium <br/>Amount</apex:facet>
+			                        <apex:outputText value="{0, number, ,##,##0}" style="width:80px;height:16px;" styleclass="standardFontStyle">
+                                         <apex:param value="{!liObj.premiumAmount}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Policy Type" style="text-align:left;">
+			                        <apex:outputText value="{!liObj.policyType}"/>  
+			                    </apex:column>
+			                    <apex:column headerValue="Tenure of insurance" style="text-align:right;">
+			                    	<apex:facet name="header">Tenure of <br/>insurance</apex:facet>
+			                        <apex:outputText value="{!liObj.tenureOfInsurance}"/>  
+			                    </apex:column>
+			                    <apex:column headerValue="Execution Tracker to be opened" style="text-align:center;">
+			                    	<apex:facet name="header">Execution Tracker <br/>to be opened</apex:facet>
+			                        <apex:outputText value="{!liObj.executionTracker}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Execution Tracker" style="text-align:center;">
+			                    	<apex:facet name="header">Execution <br/>Tracker</apex:facet>
+			                    	<apex:outputPanel rendered="{!IF(liObj.executionTracker == 'Yes',true,false)}"  >
+<!--                                     	<a href="" style="cursor: pointer;text-decoration:underline" onClick="javascript:return  openEditETforLifeInsurance('{!beanObj.entityId}','{!liObj.actionPlanLifeInsuranceID}', 'Life Insurance')"> -->
+<!-- 											Open -->
+<!-- 										</a> -->
+										<a href="EditETforLifeInsurance?eid={!beanObj.entityId}&id={!liObj.actionPlanLifeInsuranceID}&type=Life Insurance" 
+									 		target="_blank" style="cursor: pointer;text-decoration:underline;" >
+											Open
+								 		</a>
+						            </apex:outputPanel>
+			                     </apex:column>
+			                     <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;">
+			                        <apex:outputText value="{!liObj.ETStatus}"/>  
+			                    </apex:column>
+			                     <apex:column headerValue="Related Records" style="text-align:center;">
+			                     	<apex:facet name="header">Related <br/>Records</apex:facet>
+			                     	<apex:outputPanel rendered="{!IF(liObj.executionTracker == 'Yes',true,false)}">
+									   <a href="" style="cursor: pointer;text-decoration:underline;" 
+										onClick="javascript:return  openRelatedExecutionTracker('{!liObj.actionPlanLifeInsuranceID}','Life Insurance')">
+										View
+									   </a>
+			               			</apex:outputPanel>
+			                     </apex:column>
+							</apex:pageBlockTable>
+							<apex:pageBlockTable value="{!beanObj.lstNewLifeInsurance}" var="liObj" styleClass="required" style="margin-left:48px; width:900px;">
+				        	
+				        		<apex:column headerValue="Insured" style="text-align:center;">
+				        			<apex:facet name="header">Assigned <br/>To Ops</apex:facet>
+				        			<apex:outputPanel rendered="{!IF(liObj.executionTracker == 'Yes',true,false)}"  >
+                               			<apex:outputText value="{!liObj.strAssignedToOps}"/>
+                            		</apex:outputPanel>
+			                    </apex:column>
+				        		<apex:column headerValue="Insured" style="text-align:left;">
+			                        <apex:outputText value="{!liObj.insured}"/>
+			                    </apex:column>
+<!-- 			                    <apex:column headerValue="Suggested Cover" width="20%" style="text-align:right;"> -->
+<!-- 			                        <apex:outputText value="{!liObj.suggestedCover}"/> -->
+<!-- 			                    </apex:column> -->
+			                    <apex:column headerValue="Sum Assured (Rs.)" width="20%" style="text-align:right;padding-right:5px;">
+			                    	<apex:facet name="header">Sum Assured <br/>(Rs.)</apex:facet>
+			                        <apex:outputText value="{!liObj.sumAssured}" style="width:50px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Policy Name" width="20%">
+			                        <apex:outputText value="{!liObj.policyName}"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Premium Amount" style="text-align:right;padding-right:5px;">
+			                    	<apex:facet name="header">Premium <br/>Amount</apex:facet>
+			                        <apex:outputText value="{0, number, ,##,##0}" style="width:80px;height:16px;" styleclass="standardFontStyle">
+                                         <apex:param value="{!liObj.premiumAmount}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Policy Type" style="text-align:left;">
+			                        <apex:outputText value="{!liObj.policyType}"/>  
+			                    </apex:column>
+			                    <apex:column headerValue="Tenure of insurance" style="text-align:right;">
+			                    	<apex:facet name="header">Tenure of <br/>insurance</apex:facet>
+			                        <apex:outputText value="{!liObj.tenureOfInsurance}"/>  
+			                    </apex:column>
+			                    <apex:column headerValue="Execution Tracker to be opened" style="text-align:center;">
+			                    	<apex:facet name="header">Execution Tracker <br/>to be opened</apex:facet>
+			                        <apex:outputText value="{!liObj.executionTracker}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Execution Tracker" style="text-align:center;">
+			                    	<apex:facet name="header">Execution <br/>Tracker</apex:facet>
+			                    	<apex:outputPanel rendered="{!IF(liObj.executionTracker == 'Yes',true,false)}"  >
+<!--                                     	<a href="" style="cursor: pointer;text-decoration:underline" onClick="javascript:return  openEditETforLifeInsurance('{!beanObj.entityId}','{!liObj.actionPlanLifeInsuranceID}', 'Life Insurance')"> -->
+<!-- 											Open -->
+<!-- 										</a> -->
+										<a href="EditETforLifeInsurance?eid={!beanObj.entityId}&id={!liObj.actionPlanLifeInsuranceID}&type=Life Insurance" 
+									 		target="_blank" style="cursor: pointer;text-decoration:underline;" >
+											Open
+								 		</a>
+						            </apex:outputPanel>
+			                     </apex:column>
+			                     <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;">
+			                        <apex:outputText value="{!liObj.ETStatus}"/>  
+			                    </apex:column>
+			                     <apex:column headerValue="Related Records" style="text-align:center;">
+			                     	<apex:facet name="header">Related <br/>Records</apex:facet>
+			                     	<apex:outputPanel rendered="{!IF(liObj.executionTracker == 'Yes',true,false)}">
+									   <a href="" style="cursor: pointer;text-decoration:underline;" 
+										onClick="javascript:return  openRelatedExecutionTracker('{!liObj.actionPlanLifeInsuranceID}','Life Insurance')">
+										View
+									   </a>
+			               			</apex:outputPanel>
+			                     </apex:column>
+							</apex:pageBlockTable>
+<!-- 							<br/> -->
+							<apex:pageBlockTable value="{!beanObj.lstLifeInsuranceRemark}" var="liObj" styleClass="required" style="margin-left:48px; width:850px;">
+				        		<apex:column headerValue="Insured" style="text-align:left;width:18%">
+			                        <apex:outputText value="{!liObj.insured}"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Remarks" style="text-align:left;width:80%;">
+			                        <apex:outputText value="{!liObj.insuranceRemark}" escape="false"/>
+			                    </apex:column>
+			                </apex:pageBlockTable>
+							<br/>
+						</apex:pageBlockSection>
+					</apex:outputPanel>
+				</apex:outputPanel>	
+				
+<!--        =========================================================GENERAL INSURANCE========================================================= -->
+
+				<apex:outputPanel rendered="{!isGeneralInsurancePlanning}">
+					<div class="subHeader" style="width:90%;padding-left:10px;margin-left:40px;background-color:#A9C5EB;">GENERAL INSURANCE</div><br/>
+					<apex:outputPanel id="GeneralInsuranceOutputPannel">
+                		<apex:pageBlockSection collapsible="true" columns="1" >
+				        	<apex:pageBlockTable value="{!beanObj.lstGeneralInsurance}" var="giObj" styleClass="required" style="margin-left:48px;width:900px;">
+				        	
+				        		<apex:column headerValue="Assigned to Ops" style="text-align:center;">
+				        			<apex:facet name="header">Assigned <br/>To Ops</apex:facet>
+				        			<apex:outputPanel rendered="{!IF(giObj.executionTracker == 'Yes',true,false)}"  >
+                               			<apex:outputText value="{!giObj.strAssignedToOps}"/>
+                            		</apex:outputPanel>
+			                    </apex:column>
+				        		<apex:column headerValue="Insured"  width="20%" style="text-align:left;">
+			                        <apex:outputText value="{!giObj.insured}"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Policy Type" width="20%">
+			                        <apex:outputText value="{!giObj.policyType}" style="width:80px;"/>
+			                    </apex:column>
+<!-- 			                    <apex:column headerValue="Policy Name" width="20%"> -->
+<!-- 			                        <apex:outputText value="{!giObj.policyName}"/> -->
+<!-- 			                    </apex:column> -->
+			                    <apex:column headerValue="Product Name" width="20%" style="text-align:left;">
+			                        <apex:outputText value="{!giObj.productName}"/>  
+			                    </apex:column>
+			                    <apex:column headerValue="Sum Assured (Rs.)" style="text-align:right;padding-right:5px;">
+			                    	<apex:facet name="header">Sum Assured <br/>(Rs.)</apex:facet>
+			                        <apex:outputText value="{!giObj.sumAssured}"/>  
+			                    </apex:column>
+			                    <apex:column headerValue="Premium Amount" style="text-align:right;padding-right:5px;">
+			                        <apex:outputText value="{0, number, ,##,##0}" style="width:80px;height:16px;" styleclass="standardFontStyle">
+		                                <apex:param value="{!giObj.premiumAmount}"/>
+		                            </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Execution Tracker to be opened" style="text-align:center;">
+			                    	<apex:facet name="header">Execution Tracker <br/> to be opened</apex:facet>
+			                        <apex:outputText value="{!giObj.executionTracker}" />
+			                    </apex:column>
+			                    <apex:column headerValue="Execution Tracker" style="text-align:center;">
+			                    	<apex:facet name="header">Execution<br/>Tracker</apex:facet>
+			                    	<apex:outputPanel rendered="{!IF(giObj.executionTracker == 'Yes',true,false)}"  >
+<!--                                     	<a href="" style="cursor: pointer;text-decoration:underline" 
+											onClick="javascript:return  openEditETforGeneralInsurance('{!beanObj.entityId}','{!giObj.actionPlanGeneralInsuranceID}', 'General Insurance')">  -->
+<!-- 											Open -->
+<!-- 										</a>  -->
+										<a href="EditETforGeneralInsurance?eid={!beanObj.entityId}&id={!giObj.actionPlanGeneralInsuranceID}&type=General Insurance" 
+									 		target="_blank" style="cursor: pointer;text-decoration:underline;" >
+											Open
+								 		</a>
+						            </apex:outputPanel>
+			                     </apex:column>
+			                     <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;">
+				        			<apex:outputText value="{!giObj.ETStatus}" />
+				        		 </apex:column>
+			                     <apex:column headerValue="Related Records" style="text-align:center;">
+			                     	<apex:facet name="header">Related <br/>Records</apex:facet>
+			                     	<apex:outputPanel rendered="{!IF(giObj.executionTracker == 'Yes',true,false)}">
+									   <a href="" style="cursor: pointer;text-decoration:underline;" 
+										onClick="javascript:return  openRelatedExecutionTracker('{!giObj.actionPlanGeneralInsuranceID}','General Insurance')">
+										View
+									   </a>
+					               </apex:outputPanel>
+			                     </apex:column>
+							</apex:pageBlockTable>
+							
+							<apex:outputPanel rendered="{!IF(beanObj.lstNewGeneralInsurance.size>0,true,false)}">
+								<apex:pageBlockTable value="{!beanObj.lstNewGeneralInsurance}" var="giObj" styleClass="required" style="margin-left:48px;width:900px;">
+					        	
+					        		<apex:column headerValue="Insured" style="text-align:center;">
+					        			<apex:facet name="header">Assigned <br/>To Ops</apex:facet>
+					        			<apex:outputPanel rendered="{!IF(giObj.executionTracker == 'Yes',true,false)}"  >
+	                               			<apex:outputText value="{!giObj.strAssignedToOps}"/>
+	                            		</apex:outputPanel>
+				                    </apex:column>
+					        		<apex:column headerValue="Insured"  width="20%" style="text-align:left;">
+				                        <apex:outputText value="{!giObj.insured}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Policy Type" width="20%">
+				                        <apex:outputText value="{!giObj.policyType}" style="width:80px;"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Product Name" width="20%" style="text-align:left;">
+				                        <apex:outputText value="{!giObj.productName}"/>  
+				                    </apex:column>
+				                    <apex:column headerValue="Sum Assured (Rs.)" width="20%" style="text-align:right;padding-right:5px;">
+				                    	<apex:facet name="header">Sum Assured <br/>(Rs.)</apex:facet>
+				                        <apex:outputText value="{!giObj.sumAssured}"/>  
+				                    </apex:column>
+				                    <apex:column headerValue="Premium Amount" width="20%" style="text-align:right;padding-right:5px;">
+				                        <apex:outputText value="{0, number, ,##,##0}" style="width:80px;height:16px;" styleclass="standardFontStyle">
+			                                <apex:param value="{!giObj.premiumAmount}"/>
+			                            </apex:outputText>
+				                    </apex:column>
+				                    <apex:column headerValue="Execution Tracker to be opened" style="text-align:center;">
+				                    	<apex:facet name="header">Execution Tracker <br/> to be opened</apex:facet>
+				                        <apex:outputText value="{!giObj.executionTracker}" />
+				                    </apex:column>
+				                    <apex:column headerValue="Execution Tracker" style="text-align:center;">
+				                    	<apex:facet name="header">Execution<br/>Tracker</apex:facet>
+				                    	<apex:outputPanel rendered="{!IF(giObj.executionTracker == 'Yes',true,false)}"  >
+<!-- 	                                    	<a href="" style="cursor: pointer;text-decoration:underline" onClick="javascript:return  openEditETforGeneralInsurance('{!beanObj.entityId}','{!giObj.actionPlanGeneralInsuranceID}', 'General Insurance')">  -->
+<!-- 												Open -->
+<!-- 											</a>  -->
+										<a href="EditETforGeneralInsurance?eid={!beanObj.entityId}&id={!giObj.actionPlanGeneralInsuranceID}&type=General Insurance" 
+									 		target="_blank" style="cursor: pointer;text-decoration:underline;" >
+											Open
+								 		</a>
+							            </apex:outputPanel>
+				                     </apex:column>
+				                     <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;">
+					        			<apex:outputText value="{!giObj.ETStatus}" />
+					        		 </apex:column>
+				                     <apex:column headerValue="Related Records" style="text-align:center;">
+				                     	<apex:facet name="header">Related <br/>Records</apex:facet>
+				                     	<apex:outputPanel rendered="{!IF(giObj.executionTracker == 'Yes',true,false)}">
+										   <a href="" style="cursor: pointer;text-decoration:underline;" 
+											onClick="javascript:return  openRelatedExecutionTracker('{!giObj.actionPlanGeneralInsuranceID}','General Insurance')">
+											View
+										   </a>
+						               </apex:outputPanel>
+				                     </apex:column>
+								</apex:pageBlockTable>
+							</apex:outputPanel>
+							
+						</apex:pageBlockSection>
+					</apex:outputPanel>
+				</apex:outputPanel>
+				
+				<div class="space" style="text-align:left;" >
+                     <table style="width:100%;">
+						<tr style="width:100%;">
+           					<td style="width:8%; FONT-FAMILY: Calibri; FONT-SIZE: 15px; FONT-WEIGHT: bold; COLOR: #236EBC;">Remarks : </td>
+           					<td class="test2"><apex:outputText value="{!generalInsuranceRemark}" style="width:300px;height:55px;" escape="false" /></td>
+           				</tr>
+           			</table>
+        		</div>
+            </apex:pageBlockSection>
+		</apex:outputPanel>	             
+	             
+	             
+<!-- ===============================================================SUCCESSION PLANNING================================================================================================== -->
+          
+	         <apex:outputPanel id="pageBlockSection">
+	          	<apex:pageBlockSection title="SUCCESSION PLANNING" collapsible="true" columns="1" id="section4"><br/>
+	                <div class="subHeader" style="width:85%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">WILL</div>
+	                
+	                <apex:outputPanel rendered="{!NOT(bean.entity.Will__c)}"> 
+	                    <ul class="TickList">
+	                        <li> <apex:outputText value=" {!$Label.WillAbsent}"/> 
+	                        </li>
+	                        <li> <apex:outputText value=" {!$Label.WhatIsWill}" escape="false"/> 
+	                        </li>
+	                        <li> <apex:outputPanel rendered="{!IF(bean.spouse.Name!=null,true,false)}"> 
+	                                 <apex:outputText value="{!bean.entity.Name} and {!bean.spouse.Name} should make a Will as per their wish."/> 
+	                             </apex:outputPanel> 
+	                             <apex:outputPanel rendered="{!IF(bean.spouse.Name==null,true,false)}"> 
+	                                 <apex:outputText value=" {!bean.entity.Name} should make a Will as per their wish."/> 
+	                             </apex:outputPanel> 
+	                        </li>
+	                        <li> <apex:outputText value=" {!$Label.WillChanges}" escape="false"/> 
+	                        </li>
+	                        
+	                        <br/>
+                        <apex:outputText style="font-weight:bold;" value="One should consider below mentioned aspects while making a Will and POA." escape="false"/> <br/>
+                        <br/>
+                        <li>
+                             <apex:outputText style="font-weight:bold;" value="Holding pattern of assets : " escape="false"/><br/> 
+                             <apex:outputText value="Joint holding will ensure access to atleast one of you in case there is an emergency need for the money. 
+                             If many investments are singly held there is a possibility that it may remain inaccessible when needed. 
+                             It is good that you have your investments in joint holding.  In case some investments are very old, 
+                             you may want to check the holding pattern and make changes wherever applicable.  However anyone or 
+                             survivor joint holding is not to be confused with ownership. In the event of the demise of one of the holders, 
+                             the other does not become the sole owner, rather the share of the deceased holder will have to be distributed 
+                             accordingly to his Will or the Law."/>
+                        </li>
+                        <br/>
+                        <li>
+                             <apex:outputText style="font-weight:bold;" value="Keeping family informed : " escape="false"/><br/>
+                             <apex:outputText value="Your family for whose use you have accumulated all the assets need to have knowledge 
+                             of what is available and where it is accessible. Preparing a list of all your assets might be a very good idea. 
+                             Better still will be preparing a detailed Will. "/>
+                        </li>
+                        <br/>
+                        <li>
+                             <apex:outputText style="font-weight:bold;" value="Prepare a Will : " escape="false"/> <br/>
+                             <apex:outputText value="A Will is a declaration in a prescribed manner of the intention of the person making it, 
+                             with regard to the matters which he wishes to take effect upon or after his death. This is important to ensure 
+                             that the family and loved ones gain easy access to assets built for them without any legal hassles. 
+                             In this uncertain world, there is no better time than NOW to write the Will."/><br/>
+							<apex:outputText value="Subscribe to our Succession Planning services for preparing a legally sound and comprehensively well thought out 
+							Will from the comforts of your home."/>
+                        </li>
+                        <br/>
+                        <li>
+                             <apex:outputText style="font-weight:bold;" value="Power of Attorney : " escape="false"/> <br/>
+                             <apex:outputText value="A Power of Attorney is a legal right you give someone to act on your behalf in case 
+                             you are not available or in a position to act. This can be general POA to act on all matters or a restricted 
+                             POA to act only under certain circumstances. If you are travelling extensively, authorizing someone to work on 
+                             your behalf in case you cannot do it on your own, will ensure that your work will not be affectedbecause of your 
+                             unavailability. Also in case of a disability, access to your assets will not be denied if a POA is available. 
+                             At the same time a POA in the wrong hands can turn out dangerous. You may want to check the conditions in your 
+                             POA and ensure they are updated and relevant."/>
+                        </li>
+	                    </ul>
+	                </apex:outputPanel>
+	                
+	                 <apex:outputPanel rendered="{!bean.entity.Will__c}"> 
+	                    <ul class="TickList">
+	                        <li> 
+	                             <apex:outputText value=" {!$Label.WillPresent}" escape="false"/> 
+	                        </li>
+	                        <li>
+	                             <apex:outputText value=" {!$Label.WillChanges}" escape="false"/> 
+	                        </li>
+	                        <li>
+	                        	<apex:outputText value="Execution Tracker to be opened? " escape="false"/> 
+			                    <apex:outputText value="{!beanObj.isWillExecutionTracker}"/>
+	                 		</li>
+	                    </ul>
+	                </apex:outputPanel>
+	                
+	                <apex:pageBlockSectionItem >
+	           			<apex:outputText value="Remarks : " style="text-align:left; font-weight:bold;"/>
+	           			<apex:outputText value="{!successionPlanningRemark}" style="width:300px;height:55px;padding-left:20px;" escape="false" />
+	           		</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+			</apex:outputPanel>
+<!-- 			 =========================================================UNALLOCATED ASSETS====================================================	 -->
+
+<!--  			<apex:pageBlockSection title="UNALLOCATED ASSETS" collapsible="true" columns="1" id="section5"><br/>
+            		<div class="subHeader" style="width:85%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">ASSETS NOT ALLOCATED</div>
+                		<apex:pageBlockSection collapsible="true" columns="11" >
+				        	<apex:pageBlockTable value="{!beanObj.lstUnAllocatedAssets}" var="unallocated" styleClass="required" style="margin-left:48px;width:800px;">
+				        	
+				        		<apex:column headerValue="Owner" width="15%">
+			                        <apex:outputText value="{!unallocated.entityName}"/>
+			                    </apex:column>
+				        		<apex:column headerValue="Assets" width="20%">
+			                        <apex:outputText value="{!unallocated.Type}"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Description" width="20%">
+			                        <apex:outputText value="{!unallocated.description}"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Current Value" width="15%" style="text-align:right; padding-right:25px;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+		                                 <apex:param value="{!unallocated.currentValue}"/>
+		                            </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Balance Remaining" width="15%" style="text-align:right; padding-right:25px;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                         <apex:param value="{!unallocated.balanceRemaining}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+							</apex:pageBlockTable>
+						</apex:pageBlockSection>
+					
+					 	<div class="space" style="text-align:left;" >
+	                        <table style="width:100%;">
+								<tr style="width:100%;">
+			           				<td style="width:8%; FONT-FAMILY: Calibri; FONT-SIZE: 15px; FONT-WEIGHT: bold; COLOR: #236EBC;">Remarks : </td>
+			           				<td ><apex:outputText value="{!unallocatedAssetRemark}" style="width:300px;height:55px;" escape="false" /></td>
+			           			</tr>
+			           		</table>
+           		 	  	</div>
+				</apex:pageBlockSection>
+				
+-->					
+<!--  ================================================================================================================== -->	     
+<!-- =====Aditi Satpute : 5/12/13==========================Other Products====================================================	 -->
+	<apex:outputPanel rendered="{!IF(beanObj.lstLoan.size>0 || beanObj.lstFixedDeposit.size>0 || beanObj.lstBond.size>0,true,false)}">
+			<apex:pageBlockSection title="OTHER PRODUCTS" collapsible="true" columns="1" id="section9">
+				<apex:outputPanel rendered="{!IF(beanObj.lstLoan.size>0,true,false)}">
+					<apex:pageBlockSection title="Loan Section" columns="1" collapsible="true" >
+           				<div class="subHeader" style="width:85%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">LOAN</div>
+		        		<apex:pageBlockTable value="{!beanObj.lstLoan}" var="loanObj" styleClass="required" style="margin-left:48px;width:900px;" id="loan">
+			        		<apex:column headerValue="Assigned to Ops" style="text-align:center;">
+				        			<apex:facet name="header">Assigned <br/>To Ops</apex:facet>
+				        			<apex:outputPanel rendered="{!IF(loanObj.AddOnExecutionTracker == 'Yes',true,false)}"  >
+                               			<apex:outputText value="{!loanObj.strAssignedToOps}"/>
+                            		</apex:outputPanel>
+		                    </apex:column>
+			        		<apex:column headerValue="Applicant" style="text-align:left;" width="10%">
+	                            <apex:outputText value="{!loanObj.applicant}" style="width:190px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Loan Type" style="text-align:left;" width="12%" id="policyTypeId">
+	                          	  <apex:outputText value="{!loanObj.loanType}" style="width:190px;"/>	
+		                    </apex:column>
+							<apex:column headerValue="Vendors Name" style="text-align:left;" id="policyNameId" width="20%">
+					        	 <apex:outputText value="{!loanObj.vendorName}" style="width:190px;"/>
+	                        </apex:column>
+									
+		                    <apex:column headerValue="Loan Amount" style="text-align:right;" width="10%">
+		                         <apex:outputText value="{!loanObj.loanAmount}" style="width:190px;"/>
+		                    </apex:column>
+		                   	<apex:column style="text-align:center;">
+	                   			<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+	                            <apex:outputText value="{!loanObj.AddOnExecutionTracker}" style="width:190px;"/>
+		                   	</apex:column> 
+		                   	<apex:column headerValue="Execution Tracker" style="text-align:center;">
+		                    	<apex:facet name="header">Execution<br/>Tracker</apex:facet>
+		                    	<apex:outputPanel rendered="{!IF(loanObj.AddOnExecutionTracker == 'Yes',true,false)}"  >
+									<a href="EditETforLoan?eid={!beanObj.entityId}&id={!loanObj.loanAPid}&type=Loan" 
+								 		target="_blank" style="cursor: pointer;text-decoration:underline;" >
+										Open
+							 		</a>
+					            </apex:outputPanel>
+		                     </apex:column>
+		                     <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;" width="10%">
+			        			<apex:outputText value="{!loanObj.ETStatus}" />
+			        		 </apex:column>
+		                     <apex:column headerValue="Related Records" style="text-align:center;">
+		                     	<apex:facet name="header">Related <br/>Records</apex:facet>
+		                     	<apex:outputPanel rendered="{!IF(loanObj.AddOnExecutionTracker == 'Yes',true,false)}">
+								   <a href="" style="cursor: pointer;text-decoration:underline;" 
+									onClick="javascript:return  openRelatedExecutionTracker('{!loanObj.loanAPid}','Loan')">
+									View
+								   </a>
+				               </apex:outputPanel>
+		                     </apex:column>
+						</apex:pageBlockTable> 
+						<br/>
+              		</apex:pageBlockSection>	
+              	</apex:outputPanel>	
+              	<apex:outputPanel rendered="{!IF(beanObj.lstFixedDeposit.size>0,true,false)}">
+		    		<apex:pageBlockSection title="Fixed Deposit Section" columns="1" collapsible="true" >
+           				<div class="subHeader" style="width:85%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">FIXED DEPOSIT</div>
+		        		<apex:pageBlockTable value="{!beanObj.lstFixedDeposit}" var="fixedDepositObj" styleClass="required" style="margin-left:48px;width:900px;" id="fixedDeposit">
+			        		<apex:column headerValue="Assigned to Ops" style="text-align:center;">
+				        			<apex:facet name="header">Assigned <br/>To Ops</apex:facet>
+				        			<apex:outputPanel rendered="{!IF(fixedDepositObj.AddOnExecutionTracker == 'Yes',true,false)}"  >
+                              			<apex:outputText value="{!fixedDepositObj.strAssignedToOps}"/>
+                            		</apex:outputPanel>
+		                    </apex:column>
+			        		<apex:column headerValue="Applicant" style="text-align:left;" width="10%">
+	                            <apex:outputText value="{!fixedDepositObj.actionPlanFDobj.Insured__c}" style="width:190px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Goal Type" style="text-align:left;" width="12%" >
+	                          	  <apex:outputText value="{!fixedDepositObj.actionPlanFDobj.Goal_Type__c}" style="width:190px;"/>
+		                    </apex:column>
+							<apex:column headerValue="Company Name" style="text-align:left;" width="12%" >
+					        	 <apex:outputText value="{!fixedDepositObj.companyName}" style="width:190px;"/>
+	                        </apex:column>
+							<apex:column headerValue="Scheme Name" style="text-align:left;" width="15%" >
+					        	 <apex:outputText value="{!fixedDepositObj.actionPlanFDobj.Product_Name__c}" style="width:190px;"/>
+	                        </apex:column>
+							<apex:column style="text-align:center;" width="7%" >
+								<apex:facet name="header">Period<br/>in Months</apex:facet>
+					        	 <apex:outputText value="{!fixedDepositObj.actionPlanFDobj.Period_in_Months__c}" style="width:190px;"/>
+	                        </apex:column> 
+		                    <apex:column style="text-align:right;" width="10%">
+		                    	 <apex:facet name="header">Investment<br/>Amount</apex:facet>	
+		                         <apex:outputText value="{!fixedDepositObj.actionPlanFDobj.Amount__c}" style="width:190px;"/>
+		                    </apex:column>
+		                   	<apex:column style="text-align:center;">
+	                   			<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+	                            <apex:outputText value="{!fixedDepositObj.AddOnExecutionTracker}" style="width:190px;"/>
+		                   	</apex:column> 
+		                   	<apex:column headerValue="Execution Tracker" style="text-align:center;">
+		                    	<apex:facet name="header">Execution<br/>Tracker</apex:facet>
+		                    	<apex:outputPanel rendered="{!IF(fixedDepositObj.AddOnExecutionTracker == 'Yes',true,false)}"  >
+									<a href="EditETforFixedDeposit?eid={!beanObj.entityId}&id={!fixedDepositObj.actionPlanFDobj.Id}&type=Fixed Deposit" 
+								 		target="_blank" style="cursor: pointer;text-decoration:underline;" >
+										Open
+							 		</a>
+					            </apex:outputPanel>
+		                     </apex:column>
+		                     <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;">
+			        			<apex:outputText value="{!fixedDepositObj.ETStatus}" />
+			        		 </apex:column>
+		                     <apex:column headerValue="Related Records" style="text-align:center;">
+		                     	<apex:facet name="header">Related <br/>Records</apex:facet>
+		                     	<apex:outputPanel rendered="{!IF(fixedDepositObj.AddOnExecutionTracker == 'Yes',true,false)}">
+								   <a href="" style="cursor: pointer;text-decoration:underline;" 
+									onClick="javascript:return  openRelatedExecutionTracker('{!fixedDepositObj.actionPlanFDobj.Id}','Fixed Deposit')">
+									View
+								   </a>
+				               </apex:outputPanel>
+		                     </apex:column>
+						</apex:pageBlockTable> 
+						<br/>
+               		</apex:pageBlockSection>	
+               	</apex:outputPanel>
+               	<apex:outputPanel rendered="{!IF(beanObj.lstBond.size>0,true,false)}">
+              		<apex:pageBlockSection title="Bond Section" columns="1" collapsible="true" >
+           				<div class="subHeader" style="width:85%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">BOND</div>
+	           			<apex:pageBlockTable value="{!beanObj.lstBond}" var="bondObj" styleClass="required" style="margin-left:48px;width:900px;" id="bond">
+			        		<apex:column headerValue="Assigned to Ops" style="text-align:center;">
+				        			<apex:facet name="header">Assigned <br/>To Ops</apex:facet>
+				        			<apex:outputPanel rendered="{!IF(bondObj.AddOnExecutionTracker == 'Yes',true,false)}"  >
+	                             			<apex:outputText value="{!bondObj.strAssignedToOps}"/>
+	                           		</apex:outputPanel>
+		                    </apex:column>
+			        		<apex:column headerValue="Applicant" style="text-align:left;" width="10%">
+	                            <apex:outputText value="{!bondObj.actionPlanBondObj.Insured__c}" style="width:190px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Goal Type" style="text-align:left;" width="10%" >
+	                          	  <apex:outputText value="{!bondObj.actionPlanBondObj.Goal_Type__c}" style="width:190px;"/>
+		                    </apex:column>
+							<apex:column headerValue="Company Name" style="text-align:left;" width="12%" >
+					        	 <apex:outputText value="{!bondObj.companyName}" style="width:190px;"/>
+	                        </apex:column>
+							<apex:column headerValue="Scheme Name" style="text-align:left;" width="18%" >
+					        	 <apex:outputText value="{!bondObj.actionPlanBondObj.Product_Name__c}" style="width:190px;"/>
+	                        </apex:column>
+							<apex:column headerValue="Bond Type" style="text-align:left;" width="10%" >
+					        	 <apex:outputText value="{!bondObj.actionPlanBondObj.Bond_Type__c}" style="width:190px;"/>
+	                        </apex:column> 
+		                    <apex:column headerValue="Bond Amount" style="text-align:right;" width="10%">
+		                         <apex:outputText value="{!bondObj.actionPlanBondObj.Amount__c}" style="width:190px;"/>
+		                    </apex:column>
+		                   	<apex:column style="text-align:center;">
+	                   			<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+	                            <apex:outputText value="{!bondObj.AddOnExecutionTracker}" style="width:190px;"/>
+		                   	</apex:column> 
+		                   	<apex:column headerValue="Execution Tracker" style="text-align:center;">
+		                    	<apex:facet name="header">Execution<br/>Tracker</apex:facet>
+		                    	<apex:outputPanel rendered="{!IF(bondObj.AddOnExecutionTracker == 'Yes',true,false)}"  >
+									<a href="EditETforBond?eid={!beanObj.entityId}&id={!bondObj.actionPlanBondObj.Id}&type=Bond" 
+								 		target="_blank" style="cursor: pointer;text-decoration:underline;" >
+										Open
+							 		</a>
+					            </apex:outputPanel>
+		                     </apex:column>
+		                     <apex:column headerValue="ET Status" style="text-align:center;FONT-WEIGHT: bold;">
+			        			<apex:outputText value="{!bondObj.ETStatus}" />
+			        		 </apex:column>
+		                     <apex:column headerValue="Related Records" style="text-align:center;">
+		                     	<apex:facet name="header">Related <br/>Records</apex:facet>
+		                     	<apex:outputPanel rendered="{!IF(bondObj.AddOnExecutionTracker == 'Yes',true,false)}">
+								   <a href="" style="cursor: pointer;text-decoration:underline;" 
+									onClick="javascript:return  openRelatedExecutionTracker('{!bondObj.actionPlanBondObj.Id}','Bond')">
+									View
+								   </a>
+				               </apex:outputPanel>
+		                     </apex:column>
+						</apex:pageBlockTable> 
+               		</apex:pageBlockSection>
+               	</apex:outputPanel>	   
+			</apex:pageBlockSection>
+		</apex:outputPanel>
+<!--  ================================================================================================================== -->
+        
+	             </apex:outputPanel>
+	           
+	        <script>
+		        twistSection(document.getElementById('{!$Component.block1.section1}').getElementsByTagName('img')[0]) 
+		        twistSection(document.getElementById('{!$Component.block1.section2}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section3}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section4}').getElementsByTagName('img')[0]) 
+		        twistSection(document.getElementById('{!$Component.block1.section5}').getElementsByTagName('img')[0]) 
+		        twistSection(document.getElementById('{!$Component.block1.section6}').getElementsByTagName('img')[0]) 
+		        twistSection(document.getElementById('{!$Component.block1.section7}').getElementsByTagName('img')[0]) 
+		        twistSection(document.getElementById('{!$Component.block1.section8}').getElementsByTagName('img')[0]) 
+		        twistSection(document.getElementById('{!$Component.block1.section9}').getElementsByTagName('img')[0]) 
+		        twistSection(document.getElementById('{!$Component.block1.section11}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section12}').getElementsByTagName('img')[0])
+		    </script>   
+	             
+	          </apex:pageBlock>
+	          </apex:outputPanel>
+	          </apex:outputPanel>
+	          </apex:form>
+	    </apex:define>
+	</apex:composition>
+</apex:page>

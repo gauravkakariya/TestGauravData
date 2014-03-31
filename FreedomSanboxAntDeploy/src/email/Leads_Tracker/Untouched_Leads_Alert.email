@@ -1,0 +1,17 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<P><FONT face=Verdana,Helvetica,Sans-Serif size=2>Hello {!Lead.CreatedBy},</FONT></P>
+<P><FONT face=Verdana,Helvetica,Sans-Serif size=2></FONT>&nbsp;</P>
+<P><FONT face=Verdana,Helvetica,Sans-Serif size=2>The Lead <STRONG>{!Lead.Name}</STRONG> from the Campaign&nbsp;<STRONG>{!Lead.Latest_Campaign__c}</STRONG>&nbsp;is in the Open Status for more than 5 days in the Advisor Factory. </FONT></P>
+<P><FONT face=Verdana size=2></FONT>&nbsp;</P>
+<P><FONT face=Verdana size=2>The Owner of this Lead is <STRONG>{!Lead.00N20000002Yyg0}</STRONG></FONT></P>
+<P><FONT face=Verdana size=2></FONT>&nbsp;</P>
+<P><FONT face=Verdana size=2>Herein is the link of the same:{!Lead.Link}</FONT></P>
+<P>&nbsp;</P>
+<P><FONT face=Verdana,Helvetica,Sans-Serif size=2>Please&nbsp;work on the lead to set up a meeting for the Fiancial Advisory Team.&nbsp;</FONT></P>
+<P><FONT face=Verdana,Helvetica,Sans-Serif size=2></FONT>&nbsp;</P>
+<P><FONT face=Verdana,Helvetica,Sans-Serif size=2>Thank You,</FONT></P>
+<P><FONT face=Verdana,Helvetica,Sans-Serif size=2>Khyati</FONT></P>]]></td>
+</tr>
+</table>

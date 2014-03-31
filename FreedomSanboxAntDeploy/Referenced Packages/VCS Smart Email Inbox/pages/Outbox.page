@@ -1,0 +1,223 @@
+<apex:page controller="VCSSA.SmartLogger" showheader="false" sidebar="false">
+
+<apex:form >
+<br/>
+<h3>Issue reporting for {!$User.Username} of {!$Organization.Name} ({!$Organization.Id}), mail {!$User.Email}</h3>
+<br/><br/>
+<apex:pageBlock title="Issue details">
+<apex:pageBlockButtons >
+	<apex:commandButton action="{!sendMessage}" value="Send an email with all this information to support@virtualcompanyservices.com"/>
+</apex:pageBlockButtons>
+<apex:pageMessages />
+
+<apex:outputPanel rendered="{!not(emailSent)}">
+<div>Type your issue here:</div>
+<apex:inputTextArea value="{!messageText}" rows="8" cols="100"/>
+<br/><br/>
+</apex:outputPanel>
+<apex:outputPanel rendered="{!emailSent}">
+<h1>Your message was sent. We will message you back shortly.</h1><br/>
+<br/><br/>
+<apex:outputText value="{!messageText}"/>
+<br/><br/>
+</apex:outputPanel>
+
+<apex:pageBlockTable value="{!userList}" var="u" title="Organization users">
+	<apex:column >
+	    <apex:facet name="header">Id</apex:facet>
+	    {!u.user.Id}
+	</apex:column>
+	<apex:column >
+	    <apex:facet name="header">Username</apex:facet>
+	    {!u.user.username}
+	    <b>{!if(u.user.Profile.PermissionsModifyAllData,' (Admin)','')}</b>
+	</apex:column>
+	<apex:column >
+	    <apex:facet name="header">Name</apex:facet>
+	    {!u.user.name}
+	</apex:column>
+	<apex:column >
+	    <apex:facet name="header">Email</apex:facet>
+	    {!u.user.email}
+	</apex:column>
+	<apex:column >
+	    <apex:facet name="header">Config. last date</apex:facet>
+	    <a target="_blank" href="/{!u.config.Id}">{!u.config.LastModifiedDate}</a>
+	    <br/>
+	    {!if(u.config.Only_Match_Leads_Contacts__c,'MLC. ','')}
+	    {!if(u.config.auto_create_leads__c,'CL. ','')}
+	    {!if(u.config.save_all_as_activity__c,'SA. ','')}
+	    {!if(u.config.Use_Leads__c,'L. ','')}
+	    {!if(u.config.Use_Contacts__c,'C. ','')}
+	    {!if(u.config.Use_Person_Accounts__c,'A. ','')}
+	    {!if(u.config.Use_Opportunities__c,'O. ','')}
+	    {!if(u.config.Use_Cases__c,'C. ','')}
+	    {!if(u.config.Use_Campaigns__c,'M. ','')}
+	</apex:column>
+	<apex:column >
+	    <apex:facet name="header">Log outgoing emails to</apex:facet>
+	    {!u.config.VCSSA__Log_Outgoings_Email__c}
+	</apex:column>
+	<apex:column >
+	    <apex:facet name="header">Active aliases</apex:facet>
+	    <apex:repeat var="a" value="{!u.aliases}"> <a href="/{!a.Id}" target="_blank">{!a.VCSSA__Email__c}</a> {!if(a.VCSSA__Active__c,'',' (inactive)')}<br/></apex:repeat>
+	</apex:column>
+	
+</apex:pageBlockTable>
+
+<apex:repeat var="sf" value="{!emailservices}">
+	<apex:pageBlockSection columns="2" title="Email service details">
+		<apex:outputField value="{!sf.Id}" />
+		<apex:outputField value="{!sf.IsActive}" />
+		<apex:outputField value="{!sf.AuthorizedSenders}" />
+		<apex:outputField value="{!sf.OverLimitAction}" />
+		<apex:outputField value="{!sf.AttachmentOption}" />
+		<apex:outputField value="{!sf.IsAuthenticationRequired}" />
+
+		<apex:outputField value="{!sf.AddressInactiveAction}" />
+		<apex:outputField value="{!sf.AttachmentOption}" />
+		<apex:outputField value="{!sf.AuthenticationFailureAction}" />
+		<apex:outputField value="{!sf.AuthorizationFailureAction}" />
+		<apex:outputField value="{!sf.CreatedById}" />
+		<apex:outputField value="{!sf.CreatedDate}" />
+		<apex:outputField value="{!sf.FunctionInactiveAction}" />
+		<apex:outputField value="{!sf.FunctionName}" />
+		<apex:outputField value="{!sf.IsTlsRequired}" />
+		<apex:outputField value="{!sf.LastModifiedById}" />
+		<apex:outputField value="{!sf.LastModifiedDate}" />
+	</apex:pageBlockSection>
+	<apex:repeat var="sfa" value="{!sf.Addresses}">
+		<apex:pageBlockSection columns="2" title="Email service Address details">
+			<apex:outputField value="{!sfa.Id}" />
+			<apex:outputField value="{!sfa.IsActive}" />
+			<apex:outputField value="{!sfa.LocalPart}" />
+			<apex:outputField value="{!sfa.EmailDomainName}" />
+			<apex:outputField value="{!sfa.RunAsUserId}" />
+			<apex:outputField value="{!sfa.FunctionId}" />
+			<apex:outputField value="{!sfa.AuthorizedSenders}" />
+			
+			<apex:outputField value="{!sfa.CreatedById}" />
+			<apex:outputField value="{!sfa.CreatedDate}" />
+			<apex:outputField value="{!sfa.LastModifiedById}" />
+			<apex:outputField value="{!sfa.LastModifiedDate}" />
+		</apex:pageBlockSection>
+	</apex:repeat>
+</apex:repeat>
+
+<div style="white-space: pre-wrap">
+<apex:repeat var="m" value="{!emails}">
+Id: '{!m.Id}';
+Name: '{!m.Name}';
+OwnerId: '{!m.OwnerId}';
+CreatedById: '{!m.CreatedById}';
+CreatedDate: '{!m.CreatedDate}';
+From_Name__c: '{!m.VCSSA__From_Name__c}';
+From__c: '{!m.VCSSA__From__c}';
+From_SFDC_User__c: '{!m.VCSSA__From_SFDC_User__c}';
+To__c: '{!m.VCSSA__To__c}';
+Cc__c: '{!m.VCSSA__Cc__c}';
+TOandCC__c: '{!m.VCSSA__TOandCC__c}';
+Account__c: '{!m.VCSSA__Account__c}';
+Bcc__c: '{!m.VCSSA__Bcc__c}';
+Campaign__c: '{!m.VCSSA__Campaign__c}';
+Case__c: '{!m.VCSSA__Case__c}';
+Contact__c: '{!m.VCSSA__Contact__c}';
+Date__c: '{!m.VCSSA__Date__c}';
+Domain__c: '{!m.VCSSA__Domain__c}';
+EmailTemplate__c: '{!m.VCSSA__EmailTemplate__c}';
+Event__c: '{!m.VCSSA__Event__c}';
+Has_Attachments__c: '{!m.VCSSA__Has_Attachments__c}';
+Incoming__c: '{!m.VCSSA__Incoming__c}';
+IsStarred__c: '{!m.VCSSA__IsStarred__c}';
+Lead__c: '{!m.VCSSA__Lead__c}';
+Message_ID__c: '{!m.VCSSA__Message_ID__c}';
+Opportunity__c: '{!m.VCSSA__Opportunity__c}';
+Read__c: '{!m.VCSSA__Read__c}';
+RepliedBy__c: '{!m.VCSSA__RepliedBy__c}';
+RepliesTo__c: '{!m.VCSSA__RepliesTo__c}';
+Reply_To__c: '{!m.VCSSA__Reply_To__c}';
+State__c: '{!m.VCSSA__State__c}';
+Subject__c: '{!m.VCSSA__Subject__c}';
+Task__c: '{!m.VCSSA__Task__c}';
+User_Inbox__c: '{!m.VCSSA__User_Inbox__c}';
+Tags__c: '{!m.VCSSA__Tags__c}';
+<hr/>
+Text_Body__c: '{!m.VCSSA__Text_Body__c}';
+<hr/>
+Html_Body__c: '{!m.VCSSA__Html_Body__c}';
+<hr/>
+</apex:repeat>
+</div>
+
+</apex:pageBlock>
+
+</apex:form>
+
+<div style="display: none">
+	<h3>User information:</h3>
+	
+	{!$User.Id} {!$User.FirstName} {!$User.LastName} ({!$User.Email})
+	
+	<hr/>
+	<h3>Config:</h3>
+	<apex:repeat var="m" value="{!configs}">
+		{<br/>
+		Id: '{!m.Id}',<br/>
+		Name: '{!m.Name}',<br/>
+		OwnerId: '{!m.OwnerId}',<br/>
+		CreatedById: '{!m.CreatedById}',<br/>
+		CreatedDate: '{!m.CreatedDate}',<br/>
+		LastModifiedDate: '{!m.LastModifiedDate}',<br/>
+		Alert_new_emails__c: '{!m.VCSSA__Alert_new_emails__c}',<br/>
+		Auto_Create_Leads__c: '{!m.VCSSA__Auto_Create_Leads__c}',<br/>
+		Email_Service_Counter__c: '{!m.VCSSA__Email_Service_Counter__c}',<br/>
+		Email_Service_Debug_Mode__c: '{!m.VCSSA__Email_Service_Debug_Mode__c}',<br/>
+		Email_Service_Logging__c: '{!m.VCSSA__Email_Service_Logging__c}',<br/>
+		Inbox_autorefresh__c: '{!m.VCSSA__Inbox_autorefresh__c}',<br/>
+		Inbox_autorefresh_interval__c: '{!m.VCSSA__Inbox_autorefresh_interval__c}',<br/>
+		Log_Outgoings_Email__c: '{!m.VCSSA__Log_Outgoings_Email__c}',<br/>
+		Log_Outgoings__c: '{!m.VCSSA__Log_Outgoings__c}',<br/>
+		New_Emails__c: '{!m.VCSSA__New_Emails__c}',<br/>
+		Only_Match_Leads_Contacts__c: '{!m.VCSSA__Only_Match_Leads_Contacts__c}',<br/>
+		Page_size__c: '{!m.VCSSA__Page_size__c}',<br/>
+		Quit_VCS_branding__c: '{!m.VCSSA__Quit_VCS_branding__c}',<br/>
+		Related_Hover_Links__c: '{!m.VCSSA__Related_Hover_Links__c}',<br/>
+		Save_all_as_Activity__c: '{!m.VCSSA__Save_all_as_Activity__c}',<br/>
+		Show_binding_details_after_email_body__c: '{!m.VCSSA__Show_binding_details_after_email_body__c}',<br/>
+		Show_inbox_column__c: '{!m.VCSSA__Show_inbox_column__c}',<br/>
+		Split_first_and_last_name_on_bindings__c: '{!m.VCSSA__Split_first_and_last_name_on_bindings__c}',<br/>
+		Use_Campaigns__c: '{!m.VCSSA__Use_Campaigns__c}',<br/>
+		Use_Cases__c: '{!m.VCSSA__Use_Cases__c}',<br/>
+		Use_Contacts__c: '{!m.VCSSA__Use_Contacts__c}',<br/>
+		Use_Leads__c: '{!m.VCSSA__Use_Leads__c}',<br/>
+		Use_Opportunities__c: '{!m.VCSSA__Use_Opportunities__c}',<br/>
+		Use_Person_Accounts__c: '{!m.VCSSA__Use_Person_Accounts__c}',<br/>
+		hideHelpPage__c: '{!m.VCSSA__hideHelpPage__c}',<br/>
+		Signature_Above_Reply__c: '{!m.VCSSA__Signature_Above_Reply__c}',<br/>
+		Signature_Picture__c: '{!m.VCSSA__Signature_Picture__c}',<br/>
+		Signature__c: '{!m.VCSSA__Signature__c}',<br/>
+		Tags2__c: '{!m.VCSSA__Tags2__c}',<br/>
+		Tags__c: '{!m.VCSSA__Tags__c}',<br/>
+		Filter_rules__c: '{!m.VCSSA__Filter_rules__c}'<br/>
+		}<br/><br/>
+	</apex:repeat>
+	<hr/>
+	<h3>Aliases:</h3>
+	<apex:repeat var="m" value="{!aliases}">
+		{<br/>
+		Id: '{!m.Id}',<br/>
+		CreatedById: '{!m.CreatedById}',<br/>
+		CreatedDate: '{!m.CreatedDate}',<br/>
+		LastModifiedById: '{!m.LastModifiedById}',<br/>
+		LastModifiedDate: '{!m.LastModifiedDate}',<br/>
+		OwnerId: '{!m.OwnerId}',<br/>
+		Name: '{!m.Name}',<br/>
+		Active__c: '{!m.VCSSA__Active__c}',<br/>
+		Display_Name__c: '{!m.VCSSA__Display_Name__c}',<br/>
+		Email__c: '{!m.VCSSA__Email__c}',<br/>
+		New_Emails__c: '{!m.VCSSA__New_Emails__c}',<br/>
+		User__c: '{!m.VCSSA__User__c}',<br/>
+		}<br/><br/>
+	</apex:repeat>
+</div>
+</apex:page>

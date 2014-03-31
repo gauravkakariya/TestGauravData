@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Lead In Meeting Fixed Stage Overdue</name>
+    <style>freeForm</style>
+    <subject>Lead In Meeting Fixed Stage For More Than a Day</subject>
+    <textOnly>Dear {!Lead.OwnerFullName},   
+                               The Lead {!Lead.Name} is in &quot;Meeting Fixed&quot; stage for more than a day. Please take appropriate actions on the Lead to move the lead from the &quot;Meeting Fixed&quot; stage to Meeting Done/Meeting Follow-up stage.
+
+ Also please update AF asap according to the action taken.
+Click on the following link to go to the Lead&apos;s page: {!Lead.Name}
+
+Regards,
+Ffreedom Team.</textOnly>
+    <type>html</type>
+</EmailTemplate>

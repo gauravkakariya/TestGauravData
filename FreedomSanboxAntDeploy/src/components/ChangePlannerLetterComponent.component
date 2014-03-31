@@ -1,0 +1,98 @@
+<apex:component Controller="WorkstationInTemplate_Controller" access="global" Id="ChangePlannerLetterComponent">
+
+	<style type="text/css">
+		thead {font-size: 11px; font-face: normal;background: #CCCCCC; border-width: 1;  text-align: center; font-weight: bold }
+		TD  {font-size: 12px; font-face: verdana }
+		TABLE {border: solid #CCCCCC; border-width: 1;}
+		TR {border: solid #CCCCCC; border-width: 1}
+		P {padding-left:50px; font-face: Times New Roman; font-size: 12px; font-color: black;}
+	</style>
+	
+	<apex:attribute name="UserId" type="String" description="User Name" assignTo="{!userId}"/>
+	<apex:attribute name="AccountName" type="String" description="Related To Name" assignTo="{!AccountName}" />
+	
+	<apex:outputText value="{!MergeFields}" /><!-- Only to call a getWorkstationOfAccOwner() from getMergeFields() -->
+	
+	<table width="745" border="0" align="center" cellpadding="0" cellspacing="0">
+		<tr> 
+<!-- 			<td width="100%" height="1050px" background="https://ffreedom--ffreedomqa--c.cs2.content.force.com/servlet/servlet.ImageServer?id=015R00000006eCj&oid=00DR0000000LCjl&lastMod=1332332932000"> -->
+			<td width="100%" height="1050px" background="{!URLFOR($Resource.FreedomLetterImage)}">
+<!-- 	Used in Background: Changes and Replace By Gaurav:		https://ffreedom--c.eu0.content.force.com/servlet/servlet.ImageServer?id=01520000000m1iY&oid=00D20000000JZVv&lastMod=1332345747000 -->
+				<p> Dear &nbsp; <apex:outputText value="{!AccountName}" />,</p><br/>
+				
+				<p> Trust you are doing well. It has been our privilege to have you as our esteemed member.</p>
+				
+				<p> Change is the only constant, and it’s always for the better.</p> 
+				
+				<p> This is to inform you that although the team that is servicing you is the same, one of the team members [Financial Planner] has changed.</p>
+				
+				<p> Henceforth,<apex:outputText value="{!FPName}" /> &nbsp; will be your Financial Planner, who along with other team members of the workstation will partner 
+					you in your journey towards financial freedom </p>
+				
+				<p><apex:outputText value="{!AccountName}" />&nbsp; is one of our ace Financial Planners and will be ably supported in the endeavor by the following 
+					team members of the workstation. They will closely work with you to put together your plan and implement the action points, in simple words, 
+					hand hold you till your dreams are realized.</p>
+					
+				<div align="Left">
+					<table border="1px" width="85%">
+						<thead>
+							<td width="25%">Name</td>
+							<td width="25%">Department</td>
+							<td width="30%">Email</td>
+							<td width="20%">Contact</td>
+						</thead>
+						<tr>
+							<td><apex:outputText value="{!FPName}"/></td>
+							<td>Financial Planner</td>
+							<td><apex:outputText value="{!FPEmail}" /></td>
+							<td><apex:outputText value="{!FPMobile}" /></td>
+						</tr>
+						<tr>
+							<td><apex:outputText value="{!Manager}"/></td>
+							<td>Mgr. Financial Planning</td>
+							<td><apex:outputText value="{!mgrEmail}" /></td>
+							<td><apex:outputText value="{!mgrMobile}" /></td>
+						</tr>
+						<tr>
+							<td><apex:outputText value="{!FinancialAdvisor}"/></td>
+							<td>Financial Advisor</td>
+							<td><apex:outputText value="{!FAEmail}" /></td>
+							<td><apex:outputText value="{!FAMobile}" /></td>
+						</tr>
+						<tr>
+							<td>Kiran</td>
+							<td>Engagement</td>
+							<td><apex:outputText value="{!METEmail}" /></td>
+							<td><apex:outputText value="{!METMobile}" /></td>
+						</tr>
+						<tr>
+							<td>Praful</td>
+							<td>Operations</td>
+							<td>praful.panchal@ffreedom.in</td>
+							<td>9819554902</td>
+						</tr>
+						<tr>
+							<td>Supriya</td>
+							<td>Servicing</td>
+							<td>supriya.gupta@ffreedom.in</td>
+							<td>9800000000</td>
+						</tr>
+					</table>
+				</div>
+				
+				<p> Your new Financial Planner will get in touch with you shortly to connect with you personally and formally take over. 
+					We seek your continued co-operation and patronage.</p>
+				
+				<p> We will make all efforts to make this transition smooth and easy for you. In the meanwhile, 
+					if you do face any difficulties or have any clarifications do not hesitate to reach out to us. </p>
+
+				<p>Look forward to a long and rewarding journey with you.</p>
+				
+				<p>Warm Regards</p>
+				<p>Bishnu Sahu (bishnu.sahu@ffreedom.in)</p>
+				<p>COO</p>
+				<p>Ffreedom Financial Planners</p>
+			</td>
+		</tr>
+	</table>
+</apex:component>

@@ -1,0 +1,104 @@
+<apex:page sidebar="true" showHeader="false">
+<apex:stylesheet value="{!URLFOR($Resource.PortalStyleSheet1)}"/>
+ <!----<div id="main_page" style="width:1050px;height:570px;">
+<apex:insert name="rightcontent"/>---->
+
+<div id="main_page" style="width:1050px;height:570px;background-color:#;" >
+
+<div id="right_content" style="background-color:#;height:480px;padding-left:0px;">
+<table width="850" cellpadding="0" cellspacing="0" border="0" style="background-color:#;">
+<tr>
+<td width="14"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/GhostWhite1.png')}" width="14px" height="14px" /></td>
+<td width="1336" class="pistaGreen"></td>
+<td width="14"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/GhostWhite2.png')}" width="14px" height="14px" /></td>
+</tr>
+<tr>
+<td  class="pistaGreen"></td>
+<td align="center"  class="pistaGreen" height="487"><apex:insert name="rightcontent"/></td>
+<td  class="pistaGreen"></td>
+
+</tr>
+<tr>
+
+<td><img src="{!URLFOR($Resource.PortalImages,'PortalImages/GhostWhite4.png')}" width="14px" height="14px" /></td>
+
+<td  class="pistaGreen"></td>
+
+<td><img src="{!URLFOR($Resource.PortalImages,'PortalImages/GhostWhite3.png')}" width="14px" height="14px" /></td>
+
+</tr>
+</table>
+
+</div>
+
+
+<div id="left_content" style="height:auto;" style="background-color:#F1FBE2;" >
+
+<table id="table1" width="150" height="10" cellpadding="0" cellspacing="0" border="0" >
+<tr>
+<td width="15"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/Greenquarter1.png')}" width="15px" height="15px" /></td>
+<td style="background-color: #79B837;" width="150"></td>
+<td width="15"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/Greenquarter2.png')}" width="15px" height="15px" /></td>
+</tr>
+</table>
+<!----
+<div><img  src="{!URLFOR($Resource.PortalImages,'PortalImages/Picture1.png')}" /></div>
+---->
+<table id="table2" width="150" height="480" cellpadding="0" cellspacing="0" border="0" style="background-color: #79B837;">
+<tr>
+<td ></td>
+<td  align="">
+<div style="padding-bottom:60px;">
+<!----
+<div style="padding-bottom:30px;">
+<div class="leftHeaderTab" style="background-color:#E5E5E5;"> Consolidated A/c</div>
+<a href="ConsolidatedStatement"><div class="leftContentTab" style="padding-right:9px;"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/rightarrow.gif')}"/>  Consolidated A/c</div></a>
+---->
+<div class="leftHeaderTab" style="background-color:#E5E5E5;"> Personal Details</div>
+<div  class="leftPanelLinks"><a href="Portal_Family"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/rightarrow.gif')}"/><span class="leftContentTab" style="padding-left:3px;"> Family Members</span></a></div>
+<div class="leftHeaderTab"> Resources</div>
+<div  class="leftPanelLinks"><a href="Portal_BankDetails"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/rightarrow.gif')}"/><span class="leftContentTab" style="padding-left:3px;"> Bank Details</span></a></div>
+<div class="leftHeaderTab"> My Planner</div>
+<div  class="leftPanelLinks"><a href="Portal_MyPlanner"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/rightarrow.gif')}"/><span class="leftContentTab" style="padding-left:3px;"> Planner details</span></a></div>
+<div class="leftHeaderTab"> Documents</div>
+<div  class="leftPanelLinks"><a href="/sfc/#workspaces"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/rightarrow.gif')}"/><span class="leftContentTab" style="padding-left:3px;"> My Financial Plan</span></a></div>
+<!-- 
+	Case no : 00001646
+	Comment	: Commented below code to remove Summary Report link from Customer Portal
+ -->
+<!-- <div class="leftHeaderTab">Portfolio Reports</div> -->
+<!-- <div  class="leftPanelLinks"> -->
+<!-- <a href="Portal_SummaryReport"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/rightarrow.gif')}"/> -->
+<!-- <span class="leftContentTab" style="padding-left:3px;"> Summary Report</span></a> -->
+<!-- </div> -->
+
+<!--
+<div  class="leftPanelLinks">
+<a href="Portal_TransactionReport"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/rightarrow.gif')}"/>
+<span class="leftContentTab" style="padding-left:3px;"> Detailed Report</span></a>
+</div>
+ -->
+<!---
+<div  class="leftPanelLinks">
+<a href="Goal_Statement_Page"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/rightarrow.gif')}"/>
+<span class="leftContentTab" style="padding-left:3px;"> Goal Statement</span></a>
+</div>
+---->
+</div>
+</td>
+<td></td>
+</tr>
+</table>
+
+<!----<div><img  src="{!URLFOR($Resource.PortalImages,'PortalImages/Picture2.png')}" /></div>--->
+<table id="table1" width="150" height="10" cellpadding="0" cellspacing="0" border="0" >
+<tr>
+<td width="15"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/Greenquarter4.png')}" width="15px" height="15px" /></td>
+<td style="background-color: #79B837;" width="150"></td>
+<td width="15"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/Greenquarter3.png')}" width="15px" height="15px" /></td>
+</tr>
+</table>
+</div>
+</div>
+
+</apex:page>

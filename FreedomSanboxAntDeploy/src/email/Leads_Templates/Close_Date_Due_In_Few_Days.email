@@ -1,0 +1,11 @@
+<p>Dear {!Lead.OwnerFullName},</p>
+                
+                                  
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Close Date for the Lead {!Lead.Name} is due in a couple of days. Please take the necessary action on the lead to accomplish conversion of the lead.</p>
+
+<p>Click on the following link to go to the Lead's page: <a href="{!Lead.Link}">{!Lead.Name}</a></p>
+<p>
+Regards,<br/>
+
+FFreedom Team.
+</p>

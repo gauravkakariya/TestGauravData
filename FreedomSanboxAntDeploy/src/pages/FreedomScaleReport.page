@@ -1,0 +1,46 @@
+<apex:page controller="ExportToExcelFreedomScaleController" sidebar="false"  standardstylesheets="false">
+
+	<script>
+		function exportCsv()
+		{
+			window.open("ExportToExcelFreedomScale");
+		}
+	
+	</script>
+    <apex:pageMessages />
+        
+    <apex:outputPanel rendered="{!lstWrapperExportToExcel.size = 0}">
+			<span style="color: red;padding-left: 40px; padding-right:3px;" >Freedom Scale Record not found </span> 
+	</apex:outputPanel>	
+		    
+    <apex:pageBlock Title="Freedom Scale Report" rendered="{!!isRender && lstWrapperExportToExcel.size > 0}">
+    
+        <input type="button" class="btn" onclick="exportCsv();" value="Export to CSV"/>
+        <br/><br/>
+        <table border ="1"> 
+            <tr>
+                <th style="text-align:center;">Entity Name</th>
+                <th style="text-align:center;">Entity Owner</th>
+<!--                 <th style="text-align:center;">Wellness Test Date</th> -->
+                <th style="text-align:center;">Q1 Answer</th>
+                <th style="text-align:center;">Q2 Answer</th>
+                <th style="text-align:center;">Q3 Answer</th>
+                <th style="text-align:center;">Q4 Answer</th>
+                <th style="text-align:center;">Q5 Answer</th>
+                <th style="text-align:center;">Q6 Answer</th>
+                <th style="text-align:center;">Q7 Answer</th>
+            </tr>
+            <apex:repeat value="{!lstWrapperExportToExcel}" var="wellnessDetails" >
+                <tr>
+                    <td>{!wellnessDetails.entityName}</td>
+                    <td>{!wellnessDetails.entityOwner}</td>
+<!--                     <td>{!wellnessDetails.wellnessTestDate}</td> -->
+                    <apex:repeat value="{!wellnessDetails.lstAnswerText}" var="wellnessAnswer" >
+                        <td>{!wellnessAnswer}</td>
+                    </apex:repeat>
+                </tr>   
+            </apex:repeat>
+            
+        </table>
+    </apex:pageBlock>
+</apex:page>

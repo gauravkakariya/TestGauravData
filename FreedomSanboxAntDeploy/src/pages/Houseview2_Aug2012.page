@@ -1,0 +1,373 @@
+<apex:page showheader="false" title="Ffreedom Financial Planners | News Letters"	id="Houseview2_Aug12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+	<table width="740" border="0" align="center" cellpadding="0"
+		cellspacing="0">
+		<tr>
+			<td><img
+				src="{!URLFOR($Resource.images,'images/top_Aug2012.gif')}"
+				width="740" height="104" />
+			</td>
+		</tr>
+		<tr>
+			<td><table width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+						<td valign="top"><table width="98%" border="0" align="center"
+								cellpadding="0" cellspacing="0">
+								<tr>
+									<td valign="top"><table width="100%" border="0"
+											cellspacing="0" cellpadding="0">
+											<tr>
+												<td
+													background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img
+													src="{!URLFOR($Resource.images,'images/headR.gif')}"
+													width="9" height="40" align="right" /><img
+													src="{!URLFOR($Resource.images,'images/houseviewHIn.gif')}"
+													width="132" height="40" />
+												</td>
+											</tr>
+											<tr>
+												<td><table width="100%" border="0" cellpadding="0"
+														cellspacing="0">
+														<tr>
+															<td width="9" valign="top"
+																background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img
+																src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"
+																width="9" height="185" />
+															</td>
+															<td width="8" valign="top"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}"
+																width="8" height="1" />
+															</td>
+															<td valign="top"><table width="98%" border="0"
+																	cellpadding="0" cellspacing="0">
+
+																	<tr>
+																		<td height="25" valign="top"><font
+																			face="Arial, Helvetica, sans-serif" color="#683400"
+																			style="font-size: 14px;"><strong><em>Loans
+																						– get out of them</em>
+																			</strong>
+																		</font>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;"><p>
+																				<img
+																					src="{!URLFOR($Resource.images,'images/houseview2img1.jpg ')}"
+																					width="206" height="100" hspace="10" align="right" />Ravi
+																				and Kavitha wanted to start a small business. This
+																				has been their long term dream. Both Ravi and
+																				Kavitha were in good corporate jobs and earning
+																				well, but the business was what they wanted to do.
+																				They had a sound business plan ready and had even
+																				spoken to a few people who were willing to fund
+																				them. But somehow they could not get around to quit
+																				full time employment and kept putting it away. <br />
+																				<br /> Understandably this was depressing them.<br />
+																				<br /> While chatting up they came out with their
+																				problem. They have loans – at least 4 – 5 different
+																				loans that they had to pay off. They were willing to
+																				make a few life style changes, but they were not
+																				sure if the business will earn enough to pay the
+																				loan EMIs, at least to begin with. The fear of
+																				defaulting on their loans and then struggling to
+																				make ends meet deterred the couple from pursuing
+																				their dreams.<br /> <br /> When they approached us
+																				for help to get out of loans as soon as possible, we
+																				set for ourselves a target <strong>&lsquo;5
+																					years – Zero Loans&rsquo;</strong>. They were willing to do
+																				what it takes and made up their mind not to take any
+																				more loans.<br /> <br /> So, this was how we went
+																				about it. We listed down all the loans they had. 5
+																				loans in all.
+																			</p>
+																			<ol>
+																				<li>Home loan – Rs.20,00,000. Current
+																					outstanding – Rs.15.5 lacs. EMI – Rs.18,500.
+																					Interest rate – 9.5%. Tenure pending – 11 years</li>
+																				<li>Credit card (Ravi) – Rs.75,000. Paying
+																					minimum balance every month.</li>
+																				<li>Car loan (Ravi) – Rs.2.5 lacs. Current
+																					outstanding – Rs.1.5 lacs. EMI – 6500.00. Tenure
+																					pending – 2 years</li>
+																				<li>Credit card (Kavitha) – Rs.35,000. Paying
+																					minimum balance every month.</li>
+																				<li>Personal loan (Kavitha) – Rs. 1,00,000.
+																					Current outstanding – Rs.65,000. EMI – 2,750.
+																					Tenure pending – 23 months.</li>
+																			</ol>
+																			<p>
+																				So, they totally had Rs.18.75 lacs as liabilities.
+																				They were paying towards loan repayment a sum of
+																				Rs.32,500 every month. And as per this schedule they
+																				would be out of loans in 11 years.<br /> <br /> <strong>The
+																					target &ldquo;5 years – Zero loans&rdquo; </strong>
+																			</p>
+																			<ul>
+																				<li>
+																					<p>They had both got an annual bonus of
+																						Rs.25,000 each and were considering whether to use
+																						it towards loan repayment or invest it.</p></li>
+																				<li>
+																					<p>They had a small contingency fund and were
+																						saving for their long term needs Rs.10,000 a
+																						month.</p></li>
+																				<li>
+																					<p>This year after their increments they were
+																						willing to commit another Rs.5,000 towards
+																						repaying their loans.</p></li>
+																				<li>
+																					<p>The contingency fund cannot be utilised for
+																						any other purpose and the Rs.10,000 being invested
+																						for long term needs has to continue. With a total
+																						of Rs.37,500 (existing EMIs + newly committed
+																						amount) available for repaying loans, and a lump
+																						sum of Rs.50,000 what is the best way to get out
+																						of loans as soon as possible?</p></li>
+																			</ul>
+																			<p>Step one:</p>
+																			<ol>
+																				<li>
+																					<p>We will have to target the most expensive
+																						loans to begin with. 2 credit card loans of
+																						Rs.1,10,000 will take another 5 years to payoff
+																						itself if one were to repay only minimum balance.
+																						The interest rates charged could be as high as
+																						2.99% per month (36% p.a). Hence use Rs.50,000
+																						bonus to repay one credit card to begin with.</p></li>
+																				<li>
+																					<p>Credit card outstanding is now 25,000 on
+																						Ravi&rsquo;s card and Rs.35,000 or Kavitha&rsquo;s
+																						card. Ravi was paying Rs.3,500 on his card till
+																						the previous month. Now he will have to increase
+																						repayment on card by Rs.5,000 (committed amount).
+																						Repay Rs.8,500 on the card. In three months
+																						Ravi&rsquo;s card is paid off in full.</p></li>
+																				<li>
+																					<p>
+																						Now, target Kavitha&rsquo;s card. She has been
+																						paying Rs.1,500 towards that credit card. Now the
+																						amount of Rs.8500 which was earlier used by Ravi
+																						to pay for his card, can be added to this Rs.1500
+																						and totally Rs.10,000 can be used to pay off
+																						Kavitha&rsquo;s card. That will be done in 4
+																						months.<br /> <br /> Now, with two loans out of
+																						the way and Rs.10,000 additional cash flow after 7
+																						months of start of project, we target the next
+																						most expensive loan the &lsquo;personal
+																						loan&rsquo;. Now, the loan outstanding would be
+																						Rs.47,000.
+																					</p></li>
+																				<li>
+																					<p>
+																						The additional Rs.10,000 can be saved in the bank
+																						for 4 months and the personal loan can be wiped
+																						off at the end of 4 months. <br /> <br /> After
+																						this, amount available to repay loans – Rs.10,000
+																						+ Rs.2750 = Rs.12,750. Time elapsed since start of
+																						project – 11 months.
+																					</p></li>
+																				<li>
+																					<p>
+																						Next target – Car loan. Current outstanding 11
+																						months after start of project Rs.1,00,000. Already
+																						repaying towards this loan – Rs.6500 per month.
+																						Start a 6 month recurring deposit of Rs.12,500
+																						with the bank. At the end of 6 months the maturity
+																						amount of Rs.75000 can be used to settle the car
+																						loan in full.<br /> <br /> Now, amount available
+																						to repay loans – Rs.12500 + Rs.6500 = Rs.19000.
+																						Time elapsed since start of project 1 year and 5
+																						months.
+																					</p></li>
+																				<li>
+																					<p>Final target – Home loan. It has been about
+																						10 years since they took this home loan. Current
+																						outstanding – Rs.14.7 lacs. Ravi and Kavitha
+																						should make a visit to the home loan company /
+																						bank and inform their willingness to increase the
+																						EMI on their loan by Rs.19,000 – from Rs.18,500 to
+																						Rs.37,500. Most banks will be willing to
+																						reschedule the loan as long as they are convinced
+																						about the repaying capacity of the borrowers.</p></li>
+																			</ol>
+																			<p>
+																				With the new EMI the home loan will get over in
+																				another 37 months (3 years and 1 month). <br /> <br />
+																				Bingo! All loans over in 4 years and 6 months. Huge
+																				amounts saved on interest. <br /> <br /> Like a
+																				famous saying goes, &ldquo;Freedom is not granted,
+																				but rather earned&rdquo;, Ravi and Kavitha spent
+																				half an hour planning and followed through with the
+																				plan diligently to earn their freedom.<br /> <br />
+																				Regards,<br /> Bhuvana <br /> Head- Knowledge
+																				Hub&nbsp;
+																			</p>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top"
+																			style="font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; text-align: justify;">&nbsp;</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+														<tr>
+															<td valign="top"><img
+																src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"
+																width="9" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}"
+																width="1" height="1" />
+															</td>
+															<td valign="top" bgcolor="#BD6105"><img
+																src="{!URLFOR($Resource.images,'images/space.gif')}"
+																width="1" height="1" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table></td>
+								</tr>
+								<tr>
+									<td valign="top">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td><table width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+						<td valign="top"><table width="98%" border="0" align="center"
+								cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="76%" height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#035728"
+										style="font-size: 13px;"><strong>Ffreedom
+												Financial Planners</strong>
+									</font>
+									</td>
+									<td width="24%" rowspan="3"><table border="0"
+											align="center" cellpadding="0" cellspacing="0">
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong>
+															Follow us on&nbsp;&nbsp;&nbsp;</strong>
+												</font>
+												</td>
+												<td><a href="http://www.facebook.com/Ffreedom"
+													target="_blank"><img
+														src="{!URLFOR($Resource.images,'images/fb.png')}"
+														width="20" height="20" border="0" />
+												</a><a href="http://twitter.com/_Ffreedom" target="_blank"><img
+														src="{!URLFOR($Resource.images,'images/tw.png')}"
+														width="20" height="20" hspace="6" border="0" />
+												</a><a
+													href="http://www.linkedin.com/companies/ffreedom-financial-planners"
+													target="_blank"><img
+														src="{!URLFOR($Resource.images,'images/LinkedIn.png')}"
+														width="20" height="20" border="0" />
+												</a>
+												</td>
+											</tr>
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong>Watch
+															us on</strong>
+												</font>
+												</td>
+												<td><font face="Arial, Helvetica, sans-serif"
+													color="#333333" style="font-size: 12px;"><strong><a
+															href="http://www.youtube.com/user/ffreedomtube"
+															target="_blank"><img
+																src="{!URLFOR($Resource.images,'images/youtube.png')}"
+																width="20" height="20" vspace="6" border="0" />
+														</a>
+													</strong>
+												</font>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">506 / 507, Morya Landmark II,
+											Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font>
+									</td>
+								</tr>
+								<tr>
+									<td height="20" valign="top"><font
+										face="Arial, Helvetica, sans-serif" color="#333333"
+										style="font-size: 11px;">Boardline: +91 22 4222 4333
+											&nbsp;|&nbsp; Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a
+											href="mailto:contact@ffreedom.in">contact@ffreedom.in</a>
+											&nbsp;|&nbsp; <a href="http://www.ffreedom.in"
+											target="_blank">www.ffreedom.in</a>
+									</font>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" valign="top"><div align="justify">
+											<font face="Arial, Helvetica, sans-serif" color="#333333"
+												style="font-size: 11px;">Disclaimer: This
+												communication from Ffreedom provides general information
+												existing at the time of preparation. This mailer is intended
+												as a news update and Ffreedom Financial Planners neither
+												assumes nor accepts any responsibility for any loss arising
+												to any person acting or refraining from acting as a result
+												of any material contained in this communication. It is
+												recommended that professional advice be taken based on the
+												specific facts and circumstances. This communication does
+												not substitute the need to refer to the original
+												pronouncements.</font>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img
+							src="{!URLFOR($Resource.images,'images/space.gif')}" width="2"
+							height="1" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td><img src="{!URLFOR($Resource.images,'images/footer.gif')}"
+				width="740" height="15" />
+			</td>
+		</tr>
+	</table>
+</body>
+	</html>
+
+</apex:page>

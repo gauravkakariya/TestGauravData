@@ -1,0 +1,147 @@
+<!-- /*
+    
+Revision History:
+
+   Version     Version Author     Date          Comments
+   1.0         Setty    		03/09/2012     Page for New Job opening on Careers of Ffreedom website as Manager- Financial Planning
+   */-->
+<apex:page showHeader="false" sidebar="false" controller="WebFormController" id="ManagerFinancialPlanner">
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" /> 
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+<div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+        
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/Careers_img.jpg')}" /></div>
+        </div>
+              <div class="borderimg">
+              </div>
+   <div id="innerpage_textcontainer_middle">
+   <h1 style="color: teal;" align="center">We Don’t offer JOBS</h1>
+   <h1 style="color: green;" align="center">We OFFER a CAREER</h1>
+    <div class="innerpage_titletext"><span class="innerpagetexttitle">Manager – Financial Planning</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> <br /> <strong>Department: Financial Planning</strong>
+						</span>
+					</div>
+
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> <br /> <strong>Core Competencies:</strong>
+						</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> Skills:</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> • Excellent communication and Presentation  skills.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> •	Good Team Building Skills.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> •	Should have interpersonal and relationship management skills.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> •	Training and Motivation capacity.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">•	Knowledge of Finance and investments.</span>
+					</div>
+
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> Attitude:</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> •	Enterprising, highly driven</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> • Self Motivated</span>
+					</div>
+					
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> <strong>Experience / Qualifications:</strong> </span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> •	Min 2 to 3 year experience in financial service – Front end &amp; Advisory.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> •	Minimum 6 months of Team Handling experience.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> •	CFP Certified</span>
+					</div>
+					
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> <strong>Job Responsibilities:</strong> </span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">1.To ensure and maintain levels of productivity as prescribed. </span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">2.Achieving the team target.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">3.Coordinate monitor and review the efforts/ Performance of team  </span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">4.Identify/Prospect for candidates that can be successful Financial Planner.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">5.Conduct weekly meetings with all Financial Planners.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">6.Identify weak areas based on these review meetings &amp; take corrective action, also identify developmental needs of teams &amp; train them in the weak areas/nominate them to training programs.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">7.Ensure smooth functioning of Client/Member Enrolment and Engagement.</span>
+					</div>
+					
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> <strong>Reports to: Sr. Manager.</strong></span>
+					</div>
+					
+<!-- 					<div class="innerpage_titletext"> -->
+<!-- 						<span class="txtmatterbig_innerpage"> <strong>CTC: Rs.3,60,000</strong></span> -->
+<!-- 					</div> -->
+
+					<div class="innerpage_titletext">
+						<h4><span> <strong>Applicant,
+								please mention position applied for in subject-line.</strong> </span></h4>
+					</div>
+					<div align="center">
+          				<a href="Careers" class="otherslink" alt="Careers"><strong>Back</strong></a>
+          			</div>
+                           
+ </div><!-- innerpage_textcontainer_middle -->
+     
+      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" />
+      </div>
+      <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.jpg')}"  width="215" height="38" border="0" usemap="#Map21" />
+         <map name="Map21" id="Map21">
+           <area shape="rect" coords="3,0,230,36" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map></div>
+      <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+    
+         <div class="title123"><span class="imgtext">Related Links</span></div>
+         <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Ffreedom_Culture"><strong>Ffreedom Culture</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Our_Team"><strong>Our Team</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="about_ffreedom_overview"><strong>About Ffreedom</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="our_philosophy"><strong>Philosophy</strong></a></span> </div>
+       <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Planning_Team"><strong>Know our Financial Planners</strong></a></span> </div>
+       <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Who_can_be_your_financial_planner"><strong>Who is a financial planner?</strong></a></span> </div>
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

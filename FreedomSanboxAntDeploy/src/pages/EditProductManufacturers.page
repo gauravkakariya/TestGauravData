@@ -1,0 +1,63 @@
+<!-- 
+	Page for editing product manufacturer records in the object Product_Manufacturer_Master__c 
+    
+    Version     Version Author     Date           Comments
+    1.0         Prajakta Sanap     27/12/2012     To edit New Product Manufacturer details
+-->
+
+<apex:page standardController="Product_Manufacturer_Master__c"
+		   extensions="EditProductManufacturersController" 
+    	   title="Edit Product Manufacturer"
+    	   sidebar="true"
+    	   tabStyle="Product_Manufacturer_Master__c">
+    	 
+    	 
+   	<script type="text/javascript">
+    	function checkAll(cb,cbid)
+        {
+            var inputElem = document.getElementsByTagName("input");                    
+            for(var i=0; i<inputElem.length; i++)
+            {            
+                 if(inputElem[i].id.indexOf(cbid)!=-1){                                       
+                    inputElem[i].checked = cb.checked;
+                }
+            }
+        }
+	</script>
+    	   
+	<apex:form id="PMform">
+
+		<apex:sectionHeader title="Product Manufacturers"/>
+		
+		<apex:pageBlock title="Edit Product Manufacturer" mode="edit">
+		
+			<apex:outputPanel id="pnlMsg">
+				<apex:pageMessages id="pageMsgs"/>
+			</apex:outputPanel>
+		
+			<apex:pageBlockButtons >
+		        <apex:commandButton value="Save" action="{!saveProductManufacturer}" reRender="pageMsgs"/>
+		        <apex:commandButton value="Cancel" action="{!cancelProductManufacturer}"/>
+      		</apex:pageBlockButtons>
+
+			<apex:pageBlockSection title="Details" columns="4">
+                <apex:pageBlockTable value="{!lstProductManufacturer}" var="PM" width="60%">
+                    <apex:column >
+                        <apex:facet name="header"><apex:inputCheckbox id="selectall" onclick="checkAll(this,'checkedone')"/></apex:facet>
+                        <apex:inputCheckbox value="{!isRemove}" id="checkedone"/>
+                    </apex:column>
+                    <apex:column headerValue="Product Manufacturer Name">
+                        <apex:inputField value="{!PM.Name}" required="True" style="width:200px;"/>
+                    </apex:column>
+                    <apex:column headerValue="Short Code">
+                        <apex:inputField value="{!PM.Short_Code__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Active" style="text-align:center;">
+                        <apex:inputField value="{!PM.Is_Active__c}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+	    </apex:pageBlock>
+
+	</apex:form>
+</apex:page>

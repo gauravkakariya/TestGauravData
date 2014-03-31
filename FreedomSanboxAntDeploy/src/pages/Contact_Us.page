@@ -1,0 +1,175 @@
+<apex:page showHeader="false" sidebar="false" controller="WebFormController" title="Ffreedom Financial Planners | Contact Us">
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+ <div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+        
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/Contact_img.jpg')}" /></div>
+        <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+   </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+                  <!--<div class="leftlinkselectedimg" style="margin-top:144px; height:193px; background-repeat:no-repeat;"></div>-->
+              </div>
+   <div id="innerpage_textcontainer_middle">
+    <!--<div class="innerpage_titletext"><span class="innerpagetopheading">Financial Planning</span></div>-->
+          <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"> 
+            
+            <!--Manasi Issue Id FS0048: Date : 11/7/2011 -->
+            <br/>
+            <b>MUMBAI [Corporate Office]</b><br />
+            <!--End of ID:FS0048 -->
+            <p>506/507, Morya Landmark II,<br />
+            Near Infinity Mall, Link Road,<br />
+            Andheri (W), Mumbai 400 053,<br />
+            Boardline - +91 22 4222 4333,<br />
+            Fax - +91 22 4222 4332,<br />
+            Email - <a href="mailto:contact@ffreedom.in" style="text-decoration: underline;">contact@ffreedom.in</a><br />
+            </p> 
+                 <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Ffreedom+Financial+Planners,+Mumbai,+Maharashtra,+India&sll=52.536273,-169.980469&sspn=41.110593,135.263672&ie=UTF8&hq=Ffreedom+Financial+Planners,&hnear=Mumbai,+Mumbai+suburban,+Maharashtra,+India&ll=19.108839,72.868023&spn=0.123274,0.264187&z=13&iwloc=A" target="_blank" alt="Our Loacaton On Map"><strong>Our Location On Map</strong></a>
+            <br />     
+            <br />
+            <!--Manasi Issue Id FS0048: Date : 11/7/2011 -->
+            <!-- 
+                Owner    : Mahesh Hirugade
+                Issue Id : 00001612
+                Subject  : Changes & Updation in Pune office address 
+             -->
+            <b>PUNE</b><br />
+            <p>
+                4th Floor, Indra Memories,<br />
+                Next to Samsung Plaza Showroom,<br />
+                Sakalnagar, Baner Road,<br />
+                Pune- 411007<br />
+<!--  Setty:00002479           Tel. No. : +91 97625 33162<br/>  -->
+                Tel. No. : +91 8055769965<br/>
+            </p>
+<!--             <br/> -->
+<!--             <b>ABC MADHYAPRADESH</b><br /> -->
+<!--             <p>3/1, Vinamra, Kamla Nehru Marg,<br /> -->
+<!--             Near Shaheed Park, Free Ganj,<br /> -->
+<!--             Ujjain - 456010 (M.P.)<br /> -->
+<!--             Tel. No. : +08305561791<br /> -->
+<!--             </p> -->
+<!--             <br/> -->
+            <b>DELHI</b><br />
+             <!--Trupti Issue Id FS0225: Date : 10/24/2011 -->
+            <p>
+            C-460, Lower Ground Floor, <br />
+            Chittaranjan Park,<br />
+            New Delhi-110019<br/>
+            Tel. No. : 011-40520660 /<br/>
+            <!--    Setty       <span style="padding-left: 55px">+91 97173 18398</span> -->
+            <span style="padding-left: 55px">+91 9810559864</span>
+            </p>
+             
+             <!--Setty-00002033 -->
+            <b>CHENNAI</b><br />
+            <p>
+            5,4th floor,Building No.53 Laxmi Tower, <br />
+            Arcot Road, Kodambakkam,<br />
+            Chennai – 600 024<br/>
+            Tel. No. : 09597614597<br/>
+            </p>
+             <!--Setty-00002033 -->
+            
+            <!--End of ID:FS0048 -->
+            <hr/>
+         <strong>Enquiry Form: <br /></strong>
+         
+         <apex:form id="Contactus" >
+            
+        <div class="settable">
+        <table class="textmatter" width="400">        
+          <tr>
+            <td width="20%">First Name :</td>
+            <td><apex:inputField id="FirstName" required="true" value="{!lead.FirstName}" style="font-size:12px;width:100px"/></td>
+          </tr>
+          <tr> 
+            <td width="20%">Last Name :</td>
+            <td><apex:inputField id="LastName" value="{!lead.LastName}" style="font-size:12px;width:100px"/></td>
+          </tr>           
+          <tr> 
+            <td>Occupation:</td>
+            <td><apex:inputField id="Occupation" value="{!lead.Occupation__c}"/></td>
+          </tr>
+          <tr>
+            <td>Location:</td>
+            <td><apex:inputField id="Location" required="true" value="{!lead.Location__c}" style="font-size:12px;"/></td>
+          </tr>
+          <tr>  
+            <td>Email id:</td> 
+            <td><apex:inputField id="youremail" required="true" value="{!lead.Email}" style="font-size:12px;width:100px"/></td>
+          </tr>
+          <tr>
+            <td>Mobile number:</td>
+            <td><apex:inputField id="Mobilenumber" required="true" value="{!lead.MobilePhone}" style="font-size:12  px;width:100px"/></td>
+          </tr>        
+        <tr >
+        <td colspan="2"><strong>Please select a category that you wish to contact us about:</strong></td>
+        </tr>        
+        </table>
+       
+        <apex:repeat var="con" value="{!checkboxesListforContact}">
+          <table class="textmatter" width="400">        
+        <tr>
+        <td align="left"><apex:inputcheckbox required="true" id="check" value="{!con.selected}"/>
+        &nbsp;{!con.label} <apex:inputText style="font-size:12px;" id="textbx" value="{!con.value}" rendered="({!con.label} == 'Others')"/>
+       </td>
+       
+        
+        </tr>
+       
+         </table>
+         </apex:repeat>
+          
+        <table> 
+        <tr >
+         <td colspan="2" align="center">
+        <apex:commandButton value="Send" id="sendButton" onclick="validate()" action="{!insertContactUsInfo}"/>
+
+       <!--   <apex:actionFunction id="dataSendFunction" name="sendData" action="{!send}">
+          <apex:param name="FullName" assignTo="{!FullName}" value=""/>
+            <apex:param name="Occupation" assignTo="{!Occupation}" value=""/>
+            <apex:param name="Location" assignTo="{!Location}" value=""/>
+            <apex:param name="youremail" assignTo="{!youremail}" value=""/>
+            <apex:param name="Mobilenumber" assignTo="{!Mobilenumber}" value=""/>
+        </apex:actionFunction>-->
+        </td></tr>            
+         </table>
+      </div>
+    
+    </apex:form>
+           
+       </span></div>        
+                           
+ </div><!-- innerpage_textcontainer_middle -->
+     
+ <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" /></div>     
+      <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}" border="0" usemap="#Map21" />
+         <map name="Map21" id="Map21">
+           <area shape="rect" coords="3,0,230,50" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map></div>
+      <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+        
+     <div class="title123"><span class="imgtext">Related Links</span></div>
+        <!---- <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Planning_Team"><strong>Know our Financial Planners</strong></a></span> </div>---->
+        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Client_Stories"><strong>Our Client stories</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Comprehensive_fp"><strong>Services Basket</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Careers"><strong>Careers</strong></a></span> </div>
+      <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

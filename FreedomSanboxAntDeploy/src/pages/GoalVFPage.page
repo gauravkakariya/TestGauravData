@@ -1,0 +1,155 @@
+<!-- /*
+	Revision History:
+	
+    Version     Version Author     Date         Comments
+    1.0         Persistent         NA  		  	Initial Draft
+   
+	2.0			Manasi Ranade	   25/04/2012    Case No 00001605: Added Is_Include_In_HLV field on the page .
+									  			 That will be checked if we want to include the selected goal in HLV (Life Insurance Planning Page) 
+*/ -->
+<apex:page id="goalPage" controller="GoalVFPageController" standardStylesheets="true" showHeader="false" sidebar="false">
+	<style>
+	    th.colWrap div{
+	         white-space:pre-wrap;
+	      }
+    </style>
+    
+   <apex:stylesheet value="{!$Resource.FFStyle}"/> 
+   <apex:includeScript value="{!$Resource.ffreedomJavascript}"/> 
+    
+   <apex:composition template="TabPage" >
+	   <apex:define name="contents">
+		   <apex:form > 
+		        <apex:outputPanel id="PopupPanel">
+		              <apex:outputLabel value="{!goalBeanInstance.selGoalType}"></apex:outputLabel>
+		              <apex:pageBlock id="goalEdit" title="Goals">
+		                   <apex:pageMessages rendered="true" />
+		                   <apex:pageBlockTable value="{!goalBeanInstance.goalList}" align="center" var="goalRecord"  rowClasses="odd,even" headerClass="standardFontStyle" style="border-width:thin;border-style:solid;width:85%;border-color:gray;">
+		                        <!--<apex:column headerValue="{!$ObjectType.Goal__c.fields.Entity__c.label}" style="width:"5%">
+		                             <apex:outputField value="{!goalRecord.Entity__c}" style="height:20px;"  />
+		                         </apex:column>-->
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Goal_Type__c.label} " width="5%" style="border-right:1px solid;border-color:Lightgray;">
+		                             <apex:outputlabel value="{!goalRecord.Goal_Type__c}" style="height:20px;" styleclass="standardFontStyle" />
+		                         </apex:column>
+		                         
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Description__c.label}" width="10%" style="border-right:1px solid;border-color:Lightgray;">
+		                             <apex:outputlabel value="{!goalRecord.Description__c}" style="height:16px;" styleclass="standardFontStyle" />
+		                         </apex:column>
+		                        
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Priority__c.label}" width="4%" style="border-right:1px solid;border-color:Lightgray;">
+		                             <apex:outputlabel value="{!goalRecord.Priority__c}" style="height:16px;" styleclass="standardFontStyle" />
+		                         </apex:column>
+
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Goal_Start_Year__c.label}" width="3%" style="text-align:right;border-right:1px solid;border-color:Lightgray;">
+		                             <apex:outputlabel value="{!goalRecord.Goal_Start_Year__c}"  styleclass="standardFontStyle" />
+		                         </apex:column>
+		                         
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Goal_End_Year__c.label}" width="3%" style="text-align:right;border-right:1px solid;border-color:Lightgray;">
+		                             <apex:outputlabel value="{!goalRecord.Goal_End_Year__c}"  styleclass="standardFontStyle" />
+		                         </apex:column> 
+
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Inflation_Rate__c.label}" width="3%" style="text-align:right;border-right:1px solid;border-color:Lightgray;">
+		                             <apex:outputlabel value="{!goalRecord.Inflation_Rate__c}" style="height:16px;" styleclass="standardFontStyle" />
+		                         </apex:column>
+
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Cost_of_Goal_Annual__c.label}" width="5%" style="text-align:right;border-right:1px solid;border-color:Lightgray;">
+		                            <apex:outputText value="{0, number, ,##,##0}" style="width:100%;height:16px;" styleclass="standardFontStyle">
+		                                  <apex:param value="{!goalRecord.Cost_of_Goal_Annual__c}"/>
+		                            </apex:outputText>
+		                         </apex:column> 
+
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Goal_Frequency__c.label}" width="5%" style="text-align:right;border-right:1px solid;border-color:Lightgray;">
+		                              <apex:outputlabel value="{!goalRecord.Goal_Frequency__c}" style="height:16px;border-color:Lightgray;" styleclass="standardFontStyle" />
+		                         </apex:column>
+		                         
+								 
+								 <!--/** Eternus Solutions       **/
+								/** Author  : Manasi Ranade **/
+								/** Issue Id: 00001605      **/
+								/** Date    : 25/04/2012 	**/
+								/** Purpose : Added Is_Include_In_HLV field on the page .
+											  That will be checked if we want to include the selected goal in HLV (Life Insurance Planning Page) 
+								/****************************************************/ -->						 
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Is_Include_In_HLV__c.label}" width="5%" style="text-align:center;">
+		                         	<apex:outputField value="{!goalRecord.Is_Include_In_HLV__c}" styleclass="standardFontStyle" />
+<!--                             	<apex:outputlabel value="{!goalRecord.Is_Include_In_HLV__c}"></apex:outputlabel>  -->
+		<!--                      	style="height:16px;" styleclass="standardFontStyle" /> -->
+		                         </apex:column>
+		                    </apex:pageBlockTable>
+		
+		                    <apex:pageBlockTable value="{!goalBeanInstance.addNewListView}" align="center" var="goalRecord" style="width:85%" rowClasses="odd,even" rendered="{!isAddednew}" headerClass="colWrap">
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Goal_Type__c.label}" width="12%">
+<!-- 		                             <apex:inputField value="{!goalRecord.Goal_Type__c}" style="height:20px; width:90%" styleclass="standardFontStyle requiredField"/> -->
+										<apex:selectList id="EntitySelectList" value="{!goalRecord.Goal_Type__c}" multiselect="false" size="1" style="height:20px;">
+                                       		 <apex:selectOptions value="{!lstGoalOptions}" />
+                                    	</apex:selectList> 
+		                         </apex:column>
+		                         
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Description__c.label}" width="15%" >
+		                             <apex:inputField value="{!goalRecord.Description__c}" style="height:16px; width:90%;" styleclass="standardFontStyle requiredField "/>
+		                         </apex:column>
+		                        
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Priority__c.label}" width="8%" >
+		                             <apex:inputField value="{!goalRecord.Priority__c}" style="height:20px; width:98%;" styleclass="standardFontStyle"/>
+		                         </apex:column>
+		                         
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Goal_Start_Year__c.label}" width="11%" >
+		                         	 <apex:inputField value="{!goalRecord.Goal_Start_Year__c}" style="width:60%;height:16px;" onkeypress="return isNumberKey(event)" onblur="yearLength(this);" styleclass="standardFontStyle requiredField "/>
+		                         </apex:column>
+
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Goal_End_Year__c.label}" width="12%" >
+		                             <apex:inputField value="{!goalRecord.Goal_End_Year__c}" style="width:60%;height:16px;" onkeypress="return isNumberKey(event)" onblur="yearLength(this);" styleclass="standardFontStyle requiredField"/>
+		                         </apex:column>
+
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Inflation_Rate__c.label}" width="11%" >
+		                             <apex:inputField value="{!goalRecord.Inflation_Rate__c}" style="width:80%;height:16px;" styleclass="standardFontStyle"/>
+		                         </apex:column>
+
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Cost_of_Goal_Annual__c.label}" width="18%" >
+		                             
+		                             <apex:inputField value="{!goalRecord.Cost_of_Goal_Annual__c}" style="width:90%;height:16px;" styleclass="requiredField standardFontStyle"/>
+		                         </apex:column> 
+		                         
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Goal_Frequency__c.label}" width="14%" >
+		                             <apex:inputField value="{!goalRecord.Goal_Frequency__c}" style="width:90%;height:16px;" styleclass="standardFontStyle"/>
+		                         </apex:column>
+		                         
+		                         <!--/** Eternus Solutions       **/
+								/** Author  : Manasi Ranade **/
+								/** Issue Id: 00001605      **/
+								/** Date    : 25/04/2012 	**/
+								/** Purpose : Added Is_Include_In_HLV field on the page .
+											  That will be checked if we want to include the selected goal in HLV (Life Insurance Planning Page) 
+								/****************************************************/ -->
+		                         <apex:column headerValue="{!$ObjectType.Goal__c.fields.Is_Include_In_HLV__c.label}" width="14%" >
+		                             <apex:inputField value="{!goalRecord.Is_Include_In_HLV__c}" style="width:90%;height:16px;" styleclass="standardFontStyle"/>
+		                         </apex:column>
+		                    </apex:pageBlockTable>
+		
+	                        <table style="margin-left:400px">
+		                        <tr>
+			                        <td>
+<!-- 			                        	<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+										<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+				                        	<apex:commandButton rendered="{!isAddednew}" value="Save" action="{!SaveFromView}" reRender="PopupPanel,SummaryTable,counterStatusData" style=" font-family:arial; font-size:12px;" />
+					                    </apex:outputPanel>
+					                    </td><td><apex:commandButton rendered="{!isAddednew}" value="Cancel" action="{!closePopup}" rerender="PopupPanel,SummaryTable" style="font-family:arial; font-size:12px;"/>
+				                    </td>
+			                    </tr>
+		                    </table> 
+		                    
+		                    <apex:pageBlockButtons location="bottom"> 
+<!-- 		                    	<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+								<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+                               		<apex:commandButton value="Edit" action="{!edit}" style="font-family:arial; font-size:11px;margin-left:-180px; " reRender="popupPanel"/>
+                               		<apex:commandButton value="Add New" action="{!addNewRowFromView}" reRender="PopupPanel" style="font-family:arial; font-size:11px;" rendered="{!(isNumberOfGoal && goalCount < objEntityGlobalAssumption.No_of_Goals__c + 1) }" />
+                               	</apex:outputPanel>
+                               	<apex:commandButton action="/apex/InsuranceSummaryPage?entityId={!goalBeanInstance.entityId}&tabname=Financial Planning" value="Previous"  style="font-family:arial; font-size:11px;margin-left:540px; " reRender="popupPanel"/>
+                               	<apex:commandButton action="/apex/ProfilerQuestionPage?entityId={!goalBeanInstance.entityId}&tabname=Financial Planning" value="Next"  style="font-family:arial; font-size:11px; " reRender="popupPanel"/>
+		                     </apex:pageBlockButtons>
+		                 </apex:pageBlock>
+		  		 </apex:outputPanel>
+		   </apex:form>      
+	   </apex:define>
+   </apex:composition>
+</apex:page>

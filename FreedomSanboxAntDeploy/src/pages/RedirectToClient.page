@@ -1,0 +1,2 @@
+<apex:page showHeader="false" controller="RedirectToClientInfo" action="{!redirectTo}">
+</apex:page>

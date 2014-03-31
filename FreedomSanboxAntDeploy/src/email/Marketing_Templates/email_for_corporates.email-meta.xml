@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>emailer for HR - Head for Corp plan</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>HR Emailer</name>
+    <style>freeForm</style>
+    <subject>Plan Today For A Better Tomorrow</subject>
+    <textOnly>Dear {!Lead.Name}
+ 
+&apos;Our perfect life is when we are in our dreams awake’
+
+Today people dream &amp; forget. Imagine them living their dreams. No dream/goal is achievable without a plan. This becomes even more pertinent when the dreams &amp; goals are attached
+to financial requirements. 
+We believe &quot;Failing to Plan is Planning to Fail.&quot;
+
+At Ffreedom Financial Planner, we understand this problem &amp; address it by providing Financial Planning though our proprietary financial models and help achieve one’s goals. In short - we enable people live their dreams.
+
+We believe that today, due to lack of knowledge &amp; time and enormous misguidance, most of the people are finding themselves lost in this financial jungle, which often leads to stress, worry and impaired relationships. This becomes even more significant for salaried people. Our aim is to empower them with knowledge &amp; planning, which would help them being financially free.
+
+Ffreedom Financial Planners is a fee-based Financial Planning firm. We take great pride as we are into the business of reliving stress. 
+
+
+Our services include:
+Dedicated Certified Financial Planner [CFP] There are only 1800
+CFPs in India
+One-on-One Data Collection &amp; Goal Setting
+Detailed Financial Plan presentation
+Will include Emergency Planning, Risk Planning, Goal based Planning &amp; Retirement Planning
+Action Plan for each of the goals
+Action Plan Presentation Post the Financial Plan Approval 
+Access to Client Portal [with a secured username &amp; password]Assets, Liabilities, Net-worth, Financial Plan, Action Points, etc
+Implementation of the Action Plan
+Conference calls/meetings at your discretion with your dedicated CFP
+Monthly statements &amp; updates on your Financial Plan
+SIP &amp; Premium reminders (through SMS &amp; Email).
+Income Tax Filing
+
+We would like to encourage you to visit our website www.ffreedom.in &amp; also read some of your client stories &amp; testimonials to better understand what we do.
+
+We believe that our services can be a meaningful addition to your Employee Welfare Strategy. 
+
+Financial Planning is very noble &amp; will enable your employees to be on top of their goals/objectives at all points of time. A service like this if offered from the employer will add tremendous confidence and stickiness to your employees.
+
+Through this email we seek an appointment to meet you in-person to share the concept and discuss how we can take this unique proposition ahead.
+
+Wishing you a good day ahead
+
+Warm Regards
+
+Ashwin Dewan Head of Marketing | Ffreedom Financial Planners
+E: marketing@ffreedom.in</textOnly>
+    <type>html</type>
+</EmailTemplate>

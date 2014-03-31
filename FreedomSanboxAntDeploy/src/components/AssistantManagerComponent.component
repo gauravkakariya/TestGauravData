@@ -1,0 +1,17 @@
+<!--				    Eternus Solutions
+                        Author  : Pravin Patil
+                        Issue Id: FS0140
+                        Date    : 07/09/2011
+                        Purpose : Reuse code in website pages    (Assistant Manager Related Links)-->
+
+
+
+<apex:component id="AssistantManagerComponent">
+	 		<div class="title123"><span class="imgtext">Related Links</span></div>
+	        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Ffreedom_Culture"><strong>Ffreedom Culture</strong></a></span> </div>
+	        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Our_Team"><strong>Our Team</strong></a></span> </div>
+	        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="about_ffreedom_overview"><strong>About Ffreedom</strong></a></span> </div>
+	        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="our_philosophy"><strong>Philosophy</strong></a></span> </div>
+	        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Planning_Team"><strong>Know our Financial Planners</strong></a></span> </div>
+	        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Who_can_be_your_financial_planner"><strong>Who is a financial planner?</strong></a></span> </div>
+</apex:component>

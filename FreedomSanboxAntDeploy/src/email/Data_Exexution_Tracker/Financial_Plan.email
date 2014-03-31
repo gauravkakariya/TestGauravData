@@ -1,0 +1,6 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[Dear "{!Account.Name}"<br><br>Please find attached you customized financial plan. During our meeting we would discuss the specifics and take your views.<br>If you are okay with the details in the plan and accept the recommendations, please confirm your approval through a reply mail for our records.<br><br>This is a confidential document and is not to be shared with anyone. This is a customized plan and the suggestions given in there are applicable only in your case and none else. You may want to safe keep this document and use it for reviewing the progress you have made in your financial life.<br><br>To benefit from the planning exercise, you will have to act on the recommendations made. A detailed Action plan will be mailed to you after which you can choose how to go ahead with implementing the recommendations.<br><br>At any point in time, please feel free to call me for any clarifications.<br><br>Thanks and regards<br>{!Account.OwnerFullName}<br>]]></td>
+</tr>
+</table>

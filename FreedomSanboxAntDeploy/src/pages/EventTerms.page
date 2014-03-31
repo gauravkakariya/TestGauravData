@@ -1,0 +1,10 @@
+<apex:page showHeader="false" sidebar="false" >
+  <apex:composition template="EventTemplate" >
+  <apex:define name="rightcontent">   
+ <div style="align:center;text-decoration:underline; position:relative; left:210px;top:20px;font-size:16px;"> <b >TERMS OF USE AGREEMENT</b> </div>
+ <br/><br/>
+  <apex:iframe height="770px"  scrolling="true" src="EventTermsContent"  width="660px"></apex:iframe>
+  
+   </apex:define>
+ </apex:composition>
+</apex:page>

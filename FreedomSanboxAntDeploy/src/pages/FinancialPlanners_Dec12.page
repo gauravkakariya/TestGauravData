@@ -1,0 +1,233 @@
+<apex:page showHeader="false" sidebar="false"
+	title="Ffreedom Financial Planners | News Letters"
+	id="FinancialPlanners_Dec12">
+	<head>
+<link rel="shortcut icon"
+	href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+	</head>
+	<body>
+
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/top_Dec12.gif')}" width="740" height="104" /></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                <tr>
+
+                  <td background="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headbg.gif')}"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/plannerHIn.gif')}" width="218" height="40" /></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+                      <tr>
+
+                        <td width="9" valign="top" background="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="185" /></td>
+
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="8" height="1" /></td>
+
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+
+                          <tr>
+
+                            <td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>“100 Saal Jiyo!”</em></strong></font></td>
+
+                          </tr>
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">“<em>Jeetay Raho</em>,”  said my grandmother every time I touched her feet. And as a kid, I would often  asked what she meant by that. To which she would tell me that she would pray to  the deities for me, to have a longer life, at least till 100. And I would laugh  at the idea of living till the age of 100 &amp; tell her that was impossible.  But lately, I have been thinking about this. The pace at which medical science  is evolving it may not be too farfetched for the average life expectancy to  rise up to 100 years after a decade or two. <br />
+
+                                <br />
+
+                                This brought me to my next question, “What difficulties  will I face if I live till 100?” While the medical advancements can help us  overcome the complications of health, what we often tend to ignore are the aspects  of our finances. But remember, the pension fund you are banking on may not be  sufficient for you. You need to factor in the cost of living and the increasing  aspirations that we have from life into a financial plan to deal with the  future. <br />
+
+                                <br />
+
+                                Let us take the example of an average 40 year working  professional. A dinner for 4 in a restaurant which today costs him about Rs.  1000 will cost him Rs. 3200 in 20 years. Similarly, if his monthly groceries  bill is Rs. 8000 right now, then the same after 10 years would be Rs. 14000 and  Rs. 46000 after 30 years – and at this stage he would probably have retired. At  the age close to 90 years, a movie for two which costs Rs. 500 today could  easily cost him Rs. 9200! (<em>Assuming long  term inflation to be approximately 6%)</em><br />
+
+                                <br />
+
+                                These figures provide a snapshot of the way things can  shape up over the next couple of decades. Also, remember that with increased  life expectancy, one will lead more years without a source of income as  compared to generations before us. <br />
+
+                                <br />
+
+                                A fundamental fact that we need to understand is that  when we create a financial plan for the future, we need to take into account  the increase in the cost of living. But this cannot be a onetime activity,  since changes in economic scenarios will also require you to change your financial  plan. <br />
+
+                                <br />
+
+                                When you get a financial plan created for yourself, your  resources are translated into investments, which are then spread across various  asset classes, and not just a particular tool. However, you need to start on  this process now. With the GDP growing at 8-9% per annum and long term inflation  hovering around 6-7%, your financial plan could help you achieve decent returns  to match the nominal GDP  growth (Nominal  GDP = GDP + Inflation). <br />
+
+                                <br />
+
+                                If there is one thing I always tell people is – <em>Don’t underestimate the power of  compounding! </em>The earlier you begin investing, and the more you remain  disciplined in your approach, the better yields you can achieve. We had done an  analysis on returns on an investment of Rs. 10,000 per month in Systematic  Investment Plans (SIPs) in diversified equity funds in early 2000 to evaluate  the power of compounding. The results were startling! With a disciplined  approach over 10 years, the returns on Rs. 12 lakhs (10 years x 12 months x Rs.  10,000) on an average were valued at Rs. 48-50 lakhs in 2010. In the case of  some of the top performing diversified equity funds, this valuation breached  the Rs. 90 lakh mark. <br />
+
+                                <br />
+
+                                Financial planning has no end point, just like our  needs and wants. So, whether one lives to 90, 100 or 150… you can always enjoy  life and keep asking your elders to bless you with more “Jeetay Raho!”</td>
+
+                            </tr>
+
+                            
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+
+                            </tr>
+
+                            
+
+                         </table></td>
+
+                      </tr>
+
+                      <tr>
+
+                        <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+
+                      </tr>
+
+                  </table></td>
+
+                </tr>
+
+              </table>
+
+              </td>
+
+          </tr>
+
+          <tr>
+
+            <td valign="top">&nbsp;</td>
+
+            </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+
+        </tr>
+
+    </table></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+
+                </tr>
+
+            </table></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+
+          </tr>
+
+          <tr>
+
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+
+          </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+
+      </tr>
+
+    </table></td>
+
+  </tr>
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/footer.gif')}" width="740" height="15" /></td>
+
+  </tr>
+
+</table>
+
+</body>
+
+
+</apex:page>

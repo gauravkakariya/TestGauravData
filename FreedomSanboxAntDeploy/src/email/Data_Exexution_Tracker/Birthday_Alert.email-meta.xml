@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Birthday Alert</name>
+    <style>freeForm</style>
+    <subject>Birthday of &quot;{!Account.Name}&quot; due in 2 days !!</subject>
+    <textOnly>Hello Team,
+ 
+ 
+As per our Advisor factory, {!Account.Name}&apos;s birthday is due in just two days !!
+ 
+ 
+Please let us all endeavour to make it meaningful in any little way as possible.
+ 
+ 
+Herein is the link of the same:{!Account.Link} 
+ 
+ 
+ </textOnly>
+    <type>html</type>
+</EmailTemplate>

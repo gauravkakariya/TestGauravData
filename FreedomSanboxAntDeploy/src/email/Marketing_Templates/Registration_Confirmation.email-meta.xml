@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Registration Confirmation</name>
+    <style>none</style>
+    <subject>Confirmation for attending The Ffreedom Day</subject>
+    <textOnly>Thank you for confirming your attendance for The Ffreedom Day to be held on the 22nd of August 2010.
+
+Below is the Program Schedule/ Itinerary for the Ffreedom:
+
+10.30 am to 11.00 am – Registration (with Tea, Coffee &amp; Refreshments)
+11.00 am to 11.15 am – Opening Ceremony Chief Guest - TBA
+11.30 am to 12.15 pm – Ffreedom Talks on Happiness
+12.15 pm to 01.00 pm – Ffreedom Talks on Dreams
+01.00 pm to 01.30 pm – Panel Discuss on Financial Freedom
+01.30 pm to 01.45 pm – Closing Ceremony 
+01.45 pm onwards – Lunch &amp; Cocktail
+
+To read more about the about the speakers and event please visit us at
+www.ffreedomday.in
+
+Event Venue: Hotel Novotel Mumbai - Juhu Beach
+Address:BalrajSahaniMarg, Juhu Beach, 400 049 Mumbai.
+
+Map &amp;Directions:
+From the airport, drive west towards the Western Express Highway. Cross over the Andheri Flyover before turning right at S.V. Road. Turn Left at V.L. Mehta Marg, and then right at Juhu Road where you will find the hotel. The journey is about 8 km.
+Nearest Railway Station: 
+Andheri Station or Vile Parle Station
+
+Help Desk:
+For any &amp; all assistance you can email us at contact@ffreedom.in or call us at 022 4222 4333.
+
+Looking forward to meeting you at the Ffreedom Day.
+
+Thank you on behalf of the staff at Ffreedom Financial Planners.
+
+Sincerely,
+
+Team Ffreedom
+
+Freedom Wealth Solutions Pvt. Ltd                                                                                                                 
+506/507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai - 400 053                                
+Tel. 022 42224333     Email: contact@ffreedom.in 
+ Website - www.ffreedom.in</textOnly>
+    <type>custom</type>
+</EmailTemplate>

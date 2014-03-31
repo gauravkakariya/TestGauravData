@@ -1,0 +1,79 @@
+<apex:page sidebar="false" controller="ExistingLeadXRay" action="{!Init}" showHeader="false">
+<link rel="shortcut icon" href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+<script type="text/javascript">
+	function closewindow()
+	{
+		window.close();
+		window.opener.location.reload();
+		//window.location.reload();
+	}
+</script>
+<style type="text/css">
+	.spanstyle
+	{
+		font-size: 12;font-family:Arial;font-weight: bold; 
+	}
+</style>
+<apex:form id="idForm">
+<div class="topcontainer" align="left" style="height:140px;" >
+		<div class="logo">
+		<apex:image url="{!URLFOR($Resource.xrayimage,'logo.png')}" style="padding-left:20px;height:110px;" rendered="{!isFreedomUser}"/>
+		<!--Partner Portal Prajakta : To Add Partner logo--> 
+		<apex:outputField value="{!Partnerlogo.Logo__c}" style="padding-left:20px;height:10px;" rendered="{!NOT(isFreedomUser)}" />
+<!-- 			<img src="{!URLFOR($Resource.images,'images/logobg.PNG')}"   width="23%" height="75%" usemap="#Map5" alt="Ffreedom Financial Planners" title="Ffreedom Financial Planners" /> -->
+	        <map name="Map5" id="Map5">
+	            <area shape="rect" coords="3,4,220,78"  href="index" />
+	        </map>
+	    </div>
+</div>
+<div style ="height: 10px;"></div>
+	
+		<apex:pageMessages ></apex:pageMessages>
+		<apex:pageBlock id="idPgBlock" Title="Financial X-RAY">
+		<div>
+			<apex:actionStatus id="updateStatus" startText="Processing...." >
+			<apex:facet name="start">
+		                    <img src="{!URLFOR('/img/loading.gif')}"/> <span style="font-weight: bold"> Processing....</span>
+		     </apex:facet>
+			</apex:actionStatus>
+		</div>
+		<apex:variable value="{!0}" var="rowNum"/>	            	 
+		<apex:pageblockTable value="{!lstExistingQuesAnswer}" var="ExistItem" id="pgbTable">
+			<apex:column headerValue="Questions">
+				<apex:variable value="{!rowNum+1}" var="rowNum"/>
+					<span class="spanstyle">
+						<apex:outPutText value="{0}		.">
+							<apex:param value="{!rowNum}"/>
+						</apex:outPutText>
+					</span>
+			<span class="spanstyle"> <apex:outputText value="{!ExistItem.objQuestionnaire.Question_Bank_List__r.Question__c}" /></span>
+			
+			<apex:selectRadio value="{!ExistItem.selectedAnswer}" rendered="{!NOT(ExistItem.isMultiChoice)}" id="idCheckRadio" layout="pagedirection">
+				<apex:selectOptions value="{!ExistItem.strAnswer}" />
+				<apex:actionSupport event="onchange" rerender="idPgBlock" status="updateStatus" action="{!resetAllChild}">
+				<apex:param value="{!ExistItem.objQuestionnaire.Question_Bank_List__c}" name="parentId" assignTo="{!parentId}" />
+				</apex:actionSupport>
+			</apex:selectRadio>
+			
+			<apex:selectcheckboxes value="{!ExistItem.selMultipleAnswrs}"  id="idCheckBox" rendered="{!ExistItem.isMultiChoice}" layout="pagedirection">
+						<apex:selectOptions value="{!ExistItem.strAnswer}"/>
+			</apex:selectcheckboxes>
+			
+		</apex:column>
+		</apex:pageblockTable>
+			<div>
+				<apex:outPutPanel >
+					<apex:actionStatus id="updateStatus1" startText="Processing...." >
+					<apex:facet name="start">
+		                         <img src="{!URLFOR('/img/loading.gif')}"/> <span style="font-weight: bold"> Processing....</span>
+		     		</apex:facet>
+		     		</apex:actionStatus>	
+				</apex:outPutPanel>
+			</div>
+			 <apex:pageBlockButtons location="bottom">			
+		 		<apex:commandButton value="Save" action="{!Save}" onComplete="closewindow();" status="updateStatus1" reRender="idPgBlock,idForm"/>
+				<apex:commandButton value="Close" onClick="self.close();"/>  <!-- action="{!Cancel}"  -->
+			</apex:pageBlockButtons>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

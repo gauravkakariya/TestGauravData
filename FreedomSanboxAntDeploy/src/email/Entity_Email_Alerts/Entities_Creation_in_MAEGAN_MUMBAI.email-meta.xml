@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Entities Creation in MAEGAN MUMBAI</name>
+    <style>freeForm</style>
+    <subject>New Entity &quot;{!Account.Name}&quot; Created in MAEGAN MUMBAI</subject>
+    <textOnly>Hello Paresh/Daniel,
+ 
+There is a new Entity created in Advisor Factory. 
+{!Account.OwnerFirstName} is the owner of the Entity. 
+ 
+ 
+Please followup with {!Account.OwnerFirstName} to get the details so that you can incorporate them onto the Advisor Factory.
+ 
+ 
+Herein is the link of the same:{!Account.Link} 
+ 
+ 
+ 
+Thank You,
+Dhaval</textOnly>
+    <type>html</type>
+</EmailTemplate>

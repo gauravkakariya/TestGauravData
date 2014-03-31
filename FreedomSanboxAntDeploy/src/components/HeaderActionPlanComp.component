@@ -1,0 +1,228 @@
+<!-- 
+	Revision History:
+	
+    Version     Version Author     Date           Comments
+    1.0         Prajakta Sanap     27/09/2012     New Action Plan Creation
+    
+-->
+<apex:component allowDML="true" controller="SumActionPlanController">
+
+  	<apex:stylesheet value="{!$Resource.FFStyle}"/>
+  	<apex:attribute name="showButton" type="Boolean" description="Used to decide navigation button should be visible or not" default="true" />
+
+ 	<apex:form >
+
+   	<apex:pageBlock tabStyle="account" >
+    	
+
+  		<div class="divContainerStyle">
+  		<div class="divStyle">SUMMARY ACTION PLAN</div>
+  		<br/>
+
+   		<apex:messages />
+   		
+   		<div style="width:100%;overflow:auto;height:100%;">
+	   		<table width="100%" border="1" cellpadding="0" cellspacing="0" id="dataTable2" style="table-layout:fixed;text-wrap:normal;">
+				<tr class="tableHeader">
+				  	<th style="text-align:center; width:200px;">Mode</th>
+				  	<th colspan="3" style="text-align:center;">SIP</th>
+				    <th rowspan="2" style="text-align:center;">Total SIP</th>
+				    <th colspan="3" style="text-align:center;">Lumpsum</th>
+				    <th rowspan="2" style="text-align:center;">Total<br/> Lumpsum</th>
+				</tr>
+				<tr class="tableHeader">
+				    <th style="text-align:center;">Goals  /  Asset Class</th>
+				    <td class="textStyle">Debt</td>
+				    <td class="textStyle">Equity</td>
+				    <td class="textStyle">Gold</td>
+<!-- 				    <td></td> -->
+				    <td class="textStyle">Debt</td>
+				    <td class="textStyle">Equity</td>
+				    <td class="textStyle">Gold</td>
+<!-- 				    <td></td> -->
+				</tr>
+				<apex:repeat value="{!lstSummaryDetail}" var="rec">
+					<tr>
+						<td height="28px;" style="font-weight:bold; padding-left:5px;">
+							{!rec.description}
+						</td>
+						<apex:variable var="c" value="{!0}"/>
+						<apex:repeat value="{!rec.lstSipValue}" var="sip">
+							<apex:variable var="c" value="{! c +  ROUND(sip,0)}" />
+							<td style="text-align:right; padding-right:5px;">
+								<apex:outputText value="{0, number, ,##,##0}" >
+			                    	<apex:param value="{!ROUND(sip,0)}"/>
+			                    </apex:outputText> 
+<!-- 									{!ROUND(sip,0)} -->
+							</td>
+						</apex:repeat>
+						<td style="text-align:right; padding-right:5px;" class="tableHeader">
+							<apex:outputText value="{0, number, ,##,##0}" >
+	                        	<apex:param value="{!c}"/>
+	                 		</apex:outputText>
+						</td>
+						<apex:variable var="c" value="{!0}"/>
+						<apex:repeat value="{!rec.lstLumpsumValue}" var="lumpsum">
+							<apex:variable var="c" value="{! c +  ROUND(lumpsum,0)}" />
+							<td style="text-align:right; padding-right:5px;">
+								<apex:outputText value="{0, number, ,##,##0}" >
+			                    	<apex:param value="{!ROUND(lumpsum,0)}"/>
+			                    </apex:outputText>
+<!-- 									{!ROUND(lumpsum,0)} -->
+							</td>
+						</apex:repeat>
+						<td class="tableHeader" style="text-align:right; padding-right:5px;">
+							<apex:outputText value="{0, number, ,##,##0}" >
+	                        	<apex:param value="{!c}"/>
+	                 		</apex:outputText>
+						</td>
+					</tr>
+				</apex:repeat>
+				
+				<tr>
+					<td class="tableHeader" height="28px;">
+						{!objSummaryDetail.description}
+					</td>
+					<apex:variable var="c" value="{!0}"/>
+					<apex:repeat value="{!objSummaryDetail.lstSipValue}" var="sip">
+						<td class="tableHeader" style="text-align:right; padding-right:5px;">
+							<apex:outputText value="{0, number, ,##,##0}" >
+		                    	<apex:param value="{!sip}"/>
+		                    </apex:outputText>
+						</td>
+					</apex:repeat>
+					<td>
+					</td >
+					<apex:repeat value="{!objSummaryDetail.lstLumpsumValue}" var="lumpsum">
+						<td class="tableHeader" style="text-align:right; padding-right:5px;">
+							<apex:outputText value="{0, number, ,##,##0}" >
+		                    	<apex:param value="{!lumpsum}"/>
+		                    </apex:outputText>
+						</td>
+					</apex:repeat>
+					<td>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+  		<div class="subHeader">GOAL WISE SIP AND LUMPSUM ALLOCATION</div>
+  		<br/>
+  		<div style="width:100%;overflow:auto;height:100%;"> 
+	  	<table width="100%" border="1" cellpadding="0" cellspacing="0" id="dataTable2" style="table-layout:fixed;text-wrap:normal;">
+	      	<tr class="tableHeader">
+		      	<th class="textStyle" style="width: auto;font-size: 10px;">Mode</th>
+		      	<th class="textStyle" style="width: auto;font-size: 10px;">Asset Class</th>
+		      	<apex:repeat id="hd" value="{!beanObj.goalList}" var="golObj">
+		          	<th class="textStyle"><p style="font-size: 10px; white-space:	 normal;width: auto;font-weight: normal;">{!golObj.Description__c}</p></th>
+		      	</apex:repeat>
+		      	<th class="textStyle" style="width: auto;font-size: 10px;">Total</th>
+	      	</tr>
+	     	<tr class="tableData">
+	          	<td rowspan="4" class="textStyle" style="width:auto;font-size: 11px;">SIP</td>
+	          	<td>
+	          		<apex:repeat value="{!beanObj.sipList}" var="aseObj">
+		          		<tr >
+		          			<td class="textStyle">{!aseObj.className}</td>
+		            		<apex:variable var="c" value="{!0}" />
+		            
+		              		<apex:repeat value="{!aseObj.golListVals}" var="gObj"> 
+		                  		<apex:variable var="c" value="{! c +  ROUND(gObj,0)}" />
+			                  	<td class="textStyle" style="width:auto;text-align:right; font-size: 11px;">
+			                  		<apex:outputText value="{0, number, ,##,##0}" >
+			                        	<apex:param value="{!gObj}"/>
+			                     	</apex:outputText>
+			                   	</td>
+		              		</apex:repeat>
+		              		<td class="textStyle, tableHeader">
+		              			<apex:outputText value="{0, number, ,##,##0}" >
+		                        	<apex:param value="{!c}"/>
+		                 		</apex:outputText>
+		              		</td>
+		          		</tr>
+	         	 	</apex:repeat>
+	          	</td>
+		        <tr class="tableHeader">
+		        	<td class="textStyle" style="width:auto;font-size: 11px;" >Total SIP</td>
+		            <td></td>
+		            <apex:repeat value="{!beanObj.totSIPList}" var="totObj">
+		            	<td class="textStyle" style="width:auto;text-align:right;font-size: 11px;">
+		                	<apex:outputText value="{0, number, ,##,##0}" >
+		                    	<apex:param value="{!totObj}"/>
+		                    </apex:outputText>
+		                </td>
+					</apex:repeat>
+		       	</tr> 
+	      	</tr> 
+	      	<tr class="tableData">
+	      		<td rowspan="4" class="textStyle" style="width:auto;white-space:	 normal; font-size: 11px;" >Lumpsum</td>
+	         
+	          	<apex:repeat id="hd1" value="{!beanObj.asetList}" var="aseObj">
+	          		<tr>
+	          			<td class="textStyle">{!aseObj.className}</td>
+	          			<apex:variable var="c" value="{!0}" />
+	              		<apex:repeat value="{!aseObj.golListVals}" var="gObj">
+	              			<apex:variable var="c" value="{! c + ROUND(gObj,0)}" />
+	<!-- 					<apex:variable var="c" value="{!c + gObj}" /> -->
+	                   			<td class="textStyle" style="width:auto;text-align:right;font-size: 11px;">
+	                            	<apex:outputText value="{0, number, ,##,##0}" >
+	                                   	<apex:param value="{!gObj}"/><br/>
+	                            	</apex:outputText></td>
+	              		</apex:repeat>
+	<!--               <td>{!c} </td> -->
+	              		<td class="textStyle, tableHeader">
+		              		<apex:outputText value="{0, number, ,##,##0}" >
+		                        <apex:param value="{!c}"/>
+		                 	</apex:outputText>
+		           		</td>
+	          		</tr>
+	          	</apex:repeat>
+	         
+	          	<tr class="tableHeader">
+	              	<td class="textStyle" style="width:auto;white-space:normal;font-size: 11px;font-weight: bold" >Total Lumpsum</td>
+	              	<td class="textStyle"></td>
+	              	<apex:repeat id="hd111" value="{!beanObj.totLumpSumList}" var="totObj">
+	              		<td class="textStyle" style="width:auto;text-align:right;font-size: 11px;">
+	                   		<apex:outputText value="{0, number, ,##,##0}" >
+	                        	<apex:param value="{!totObj}"/>
+	                        </apex:outputText>
+	                    </td>
+	              	</apex:repeat>
+	          	</tr>
+	      	</tr>
+	  	</table>
+	</div>
+  	<br/> 
+  
+ 	
+ </div>
+ </apex:pageBlock>  
+ </apex:form>
+   <script>
+    <!-- This is for styling alternate rows of SummaryTable -->
+        function altRows(id)
+        {
+           // alert('hello'+id);
+            if(document.getElementsByTagName)
+            {  
+                var table = document.getElementById(id);  
+                var rows = table.getElementsByTagName("tr"); 
+                for(i = 1; i < rows.length; i++)
+                {  
+                    if(i % 2 == 0)
+                    {
+                        rows[i].className = "DataTableEven";
+                    }
+                    else
+                    {
+                        rows[i].className = "DataTableOdd";
+                    }      
+                }
+            }
+            
+        }
+    
+        window.onload =   altRows('dataTable1');altRows('dataTable2');altRows('dataTable3');altRows('dataTable4');
+   </script>
+
+</apex:component>

@@ -1,0 +1,219 @@
+<apex:page controller="RenewalTrackerforLIController" showHeader="false" standardStylesheets="true" title="Renewal Tracker" id="pageId">
+ <script>
+ 	function hide(){
+ 	  document.getElementById('pageId:formId:pageBlockId:saveBtn').style.display = 'none';
+ 	}
+ 
+ </script>
+ <apex:stylesheet value="{!$Resource.FFStyle}"/>
+ 	<apex:form id="formId">
+	<apex:pageBlock tabStyle="account" id="pageBlockId">
+ 		<div style="margin:bottom:20px; width:100%;margin-left:10px;padding-left:250px">
+ 		<br/>
+ 		<br/>
+	 		<apex:commandButton id="btn1" styleclass="button" value="Life Insurance Tackers" action="{!lifeInsuranceTracker}" status="topStatus" 
+	 								rerender="pageBlockSection1,pageBlockSection2,saveBtn"
+					 				style="margin-left:20px; background-image:none;background-color:#A9C5EB !important;" onComplete="hide();"/>
+									
+			<apex:commandButton id="btn2" styleclass="button" value="General Insurance Tackers" action="{!generalInsuranceTracker}" status="topStatus" 
+								rerender="pageBlockSection1,pageBlockSection2,saveBtn"
+								style="margin-left:20px; background-image:none;background-color:#A9C5EB !important;" onComplete="hide();"/>
+			<apex:actionStatus stopText="" id="topStatus">
+	           	<apex:facet name="start">
+	          		<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+	               		<img src="/img/loading.gif" width="16" height="16"/>
+					</apex:outputPanel>
+              	</apex:facet>
+           </apex:actionStatus>  		
+			<br/>
+			<br/>
+			<div style="padding-left:150px" id="divId">
+			                            
+				<apex:commandButton value="Cancel" action="{!closeRT}" rendered="{!isShowCancelButton}" id="saveBtn"/>					
+			</div>					
+				
+		</div>
+		<br/>
+		<br/>		
+        <apex:outputPanel id="pageBlockSection1">
+        <apex:outputPanel rendered="{!isLifeInsuranceTracker}">
+	        <apex:pageBlock tabStyle="account" >
+		        <apex:pageBlockButtons > 
+		           	<apex:commandButton value="Save" action="{!saveRenewalTracker}" rerender="section1,pageBlockSection1,Pagemsg" status="statusId"/>
+		           	<apex:commandButton value="Cancel" action="{!cancel}" immediate="true"/>
+		           	<apex:actionStatus stopText="" id="statusId">
+			           <apex:facet name="start"> 
+			               <apex:outputPanel style="padding-left:50%;">
+			                    <img src="/img/loading.gif" width="16" height="16"/>
+			               </apex:outputPanel>
+			           </apex:facet>
+			       </apex:actionStatus>    
+		       	</apex:pageBlockButtons>
+		       	
+				<apex:pageBlockSection title="RENEWAL TRACKERS FOR LIFE INSURANCE" collapsible="true" columns="1" id="section1" >
+				<apex:pageMessages id="Pagemsg"/>
+					<apex:repeat value="{!lstBaseRenewalTrackers}" var="lstRenewalTracker"> 
+						<apex:pageBlockSection title="{!lstRenewalTracker.policyName}" columns="1">
+							<table width="100%">
+				 				<tr width="100%">
+						 			<td width="30%"><b>Total No. of Trackers :</b> {!lstRenewalTracker.totalNoOfTrackers}</td>
+				 				</tr>
+			 				</table>
+			                <apex:pageBlockTable value="{!lstRenewalTracker.lstRenewalTrackerDetails}" var="objRenewalTracker" styleClass="required" style="margin-left:48px;width:900px;">
+	<!-- 		                    <apex:outputPanel rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Cheque_Submission_date__c == null),true,false)}"/> -->
+				                    <apex:column headerValue="" width="2%">
+										<apex:commandLink value="View/Edit" action="{!ViewRecords}" target="_blank">
+									            <apex:param name="recId" value="{!objRenewalTracker.objchildRenewalTracker.Id}" assignTo="{!renewalTrackerId}"/> 
+										</apex:commandLink>
+				                    </apex:column>
+									<apex:column headerValue="Next Renewal Date" width="10%">
+				                        <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Next_renewal_date__c}" style="width:100px;"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Cheque Submission Date" width="10%">
+				                        <apex:inputField value="{!objRenewalTracker.objchildRenewalTracker.Cheque_Submission_date__c}" style="width:100px;"  
+				                        		rendered="{!IF(((objRenewalTracker.objchildRenewalTracker.Cheque_Submission_date__c == null) || (objRenewalTracker.objchildRenewalTracker.Cheque_Submission_date__c < objRenewalTracker.objchildRenewalTracker.Next_renewal_date__c)),true,false)}"/>
+				                       	 <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Cheque_Submission_date__c}" style="width:100px;"
+				                       	 		rendered="{!IF(((objRenewalTracker.objchildRenewalTracker.Cheque_Submission_date__c != null) && (objRenewalTracker.objchildRenewalTracker.Cheque_Submission_date__c >= objRenewalTracker.objchildRenewalTracker.Next_renewal_date__c)),true,false)}"/>
+				                    </apex:column> 
+			                        <apex:column headerValue="Cheque Number" width="10%">
+				                        <apex:inputField value="{!objRenewalTracker.objchildRenewalTracker.Cheque_Number__c}" style="width:100px;"
+				                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Cheque_Number__c == null),true,false)}"/>
+				                        		
+				                        <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Cheque_Number__c}" style="width:100px;"
+				                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Cheque_Number__c != null),true,false)}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Bank Name" width="10%">
+				                        <apex:inputField value="{!objRenewalTracker.objchildRenewalTracker.Bank_Name__c}" style="width:100px;"
+				                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Bank_Name__c == null),true,false)}"/>
+				                        		
+				                        <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Bank_Name__c}" style="width:100px;"
+				                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Bank_Name__c != null),true,false)}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Target Revenue" width="10%">
+				                        <apex:inputField value="{!objRenewalTracker.objchildRenewalTracker.Target_Revenue__c}" style="width:100px;" 
+				                        	rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Target_Revenue__c == null),true,false)}"/>
+				                        		
+				                        <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Target_Revenue__c}" style="width:100px;"
+				                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Target_Revenue__c != null),true,false)}"/>
+				                    </apex:column>
+				                     <apex:column headerValue="Premium Amount" width="10%">
+				                        <apex:inputField value="{!objRenewalTracker.objchildRenewalTracker.Premium_Amount__c}" style="width:100px;"
+				                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Premium_Amount__c == null),true,false)}"/>
+				                        		
+				                        <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Premium_Amount__c}" style="width:100px;"
+				                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Premium_Amount__c != null),true,false)}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Remark" width="10%">
+				                        <apex:inputField value="{!objRenewalTracker.objchildRenewalTracker.Remark__c}" style="width:100px;"
+				                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Remark__c == null),true,false)}"/>
+				                        		
+				                        <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Remark__c}" style="width:100px;"
+				                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Remark__c != null),true,false)}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Remaining Trackers" width="5%">
+				                        <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Tenure_of_Insurance__c}" style="width:100px;"/>
+				                    </apex:column>
+	<!-- 		                   </apex:outputPanel> -->
+			                </apex:pageBlockTable>
+	<!-- 		                <apex:commandButton value="Save" Action="{!saveRenewalTracker}"  style="margin-top:15px;margin-left:450px;font-weight:bold; font-size:11px;"  -->
+	<!-- 		                                     rerender="section1,pageBlockSection1,Pagemsg" status="statusIdEF"/> -->
+			              </apex:pageBlockSection>
+		            </apex:repeat>
+				</apex:pageBlockSection>
+		 		</apex:pageBlock>
+			</apex:outputPanel>
+		 </apex:outputPanel>
+		  	
+		<apex:outputPanel id="pageBlockSection2">
+		<apex:outputPanel rendered="{!isGeneralInsuranceTracker}" > 
+			<apex:pageBlock tabStyle="account" mode="inlineEdit">
+		        <apex:pageBlockButtons > 
+		           	<apex:commandButton value="Save" action="{!saveRenewalTracker}" rerender="section2,pageBlockSection2,Pagemsg1" status="statusId" id="saveButton" />
+		           	<apex:commandButton value="Cancel" action="{!cancel}" />
+		       	</apex:pageBlockButtons>
+		       	<apex:actionStatus stopText="" id="statusId">
+		           <apex:facet name="start"> 
+		               <apex:outputPanel style="padding-left:50%;">
+		                    <img src="/img/loading.gif" width="16" height="16"/>
+		               </apex:outputPanel>
+		           </apex:facet>
+		       </apex:actionStatus>    
+			<apex:pageBlockSection title="RENEWAL TRACKERS FOR GENERAL INSURANCE" collapsible="true" columns="1" id="section2">
+			<apex:pageMessages id="Pagemsg1"/>
+				<apex:repeat value="{!lstBaseRenewalGITrackers}" var="lstRenewalTracker"> 
+					<apex:pageBlockSection title="{!lstRenewalTracker.policyName}" columns="1">
+						<table width="100%">
+			 				<tr width="100%">
+					 			<td width="30%"><b>Total No. of Trackers :</b> {!lstRenewalTracker.totalNoOfTrackers}</td>
+			 				</tr>
+		 				</table>
+		                <apex:pageBlockTable value="{!lstRenewalTracker.lstGIRenewalTrackerDetails}" var="objRenewalTracker" styleClass="required" style="margin-left:48px;width:900px;">
+<!-- 		                    <apex:outputPanel rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Cheque_Submission_date__c == null),true,false)}"/> -->
+			                    <apex:column headerValue="" width="2%">
+									<apex:commandLink value="View/Edit" action="{!ViewRecords}" target="_blank">
+								            <apex:param name="recId" value="{!objRenewalTracker.objchildRenewalTracker.Id}" assignTo="{!renewalTrackerId}"/> 
+									</apex:commandLink>
+			                    </apex:column>
+								<apex:column headerValue="Next Renewal Date" width="10%">
+			                        <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Next_renewal_date__c}" style="width:100px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Cheque Submission Date" width="10%">
+			                        <apex:inputField value="{!objRenewalTracker.objchildRenewalTracker.Cheque_Submission_date__c}" style="width:100px;"
+			                        		rendered="{!IF(((objRenewalTracker.objchildRenewalTracker.Cheque_Submission_date__c == null) || (objRenewalTracker.objchildRenewalTracker.Cheque_Submission_date__c < objRenewalTracker.objchildRenewalTracker.Next_renewal_date__c)),true,false)}"/>
+			                       	 <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Cheque_Submission_date__c}" style="width:100px;"
+			                       	 		id="idChequeDate" rendered="{!IF(((objRenewalTracker.objchildRenewalTracker.Cheque_Submission_date__c != null) && (objRenewalTracker.objchildRenewalTracker.Cheque_Submission_date__c >= objRenewalTracker.objchildRenewalTracker.Next_renewal_date__c)),true,false)}">
+			                   			<apex:inlineEditSupport event="ondblclick" showOnEdit="saveButton" />  		
+			                   		</apex:outputField>
+			                    </apex:column> 
+			                    <apex:column headerValue="Cheque Number" width="10%">
+				                        <apex:inputField value="{!objRenewalTracker.objchildRenewalTracker.Cheque_Number__c}" style="width:100px;"
+				                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Cheque_Number__c == null),true,false)}"/>
+				                        		
+				                        <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Cheque_Number__c}" style="width:100px;"
+				                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Cheque_Number__c != null),true,false)}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Bank Name" width="10%">
+				                        <apex:inputField value="{!objRenewalTracker.objchildRenewalTracker.Bank_Name__c}" style="width:100px;"
+				                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Bank_Name__c == null),true,false)}"/>
+				                        		
+				                        <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Bank_Name__c}" style="width:100px;"
+				                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Bank_Name__c != null),true,false)}"/>
+				                    </apex:column>
+			                    <apex:column headerValue="Target Revenue" width="10%">
+			                        <apex:inputField value="{!objRenewalTracker.objchildRenewalTracker.Target_Revenue__c}" style="width:100px;"
+			                        	rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Target_Revenue__c == null),true,false)}"/>
+			                        		
+			                        <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Target_Revenue__c}" style="width:100px;"
+			                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Target_Revenue__c != null),true,false)}"/>
+			                    </apex:column>
+		                      	<apex:column headerValue="Premium Amount" width="10%">
+			                        <apex:inputField value="{!objRenewalTracker.objchildRenewalTracker.Premium_Amount__c}" style="width:100px;"
+			                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Premium_Amount__c == null),true,false)}"/>
+			                        		
+			                        <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Premium_Amount__c}" style="width:100px;"
+			                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Premium_Amount__c != null),true,false)}"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Remark" width="10%">
+			                        <apex:inputField value="{!objRenewalTracker.objchildRenewalTracker.Remark__c}" style="width:100px;"
+			                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Remark__c == null),true,false)}"/>
+			                        		
+			                        <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Remark__c}" style="width:100px;"
+			                        		rendered="{!IF((objRenewalTracker.objchildRenewalTracker.Remark__c != null),true,false)}"/>
+			                    </apex:column>
+			                   <apex:column headerValue="Remaining Trackers" width="5%">
+				                        <apex:outputField value="{!objRenewalTracker.objchildRenewalTracker.Tenure_of_Insurance__c}" style="width:100px;"/>
+				                    </apex:column>
+<!-- 		                   </apex:outputPanel> -->
+		                </apex:pageBlockTable>
+<!-- 		                <apex:commandButton value="Save" Action="{!saveRenewalTracker}"  style="margin-top:15px;margin-left:450px;font-weight:bold; font-size:11px;"  -->
+<!-- 		                                     rerender="section1,pageBlockSection1,Pagemsg" status="statusIdEF"/> -->
+		              </apex:pageBlockSection>
+	            </apex:repeat>
+			</apex:pageBlockSection>
+			</apex:pageBlock>
+		</apex:outputPanel>
+		</apex:outputPanel>
+			
+    </apex:pageBlock>    
+    </apex:form>
+</apex:page>

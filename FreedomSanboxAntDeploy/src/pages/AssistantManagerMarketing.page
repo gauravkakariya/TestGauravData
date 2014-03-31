@@ -1,0 +1,84 @@
+<apex:page showHeader="false" sidebar="false" controller="WebFormController" id="AssistantManagerMarketing">
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+<div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+        
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/Careers_img.jpg')}" /></div>
+        <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+   </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+                  <!--<div class="leftlinkselectedimg" style="margin-top:144px; height:193px; background-repeat:no-repeat;"></div>-->
+              </div>
+   <div id="innerpage_textcontainer_middle">
+    <div class="innerpage_titletext"><span class="innerpagetexttitle">Assistant Manager – Marketing</span> </div>  
+       <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"> <br/>
+           <strong>Job Description:<br /></strong>Location: Mumbai<br />Experience: 1-3 years<br />Qualification: Graduation, Post Graduation
+        </span></div>    
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"> 
+            <strong>Job Profile :</strong>  
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+           <strong>Core area of work would include :- </strong> Customer Acquisition / Branding / Corporate Communication  / Event Management
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">    
+          <strong>1.&nbsp;</strong>Customer Acquisition: Ideate &amp; implement effective customer acquisition campaigns and hence providing opportunities (leads of interested prospective  clients to the Financial Planning Team)
+        </span></div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">    
+          <strong>2.&nbsp;</strong>To work as part of a work station as  marketing representative, helping them with all marketing requirements.
+        </span></div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">    
+          <strong>3.&nbsp;</strong>Drafting  of key messages towards all types of audiences which communicate our core brand identity.
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">    
+          <strong>4.&nbsp;</strong>To Organize &amp; execute events focused towards prospective clients, existing clients, financial services industry &amp; employees.
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">    
+          <strong>5.&nbsp;</strong>To monitor &amp; manage all internal publications, lead agencies and internal team members which are appropriate to execute all communication activities (marketing materials, advertising, client communications, direct mail, marketing campaigns, content for trade publications, etc.).
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">    
+          <strong>6.&nbsp;</strong>Build and maintain strong relationships with internal and external key stakeholders to ensure proper delivery of communication about the company beliefs and service offerings.
+        </span></div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">    
+          <strong>7.&nbsp;</strong>Contributes to the total effectiveness of the department, communicating openly, solving problems proactively, offering creative ideas and working as a positive, engaged team member.
+        </span><br /><br />
+        <center><a href="Careers" class="otherslink" alt="Careers"><strong>Back</strong></a>
+        </center>
+        </div>
+       
+           
+                   
+                           
+ </div><!-- innerpage_textcontainer_middle -->
+     
+      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" />
+      </div>
+      <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.jpg')}"  width="215" height="38" border="0" usemap="#Map21" />
+         <map name="Map21" id="Map21">
+           <area shape="rect" coords="3,0,230,36" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map></div>
+      <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+    
+         <div class="title123"><span class="imgtext">Related Links</span></div>
+         <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Ffreedom_Culture"><strong>Ffreedom Culture</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Our_Team"><strong>Our Team</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="about_ffreedom_overview"><strong>About Ffreedom</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="our_philosophy"><strong>Philosophy</strong></a></span> </div>
+       <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Planning_Team"><strong>Know our Financial Planners</strong></a></span> </div>
+       <div class="relatedinfoheading"><span class="innerpage_text_left"><a href="Who_can_be_your_financial_planner"><strong>Who is a financial planner?</strong></a></span> </div>
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

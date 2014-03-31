@@ -1,0 +1,30 @@
+<apex:page controller="CancelExecutionTrackerController" sidebar="false">
+	<apex:pageMessages id="messages"/>
+	<apex:outputLink value="/{!entityId}" style="padding-left:20px" rendered="{!lstExecutionTrackerDetail.size == 0}">Back</apex:outputLink>
+	
+	<apex:form >
+		<apex:pageBlock title="Execution Tracker Details" rendered="{!lstExecutionTrackerDetail.size != 0 && isRender}">
+			<apex:pageBlockButtons >
+				<apex:commandButton value="Save" action="{!saveET}"></apex:commandButton>
+				<apex:commandButton value="Cancel" action="{!cancel}"></apex:commandButton>
+			</apex:pageBlockButtons>
+			
+			<apex:pageBlockTable value="{!lstExecutionTrackerDetail}" var="rec" >
+		           <apex:column headerValue="Execution Tracker Name"> {!rec.objExectionTracker.Name}</apex:column>
+		           <apex:column headerValue="Type"> {!rec.objExectionTracker.Type__c} </apex:column>  
+		            <apex:column headerValue="Goal Type"> {!rec.objExectionTracker.Goal__r.Goal_Type__c} </apex:column>
+		           <apex:column headerValue="Suggested Amount"> {!rec.objExectionTracker.Suggested_Amount__c} </apex:column>
+		           <apex:column headerValue="Agreed Amount"> {!rec.objExectionTracker.Agreed_Amount__c} </apex:column>
+		           <apex:column headerValue="Executed Amount"> {!rec.objExectionTracker.Executed_Amount__c} </apex:column>
+		           <apex:column headerValue="Target Revenue"> {!rec.objExectionTracker.Target_Revenue__c} </apex:column>  
+		           <apex:column headerValue="Booked Revenue"> {!rec.objExectionTracker.Booked_Revenue__c} </apex:column>
+		           <apex:column headerValue="Cancel Tracker?"> 
+		               <apex:inputCheckbox value="{!rec.isCancel}"></apex:inputCheckbox> 
+		           </apex:column>
+		           <apex:column headerValue="Remarks"> 
+		           		<apex:inputText value="{!rec.objExectionTracker.Remarks__c}"></apex:inputText>
+		           </apex:column>
+				</apex:pageBlockTable>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

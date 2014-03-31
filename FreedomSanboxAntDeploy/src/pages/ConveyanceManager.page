@@ -1,0 +1,70 @@
+<apex:page controller="ConveyanceController" id="ConveyanceManager" sidebar="false">
+<apex:form id="frmConveynance">
+	<apex:pagemessages id="pmsg"></apex:pagemessages>
+		<apex:sectionHeader title="Conveyance"  id="sHeader"/>
+		<apex:pageBlock id="pgBlock"> <!-- {!Not(ipflagShow)} -->
+			<!--<apex:pageBlockButtons id="pgbButton" location="bottom">
+				 <apex:commandButton action="{!AddMore}" value="Add More" rerender="pbsConVeyDetail,pbtConveyDetail,pmsg" id="cbAddmore"/>
+				<apex:commandButton action="{!Remove}" value="Remove" rerender="pbsConVeyDetail,pbtConveyDetail,pmsg" id="cbRemove"/> 
+			</apex:pageBlockButtons>-->
+				<apex:pageBlockSection title="Conveyance Manager" columns="2" id="pgbSection" rendered="{!flag}">
+					 <apex:outputField value="{!objEvent.Name}" id="opEventName" />	 				
+	 				 <!-- <apex:inputField value="{!objConveyanceManager.Event__c}" id="ipName"/>-->
+	 				 <apex:inputField value="{!objConveyanceManager.Mode_of_Travel__c}" id="ipModeTravel"/>
+					 <apex:inputField value="{!objConveyanceManager.Travel_Type__c}" id="ipTraveltype"/>
+					 <apex:inputField value="{!objConveyanceManager.Date_of_Travel__c}" id="ipDateTravel"/>
+					 <apex:outputField value="{!objConveyanceManager.Amount_Claimed__c}" id="ipAmountClaimed"/>
+					 <apex:outputField value="{!objConveyanceManager.Claim_Date__c}" id="ipClaimDate" />
+					 <!-- <apex:inputField value="{!objConveyanceManager.Claim_Date__c}" id="ipClaimDate" /> -->
+					 <apex:inputField value="{!objConveyanceManager.Remarks__c}" id="ipRemarks" style="width: 251px; height: 37px;"/>
+				</apex:pageBlockSection>
+				<apex:pageBlockSection columns="2" rendered="{!NOT(flag)}"> <!-- {!ipflagShow} -->
+				<apex:outputField value="{!objEvent.Name}" id="opfEventName" />
+				<apex:outputField value="{!objConveyanceManager.Date_of_Travel__c}"/>
+				<apex:outputField value="{!objConveyanceManager.Travel_Type__c}"/>
+				<apex:outputField value="{!objConveyanceManager.Mode_of_Travel__c}"/>
+				<apex:outputField value="{!objConveyanceManager.Amount_Claimed__c}"/>
+				<apex:outputField value="{!objConveyanceManager.Claim_Date__c}" />
+				<apex:outputField value="{!objConveyanceManager.Remarks__c}" />
+				</apex:pageBlockSection>
+		 
+		<!-- </apex:pageBlock>-->
+		 <apex:pageBlock id="pgBlockDetails" > 
+				<apex:pageBlockButtons id="pgbDetails">
+				<apex:commandButton action="{!AddMore}" value="Add More" rerender="pbsConVeyDetail,pbtConveyDetail,pmsg" id="cbAddmore" rendered="{!flag}" />
+				<apex:commandButton action="{!Remove}" value="Remove" rerender="pbsConVeyDetail,pbtConveyDetail,pmsg" id="cbRemove" rendered="{!flag}"/>
+				<apex:commandButton action="{!save}" value="Save" id="cbSave" rendered="{!flag}"/>
+				<apex:commandButton value="Submit" id="cbSubmit" onclick="return confirm('Do you want to submit ?')"  action="{!Submit}" rendered="{!flag}" />
+				<apex:commandButton action="{!Cancel}" value="Cancel" id="cbCancel"  immediate="true"/>
+				</apex:pageBlockButtons>
+				<apex:actionStatus startText=" (incrementing...)"id="counterStatus"/> 
+				 <apex:pageBlockSection title="Conveyance Details" columns="3" id="pbsConVeyDetail">
+				 	 <apex:pageBlockTable value="{!lstConveyanceInfo}" var="item" id="pbtConveyDetail" style="width=100%">
+					 	<apex:column id="colSerialNo">
+							<apex:facet name="header">Sr.No.</apex:facet>
+								{!item.iIndex}
+						</apex:column>
+						<apex:column id="colIsBIllAvailable">
+							<apex:facet name="header" >Is Bill Available</apex:facet>
+							<apex:inputCheckbox value="{!item.objConveyance_Details.Is_Bill_Available__c}" id="chkIsBIllAvailable" disabled="{!NOT(flag)}"/>
+						</apex:column>
+						<apex:column id="colIsBIllNumber">
+							<apex:facet name="header" >Bill Number</apex:facet>
+							<apex:InputText value="{!item.objConveyance_Details.Bill_Number__c}" id="BIllNumber" disabled="{!NOT(flag)}" />
+						</apex:column>
+						
+				 		<apex:column id="colBillDetails">
+							<apex:facet name="header" >Bill Details</apex:facet>
+							<apex:InputText value="{!item.objConveyance_Details.Bill_Details__c}" style="width: 251px;" disabled="{!NOT(flag)}"></apex:InputText>
+						</apex:column>
+						<apex:column id="colAmount">
+							<apex:facet name="header">Amount</apex:facet>
+							<apex:InputText value="{!item.objConveyance_Details.Amount__c}" id="ipTextAmount" disabled="{!NOT(flag)}"></apex:InputText>
+						</apex:column>
+					</apex:pageBlockTable>
+				</apex:pageBlockSection>
+				</apex:pageBlock>
+				
+		 </apex:pageBlock> 
+	</apex:form>  
+</apex:page>

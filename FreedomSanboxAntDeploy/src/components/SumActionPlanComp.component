@@ -1,0 +1,286 @@
+<!-- 
+    Revision History:
+    
+    Version     Version Author     Date         Comments
+    1.0         Persistent         NA           Initial Draft
+    2.0         Manasi Ranade      7/6/2012     Issue Id : 00001673 :Added Tenure Of Insurance for LI
+-->
+<apex:component allowDML="true" controller="SummaryActionPlanController">
+    <apex:stylesheet value="{!$Resource.FFStyle}"/>
+    <apex:attribute name="showButton" type="Boolean" description="Used to decide navigation button should be visible or not" default="true" />
+
+    <apex:form >
+
+    <apex:pageBlock tabStyle="account" >
+    <apex:outputPanel rendered="{!showButton}">
+             <div class="divNavigationContainerStyle">
+                   <apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;  background-image:none;background-color:#A9C5EB !important; font-size:11px !important;padding-top:4px; padding-bottom:4px;" />
+                   
+                  <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+                   <apex:outputLabel value="Action Plan" styleclass="button" style=" width:10%;margin-left:20px;  background-image:none;background-color:#A9C5EB !important;font-size:11px !important; padding-top:4px; padding-bottom:4px;" />
+                    <apex:image id="theImage2" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+                   <apex:outputLabel id="theCommandLink2" styleclass="button" value="Summary Action Plan"  style="margin-left:20px; background-image:none;background-color:#F5D0A9!important;font-size:11px !important;padding-top:4px; padding-bottom:4px;"  />
+<!--                    <apex:commandButton id="theCommandLink1" styleclass="button" value="Approved Plan" action="{!approvedPlan}" style="margin-left:20px; background-image:none;background-color:#A9C5EB !important; " /> -->
+              </div>
+    </apex:outputPanel>
+
+    <div class="divContainerStyle">
+    <div class="divStyle">SUMMARY ACTION PLAN</div>
+    <br/>
+    <apex:outputPanel >
+        <apex:outputText value="{!$Label.Summary_Action_Plan_Write_Up_Line}" styleClass="textStyle" />
+        <br/><br/>
+        <apex:outputText value="{!$Label.Summary_Action_Plan_Write_Up}" styleClass="textStyle" />
+    </apex:outputPanel>
+    <br/><br/> 
+  
+  <div class="subHeader">ACTION PLAN ON YOUR CURRENT INVESTMENT ASSETS</div>
+  <br/>         
+  <div style="width:90%;overflow:auto;height:100%;"> 
+  <table width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable1">
+      <tr class="tableHeader">
+          <th class="textStyle">Asset</th>
+          <th class="textStyle">Owner</th>
+          <th class="textStyle">Goal</th>
+          <th class="textStyle">Action</th>
+          <th class="textStyle">Allocated Amount</th>
+          <th class="textStyle">Allocated Percent (%)</th>
+      </tr>
+      <apex:repeat value="{!beanObj.aaBeanList}" var="ap">
+      <tr class="tableData">
+          <td class="textStyle" width="18%">{!ap.Assets}</td>
+          <td class="textStyle" width="15%">{!ap.entityName}</td>
+          <td class="textStyle" width="20%">{!ap.goalName}</td>
+          <td class="textStyle" width="20%">{!ap.action}</td>
+          <td class="textStyle" width="12%" style="text-align:right;">
+                <apex:outputText value="{0, number, ,##,##0}" >
+                    <apex:param value="{!ap.allocatedAmount}"/>
+                </apex:outputText>
+          </td>
+          <td class="textStyle" width="12%" style="text-align:right;">{!ap.allocatedPercent}</td>
+      </tr>
+      </apex:repeat>
+      
+  </table>
+  </div>
+   <apex:messages />
+  <br/> 
+  <div class="subHeader">GOAL WISE SIP AND LUMPSUM ALLOCATION</div>
+  <br/>
+            <div style="width:100%;overflow:auto;height:100%;">
+                <table width="90%" border="1" cellpadding="0" cellspacing="0" id="dataTable2" style="table-layout:fixed;text-wrap:normal;">
+                    <tr class="tableHeader">
+                        <th style="text-align:center; width:200px;">Mode</th>
+                        <th colspan="3" style="text-align:center;">SIP</th>
+                        <th rowspan="2" style="text-align:center;">Total SIP</th>
+                        <th colspan="3" style="text-align:center;">Lumpsum</th>
+                        <th rowspan="2" style="text-align:center;">Total<br/> Lumpsum</th>
+                    </tr>
+                    <tr class="tableHeader">
+                        <th class="tableHeader" style="text-align:center;">Goals  /  Asset Class</th>
+                        <td class="tableHeader" style="text-align:center;">Debt</td>
+                        <td class="tableHeader" style="font-weight:bold;text-align:center;">Equity</td>
+                        <td class="tableHeader" style="font-weight:bold;text-align:center;">Gold</td>
+    <!--                    <td></td> -->
+                        <td class="tableHeader" style="font-weight:bold;text-align:center;">Debt</td>
+                        <td class="tableHeader" style="font-weight:bold;text-align:center;">Equity</td>
+                        <td class="tableHeader" style="font-weight:bold;text-align:center;" >Gold</td>
+    <!--                    <td></td> -->
+                    </tr>
+                    <apex:variable var="totalSIP" value="{!0}"/>
+                    <apex:variable var="totalLumpsum" value="{!0}"/>
+                    <apex:repeat value="{!lstSummaryDetail}" var="rec">
+                        <tr>
+                            <td class="textStyle" style="font-weight:bold; padding-left:5px;">
+                                {!rec.description}
+                            </td>
+                            <apex:variable var="c" value="{!0}"/>
+                            <apex:repeat value="{!rec.lstSipValue}" var="sip">
+                                <apex:variable var="c" value="{! c +  ROUND(sip,0)}" />
+                                <td class="textStyle" style="text-align:right; padding-right:5px;">
+                                    <apex:outputText value="{0, number, ,##,##0}" >
+                                        <apex:param value="{!ROUND(sip,0)}"/>
+                                    </apex:outputText> 
+    <!--                                    {!ROUND(sip,0)} -->
+                                </td>
+                            </apex:repeat>
+                            <td class="textStyle" style="text-align:right; padding-right:5px;" class="tableHeader">
+                                <apex:outputText value="{0, number, ,##,##0}" >
+                                    <apex:param value="{!c}"/>
+                                </apex:outputText>
+                                <apex:variable var="totalSIP" value="{! totalSIP +  c}" />
+                            </td>
+                            <apex:variable var="c" value="{!0}"/>
+                            <apex:repeat value="{!rec.lstLumpsumValue}" var="lumpsum">
+                                <apex:variable var="c" value="{! c +  ROUND(lumpsum,0)}" />
+                                <td class="textStyle" style="text-align:right; padding-right:5px;">
+                                    <apex:outputText value="{0, number, ,##,##0}" >
+                                        <apex:param value="{!ROUND(lumpsum,0)}"/>
+                                    </apex:outputText>
+    <!--                                    {!ROUND(lumpsum,0)} -->
+                                </td>
+                            </apex:repeat>
+                            <td class="tableHeader" style="text-align:right; padding-right:5px;">
+                                <apex:outputText value="{0, number, ,##,##0}" >
+                                    <apex:param value="{!c}"/>
+                                </apex:outputText>
+                                <apex:variable var="totalLumpsum" value="{! totalLumpsum +  c}" />
+                            </td>
+                        </tr>
+                    </apex:repeat>
+                    
+                    <tr>
+                        <td class="tableHeader">
+                            {!objSummaryDetail.description}
+                        </td>
+                        <apex:variable var="c" value="{!0}"/>
+                        <apex:repeat value="{!objSummaryDetail.lstSipValue}" var="sip">
+                            <td class="tableHeader" style="text-align:right; padding-right:5px;">
+                                <apex:outputText value="{0, number, ,##,##0}" >
+                                    <apex:param value="{!sip}"/>
+                                </apex:outputText>
+                            </td>
+                        </apex:repeat>
+                        <td style="text-align: right">
+                            <apex:outputText value="{0, number, ,##,##0}" >
+                                <apex:param value="{!totalSIP}"/>
+                            </apex:outputText>
+                        </td >
+                        <apex:repeat value="{!objSummaryDetail.lstLumpsumValue}" var="lumpsum">
+                            <td class="tableHeader" style="text-align:right; padding-right:5px;">
+                                <apex:outputText value="{0, number, ,##,##0}" >
+                                    <apex:param value="{!lumpsum}"/>
+                                </apex:outputText>
+                            </td>
+                        </apex:repeat>
+                        <td style="text-align: right">
+                            <apex:outputText value="{0, number, ,##,##0}" >
+                                <apex:param value="{!totalLumpsum}"/>
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+  <br/> 
+ <apex:outputPanel rendered="{!isLifeInsuranceAnalysis}">
+ <div class="subHeader">LIFE INSURANCE</div>
+ <br/>
+    
+  <apex:outputPanel rendered="{!NOT(beanObj.isLifeInsExist)}">
+      <apex:outputText value="{!$Label.ActionPlanInsurenceMsg}" styleClass="textStyle" />
+      </apex:outputPanel>
+  <apex:outputPanel rendered="{!beanObj.isLifeInsExist}">
+  
+  <div style="width:100%;overflow:auto;height:100%;">
+  <table width="60%" cellspacing="0" cellpadding="2" border="1" id="dataTable3"  >
+      <tr class="tableHeader">
+          <th class="textStyle">Insured</th>
+          <th class="textStyle">Suggested Cover</th>
+          <th class="textStyle">Premium Amount</th>
+          <th class="textStyle">Policy Type</th>
+            <!--/** Eternus Solutions      **/
+            /** Author  : Manasi Ranade*/
+            /** Issue Id: 00001673      **/
+            /** Date    : 7/6/2012 **/
+            /** Purpose : Added Tenure Of Insurance on Action Plan**/
+            /****************************************************/-->
+          <th class="textStyle">Tenure Of Insurance</th>
+      </tr>
+      <apex:repeat value="{!beanObj.liList}" var="liObj">
+      <tr class="tableData" >
+          <td class="textStyle"><apex:outputLabel value="{!liObj.Entity__r.FirstName + ' ' + liObj.Entity__r.LastName}" /></td>
+          <td class="textStyle" style="text-align:right;"><apex:outputField value="{!liObj.Suggested_Cover_General_Insurance__c}" /> </td>
+<!--           <td class="textStyle" style="text-align:right;"><apex:outputText value="{0, number,INR ,##,##0}" > -->
+<!--                                   <apex:param value="{!liObj.Premium_Amount_Rs__c}"/> -->
+<!--                             </apex:outputText> </td> -->
+          <!--
+          /** Eternus Solutions       **/
+          /** Author  : Manasi Ranade **/
+          /** Issue Id: FS0397        **/
+          /** Date    : 3/1/2012      **/
+          /** Purpose : Commented above code.Removed the INR from from Currency field
+          /****************************************************/-->
+          <td class="textStyle" style="text-align:right;"><apex:outputText value="{0, number, ,##,##0}" >
+                                  <apex:param value="{!liObj.Premium_Amount_Rs__c}"/>
+                            </apex:outputText> </td>
+          <td class="textStyle"><apex:outputField value="{!liObj.Policy_Type__c}" /></td>
+          <td class="textStyle"><apex:outputField value="{!liObj.Tenure_of_Insurance__c}" /></td>
+      </tr>
+      </apex:repeat>
+  </table>  
+  </div>  
+  </apex:outputPanel>
+  <br/> 
+ </apex:outputPanel>
+ 
+ <apex:outputPanel rendered="{!isLifeInsuranceAnalysis}">
+ <div class="subHeader">GENERAL INSURANCE</div>
+ <br/>
+ <apex:outputPanel rendered="{!NOT(beanObj.isGeneralInsExist)}">
+      <apex:outputText value="{!$Label.ActionPlanInsurenceMsg}" styleClass="textStyle" />
+ </apex:outputPanel>
+ 
+ <apex:outputPanel rendered="{!beanObj.isGeneralInsExist}">
+     <div style="width:100%;overflow:auto;height:100%;"> 
+     <table width="60%" cellspacing="0" cellpadding="2" border="1" id="dataTable4"  >
+          <tr class="tableHeader">
+              <th class="textStyle">Insured</th>
+              <th class="textStyle">Suggested Cover</th>
+              <th class="textStyle">Premium Amount</th>
+              <th class="textStyle">Policy Type</th>
+          </tr>
+          <apex:repeat value="{!beanObj.giList}" var="giObj">
+          <tr class="tableData" >
+              <td class="textStyle"><apex:outputLabel value="{!giObj.Entity__r.FirstName + ' '+ giObj.Entity__r.LastName}" /></td>
+              <td class="textStyle" style="text-align:right;"><apex:outputField value="{!giObj.Suggested_Cover_General_Insurance__c}" /> </td>
+    <!--           <td class="textStyle" style="text-align:right;"><apex:outputText value="{0, number,INR ,##,##0}" > -->
+    <!--                                   <apex:param value="{!giObj.Premium_Amount_Rs__c}"/> -->
+    <!--                             </apex:outputText> </td> -->
+            <!--
+              /** Eternus Solutions       **/
+              /** Author  : Manasi Ranade **/
+              /** Issue Id: FS0397        **/
+              /** Date    : 3/1/2012      **/
+              /** Purpose : Commented above code.Removed the INR from from Currency field
+              /****************************************************/-->
+            <td class="textStyle" style="text-align:right;"><apex:outputText value="{0, number, ,##,##0}" >
+                                     <apex:param value="{!giObj.Premium_Amount_Rs__c}"/>
+                               </apex:outputText> </td>
+              <td class="textStyle"><apex:outputField value="{!giObj.Policy_Type__c}" /></td>
+          </tr>
+           </apex:repeat>
+      </table>
+      </div>
+  </apex:outputPanel>
+  </apex:outputPanel>
+  </div>
+  </apex:pageBlock>  
+  </apex:form>
+   <script>
+    <!-- This is for styling alternate rows of SummaryTable -->
+        function altRows(id)
+        {
+           // alert('hello'+id);
+            if(document.getElementsByTagName)
+            {  
+                var table = document.getElementById(id);  
+                var rows = table.getElementsByTagName("tr"); 
+                for(i = 1; i < rows.length; i++)
+                {  
+                    if(i % 2 == 0)
+                    {
+                        rows[i].className = "DataTableEven";
+                    }
+                    else
+                    {
+                        rows[i].className = "DataTableOdd";
+                    }      
+                }
+            }
+            
+        }
+    
+        window.onload =   altRows('dataTable1');altRows('dataTable2');altRows('dataTable3');altRows('dataTable4');
+    </script>
+
+</apex:component>

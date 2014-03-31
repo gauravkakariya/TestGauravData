@@ -1,0 +1,304 @@
+<!--
+/**
+Revision History:
+	
+    Version     Version Author     Date        Comments
+    1.0         --           	   --	  		Initial Draft
+    
+   
+	2.0			Manasi Ranade	   31/10/2011   Issue ID: FS0230: 
+												Passed the SIP values to the component : "GoalComponent"
+	2.0			Manasi Ranade	   11/06/2012   Issue ID: 00001678 : Commented original part to remove the error of Invalid property
+												
+*/ -->
+<!--<apex:page cache="true" standardStylesheets="false" controller="GeneratePDFController" showHeader="false" sidebar="false">
+-->
+<apex:page contentType="application/msword" cache="true" standardStylesheets="false" controller="GeneratePDFController" showHeader="false" sidebar="false">
+
+   <style>
+       @page divStyle {
+            BACKGROUND-COLOR: #66cd00;
+            FONT-FAMILY: calibri;
+            PADDING: 3px;
+            COLOR: white;
+            FONT-SIZE: 15px;
+            FONT-WEIGHT: bold;
+            TEXT-TRANSFORM: uppercase;
+        }
+        div.divStyle{
+            page:divStyle;
+        }
+        @page subHeader {
+            BACKGROUND-COLOR: #e4fbc5;
+            FONT-FAMILY: calibri;
+            PADDING: 3px;
+            COLOR: black;
+            FONT-SIZE: 15px;
+        }
+        div.subHeader{
+            page:subHeader;
+        }
+        @page divContainerStyle {
+            MARGIN-LEFT: 58px;
+            MARGIN-RIGHT: 58px;
+            MARGIN-TOP: 10px;
+            MARGIN-BOTTOM: 10px;
+        }
+        div.divContainerStyle {
+            page:divContainerStyle;
+        }
+        
+        @page TickList {
+            FONT-FAMILY: Calibri;
+            FONT-SIZE: 15px;
+            LIST-STYLE-IMAGE: url(https://ffreedom--ffintg--c.cs2.visual.force.com/resource/1298557942000/tick);
+        }
+        ul.TickList{
+            page:TickList;
+        }  
+        @page tableHeader {   
+            BORDER-BOTTOM: 0px solid;
+            TEXT-ALIGN: center;
+            COLOR: white !important;
+            BORDER-LEFT: gray thin solid;
+            BACKGROUND:#66cd00 none repeat scroll 0 0;
+            HEIGHT: 30px;
+            BORDER-TOP: gray thin solid;
+            FONT-WEIGHT: bold;
+            FONT-FAMILY: Calibri !important;
+            FONT-SIZE: 15px;
+            BORDER-RIGHT: 1px solid;
+            -moz-background-clip: border;
+            -moz-background-inline-policy: continuous;
+            -moz-background-origin: padding
+        }
+        tr.tableHeader {
+            page:tableHeader;
+        }      
+        .textStyle {
+            FONT-FAMILY: Calibri;
+            FONT-SIZE: 15px;
+        }
+        @page rightAlignData {
+            FONT-FAMILY: Calibri;
+            FONT-SIZE: 15px;
+            TEXT-ALIGN:RIGHT;
+        }
+        .rightAlignData {
+            page:rightAlignData;
+        }
+        @page upperCase {
+            FONT-FAMILY: Calibri;
+            FONT-SIZE: 15px;
+            TEXT-TRANSFORM:uppercase;
+        }
+        .upperCase {
+            page:upperCase;
+        }
+        @page {
+            FONT-FAMILY: Calibri;
+            FONT-SIZE: 15px;
+        }
+}
+      
+
+        
+
+        
+
+   </style>
+ <!--  <apex:stylesheet value="http://ffreedom.ffintg.cs2.force.com/servlet/servlet.FileDownload?file=015R00000009wgT&oid=00DR00000008U5a" />
+  -->  <div> 
+        <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent>
+<!--         <c:CoverComponent client="{!bean.client}" spouse="{!bean.spouse}" generationDate="{!planGenerationDate}"></c:CoverComponent>  -->
+     <c:CoverComponent isFreedomUserProp="{!isFreedomUser}" addressInComponent="{!address}" Logo_partner="{!Partnerlogo}" client="{!bean.client}"  spouse="{!bean.spouse}" generationDate="{!planGenerationDate}"></c:CoverComponent> 
+  
+    </div>
+    
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <div>
+       <c:TableOfContentsComponent >
+            <apex:repeat value="{!goalMappingBeanList}" var="goalBean">
+                <tr class="textStyle">
+                    <td class="upperCase"><apex:outputText value="{!goalBean.goalObj.Description__c}"/></td>
+                </tr>
+            </apex:repeat>
+            <apex:repeat value="{!lstHLVDetails}" var="insurance">
+                <tr class="textStyle">
+                    <td class="upperCase"><apex:outputText value="LIFE INSURANCE ANALYSIS FOR {!insurance.Selected_Entity_Name__c}"/></td>
+                </tr>
+            </apex:repeat>
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.General_Insurance}"/></td>
+            </tr>
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.Estate_Planning}"/></td>
+            </tr>
+            <tr class="textStyle">
+                <td class="upperCase"><apex:outputText value="{!$Label.Summary_Action_Plan}"/></td>
+            </tr>
+           <apex:variable var="counter" value="1"/>
+          <apex:repeat value="{!lstHLVDetails}" var="insurance">
+                <tr class="textStyle">
+                    <td class="upperCase"><apex:outputText value="ANNEXURE {!counter}: INSURANCE CALCULATION FOR {!insurance.Selected_Entity_Name__c}"/></td>
+                </tr>
+                <apex:variable var="counter" value="{!VALUE(counter) + 1}"/>
+           </apex:repeat>
+        </c:TableOfContentsComponent>   
+    </div>
+
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <div>
+        <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent><br/>
+<!--         <c:IntroductionComponent emailId="{!email}" accountName="{!Accname}" clientFullName="{!bean.client.name}" spouseFullName="{!bean.spouse.name}" entityOwner="{!bean.client.owner.name}" /> -->
+ <c:IntroductionComponent clientFullName="{!bean.client.name}" spouseFullName="{!bean.spouse.name}" entityOwner="{!bean.client.owner.name}" />
+    </div>
+    
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <div>
+      <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent><br/>
+<!--       <c:DisclosureComponent accountName="{!Accname}"/> -->
+<c:DisclosureComponent />
+    </div>
+   
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <div>
+        <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent><br/>
+        <c:GoalSummaryComponent ></c:GoalSummaryComponent>
+    </div>
+
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <div>
+        <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent>
+        <apex:form >
+            <c:PortolioComponent showButton="false"></c:PortolioComponent>
+        </apex:form>
+    </div>
+   
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <div style="page-break-inside:avoid;">
+        <apex:form >
+        <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent>
+            <c:NetworthPageComponent showButton="false"></c:NetworthPageComponent>
+        </apex:form>
+    </div>
+
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <div>
+        <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent>
+        <apex:form >
+            <c:CashFlowComponent showButton="false"></c:CashFlowComponent>
+        </apex:form> 
+    </div>
+
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <div>
+        <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent>
+        <apex:form >
+            <c:EmergencyFundComponent showButton="false"></c:EmergencyFundComponent>
+        </apex:form>
+    </div>
+
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <apex:outputPanel rendered="{!IF(goalMappingBeanList.size>0,true,false)}">
+    <div>
+        <apex:repeat value="{!goalMappingBeanList}" var="goalBean">
+           <apex:form >
+              <p><br style="page-break-before:always;" clear="all"/></p>
+              <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent>
+              <div>
+                <!--/** Eternus Solutions      **/
+				/** Author  : Manasi Ranade*/
+				/** Issue Id: FS0230      **/
+				/** Date    : 31/10/2011 **/
+				/** Purpose : Passed the SIP values to the component**/
+				/****************************************************/-->
+                  <c:GoalComponent goalMappingBean="{!goalBean}" showButton="false" dblTotalSIP="{!goalBean.dblTotalSIP}" dblEquitySIP="{!goalBean.dblEquitySIP}"
+            			dblGoldSIP="{!goalBean.dblGoldSIP}" dblDebtSIP="{!goalBean.dblDebtSIP}"></c:GoalComponent>
+              </div>
+          </apex:form>
+        </apex:repeat>
+    </div>
+    </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!IF(lstHLVDetails.size>0,true,false)}">
+       <apex:repeat value="{!lstHLVDetails}" var="ins">
+			<c:LifeInsuranceOutputComponentRefactored HlvDetails="{!ins}" > 
+			</c:LifeInsuranceOutputComponentRefactored>
+	   </apex:repeat>
+	</apex:outputPanel>
+<!--     <apex:outputPanel rendered="{!IF(bean.insuranceBeanList.size>0,true,false)}"> -->
+<!--     <div> -->
+<!--         <apex:repeat value="{!bean.insuranceBeanList}" var="ins"> -->
+<!--             <p><br style="page-break-before:always;" clear="all"/></p> -->
+<!--             <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent> -->
+<!--             <c:LifeInsuranceOutputComponent insuranceBean="{!ins}" entity="{!ins.entity}" adjustmentFactor="{!ins.entity.Adjustment_Factor__c}" ObjRemark="{!objRemark}"></c:LifeInsuranceOutputComponent> -->
+<!--         </apex:repeat> -->
+<!--     </div> -->
+<!--     </apex:outputPanel> -->
+    
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <div>
+        <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent>
+        <apex:form >
+            <c:GeneralInsuranceComponent showButton="false"></c:GeneralInsuranceComponent>
+        </apex:form>
+    </div>
+
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <div>
+        <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent>
+        <c:EstatePlanningComponent showButton="false"/>
+    </div>
+
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <div>
+        <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent>
+       <c:SumActionPlanComp showButton="false" ></c:SumActionPlanComp>
+       
+<!--        Action Plan : Prajakta Sanap -->
+       <c:SummaryActionPlanComp showButton="false" ></c:SummaryActionPlanComp>
+    </div>
+   
+<!--     <apex:outputPanel rendered="{!IF(bean.insuranceBeanList.size>0,true,false)}"> -->
+<!--     <div> -->
+<!--         <apex:repeat value="{!bean.insuranceBeanList}" var="insurance"> -->
+<!--             <p><br style="page-break-before:always;" clear="all"/></p> -->
+<!--             <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent> -->
+<!--             FS0309 -->
+<!--             00001613 -->
+<!--             <c:LifeInsurancePlanningComponent entity="{!insurance.entity}" spouse="{!bean.spouse}" adjustmentFactor="{!insurance.entity.Adjustment_Factor__c}" insuranceBean="{!insurance}" />ObjRemark="{!objRemark}" -->
+<!--         </apex:repeat>  -->
+<!--     </div> -->
+<!--    </apex:outputPanel> -->
+	<apex:outputPanel rendered="{!IF(lstHLVDetails.size>0,true,false)}">
+       <apex:variable var="counter" value="1"/>
+       <apex:repeat value="{!lstHLVDetails}" var="HLVDetails">
+            <div style="page-break-after:always;">
+ 				<c:LifeInsurancePlanningComponentRefactored HLVDetails="{!HLVDetails}" count="{!counter}">
+                </c:LifeInsurancePlanningComponentRefactored>
+           </div>
+           <apex:variable var="counter" value="{!VALUE(counter) + 1}"/>
+        </apex:repeat>
+    </apex:outputPanel>
+   
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <div>
+        <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent>
+        <br/> <c:ReviewComponent />
+    </div>
+
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <div>
+        <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent><br/>
+      <c:InvestmentRisksComponent />
+    </div>
+    
+    <p><br style="page-break-before:always;" clear="all"/></p>
+    <div>
+    <c:HeaderComponent client="{!bean.client.name}" spouse="{!bean.spouse.name}"></c:HeaderComponent><br/>
+<!--     <c:DeliveryAcknowledgementComponent accountName="{!Accname}"/> -->
+<c:DeliveryAcknowledgementComponent />
+    </div>
+
+</apex:page>

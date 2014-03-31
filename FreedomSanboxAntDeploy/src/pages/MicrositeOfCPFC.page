@@ -1,0 +1,421 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | Microsite of CPFC" id="MicrositeOfCPFC">
+	 <apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+     <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+     <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate">
+	<apex:define name="bodycontent">
+ 			<div class="leftcontainer">
+		      <div id="innerpage_textcontainer_left">
+		        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/result_img_new.png')}" style="height:30%;width:100%;"/></div>
+		        </div>
+		        <div class="borderimg">
+		      	</div>
+			      <div id="innerpage_textcontainer_middle">
+			        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">Ffreedom Financial Planners and Ambition Learning Solutions collaborated to launch one of its kinds of program to fulfill the human resource requirement in India’s fastest growing Financial Planning Industry i.e. <b>“Certified Personal Financial Consultant”</b>. The program is jointly designed and executed to get the best breed of professionals required by the industry, which will also help people with right attitude get their career kick start with assured placements into Financial Planning / Advisory services.</span></div>
+			        <div class="innerpage_titletext">
+		        		<span class="txtmatterbig_innerpage">
+			        		<b>Key Highlights of the course:</b>
+				        	<ul>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				3 Months, Weekend program with 100% Job Guarantee
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Offer letter immediately after clearing GD and PI (with a condition of undergoing rigorous training and clearing the exams) 
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Minimum package Rs. 240,000 pa plus incentives 
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Trainings by Industry experts, Guest lectures by top most officials of Financial Corporate
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Unique approach of training through Case studies, Role Plays, Solving Real time personal financial planning problems with aim to make a candidate job ready with Complete focus on 6 step Financial Planning Process. 
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Rigorous training on the practical aspects of Financial Planning.
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Program designed specifically to address Financial Planning Industry opportunities, with emphasis on “Last Mile Connect”
+				        			</span>
+				        		</li>
+				        	</ul>
+				        	<b>Course Ideal for Graduates from following streams:</b>
+				        	<ul>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				B.com (Bachelors in Commerce)
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				BMS (Bachelors in Management Studies)
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				B.com with Account and Finance
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				B.com with Banking and Insurance
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				B.com with Financial Markets
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				BBA (Bachelors in Business Administration)
+				        			</span>
+				        		</li>
+				        	</ul>
+				        	<b>High Growth Careers into:</b>
+				        	<ul>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Banking
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Mutual Funds and other Financial Services
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Life and General Insurance Companies
+									</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Wealth Management Companies
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Investment Advisory Services
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        			Stock Broking houses
+				        			</span>
+				        		</li>
+				        	</ul>
+				        	<b>Eligibility:</b>
+				        	<ul>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Graduates from any stream
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Should have a flair to enter into the fastest growing “Financial Planning Industry”
+				        			</span>
+				        		</li>
+				        	</ul>
+				        	<b> Admission Process: </b>	
+				        	<ul>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Last date of Submission of Enrollment forms along with the DD / Pay order of Rs. 
+				        				500 in favor of “Ambition Learning Solutions”: 2 July 2011
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Group Discussion and Personal Interviews: 6 July 2011
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Completing payment formalities: 8 July 2011 
+				        			</span>
+				        		</li>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Program Commencement: 9 July 2011
+				        			</span>
+				        		</li>
+				        	</ul>
+				        	<b>Training Venue: </b>
+				        	<ul>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Ffreedom Financial Planners, 506/507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053.
+				        			</span>
+				        		</li>
+				        	</ul>
+				        	<!-- <b>For more details and enrollments contact:</b>
+				        	<ul>
+				        		<li>
+				        			<span class="txtmatterbig_innerpage">
+				        				Vishal Gada - 022 – 26244248, 09930805522 or write to us on <a>vishal.gada@ambitionlearning.com</a>
+				        			</span>
+				        		</li>
+				        	</ul> -->
+			        </span>
+			    </div>
+			    
+			    <div class="innerpage_titletext">
+		        	<span class="txtmatterbig_innerpage">
+			        	<b>Course Content:</b>
+			        	<ul>
+			        		<li>
+			        			<span class="txtmatterbig_innerpage">
+			        				<b>Foundations of Financial Planning</b><br/><br/>
+			        				<ul type="square">
+			        					<li>
+			        						Evolution of Financial Planning.
+			        					</li>
+			        					<li>
+			        						Six Step process in Financial Planning.
+			        					</li>
+			        					<li>
+			        						Understanding Code of Ethics for Financial Planning Professional.
+			        					</li>
+			        					<li>
+			        						Current Financial Services Industry Value Chain in India.
+			        					</li>
+			        					<li>
+			        						Financial Planning Pyramid.
+			        					</li>
+			        					<li>
+			        						Financial Planning Opportunity in India.
+			        					</li>
+			        					<li>
+			        						Source of Income for Financial Planners.
+			        					</li>
+			        					<li>
+			        						Understanding your role as Financial Planner.
+			        					</li>
+			        					<li>
+			        						Guest Lecture by Sumeet Vaid - CEO – Ffreedom Financial Planners will talk about Future of Financial Planning Profession in India.
+			        					</li>
+			        				</ul>
+			        			</span>
+			        		</li>
+			        		<br></br>
+			        		<li>
+			        			<span class="txtmatterbig_innerpage">
+			        				<b>SIX STEPS OF FINANCIAL PLANNING PROCESS</b><br/><br/>
+			        				<ol>
+			        					<li>
+			        						<b>Establish and define the client-planner relationship.</b><br/>
+			        							<ul>
+			        								<li>
+			        									Understanding of ‘Why clients do not plan’ and ‘why they need your help’.
+			        								</li>
+			        								<li>
+			        									Parameters, on the basis of which, client select the financial planner.
+			        								</li>
+			        								<li>
+			        									Practical Session
+			        								</li>
+			        								<li>
+			        									How to approach the client for the first No-Obligation Consultative Session ? 
+			        								</li>
+			        								<li>
+			        									Role Play- How to conduct first meeting with the client?
+			        								</li>
+			        								<li>
+			        									Types of client objections and how to handle the same.
+			        								</li>
+			        								<li>
+			        									Guest Lecture from Financial Services Industry to talk about importance of developing long term relationship with a client.
+			        								</li>
+			        							</ul>		
+			        					</li>
+			        					<br></br>
+			        					<li>
+			        						<b>Gather client data, including goals.</b><br/>
+			        							<ul>
+			        								<li>
+			        									Role of Financial Planner in Data Gathering and Goal Setting.
+			        								</li>
+			        								<li>
+			        									Categorizing and Prioritizing data for an effective Financial Plan.
+			        								</li>
+			        								<li>
+			        									Understanding the Data Collection Sheet.
+			        								</li>
+			        								<li>
+			        									Formulation of goals and helping clients with goal setting and goal articulation.
+			        								</li>
+			        								<li>
+			        									Filling up the dummy Data Sheet.
+			        								</li>
+			        								<li>
+			        									Assignment and Out of the Classroom activity.
+			        								</li>
+			        							</ul>
+			        					</li>
+			        					<br></br>
+			        					<li>
+			        						<b>Analyze and evaluate client’s financial status.</b><br/>
+			        							<ul>
+			        								<li>
+			        									Analysis of Data Gathering Sheet
+			        								</li>
+			        								<li>
+			        									Personal Financial Statement Analysis
+			        								</li>
+			        								<li>
+			        									Calculating Emergency Fund/Contingency Fund
+			        								</li>
+			        								<li>
+			        									Working and analysis of Goals by using excel
+			        								</li>
+			        							</ul>
+			        					</li>
+			        					<br></br>
+			        					<li>
+			        						<b>Develop and present financial planning recommendations and/or alternatives.</b><br/><br/>
+			        							<ul>
+			        								<li>
+			        									<b>Practical understanding of Financial Products</b><br></br><br/>
+			        										<ul type="square">
+			        											<li>
+			        												Investment Products and Analysis
+			        											</li>
+			        											<li>
+			        												Insurance Products and Analysis
+			        											</li>
+			        											<li>
+			        												Retirement Planning
+			        											</li>
+			        											<li>
+			        												Tax Planning
+			        											</li>
+			        										</ul>
+			        								</li><br/>
+			        								<li>
+			        									<b>Financial Plan Preparation and Presentation </b><br></br><br/>
+			        										<ul type="square">
+			        											<li>
+			        												Preparing Retirement plan( Both Accumulation and Distribution Stage).
+			        											</li>
+			        											<li>
+			        												Preparing Insurance Plan by calculating Human Life Value.
+			        											</li>
+			        											<li>
+			        												Analysis of current Investment and Real assets and Suggested Asset Allocation on existing Assets.
+			        											</li>
+			        											<li>
+			        												Preparing Comprehensive Financial Plan.
+			        											</li>
+			        											<li>
+			        												How to Present Comprehensive Financial Plan to the Clients?
+			        											</li>
+			        											<li>
+			        												Designing Action plan and recommendation plan based on the Comprehensive Financial Plan.
+			        											</li>
+			        											<li>
+			        												Assignment and Out of the Classroom activity.
+			        											</li>
+			        										</ul>
+			        								</li>
+			        							</ul>
+			        					</li>
+			        					<br/>
+			        					<li>
+			        						<b>Implement the financial planning recommendations.</b><br/><br/>
+			        							<ul>
+			        								<li>
+			        									How to successfully implement the Financial Plan for the client.
+			        								</li>
+			        								<li>
+			        									Understanding Operations procedure of mutual funds and insurance for smooth plan execution.
+			        								</li>
+			        								<li>
+			        									Steps to engage clients at points of time.
+			        								</li>
+			        								<li>
+			        									Practical ‘objection handling’ tips during implementation of financial plan.
+			        								</li>
+			        								<li>
+			        									Guest Lecture on Current Distribution and Operations of Financial  Products in Financial Services Industry.
+			        								</li>
+			        							</ul>
+			        					</li><br/>
+			        					<li>
+			        						<b> Monitor the financial planning recommendations.</b><br/><br/>
+			        						<ul>
+			        							<li>
+			        								Portfolio performance and rebalancing.
+			        							</li>
+			        							<li>
+			        								Ongoing Client engagement process to ensure your client’s  financial freedom.
+			        							</li>
+			        							<li>
+			        								Update clients data and act accordingly.
+			        							</li>
+			        							<li>
+			        								Review of Financial Plan.
+			        							</li>
+			        						</ul>
+			        					</li>
+			        				</ol>
+			        			</span>
+			        		</li>
+			        	</ul>
+			        	<br></br>
+			        	<b>For more details and enrollments contact:</b>
+			        	<ul>
+				        	<li>
+					        	<span class="txtmatterbig_innerpage">
+			        				Vishal Gada - 022 – 26244248, 09930805522 or write to us on <a>vishal.gada@ambitionlearning.com</a>
+			        			</span>
+			        		</li>
+			        	</ul>
+			        </span>
+			    </div>
+			        		
+		       
+		       <center><a href="#top" class="otherslink"><strong>Top</strong></a>
+		        </center>
+		        <br /> 
+		       </div>
+		      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" /></div>
+		       
+		       <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}"  border="0" usemap="#Map2" />
+		         <map name="Map2" id="Map2">
+		           <area shape="rect" coords="3,0,230,50" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+		         </map></div>
+		       <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+		        People dream &amp; remain happy.<br/>
+		        Imagine people dreaming &amp; living their dreams.<br /><br />
+		        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+		        For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+		         <div class="title123"><span class="imgtext">Related Links</span></div>
+		         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Comprehensive_fp"><strong>Services Basket</strong></a></span> </div>
+		        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know our Financial Planers</strong></a></span> </div>
+		        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Why_do_you_need_a_plan"><strong>Why do you need a financial plan?</strong></a></span> </div>
+		        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Who_can_be_your_financial_planner"><strong>Who can be a financial planner?</strong></a></span> </div>
+<!-- 		       <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="why_fees"><strong> Financial Planning Fees</strong></a></span> </div> -->
+		       <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+		      </div>
+		</apex:define>
+  </apex:composition>
+</apex:page>

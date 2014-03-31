@@ -1,0 +1,39 @@
+<apex:page id="globalAssumptionPartner" controller="GlobalAssumptionController" showHeader="false" >
+     <apex:composition template="TabPage">
+        <apex:define name="contents">
+<!--           <apex:pageMessages rendered="true" />  -->
+            <apex:form id="gaForm1">
+             	<apex:actionFunction name="saveGoalProfile" action="{!save}" />
+              		<apex:pageBlock id="mainBlock">
+              
+                  	<apex:outPutPanel id="gAssumptionPanel" style="width:80%">
+                  		<apex:pageBlock title="Assumption"  id="gAssumptionBlock" >
+                        	<apex:pageBlockSection columns="4" rendered="true">
+                           		<apex:outputLabel value="Number of Months savings required for Emergency Planning" />
+                           		<apex:inputText value="{!entityAssumption.Number_Of_Months__c}"  id="months"/>
+                            	<apex:outputLabel value="Expected Return on Investment" />
+                            	<apex:inputText value="{!entityAssumption.Expected_Return_on_Investment__c}"  id="return"/>
+                             	<apex:outputLabel value="Inflation Rate" />
+                            	<apex:inputText value="{!entityAssumption.Inflation_Rate__c}"  id="inflation"/>
+                             	<apex:outputLabel value="Income Growth Rate" />
+                            	<apex:inputText value="{!entityAssumption.Income_Growth_Rate__c}" id="growth"/> 
+                            	<apex:outputLabel value="Retirement Age" />
+                             	<apex:inputText value="{!entityAssumption.Default_Retirement_Age__c}" id="retirement"/> 
+                            	<apex:outputLabel value="Estimated Life Expectancy" />
+                             	<apex:inputText value="{!entityAssumption.Default_Estimated_Life_Expectancy__c}" id="LifeExpectancy"/> 
+                        	</apex:pageBlockSection>
+                    	</apex:pageBlock>
+				  	</apex:outPutPanel>
+                
+                <apex:pageBlockButtons >
+                    <apex:actionRegion >
+                    <apex:CommandButton value="Save"  action="{!save}" rerender="dummy" />
+                    <apex:CommandButton value="Cancel"  action="{!Cancel}" />
+                    </apex:actionRegion>
+                </apex:pageBlockButtons>
+
+                </apex:pageBlock>
+            </apex:form>
+        </apex:define>
+    </apex:composition>
+</apex:page>

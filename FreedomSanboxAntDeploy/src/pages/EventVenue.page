@@ -1,0 +1,29 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Wealth Solutions">
+   <apex:composition template="EventTemplate">
+  <apex:define name="rightcontent"> 
+   <br/><br/><br/>
+
+    <table >
+    <caption><span style="font-size:16px;color:black;">Event Venue:</span></caption>
+<tr>
+ <td style="vertical-align:text-top;" align="right">
+<div> 
+
+     <br/><b>Hotel Novotel Mumbai</b><br/><i> [Erstwhile Holiday Inn]</i><br/>Juhu Beach,<br/> BalrajSahaniMarg,<br/> Juhu-Vile Parle (west).<br/> Mumbai - 400049. 
+ </div>
+ </td>
+  
+ <td align="right" Style="Padding-left:40px;"><img border="0" src="{!URLFOR($Resource.EventImages,'EventImages/NovotelImage.gif')}" /> </td>     
+ </tr>
+</table>
+
+ <div><b>Map &amp; Directions :</b> From the airport, drive west towards the Western Express Highway. Cross over the Andheri Flyover before turning right at S.V. Road. Turn Left at V.L. Mehta Marg, and then right at Juhu Road where you will find the hotel. The journey is about 8 km.</div>
+<br/> <div><b>Nearest Railway Station : </b>Santacruz Station, Vile Parle Station  or Andheri Station.</div><br/>
+<div>
+<b>Help Desk : </b>
+For any assistance email us at <a href="http://www.ffreedom.in/Contact_Us">contact@ffreedom.in</a> or call us at 022-4222-4333.
+</div>
+ 
+  </apex:define>   
+ </apex:composition>
+</apex:page>

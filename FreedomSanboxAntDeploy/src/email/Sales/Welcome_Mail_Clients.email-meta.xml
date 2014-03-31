@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Welcome Mail - Clients</name>
+    <style>freeForm</style>
+    <subject>Welcome to Ffreedom</subject>
+    <textOnly>Hello {!Account.Name},
+Thank you for giving us the opportunity to assist you in creating your Financial Plan. We congratulate you on taking your first step towards Financial Freedom and welcome you to Ffreedom Financial Planners. Financial Planning will enable you to live a life that you have always envisioned for yourself by helping you build a better relationship with your money. We look forward to working with you and help you prepare today for a better tomorrow.
+Attached in the e-mail please find the following documents,
+The Ffreedom Score
+This is the financial health checkup exercise done with you
+ 
+Terms and conditions Agreement copy 
+Please sign the same and send it back to us via courier. Alternatively, you can scan and mail it across 
+The Data Sheet
+We request you to review the sheet and fill up the required information to enable us to proceed with the financial plan preparation. There are various tabs within this sheet. Please see the “Introduction” tab which gives an overview of the data sheet.
+ 
+Kindly also issue a check favoring “Freedom Wealth Solutions P L” Amounting Rs. xxxxxx (xxxx + xxx Service Tax).
+If you want to make the payment online, please find the details below:
+
+Bank Details:
+Account Name: Freedom Wealth Solutions P L
+Bank Name: Axis Bank
+Branch: Springfields, Lokhandwala, Andheri (W)
+Account No : Current  Account  415010200003186
+IFSC: UTIB0000415
+MICR: 400211037
+ 
+For any queries please feel free to contact us.
+ 
+We thank you once again for giving us the opportunity to help you attain financial freedom.
+ </textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,14 @@
+<apex:page standardController="Account" extensions="DeleteTestAccountCtrl">
+    <apex:form >
+    <apex:pageBlock mode="Edit">
+    <apex:pageBlockSection >
+    <apex:pageblocksectionItem >
+    <apex:outputpanel >
+        <apex:inputfield value="{!c.Salutation}" required="false"/>
+        <apex:inputfield value="{!c.LastName}" required="false"/>
+    </apex:outputpanel>
+    </apex:pageblocksectionItem>
+    </apex:pageBlockSection>
+    </apex:pageBlock>
+    </apex:form>
+</apex:page>

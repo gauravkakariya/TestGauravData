@@ -1,0 +1,243 @@
+<apex:page showheader="false" title="Ffreedom Financial Planners | News Letters"	id="LeadStory_Nov12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.images,'images/top_Nov12.gif')}" width="740" height="104" /></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                <tr>
+
+                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                    <tr>
+
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.images,'images/headL.gif')}" width="9" height="40" /></td>
+
+                      <td width="98%" valign="top" background="{!URLFOR($Resource.images,'images/headbg.gif')}" style="padding-top:6px;"><font face="Arial, Helvetica, sans-serif" color="#FFFFFF" style="font-size:14px;"><strong>LET THIS DIWALI MARK A NEW BEGINNING!</strong></font></td>
+
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /></td>
+
+                    </tr>
+
+                  </table></td>
+
+                </tr>
+
+                
+
+                <tr>
+
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+                      <tr>
+
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+
+
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">This  month brings the most awaited festival in India – Diwali! Come Diwali, and  there is a plethora of wishes coming from friends and family wishing good health and wealth. <br />
+
+                                <br />
+
+                                What  an irony? We wish people good health and wealth while feeding them mithais in  their newly renovated house!<br />
+
+                                <br />
+
+                                Health  and Wealth actually takes a beating, due to all the binging and spending around  this season. I guess the wishes are for the return of health and wealth after  it is all over.<br />
+
+                                <br />
+
+                                Health  and Wealth undisputedly are like the two eyes in our wellness and we choose to be  either reactive or proactive. <br />
+
+                                <br />
+
+                                You  may abuse your health by dumping yourself with junk, inactivity or bad habits  and then react when it starts showing on your health. Alternatively you may follow  a good diet, workout and ensure you take care of your health – this being  proactive. A dietician, doctor and personal trainer will help you ably in your  journey towards physical wellness giving your feedback, keeping you honest and disciplined.<br />
+
+                                <br />
+
+                                Likewise  with your wealth, you may borrow recklessly, splurge on non essentials, forget  to protect your assets and then relent and try to put your house in order when  your goals are staring at your face. Alternatively you can choose to be discipline,  follow a plan, stay out of debt, create multiple sources of income and live in  style. A good financial planner or advisor who may tell you what to do and what  not to and spouse who will nudge you back on track most of the time, can do  wonders here.<br />
+
+                                <br />
+
+                                But  the hard work is something you have to do. The trainer can’t do your workouts  or your financial advisor can follow your budgets or write your Will. I  sometimes feel we pay these guys to make our life difficult. Nevertheless we  understand and appreciate the long term impact of what they do and make us do  in our lives and engage their services. Of course not all of us do. Those of us  who care for our loved ones and who like to stay in control of our life do it. <br />
+
+                                <br />
+
+                                Hope  this Diwali you will commit yourself to taking care of your health and wealth.  Good health keeps your wealth intact, and wealth helps keep something more  important – your Dignity intact.<br />
+
+                                <br />
+
+                                However,  let this not dissuade you from binging and spending. After all, Diwali comes  once a year!<br />
+
+                                <br />
+
+                                Regards,<br />
+
+                                  Vinita Somaiya<br />
+
+                                  Head- Research &amp; Advisory</td>
+
+                            </tr>
+
+                            
+
+                            
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+
+                            </tr>
+
+                            
+
+                          </table></td>
+
+                      </tr>
+
+                      <tr>
+
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+
+                      </tr>
+
+                  </table></td>
+
+                </tr>
+
+              </table>
+
+              </td>
+
+          </tr>
+
+          <tr>
+
+            <td valign="top">&nbsp;</td>
+
+            </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        </tr>
+
+    </table></td>
+
+  </tr>
+
+  
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+
+                  <td><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></td>
+
+                </tr>
+
+            </table></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+
+          </tr>
+
+          <tr>
+
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+
+          </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+      </tr>
+
+    </table></td>
+
+  </tr>
+
+  
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+
+  </tr>
+
+</table>
+
+</body>
+
+	</html>
+</apex:page>

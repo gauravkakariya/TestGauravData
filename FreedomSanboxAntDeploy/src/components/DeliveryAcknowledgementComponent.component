@@ -1,0 +1,17 @@
+<apex:component selfClosing="true">
+<!-- <apex:attribute name="accountName" type="String" description="Account Name" required="true"/> -->
+    <apex:stylesheet value="{!$Resource.FFStyle}"/>
+     <div class="divContainerStyle">
+    <div class="divStyle">DELIVERY ACKNOWLEDGEMENT - CLIENT</div>
+    <p class="textStyle">We acknowledge that we have reviewed the financial plan and we find it to be in accordance with the information provided by us.</p>
+    <p class="textStyle">
+<!--     We also acknowledge that {!accountName} does not guarantee performance of the investments it suggests and the projections may vary over time.   -->
+     We don’t guarantee performance of the investment. The suggestions and projections may vary over time.  
+       The same have been used to aid us in better decision making and help us achieve our financial goals and aspirations.</p>
+    <p class="textStyle">We further understand that we need to periodically review our financial situation over time or in accordance with changing macro conditions or any material changes in personal circumstances.</p><br/><br/>
+    <p>_________________________</p>
+    <p class="textStyle">Clients Signature </p><br/>
+    <p>________________</p>
+    <p class="textStyle">Date</p>
+    </div>
+</apex:component>

@@ -1,0 +1,2 @@
+<apex:page standardController="Account" extensions="CreateDepartmentController" tabStyle="Account" showheader="true" action="{!redirectAccount}" > 
+</apex:page>

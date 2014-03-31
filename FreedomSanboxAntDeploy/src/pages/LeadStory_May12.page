@@ -1,0 +1,179 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="LeadStory_May12">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Ffreedom Financial Planners</title>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+		_gaq.push([ '_trackPageview' ]);
+	
+		(function() {
+			var ga = document.createElement('script');
+			ga.type = 'text/javascript';
+			ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+					: 'http://www')
+					+ '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+</head>
+
+<body>
+	<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+		<tr>
+			<td><img src="{!URLFOR($Resource.images,'images/top_May12.gif')}" width="740" height="104" /></td>
+		</tr>
+		<tr>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+						<td valign="top">
+							<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+								<tr>
+									<td valign="top">
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td>
+													<table width="100%" border="0" cellspacing="0" cellpadding="0">
+														<tr>
+															<td width="1%" valign="top">
+																<img src="{!URLFOR($Resource.images,'images/headL.gif')}" width="9" height="40" />
+															</td>
+															<td width="98%" valign="top" background="{!URLFOR($Resource.images,'images/headbg.gif')}" style="padding-top:6px;">
+																<font face="Arial, Helvetica, sans-serif" color="#FFFFFF" style="font-size:14px;">
+																	<strong>PLAN YOUR BONUS SPENDS WISELY</strong>
+																</font>
+															</td>
+															<td width="1%" valign="top">
+																<img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" />
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+				
+											<tr>
+												<td>
+													<table width="100%" border="0" cellpadding="0" cellspacing="0">
+														<tr>
+															<td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}">
+																<img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" />
+															</td>
+															<td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+															<td valign="top">
+																<table width="98%" border="0" cellpadding="0" cellspacing="0">
+																	<tr>
+																		<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">
+																			April  traditionally is a lazy month. Most of it is spent on appraisals, holidays and  planning for the next financial year. The men are coming home early, though  that can also be to watch IPL. Most of us wish that the month would never end,  except for the fact that the yearly bonus will hit the salary account when the  month ends.<br />
+																			<br />
+																			Most of us, I guess will already be  counting the chicks before they are all hatched. The long pending vacation, repaying those loans, payment of school fees may all be on  the list. Generally people do also come back and recommit towards implementing  their financial plans during this period<strong>. </strong><br />
+																			<br />
+																			These bonuses are an annual affair, they  don’t happen all the time. In our total working life, if we are lucky, it is  probably just 30 – 35 times that such opportunities present themselves. And so,  it becomes all the more important that these are used wisely. <br />
+																			<br />
+																			Once an elderly gentleman had stressed on  the importance of using money wisely, he said, “You young people tend to take  these 50 Rs – 100 Rs lightly and are okay with wasting them. When you are old  and retired, your doctor would have prescribed you a new medicine and you might  be short of just this much money to buy it. At that time you would reflect on  how these small sums just when up in air. And reflections they would remain -  you won’t be able to do a thing about it.”<br />
+																			<br />
+																			If we can look into the future and see how  all the money that we earn today, can go a really long way in future, we would  use our money much more sensibly today, won’t we? <br />
+																			<br />
+																			So what can you do with responsibility to  make this bonus money go a really long way?
+																		</td>
+																	</tr>
+											
+																	<tr>
+																		<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">
+																			<ol>
+																				<li>Forget the money for now and sit down with  your spouse over a cup of coffee and a piece of paper and dream. Yes, I said  dream. Dream about all that you want to do in your life – buy that big house,  send children to good colleges, retire early, go on that cruise, stay  independent after retirement, whatever comes to your mind. Trust me, this would  be one of the best couple things you would have done in a while. </li>
+																				<li>Gulp down that cup of coffee and now put a  figure to how much it will cost you to live those dreams. How much money would  you require to buy that house, to live after 20 years, to pay your children’s  post grad fees? This is your left hand side of the sheet. Take professional  help here if you need some.</li>
+																				<li>Place  each of these goals one below the other, in order of priority. Which of these  dreams are very close to your heart? Which of them would give you the most happiness  when they are achieved? Which of these are nice to have, but are not show  stoppers? <strong></strong></li>
+																				<li>Now pick up that bank statement and see how  much money has come in. This is the right hand side of your sheet.</li>
+																				<li>And now you should be able to see the  picture, the bigger picture.</li>
+																			</ol>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">
+																			You don’t need anybody else to tell you  what to do with your money. If you know what to do with your life, you would  know what to do with your money. <br /><br />
+																			Before you go about matching the left hand  side to the right hand side right away, pay your insurance premiums and top up  that emergency fund. And then you are free to dream and fund those dreams.<br /><br />
+																			While money is the means with which you can  live the life of your dreams, you need to respect it too since each penny you  earn can satisfy multiple wants. Chase your dreams but don’t forget the advice  of the old gentleman by adding wisdom and foresight to your financial plan.
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+														<tr>
+															<td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+															<td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+															<td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td valign="top">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	
+		<tr>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+						<td valign="top">
+							<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+									<td width="24%" rowspan="3">
+										<table border="0" align="center" cellpadding="0" cellspacing="0">
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+												<td>
+													<a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a>
+													<a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a>
+													<a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a>
+												</td>
+											</tr>
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+												<td><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+								</tr>
+								<tr>
+									<td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+								</tr>
+								<tr>
+									<td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	
+		<tr>
+			<td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+		</tr>
+	</table>
+</body>
+</apex:page>

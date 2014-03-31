@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Assigment for Consultation</name>
+    <style>freeForm</style>
+    <subject>Inquiry from Complimentary Consultation (website)</subject>
+    <textOnly>The below person has requested for a Complimentary Consultation with a ‘Ffreedom Financial Planner’. This request has come from the website on {!Lead.CreatedDate}
+ 
+First Name : {!Lead.FirstName}
+Last Name : {!Lead.LastName}
+Date/Time of Consultation : {!Lead.Appointment_Time__c}
+Location: {!Lead.Address}
+Email id:  {!Lead.Email}
+Mobile number : {!Lead.MobilePhone}
+
+ 
+Please respond to the same ASAP.</textOnly>
+    <type>html</type>
+</EmailTemplate>

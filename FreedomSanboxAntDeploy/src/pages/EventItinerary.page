@@ -1,0 +1,101 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Wealth Solutions">
+       
+
+         
+   <apex:composition template="EventTemplate">
+  <apex:define name="rightcontent"> 
+ 
+<br/><span style="font:38px Brush Script MT;color:#FF8000;font-style:italic;padding-left:150px;">Ffreedom day </span><span style="font:34px Brush Script MT;color:green;font-style:italic;">Schedule</span><br/><br/>
+<!---- <h2 style="position:relative;font-size:250%; color:#FF8040; left:135px;"> Ffreedom day Schedule</h2> <br/>---->
+
+
+<br/>
+ <div>
+ <span style="font-size:16px;color:black;"><b>Programme Schedule:</b></span>
+ <br/>
+ <br/>
+<table border="1" style="text-align:left;">
+
+<tr style="background-color:#D8D8D8;">
+<td  width="100" ><b>10.30 - 11.00 am</b></td>
+<td>Registration (with Tea, Coffee &amp; Refreshments)</td>
+<td></td>
+</tr>
+<tr  style="background-color:#D8D8D8;">
+<td ><b>11.00 – 11.15 am</b></td>
+<td>Opening Ceremony</td>
+<td>TBA</td>
+</tr >
+<tr >
+
+<td  colspan="3" style="text-align:center;"><b><u>Ffreedom Talks on Happiness</u></b></td>
+
+</tr>
+<tr style="background-color:#D8D8D8;">
+<td rowspan="2"  width="100"><b>11.30 – 12.15 pm</b></td>
+<td > Talk on Happiness </td>
+<td>Mr Bhupendar Sharma<br/> [ CEO of <a href="http://www.nxtlyf.com/" target="_blank" style="color:#000000">nxtlyf</a> and Strategic Innovation Consultant ]</td>
+</tr>
+<tr style="background-color:#D8D8D8;"><td>From GDP (Gross Domestic Product) to <br/>GNH (Gross National Happiness)</td>
+<td>Ms Rajni Bakshi<br/> [ Author of <a href="http://www.bazaarsconversationsfreedom.com/bazaars/" target="_blank" style="color:#000000">Bazaars, Conversations and Freedom</a> ]
+</td>
+</tr>
+
+
+<tr>
+<td  colspan="3"  style="text-align:center;"><b><u>Ffreedom Talks on Dreams</u></b></td>
+</tr>
+
+
+
+<tr style="background-color:#D8D8D8;">
+<td rowspan="2"  width="100" ><b>12.15 – 1.00 pm</b></td>
+<td > Just dial – My Dream </td>
+<td>Mr. V S S Mani [ CEO of <a href="http://www.justdial.com" target="_blank" style="color:#000000">Just dial</a> ]</td>
+</tr>
+<tr style="background-color:#D8D8D8;"><td>R D Burman – A musical Dream </td>
+<td>Mr. Brahmanand Singh [ <a href="http://www.brahmanandsingh.com/" target="_blank" style="color:#000000">Film-maker</a> and Wirter ]</td>
+</tr>
+<tr>
+<td  colspan="3"  style="text-align:center;"><b><u>Ffreedom Talks on Financial Freedom</u></b></td>
+</tr>
+
+<tr style="background-color:#D8D8D8;">
+<td width="100" ><b>1.00 – 1.35 pm</b></td>
+<td > Panel Discuss on Financial Freedom</td>
+<td>TBA</td>
+</tr>
+
+<!----
+<tr style="background-color:#D8D8D8;">
+<td>TBA</td>
+</tr>
+---->
+
+<tr style="background-color:#D8D8D8;">
+<td  width="100" ><b> 1.30 - 01.45 pm  </b></td>
+<td > Closing Ceremony</td>
+<td>Mr Sumeet Vaid [Founder, CEO <a href="http://www.ffreedom.in/" target="_blank" style="color:#000000">Ffreedom Financial Planners</a>]</td>
+</tr>
+<!---
+<tr style="background-color:#D8D8D8;">
+<td  width="100" ><b>2.00 - 2.10 pm</b></td>
+<td > Wine Tasting</td>
+<td>TBA</td>
+</tr>
+---->
+
+<tr style="background-color:#D8D8D8;">
+<td  width="100" ><b>1.45 pm onwards</b></td>
+<td >Lunch &amp; Cocktail</td>
+
+<td></td>
+</tr>
+</table> 
+   </div>
+  </apex:define>
+
+    
+ </apex:composition>
+
+</apex:page>

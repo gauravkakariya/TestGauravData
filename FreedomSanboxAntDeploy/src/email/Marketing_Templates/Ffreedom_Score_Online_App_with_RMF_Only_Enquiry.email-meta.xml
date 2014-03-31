@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Ffreedom Score Online App with RMF (Only Enquiry)</name>
+    <style>freeForm</style>
+    <subject>Ffreedom Financial Planners</subject>
+    <textOnly>Hello {!Lead.Name},
+ 
+Thank you for taking the Ffreedom Score (Financial Health Checkup). 
+
+We have noticed that you have not completed the Ffreedom Score (Free Financial Health Checkup), hence to further assist you in completing your Financial Health Checkup we would like to offer you a complimentary consulting session with our Financial Planner (Certified Financial Planner). 
+
+In this session we shall sit with you and your family to understand your current financial health in much more detail, we shall also explain to you how financial planning if properly implemented could help you in managing your personal finance in a more effective manner and thus help you live your Dreams &amp; Goals. 
+‘Our truest life is when we are in our dreams awake’– Ffreedom Financial Planners 
+  
+A bit about us: We at Ffreedom believe that the term ‘financially free’ refers to a person that has significant savings or income and thus has peace of mind and the satisfaction of being able to do what he wants and when he wants to do it. We believe that today people are under incredible financial pressure which often leads to stress, worry and impaired relationships. Our aim is to empower the person with the knowledge which would help reduce or eliminate this negativity which would result in the person being financially free. The advice that we deliver to our clients is through expert Financial Consultants who are Certified Financial Planners*. 
+*There are currently only 931 Certified Financial Planners in India - source Financial Planning Standards Board of India.
+Kindly please let me know if you would be interested in availing this complimentary consultation. 
+ 
+Below are a couple of links to articles featured in The Indian Express, Business Standard that have been authored by our Founder &amp; CEO, Mr. Sumeet Vaid . I have also attached links to the Smart Money show on UTVI Bloomberg and CNBC TV 18 that Sumeet Vaid has participated in.
+ 
+Please feel free to get in touch with us for any questions and concerns that you may have.
+ 
+We look forward to meeting you.
+
+Regards 
+Ffreedom Financial Planners
+ 
+To access Sumeet Vaid&apos;s Blog on &quot;The Economic Times&quot; please click the following link:
+http://blogs.economictimes.indiatimes.com/simplified-finance/
+ 
+Click below to view Sumeet&apos;s Q&amp;A featured today in &quot;Business Standard&quot;:
+http://www.business-standard.com/india/storypage.php?autono=394077
+ 
+To access the Smart Money Show on UTVI Bloomberg &amp; CNBC TV 18 please click on the following links:
+http://www.youtube.com/watch?v=85hI3nG5yos
+http://www.youtube.com/watch?v=nwf2uIsnagM
+http://www.youtube.com/watch?v=uEy0fp1reJI
+http://www.youtube.com/watch?v=41BYQZ6-XPs
+ 
+To follow Ffreedom on Twitter please click on the following link:
+http://twitter.com/_ffreedom</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,226 @@
+<!-- 
+    Version     Version Author     Date           Comments
+    1.0         Aditi            02/04/2013      Display all Pop Up fields on ET page for Recommended Insurance MET Member and Ops Team
+-->
+<apex:page controller="EditETforSurrenderLifeInsurance" showHeader="false" sidebar="fasle" tabStyle="Execution_Tracker__c">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+	<script language="javascript" type="text/javascript">
+       $(document).ready(function () {
+          //alert("hi");
+       });
+       
+      /*
+       Commented on :26/9/13:Aditi: No need as Per cal with Kiran:
+      	function checkAgreedAmountFilled()
+	    {
+	    	if($(".agreedAmount").val() == null || $(".agreedAmount").val() == 0.0){
+	    		alert('{!$Label.Agreed_Amount}');
+	    		$(".AssigntoOps").prop('checked', false);
+	    		return false;
+	    	}
+	    }
+      */ 
+     </script> 
+	<script>
+		function populateParent(value)
+	    {
+	        var isError = value;
+	        if('{!$CurrentPage.parameters.type}' == 'other')
+	    	{
+	    		window.close();
+	    	}
+	    	else
+	    	{
+	    		if (isError == 'false')
+	               return false; 
+	            window.close();
+	    		//return top.window.opener.closeETWindow();
+	    	}
+	        return false;
+	    }
+	</script>
+	<apex:form >
+		<apex:pageBlock title="Execution Tracker" rendered="{!!isReadOnly}">
+		 <apex:pageMessages id="Pagemsg"/>
+			<apex:pageBlockButtons > 
+            	<apex:commandButton value="Save" rendered="{!!isClosed}" action="{!updateExecutionTracker}" rerender="Pagemsg" oncomplete="return populateParent('{!isError}');" status="statusId"/>
+               	<input type="button" class="btn" value="Cancel"  onClick="return window.close();" />
+               	<apex:actionStatus stopText="" id="statusId">
+                	<apex:facet name="start">
+               			<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                    		<img src="/img/loading.gif" width="16" height="16"/>
+						</apex:outputPanel>
+                	</apex:facet>
+        		</apex:actionStatus>  
+            </apex:pageBlockButtons>
+            <!-- Pop Up for MET Team -->
+          	<apex:outputPanel rendered="{!isRecommendedInsurance}">
+          	<apex:sectionHeader title="Edit Execution Tracker for MET Team"/>
+          	 	<apex:pageBlockSection title="Surrender Life Insurance" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Number__c}" label="Policy Number "/>
+					<apex:outputField value="{!objExecutionTracker.Nominee__c}" label="Insured "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Insurance_Company__c}" label="Insurance Company"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Name__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Commencement_Date__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Death_Benefit_Rs__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Tenure_of_Insurance__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Action__c}"/>
+			    </apex:pageBlockSection> 
+			    <apex:pageBlockSection title="Insurer Details" columns="2">
+					<apex:inputField value="{!objExecutionTracker.Policy_Name__c}" label="Agreed Policy Name "/>
+					<apex:inputField value="{!objExecutionTracker.Executed_Product_Name__c}" label="Agreed Insurance Company" />
+<!-- 		Commented on :26/9/13:Aditi: No need as Per cal with Kiran:	<apex:outputText value="{!objExecutionTracker.Total_Remaining_Balance__c}" label="Balance Remaining" id="balance"/> -->
+					<apex:inputField value="{!objExecutionTracker.Policy_Number__c}" label="Policy Number "/>
+<!-- 		Commented on :26/9/13:Aditi: No need as Per cal with Kiran:	<apex:inputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Agreed Amount " required="true" id="agreedAmount" styleclass="agreedAmount"/> -->
+					<apex:pageBlockSectionItem >
+					 	<apex:outputLabel value="Insured "/> 
+						<apex:selectList value="{!objExecutionTracker.Insured_Name__c}" size="1"  >
+                             <apex:selectOptions value="{!Entities}"></apex:selectOptions>
+                   		</apex:selectList>
+					 </apex:pageBlockSectionItem>
+<!-- 					<apex:inputField value="{!objExecutionTracker.Insured_Name__c}" label="Insured "/> -->
+<!-- 					<apex:pageBlockSectionItem rendered="{!IF(objExecutionTracker.Application_Status__c == $Label.Forms_Provided || objExecutionTracker.Application_Status__c == $Label.Forms_Handed,true,false)}"> -->
+<!-- 					 	<apex:outputLabel value="Application Status"/>  -->
+<!-- 						<apex:selectList value="{!objExecutionTracker.Application_Status__c}" size="1"  > -->
+<!--                              <apex:selectOptions value="{!applicationStatus}"></apex:selectOptions> -->
+<!--                    		</apex:selectList> -->
+<!-- 				 	</apex:pageBlockSectionItem> -->
+<!-- 	Commented on :26/9/13:Aditi: No need as Per cal with Kiran:	<apex:inputField value="{!objExecutionTracker.Target_Revenue__c}"/> -->
+<!-- 	Commented on :26/9/13:Aditi: No need as Per cal with Kiran:	<apex:inputField onClick="checkAgreedAmountFilled();" value="{!objExecutionTracker.AssignToOps__c}" label="Assign to Ops" rendered="{!IF(objExecutionTracker.AssignToOps__c == false, true,false)}" id="AssigntoOps" StyleClass="AssigntoOps"/> -->
+                    <apex:inputField value="{!objExecutionTracker.AssignToOps__c}" label="Assign to Ops" rendered="{!IF(objExecutionTracker.AssignToOps__c == false, true,false)}"/>
+                    <apex:outputField value="{!objExecutionTracker.AssignToOps__c}" label="Assign to Ops" rendered="{!IF(objExecutionTracker.AssignToOps__c == true, true,false)}"/>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Assign Task"/>
+						<apex:commandLink action="{!assignTask}" value="Click here" id="theCommandLink"/>
+					</apex:pageBlockSectionItem>
+					<apex:inputField value="{!objExecutionTracker.Remarks__c}" label="MET Remark"/>
+					
+                </apex:pageBlockSection> 
+          	 </apex:outputPanel>
+          	 <!-- End of Pop Up for MET Team -->
+          	 
+			 <!-- Pop Up for Operations Team -->
+          	 <apex:outputPanel rendered="{!isRecommendedInsuranceForOps}">
+          	 <apex:sectionHeader title="Edit Execution Tracker for Operations Team"/>
+          	 	<apex:pageBlockSection title="Surrender Life Insurance" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Number__c}" label="Policy Number "/>
+					<apex:outputField value="{!objExecutionTracker.Nominee__c}" label="Insured "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Insurance_Company__c}" label="Insurance Company"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Name__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Commencement_Date__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Death_Benefit_Rs__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Tenure_of_Insurance__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Action__c}"/>
+			    </apex:pageBlockSection>
+			    <apex:pageBlockSection title="Execution Tracker Details" columns="2">
+		    		<apex:inputField value="{!objExecutionTracker.Policy_Name__c}" label="Agreed Policy Name "/>
+					<apex:inputField value="{!objExecutionTracker.Executed_Product_Name__c}" label="Agreed Insurance Company "/>
+<!-- Commented on :26/9/13:Aditi: No need as Per cal with Kiran: <apex:outputText value="{!objExecutionTracker.Total_Remaining_Balance__c}" label="Balance Remaining" id="balance"/> -->
+					<apex:inputField value="{!objExecutionTracker.Policy_Number__c}" label="Policy Number "/>
+<!-- Commented on :26/9/13:Aditi: No need as Per cal with Kiran: <apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Agreed Amount "/> -->
+<!-- 					<apex:inputField value="{!objExecutionTracker.Insured_Name__c}" label="Insured "/> -->
+					<apex:pageBlockSectionItem >
+					 	<apex:outputLabel value="Insured "/> 
+						<apex:selectList value="{!objExecutionTracker.Insured_Name__c}" size="1"  >
+                             <apex:selectOptions value="{!Entities}"></apex:selectOptions>
+                   		</apex:selectList>
+					 </apex:pageBlockSectionItem>
+					<apex:inputField value="{!objExecutionTracker.Sent_to_Insurance_Company__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Application_Status__c}" label="Status"/>
+<!-- Commented on :26/9/13:Aditi: No need as Per cal with Kiran: <apex:inputField value="{!objExecutionTracker.Target_Revenue__c}"/> -->
+<!-- Commented on :26/9/13:Aditi: No need as Per cal with Kiran: <apex:inputField value="{!objExecutionTracker.Booked_Revenue__c}" label="Booked Revenue "/> -->
+					<apex:outputField value="{!objExecutionTracker.Remarks__c}" label="MET Remark"/>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Assign Task"/>
+						<apex:commandLink action="{!assignTask}" value="Click here" id="theCommandLink"/>
+					</apex:pageBlockSectionItem>
+					<apex:inputField value="{!objExecutionTracker.Remark_OpsTeam__c}" label="OPS Remark"/>
+                </apex:pageBlockSection> 
+          	 </apex:outputPanel>
+          	<!--End of Pop Up for Operations Team -->
+		</apex:pageBlock>
+		 
+		  
+		<!--Read only page for MET member and Operation Team member when Application Status = 'Processed'-->
+		<apex:pageBlock title="Execution Tracker" rendered="{!isReadOnly}">
+			<apex:pageBlockButtons >
+				<apex:commandButton value="Save" rendered="{!isRecommendedInsuranceForOps}" action="{!updateExecutionTracker}" rerender="Pagemsg1"  oncomplete="return populateParent('{!isError}');" status="statusId1"/>
+               	<input type="button" class="btn" value="Cancel"  onClick="return window.close();" />
+               	<apex:actionStatus stopText="" id="statusId1">
+                	<apex:facet name="start">
+               			<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                    		<img src="/img/loading.gif" width="16" height="16"/>
+						</apex:outputPanel>
+                	</apex:facet>
+        		</apex:actionStatus> 
+            </apex:pageBlockButtons>
+          	 
+          	<apex:outputPanel rendered="{!isRecommendedInsurance}">
+          	<apex:sectionHeader title="Edit Execution Tracker for MET Team"/>
+          	 	<apex:pageBlockSection title="Surrender Life Insurance" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Number__c}" label="Policy Number "/>
+					<apex:outputField value="{!objExecutionTracker.Nominee__c}" label="Insured "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Insurance_Company__c}" label="Insurance Company"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Name__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Commencement_Date__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Death_Benefit_Rs__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Tenure_of_Insurance__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Action__c}"/>
+			    </apex:pageBlockSection>
+			    <apex:pageBlockSection title="Insurer Details" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Policy_Name__c}" label="Agreed Policy Name "/>
+					<apex:outputField value="{!objExecutionTracker.Application_Status__c}" />
+<!-- Commented on :26/9/13:Aditi: No need as Per cal with Kiran: <apex:outputText value="{!objExecutionTracker.Total_Remaining_Balance__c}" label="Balance Remaining" id="balance"/> -->
+					<apex:outputField value="{!objExecutionTracker.Executed_Product_Name__c}" label="Agreed Insurance Company "/>
+<!-- Commented on :26/9/13:Aditi: No need as Per cal with Kiran: <apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Agreed Amount "/> -->
+					<apex:outputField value="{!objExecutionTracker.Policy_Number__c}" label="Policy Number "/>
+					<apex:outputField value="{!objExecutionTracker.Insured_Name__c}" label="Insured "/>
+<!-- Commented on :26/9/13:Aditi: No need as Per cal with Kiran: <apex:outputField value="{!objExecutionTracker.Target_Revenue__c}"/> -->
+					<apex:outputField value="{!objExecutionTracker.AssignToOps__c}" label="Assign to Ops"/>
+					<apex:outputField value="{!objExecutionTracker.Remarks__c}" label="MET Remark"/>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Assign Task"/>
+						<apex:commandLink action="{!assignTask}" value="Click here" id="theCommandLink"/>
+					</apex:pageBlockSectionItem>
+                </apex:pageBlockSection> 
+          	 </apex:outputPanel>
+          	 
+          	 <apex:outputPanel rendered="{!isRecommendedInsuranceForOps}">
+          	 <apex:sectionHeader title="Edit Execution Tracker for Operations Team"/>
+          	 	<apex:pageBlockSection title="Surrender Life Insurance" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Number__c}" label="Policy Number "/>
+					<apex:outputField value="{!objExecutionTracker.Nominee__c}" label="Insured"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Insurance_Company__c}" label="Insurance Company"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Name__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Type__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Commencement_Date__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Death_Benefit_Rs__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Tenure_of_Insurance__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Action__c}"/>
+			    </apex:pageBlockSection>
+			    <apex:pageBlockSection title="Execution Tracker Details" columns="2">
+					<apex:inputField value="{!objExecutionTracker.Policy_Name__c}" label="Agreed Policy Name "/>
+					<apex:outputField value="{!objExecutionTracker.Application_Status__c}" />
+<!-- Commented on :26/9/13:Aditi: No need as Per cal with Kiran: <apex:outputText value="{!objExecutionTracker.Total_Remaining_Balance__c}" label="Balance Remaining" id="balance"/> -->
+					<apex:inputField value="{!objExecutionTracker.Executed_Product_Name__c}" label="Agreed Insurance Company "/>
+<!-- Commented on :26/9/13:Aditi: No need as Per cal with Kiran: <apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Agreed Amount "/> -->
+					<apex:inputField value="{!objExecutionTracker.Policy_Number__c}" label="Policy Number "/>
+					<apex:inputField value="{!objExecutionTracker.Insured_Name__c}" label="Insured"/>
+					<apex:inputField value="{!objExecutionTracker.Sent_to_Insurance_Company__c}"/>
+					<apex:outputField value="{!objExecutionTracker.Application_Status__c}" label="Status"/>
+<!-- Commented on :26/9/13:Aditi: No need as Per cal with Kiran: <apex:inputField value="{!objExecutionTracker.Target_Revenue__c}"/> -->
+<!-- Commented on :26/9/13:Aditi: No need as Per cal with Kiran: <apex:inputField value="{!objExecutionTracker.Booked_Revenue__c}" label="Booked Revenue "/> -->
+					<apex:outputField value="{!objExecutionTracker.Remarks__c}" label="MET Remark"/>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Assign Task"/>
+						<apex:commandLink action="{!assignTask}" value="Click here" id="theCommandLink"/>
+					</apex:pageBlockSectionItem>
+					<apex:inputField value="{!objExecutionTracker.Remark_OpsTeam__c}" label="OPS Remark"/>
+                </apex:pageBlockSection> 
+          	 </apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

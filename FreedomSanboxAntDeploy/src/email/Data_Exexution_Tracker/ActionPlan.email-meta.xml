@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>ActionPlan</name>
+    <style>freeForm</style>
+    <subject>Plan for  {!Account.Name}</subject>
+    <textOnly>Dear &quot;{!Account.Name}&quot;
+
+Please find attached your Action Plan which specifies what you should do to secure your financial life and build wealth for your goals.
+
+You may have some paperwork to do, submit some documents, do some medical tests, make payments etc.
+If you need help with implementing the action points given here, please entertain our colleague from the Member Engagement Team who will call you to check and do whatever is necessary.
+
+At any time, if you have any clarifications or any assistance please get in touch with me or our member service team @ 022-42224333
+
+Thanks and regards
+{!Account.OwnerFullName}</textOnly>
+    <type>html</type>
+</EmailTemplate>

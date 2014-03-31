@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Attached email to all entities and Our Business Partners</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Dont do that</name>
+    <style>none</style>
+    <subject>Don&apos;t Do That!</subject>
+    <type>custom</type>
+</EmailTemplate>

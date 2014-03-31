@@ -1,0 +1,15 @@
+Hi {!Case.AsssignedTo__c},
+
+A new case has been logged. 
+
+Here are the details regarding the case:
+
+Case Number :  {!Case.CaseNumber}
+Subject :  {!Case.Subject}
+Description : {!Case.Description}
+
+Please do the needful.
+
+Regards
+
+{!Case.OwnerFirstName}

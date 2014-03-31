@@ -1,0 +1,103 @@
+<apex:page controller="ExistingLeadXRay" action="{!Init}" id="DownloadQuestions"  renderAs="pdf"  > <!-- renderAs="pdf" -->
+<style type="text/css">
+.fontStyle{
+font-weight:bold;
+}
+.tdStyle{
+	width:40%;
+}
+.pdfbody{
+ border: 2px solid #000000;
+ padding:100px;
+}
+@PAGE {
+	width: 80%;
+}
+</style>
+<div style="padding:30px;">
+<div style="width:100%">
+		<div align="left" style="float: left;">
+			<img src="{!URLFOR($Resource.xrayimage,'logo.png')}" width="200px" alt="Ffreedom Financial Planners" title="Ffreedom Financial Planners" />
+	    </div>
+	    <div align="right" >  
+			<img src="{!URLFOR($Resource.xrayimage,'fxray.jpg')}" />
+    	</div>
+</div>
+
+<div style="height:20px;"></div>
+	
+<apex:form id="idForm">
+	<div>
+		<table>
+			<tr>
+				<td class="tdStyle">
+					<span class="fontStyle">Name:__________________________</span>
+				</td>
+				<td style="width:20% ">
+					<span class="fontStyle">Age:_________</span>
+				</td>
+				<td class="tdStyle">
+					<span class="fontStyle">Occuption:_____________________</span>
+				</td>
+			</tr>
+			<tr>
+				<td class="30%">
+					<span class="fontStyle">Mobile No.:_________________</span>
+				</td>
+				<td style="padding-left: 3px;" colspan="2">
+					<span class="fontStyle">Email Id.:__________________________</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="height: 40px"></div>
+	
+	<div>
+		<apex:variable value="{!0}" var="rowNum"/>	
+		<apex:repeat var="ExistItem" value="{!lstExistingQuesAnswer}" id="idRepeat">
+		<apex:variable value="{!rowNum+1}" var="rowNum"/>
+		<apex:outputPanel rendered="{!ExistItem.objQuestionnaire.Question_Bank_List__r.IsDummy__c}" ><!-- rendered="{!ExistItem.objQuestionnaire.Question_Bank_List__r.IsDummy__c}" -->
+		<div>
+			<span>
+				<apex:outPutText value="Q{0})  " >
+					<apex:param value="{!rowNum}"/>
+				</apex:outPutText>
+			</span>
+		
+			<span style="font-weight: bold;font-size: 14px; font-family: Arial">
+				<apex:outputText value="{!ExistItem.objQuestionnaire.Question_Bank_List__r.Question__c}" />
+			</span>
+			<br/>
+			<apex:repeat var="var" value="{!ExistItem.lstofAnswers}" id="idRepeatList1">
+					<div style="padding-left:30px">
+					<img src="{!URLFOR($Resource.xrayimage,'Check.jpg')}" width="12px" /> &nbsp;&nbsp;
+					<span style="font-size: 12px;"><apex:outputText value="{!var}"/></span><br/>
+					</div>
+			</apex:repeat>
+			</div>
+		</apex:outputPanel>
+		
+		<apex:outputPanel rendered="{!Not(ExistItem.objQuestionnaire.Question_Bank_List__r.IsDummy__c)}"><!-- rendered="{!Not(ExistItem.objQuestionnaire.Question_Bank_List__r.IsDummy__c)}" -->
+		<div>
+			<span>
+				<apex:outPutText value="Q{0})  " >
+					<apex:param value="{!rowNum}"/>
+				</apex:outPutText>
+			</span>
+		
+			<span style="font-weight: bold;font-size: 14px; font-family: Arial">
+				<apex:outputText value="{!ExistItem.objQuestionnaire.Question_Bank_List__r.Question__c}" />
+			</span><br/>
+			
+			<apex:repeat var="var" value="{!ExistItem.lstofAnswers}" id="idRepeatList2" >
+					 <img src="{!URLFOR($Resource.xrayimage,'Check.jpg')}" style="padding-left:30px; " width="12px" />&nbsp;&nbsp;
+					 <span style="font-size: 12px;font-family:Arial;padding-left:5px; "><apex:outputText value="{!var}"/></span> &nbsp;&nbsp;
+				</apex:repeat>
+			</div>
+		</apex:outputPanel>
+		<br/>
+	</apex:repeat>
+	</div>
+</apex:form>
+</div>
+</apex:page>

@@ -1,0 +1,16 @@
+<!--				    Eternus Solutions
+                        Author  : Pravin Patil
+                        Issue Id: FS0140
+                        Date    : 07/09/2011
+                        Purpose : Reuse code in website pages    (Testimonials Related Links)-->
+
+
+<apex:component id="TestimonialsRelatedLinks">
+		<div class="title123"><span class="imgtext">Related Links</span></div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Comprehensive_fp"><strong>Services Basket</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know our Financial Planers</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Why_do_you_need_a_plan"><strong>Why do you need a financial plan?</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Who_can_be_your_financial_planner"><strong>Who can be a financial planner?</strong></a></span> </div>
+<!--    <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="why_fees"><strong> Financial Planning Fees</strong></a></span> </div> -->
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+</apex:component>

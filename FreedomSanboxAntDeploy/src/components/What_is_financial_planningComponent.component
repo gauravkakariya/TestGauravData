@@ -1,0 +1,16 @@
+<!--				    Eternus Solutions
+                        Author  : Pravin Patil
+                        Issue Id: FS0140
+                        Date    : 07/09/2011
+                        Purpose : Reuse code in website pages  (What_is_financial_planning Related Links)-->
+
+
+<apex:component id="What_is_financial_planningComponent">
+		 <div class="title123"><span class="imgtext">Related Links</span></div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know Our Financial Planners</strong></a></span> </div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="our_process"><strong>Our Process</strong></a></span> </div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Client_Stories"><strong>Our Client stories</strong></a></span> </div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Comprehensive_fp"><strong>Services Basket</strong></a></span> </div>
+<!--     <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="why_fees"><strong> Financial Planning Fees</strong></a></span> </div> -->
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+</apex:component>

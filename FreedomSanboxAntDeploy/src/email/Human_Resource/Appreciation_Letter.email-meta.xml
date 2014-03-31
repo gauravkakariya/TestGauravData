@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Appreciation Letter</name>
+    <style>freeForm</style>
+    <subject>Appreciation Letter</subject>
+    <textOnly>To,
+Employee Name: xxxx
+Address                : xxxxx
+                                 xxxxx
+                                 xxxxx
+ 
+Department: xxxx
+ 
+Sub: Appreciation Letter
+ 
+Dear xxx,
+ 
+We congratulate you for your outstanding performance at Ffreedom and therefore it is our great pleasure to inform you that you have been promoted to xxxxxxx w.e.f xxxxxxx. Your performance is indicative of how committed and proficient you are towards your work and has thereby led us to have great confidence in your abilities.
+ 
+Your CTC has been revised from Rs. xxxx to Rs. xxxx p.a. A detailed break-up sheet of your revised earnings is attached along with this correspondence. All other terms and conditions contained in the original Offer Letter dated 1st Jan. 2010 remain unchanged.
+ 
+At Ffreedom, we believe all our team members are an invaluable resource to us and 
+we would like to extend our appreciation to you for being an outstanding addition to the Ffreedom family. We look forward to your continued association with our company and hope that you will find the Ffreedom experience to be a rewarding and enjoyable one. 
+ 
+ 
+Thank you &amp; Best Regards,
+ 
+ 
+Sumeet Vaid
+Founder/Managing Director, Ffreedom Wealth Solutions Pvt. Ltd.
+ 
+I accept the revision of my annual earnings on the above terms and conditions mentioned in the Offer Letter dt. 6th Jan, 2010.
+ 
+ 
+________________________
+Employee Name        </textOnly>
+    <type>html</type>
+</EmailTemplate>

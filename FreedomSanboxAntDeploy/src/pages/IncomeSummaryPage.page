@@ -1,0 +1,143 @@
+<apex:page controller="IncomeSummaryPageController" showHeader="false" standardStylesheets="true">
+<apex:stylesheet value="{!$Resource.FFStyle}"/>
+<apex:includeScript value="{!$Resource.ffreedomJavascript}"/>
+
+<!-- This is for including tab panel and sidebar -->
+<apex:composition template="TabPage">
+ <apex:define name="contents" > 
+    <apex:form id="myForm">
+    
+        <!-- This is to show the landing page Summary Table -->
+        <apex:outputPanel id="SummaryTable">  
+            <apex:pageBlock tabStyle="Account" title="Incomes">
+             <table id="DataTable"  cellSpacing="0" cellPadding="0" border="1" class="list" align="center" 
+                     style="border-width:thin;border-style:solid;width:70%;border-color:gray;">
+                 <tr class="headerRow">  
+                     <td class="dataCol" style="width:35%;" >
+                         <apex:outputText value="{!$Label.Income_Class}" />
+                     </td>
+                     <apex:repeat value="{!bean.accountList}" var="account">
+                     <td class="labelCol" style="text-align:left;">
+                          <apex:outputText value="{!account.Name}"/>
+                     </td>
+                     </apex:repeat>
+                 </tr>
+                 <apex:repeat value="{!bean.summaryTableList}" var="STList" >
+                 <tr>
+                     <td class="dataCol" style="width:25%; " > 
+                         <apex:commandLink value="{!STList.RecordType}" action="{!showPopUp}" reRender="PopupPanel">
+                             <apex:param name="id" value="{!STList.recordTypeIdStr}" assignTo="{!bean.selRecordTypeId}"/>
+                             <apex:param name="name" value="{!STList.recordType}" assignTo="{!bean.selRecordTypeName}"/>
+                         </apex:commandLink>   
+                     </td>
+                     <apex:repeat value="{!STList.InnerClassList}" var="innerList">
+                     <td class="labelCol"> 
+                         <apex:outputText value="{0, number, ,##,##0}">
+                             <apex:param value="{!innerList.amountValue}"/>
+                         </apex:outputText>
+                     </td>
+                     </apex:repeat>
+                 </tr>
+                 </apex:repeat>  
+                 <tr class="headerRow">  
+                     <td class="dataCol" style="padding-left:10px">
+                         <apex:outputText value="Total" />
+                     </td>
+                     <apex:repeat value="{!bean.accountList}" var="account">
+                         <td class="labelCol" style="width:15%;padding-right:10px;">
+                               <apex:outputText value="{0, number, ##,##0}">
+                            <apex:param value="{!account.Total_Income__c}"/>
+                            </apex:outputText> 
+                         </td>
+                     </apex:repeat>
+                 </tr>
+             </table>
+             	<br/>
+             	<!-- Change By Niket Chandane Added the Label on the Page --> 
+             <apex:outputLabel value="{!$Label.Income_Information}" style="margin-left: 2.8in;"></apex:outputLabel>
+             <apex:pageBlockButtons location="bottom" >
+                 <apex:commandButton action="/apex/FamilyMemberDetail?entityId={!entityId}&tabname=Financial Planning" 
+                         rendered="{!NOT(fmBean.isCustomer)}" value="Previous" reRender="PopupPanel" style="margin-left:170px;"/>
+                 <apex:commandButton action="/apex/ClientMemberDetails?entityId={!entityId}&tabname=Financial Planning" 
+                         rendered="{!(fmBean.isCustomer)}" value="Previous" reRender="PopupPanel" style="margin-left:170px;"/>
+                 <apex:commandButton action="/apex/ExpenseVFPage?entityId={!entityId}&tabname=Financial Planning" 
+                         value="Next" reRender="PopupPanel"/>
+             </apex:pageBlockButtons>
+             </apex:pageBlock>
+        </apex:outputPanel>
+        
+        <!-- This is to show the popup page -->
+        <apex:outputPanel id="PopupPanel">
+            <apex:outputPanel id="BGPanel" styleClass="popupBackground" layout="block" rendered="{!bean.displayPopUp}" />
+            <apex:outputPanel id="FGPanel" styleClass="incomePopupForeground" layout="block" rendered="{!bean.displayPopUp}" >
+                <apex:pageBlock id="IncomeEditPage" tabStyle="Account" title="{!bean.selRecordTypeName}" >
+                    <apex:outputText value="{!$Label.RequiredInfoMsg}" styleClass="requiredInfoMsg"/>
+                    <apex:pageMessages rendered="true" />
+                    <apex:pageBlockTable id="tblId" style="width:100%" value="{!bean.incomeList}" var="income" align="center" 
+                            rowClasses="odd,even" headerClass="colWrap" >
+                        <apex:column headerValue="{!$Label.Remove}" style="width:4%;">
+                            <apex:inputCheckbox value="{!income.RemoveCheckbox__c}"/>
+                        </apex:column>
+                        <apex:column headerValue="{!$Label.Owner}" style="width:15%">
+                            <apex:selectList style="width:95%;" id="EntitySelectList" value="{!income.Entity__c}" 
+                                    multiselect="false" size="1" styleClass="requiredField">
+                                <apex:selectOptions value="{!OwnerItems}" />
+                            </apex:selectList>         
+                        </apex:column>
+                        <apex:column style="width:4%;" headerValue="{!$ObjectType.Income__c.fields.Start_Year__c.label}" >
+                             <apex:inputField value="{!income.Start_Year__c}" onkeypress="return isNumberKey(event)" 
+                                 onblur="yearLength(this);" style="width:95%"/>
+                        </apex:column>
+                        <apex:column style="width:4%" headerValue="{!$ObjectType.Income__c.fields.End_Year__c.label}" title="{!$Label.IncomeEndYearHelpText}" >
+                             <apex:inputField value="{!income.End_Year__c}" onkeypress="return isNumberKey(event)" 
+                                 onblur="yearLength(this);" style="width:95%"/>
+                        </apex:column>
+                        <apex:column style="width:6%" headerValue="{!$ObjectType.Income__c.fields.Income_Amount__c.label}" title="{!$Label.IncomeAmountHelpText}" >
+                             <apex:inputField value="{!income.Income_Amount__c}" styleClass="requiredField" style="width:95%"/>
+                        </apex:column>
+                        <apex:column style="width:10%" headerValue="{!$ObjectType.Income__c.fields.Frequency__c.label}" >
+<!--                             <apex:selectList value="{!income.Frequency__c}" multiselect="false" size="1" style="width:95%"> -->
+<!--                                  <apex:selectOptions value="{!Frequency}"/>  -->
+<!--                              </apex:selectList>  -->
+							<apex:inputField value="{!income.Frequency__c}" styleClass="requiredField" style="width:95%"/>
+                        </apex:column>
+                        <apex:column style="width:6%;" headerValue="{!$Label.GrowthRate}" >
+                             <apex:inputField style="width:95%" value="{!income.Income_Growth_Rate__c}" styleClass="requiredField"/>
+                        </apex:column>     
+                        <apex:column style="width:15%" headerValue="{!$ObjectType.Income__c.fields.Employer__c.label}" rendered="{!bean.displaySalaryFields}">
+                             <apex:inputField value="{!income.Employer__c}"  style="width:95%; height:18px;"/>
+                        </apex:column>    
+                        <apex:column style="width:15%" headerValue="{!$ObjectType.Income__c.fields.Business_Name__c.label}" rendered="{!bean.displayBusinessFields}" >
+                             <apex:inputField value="{!income.Business_Name__c}" style="width:95%; height:18px;" />
+                        </apex:column>    
+                        <apex:column style="width:12%" headerValue="{!$ObjectType.Income__c.fields.Income_Type__c.label}" rendered="{!bean.displayIncomeTypeField}" >
+                             <apex:inputField value="{!income.Income_Type__c}" style="width:95%; " />
+                        </apex:column>    
+                        <apex:column style="width:15%" headerValue="{!$ObjectType.Income__c.fields.Property_Name__c.label}" rendered="{!bean.displayRentalFields}" >
+                             <apex:inputField value="{!income.Property_Name__c}" style="width:95%; height:18px;" />
+                        </apex:column>    
+                    </apex:pageBlockTable>
+                    
+                    <apex:actionStatus stopText="" id="counterStatusData">
+                            <apex:facet name="start">                
+                                <apex:outputPanel style="padding-left:45%;">
+                                    <apex:image value="{!$Resource.loading_image}" width="3%" height="3%"/>
+                                </apex:outputPanel>
+                            </apex:facet>
+                      </apex:actionStatus>  
+                    <apex:pageBlockButtons location="bottom">
+<!--                     	<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+						<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+	                        <apex:commandButton value="{!$Label.Add_New}" status="counterStatusData" action="{!AddNewRow}" reRender="counterStatusData,PopupPanel" style="margin-left:90px;"/>
+	                        <apex:commandButton value="{!$Label.Remove}"  action="{!Remove}" status="counterStatusData" reRender="PopupPanel,SummaryTable,counterStatusData"  /> 
+	                        <apex:commandButton value="{!$Label.Save}" status="counterStatusData" action="{!Save}" reRender="PopupPanel,SummaryTable,counterStatusData" />
+                        </apex:outputPanel>
+                        <apex:commandButton value="{!$Label.Cancel}" action="{!closePopup}"  immediate="true"  rerender="PopupPanel,SummaryTable" />
+                    </apex:pageBlockButtons>
+                </apex:pageBlock>
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form> 
+    </apex:define>   
+    </apex:composition>
+</apex:page>

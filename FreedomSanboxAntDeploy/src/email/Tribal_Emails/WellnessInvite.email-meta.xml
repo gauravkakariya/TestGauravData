@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>WellnessInvite</name>
+    <style>formalLetter</style>
+    <subject>Your Freedom Scale Test</subject>
+    <textOnly>Dear {!Account.FirstName} {!Account.LastName},
+Greetings!
+
+
+
+We have initiated a little exercise to better understand how much financial planning has helped in your life and how confident you are feeling about your financial life. It might be some realisation for you too.
+
+
+Please take this test here http://ffreedom1.ffreedom.cs13.force.com/financialwellness?id={!Account.Id}
+
+
+Expect a call from your financial planner to discuss this.
+Thanks and regards
+Member Success Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

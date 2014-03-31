@@ -1,0 +1,32 @@
+<apex:page Controller="LoanAnalyticsController" contentType="application/x-excel" language="en-US" showHeader="false">
+<apex:pageBlock title="Loan Analytics">
+
+<!-- 	<apex:pageBlockTable value="{!Loanobj}" var="obj"> -->
+<!--       <apex:column value="{!obj.Loan_Type__c}"/> -->
+<!--       <apex:column value="{!obj.Financial_Institution__c}"/> -->
+<!--       <apex:column value="{!obj.EMI__c}"/> -->
+<!--       <apex:column value="{!obj.Interest_Rate__c}"/> -->
+<!--       <apex:column value="{!obj.Term_No_of_years__c}"/> -->
+<!--       <apex:column value="{!obj.Balance_No_of_Years__c}"/> -->
+<!--     </apex:pageBlockTable> -->
+    
+    <apex:repeat value="{!lstLoans}" var="m"> 
+    		<apex:pageBlockTable value="{!lstLoans}" var="m">
+		      <apex:column value="{!m.Loan_Type__c}"/>
+		      <apex:column value="{!m.Financial_Institution__c}"/>
+		      <apex:column value="{!m.EMI__c}"/>
+		      <apex:column value="{!m.Interest_Rate__c}"/>
+		      <apex:column value="{!m.Term_No_of_years__c}"/>
+		      <apex:column value="{!m.Balance_No_of_Years__c}"/>
+		    </apex:pageBlockTable>
+  	</apex:repeat>
+  
+  </apex:pageBlock>
+
+<!-- "Loan type","Financial Institution", EMI, Interest Rates, Term No of Years, Balance Number of Years -->
+<!-- <apex:repeat value="{!lstLoans}" var="m">  -->
+ 
+<!--  "{!m.Loan_Type__c}","{!m.Financial_Institution__c}","{!m.EMI__c}","{!m.Interest_Rate__c}","{!m.Term_No_of_years__c}","{!m.Balance_No_of_Years__c}" -->
+
+<!-- </apex:repeat> -->
+</apex:page>

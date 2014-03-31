@@ -1,0 +1,25 @@
+<apex:component id="AnalysisHeaderComponent" >
+<apex:attribute name="PartnerPortalLogo" type="Account" description="Account Details" required="true"/>
+<apex:attribute name="isFreedomUserProp" type="boolean" description="Boolean Flag" required="true"/>
+<div class="topcontainer" align="right" > 
+<!-- 			<img src="{!URLFOR($Resource.xrayimage,'logo.png')}" width="20%" height="70%" style= "border: 0;"usemap="#Map5" alt="Ffreedom Financial Planners" title="Ffreedom Financial Planners" rendered="{!isFreedomUserProp}"/> -->
+	        
+	        <apex:image url="{!URLFOR($Resource.xrayimage,'logo.png')}" style="align:right;height:100px;" rendered="{!isFreedomUserProp}"/>
+	      <!--Partner Portal Aditi-->
+	        <apex:outputField style="margin-left:50px;" value="{!PartnerPortalLogo.Logo__c}" rendered="{!NOT(isFreedomUserProp)}" />
+<!-- 	        	<apex:pageBlock > -->
+<!-- 	        	<apex:pageBlockSection > -->
+<!-- 	        		<apex:pageBlockSectionItem > -->
+<!-- 	        		</apex:pageBlockSectionItem> -->
+<!-- 	        		<apex:pageBlockSectionItem > -->
+<!-- 	        			<apex:outputField style="margin-left:50px;" value="{!PartnerPortalLogo.Logo__c}" rendered="{!NOT(isFreedomUserProp)}" /> -->
+<!-- 	        		</apex:pageBlockSectionItem> -->
+<!-- 	        	</apex:pageBlockSection> -->
+<!-- 	        	</apex:pageBlock> -->
+	        <map name="Map5" id="Map5">
+	            <area shape="rect" coords="3,4,220,78"  href="index" />
+	        </map>
+	        
+	        </div>
+<div style="height:10px"></div>
+</apex:component>

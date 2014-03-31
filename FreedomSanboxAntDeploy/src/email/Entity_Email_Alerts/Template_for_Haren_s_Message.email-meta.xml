@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Letterhead_for_Haren_s_message</letterhead>
+    <name>Template for Haren&apos;s Message</name>
+    <style>formalLetter</style>
+    <subject>Message from Haren Banker, Chief Financial Planning &amp; Research</subject>
+    <textOnly>Dear {!Account.Name}
+Markets have become very volatile. We have members who are concerned that their Equity investments are making losses and want to shift them to fixed income investments which are giving almost double digit returns or gold which is going through the roof. Our recommendation is Stick to your Financial Plan
+
+
+We have been consistent in our advice to stick to your Financial Plan which has an Asset Allocation linked to every Goal. If you have investments in Equity, it is because your Goal is long term. Even though you are losing money now, your money will start growing long before you need it. There is no way of predicting a crash, and similarly, there is no way of predicting where the bottom is and when the markets will turn around. Asset Allocation eliminates the need of predicting these future crashes or highs which is impossible.
+
+
+In any investment, you typically want to buy low and sell high to make a profit. When you go shopping you want to buy when there is a sale on. Well, the market is on sale. Are you buying or selling?
+
+
+Crashes are your friend. This is particularly true when you are investing through SIPs as we advise all our members to do. With each fall you are purchasing units at a lower NAV. When you reach your goal (which is long term or you will not be in equity), it is these units which will give you the highest returns. So, now is not the time to stop your SIPs in Equity or shift your investments to Fixed Income or Gold because then you will miss the sale.
+
+
+Therefore, stick to your Asset Allocation &amp; your Financial Plan and also start investing for the goals that you have not started. Remember, Equity is a far safer option in the long run if you want to beat inflation and grow your money. Short term volatility will come and go and in the long term you will make money not despite it but because of it.
+
+
+Warm Regards,
+
+
+Haren Banker
+Chief Financial Planning &amp; Research, 
+Ffreedom Financial Planners</textOnly>
+    <type>html</type>
+</EmailTemplate>

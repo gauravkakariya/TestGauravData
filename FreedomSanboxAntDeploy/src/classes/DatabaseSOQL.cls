@@ -1,0 +1,3519 @@
+/*
+
+  Revision History: 
+  
+    Version     Version Author     Date        Comments
+    1.0         --                --        Initial Draft
+    2.0      Manasi         27/05/2011  Added two fields Default_Retirement_Age__c and Default_Estimated_Life_Expectancy__c
+                          in Entity_Global_Assumption__c object.So there is change in select query of 
+                          Entity_Global_Assumption__c object in getEntityGlobalAssumption function
+  2.0      Manasi         26/05/2011   Issue ID:F0009:Added one field in the select statement: Annual_Premium_amount__c in 
+                        getInsuranceListByRecordType() function  
+  2.0      Manasi         09/06/2011  Added overloaded function getAssetListByClass() with 3 parameters which will fetch assets depending on 
+                          Filters : entityId,recordTypeId,accountType  
+  2.0      Manasi         11/06/2011  Issue ID :F0040:Added new field in Insurance__c object.Name is:current_Amount__c,Maturity_Amount__c
+                        with datatype as currency.
+                        So added those fields in select statement of getInsurances() function
+                        
+  2.0      Niket          21/06/2011   Updated the Method "getAssetsForPortfolio"
+                         Summary   : Removed the Asset Type "Primary" from the Real Estate Asset.
+                         Issue no   : F0002
+                         
+  2.0      Manasi          22/06/2011  Issue id : F0051 :Class Name DatabaseSOQL:
+                         a. Value of insurance should be Surrender value, if it is null then calculate its 
+                            current value.
+                         b. So created new function getSurrenderOrCurrentInsuranceByRecordType().
+                         c. Function will 1st calculate the insurance value whose surrender value is not null 
+                            and then calculates current value of remaining records.
+                            And returns the sum of these two values.
+                            
+  2.0      Manasi          28/06/2011  Issue ID :F0042 :Added field Entity__c in select statement of getIncomesForCashFlow() function.
+  2.0      Manasi          30/06/2011  Issue ID :F0057 :Added Commencement_Date__c field in select statement 
+                         of getInsurances() function.
+  2.0      Niket          1/7/2011    Added the New function 
+                         Method     : getAssetMap(String strEntityId)
+                         Return Type  : MAP<ID,Asset__c>();
+                          Summary      : Used in the AssetAllocationService class
+                         
+  2.0      Manasi        01/07/2011    Issue Id: F0047
+                         Added Premium_Paying_Term__c field in select statement of following functions:
+                         getInsurances(),getInsuranceListByRecordType()
+                         
+  2.0      Manasi        18/08/2011    Issue Id: FS0110 Class Name:DatabaseSOQL
+                         Added asset__r.Interest_Rate__c in select statement of function : getGoalAssetAllocationList
+  2.0      Manasi        22/08/2011    Issue Id: FS0118 Class Name:DatabaseSOQL
+                         Added method to fetch insurance related record from given id of insurance
+                         //FS0087
+  2.0      Manasi        9/27/2011     Issue Id: FS0164
+                         Created new function : getGoalInvestmentAssociationListSeparately
+                         Query to select the Investment Asset those are allocated to current Goal.
+  2.0      Manasi        5/10/2011     Issue Id: FS0177
+                         Created new function : To separate out the Fixed income related records on asset 
+                          allocation page
+  2.0      Manasi        19/11/2011     Issue Id: FS0293
+                         Created new overloaded function : getInsurances:
+                         Added Overloaded Function to select the Insurances of selected Entity and selected Flag
+  2.0      Manasi        22/11/2011    Issue Id: FS0290
+                         Created new function: getAllocatedApprovedPlans
+                         Selects the Approved actions from Approved_Action_Plan__c for selected entity 
+                           whose Allocated_Amount__c is greater than zero
+  2.0      Manasi        22/11/2011    Issue Id: FS0290
+                         Change in function : getFamilyDetails,getEntity
+                         Added IsExecutionTrackerGenerated__c field in the select statement
+  2.0      Manasi        28/11/2011    Issue Id: FS0309
+                         Change in function : getGoal
+                         Added Remark in select statement
+   2.0      Manasi        16/12/2011    Issue Id: FS0345
+                         For Asset Allocation page fetch the insurances with the flag = 'Data Entry'
+  2.0      Manasi        16/01/2012    Issue Id: 00001449 : Added RemoveCheckbox__c field in the select statement
+  2.0      Manasi        19/1/2012     Issue Id: 00001461 : Change in function:getInvestmentAssetByClass , getMutualFundTotal
+                                  To remove 'List has no rows for assignment' error from select statement, 
+                                  Collected the rows returned from select statement in the list and
+                                    after that assigned it to respective object
+  2.0      Manasi        6/3/2012      Issue Id: 00001535 : Change in function : getGoalAssetAllocationList function :
+                                  Added asset__r.Expected_Year_of_Sale__c in select statement
+  2.0      Manasi        9/3/2012      Issue Id: 00001541 : Added 'Business Assets' under 'Less:- Existing Investments' section
+                                  In 'Life Insurance Planning Page'
+  2.0      Manasi        1/2/2012      Issue Id: 00001470 : Added GoldCurrentYear__c,EquityCurrentYear__c,DebtCurrentYear__c fields in select statement
+  2.0      Manasi        25/04/2012    Issue Id: 00001605 : Change in function : getAllGoals : 
+                         Added Is_Include_In_HLV__c in select statement
+  2.0      Mahesh        07/05/2012    Issue Id: 00001613 : Added Dependent__c in select Statement of getFamilyDetails function
+
+  2.0      Manasi Ranade   7/6/2012      Issue Id : 00001673 :Added Tenure Of Insurance for LI in functions : 
+                         getAnalysisInsurances,getEntityLifeInsurance
+  2.0      Manasi Ranade   20/7/2012     Issue Id : 00001717 : Function Name: getExpense : Commented original Code , as it was fetching records depending on Account Name.
+                         But in actual it should fetch record from account id.
+  
+*/
+public class DatabaseSOQL 
+{  
+
+    public DatabaseSOQL() 
+    {       
+       // Do nothing constructor
+    }
+    
+    /** This method is to return list of Entities related to given Client
+        Input Parameters: EntityId 
+        Returns: List of related Accounts              
+    */
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: FS0290        **/
+  /** Date    : 22/11/2011   **/
+  /** Purpose : Added IsExecutionTrackerGenerated__c field in the select statement
+  /****************************************************/
+  /** Eternus Solutions         **/
+  /** Author  : Mahesh Hirugade  **/
+  /** Issue Id: 00001613        **/
+  /** Date    : 07/05/2012     **/
+  /** Purpose : Added Dependent__c in select Statement of getFamilyDetails
+  /****************************************************/
+    public List<Account> getFamilyDetails(String entityId) 
+    {
+      List<Account> Entities;
+        if(entityId !=null && entityId!='' )
+        {
+          Entities = [SELECT Id, Name, isPersonAccount,OwnerId,Logo__c, Parent_Entity__c, FirstName, LastName,Total_Assets__c,Total_Income__c,
+                            Total_Investment_Assets__c,Total_Liabilities__c,Investment_Asset_Rollup__c,
+                            RecordTypeId,Adjustment_Factor__c,
+                            PersonTitle, PersonContactId, PersonBirthdate, PersonHomePhone,Salutation,
+                            PersonMobilePhone, Alternate_Mobile__c, PersonEmail, Alternate_E_Mail_Address__c,
+                            Retirement_Year__c,Residential_Status_del__c,Retirement_Age__c,Estimated_Life_Expectancy__c,Stock_Growth_Rate__c,
+                            Estimated_Life_EndYear__c,Relationship_to_Entity__pc,
+                          IsExecutionTrackerGenerated__c,owner.name,Earning_member__c,Dependent__c,
+                          Will__c, Gender__pc, Marital_Status__pc,
+                          Plan_Generation_Date__c, /* Prajakta - FP changes - 28-02-2013 */
+                          Gold_Growth_Rate__c,     /* Prajakta - FP changes - 01-04-2013 */ 
+                          Retirement_Planning_Entity__c, /* Prajakta - FP changes - 31-05-2013 */
+                          Related_To__c,Virtual_Partner__c,    //Added new field in select Statement related to Virtual partner
+                          Family_Picture__c,            //Added new field to display client's family picture on financial plan
+                          Business_Unit__c,		//Prajakta - 4/12/2013
+                          Risk_Profile__c,Finametrica_Score__c,
+                          Age__pc   
+                  FROM Account WHERE isPersonAccount =: true AND (Id =: entityId OR Parent_Entity__c =: entityId)order by Id  ];
+        }
+        return Entities; 
+    }
+    
+    /** Eternus Solutions       **/
+  /** Author  : Mahesh Hirugade**/
+  /** Issue Id: 00001616        **/
+  /** Date    : 02/05/2012   **/
+  /** Purpose : Added below SOQL to find out all the family members of parent entity
+  /****************************************************/
+    public List<Account> getFamilyMembers(String entityId) 
+    {
+      List<Account> Entities;
+        if(entityId !=null && entityId!='' )
+        {
+          Entities = [SELECT Id, Name, isPersonAccount, Parent_Entity__c, FirstName, LastName,Total_Assets__c,Total_Income__c, 
+                            Total_Investment_Assets__c,Total_Liabilities__c,Investment_Asset_Rollup__c,PersonMailingCountry,
+                            RecordTypeId,Adjustment_Factor__c,PersonMailingStreet,PersonMailingState,PersonMailingPostalCode,
+                            PersonTitle, PersonContactId, PersonBirthdate, PersonHomePhone,Salutation,PersonMailingCity,
+                            PersonMobilePhone, Alternate_Mobile__c, PersonEmail, Alternate_E_Mail_Address__c,
+                            Retirement_Year__c,Residential_Status_del__c,Retirement_Age__c,Estimated_Life_Expectancy__c,Stock_Growth_Rate__c,
+                            Estimated_Life_EndYear__c,Relationship_to_Entity__pc,  Will__c, Gender__pc, Marital_Status__pc,
+                          IsExecutionTrackerGenerated__c,owner.name,Earning_member__c,Dependent__c, Gold__c, Equity__c, Debt__c,
+                          Gold_Growth_Rate__c,     /* Prajakta - FP changes - 01-04-2013 */
+                          Retirement_Planning_Entity__c, /* Prajakta - FP changes - 31-05-2013 */
+                          Plan_Generation_Date__c, /* Prajakta - FP changes - 28-02-2013 */
+                          Risk_Profile__c  
+                    FROM Account 
+                    WHERE (isPersonAccount =: true AND Parent_Entity__c =: entityId) OR (Id =: entityId) order by Id];
+        }
+        return Entities; 
+    }
+    
+    /** This method is to get individual Entity Details. 
+     Input Parameters: EntityId 
+     Returns: Account
+    */
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: FS0290        **/
+  /** Date    : 24/11/2011   **/
+  /** Purpose : Added IsExecutionTrackerGenerated__c field in the select statement
+  /****************************************************/
+    public Account getEntity(String entityId) 
+    {
+      Account acc;
+        try
+        {
+               
+           acc = [ SELECT isPersonAccount, RecordTypeId, FirstName, LastName, Name,owner.name,Adjustment_Factor__c,
+                            PersonTitle, PersonContactId, PersonBirthdate, PersonHomePhone,Salutation,
+                            PersonMobilePhone, Alternate_Mobile__c, PersonEmail, Alternate_E_Mail_Address__c,
+                            Health_History_del__c, Fax, Office_Phone_2__c, Parent_Entity__c,Retirement_Year__c,
+                            Residential_Status_del__c,Retirement_Age__c,Estimated_Life_Expectancy__c,Estimated_Life_EndYear__c,Stock_Growth_Rate__c,
+                            BillingCity, BillingCountry, BillingPostalCode,BillingState,PersonMailingCity,PersonMailingCountry, 
+                            PersonMailingPostalCode,PersonMailingState,PersonOtherCity,PersonOtherCountry, 
+                            PersonOtherPostalCode,PersonOtherState, BillingStreet,PersonMailingStreet, PersonOtherStreet, 
+                            Relationship_to_Entity__pc,PAN_ID__pc,Passport__pc,Middle_Name__pc,Marital_Status__pc,Gender__pc,Will__c,Description,OwnerId,
+                            IsExecutionTrackerGenerated__c,Dependent__c, //Mahesh 00001616 //Added new field in select Statement
+                            IsCreatedByPartner__c, //Added new field in select Statement related to partner Portal
+                            Plan_Generation_Date__c, /* Prajakta - FP changes - 28-02-2013 */
+                            Gold_Growth_Rate__c,       /* Prajakta - FP changes - 01-04-2013 */
+                            Retirement_Planning_Entity__c, /* Prajakta - FP changes - 31-05-2013 */
+                            Related_To__c, isFPGenerated__c,
+                            Virtual_Partner__c,    //Added new field in select Statement related to Virtual partner
+                            Family_Picture__c    //Added new field to display client's family picture on financial plan
+                    FROM 
+                        account 
+                    WHERE 
+                        isPersonAccount = :true 
+                    AND id=:entityId
+                ];  
+        }
+        catch(System.Exception e)
+        {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, e.getMessage())); 
+        }
+        return acc; 
+    }
+    
+    /**     getContact() returns Individual Contact
+            Input Parameters: EntityId 
+            Returns: Account
+    */
+    public Contact getContact(String conId) 
+    {
+         Contact con = [ SELECT Gender__c,
+                            Marital_Status__c,
+                            Middle_Name__c,
+                            PAN_ID__c,
+                            Passport__c,
+                            Relationship_to_Entity__c,
+                            Office_Phone1__c
+                                
+                           FROM 
+                                contact 
+                           WHERE 
+                                id =: conId 
+                        ];     
+         return con; 
+    }
+    
+    public List<Client_Details__c> getClient(String entityId) 
+    {
+        try
+        {
+            List<Client_Details__c> ctDetails = [SELECT 
+                                                        Billing_City__c, Billing_Country__c, Billing_State__c,Billing_Street__c, 
+                                                        Billing_Zip_Postal_Code__c,
+                                                        Date_Of_Birth__c, Email__c, Employment_Information__c,  First_Name__c, Gender__c,
+                                                        Health_History__c, Home_Phone__c, Last_Name__c, Mailing_City__c, Mailing_Country__c, Mailing_State__c,
+                                                        Mailing_Street__c, 
+                                                        Mailing_Zip_Postal_Code__c, 
+                                                        Marital_Status__c, Middle_Name__c,
+                                                        Mobile__c, Office_City__c, Office_Country__c, Office_State__c, Office_Street__c, 
+                                                        Office_Zip_Postal_Code__c,
+                                                        Entity__c, Parent_Entity__c,Will__c,
+                                                        Pan_Id__c,  Passport_Number__c, Relationship_to_Entity__c, Residential_Status__c, Salutation__c
+                                                FROM 
+                                                        Client_Details__c
+                                                WHERE  
+                                                        Entity__c =: entityId Limit 1
+                                                ];
+            return ctDetails;
+        }
+        catch(Exception ex)
+        {
+            return null;
+        }           
+    }
+    
+    public List<Client_Details__c> getClientFamily(String entityId) 
+    {
+        try
+        {
+            List<Client_Details__c> ctDetails = [   
+                                                    SELECT 
+                                                        Entity__c, Parent_Entity__c, First_Name__c, Last_Name__c
+                                                    FROM 
+                                                        Client_Details__c
+                                                    WHERE  
+                                                        Entity__c =: entityId 
+                                                    OR      
+                                                        Parent_Entity__c =: entityId 
+                                                ];
+            return ctDetails;
+        }
+        catch(Exception ex)
+        {
+            return null;
+        }            
+    }
+    
+    /** 
+        ============== FOR INCOME ========================    
+        getIncomes() returns list of Incomes related to given RecordType
+        Input Parameters: RecordTypeId, List of accounts
+        Returns: List of Incomes
+    */   
+    public List<Income__c> getIncomes(String recordTypeIdStr,List<Account> accountList) 
+    {    
+        List<Income__c> incomes = [
+                                    SELECT RecordTypeId,Entity__c,Start_Year__c,End_Year__c,Frequency__c,RemoveCheckbox__c,
+                                            Income_Amount__c,Income_Growth_Rate__c,Employer__c,Business_Name__c,
+                                            Income_Type__c,Property_Name__c,Beneficiary__c 
+                                    FROM 
+                                            Income__c 
+                                    WHERE 
+                                            RecordTypeId =: RecordTypeIdStr 
+                                    AND 
+                                            Entity__c IN:AccountList
+                                ];    
+        return incomes ; 
+    } 
+    
+    /** getIncomeDBValues() returns list of AggregateResult for Incomes related to given Account
+        Input Parameters: List of accounts
+        Returns: List of AggregateResult 
+    */
+    public List<AggregateResult> getIncomeDBValues(List<Account> accountList) 
+    {
+        
+        List<AggregateResult> aggQueryResult = [ 
+                                                    SELECT 
+                                                        Sum(Monthly_Income__c) AmtSum,recordType.Name RTName,Entity__r.Name Entity 
+                                                    FROM 
+                                                        Income__c 
+                                                    WHERE 
+                                                        recordTypeId !=null 
+                                                    AND 
+                                                        Entity__c IN:AccountList 
+                                                    GROUP by 
+                                                        recordType.Name , Entity__r.Name
+                                                ];         
+        return aggQueryResult ;
+    }
+
+    /** Method to get RecordTypes for an object
+        Input Parameters: ObjectName
+        Returns: List of RecordTypes
+    */
+    public List<RecordType> getObjectRecordTypes(String objectName) 
+    {           
+        List<RecordType> recordTypeList = [SELECT Id,Name FROM RecordType WHERE RecordType.SobjectType=:ObjectName order by Id desc];    
+        return recordTypeList ;
+    }  
+    
+    
+    /**
+    	Added By : Aditi Satpute
+    	Purpose : need to display the recordTypes in following order : Stocks, Mutual Funds, Gold and Silver and Fixed Income
+    	Date : 18/6/2013
+    **/
+    public List<RecordType> getInvestmentAssetRecordTypes(String objectName) 
+    {           
+        List<RecordType> recordTypeList = [SELECT Id,Name FROM RecordType WHERE RecordType.SobjectType=:ObjectName order by Name desc];    
+        return recordTypeList ;
+    }  
+    
+    
+      
+    /**============== FOR INSURANCE ========================    
+         getInsurance() returns list of Insurances related to given RecordType
+        Input Parameters: RecordTypeId, List of accounts
+        Returns: List of Insurances
+    */
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: F0040        **/
+  /** Date    : 11/06/2011   **/
+  /** Purpose : Added current_Amount__c,Maturity_Amount__c fields in select statement
+  /****************************************************/
+   /** Eternus Solutions   **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: F0047        **/
+  /** Date    : 01/07/2011   **/
+  /** Purpose : Added one field in the select statement: Premium_Paying_Term__c 
+  /****************************************************/
+    public List<Insurance__c> getInsurances(String recordTypeIdStr,List<Account> accountList) 
+    {
+    
+        List<Insurance__c> insurances= [
+                                            SELECT RecordTypeId,Entity__c,Nominee__c,Insurance_Company__c,Policy_Type__c,RemoveCheckbox__c,
+                                                Policy_Name__c,Policy_Number__c,Death_Benefit_Rs__c,Premium_Amount_Rs__c,
+                                                Premium_Frequency__c,Annualized_Premium_In_Rs__c,Commencement_Date__c,
+                                                Next_Premium_Due_Date__c,Tenure_of_Insurance__c,Number_of_Years_Left__c,
+                                                Surrender_Cash_Value__c,Sum_Assured_Rs__c,current_Amount__c,Maturity_Amount__c,
+                                                Premium_Paying_Term__c, //F0047
+                                                Return_Of_Interest__c,      /* Prajakta - FP changes - 23-05-2013 */
+                                                Revised_Maturity_Amount__c, /* Prajakta - FP changes - 06-03-2013 */
+                                                isIncludeActionPlan__c						 /* Gaurav - FP changes - 04-03-2014 */
+                                            FROM 
+                                                Insurance__c 
+                                            WHERE 
+                                                RecordTypeId =: recordTypeIdStr 
+                                            AND     
+                                                Entity__c IN:accountList
+                                            AND 
+                                                Flag__c=:'Data Entry'
+                                        ];    
+        return insurances; 
+    } 
+    
+    public List<AggregateResult> getInsuranceTotal(string entity)
+    {
+        List<AggregateResult> totalList=[select sum(total_insurance__c)total,entity__r.name entity  from insurance__c 
+                                         where 
+                                             (entity__c=:entity
+                                             OR 
+                                             Entity__r.parent_entity__c=:entity 
+                                             )
+                                         AND 
+                                                Flag__c=:'Data Entry'    
+                                         group by 
+                                         entity__r.name]; 
+         return totalList;
+   
+    }
+     /** Eternus Solutions      **/
+   /** Author  : Manasi Ranade*/
+   /** Issue Id: 00001673      **/
+   /** Date    : 7/6/2012 **/
+   /** Purpose : Added  Tenure Of Insurance in select statement**/
+      /****************************************************/
+    public List<Insurance__c> getAnalysisInsurances(String RecordTypeIdStr,List<Account> AccountList) 
+    {
+       List<Insurance__c> Insurances= [SELECT RecordTypeId,Entity__c,
+                                        Entity__r.FirstName,Entity__r.LastName,Suggested_Cover_General_Insurance__c,
+                                        Insurance_Company__c,Policy_Type__c,Entity_Name__c ,Tenure_of_Insurance__c, //00001673
+                                        Premium_Amount_Rs__c,Policy_Name__c,Sum_Assured_Rs__c, 
+                                        Return_Of_Interest__c,      /* Prajakta - FP changes - 23-05-2013 */
+                                        Revised_Maturity_Amount__c /* Prajakta - FP changes - 06-03-2013 */ 
+                                        FROM Insurance__c 
+                                        WHERE RecordTypeId =: RecordTypeIdStr AND Entity__c IN:AccountList
+                                        And Flag__c =: 'Analysis' 
+                                        ];    
+        return Insurances; 
+    } 
+    
+    public List<Insurance__c> getApprovedInsurances(String RecordTypeIdStr,List<Account> AccountList) 
+    {
+      List<Insurance__c> Insurances= [SELECT RecordTypeId,Entity__c,
+                                        Entity__r.FirstName,Entity__r.LastName,Suggested_Cover_General_Insurance__c,
+                                        Insurance_Company__c,Policy_Type__c,Entity_Name__c ,Policy_Name__c,//ET
+                                        Premium_Amount_Rs__c,
+                                        Return_Of_Interest__c,      /* Prajakta - FP changes - 23-05-2013 */
+                                        Revised_Maturity_Amount__c /* Prajakta - FP changes - 06-03-2013 */
+                                        FROM Insurance__c 
+                                        WHERE RecordTypeId =: RecordTypeIdStr AND Entity__c IN:AccountList
+                                        And Flag__c =: 'Approved'];    
+        return Insurances; 
+    } 
+    
+    /** getIncomes() returns list of AggregateResult for Incomes related to given Account
+        Input Parameters: List of accounts
+        Returns: List of AggregateResult 
+    */
+    public List<AggregateResult> getInsuranceDBValues(List<Account> accountList) 
+    {
+        List<AggregateResult> aggQueryResult = [ 
+                                                    SELECT Sum(Death_Benefit_Rs__c)deathBenefitSum,
+                                                           Sum(Sum_Assured_Rs__c)sumAssured,recordType.Name RTName,
+                                                            Entity__r.Name Entity 
+                                                    FROM 
+                                                            Insurance__c 
+                                                    WHERE 
+                                                            recordTypeId !=null 
+                                                    AND 
+                                                            Entity__c IN:AccountList 
+                                                    AND 
+                                                            Flag__c=:'Data Entry'        
+                                                    GROUP by 
+                                                            recordType.Name, Entity__r.Name
+                                                ];         
+        return aggQueryResult ;
+    }
+    
+    /**
+        To get Asset List for a given Client and his/her family
+    */    
+    public List<Asset__c> getAssets(String RecordTypeIdStr,List<Account> AccountList) 
+    {
+        List<Asset__c> assets = [
+                                    SELECT 
+                                            RecordTypeId,Entity__c,Bank_Name__c,Start_Year__c,End_Year__c,Account_Type__c,RemoveCheckbox__c,
+                                            Account_Number__c,Accumulated_Value__c,Interest_Rate__c,Annual_Contribution__c,
+                                            Maturity_Date__c,Current_Balance__c,Current_Value__c,Description__c,Acquisition_Year__c,
+                                            Expected_Year_of_Sale__c,Asset_Types__c,Expected_Growth_Rate__c, Is_Include_In_HLV_Asset__c/* Prajakta - 27-05-2013 */ 
+                                    FROM 
+                                            Asset__c 
+                                    WHERE 
+                                            RecordTypeId =: RecordTypeIdStr 
+                                    AND 
+                                            Entity__c IN:AccountList
+                                ];    
+        return Assets ; 
+    } 
+    
+    public List<AggregateResult> getAssetDBValues(List<Account> AccountList) 
+    {
+        List<AggregateResult> aggQueryResult = [ 
+                                                    SELECT 
+                                                        Sum(Current_Value__c) AmtSum,Sum(Current_Balance__c) BalanceSum, 
+                                                        Sum(Accumulated_Value__c) AccValueSum, recordType.Name RTName,Entity__r.Name Entity 
+                                                    FROM 
+                                                            Asset__c 
+                                                    WHERE 
+                                                        recordTypeId !=null 
+                                                    AND 
+                                                        Entity__c IN:AccountList 
+                                                    GROUP BY 
+                                                        recordType.Name , Entity__r.Name
+                                                ];         
+        return aggQueryResult ;
+    }
+
+    //============== FOR INVESTMENT ASSETS ========================    
+    public List<Investment_Asset__c> getInvestmentAsset(String RecordTypeIdStr) 
+    {
+       List<Investment_Asset__c> investment= [
+                                                SELECT 
+                                                    AMC_Name__c , Purchase_Price__c,Fund__c,Units__c,Purchase_NAV__c,Monthly_SIP_Amount__c,
+                                                    RecordTypeId,Entity__c,Script_Name__c,Acquisition_Date__c,Quantity__c,Description__c,
+                                                    Face_Value__c,Coupon_Rate__c,Maturity_Value__c,Asset_Type__c,Maturity_Date__c 
+                                                    ,Is_Include_In_HLV_Inv_Asset__c
+                                                FROM 
+                                                    Investment_Asset__c 
+                                                WHERE RecordTypeId =: RecordTypeIdStr
+                                            ];    
+       return investment; 
+    }
+    
+    public String getFieldNames(String RecordTypeIdStr)
+    {
+        String Fields = '';
+        /*   List<Stock__c> stck = [select values__c FROM Stock__c WHERE RecordTypeId__c=:RecordTypeIdStr LIMIT 1];
+                for(Stock__c st : stck){
+                    Fields = String.valueOf(st.get('values__c'));
+                }
+        */
+        return Fields;
+    }
+    
+    /**
+        Returns list of expenses of selected general expense
+    */
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: 00001717      **/
+  /** Date    : 20/7/2012   **/
+  /** Purpose : Commented original Code , as it was fetching records depending on Account Name.
+          But in actual it should fetch record from account id. 
+  /****************************************************/
+    public List<Expense__c> getExpense(String selGeneralExpense,list<String>AccountList) 
+    {
+      //Commented Original Code
+        /*List<Expense__c> expenses = [
+                                        SELECT 
+                                            Entity_name__c,Start_Year__c,End_Year__c,Frequency__c,Current_Expenses__c,Expense_Growth_Rate__c,
+                                            Essential__c,Sub_Expenses__c,general_Expenses__c 
+                                        FROM 
+                                            expense__c 
+                                        WHERE 
+                                            General_Expenses__c = : selGeneralExpense 
+                                        AND 
+                                            Entity_name__r.name IN:AccountList
+                                    ];*/
+        List<Expense__c> expenses = [
+                            SELECT 
+                                Entity_name__c,Start_Year__c,End_Year__c,Frequency__c,Current_Expenses__c,Expense_Growth_Rate__c,
+                                Essential__c,Sub_Expenses__c,general_Expenses__c 
+                            FROM 
+                                expense__c 
+                            WHERE 
+                                General_Expenses__c = : selGeneralExpense 
+                            AND 
+                                Entity_name__r.Id IN:AccountList
+                        ];
+        for(expense__c e:expenses ) 
+        {
+            e.general_Expenses__c=selGeneralExpense;
+        }
+        return expenses; 
+    } 
+    
+    public List<goal__c> getGoals(String selGoal,list<string>AccountList) 
+    {
+        List<goal__c> goals = [
+                                SELECT 
+                                    entity__c,Goal_Type__c,Start_Year__c,RemoveCheckbox__c,End_Year__c,Inflation_Rate__c,Cost_of_Goal_Annual__c,
+                                    Priority__c,Description__c, Allocation_Message__c /* Prajakta - FP changes - 22-03-2013 */
+                                FROM 
+                                    goal__c 
+                                WHERE 
+                                    Goal_Type__c = : selGoal 
+                                AND Entity__r.name IN:AccountList
+                            ];    
+        return goals ; 
+    }
+             
+    /**============== FOR FIANANCIAL ACCOUNT========================    
+        // getFinancialAccount() returns list of bank details related to given RecordType
+        // Input Parameters: RecordTypeId, List of accounts
+        // Returns: List of financial account
+    */
+    public List<Financial_account__c> getFinancialAccount(String RecordTypeIdStr,List<Account> AccountList) 
+    {
+            
+        List<Financial_Account__c> financial_AcctList= [
+                                                        SELECT 
+                                                            RecordTypeId,recordType.Name,Account_Number__c,Account_type__c,bank_name__c,
+                                                            branch_detail__c,DP_id__c,DP_Name__c,IFSC_No__c,MICR_NO__c,Account__c,
+                                                            account__r.name 
+                                                        FROM 
+                                                            Financial_Account__c 
+                                                        WHERE 
+                                                            RecordTypeId =: RecordTypeIdStr 
+                                                        AND 
+                                                            account__c IN:AccountList
+                                                        ];    
+        return financial_AcctList; 
+    } 
+    
+    public List<Financial_account__c> getFinancialDBValues(List<Account> AccountList) 
+    {
+        List<Financial_account__c> queryResult =[
+                                                    SELECT 
+                                                        RecordTypeId,recordType.Name,Account_Number__c,Account_type__c,bank_name__c,
+                                                        branch_detail__c,DP_id__c,DP_Name__c,IFSC_No__c,MICR_NO__c,Account__c,account__r.name 
+                                                    FROM 
+                                                        Financial_Account__c 
+                                                    WHERE 
+                                                        account__c IN:AccountList
+                                                ];         
+        return queryResult ;
+    }
+    
+    public List<AggregateResult> getAssetListByClass(String entityId) 
+    {
+        List<AggregateResult> assetList = [SELECT   RecordType.Name assetClass,                                                 
+                                                    SUM(Asset_value__c) asset_value
+                                            FROM 
+                                                    Asset__c  
+                                            WHERE 
+                                                    Asset_value__c > 0
+                                            AND      
+                                            (       Entity__c = : entityId 
+                                            OR
+                                                    Entity__r.Parent_Entity__c = : entityId                                         
+                                            )                                                                                                    
+                                            GROUP BY RecordType.Name];
+        return assetList;           
+    }
+    
+    public List<AggregateResult> getInvestmentAssetListByClass(String entityId) 
+    {
+        List<AggregateResult>   investmentAssetList = [SELECT 
+                                                            RecordType.Name assetClass,
+                                                            Asset_Type__c assetType,                                                            
+                                                            SUM(TotalAsset__c) asset_value
+                                                        FROM
+                                                            Investment_Asset__c
+                                                        WHERE
+                                                            TotalAsset__c > 0
+                                                        AND 
+                                                        (    Entity__C = : entityId     
+                                                        OR
+                                                            Entity__r.Parent_Entity__c = : entityId                                                                                  
+                                                        )                                                                                     
+                                                        GROUP BY RecordType.Name,Asset_Type__c
+                                                        ];      
+        return  investmentAssetList;                                            
+    }
+    
+    public List<AggregateResult> getLiabilitiesList(String entityId) 
+    {
+        List<AggregateResult>   liabilitiesList = [SELECT 
+                                                            Entity__c,
+                                                            Loan_Type__c,
+                                                            SUM(Principal_Amount_Outstanding__c) liabilities 
+                                                        FROM
+                                                            Loan__c
+                                                        WHERE
+                                                            Principal_Amount_Outstanding__c != null
+                                                        AND
+                                                        (   Entity__C = : entityId      
+                                                            OR
+                                                            Entity__r.Parent_Entity__c = : entityId
+                                                        )
+                                                        GROUP BY Entity__c,Loan_Type__c
+                                                        ORDER BY Loan_Type__c
+                                                        ];      
+        return  liabilitiesList;
+    } 
+         
+    public List<Loan__c> getLoanList(String entityId) 
+    {
+        List<Loan__c> loanList = [  SELECT 
+                                        entity__c,loan_type__c,financial_institution__c,principal_amount_outstANDing__c,
+                                        Last_EMI_Month__c,Prepayment_terms__c ,RemoveCheckbox__c,
+                                        emi__c,interest_rate__c,term_no_of_years__c,fixed_floating__c,Balance_No_of_Years__c  
+                                    FROM
+                                        Loan__c 
+                                      WHERE   
+                                             emi__c>0
+                                        AND
+                                           ( Entity__C = : entityId      
+                                           OR
+                                            Entity__r.Parent_Entity__c = : entityId)
+                                ];
+        return loanList;                                        
+    } 
+    
+    public List<Loan__c> getLoanList(String entityId,String loanType) 
+    {
+        List<Loan__c> loanList = [SELECT 
+                                        entity__c,loan_type__c,financial_institution__c,principal_amount_outstANDing__c,Last_EMI_Month__c,
+                                        Prepayment_terms__c,RemoveCheckbox__c,emi__c,interest_rate__c,term_no_of_years__c,fixed_floating__c,Balance_No_of_Years__c 
+                                    FROM
+                                        Loan__c 
+                                    WHERE   
+                                        loan_type__c like :loanType
+                                    AND 
+                                        (   Entity__C = : entityId      
+                                            OR
+                                            Entity__r.Parent_Entity__c = : entityId
+                                        )   
+                                ];
+        return loanList;                                        
+    }      
+    
+    public  FinancialRecTypes__c  getFinancialRec(String recordType)
+    {
+        FinancialRecTypes__c financialRecordType=[
+                                                    SELECT 
+                                                        Name,RecordTypeId__c
+                                                    FROM 
+                                                        FinancialRecTypes__c 
+                                                    WHERE 
+                                                        name=:recordType limit 1
+                                                ];
+        return FinancialRecordType;
+        
+    }
+    
+    public List<Financial_Account__c> getBankDetails(String entityId,String recId) {
+        List<Financial_Account__c> bankList=[
+                                                SELECT 
+                                                        id,Account__c,Account_Number__c,Account_type__c,Bank_Name__c,Branch_detail__c,
+                                                        DP_Name__c,DP_Id__c,IFSC_No__c,MICR_No__c,RecordTypeId 
+                                                FROM 
+                                                    Financial_Account__c 
+                                                WHERE  
+                                                    Account__c=:entityId 
+                                                AND RecordTypeId=:recId];    
+       return bankList;
+    }
+    public List<ProfileRecTypes__c> getCustomerProfile(){
+       List<ProfileRecTypes__c> custProfileList=[SELECT Name, ProfileId__c FROM ProfileRecTypes__c];
+       return custProfileList;
+    }
+    public RecTypes__c getPersonRecordType(String accountName){
+        RecTypes__c PersonAccRecordType=[SELECT Name,Record_Type_Value__c   FROM RecTypes__c WHERE name=:accountName limit 1];
+        return PersonAccRecordType;
+    }
+    //============== FOR INVESTMENT ASSETS ========================
+    //FS0235 Added field in select Statement :  AMC_Name_Text__c,Scheme_Name_Text__c. 
+    public List<Investment_Asset__c> getInvestmentAsset(String recordTypeIdStr,String entityId){
+       
+        List<Investment_Asset__c> investment= [
+                                                SELECT 
+                                                    Purchase_Price__c,Fund__c,Units__c,Purchase_NAV__c,Monthly_SIP_Amount__c,RecordTypeId,
+                                                    Entity__c,Script_Name__c,Acquisition_Date__c,Quantity__c,Description__c,Face_Value__c,
+                                                    Coupon_Rate__c,Maturity_Value__c,Asset_Type__c,Maturity_Date__c,Current_Price__c,
+                                                    asset_class__c,TotalAsset__c,Current_NAV__c,AMC_Name__c,Scheme_Name__c,Remove_Checkbox__c,
+                                                    AMC_Name_Text__c,Scheme_Name_Text__c,Asset_Name__c,Is_Include_In_HLV_Inv_Asset__c
+                                                    
+                                                FROM
+                                                    Investment_Asset__c 
+                                                WHERE 
+                                                    RecordTypeId =: recordTypeIdStr
+                                                AND 
+                                                    (   Entity__C = : entityId      
+                                                        OR
+                                                        Entity__r.Parent_Entity__c = : entityId
+                                                    )                                                                                                               
+                                                ];    
+        return investment; 
+    }
+    
+/*    public String getFieldNames(String RecordTypeIdStr) {
+        String Fields = '';
+        List<Stock__c> stck = [select values__c FROM Stock__c WHERE RecordTypeId__c=:RecordTypeIdStr LIMIT 1];
+        for(Stock__c st : stck){
+             Fields = String.valueOf(st.get('values__c'));
+        }
+        return Fields;
+    } */
+    
+    public List<AMC_Name__c> getAMCList() {
+        List<AMC_Name__c> amcNameList = [SELECT Id,AMC_Field__c FROM AMC_Name__c];
+        return  amcNameList;
+    }
+    public List<Fund__c> getSchemeList(String amcName) {
+        List<Fund__c> fundList = [SELECT Id,Scheme_Name__c FROM Fund__c WHERE AMCName__c=:amcName];
+        return  fundList;
+    }    
+    public List<AggregateResult> getInvestmentSummaryList(String entityId) {
+        List<AggregateResult> aggResultList = [SELECT recordType.Name RTName,
+                                                        Entity__r.Name Entity,
+                                                        SUM(TotalAsset__c)assetTotal  
+                                                FROM Investment_Asset__c
+                                                WHERE
+                                                    (
+                                                        Entity__C = : entityId      
+                                                        OR
+                                                        Entity__r.Parent_Entity__c = : entityId
+                                                    )
+                                                GROUP BY recordType.Name , Entity__r.Name                                                                                                                                                                                                                                   
+                                                ];
+        return aggResultList;                                       
+    }
+/*    public List<RecordType> getObjectRecordTypes(String objectName){
+        List<RecordType> RecordTypeList = [Select Id,Name FROM RecordType WHERE RecordType.SobjectType=:objectName];    
+        return RecordTypeList ;
+    }   */       
+    public AggregateResult getInvestmentAssetByClass(String entityId,ID recordTypeId) {
+        
+        AggregateResult  result;
+        /** Eternus Solutions       **/
+    /** Author  : Manasi Ranade **/
+    /** Issue Id: 00001461      **/
+    /** Date    : 19/1/2012   **/
+    /** Purpose : To remove 'List has no rows for assignment' error from select statement, Collected the rows returned from select statement in the list and
+            after that assigned it to respective object
+    /****************************************************/
+    
+        List<AggregateResult> aggregateList = new List<AggregateResult>();
+        try {
+            aggregateList = [  SELECT 
+                            RecordType.Name assetClass,                                                                                                                        
+                            SUM(TotalAsset__c) assetValue
+                            ,Is_Include_In_HLV_Inv_Asset__c includeHLV /* Prajakta - 27-05-2013 */
+                        FROM
+                            Investment_Asset__c
+                        WHERE
+                            RecordType.ID = :recordTypeId
+                        AND
+                            TotalAsset__c > 0    
+                        AND
+                        (
+                            Entity__c = : entityId     
+                            OR
+                            Entity__r.Parent_Entity__c = : entityId                                                             
+                        )                                                                                                                                              
+                        GROUP BY RecordType.Name, Is_Include_In_HLV_Inv_Asset__c /* Prajakta - 27-05-2013 */
+                    ];
+                   if(aggregateList != null && aggregateList.size() > 0)
+              {
+                  result = aggregateList[0]; 
+              } 
+        }catch(System.QueryException qe) {
+            System.debug('QueryException : ' + qe.getMessage() + ' entityId = ' + entityId);            
+        }      
+        return  result;                                            
+    }
+    public AggregateResult getMutualFundTotal(String entityId,String assetType,ID recordTypeId) {
+        assetType = '%' + assetType + '%';
+        /** Eternus Solutions       **/
+    /** Author  : Manasi Ranade **/
+    /** Issue Id: 00001461      **/
+    /** Date    : 19/1/2012   **/
+    /** Purpose : To remove 'List has no rows for assignment' error from select statement, Collected the rows returned from select statement in the list and
+            after that assigned it to respective object
+    /****************************************************/
+        AggregateResult   result;
+        List<AggregateResult> aggregateList = new List<AggregateResult>();
+         
+        try {
+            aggregateList   = [ SELECT 
+                            RecordType.Name assetClass,
+                            SUM(TotalAsset__c) assetValue
+                            ,Is_Include_In_HLV_Inv_Asset__c includeHLV /* Prajakta - 27-05-2013 */
+                        FROM 
+                            Investment_Asset__c
+                        WHERE
+                            Asset_Type__c like :assetType
+                        AND
+                            TotalAsset__c > 0    
+                        AND
+                            RecordType.ID =  :recordTypeId //'01220000000HYx4AAG'       
+                        AND 
+                        (
+                            Entity__C = :entityId
+                            OR      
+                            Entity__r.Parent_Entity__c = :entityId
+                        )
+                        GROUP BY RecordType.Name , Is_Include_In_HLV_Inv_Asset__c /* Prajakta - 27-05-2013 */                                                       
+                    ];
+          if(aggregateList != null && aggregateList.size() > 0)
+          {
+              result = aggregateList[0]; 
+          }
+        }catch(System.QueryException qe) {
+            System.debug('QueryException : ' + qe.getMessage() + ' entityId = ' + entityId);            
+        }      
+        return  result;                                         
+    }     
+        
+    /* Prajakta - FP changes II - 21-05-2013 - Function is used to show current values of Life Insurance in Networth */                 
+    public AggregateResult getInsuranceSumByRecordTypeCurrentValue(String entityId,ID recordTypeId) 
+    {
+        AggregateResult result;
+        try {
+                result = [ 
+                            SELECT 
+                                SUM(current_amount__C) insuranceValue,
+                                recordType.Name insuranceClass                                                           
+                            FROM 
+                                Insurance__c 
+                            WHERE 
+                                recordType.ID != null
+                            AND
+                                recordType.ID = : recordTypeId   
+                            AND
+                                current_amount__C != null
+                            AND
+                                current_amount__C > 0        
+                            AND 
+                                (
+                                    Entity__c = :entityId
+                                    OR
+                                    Entity__r.Parent_Entity__c = : entityId
+                                )                                                   
+                            GROUP BY 
+                            recordType.Name
+                        ];
+        }catch(System.QueryException qe){
+            System.debug('QueryException : ' + qe.getMessage() + ' entityId = ' + entityId);        
+        }         
+        return result ;
+    } 
+    
+    public AggregateResult getInsuranceSumByRecordType(String entityId,ID recordTypeId) {
+        AggregateResult result;
+        try {
+                result = [ 
+                            SELECT 
+                                SUM(Surrender_Cash_Value__c) insuranceValue,
+                                recordType.Name insuranceClass                                                           
+                            FROM 
+                                Insurance__c 
+                            WHERE 
+                                recordType.ID != null
+                            AND
+                                recordType.ID = : recordTypeId   
+                            AND
+                                Surrender_Cash_Value__c != null
+                            AND
+                                Surrender_Cash_Value__c > 0        
+                            AND 
+                                (
+                                    Entity__c = :entityId
+                                    OR
+                                    Entity__r.Parent_Entity__c = : entityId
+                                )                                                   
+                            GROUP BY 
+                            recordType.Name
+                        ];
+        }catch(System.QueryException qe){
+            System.debug('QueryException : ' + qe.getMessage() + ' entityId = ' + entityId);        
+        }         
+        return result ;
+    } 
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: F0051        **/
+  /** Date    : 22/06/2011   **/
+  /** Purpose : a. Value of insurance should be Surrender value, if it is null then calculate its current value.
+          b. So created new function getSurrenderOrCurrentInsuranceByRecordType().
+          c. Function will 1st calculate the insurance value whose surrender value is not null 
+             and then calculates current value of remaining records.And returns the sum of these two values. 
+  /****************************************************/       
+     //Manasi F0051 //Value of insurance should be Surrender value if it is null then calculate its current value
+      public Double getSurrenderOrCurrentInsuranceByRecordType(String entityId,ID recordTypeId) {
+        Double dblNetworthInsuranceValue = 0;
+        AggregateResult surrenderValueResult;
+        AggregateResult result;
+        Double CurrentValueResult = 0;
+        List<Insurance__c> currentValueForInsuranceList = new List<Insurance__c>();
+        try {
+          //Query to get total of surrender value
+                surrenderValueResult = [ 
+                            SELECT 
+                                SUM(Surrender_Cash_Value__c) insuranceValue,
+                                recordType.Name insuranceClass                                                           
+                            FROM 
+                                Insurance__c 
+                            WHERE 
+                                recordType.ID != null
+                            AND
+                                recordType.ID = : recordTypeId   
+                            AND
+                                Surrender_Cash_Value__c != null
+                            AND
+                                Surrender_Cash_Value__c > 0        
+                            AND 
+                                (
+                                    Entity__c = :entityId
+                                    OR
+                                    Entity__r.Parent_Entity__c = : entityId
+                                )                                                   
+                            GROUP BY 
+                            recordType.Name
+                        ];
+                //Code to calculate current value of insurance
+                currentValueForInsuranceList = [ 
+                            SELECT 
+                                ID,Policy_Type__c,Commencement_Date__c,current_amount__C
+                                ,Premium_Amount_Rs__c,Tenure_of_Insurance__c,Premium_Frequency__c,Premium_Paying_Term__c  
+                                                                             
+                            FROM 
+                                Insurance__c 
+                            WHERE 
+                                recordType.ID != null
+                            AND
+                                recordType.ID = : recordTypeId   
+                            AND
+                                Surrender_Cash_Value__c =: null
+                            AND 
+                                (
+                                    Entity__c = :entityId
+                                    OR
+                                    Entity__r.Parent_Entity__c = : entityId
+                                )                                                   
+                        ];
+                Double dblAnnualPremiumAmount = 0;
+           for(Insurance__c objInsurance : currentValueForInsuranceList)
+           {
+             AssetAllocationService objAssetAllocationService = new AssetAllocationService();
+             //dblAnnualPremiumAmount = objAssetAllocationService.GetAnnualPremiumAmount(objInsurance);
+             //Previous Code FS0287
+             //if(!objInsurance.Policy_Type__c.equals('Term Life') && !objInsurance.Policy_Type__c.equals('Pension Plan') &&
+             if(!objInsurance.Policy_Type__c.equals('Term Life')  &&
+                !objInsurance.Policy_Type__c.equals('Children\'s') && !objInsurance.Policy_Type__c.equals('Other') ) 
+             {
+               //These changes are required for current value calculation : Manasi
+             Integer iTenureOfInsurance = Integer.valueOf(objInsurance.Tenure_of_Insurance__c);
+              Integer iMaturityYear = iTenureOfInsurance + objInsurance.Commencement_Date__c.year();
+              Integer iCurrentYearForCalculation = 0;
+             if(Date.today().year() > iMaturityYear)
+                 iCurrentYearForCalculation = iMaturityYear;
+               else
+                 iCurrentYearForCalculation = Date.today().year();
+              Integer totalPeriodInYears =  iCurrentYearForCalculation - objInsurance.Commencement_Date__c.year();//
+               CurrentValueResult += Math.round(objAssetAllocationService.GetInsuranceAmountForPeriod(objInsurance
+                                            ,totalPeriodInYears
+                                            ,Double.valueOf(objInsurance.Premium_Amount_Rs__c)));
+             }
+           }
+           
+           if(surrenderValueResult != null)  
+             dblNetworthInsuranceValue = (Double) surrenderValueResult.get('insuranceValue') + CurrentValueResult; //Add two values
+           else
+             dblNetworthInsuranceValue = CurrentValueResult;
+          
+        }catch(System.QueryException qe){
+            System.debug('QueryException : ' + qe.getMessage() + ' entityId = ' + entityId);        
+        }         
+        return dblNetworthInsuranceValue ;
+    } 
+      
+    public List<Expense__c> getMonthlyExpenseForCashFlow(String entity) {
+        List<Expense__c> aggrResult=[ SELECT 
+                                            General_Expenses__c,
+                                            start_year__c,
+                                            end_year__c,
+                                            MonthlyExpense__c,
+                                            Expense_Growth_Rate__c                                                 
+                                            FROM expense__c 
+                                           WHERE 
+                                                (Entity_Name__c=:entity 
+                                            OR 
+                                                Entity_name__r.parent_entity__c=:entity) 
+                                             AND
+                                             (MonthlyExpense__c > 0 and MonthlyExpense__c != null)
+                                            ];   
+                                         
+        return aggrResult;
+    } 
+    
+    /* Prajakta - FP changes II - 21-05-2013 - Changed query in DatabaseSOQL as expense total in emergency planning is needed without vacation expense*/
+    public List<Expense__c> getMonthlyExpenseForCashFlowWithoutVacation(String entity) {
+        List<Expense__c> aggrResult=[ SELECT 
+                                            General_Expenses__c,
+                                            start_year__c,
+                                            end_year__c,
+                                            MonthlyExpense__c,
+                                            Expense_Growth_Rate__c                                                 
+                                            FROM expense__c 
+                                           WHERE 
+                                                (Entity_Name__c=:entity 
+                                            OR 
+                                                Entity_name__r.parent_entity__c=:entity) 
+                                             AND
+                                                (MonthlyExpense__c > 0 and MonthlyExpense__c != null)
+                                             AND
+                                                Sub_Expenses__c != 'Vacation'
+                                            ];   
+                                         
+        return aggrResult;
+    } 
+       
+    // Manasi 
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: F0042        **/
+  /** Date    : 28/06/2011   **/
+  /** Purpose : Added field Entity__c in select statement.
+  /****************************************************/ 
+    public List<Income__c> getIncomesForCashFlow(String entityId) {
+        List<Income__c> aggQueryResult = [ SELECT                                                         
+                                                        recordType.Name,
+                                                        start_year__c,
+                                                        end_year__c,
+                                                        Monthly_Income__c,
+                                                        Income_Growth_Rate__c,Entity__c                                                        
+                                                    FROM Income__c 
+                                                     WHERE 
+                                                        recordTypeId !=null 
+                                                    AND 
+                                                    (
+                                                        Entity__C = : entityId      
+                                                        OR
+                                                        Entity__r.Parent_Entity__c = : entityId
+                                                    )   
+                                                    AND
+                                                      Monthly_Income__c>0                                                                                                                                                              
+                                                ];         
+       return  aggQueryResult;                
+    }
+    /*public AggregateResult getInvestmentAssetByClass(String entityId,ID recordTypeId) {
+        AggregateResult  result;
+        try {
+            result = [  SELECT 
+                            RecordType.Name assetClass,                                                                                                                        
+                            SUM(TotalAsset__c) assetValue
+                        FROM
+                            Investment_Asset__c
+                        WHERE
+                            RecordType.ID = :recordTypeId
+                        AND
+                        (
+                            Entity__c = : entityId     
+                            OR
+                            Entity__r.Parent_Entity__c = : entityId                                                             
+                        )                                                                                                                                              
+                        GROUP BY RecordType.Name
+                    ];
+        }catch(System.QueryException qe) {
+            System.debug('QueryException : ' + qe.getMessage() + ' entityId = ' + entityId);            
+        }      
+        return  result;                                            
+    } */
+    public List<Asset__c> getAssetListByClass(String entityId,String recordTypeId) {
+      system.debug('*****:recordTypeId'+recordTypeId);
+        List<Asset__c> asset = [SELECT
+                                            RecordType.Name,                                                 
+                                            Annual_Contribution__c,
+                                            Expected_Growth_Rate__c,
+                                            Start_year__c,
+                                            end_year__c
+                                        FROM 
+                                                    Asset__c  
+                                        WHERE
+                                            Annual_Contribution__c != null
+                                        AND
+                                          recordTypeId = :recordTypeId    
+                                        AND 
+                                            Annual_Contribution__c >0
+                                        AND 
+                                            (   
+                                                Entity__c = : entityId 
+                                                OR
+                                                Entity__r.Parent_Entity__c = : entityId
+                                            )                                                                                  
+                                ];
+        return asset;           
+    }
+    
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: F0014        **/
+  /** Date    : 09/06/2011   **/
+  /** Purpose : Added overloaded function getAssetListByClass() with 3 parameters which will fetch assets depending on 
+          Filters : entityId,recordTypeId,accountType
+  /****************************************************/ 
+     public List<Asset__c> getAssetListByClass(String entityId,String recordTypeId,String accountType) {
+      system.debug('*****:recor11dTypeId'+recordTypeId);
+        List<Asset__c> asset = [SELECT
+                                            RecordType.Name,                                                 
+                                            Annual_Contribution__c,
+                                            Expected_Growth_Rate__c,
+                                            Start_year__c,
+                                            end_year__c
+                                        FROM 
+                                                    Asset__c  
+                                        WHERE
+                                            Annual_Contribution__c != null
+                                        AND
+                                          recordTypeId = :recordTypeId    
+                                        AND 
+                                            Annual_Contribution__c >0
+                                        AND 
+                                            (   
+                                                Entity__c = : entityId 
+                                                OR
+                                                Entity__r.Parent_Entity__c = : entityId
+                                            )
+                                        AND Account_Type__c =: accountType  
+                                                                                                                     
+                                ];
+        return asset;           
+    }
+  
+    public List<Investment_Asset__c> getInvestmentAssetListByClass(String entityId,String recordTypeId) {
+      system.debug('****recordTypeIdInvAssets:'+recordTypeId);
+        List<Investment_Asset__c> asset = [
+                                            SELECT
+                                                RecordType.Name,                                                 
+                                                Monthly_SIP_Amount__c                                           
+                                            FROM 
+                                                Investment_Asset__c  
+                                            WHERE
+                                                Monthly_SIP_Amount__c != null
+                      AND
+                                            recordTypeId = :recordTypeId                                                     
+                                            AND 
+                                                (   
+                                                    Entity__c = : entityId 
+                                                    OR
+                                                    Entity__r.Parent_Entity__c = : entityId
+                                                )                                                                               
+                                        ];
+        return asset;           
+    }        
+  /*  public AggregateResult getMutualFundTotal(String entityId,String assetType,ID recordTypeId) {
+        assetType = '%' + assetType + '%';
+        AggregateResult   result;
+        try {
+            result  = [ SELECT 
+                            RecordType.Name assetClass,
+                            SUM(TotalAsset__c) assetValue
+                        FROM 
+                            Investment_Asset__c
+                        WHERE
+                            Asset_Class__c like :assetType
+                        AND
+                            RecordType.ID =  :recordTypeId //'01220000000HYx4AAG'       
+                        AND 
+                        (
+                            Entity__C = :entityId
+                            OR      
+                            Entity__r.Parent_Entity__c = :entityId
+                        )
+                        GROUP BY RecordType.Name                                                        
+                    ];
+        }catch(System.QueryException qe) {
+            System.debug('QueryException : ' + qe.getMessage() + ' entityId = ' + entityId);            
+        }      
+        return  result;                                         
+    }    */   
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: F0057        **/
+  /** Date    : 30/06/2011   **/
+  /** Purpose : Added Commencement_Date__c field in select statement
+  /****************************************************/       
+  /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: F0047        **/
+  /** Date    : 01/07/2011   **/
+  /** Purpose : Added one field in the select statement: Premium_Paying_Term__c 
+  /****************************************************/
+    public List<Insurance__c> getInsurances(String entityId) {
+            
+        List<Insurance__c> insurances= [SELECT 
+                                            Premium_Amount_Rs__c,Premium_Frequency__c,Annual_Premium_amount__c,
+                                            Next_Premium_Due_Date__c,Number_of_Years_Left__c,Tenure_of_Insurance__c,Commencement_Date__c,
+                                            Return_Of_Interest__c,      /* Prajakta - FP changes - 23-05-2013 */
+                                            Premium_Paying_Term__c //F0047
+                                        FROM 
+                                            Insurance__c 
+                                       WHERE 
+                                            annual_premium_amount__c > 0
+                                         AND(
+                                            Entity__C = :entityId
+                                           OR      
+                                            Entity__r.Parent_Entity__c = :entityId 
+                                          )
+                                        ];
+        return insurances; 
+    }
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: FS0293        **/
+  /** Date    : 19/11/2011   **/
+  /** Purpose : Added Overloaded Function to select the Insurances of selected Entity and Flag
+  /****************************************************/
+    public List<Insurance__c> getInsurances(String entityId,String strFlag) {
+            
+        List<Insurance__c> insurances= [SELECT 
+                                            Premium_Amount_Rs__c,Premium_Frequency__c,Annual_Premium_amount__c,
+                                            Next_Premium_Due_Date__c,Number_of_Years_Left__c,Tenure_of_Insurance__c,Commencement_Date__c,
+                                            Return_Of_Interest__c,      /* Prajakta - FP changes - 23-05-2013 */
+                                            Premium_Paying_Term__c
+                                            
+                                        FROM 
+                                            Insurance__c 
+                                       WHERE 
+                                            annual_premium_amount__c > 0
+                                         AND(
+                                            Entity__C = :entityId
+                                           OR      
+                                            Entity__r.Parent_Entity__c = :entityId 
+                                          )
+                                          AND Flag__c =:strFlag
+                                        ];
+        return insurances; 
+    }
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: FS0118        **/
+  /** Date    : 20/08/2011   **/
+  /** Purpose : Added method to fetch insurance related record from given id of Entity**/
+  /****************************************************/
+  public MAP<Id,Insurance__c> getInsuranceDetails(Id entityId)//(Id insuranceId)
+  {
+    /*Insurance__c objInsurance =  [      SELECT
+                                                    RecordTypeId,RecordType.name,RemoveCheckbox__c,Entity__c,Nominee__c,
+                                                    Insurance_Company__c,Policy_Type__c,Policy_Name__c,
+                                                    Policy_Number__c,Death_Benefit_Rs__c,Premium_Amount_Rs__c,totalAsset__c,
+                                                    Premium_Frequency__c,Annualized_Premium_In_Rs__c,
+                                                    Commencement_Date__c,Next_Premium_Due_Date__c,
+                                                    Tenure_of_Insurance__c,Number_of_Years_Left__c,
+                                                    Surrender_Cash_Value__c,Sum_Assured_Rs__c,Action__c,Entity__r.Name,Entity__r.firstName,
+                                                    Annual_Premium_amount__c,Premium_Paying_Term__c
+                                            FROM
+                                                    Insurance__c
+                                            WHERE
+                                                Id =: insuranceId
+                                            LIMIT 1
+                   ];
+    Return objInsurance;*/
+    MAP<Id,Insurance__c> insuranceMap = new MAP<Id,Insurance__c> ([SELECT
+                                                    RecordTypeId,RecordType.name,RemoveCheckbox__c,Entity__c,Nominee__c,
+                                                    Insurance_Company__c,Policy_Type__c,Policy_Name__c,
+                                                    Policy_Number__c,Death_Benefit_Rs__c,Premium_Amount_Rs__c,totalAsset__c,
+                                                    Premium_Frequency__c,Annualized_Premium_In_Rs__c,
+                                                    Commencement_Date__c,Next_Premium_Due_Date__c,
+                                                    Tenure_of_Insurance__c,Number_of_Years_Left__c,Maturity_Amount__c,/*Prajakta*/
+                                                    Surrender_Cash_Value__c,Sum_Assured_Rs__c,Action__c,Entity__r.Name,Entity__r.firstName,
+                                                    Annual_Premium_amount__c,Premium_Paying_Term__c,Revised_Maturity_Amount__c,
+                                                    Return_Of_Interest__c   /* Prajakta - FP changes - 23-05-2013 */
+                                            FROM
+                                                    Insurance__c
+                                            WHERE
+                                                Entity__c =: entityId
+                                            //Added and condition //Action Plan : Manasi
+                                            OR
+                                                Entity__r.Parent_Entity__c = :entityId 
+                   ]);
+    
+    Return insuranceMap;
+    
+  }
+  
+  /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: FS0118        **/
+  /** Date    : 26/09/2011   **/
+  /** Purpose : Added method to fetch Investment Asset related record from given id of Entity**/
+  /****************************************************/
+  public MAP<Id,Investment_Asset__c> getInvestmentAssetDetails(Id entityId)//(Id insuranceId)
+  {
+    MAP<Id,Investment_Asset__c> insuranceMap = new MAP<Id,Investment_Asset__c> ([SELECT
+                                                    Face_Value__c,Maturity_Value__c,Maturity_Date__c
+                                                    
+                                            FROM
+                                                    Investment_Asset__c
+                                            WHERE
+                                                Entity__c =: entityId
+                   ]);
+    Return insuranceMap;
+    
+  }
+  
+    /** Eternus Solutions       **/
+    /** Author  : Manasi Ranade **/
+    /** Issue Id: F0018        **/
+    /** Date    : 27/05/2011   **/
+    /** Purpose : Added two fields Default_Retirement_Age__c and Default_Estimated_Life_Expectancy__c
+            in Entity_Global_Assumption__c object.So modified following query to select newly added fields **/
+      /****************************************************/  
+    public Entity_Global_Assumption__c getEntityGlobalAssumption(String entitiId)
+    {
+        Entity_Global_Assumption__c globalAssumption;
+        List<Entity_Global_Assumption__c> globalAssumptionList=[
+                                                               SELECT 
+                                                                      Expected_Return_on_Investment__c,Income_Growth_Rate__c,
+                                                                      Inflation_Rate__c,Account__c,Number_Of_Months__c ,Stock_Growth_Rate__c,
+                                                                      Gold_Growth_Rate__c,     /* Prajakta - FP changes - 01-04-2013 */
+                                                                      Default_Estimated_Life_Expectancy__c,Default_Retirement_Age__c,
+                                                                      Data_Collection_Analysis_Control__c, //Gaurav- 09-04-2013
+                                                                      Financial_Planing_Output_Report__c,
+                                                                      CashFlow_Projection_End_Year__c ,/* Aditi - FP enhancement changes - 15-10-2013 */
+                                                                      Goals_Allowed_List__c,
+                                                                      No_of_Goals__c
+                                                               FROM
+                                                                       Entity_Global_Assumption__c
+                                                               WHERE 
+                                                                        Account__c=:entitiId
+		];
+		system.debug('--- globalAssumptionList --->' + globalAssumptionList);
+        if((globalAssumptionList.size())>0)
+        {
+            globalAssumption = globalAssumptionList.get(0);
+        }
+        else
+        {
+            globalAssumption = null;
+        }
+        return globalAssumption;
+     }
+      public List<Goal_Profile__c> getStdGoalProfileList()
+      {
+          List<Goal_Profile__c>goalProfileList = [
+                                                  SELECT 
+                                                        name,Goal_Profile_Type__c,Debt_Allocation__c,Account__c,
+                                                        Equity_Allocation__c,Gold_allocation__c,Return_expected__c,Returns_expected__c
+                                                  FROM 
+                                                        Goal_Profile__c 
+                                                  WHERE 
+                                                         account__c = null
+                                                  ORDER BY CreatedDate       
+                                                ];
+          return goalProfileList;
+      }
+      
+      public List<Goal_Profile__c> getStdGoalProfileList(String riskType)
+      {
+          List<Goal_Profile__c>goalProfileList = [
+                                                  SELECT 
+                                                        Id,name,Goal_Profile_Type__c,Debt_Allocation__c,Account__c,
+                                                        Equity_Allocation__c,Gold_allocation__c,Return_expected__c,Returns_expected__c
+                                                  FROM 
+                                                        Goal_Profile__c 
+                                                  WHERE 
+                                                         account__c = null
+                                                         and Risk_Type__c =: riskType
+                                                  ORDER BY CreatedDate       
+                                                ];
+          return goalProfileList;
+      }
+      
+      public List<goal_Profile__c> getCustomGoalProfileList(String EntityId)
+      {
+         List<Goal_Profile__c>goalProfileList=[
+                                                SELECT 
+                                                      name,Goal_Profile_Type__c,Debt_Allocation__c,Account__c,
+                                                      Equity_Allocation__c,Gold_allocation__c,Return_expected__c,Returns_expected__c
+                                                 FROM 
+                                                       Goal_Profile__c 
+                                                 WHERE 
+                                                        account__c=:EntityId 
+                                              ];
+          return goalProfileList;
+     }   
+     public List<GoalAssetAssociation__c> getGoalAssetAllocationList(String entityId) 
+     {
+         List<GoalAssetAssociation__c> goalAssetAssociationList = [
+                                                            SELECT allocated__c,
+                                                                   asset__c,
+                                                                   Allocation__c,
+                                                                   GoalYearValue__c,
+                                                                   Maturity_Value__c, /* Prajakta - FP Changes - 26-03-2013 */  
+                                                                   Goal__c,
+                                                                   asset__r.entity__c,
+                                                                   asset__r.CalculatedInterestRate__c ,
+                                                                   asset__r.Expected_Growth_Rate__c,
+                                                                   asset__r.Interest_Rate__c ,
+                                                                   asset__r.entity__r.FirstName, 
+                                                                   asset__r.entity__r.LastName,
+                                                                   asset__r.action__c,
+                                                                   asset__r.Asset_Types__c,
+                                                                   asset__r.Current_Value__c,
+                                                                   asset__r.Accumulated_Value__c,
+                                                                   asset__r.RecordType.Name,
+                                                                   asset__r.Allocated_Amount__c,
+                                                                   asset__r.Monthly_Asset__c,
+                                                                   asset__r.Description__c ,
+                                                                   asset__r.Account_Number__c ,
+                                                                   asset__r.Bank_Name__c, Goal__r.Description__c, 
+                                                                   asset__r.Current_Balance__c,
+                                                                goal__r.SelectedGoalProfile__r.Gold_allocation__c ,
+                                                                goal__r.SelectedGoalProfile__r.Debt_Allocation__c,
+                                                                goal__r.SelectedGoalProfile__r.Equity_Allocation__c,
+                                                                //goal__r.CreatedDate, /* Kiran : 13-Jun-2013 : Sort goals */
+                                                                   asset__r.Account_Type__c
+                                                              FROM GoalAssetAssociation__c 
+                                                             WHERE Allocated__c != null
+                                                               AND (asset__r.entity__c = :entityId
+                                                                OR  asset__r.entity__r.Parent_Entity__c = :entityId)
+                                                          //order by goal__r.CreatedDate
+         ];  
+        return goalAssetAssociationList;
+     }
+     
+    public List<Asset__c> getAssets(String entityId) {
+        List<Asset__c> assetList = [SELECT 
+                                    Action__c,RemoveCheckbox__c, RecordTypeId,recordType.Name,Entity__c,Bank_Name__c,Start_Year__c,
+                                    End_Year__c,Account_Type__c,Account_Number__c,Accumulated_Value__c,Interest_Rate__c,
+                                    Annual_Contribution__c,Maturity_Date__c,Current_Balance__c,Current_Value__c,
+                                    Description__c,Acquisition_Year__c,Expected_Year_of_Sale__c,Monthly_Asset__c,Allocated_Amount__c,
+                                    Asset_Types__c,Expected_Growth_Rate__c,Entity__r.name,Entity__r.firstName,Entity__r.lastName  
+                                    , Is_Include_In_HLV_Asset__c/* Prajakta - 27-05-2013 */
+                                 FROM 
+                                    Asset__c 
+                                 WHERE 
+                                  (
+                                    Entity__c  = :entityId
+                                    OR
+                                    Entity__r.Parent_Entity__c = :entityId
+                                  )
+                                    AND
+                                        RecordTypeId != NULL
+                                    AND
+                                        RecordType.Name != NULL
+                                    ORDER BY recordType.Id,Asset_Types__c,Account_Type__c                                  
+
+                                 ];    
+        return assetList ; 
+    }
+    /*
+      Created By : Niket Chandane.
+      Crated At  : 1 July 2011
+      Summary    : This function Accept's the entity Id and Returns the Map of Asset's Id and Asset.
+             It will help to optimised the code and avoid the Exception says to many scripts 2000001
+    */
+     public MAP<Id,Asset__c> getAssetMap(String entityId) {
+        MAP<Id,Asset__c> Mapasset = New Map<Id,Asset__c>([SELECT 
+                                    Action__c,RemoveCheckbox__c, RecordTypeId,recordType.Name,Entity__c,Bank_Name__c,Start_Year__c,
+                                    End_Year__c,Account_Type__c,Account_Number__c,Accumulated_Value__c,Interest_Rate__c,
+                                    Annual_Contribution__c,Maturity_Date__c,Current_Balance__c,Current_Value__c,
+                                    Description__c,Acquisition_Year__c,Expected_Year_of_Sale__c,Monthly_Asset__c,
+                                    Asset_Types__c,Expected_Growth_Rate__c,Entity__r.name,Entity__r.firstName 
+                                    , Is_Include_In_HLV_Asset__c/* Prajakta - 27-05-2013 */
+                                 FROM 
+                                    Asset__c 
+                                 WHERE 
+                                  (
+                                    Entity__c  = :entityId
+                                    OR
+                                    Entity__r.Parent_Entity__c = :entityId
+                                  )
+                                    AND
+                                        RecordTypeId != NULL
+                                    AND
+                                        RecordType.Name != NULL
+                                    ORDER BY recordType.Id,Asset_Types__c,Account_Type__c                                  
+
+                                 ]);    
+        return Mapasset ; 
+    }
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: 00001605      **/
+  /** Date    : 25/04/2012   **/
+  /** Purpose : Added Is_Include_In_HLV__c in select statement
+  /****************************************************/
+    /*
+      Updated By : Kiran Patil
+      Updated At : 5-Jun-2013
+      Summary    : FP changes-part2 - issue 6 
+    */
+    public List<goal__c> getAllGoals(String entityId) {
+        List<goal__c> goals = [
+                        SELECT entity__c, Goal_Type__c, RemoveCheckbox__c, Start_Year__c, End_Year__c, Inflation_Rate__c, Cost_of_Goal_Annual__c,
+                               IRR__c, Priority__c, Description__c, SelectedGoalProfile__c, SelectedGoalProfile__r.Name, Goal_Frequency__c,
+                               Goal_Start_Year__c, Goal_End_Year__c, Remark__c, Is_Include_In_HLV__c, Allocation_Message__c, CreatedDate /* Prajakta - FP changes - 22-03-2013 */
+                               , IsDisplayDefaultProduct__c, IsDisplaySIPinAP__c , 	IsDisplayLumpsuminAP__c
+                          FROM goal__c 
+                         WHERE Entity__c  =: entityId                              
+                            OR Entity__r.Parent_Entity__c =: entityId
+                    //  order by CreatedDate
+        ];    
+        return goals ; 
+    }   
+    public List<Investment_Asset__c> getInvestmentAsset(String entityId,boolean flag) 
+    {       
+        List<Investment_Asset__c> investment= [SELECT Purchase_Price__c,Fund__c,Units__c,Purchase_NAV__c,Monthly_SIP_Amount__c,RecordTypeId,Entity__r.firstName,Entity__r.LastName,
+                                                    RecordType.Name,Entity__c,Script_Name__c,Acquisition_Date__c,Quantity__c,Description__c,Face_Value__c,
+                                                    Coupon_Rate__c,Maturity_Value__c,Asset_Type__c,Maturity_Date__c,Current_Price__c, Asset_Name__c,
+                                                    asset_class__c,TotalAsset__c,Current_NAV__c,AMC_Name__c,Scheme_Name__c,Entity__r.Name,Action__c
+                                                    ,Is_Include_In_HLV_Inv_Asset__c
+                                                    ,Allocated_Amount__c
+                                                   
+                                                FROM Investment_Asset__c 
+                                                WHERE(Entity__C = : entityId  OR Entity__r.Parent_Entity__c = : entityId) 
+                                                    and RecordTypeId != NULL
+                                                    and RecordType.Name != NULL
+                                                order BY RecordTypeId,Entity__c
+                                                ];
+        return investment; 
+    }
+    public List<GoalInvestmentAssetAssociation__c> getGoalInvestmentAssociationList(String entityId) {
+        List<GoalInvestmentAssetAssociation__c> goalInvestmentAssociationList =  
+                                                            [
+                                                                SELECT 
+                                                                        allocated__c,
+                                                                        Allocation_Order__c,
+                                                                        Investment_Asset__c,
+                                                                        GoalYearValue__c,
+                                                                        Allocation__c ,
+                                                                        Goal__c,
+                                                                        investment_Asset__r.recordType.Name,
+                                                                        Investment_Asset__r.Entity__c,
+                                                                        Investment_asset__r.entity__r.FirstName, 
+                                                                        Investment_asset__r.entity__r.LastName,
+                                                                        Investment_asset__r.action__c,
+                                                                        Investment_asset__r.Maturity_Date__c,//Prajakta - FP changes - 25-02-2013
+                                                                        Investment_asset__r.Description__c,//Prajakta - FP changes - 25-02-2013
+                                                                        Investment_asset__r.Script_Name__c,//Prajakta - FP changes - 21-05-2013
+                                                                        Investment_asset__r.Scheme_Name__c,//Prajakta - FP changes - 21-05-2013
+                                                                        Investment_asset__r.AMC_Name__c,//Prajakta - FP changes - 21-05-2013
+                                                                        Investment_asset__r.TotalAsset__c,
+                                    goal__r.SelectedGoalProfile__r.Gold_allocation__c ,
+                                    goal__r.SelectedGoalProfile__r.Debt_Allocation__c,
+                                    goal__r.SelectedGoalProfile__r.Equity_Allocation__c,       
+                                                                        Investment_asset__r.Allocated_Amount__c,
+                                                                        Goal__r.Description__c 
+                                                                FROM 
+                                                                        GoalInvestmentAssetAssociation__c 
+                                                                WHERE 
+                                                                         Allocated__c!=null
+                                                                  AND
+                                                                       (
+                                                                        Investment_Asset__r.Entity__c  = :entityId
+                                                                      OR
+                                                                        Investment_Asset__r.Entity__r.Parent_Entity__c = :entityId                                  
+                                                                       )
+                                                               order by investment_Asset__r.recordType.Name
+                                                            ];            
+        return goalInvestmentAssociationList;
+     }
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: FS0177        **/
+  /** Date    : 5/10/2011   **/
+  /** Purpose : To separate out the Fixed income related records on asset 
+          allocation page
+  /****************************************************/
+     public List<GoalInvestmentAssetAssociation__c> getGoalInvestmentAssociationListForFixedIncome (String entityId) {
+        List<GoalInvestmentAssetAssociation__c> goalInvestmentAssociationList =  
+                                                            [
+                                                                SELECT 
+                                                                        allocated__c,
+                                                                        Allocation_Order__c,
+                                                                        Investment_Asset__c,
+                                                                        Goal__c,
+                                                                        investment_Asset__r.recordType.Name,
+                                                                        Investment_Asset__r.Entity__c,
+                                                                        Investment_asset__r.entity__r.FirstName, 
+                                                                        Investment_asset__r.entity__r.LastName,
+                                                                        Investment_asset__r.action__c,
+                                                                        Investment_asset__r.TotalAsset__c,
+                                    goal__r.SelectedGoalProfile__r.Gold_allocation__c ,
+                                    goal__r.SelectedGoalProfile__r.Debt_Allocation__c,
+                                    goal__r.SelectedGoalProfile__r.Equity_Allocation__c,                                                                                                                                                    
+                                                                        Investment_asset__r.Allocated_Amount__c,
+                                                                        Goal__r.Description__c  
+                                                                FROM 
+                                                                        GoalInvestmentAssetAssociation__c 
+                                                                WHERE 
+                                                                         Allocated__c!=null
+                                                                  AND
+                                                                      investment_Asset__r.recordType.Name =: 'Fixed Income'       
+                                                                  AND
+                                                                       (
+                                                                        Investment_Asset__r.Entity__c  = :entityId
+                                                                      OR
+                                                                        Investment_Asset__r.Entity__r.Parent_Entity__c = :entityId                                  
+                                                                       )
+                                                            ];            
+        return goalInvestmentAssociationList;
+     }      
+    // For AssetAllocationService 
+    public List<Investment_Asset__c> getInvestmentAssetByAccount(String RecordTypeIdStr,String entityId){
+       
+        List<Investment_Asset__c> investment= [SELECT Purchase_Price__c,Fund__c,Units__c,Purchase_NAV__c,Monthly_SIP_Amount__c,RecordTypeId,
+                                                    Entity__c,Script_Name__c,Acquisition_Date__c,Quantity__c,Description__c,Face_Value__c,
+                                                    Coupon_Rate__c,Maturity_Value__c,Asset_Type__c,Maturity_Date__c,Current_Price__c,Asset_Name__c,
+                                                    asset_class__c,TotalAsset__c,Current_NAV__c,AMC_Name__c,Scheme_Name__c,Action__c
+                                                    ,Is_Include_In_HLV_Inv_Asset__c
+                                                FROM 
+                                                    Investment_Asset__c 
+                                                WHERE RecordTypeId =: RecordTypeIdStr
+                                                AND 
+                                                (
+                                                    Entity__C = : entityId
+                                                )
+                                                ];
+        return investment; 
+    }
+      /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: FS0177        **/
+  /** Date    : 5/10/2011   **/
+  /** Purpose : To separate out the Fixed income related records on asset 
+          allocation page
+  /****************************************************/
+    public List<Investment_Asset__c> getInvestmentAssetList(String entityId) {
+        List<Investment_Asset__c> investment= [SELECT Purchase_Price__c,Fund__c,Units__c,Purchase_NAV__c,Monthly_SIP_Amount__c,RecordTypeId,
+                                                    Entity__c,Script_Name__c,Acquisition_Date__c,Quantity__c,Description__c,Face_Value__c,Entity__r.FirstName,Entity__r.LastName,
+                                                    Coupon_Rate__c,Maturity_Value__c,Asset_Type__c,Maturity_Date__c,Current_Price__c,RecordType.name, Asset_Name__c,
+                                                    asset_class__c,TotalAsset__c,Current_NAV__c,AMC_Name__c,Scheme_Name__c,Action__c
+                                                    ,Is_Include_In_HLV_Inv_Asset__c  
+                                                FROM 
+                                                    Investment_Asset__c 
+                                                WHERE 
+                                                    (   Entity__C = : entityId      
+                                                        OR
+                                                        Entity__r.Parent_Entity__c = : entityId
+                                                    )
+                                                    AND
+                                                       RecordType.Name =: 'Fixed Income'                                                                                 
+                                                ];    
+        return investment; 
+    }
+    
+    public List<Insurance__c> getInsuranceList(String entityId) {
+        List<Insurance__c> insuranceList = [
+                                            SELECT 
+                                                    RecordTypeId,RecordType.name,RemoveCheckbox__c,Entity__c,Nominee__c,
+                                                    Insurance_Company__c,Policy_Type__c,Policy_Name__c,
+                                                    Policy_Number__c,Death_Benefit_Rs__c,Premium_Amount_Rs__c,
+                                                    Premium_Frequency__c,Annualized_Premium_In_Rs__c,
+                                                    Commencement_Date__c,Next_Premium_Due_Date__c,
+                                                    Tenure_of_Insurance__c,Number_of_Years_Left__c,
+                                                    Return_Of_Interest__c,      /* Prajakta - FP changes - 23-05-2013 */
+                                                    Surrender_Cash_Value__c,Sum_Assured_Rs__c,Action__c,Entity__r.Name,Entity__r.firstName 
+                                            FROM 
+                                                    Insurance__c 
+                                            WHERE 
+                                                    (   Entity__C = : entityId      
+                                                        OR
+                                                        Entity__r.Parent_Entity__c = : entityId
+                                                    ) 
+                                            ORDER BY  RecordTypeId,Policy_Type__c,Entity__c                                                                                                                                                                 
+                                        ];    
+        return insuranceList; 
+    }     
+    
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: F0009        **/
+  /** Date    : 26/05/2011   **/
+  /** Purpose : Added one field in the select statement Annual_Premium_amount__c 
+  /****************************************************/ 
+  /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: F0047,FS0345  **/
+  /** Date    : 01/07/2011, 
+          15/12/2011  **/
+  /** Purpose : 1. Added one field in the select statement Premium_Paying_Term__c
+          2. For Asset Allocation page fetch the insurances with the flag = 'Data Entry'    
+  /****************************************************/
+    public List<Insurance__c> getInsuranceListByRecordType(String entityId) {
+        List<Insurance__c> insuranceList = [
+                                            SELECT 
+                                                    RecordTypeId,RecordType.name,RemoveCheckbox__c,Entity__c,Nominee__c,Entity_Name__c,
+                                                    Insurance_Company__c,Policy_Type__c,Policy_Name__c,
+                                                    Policy_Number__c,Death_Benefit_Rs__c,Premium_Amount_Rs__c,totalAsset__c,
+                                                    Premium_Frequency__c,Annualized_Premium_In_Rs__c,
+                                                    Commencement_Date__c,Next_Premium_Due_Date__c,Premium_Payment_Frequency__c,
+                                                    Tenure_of_Insurance__c,Number_of_Years_Left__c,Current_Amount__c,Maturity_Amount__c,
+                                                    Surrender_Cash_Value__c,Sum_Assured_Rs__c,Action__c,Entity__r.Name,Entity__r.firstName,Entity__r.LastName,
+                                                    Annual_Premium_amount__c,Premium_Paying_Term__c, //F0047
+                                                    Return_Of_Interest__c,      /* Prajakta - FP changes - 23-05-2013 */
+                                                    Revised_Maturity_Amount__c 
+                                                    /* Prajakta - FP changes - 06-03-2013 */ 
+                                            FROM 
+                                                    Insurance__c 
+                                            WHERE 
+                                                    RecordType.Name='Life Insurance'
+                                             AND
+                                                    Policy_Type__c not IN('Term Life')       
+                                             AND
+                                                    (   Entity__C = : entityId      
+                                                        OR
+                                                        Entity__r.Parent_Entity__c = : entityId
+                                                    )
+                                            AND Flag__c = 'Data Entry'
+                                           
+                                            ORDER BY  RecordTypeId,Policy_Type__c,Entity__c                                                                                                                                                                 
+                                        ];    
+        return insuranceList; 
+    }         
+    
+    
+     public List<Insurance__c> getInsuranceListByRecordTypeForIncludeActionPlan(String entityId) {
+        List<Insurance__c> insuranceList = [
+                                            SELECT 
+                                                    RecordTypeId,RecordType.name,RemoveCheckbox__c,Entity__c,Nominee__c,Entity_Name__c,
+                                                    Insurance_Company__c,Policy_Type__c,Policy_Name__c,
+                                                    Policy_Number__c,Death_Benefit_Rs__c,Premium_Amount_Rs__c,totalAsset__c,
+                                                    Premium_Frequency__c,Annualized_Premium_In_Rs__c,
+                                                    Commencement_Date__c,Next_Premium_Due_Date__c,Premium_Payment_Frequency__c,
+                                                    Tenure_of_Insurance__c,Number_of_Years_Left__c,Current_Amount__c,Maturity_Amount__c,
+                                                    Surrender_Cash_Value__c,Sum_Assured_Rs__c,Action__c,Entity__r.Name,Entity__r.firstName,Entity__r.LastName,
+                                                    Annual_Premium_amount__c,Premium_Paying_Term__c, //F0047
+                                                    Return_Of_Interest__c,      /* Prajakta - FP changes - 23-05-2013 */
+                                                    Revised_Maturity_Amount__c 
+                                                    /* Prajakta - FP changes - 06-03-2013 */ 
+                                            FROM 
+                                                    Insurance__c 
+                                            WHERE 
+                                                    RecordType.Name='Life Insurance'
+                                             AND
+                                                    Policy_Type__c not IN('Term Life')       
+                                             AND
+                                                    (   Entity__C = : entityId      
+                                                        OR
+                                                        Entity__r.Parent_Entity__c = : entityId
+                                                    )
+                                            AND Flag__c = 'Data Entry'
+                                            AND isIncludeActionPlan__c = true
+                                            ORDER BY  RecordTypeId,Policy_Type__c,Entity__c                                                                                                                                                                 
+                                        ];    
+        return insuranceList; 
+    }         
+    public List<GoalInsuranceAssociation__c> getGoalInsuranceAllocationList(String entityId){
+        List<GoalInsuranceAssociation__c> goalInsuranceAssociationList =  [
+                                                    SELECT 
+                                                            Allocated__c,Allocation__c,
+                                                            GoalYearValue__c, 
+                                                            Insurance__c,
+                                                            Goal__c, Goal__r.Description__c,
+                                                            Insurance__r.recordType.Name,
+                                                            Insurance__r.Entity__c ,
+                                                            Insurance__r.entity__r.FirstName, 
+                                                            Insurance__r.entity__r.LastName,
+                                                            Insurance__r.action__c,
+                                                            Insurance__r.total_insurance__c,
+                                                            Insurance__r.Allocated_Amount__c,
+                                                            Insurance__r.Insurance_Company__c, 
+                                                            Insurance__r.Policy_Type__c, 
+                                                            Insurance__r.Policy_Name__c, 
+                                                            goal__r.SelectedGoalProfile__r.Gold_allocation__c ,
+                              goal__r.SelectedGoalProfile__r.Debt_Allocation__c,
+                              goal__r.SelectedGoalProfile__r.Equity_Allocation__c,                                                                                                                                         
+ 
+                                                            Insurance__r.Policy_Number__c,
+                                                            Insurance__r.Premium_Amount_Rs__c
+                                                    FROM 
+                                                            GoalInsuranceAssociation__c 
+                                                    WHERE 
+                                                            Allocated__c!=null
+                                                      AND
+                                                      (
+                                                            Insurance__r.Entity__c  = :entityId
+                                                          OR
+                                                            Insurance__r.Entity__r.Parent_Entity__c = :entityId
+                                                        )    
+                                                     ];       
+                                                                               
+        return goalInsuranceAssociationList;      
+    }        
+
+    //=============== FOR EMERGENCY, ESTATE AND INSURANCE PLANNING ============================
+    /**
+    * @getSpouseDetails() function returns the details of Entity's spouse
+    * @params:id of particular Account (Entity)
+    * @Return Type:Account object instance for that particular entity's spouse
+    */  
+    public Account getSpouseEntity(String entityId){
+        List<Account> spouseEntityList;
+        Account spouseEntity;
+        try{
+        spouseEntityList = [
+                                SELECT 
+                                    Name,Parent_Entity__c, FirstName, LastName,Estimated_Life_Expectancy__c,
+                                    Relationship_to_Entity__pc,PersonBirthdate
+                                FROM 
+                                    Account  
+                                WHERE 
+                                    isPersonAccount =: true 
+                                AND 
+                                    Parent_Entity__c =: entityId 
+                                AND 
+                                    Relationship_to_Entity__pc IN ('Wife','Husband')
+                                ORDER BY 
+                                    Id 
+                        ];
+        if(spouseEntityList != null && spouseEntityList.size() > 0)
+        {
+          spouseEntity = spouseEntityList[0];
+        }
+        }
+        catch(Exception e){
+             system.debug('==========DatabaseSOQL Exception=========='+e.getmessage());
+        }
+        return spouseEntity ;
+    }   
+    
+    /**
+    * @getGlobalAssumptions() function returns the values from Global Assumptions
+    * @params:id of particular Account (Entity)
+    * @Return Type:Entity_Global_Assumption__c
+    */ 
+    public Entity_Global_Assumption__c getGlobalAssumptions(String entityId){
+        Entity_Global_Assumption__c assumption;
+        try{
+            assumption = [ 
+                                SELECT
+                                    Number_Of_Months__c,Expected_Return_on_Investment__c,
+                                    Gold_Growth_Rate__c,       /* Prajakta - FP changes - 01-04-2013 */
+                                    Income_Growth_Rate__c,Inflation_Rate__c,Stock_Growth_Rate__c
+                                FROM
+                                    Entity_Global_Assumption__c 
+                                WHERE
+                                        Account__c =: entityId      
+                                LIMIT 1
+                            ];
+        }
+        catch(Exception e){
+             system.debug('==========DatabaseSOQL Exception=========='+e.getmessage());
+        }
+        return assumption; 
+    }
+    
+    /**
+    * @getTotalLiabilities() function returns the total of liabilities for a particular entity
+    * @params:id of particular Account (Entity)
+    * @Return Type:AggregateResult
+    */ 
+    public List<AggregateResult> getTotalLiabilities(List<Account> accountList) {
+        List<AggregateResult> liability;
+        try{
+            liability = [
+                            SELECT 
+                                   SUM(Principal_Amount_Outstanding__c) Liabilities ,
+                                   Entity__c entity
+                               FROM
+                                   Loan__c
+                               WHERE
+                                   Entity__c IN: accountList
+                                GROUP BY
+                                    Entity__c
+                              ];      
+        }
+        catch(Exception e){
+             system.debug('==========DatabaseSOQL Exception=========='+e.getmessage());
+        }
+        return  liability;                                                    
+    }      
+    
+    /**
+    * @getTotalFamilyLiabilities() function returns the total of liabilities for a all family members
+    * @params:id of particular Account (Entity)
+    * @Return Type:AggregateResult
+    */ 
+    public AggregateResult getTotalFamilyLiabilities(String entityId) {
+        AggregateResult liability;
+        try{
+            liability = [
+                            SELECT 
+                                   SUM(Principal_Amount_Outstanding__c) Liabilities,
+                                   SUM(EMI__c) emi 
+                               FROM
+                                   Loan__c
+                               WHERE
+                                   (Entity__c =:entityId
+                                    OR
+                                   Entity__r.Parent_Entity__c =:entityId)
+                              ];      
+        }
+        catch(Exception e){
+             system.debug('==========DatabaseSOQL Exception=========='+e.getmessage());
+        }
+        return  liability;                                                    
+    }      
+    
+    /**
+    * @getTotalExpenses() function returns the total monthly expenses for a particular entity
+    * @params:id of particular Account (Entity)
+    * @Return Type:AggregateResult
+    */ 
+    public AggregateResult getTotalExpenses(String entityId) {
+        AggregateResult expense;
+        try{
+            expense = [
+                           SELECT 
+                                SUM(MonthlyExpense__c) expenses 
+                           FROM
+                               Expense__c
+                           WHERE
+                               (Entity_Name__c =:entityId
+                                    OR
+                               Entity_Name__r.Parent_Entity__c =:entityId)
+                           ]; 
+        }     
+        catch(Exception e){
+             system.debug('==========DatabaseSOQL Exception=========='+e.getmessage());
+        }
+        return expense ;                         
+    }      
+    /**
+    * @getTotalInsurance() function returns the total life insurance cover(Death Benefit) and AnnualPremium for a particular entity
+    * @params:List<Account>
+    * @Return Type:List<AggregateResult>
+    */ 
+    public List<AggregateResult> getTotalInsurance(List<Account> accountList,String Flag) {
+        List<AggregateResult> insurance = [
+                           SELECT 
+                                SUM(Death_Benefit_Rs__c) deathbenefit,
+                                SUM(Annual_Premium_amount__c) annualpremium ,
+                                Entity__c entity                                
+                           FROM
+                               Insurance__c
+                           WHERE
+                               Entity__c IN:accountList
+                           AND 
+                               RecordType.Name='Life Insurance'
+                           AND 
+                               Flag__c=:Flag
+                            GROUP BY
+                               Entity__c
+                           ];      
+        return insurance;                         
+    }      
+    /**
+    * @getGoalsExceptRetirement() function returns the goals (except retirement) for a particular entity
+    * @params:id of particular Account (Entity)
+    * @Return Type:List<AggregateResult>
+    */ 
+    public List<AggregateResult> getGoalsExceptRetirement(String entityId) {
+        List<AggregateResult> goals= [
+                       SELECT 
+                            SUM(Cost_of_Goal_Annual__c) annualcost,Goal_Type__c goaltype
+                       FROM
+                           Goal__c
+                       WHERE
+                           Entity__c =:entityId
+                        AND 
+                           Goal_Type__c!='Retirement'
+                        GROUP BY 
+                           Goal_Type__c
+                       ];    
+        return goals;                         
+    }                        
+    /**
+    * @getExistingAssets() function returns the total of each assets recordType for a particular entity
+    * @params:id of particular Account (Entity)
+    * @Return Type:List<AggregateResult>
+    */
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: 00001541       **/
+  /** Date    : 9/3/2012     **/
+  /** Purpose : Added 'Business Assets' under 'Less:- Existing Investments' section
+          In 'Life Insurance Planning Page'
+  /****************************************************/ 
+    public List<AggregateResult> getExistingAssets(String entityId) {
+        List<AggregateResult> aggQueryResult = [ 
+                                    SELECT 
+                                        Sum(Monthly_Asset__c) totalasset, RecordType.Name recordtype,
+                                        RecordType.Id
+                                        , Is_Include_In_HLV_Asset__c includeHLV /*Prajakta - FP changes II - 27-05-2013*/
+                                    FROM 
+                                            Asset__c 
+                                    WHERE 
+                                        recordTypeId !=null 
+                                    AND 
+                                         (Entity__c =:entityId
+                                    OR
+                                         Entity__r.Parent_Entity__c =:entityId)
+                                    AND 
+                                         RecordType.Name in( 'Cash and Cash Equivalents',
+                                                             'Deposits with Bank',
+                                                             //'Post Office Saving Schemes',
+                                                             'Govt. Saving Schemes', //Prajakta
+                                                             'Retirement Accounts',
+                                                             'Business Assets') 
+                                    GROUP BY 
+                                        RecordType.Name,RecordType.Id,recordTypeId
+                                        , Is_Include_In_HLV_Asset__c /*Prajakta - FP changes II - 27-05-2013*/
+                                ];
+         return aggQueryResult ;
+    }
+    /**
+    * @getExistingRealEstatePersonalAssets() function returns the total of each RealEstate or PersonalAsset for a particular entity
+    * @params:id of particular Account (Entity)
+    * @Return Type:List<AggregateResult>
+    */ 
+    public List<AggregateResult> getExistingRealEstatePersonalAssets(String entityId) {
+        List<AggregateResult> aggQueryResult = [ 
+                            SELECT 
+                                Sum(Monthly_Asset__c) totalasset, RecordType.Name recordtype,
+                                RecordType.Id, Asset_Types__c assettype
+                                , Is_Include_In_HLV_Asset__c includeHLV /*Prajakta - FP changes II - 27-05-2013*/
+                            FROM 
+                                    Asset__c 
+                            WHERE 
+                                recordTypeId !=null 
+                            AND 
+                                (Entity__c =:entityId
+                                    OR
+                                Entity__r.Parent_Entity__c =:entityId)
+                            AND 
+                                (    ( RecordType.Name in('Personal Assets') AND Asset_Types__c in('Gold'))
+                                   OR( RecordType.Name in('Real Estate Assets') AND Asset_Types__c NOT IN('Primary'))
+                                )
+                            GROUP BY 
+                                RecordType.Name,RecordType.Id,recordTypeId,Asset_Types__c
+                                , Is_Include_In_HLV_Asset__c /*Prajakta - FP changes II - 27-05-2013*/
+                        ];
+         return aggQueryResult ;
+    }
+    /** 
+    * @getDependentsIncomeValues() returns list of AggregateResult for Incomes of family members related to given Account
+    * @params:List of accounts
+    * @Return Type:List of AggregateResult 
+    */
+    public List<AggregateResult> getDependentsIncomeValues(List<Account> accountList) {
+        List<AggregateResult> aggQueryResult = [ 
+                                SELECT 
+                                    Sum(Monthly_Income__c) amount,Entity__c entity ,Entity__r.Name name
+                                FROM 
+                                    Income__c 
+                                WHERE 
+                                    recordTypeId !=null 
+                                AND 
+                                    Entity__c IN:accountList
+                                GROUP by 
+                                    Entity__c,Entity__r.Name
+                            ];
+         return aggQueryResult ;
+    }
+  /** Eternus Solutions  **/
+  /** Author  : Manasi Ranade  **/
+  /** Issue Id: 00001449      **/
+  /** Date    : 16/01/2012   **/
+  /** Purpose : Added RemoveCheckbox__c field in the select statement**/
+  /****************************************************/
+    /**
+    * @getGenInsuranceValues() function returns the medical and asset insurances for a particular entity
+    * @params:id of particular Account (Entity),RecordTypeId
+    * @Return Type:List<Insurance__c>
+    */ 
+    public List<Insurance__c> getGenInsuranceValues(String entityId,String recordTypeId,String Flag) {
+        List<Insurance__c> insurances= [ 
+                                SELECT 
+                                        Id,Entity__r.Name, Policy_Type__c, Policy_Name__c,Premium_Frequency__c,
+                                        Sum_Assured_Rs__c,Premium_Amount_Rs__c,RemoveCheckbox__c
+                                FROM 
+                                        Insurance__c 
+                                WHERE 
+                                        RecordTypeId =:recordTypeId 
+                                AND 
+                                        (Entity__c =:entityId
+                                    OR
+                                         Entity__r.Parent_Entity__c =:entityId)
+                                AND 
+                                    Flag__c=:Flag       
+                                ]; 
+        return insurances;
+    }
+    /**
+    * @getTotalAssetsForEmergencyFund() function returns the assets allocated to emergency fund for a particular entity
+    * @params:id of particular Account (Entity)
+    * @Return Type:List<AggregateResult>
+    */
+    public List<AggregateResult> getTotalAssetsForEmergencyFund(String entityId) {
+        List<AggregateResult> goalAsset =[
+                        SELECT
+                            Sum(Allocation__c) amount, Asset__r.Entity__r.Name entity, 
+                            Asset__r.EmergencyFundAction__c action,
+                            Asset__r.Asset_Types__c assettype,Asset__r.Account_Type__c accounttype
+                        FROM
+                            GoalAssetAssociation__c 
+                        WHERE
+                            (Goal__r.Entity__c=:entityId
+                            OR
+                            Goal__r.Entity__r.Parent_Entity__c =: entityId)     
+                            AND
+                            Goal__r.Goal_Type__c='Emergency Fund'
+                        GROUP BY
+                            Asset__r.Asset_Types__c,Asset__r.Account_Type__c,Asset__r.Entity__r.Name,
+                            Asset__r.EmergencyFundAction__c
+                            
+                        ];       
+        return goalAsset;
+    }
+    /**
+    * @getTotalInsuranceForEmergencyFund() function returns the insurances allocated to emergency fund for a particular entity
+    * @params:id of particular Account (Entity)
+    * @Return Type:List<AggregateResult>
+    */
+    public List<AggregateResult> getTotalInsuranceForEmergencyFund(String entityId) {
+        List<AggregateResult> goalInsurance =[
+                            SELECT
+                                Sum(Allocation__c) amount, Insurance__r.Entity__r.Name entity,
+                                Insurance__r.EmergencyFundAction__c action,
+                                Insurance__r.RecordType.Name recordtype
+                            FROM
+                                GoalInsuranceAssociation__c 
+                            WHERE
+                                (Goal__r.Entity__c=:entityId
+                                OR
+                                Goal__r.Entity__r.Parent_Entity__c =: entityId)     
+                                AND
+                                Goal__r.Goal_Type__c='Emergency Fund'
+                            GROUP BY
+                                Insurance__r.RecordType.Name,Insurance__r.Entity__r.Name,
+                                Insurance__r.EmergencyFundAction__c
+                            ];
+        return goalInsurance;
+    }    
+    /**
+    * @getTotalInvestmentAssetsForEmergencyFund() function returns the InvestmentAssets allocated to emergency fund for a particular entity
+    * @params:id of particular Account (Entity)
+    * @Return Type:List<AggregateResult>
+    */
+    public List<AggregateResult> getTotalInvestmentAssetsForEmergencyFund(String entityId) {
+        List<AggregateResult> goalInvAsset =[
+                            SELECT
+                                Sum(Allocation__c) amount, Investment_Asset__r.Entity__r.Name entity, 
+                                Investment_Asset__r.RecordType.Name recordtype,
+                                //Investment_asset__r.TotalAsset__c totalAsset,
+                                Investment_Asset__r.EmergencyFundAction__c action
+                            FROM
+                                GoalInvestmentAssetAssociation__c 
+                            WHERE
+                                (Goal__r.Entity__c=:entityId
+                                OR
+                                Goal__r.Entity__r.Parent_Entity__c =: entityId)
+                                AND
+                                Goal__r.Goal_Type__c='Emergency Fund'
+                            GROUP BY
+                                Investment_Asset__r.RecordType.Name,Investment_Asset__r.Entity__r.Name,
+                                Investment_Asset__r.EmergencyFundAction__c
+                            ];
+        return goalInvAsset ;
+    }
+    /**
+    * @getListFixedIncomeInvestmentAssetsForEmergencyFund() function returns the Fixed Income InvestmentAssets allocated to emergency fund for a particular entity
+    * @params:id of particular Account (Entity)
+    * @Return Type:List<GoalInvestmentAssetAssociation__c>
+    * Added on : 7/10/2013 - Aditi Satpute
+    * Purpose : Fixed income doesn't store Allocated Amount in Allocation__c 
+    			and Fixed Income is treated as individual Record so cannot Add its Total Assets as done in above function.
+    			Created new function wich returns individually allocated Fixed Income list.
+    */
+     public List<GoalInvestmentAssetAssociation__c> getListFixedIncomeInvestmentAssetsForEmergencyFund(String entityId) {
+        List<GoalInvestmentAssetAssociation__c> goalInvAssetFixedIncomeList =[
+                            SELECT
+                                Allocation__c, Investment_Asset__r.Entity__r.Name,Allocated__c,
+                                Investment_Asset__r.RecordType.Name,
+                                Investment_asset__r.TotalAsset__c,
+                                Investment_Asset__r.EmergencyFundAction__c 
+                            FROM
+                                GoalInvestmentAssetAssociation__c 
+                            WHERE
+                                (Goal__r.Entity__c=:entityId
+                                OR
+                                Goal__r.Entity__r.Parent_Entity__c =: entityId)
+                                AND
+                                Goal__r.Goal_Type__c='Emergency Fund'
+                                AND 
+                                Investment_Asset__r.RecordType.Name = 'Fixed Income'
+                            
+                            ];
+        return goalInvAssetFixedIncomeList ;
+    }
+    
+    /**
+    * @getAssetsForEmergencyFund() function returns the assets allocated to emergency fund for a particular entity
+    * @params:id of particular Account (Entity)
+    * @Return Type:List<Asset__c>
+    */
+    public List<Asset__c> getAssetsForEmergencyFund(String entityId) {
+        List<Asset__c> assets=[
+                    SELECT
+                       Id,RecordType.Name,Entity__r.Name,EmergencyFundAction__c,
+                       Asset_Types__c ,Account_Type__c
+                    FROM
+                        Asset__c 
+                    WHERE
+                        Id IN     
+                        (    Select 
+                                 Asset__c from GoalAssetAssociation__c 
+                             where 
+                                 Goal__r.Goal_Type__c='Emergency Fund' 
+                                 AND 
+                                     (Asset__r.Entity__c=: entityId
+                                        OR
+                                      Asset__r.Entity__r.Parent_Entity__c =: entityId
+                                      )
+                         )   
+                    ];
+        return assets;
+    }
+    /**
+    * @getInvestmentAssetsForEmergencyFund() function returns the investment assets allocated to emergency fund for a particular entity
+    * @params:id of particular Account (Entity)
+    * @Return Type:List<Investment_Asset__c>
+    */
+    public List<Investment_Asset__c> getInvestmentAssetsForEmergencyFund(String entityId) {
+        List<Investment_Asset__c> investmentassets =[
+                                SELECT
+                                   Id,RecordType.Name,Entity__r.Name,EmergencyFundAction__c  
+                                FROM
+                                    Investment_Asset__c 
+                                WHERE
+                                    Id IN     
+                                    (    Select 
+                                             Investment_Asset__c from GoalInvestmentAssetAssociation__c 
+                                         where 
+                                             Goal__r.Goal_Type__c='Emergency Fund' 
+                                             AND 
+                                                 (Investment_Asset__r.Entity__c=: entityId
+                                                    OR
+                                                  Investment_Asset__r.Entity__r.Parent_Entity__c =: entityId
+                                                  )
+                                     )   
+                                ];
+        return investmentassets;
+    }
+    /**
+    * @getInsurancesForEmergencyFund() function returns the insurances allocated to emergency fund for a particular entity
+    * @params:id of particular Account (Entity)
+    * @Return Type:List<Insurance__c>
+    */
+    public List<Insurance__c> getInsurancesForEmergencyFund(String entityId) {
+        List<Insurance__c> insurances =[
+                            SELECT
+                               Id,RecordType.Name,Entity__r.Name,EmergencyFundAction__c  
+                            FROM
+                                Insurance__c 
+                            WHERE
+                                Id IN     
+                                (    Select 
+                                         Insurance__c from GoalInsuranceAssociation__c 
+                                     where 
+                                         Goal__r.Goal_Type__c='Emergency Fund' 
+                                         AND 
+                                             (Insurance__r.Entity__c=: entityId
+                                                OR
+                                              Insurance__r.Entity__r.Parent_Entity__c =: entityId
+                                              )
+                                 )   
+                            ];
+        return insurances;
+    }
+      
+      /**
+    * @getEntityLifeInsurance() function returns life insurance(analysis status) of Entity
+    * @params:id of particular Account (Entity)
+    * @Return Type:Insurance object instance for that particular entity's spouse
+    */  
+    public Insurance__c getEntityLifeInsurance(String entityId,String recordTypeId, String status){
+        Insurance__c insurance;
+        try{
+            insurance= [
+                                SELECT 
+                                    RecordTypeId,Entity__c,Nominee__c,Insurance_Company__c,Policy_Type__c,
+                                    Policy_Name__c,Policy_Number__c,Death_Benefit_Rs__c,Premium_Amount_Rs__c,
+                                    Premium_Frequency__c,Annualized_Premium_In_Rs__c,Commencement_Date__c,
+                                    Next_Premium_Due_Date__c,Tenure_of_Insurance__c,Number_of_Years_Left__c,
+                                    Surrender_Cash_Value__c,Sum_Assured_Rs__c,RemoveCheckbox__c,
+                                    Suggested_Cover_General_Insurance__c,Flag__c    
+                                FROM 
+                                    Insurance__c
+                                WHERE 
+                                    Entity__c =: entityId 
+                                AND 
+                                    RecordTypeId=:recordTypeId
+                                AND 
+                                    Flag__c =:status
+                                LIMIT 1
+                        ];
+        }
+        catch(Exception e){
+             system.debug('==========DatabaseSOQL Exception=========='+e.getmessage());
+        }
+        return insurance;
+    }   
+    /**
+    * @getEntityLifeInsurances() function returns life insurances(analysis status) of Entities
+    * @params:List<Account>,recordTypeId,status
+    * @Return Type:List<Insurance__c> 
+    */  
+    /** Eternus Solutions      **/
+  /** Author  : Manasi Ranade*/
+  /** Issue Id: 00001673      **/
+  /** Date    : 7/6/2012 **/
+  /** Purpose : Added  Tenure Of Insurance in select statement**/
+      /****************************************************/
+    public List<Insurance__c> getEntityLifeInsurance(List<Account> accountList,String recordTypeId, String status){
+      system.debug('sadddddddddddddddd:'+recordTypeId);
+      
+        List<Insurance__c> insurances= [
+                                SELECT 
+                                    Entity__c,Policy_Type__c,
+                                    Death_Benefit_Rs__c,Premium_Amount_Rs__c,
+                                    Suggested_Cover_General_Insurance__c,Tenure_of_Insurance__c//00001673 Added  Tenure
+                                FROM 
+                                    Insurance__c
+                                WHERE 
+                                    Entity__c IN: accountList
+                                AND 
+                                    RecordTypeId=:recordTypeId
+                                AND 
+                                    Flag__c =:status
+                        ];
+        return insurances;
+    }   
+    //===========================================================================
+    
+       public List<AggregateResult> getPortfolioAssets(List<Account>EntityList) {  
+        List<AggregateResult> assetList=new List<AggregateResult>();
+       try{
+                 assetList = [SELECT 
+                                            RecordType.Name assetClass,
+                                            SUM(Current_Balance__c) current_balance,
+                                            SUM(Current_Value__c) current_value, 
+                                            SUM(Accumulated_Value__c) accumulated_value
+                                      FROM 
+                                            Asset__c 
+                                      WHERE 
+                                            Entity__c IN :EntityList
+                                      AND 
+                                        (
+                                            RecordType.Name in( 'Cash and Cash Equivalents',
+                                                                         'Deposits with Bank',
+                                                                         //'Post Office Saving Schemes',
+                                                                         'Govt. Saving Schemes',  //Prajakta
+                                                                         'Retirement Accounts')
+                                            OR(
+                                               RecordType.Name in('Personal Assets')
+                                            AND
+                                                Asset_Types__c in('GOLD')
+                                             )
+                                            OR(
+                                                RecordType.Name in('Real Estate Assets')
+                                            AND
+                                                Asset_Types__c in('SECONDARY','LAND','Rental Property')
+                                             )
+                                        )
+                                        GROUP BY 
+                                                RecordType.Name
+                                ];
+       }
+         catch(Exception e){
+            system.debug('==========DatabaseSOQL Exception=========='+e.getmessage());
+        }
+    return assetList;
+}
+public List<AggregateResult> getPortfolioInvestmentAssets(List<Account>EntityList) {
+    List<AggregateResult> investmentAssetList=new List<AggregateResult>();
+    try{
+     investmentAssetList = [
+                                              SELECT 
+                                                    RecordType.Name assetClass,
+                                                    Asset_Type__c assetType,
+                                                    SUM(TotalAsset__c)totalAsset
+                                              FROM
+                                                    Investment_Asset__c
+                                              WHERE
+                                                    Entity__c IN :EntityList 
+                                              AND
+                                              (
+                                                RecordType.Name in( 'Fixed Income', 'Stocks')//,'Gold')
+                                                OR(
+                                                   RecordType.Name in('Mutual Fund')
+                                                   AND
+                                                   (
+                                                       Asset_Type__c like '%Equity%'
+                                                     OR
+                                                         Asset_Type__c like '%Debt%'
+                                                   )
+                                                )
+                                                OR(
+                                                  RecordType.Name in('Gold and Silver') /*Prajakta - 24-05-2013 */
+                                                AND
+                                                  Asset_Type__c in('Physical','ETF','Fund')
+                                               )//Prajakta
+                                              )
+                                           GROUP BY 
+                                                RecordType.Name,Asset_Type__c
+                                             ]; 
+    }catch(Exception e){
+            system.debug('==========DatabaseSOQL Exception=========='+e.getmessage());
+        }
+             return investmentAssetList; 
+    }  
+     public List<AggregateResult> getPortfolioInsurance(List<Account>EntityList) {
+    List<AggregateResult> insuranceList = [
+                                              SELECT 
+                                                    RecordType.Name assetClass,
+                                                    Policy_Type__c PolicyType,
+                                                    SUM(Surrender_Cash_Value__c)totalInsurance
+                                              FROM
+                                                    Insurance__c
+                                              WHERE
+                                                    Entity__c IN :EntityList 
+                                              AND
+                                              
+                                                RecordType.Name ='Life Insurance'
+                                                
+                                             
+                                           GROUP BY 
+                                                RecordType.Name,Policy_Type__c
+                                             ]; 
+                                     return insuranceList; 
+    }
+   public List<AggregateResult> getSuggestedAssets(List<Account> entityLst) { 
+
+    List<AggregateResult> assetList = [SELECT 
+                                            Asset__r.RecordType.Name assetClass,
+                                            SUM(allocated__c) allocatedPercent
+                                       FROM 
+                                            GoalAssetAssociation__c 
+                                       WHERE 
+                                            Asset__r.Entity__c IN : entityLst
+                                        AND 
+
+                                        (
+                                            Asset__r.RecordType.Name in( 'Cash and Cash Equivalents',
+                                                                         'Deposits with Bank',
+                                                                         //'Post Office Saving Schemes',
+                                                                         'Govt. Saving Schemes',   //Prajakta
+                                                                         'Retirement Accounts')
+                                            OR(
+                                            Asset__r.RecordType.Name in('Personal Assets')
+                                            AND
+                                            Asset__r.Asset_Types__c in('GOLD')
+                                            )
+                                            OR(
+                                            Asset__r.RecordType.Name in('RealEstate Assets')
+                                            AND
+                                            Asset__r.Asset_Types__c in('SECONDARY','LAND','Rental Property')
+                                            )
+                                            )
+                                            GROUP BY Asset__r.RecordType.Name];
+
+return assetList;
+
+}
+
+
+public List<AggregateResult> getSuggestedInvestmentAssets(List<Account> entityLst) {
+
+List<AggregateResult> investmentAssetList = [SELECT 
+
+                                                    Investment_Asset__r.RecordType.Name assetClass,
+                                                    Investment_Asset__r.Asset_Type__c assetType,
+                                                    SUM(allocated__c) allocatedPercent,
+                                                    SUM(Investment_Asset__r.TotalAsset__c)totalAssets
+                                             FROM
+                                                    GoalInvestmentAssetAssociation__c
+                                             WHERE
+                                                    Investment_Asset__r.Entity__c IN: entityLst 
+                                                    GROUP BY Investment_Asset__r.RecordType.Name,Investment_Asset__r.Asset_Type__c
+                                            ]; 
+                                                    
+        return investmentAssetList; 
+
+}
+public List<AggregateResult> getSuggestedInsurance(List<Account> entityLst){
+       List<AggregateResult> insuranceList =[SELECT
+                                                     Insurance__r.RecordType.Name assetClass,
+                                                     Insurance__r.Policy_Type__c PolicyType,
+                                                     SUM(allocated__c) allocatedPercent
+                                             FROM
+                                                    GoalInsuranceAssociation__c
+                                             WHERE
+                                                    Insurance__r.Entity__c IN: entityLst 
+                                             AND    
+                                                    Insurance__r.RecordType.Name='Life Insurance'
+                                             GROUP BY Insurance__r.RecordType.Name,Insurance__r.Policy_Type__c
+                                          ];
+       return insuranceList;
+                                          
+}
+ 
+  
+   public List<ProfilerQuestions__c> getProfilerQuestion(){
+    List<ProfilerQuestions__c> questionList=[select Id,name,Question__c,AnswerOptions__c ,Score__c
+                                        from ProfilerQuestions__c  
+                                        order by name];
+    return questionList;
+   }
+   
+  
+   
+   public List<EntityProfilerQuestion__c> getProfilerAnswersFromDB(string currentEntity){
+    List<EntityProfilerQuestion__c> answerList=[select id,name,ProfilerQuestion__c,Answer__c,Score__c,ProfilerQuestion__r.Question__c ,ProfilerQuestion__r.Action__c,ProfilerQuestion__r.name from EntityProfilerQuestion__c where Entity__c=:currentEntity order by ProfilerQuestion__r.name ];
+    
+    
+    return answerList;
+   }
+// Added Methods for Goal Page
+    public Goal_Profile__c getGoalProfile(String id){
+        Goal_Profile__c goalProfile=[   
+                                            SELECT 
+                                                name,Goal_Profile_Type__c, debt_Allocation__c,
+                                                Equity_Allocation__c,Gold_allocation__c,Risk_Type__c,
+                                                Return_expected__c,Returns_expected__c,Account__c
+                                                 
+                                            FROM 
+                                                Goal_Profile__c 
+                                            WHERE
+                                             Id = :id 
+                                        ];
+        return goalProfile;
+    }
+    public List<GoalInsuranceAssociation__c> getGoalInsuranceAssociationList(String entityId,String goalId){
+        List<GoalInsuranceAssociation__c> goalInsuranceAssociationList =  [
+                                                    SELECT 
+                                                            Allocated__c,
+                                                            insurance__r.annual_premium_amount__c,
+                                                            insurance__r.Policy_Type__c,
+                                                            insurance__r.Entity__r.name,
+                                                            insurance__r.Tenure_of_Insurance__c,                                                            
+                                                            Goal__c,
+                                                            insurance__r.Action__c 
+                                                    FROM 
+                                                            GoalInsuranceAssociation__c 
+                                                    WHERE 
+                                                            Insurance__r.Entity__c  = :entityId
+                                                    AND
+                                                            Goal__c = :goalId ];                                 
+        return goalInsuranceAssociationList;      
+    }        
+    public List<AggregateResult> getGoalInvestmentAssociationList(String entityId,String goalId) {
+        List<AggregateResult> goalInvestmentAssociationList =  
+                                                            [
+                                                                SELECT 
+                                                                        investment_Asset__r.recordType.Name recordTypeName,
+                                                                        Investment_Asset__r.Entity__r.Name entityName,
+                                                                        Investment_Asset__r.Action__c action,
+                                                                        MAX(allocated__c) allocatedPercent,
+                                                                        SUM(Investment_Asset__r.TotalAsset__c) TotalAsset                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+                                                                FROM 
+                                                                        GoalInvestmentAssetAssociation__c 
+                                                                WHERE 
+                                                                        Investment_Asset__r.Entity__c  = :entityId
+                                                                AND
+                                                                        Goal__c = :goalId
+                                                                GROUP by    investment_Asset__r.recordType.Name,
+                                                                            Investment_Asset__r.Entity__r.Name,
+                                                                            investment_Asset__r.Action__c                                                                        
+                                                            ];                                                                                              
+        return goalInvestmentAssociationList;
+     }      
+     
+    public List<GoalAssetAssociation__c> getGoalAssetAllocationList(String entityId,String goalId) {
+         List<GoalAssetAssociation__c> goalAssetAssociationList=  [
+                                                                    SELECT 
+                                                                            allocated__c,
+                                                                            asset__r.Monthly_Asset__c,
+                                                                            asset__r.Account_Type__c,
+                                                                            asset__r.Asset_Types__c,
+                                                                            asset__r.Expected_Growth_Rate__c,
+                                                                            asset__r.entity__r.name,
+                                                                            asset__r.action__c,
+                                                                            asset__r.End_Year__c,
+                                                                            asset__r.Start_Year__c,
+                                                                            asset__r.Current_Value__c,
+                                                                            asset__r.Allocated_Amount__c,
+                                                                            Goal__c,
+                                                                            Goal__r.Description__c 
+                                                                    FROM 
+                                                                            GoalAssetAssociation__c 
+                                                                    WHERE 
+                                                                            asset__r.entity__c = :entityId
+                                                                    AND
+                                                                            Goal__c = :goalId];         
+        return goalAssetAssociationList;
+     }
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: FS0309        **/
+  /** Date    : 28/11/2011   **/
+  /** Purpose : Added Remark in select statement
+  /****************************************************/
+    public Goal__c getGoal(String selGoal) 
+    {
+        Goal__c goalObj = [ SELECT  entity__c,Goal_Type__c,RemoveCheckbox__c,Goal_Start_Year__c,
+                                    Goal_End_Year__c,Inflation_Rate__c,Cost_of_Goal_Annual__c,
+                                    Priority__c,Description__c,Entity__r.name,SelectedGoalProfile__c,Saving_type__c,
+                                    aggressive_profile_years__c,Retirement_Amount__c ,
+                                    moderately_aggressive_profile_years__c,
+                                    moderate_profile_years__c, Allocation_Message__c, /* Prajakta - FP changes - 22-03-2013 */
+                                    moderately_conservative_profile_years__c, Include_SIP__c,/* Prajakta - FP changes - 21-05-2013 */
+                                    conservative_profile_years__c,SelectedGoalProfile__r.name,
+                                    SelectedGoalProfile__r.Maximum_Returns68__c, SelectedGoalProfile__r.Maximum_Returns95__c,
+                                    SelectedGoalProfile__r.MinimumReturns68__c, SelectedGoalProfile__r.MinimumReturns95__c, 
+                                    SelectedGoalProfile__r.Return_expected__c,SelectedGoalProfile__r.Returns_expected__c,Allocated_Debt__c,Allocated_equity__c,Allocated_gold__c,
+                                    SelectedGoalProfile__r.Gold_allocation__c, SelectedGoalProfile__r.Debt_allocation__c ,SelectedGoalProfile__r.Equity_Allocation__c,
+                                    Remark__c, RichText_Remark__c, 
+                                    Entity__r.Retirement_Planning_Entity__c, /* Prajakta - FP changes - 31-05-2013 */
+                                    SIP_Start_Year__c,Risk_Profile__c  
+                            FROM  goal__c 
+                            WHERE id = :selGoal
+                        ];    
+        return goalObj ; 
+    }
+      /// Code for action plan
+   
+    public  List<Goal__c>  getGoal(List<String> goalList) 
+    {
+        List<Goal__c>   goalObjList = [
+                                SELECT entity__c, Goal_Type__c, RemoveCheckbox__c, Goal_Start_Year__c, Goal_End_Year__c, Inflation_Rate__c,
+                                       Cost_of_Goal_Annual__c, Priority__c, Description__c, Entity__r.name, SelectedGoalProfile__c, Saving_type__c,
+                                       annual_expenses__c, aggressive_profile_years__c, Goal_Frequency__c, Retirement_Amount__c,
+                                       moderately_aggressive_profile_years__c, moderate_profile_years__c, Entity__r.Retirement_Age__c,
+                                       Entity__r.PersonBirthdate, moderately_conservative_profile_years__c, IRR__c, OriginalGoalPV__c,
+                                       conservative_profile_years__c, SelectedGoalProfile__r.name, SelectedGoalProfile__r.Maximum_Returns68__c,
+                                       SelectedGoalProfile__r.Maximum_Returns95__c, SelectedGoalProfile__r.MinimumReturns68__c,
+                                       SelectedGoalProfile__r.MinimumReturns95__c, SelectedGoalProfile__r.Return_expected__c,
+                                       SelectedGoalProfile__r.Returns_expected__c, Allocated_Debt__c, Allocated_equity__c, Allocated_gold__c,
+                                       SelectedGoalProfile__r.Gold_allocation__c, SelectedGoalProfile__r.Debt_allocation__c,
+                                       SelectedGoalProfile__r.Equity_Allocation__c, Remark__c, SIP_Start_Year__c, Allocation_Message__c /* Prajakta - FP changes - 22-03-2013 */
+                                     , Entity__r.Retirement_Planning_Entity__c /* Prajakta - FP changes - 31-05-2013 */
+                                     , Include_SIP__c,Risk_Profile__c /* Prajakta - FP changes - 21-05-2013 */
+                                     , RichText_Remark__c
+                               //      , CreatedDate/* Kiran : FP changes : isuue - 6 : 10-06-2013 */
+                                  FROM goal__c 
+                                 WHERE Id IN: goalList
+                            //  order by CreatedDate/* Kiran : FP changes : isuue - 6 : 10-06-2013 */
+        ];    
+        return goalObjList ; 
+    }
+    
+     //Calling from the NewGoalService : getAssociatedAssets() method
+    public List<GoalAssetAssociation__c> getGoalAssetAllocationList(String entityId,List<String> goalIdList) 
+    {
+        List<GoalAssetAssociation__c> goalAssetAssociationList = [ SELECT allocated__c,
+                                                                            GoalYearValue__c,
+                                                                            Maturity_Value__c, /* Prajakta - FP Changes - 26-03-2013 */ 
+                                                                            asset__r.Monthly_Asset__c,
+                                                                            asset__r.Account_Type__c,
+                                                                            asset__r.Asset_Types__c,
+                                                                            asset__r.RecordType.Name,
+                                                                            asset__r.CalculatedInterestRate__c,
+                                                                            asset__r.Expected_Growth_Rate__c,
+                                                                            asset__r.Annual_Contribution__c,
+                                                                            asset__r.entity__r.name,
+                                                                            asset__r.action__c,
+                                                                            asset__r.End_Year__c,
+                                                                            asset__r.Start_Year__c,
+                                                                            Goal__c ,
+                                      /** Issue Id: FS0110        **/
+                                      /** Date    : 18/08/2011   **/
+                                                                            asset__r.Interest_Rate__c
+                                      /** Issue Id: 00001535       **/
+                                      /** Date    : 6/3/2012     **/
+                                                                            ,asset__r.Expected_Year_of_Sale__c,
+                                      /** Issue Id: 00001614         **/
+                                      /** Date    : 9/5/2012       **/
+                                                                            asset__r.Account_Number__c,
+                                                                            asset__r.Description__c,
+                                                                            asset__r.Bank_Name__c,
+                                                                            Allocation_Order__c 
+                                                                    FROM GoalAssetAssociation__c 
+                                                                    WHERE ( asset__r.entity__c = :entityId OR asset__r.entity__r.Parent_Entity__c = : entityId) AND Goal__c IN :goalIdList 
+                                                                    order by Allocation_Order__c 
+                                                                    ];
+    return goalAssetAssociationList;                                                                    
+    }
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: FS0164        **/
+  /** Date    : 9/27/2011   **/
+  /** Purpose : Query to select the Investment Asset those are allocated to current Goal
+  /****************************************************/
+    public List<GoalInvestmentAssetAssociation__c> getGoalInvestmentAssociationListSeparately(String entityId,List<String> goalIdList)
+    {
+        List<GoalInvestmentAssetAssociation__c> goalInvestmentAssociationList =[ SELECT investment_Asset__r.recordType.Name ,
+                                                                                Investment_Asset__r.Entity__r.Name ,
+                                                                                Investment_Asset__r.Action__c ,
+                                                                                allocated__c,
+                                                                                GoalYearValue__c,
+                                                                                Investment_Asset__r.TotalAsset__c,
+                                                                                Investment_Asset__r.Maturity_Date__c,
+                                                                                Investment_Asset__r.Maturity_Value__c,
+                                                                                Investment_Asset__r.Description__c,
+                                                                                Goal__c,
+                                                                                 Id,
+                                                                                 Allocation_Order__c 
+                                                                        FROM  GoalInvestmentAssetAssociation__c
+                                                                        WHERE ( Investment_Asset__r.entity__r.Parent_Entity__c = : entityId OR Investment_Asset__r.Entity__c  = :entityId)
+                                                                            AND Goal__c IN : goalIdList
+                                                                            AND investment_Asset__r.recordType.Name =: 'Fixed Income'
+                                                                        order by Allocation_Order__c
+                                                                    ];
+        return goalInvestmentAssociationList;
+    }
+    
+    public List<GoalInvestmentAssetAssociation__c> getGoalInvestmentAssociationListForGoalCalculation(String entityId,String goalId) {
+        List<GoalInvestmentAssetAssociation__c> goalInvestmentAssociationList =   
+                                                            [
+                                                                SELECT                                                                         
+                                                                        investment_Asset__r.recordType.Name ,
+                                                                        Investment_Asset__r.Entity__r.Name ,
+                                                                        Investment_Asset__r.Action__c ,
+                                                                        allocated__c,
+                                                                        GoalYearValue__c,
+                                                                        Investment_Asset__r.TotalAsset__c                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                                                FROM 
+                                                                        GoalInvestmentAssetAssociation__c 
+                                                                WHERE 
+                                                                (   
+                                                                    Investment_Asset__r.entity__r.Parent_Entity__c = : entityId
+                                                                    OR    
+                                                                    Investment_Asset__r.Entity__c  = :entityId
+                                                                )
+                                                                AND
+                                                                        Goal__c = :goalId
+                                                                ORDER BY    investment_Asset__r.recordType.Name,
+                                                                            Investment_Asset__r.Entity__r.Name,
+                                                                            investment_Asset__r.Action__c                                                                        
+                                                            ];                                                                                              
+        return goalInvestmentAssociationList;
+    }  
+            
+    public List<AggregateResult> getGoalInvestmentAssociationList(String entityId,List<String> goalIdList) 
+    {
+        List<AggregateResult> goalInvestmentAssociationList =  [SELECT investment_Asset__r.recordType.Name recordTypeName,
+                                                                        Investment_Asset__r.Entity__r.Name entityName,
+                                                                        Investment_Asset__r.Action__c action,
+                                                                        Goal__c,
+                                                                        Max(Allocation_Order__c) allocationOrder,
+                                                                        MAX(allocated__c) allocatedPercent,
+                                                                        MAX(GoalYearValue__c) GoalYearValue__c,
+                                                                        SUM(Investment_Asset__r.TotalAsset__c) TotalAsset                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+                                                                FROM GoalInvestmentAssetAssociation__c 
+                                                                WHERE (Investment_Asset__r.entity__r.Parent_Entity__c = : entityId OR Investment_Asset__r.Entity__c  = :entityId)
+                                                                    AND Goal__c IN :goalIdList AND investment_Asset__r.recordType.Name <> 'Fixed Income'
+                                                                GROUP by Goal__c,
+                                                                         investment_Asset__r.recordType.Name,
+                                                                         Investment_Asset__r.Entity__r.Name,
+                                                                         investment_Asset__r.Action__c
+                                                                        ];                                                                                              
+        return goalInvestmentAssociationList;
+    }      
+    public List<GoalInsuranceAssociation__c> getGoalInsuranceAssociationList(String entityId,List<String> goalIdList)
+    {
+        List<GoalInsuranceAssociation__c> goalInsuranceAssociationList = [ SELECT Allocated__c,
+                                                                        GoalYearValue__c,
+                                                                        insurance__r.Revised_Maturity_Amount__c, /* Prajakta - FP changes - 02-04-2013 */
+                                                                        insurance__r.Maturity_Amount__c, /* Prajakta - FP changes - 02-04-2013 */
+                                                                        insurance__r.annual_premium_amount__c,
+                                                                        insurance__r.Commencement_Date__c,
+                                                                        insurance__r.Policy_Type__c,
+                                                                        insurance__r.Entity__r.name,
+                                                                        insurance__r.Tenure_of_Insurance__c,                                                            
+                                                                        insurance__r.totalAsset__c,
+                                                                        insurance__r.Surrender_Cash_Value__c,
+                                                                        insurance__r.Return_Of_Interest__c, //Prajakta - 29-05-2013 - FP changes
+                                                                        Goal__c,
+                                                                        insurance__r.Action__c,
+                                                                        insurance__r.Insurance_Company__c,    //Mahesh - 00001614
+                                                                        insurance__r.Policy_Number__c,      //Mahesh - 00001614
+                                                                        insurance__r.Policy_Name__c, Allocation_Order__c         //Mahesh - 00001614
+                                                                FROM GoalInsuranceAssociation__c 
+                                                                WHERE(  Insurance__r.Entity__r.Parent_Entity__c =:entityId OR Insurance__r.Entity__c  = :entityId)
+                                                                    AND Goal__c IN :goalIdList
+                                                                order by  Allocation_Order__c];                                 
+        return goalInsuranceAssociationList;      
+    }
+ 
+  /*  public List<GoalInvestmentAssetAssociation__c> getGoalInvestmentAssociationList(String entityId) {
+        List<GoalInvestmentAssetAssociation__c> goalInvestmentAssociationList =  
+                                                            [
+                                                                SELECT 
+                                                                        allocated__c,
+                                                                        Investment_Asset__c,
+                                                                        Goal__c,
+                                                                        Investment_Asset__r.recordType.Name,
+                                                                        Investment_Asset__r.Entity__c, 
+                                                                        Investment_asset__r.entity__r.FirstName, 
+                                                                        Investment_asset__r.entity__r.LastName,
+                                                                        Investment_asset__r.action__c,
+                                                                        Investment_asset__r.TotalAsset__c,
+                                                                        Investment_asset__r.Allocated_Amount__c
+                                                                FROM 
+                                                                        GoalInvestmentAssetAssociation__c 
+                                                                WHERE 
+                                                                        Investment_Asset__r.Entity__c  = :entityId
+                                                                OR
+                                                                        Investment_Asset__r.Entity__r.Parent_Entity__c = :entityId                                  
+                                                            ];            
+     return goalInvestmentAssociationList;
+     }
+     
+     
+     public List<GoalInsuranceAssociation__c> getGoalInsuranceAllocationList(String entityId){
+        List<GoalInsuranceAssociation__c> goalInsuranceAssociationList =  [
+                                                    SELECT 
+                                                            Allocated__c,
+                                                            Insurance__c,
+                                                            Goal__c,
+                                                            Insurance__r.recordType.Name,
+                                                            Insurance__r.Entity__c ,
+                                                            Insurance__r.entity__r.FirstName, 
+                                                            Insurance__r.entity__r.LastName,
+                                                            Insurance__r.action__c,
+                                                            Insurance__r.total_insurance__c,
+                                                            Insurance__r.Allocated_Amount__c 
+                                                    FROM 
+                                                            GoalInsuranceAssociation__c 
+                                                    WHERE 
+                                                            Insurance__r.Entity__c  = :entityId
+                                                    OR
+                                                            Insurance__r.Entity__r.Parent_Entity__c = :entityId ];                                 
+        return goalInsuranceAssociationList;      
+    }*/
+            
+     public List<AggregateResult> getInvestAssociationSum(List<Account> accList){
+        List<AggregateResult> goalInassetList = [Select sum(Allocation__c), Goal__c
+        from GoalInvestmentAssetAssociation__c 
+        where Investment_Asset__r.Entity__c In: accList 
+        and ((Investment_Asset__r.recordType.Name = :'Mutual Fund') 
+        or(Investment_Asset__r.recordType.Name = :'Stocks' and Investment_Asset__r.Action__c =: 'Liquidate (Align to goal)')
+        or(Investment_Asset__r.recordType.Name = :'Gold and Silver' and Investment_Asset__r.Action__c =: 'Liquidate (Align to goal)'))
+        Group By Goal__c];
+        return  goalInassetList;
+     }
+     
+     public List<AggregateResult> getInsuranceAssociationSum(List<Account> accList){
+        List<AggregateResult> goalInassetList = [Select sum(Allocation__c), Goal__c
+        from GoalInsuranceAssociation__c    
+        where Insurance__r.Entity__c In: accList and Insurance__r.Action__c =: 'Liquidate (Align to goal)'
+        Group By Goal__c];
+        return  goalInassetList;
+     }
+     
+     public List<AggregateResult> getAssetAssociationSum(List<Account> accList){
+        List<AggregateResult> goalInassetList = [Select sum(Allocation__c), Goal__c
+        from GoalAssetAssociation__c 
+        where Asset__r.Entity__c In: accList and Asset__r.Action__c =: 'Liquidate (Align to goal)'
+        Group By Goal__c];
+        return  goalInassetList;
+     }
+     
+     public List<goal_Profile__c> getProfileList(Set<Id> profileSet){
+         List<goal_Profile__c> lstProfile = [Select name,Goal_Profile_Type__c, Debt_Allocation__c,Risk_Type__c,
+                                 Equity_Allocation__c,Gold_allocation__c,Return_expected__c,Returns_expected__c,Account__c 
+                                 from Goal_Profile__c where Id in: profileSet];
+         return lstProfile;
+     }
+     //FS0235
+     public List<Approved_Action_Plan__c> getdbApprovedPlans(List<Account> accList){
+         List<Approved_Action_Plan__c> approvedPlanList = [Select Allocated__c, Amount__c, Asset_Class__c, Entity__c, Investment_Asset__c,
+                                        Entity__r.FirstName,  
+                                        Entity__r.LastName,
+                                        Investment_Asset__r.Entity__c, Investment_Asset__r.Entity__r.FirstName,  
+                                        Investment_Asset__r.Entity__r.LastName,Investment_Asset__r.Fund__r.Scheme_Name__c,
+                                        Investment_Asset__r.Scheme_Name_Text__c,//FS0235
+                                        Scheme_Name_Text__c,//FS0235
+                                        Investment_Asset__r.Monthly_SIP_Amount__c, Investment_Asset__r.TotalAsset__c,
+                                        Investment_Asset__r.Asset_Class__c,
+                                        Investment_Asset__r.Asset_Type__c, 
+                                        Investment_Asset__r.Asset_Name__c,
+                                        Goal__c, Goal__r.Description__c,Allocated_Amount__c,
+                                        Lumpsum_Action__c, Notes__c, Scheme_Name__c, SIP_Action__c,
+                                        RecordType.Name, Suggested_LumpSum_Action__c
+                                        from Approved_Action_Plan__c
+                                        where Entity__c in: accList];
+         return approvedPlanList;
+    }
+     public List<Approve_Action_Plan__c> getApprovedPlans(List<Account> accList){
+         List<Approve_Action_Plan__c> approvedPlanList = [Select  Amount__c, Asset_Class__c, Account__c, Investment_Asset__c,
+                                        Account__r.FirstName,  
+                                        Account__r.LastName,Item_Type__c ,
+                                        Investment_Asset__r.Entity__c, Investment_Asset__r.Entity__r.FirstName,  
+                                        Investment_Asset__r.Entity__r.LastName,Investment_Asset__r.Fund__r.Scheme_Name__c,
+                                        Investment_Asset__r.Scheme_Name_Text__c,//FS0235
+                                       //Scheme_Name_Text__c,//FS0235
+                                        Investment_Asset__r.Monthly_SIP_Amount__c, Investment_Asset__r.TotalAsset__c,
+                                        Investment_Asset__r.Asset_Class__c,
+                                        Investment_Asset__r.Asset_Type__c,
+                                        Investment_Asset__r.Asset_Name__c,
+                                        Goal__c, Goal__r.Description__c,
+                                        Lumpsum_Action__c, Scheme_Name__c, SIP_Action__c,
+                                        Suggested_LumpSum_Action__c
+                                        from Approve_Action_Plan__c
+                                        where Account__c in: accList];
+         return approvedPlanList;
+    }
+    
+    
+    
+    
+    //FS0235
+    public List<Investment_Asset__c> getMFInvestmentAsset(List<Account> AccountList)
+    {
+        List<Investment_Asset__c> investment= [SELECT Fund__r.Scheme_Name__c, Entity__c,
+                                                Entity__r.FirstName, Entity__r.LastName,Asset_Class__c,Asset_Type__c,
+                                                TotalAsset__c, Monthly_SIP_Amount__c,
+                                                Scheme_Name_Text__c
+                                                FROM Investment_Asset__c 
+                                                WHERE RecordType.Name =: 'Mutual Fund'
+                                                AND Entity__c IN:AccountList];    
+        return investment; 
+    }  
+    public List<Asset__c>  getAsset(List<Account> accList){
+        List<Asset__c> gaaList = [Select Account_Type__c, Asset_Types__c, Entity__c, Entity__r.FirstName, Entity__r.LastName
+                                                , Action__c 
+                                                from Asset__c 
+                                                where Entity__c in:accList
+                                                And Action__c <> null and Action__c <> '---None----'
+                                                ];
+        return gaaList;
+    }
+    public List<Investment_Asset__c>  getInvestmentAsset(List<Account> accList){
+        List<Investment_Asset__c> giaList = [Select AMC_Name__r.AMC_Field__c, Description__c, Script_Name__c, Entity__c, Entity__r.FirstName, Entity__r.LastName
+                                                        , Action__c , RecordType.Name, RecordTypeId,Is_Include_In_HLV_Inv_Asset__c
+                                                        from Investment_Asset__c 
+                                                        where Entity__c in:accList
+                                                        And Action__c <> null and Action__c <> '---None----'
+                                                        ];
+        return giaList ;
+    }
+      
+    public List<Insurance__c>  getInsurence(List<Account> accList){
+        List<Insurance__c> ginaList = [Select Entity__c, RecordTypeId,  Entity__r.FirstName, Entity__r.LastName
+                                    , Action__c 
+                                                  from Insurance__c
+                                                  where Entity__c in:accList
+                                                  And Action__c <> null and Action__c <> '---None----'
+                                                  ];        
+        return ginaList;
+    }
+    
+    public List<RecordType>  getRecordTypeNames(Set<Id> recIds){
+        List<RecordType> recList = [select Name, Id from RecordType where Id in: recIds];
+        return recList;
+    }
+   
+   /*
+     Modified By : Niket Chandane
+     Modified at : 14 june 2011
+     Summary     : Added the Inflaction Rate in the query.
+   */
+   //FS0309
+      public list<goal__c> getEntityGoal(string entity)
+    {
+        list<goal__c> goalList=[Select Id, Name,Inflation_Rate__c,Goal_Type__c,SelectedGoalProfile__c,  Goal_Start_Year__c, Goal_end_Year__c,
+                                    description__c,Remark__c,Allocation_Message__c /* Prajakta - FP changes - 22-03-2013 */ 
+                                from Goal__c 
+                                where entity__c =:entity and Goal_Start_Year__c!=NULL 
+                                and Goal_end_Year__c!=NULL and description__c!=null and  Goal_Type__c!=null];
+        return goalList;
+    }    
+    
+    public List<Account> getEarningMember(string entity){
+         list<Account> earningMemberList = [SELECT Id, Name, isPersonAccount, Parent_Entity__c, FirstName, LastName,Total_Assets__c,
+                                                        Total_Income__c,
+                                                        RecordTypeId,Adjustment_Factor__c,
+                                                        PersonTitle, PersonContactId, PersonBirthdate, PersonHomePhone,Salutation,
+                                                        PersonMobilePhone, Alternate_Mobile__c, PersonEmail, Alternate_E_Mail_Address__c,
+                                                        Retirement_Year__c,Residential_Status_del__c,Retirement_Age__c,Estimated_Life_Expectancy__c,
+                                                        Estimated_Life_EndYear__c,Relationship_to_Entity__pc, Description        //mahesh
+                                            from Account where 
+                                            ((id=:entity OR parent_entity__c=:entity) AND Earning_member__c =:true)];
+         return earningMemberList;
+     }
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: 00001470       **/
+  /** Date    : 1/2/2012    **/
+  /** Purpose : Added GoldCurrentYear__c,EquityCurrentYear__c,DebtCurrentYear__c fields in select statement
+  /****************************************************/
+     public List<GoalSIPAmount__c> getSIPAmountList(String goalId) 
+     {
+      List<GoalSIPAmount__c> goalAmountList = [SELECT id,Goal__c,Goal_Year__c,SIP_Debt__C,SIP_Equity__c,SIP_Gold__c,
+                              GoldCurrentYear__c,EquityCurrentYear__c,DebtCurrentYear__c,SIP_Total__c
+                                                    FROM
+                                                        GoalSIPAmount__c
+                                                    WHERE 
+                                                        Goal__c = :goalId
+                                                ];
+        return goalAmountList;                                              
+    }
+    public List<GoalSIPAmount__c> getSIPAmountList(List<String> goalIdList,String entityId,Boolean flag) {
+        List<GoalSIPAmount__c> goalSIPAmountList =
+                              [
+                                                        SELECT id,Goal__c,Goal_Year__c,SIP_Debt__C,SIP_Equity__c,SIP_Gold__c,SIP_Total__c 
+                                                        FROM
+                                                            GoalSIPAmount__c
+                                                        WHERE 
+                                                        Goal__c IN :goalIdList
+                                                        AND
+                                                        Goal__r.Entity__c = :entityId
+                            //FS0323 Commented. Goal_Type__c is not used now
+                                                        /*AND
+                                                            (
+                                                                ( SIP_Outflow__c = :flag
+                                                                    AND
+                                                                    Goal__r.Goal_Type__c not in ('Retirement')
+                                                                )
+                                                                OR
+                                                                ( 
+                                                                    SIP_Outflow__c = :!flag
+                                                                    AND
+                                                                    Goal__r.Goal_Type__c in ('Retirement')
+                                                                )   
+                                                            )*/
+                                                        ORDER BY goal__c,Goal_Year__c    
+                                                    ];
+        return  goalSIPAmountList;                                                  
+     }
+    
+    /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: 00001470       **/
+  /** Date    : 1/2/2012    **/
+  /** Purpose : Added GoldCurrentYear__c,EquityCurrentYear__c,DebtCurrentYear__c fields in select statement
+  /****************************************************/
+    public List<GoalSIPAmount__c> getGoalSIP(Integer currentYear, List<Id> goalIds)
+    {
+      List<GoalSIPAmount__c> goalSips= [select Goal__c, Goal_Year__c, SIP_Debt__c, SIP_Equity__c, SIP_Gold__c, SIP_Total__c,
+                          GoldCurrentYear__c,EquityCurrentYear__c,DebtCurrentYear__c
+                                from GoalSIPAmount__c 
+                                where SIP_Outflow__c = true AND
+                                Goal_Year__c =: currentYear and
+                                Goal__c In: goalIds];
+        return goalSips; 
+    }
+    
+    /**
+    * getMonthlyExpense() returns sum of monthly expenses of family based on general expense
+    */
+    public List<AggregateResult> getMonthlyExpense(String entity){
+        List<AggregateResult> AggQueryResult=  [ Select Sum(MonthlyExpense__c) AmtSum,general_expenses__c  generalexpense from expense__c where (Entity_Name__c=:entity OR Entity_name__r.parent_entity__c=:entity) group by general_expenses__c ];         
+        return AggQueryResult;
+    }
+    
+    /**
+    * getSubexpenseList() returns list of subeexpenses for selected general expense
+    */        
+    public list<ExpenseType__c> getSubexpenseList(String selGeneralExpense){
+        List<ExpenseType__c>subExpenseList=[select subexpense__c from ExpenseType__c  where general_expense__c=:selGeneralExpense];      
+        return subExpenseList;
+    }  
+     public List<AggregateResult> getSuggestedAssetsData(List<Account> entityLst) { 
+
+    List<AggregateResult> assetList = [SELECT 
+                                            Asset__r.RecordType.Name assetClass,
+                                            Asset__r.Action__c action,
+                                            SUM(Allocation__c) allocation,
+                                            Goal__r.Description__c,
+                                             SUM(allocated__c) allocatedPercent,
+                                            SUM(Goal__r.SelectedGoalProfile__r.Gold_allocation__c) gold,
+                                            SUM(Goal__r.SelectedGoalProfile__r.Debt_Allocation__c)Debt,
+                                            SUM(Goal__r.SelectedGoalProfile__r.Equity_Allocation__c)Equity,
+                                            SUM(Asset__r.Asset_value__c)totalAssets
+                                          
+                                       FROM 
+                                            GoalAssetAssociation__c 
+                                       WHERE 
+                                            Asset__r.Entity__c IN : entityLst
+                                        AND
+                                            Asset__r.Asset_value__c >0
+                                        AND 
+
+                                        (
+                                            Asset__r.RecordType.Name in( 'Cash and Cash Equivalents',
+                                                                         'Deposits with Bank',
+                                                                         //'Post Office Saving Schemes',
+                                                                         'Govt. Saving Schemes',  // Prajakta
+                                                                         'Retirement Accounts')
+                                            OR(
+                                            Asset__r.RecordType.Name in('Personal Assets')
+                                            AND
+                                            Asset__r.Asset_Types__c in('GOLD')
+                                            )
+                                            OR(
+                                            Asset__r.RecordType.Name in('RealEstate Assets')
+                                            AND
+                                            Asset__r.Asset_Types__c in('SECONDARY','LAND','Rental Property')
+                                            )
+                                            )
+                                            GROUP BY Asset__r.RecordType.Name,Asset__r.Action__c ,Goal__r.Description__c];
+
+return assetList;
+
+}
+
+
+public List<AggregateResult> getSuggestedInvestmentAssetsData(List<Account> entityLst) {
+
+  List<AggregateResult> investmentAssetList = [SELECT 
+
+                                                    Investment_Asset__r.RecordType.Name assetClass,
+                                                    Investment_Asset__r.Action__c action,
+                                                    SUM(Allocation__c) allocation,
+                                                    Investment_Asset__r.Asset_Type__c assetType,
+                                                    Goal__r.Description__c,
+                                                     SUM(allocated__c) allocatedPercent,
+                                                    SUM(Goal__r.SelectedGoalProfile__r.Gold_allocation__c) gold,
+                                                    SUM(Goal__r.SelectedGoalProfile__r.Debt_Allocation__c)Debt,
+                                                    SUM(Goal__r.SelectedGoalProfile__r.Equity_Allocation__c)Equity,
+                                                    SUM(Investment_Asset__r.TotalAsset__c)totalAssets
+                                                  
+                                            
+                                             FROM
+                                                    GoalInvestmentAssetAssociation__c
+                                             WHERE
+                                                    Investment_Asset__r.Entity__c IN: entityLst 
+                                             AND
+                                                    Investment_Asset__r.TotalAsset__c >0
+                                              
+                                                    GROUP BY Investment_Asset__r.RecordType.Name,Investment_Asset__r.Asset_Type__c,Investment_Asset__r.Action__c,Goal__r.Description__c
+                                            ]; 
+                                                    
+        return investmentAssetList; 
+
+}
+public List<AggregateResult> getSuggestedInsuranceData(List<Account> entityLst){
+       List<AggregateResult> insuranceList =[SELECT
+                                                     Insurance__r.RecordType.Name assetClass,
+                                                     Insurance__r.Policy_Type__c PolicyType,
+                                                     Insurance__r.Action__c action,
+                                                    SUM(Allocation__c) allocation,
+                                                     SUM(allocated__c) allocatedPercent,
+                                                     SUM(Insurance__r.totalAsset__c)totalAssets,
+                                                    SUM(Goal__r.SelectedGoalProfile__r.Gold_allocation__c) gold,
+                                                    SUM(Goal__r.SelectedGoalProfile__r.Debt_Allocation__c)Debt,
+                                                    SUM(Goal__r.SelectedGoalProfile__r.Equity_Allocation__c)Equity,
+                                                    Goal__r.Description__c
+                                                    
+                                             FROM
+                                                    GoalInsuranceAssociation__c
+                                             WHERE
+                                                    Insurance__r.Entity__c IN: entityLst 
+                                            AND
+                                                    Insurance__r.totalAsset__c >0
+                                             AND    
+                                                    Insurance__r.RecordType.Name='Life Insurance'
+                                             GROUP BY Insurance__r.RecordType.Name,Insurance__r.Policy_Type__c, Insurance__r.Action__c,Goal__r.Description__c
+                                          ];
+        system.debug('insuranceList**********'+insuranceList);
+       return insuranceList;
+                                          
+}
+
+  /*
+   Modified By : Niket Chandane
+   Modified At : 13 June 2011
+   Summary   : Added one more value int the In the Real Estate Assets filter.
+    */
+   /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: 00001541       **/
+  /** Date    : 12/3/2012     **/
+  /** Purpose : Added 'Business Assets' in the Portfoliosummary page
+  /****************************************************/ 
+  public List<Asset__c> getAssetsForPortfolio(String entityId){
+    List<Asset__c> assetList=[SELECT 
+                    RecordType.Name ,
+                    Entity__r.Name,
+                    entity__c,
+                    RecordTypeId,
+                    Action__c,
+                    id ,
+                    Monthly_Asset__c,
+                    Account_Type__c,
+                    Asset_Types__c
+                  FROM
+                    Asset__c
+                  WHERE 
+                    (
+                      Entity__c = : entityId
+                      OR
+                      Entity__r.parent_entity__C = :entityId  
+                    )  
+                                        AND
+                      Monthly_Asset__c >0
+                    AND 
+                                        (
+                                            recordType.Name in( 'Cash and Cash Equivalents',
+                                                                'Deposits with Bank',
+                                                                //'Post Office Saving Schemes',
+                                                                'Govt. Saving Schemes', //Prajakta
+                                                                'Retirement Accounts'
+                                                                //00001541,
+                                                                ,'Business Assets')
+                                            OR(
+                                              RecordType.Name in('Personal Assets')
+                                              AND
+                                              Asset_Types__c in('GOLD')
+                                            )
+                                            OR(
+                                              RecordType.Name in('Real Estate Assets')
+                                              AND
+                                              Asset_Types__c in('SECONDARY','Vacation home','Commercial','LAND','Rental Property','Others…') // Change By Niket Chandane Removed Primary  
+                                            )
+                    )
+                    ORDER BY recordType.Id,Asset_Types__c,Account_Type__c
+                ];           
+            return assetList;
+  }
+  
+  public List<Investment_Asset__c> getInvestmentAssetsForPortfolio(String entityId) {
+    List<Investment_Asset__c> investmentAssetList = [SELECT 
+  
+                                                        RecordType.Name ,
+                                                        RecordTypeId ,
+                                                        Action__c ,
+                                                        Asset_Type__c ,                                                     
+                                                        id ,
+                                                        Entity__c ,
+                                                        Entity__r.Name ,                                                        
+                                                        TotalAsset__c                                                                                              
+                                                   FROM
+                                                        Investment_Asset__c
+                                                   WHERE
+                              (
+                                Entity__c = : entityId
+                                OR
+                                Entity__r.parent_entity__C = :entityId  
+                              )   
+                                                   AND
+                              TotalAsset__c >0                                              
+                                                     ORDER BY id
+                                                  ];
+    return investmentAssetList;
+  }
+  public List<Insurance__c> getInsuranceForPortfolio(String entityId){
+    List<Insurance__c> insuranceList =[SELECT
+                          RecordType.Name  ,
+                          RecordTypeId ,
+                                                    Policy_Type__c ,
+                                                    Action__c ,
+                                                    id ,Current_Amount__c,
+                          totalAsset__c ,
+                          Entity__r.Name
+                                             FROM
+                                                    Insurance__c
+                                             WHERE
+                        (
+                          Entity__c = : entityId
+                          OR
+                          Entity__r.parent_entity__C = :entityId  
+                        )   
+                                              AND
+                                                    //totalAsset__c >0
+                                                    current_amount__C>0
+                                               AND    
+                          RecordType.Name='Life Insurance'
+                                             order by  id                                      
+                                          ];        
+       return insuranceList;
+  }
+//ET001
+  /* public map<id,List<ET_Action_Plan_Item__c>> getActionPlanItemDetails(Id selctedPlanID) {
+        ////////////////
+        map<id,List<ET_Action_Plan_Item__c>> actionPlanDetailMap = new map<id, list<ET_Action_Plan_Item__c>>();
+        List<ET_Action_Plan__c> actionPlanList = [SELECT Id FROM ET_Action_Plan__c where id=:selctedPlanID ];
+        set<Id> actionPlanIdSet = new set<Id>();
+        for(ET_Action_Plan__c objActionPlan : actionPlanList)     
+        {
+          actionPlanIdSet.add(objActionPlan.Id);
+        } 
+        for(ET_Action_Plan_Item__c [] objActionPlanItem : [SELECT Id,Action_Plan__c,Product_Type__r.Name,Action_Start_Date__c,Action_End_date__c,
+                                      Current_Status__c    
+                                    FROM ET_Action_Plan_Item__c where
+                                              Action_Plan__c IN: actionPlanIdSet])
+    {
+      for(ET_Action_Plan_Item__c  objItem : objActionPlanItem)
+      {
+        if(actionPlanDetailMap.get(objItem.Action_Plan__c) == null)
+            {
+                actionPlanDetailMap.put(objItem.Action_Plan__c, new list<ET_Action_Plan_Item__c>{objItem});
+            }
+            else
+            {
+                actionPlanDetailMap.get(objItem.Action_Plan__c).add(objItem);
+            }
+      }
+    }
+                                
+        return actionPlanDetailMap;                            
+        
+    }*/
+  /* public List<ET_Action_Plan__c> getActionPlan()
+    {
+      List<ET_Action_Plan__c> actionPlanList = new List<ET_Action_Plan__c>();
+      actionPlanList = [SELECT Id,Start_Date__c,End_Date__c,Status__c,Entity__r.Name
+                FROM ET_Action_Plan__c];
+                      
+      return actionPlanList;
+    }*/   
+    //ET001 selects types of products in MAP
+    /*public Map<String,Id> getProductTypeMap()
+    {
+      Map<String,Id> productTypeMap = new Map<String,Id>();
+    for(AF_Conf_Product_Type__c objProductType : [SELECT ID,Name FROM AF_Conf_Product_Type__c])
+    {
+      if(productTypeMap.get(objProductType.Name) == Null)
+      {
+        productTypeMap.put(objProductType.Name,objProductType.Id);
+      }
+    }
+    return productTypeMap;
+    }*/
+    ////ET001 Selects Action plan from intermediate action plan
+    /*public List<ET_Intermediate_Action_Plan__c> getIntemediateActionPlanForEntity(Id Entity)
+    {
+      List<ET_Intermediate_Action_Plan__c> objIntermediateActionPlan = new List<ET_Intermediate_Action_Plan__c>();
+      objIntermediateActionPlan=      [
+              SELECT ID,Description__c,End_date__c,Entity__c,FP__c,Reviewed_By__c 
+                      ,Start_Date__c,Status__c,Workstation__c,CEM__c FROM ET_Intermediate_Action_Plan__c WHERE Entity__c =: Entity
+            ];
+      return objIntermediateActionPlan;
+    }*/
+    ////ET001 Selects Action plan from intermediate action plan Item for given Action Plan
+    /*public List<ET_Intermediate_Action_Plan_Item__c> getIntemediateActionPlanItemForPlan(Id intermediateActionPlanId)
+    {
+      List<ET_Intermediate_Action_Plan_Item__c> lstIntermediateActionPlanItem = new List<ET_Intermediate_Action_Plan_Item__c>();
+      lstIntermediateActionPlanItem = [
+                        SELECT Id,Intermediate_Action_Plan__c ,Product_Type__r.Name
+                             ,Action_Start_Date__c,Action_End_date__c,Current_Status__c,Action_Item_Type_Description__c
+                             ,Price__c
+                        FROM ET_Intermediate_Action_Plan_Item__c
+                        WHERE Intermediate_Action_Plan__c =: intermediateActionPlanId
+                      ];
+      return lstIntermediateActionPlanItem;
+    }*/
+    //FS0087
+     public List<Action_Plan__c> getActionPlanRelatedToEntity(Id accountId)
+     {
+       List<Action_Plan__c> lstActionPlan = new List<Action_Plan__c>();
+       lstActionPlan = [SELECT id FROM Action_Plan__c WHERE First_Holder_Name__c =: accountId];
+       return lstActionPlan;
+     }
+     public List<Checklist__c> getChecklistRelatedToEntity(Id accountId)
+     {
+       List<Checklist__c> lstChecklist = new List<Checklist__c>();
+       lstChecklist = [SELECT id FROM Checklist__c WHERE Entity__c =: accountId];
+       return lstChecklist;
+     }
+     public List<Client_Details__c> getClientDetailsRelatedToEntity(Id accountId)
+     {
+       List<Client_Details__c> lstClientDetails = new List<Client_Details__c>();
+       lstClientDetails = [SELECT id FROM Client_Details__c WHERE Entity__c =: accountId];
+       return lstClientDetails;
+     }
+     public List<Conveyance_Expense__c> getConveyanceExpenseRelatedToEntity(Id accountId)
+     {
+       List<Conveyance_Expense__c> lstConveyanceExpense = new List<Conveyance_Expense__c>();
+       lstConveyanceExpense = [SELECT id FROM Conveyance_Expense__c WHERE Entity_Name__c =: accountId];
+       return lstConveyanceExpense;
+     }
+     public List<Expense__c> getExpenseRelatedToEntity(Id accountId)
+     {
+       List<Expense__c> lstExpense = new List<Expense__c>();
+       lstExpense = [SELECT id FROM Expense__c WHERE Entity_Name__c =: accountId];
+       return lstExpense;
+     }
+     public List<Goal_Profile__c> getGoalProfileRelatedToEntity(Id accountId)
+     {
+       List<Goal_Profile__c> lstGoalProfile = new List<Goal_Profile__c>();
+       lstGoalProfile = [SELECT id FROM Goal_Profile__c WHERE Account__c =: accountId];
+       return lstGoalProfile;
+     }
+     
+     /////
+  /*   public List<> get RelatedToEntity(Id accountId)
+     {
+       List<> lst = new List<>();
+       lst = [SELECT id FROM  WHERE  =: accountId];
+       return lst;
+     }*/
+     public List<Insurance__c> getInsuranceRelatedToEntity(Id accountId)
+     {
+       List<Insurance__c> lstInsurance = new List<Insurance__c>();
+       lstInsurance = [SELECT id FROM Insurance__c WHERE Entity__c =: accountId];
+       return lstInsurance;
+     }
+     /** Eternus Solutions       **/
+  /** Author  : Manasi Ranade **/
+  /** Issue Id: FS0290        **/
+  /** Date    : 22/11/2011   **/
+  /** Purpose : Select the Approved actions from Approved_Action_Plan__c for selected entity 
+          whose Allocated_Amount__c is greater than zero 
+  /****************************************************/
+  public List<Approved_Action_Plan__c> getAllocatedApprovedPlans(List<Account> accList){
+         List<Approved_Action_Plan__c> approvedPlanList = [Select Allocated__c, Amount__c, Asset_Class__c, Entity__c, Investment_Asset__c,
+                                        Entity__r.FirstName,
+                                        Entity__r.LastName,
+                                        Investment_Asset__r.Entity__c, Investment_Asset__r.Entity__r.FirstName,
+                                        Investment_Asset__r.Entity__r.LastName,Investment_Asset__r.Fund__r.Scheme_Name__c,
+                                        Investment_Asset__r.Scheme_Name_Text__c,
+                                        Scheme_Name_Text__c,
+                                        Investment_Asset__r.Monthly_SIP_Amount__c, Investment_Asset__r.TotalAsset__c,
+                                        Investment_Asset__r.Asset_Class__c,
+                                        Investment_Asset__r.Asset_Type__c,
+                                        Investment_Asset__r.Asset_Name__c,
+                                        Goal__c, Goal__r.Description__c,Allocated_Amount__c,
+                                        Lumpsum_Action__c, Notes__c, Scheme_Name__c, SIP_Action__c,
+                                        RecordType.Name, Suggested_LumpSum_Action__c
+                                        from Approved_Action_Plan__c
+                                        where Entity__c in: accList
+                                        //And Allocated_Amount__c > 0];
+                                        And Allocated__c > 0];
+         return approvedPlanList;
+    }
+}

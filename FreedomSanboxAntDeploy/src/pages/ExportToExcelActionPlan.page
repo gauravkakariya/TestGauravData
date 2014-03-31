@@ -1,0 +1,15 @@
+<apex:page controller="ExportToExcelActionPlanController" showheader="false" sidebar="false" contenttype="application/vnd.ms-excel#ActionPlan.xls" readOnly="true">
+
+	<apex:pageBlock title="Action Plan">
+		 <apex:dataTable value="{!lstActionPlan}" var="rec" border="1">
+		 	<apex:repeat value="{!$ObjectType.Approve_Action_Plan__c.FieldSets.ExportToExcelAP}" var="fld">
+				 <apex:column headerValue="Account__r.Name" >
+				 	<apex:facet name="header"> {!fld.label} </apex:facet>
+					<apex:outputField value="{!rec[fld]}" />
+				</apex:column>
+			</apex:repeat>                           
+			
+		</apex:dataTable>
+	</apex:pageBlock>
+
+</apex:page>

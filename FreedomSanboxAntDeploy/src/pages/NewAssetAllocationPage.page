@@ -1,0 +1,308 @@
+<!-- /*
+	
+Revision History:
+
+   Version     Version Author     Date          Comments
+   1.0         Persistent         NA  		  	Initial Draft
+   
+   2.0 		   Manasi Ranade	  04/06/2011	 Added style to the div to add scrollbars.
+   
+   2.0         Niket Chandane	  04/06/2011     Removed the Scrolling div and added the scrollto the table
+   												 and lock the Heading for the scrolling
+   2.0		   Niket Chandane     22/06/2011	 Lock the headers with size in % so the Asset Allocation table will be free from the machine's 
+   												 resolution. 
+   												 Issue : F0036
+   2.0		   Manasi Ranade      28/12/2011	 adjusted the size of Picklist 				  											
+   
+   3.0		   Mahesh hirugade	  25/4/2012		 Case no : 00001606 : Added Description field
+*/-->
+
+<apex:page id="assetPage" controller="NewAssetAllocationController" showHeader="false">
+	<Style>
+		.outerNoSidebar
+		{
+			max-width: 99%;
+		}
+		.rich-tabpanel-content-position 
+		{
+    		width: 111%;
+		}
+	</Style>
+    <script>
+         function calculateAllocated(firstIndex,secondIndex,lastIndex) 
+         {
+            var rowId;
+            var allocatedTotal = 0, allocatedValue;
+            rowId = 'AssetIdTR:' + firstIndex + ':' + secondIndex + ':' + lastIndex;
+             
+            var rowElementArray = document.getElementById('assetTable').rows;
+            var rowElementRow = document.getElementById(rowId);
+            var node,flag=0;
+           
+            for(i=0; i<rowElementArray.length ;i++) 
+            {
+                if(rowElementArray[i].id.search(rowId) != -1) 
+                {
+                    for(j=0; j < rowElementArray[i].cells.length;j++) 
+                    {
+                        node = rowElementArray[i].cells[j];
+                        
+                        if(node.id.search('goalPercentCol') != -1) 
+                        {
+                            allocatedValue = node.children[0].value;
+                            if(allocatedValue!=''){
+                                allocatedTotal = allocatedTotal + parseInt(allocatedValue);  
+                            }                       
+                        }
+                        
+                    }
+                    break;
+                }
+            }
+            
+            return allocatedTotal;
+        }
+    
+        function calculate(curObject,recTypeIndex,assetTypeIndex,detailIndex)
+        {
+            var elementId,allocatedValue;
+            elementId = 'assetPage:j_id1:j_id4:assetForm:AssetAllocation:recTypeRepeat:' + recTypeIndex +
+                                     ':assetTypeRepeat:' + assetTypeIndex + ':repeatAssetId:' + detailIndex;
+            var allocated = document.getElementById(elementId + ':allocated');                      
+            var available = document.getElementById(elementId + ':availablePercent');                       
+            var balance = document.getElementById(elementId + ':balance');    
+            var currentValueObj = document.getElementById(elementId + ':assetCurrentValue');  
+            allocatedValue = calculateAllocated(recTypeIndex,assetTypeIndex,detailIndex);
+            if(allocatedValue > 100) 
+            {
+                alert('You should allocate less than or equal to 100% for an asset');
+                curObject.value = '0';
+                allocatedValue = calculateAllocated(recTypeIndex,assetTypeIndex,detailIndex);
+            }  
+            available.innerHTML = (100 - parseInt(allocatedValue));
+            allocated.value = allocatedValue;
+            var currentValue =''+ currentValueObj.innerHTML;            
+            currentValue = parseInt(currentValue.replace(',',''));          
+            currentValue =  currentValue + ' - ( ' + currentValue + ' * ( ' + allocated.value + '/100))';                       
+            balance.innerHTML = putCommas(Math.ceil(eval(currentValue)));               
+        }
+        
+        function putCommas(digitStr) 
+        {
+            digitStr += '';
+            digits = digitStr.split('.');
+            x1 = digits[0];
+            x2 = digits.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) 
+            {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
+        }
+        
+        function validateAction()
+        {
+            var rowElementArray = document.getElementById('assetTable').rows;
+            var flag=0;
+            for(i=0; i<rowElementArray.length; i++)
+            {
+                 actionNode = rowElementArray[i].cells[(rowElementArray[i].cells.length-1)];
+                 if(rowElementArray[i].cells.length >=3)
+                 {
+                      allocatedNode=rowElementArray[i].cells[3];
+                 	  if(allocatedNode.id.search('allocatedId')!=-1)
+                 	  {
+	                      if(allocatedNode.children[0].value!='' && allocatedNode.children[0].value >0)
+	                      {
+	                          if(actionNode.id.search('actionId') != -1) 
+	                          {
+	                              if((actionNode.children[0].value)=='---None----')
+	                              {
+	                                  flag=1;
+	                              }
+	                          }
+	                      }
+                 	  }
+            	  }
+        	}
+            if(flag==1)
+               alert('You should select action for asset');
+            else
+               saveAsset();
+        }
+        
+    </script>
+    
+   	<apex:stylesheet value="{!URLFOR($Resource.FixedHeader, 'defaultTheme.css')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.FixedHeader, 'jquery-1.5.2.min.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.FixedHeader, 'jquery.fixedheadertable.js')}"/>
+	
+	<script>
+		$(document).ready(function() {
+			 $('#assetTable').fixedHeaderTable({ footer: true, altClass: 'odd', fixedColumns: 1});
+		});
+	</script>
+	
+	<style>
+		.grid_8 {
+			display: inline;
+			float: left;
+			margin-left: 10px;
+			margin-right: 10px;
+		}
+		.height250 {
+			height: 400px;
+			width :1000px;				
+			overflow-y: auto;
+		}
+		.headerStyle{
+			white-space:pre-wrap; 
+			text-align:center;
+			background-color:#E4FBC5 !important; 
+		}
+		
+	</style>
+   	<apex:composition template="TabPage">
+        <apex:define name="contents">
+            <apex:pageMessages rendered="true" /> 
+            <apex:pageBlock id="emptyPage" rendered="{!(IF(assetAllocationBean.assetRecordTypeBeanList.size == 0,true,false))}">
+                <apex:pageBlockSection title="Asset Allocation" columns="2">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >
+                            There are no assets available for allocation
+                        </apex:outputLabel>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>    
+            </apex:pageBlock> 
+            <apex:form id="assetForm" rendered="{!(IF(assetAllocationBean.assetRecordTypeBeanList.size != 0,true,false))}">
+               <apex:actionFunction action="{!save}" name="saveAsset" />
+               		<apex:pageBlock id="AssetAllocation" >
+                    <!-- <div id="div11" style="overflow:auto; width:950px;"> -->
+                   		<!-- /** Eternus Solutions  **/
+						/** Author  : Manasi Ranade	**/
+						/** Issue Id: F0036      	**/
+						/** Date    : 04/06/2011 	**/
+						/** Purpose : Added style to the div to add scrollbars **/
+						/****************************************************/  -->
+						 
+					<!-- /** Eternus Solutions  **/
+						/** Author  : Niket Chandane	**/
+						/** Issue Id: F0036      	**/
+						/** Date    : 04/06/2011 	**/
+						/** Purpose : Removed the Div added the Scrolbar to the table and Locked the Headers **/
+						/****************************************************/  -->
+						 <!--  -->
+<!--   						<div id="div11" style="height: 1000px;width: 99%;overflow: auto;border: 0px solid #666;padding: 8px 8px 8px 1px;">  -->
+					<div class="grid_8 height250">
+  						<table id="assetTable" cellSpacing="0" cellPadding="0" class="List" >
+	  						<thead>
+	                            <tr>
+                                	 <td class="headerStyle" style="font-weight: bold;">Assets</td>
+                                     <td class="headerStyle" style="font-weight: bold;">Description</td>
+                                     <td class="headerStyle" style="font-weight: bold;">Current Value</td>
+                                     <td class="headerStyle" style="font-weight: bold;">Available</td>
+                                     <td class="headerStyle" style="font-weight: bold;">{!$Label.Allocated}</td>
+                                     <td class="headerStyle" style="font-weight: bold;">Balance Remaining</td>
+	                                 <apex:repeat value="{!assetAllocationBean.headerList}" var="desc">
+	                                     <td class="textStyle" style="text-align:center;background-color:#E4FBC5 !important;" >
+	                                         <apex:outputtext styleclass="textStyle" style="font-weight:bold;white-space:pre-wrap;" value="{!desc}" />
+	                                    </td>
+	                                </apex:repeat>
+	                                <td class="headerStyle" style="font-weight: bold;" >Action</td>
+	                            </tr>
+	                        </thead>
+
+	                        <tbody>
+	                           	<apex:repeat id="recTypeRepeat" value="{!assetAllocationBean.assetRecordTypeBeanList}" var="rec">
+	                            	<tr  id="RecType :{!rec.Index}">                                
+	                                	<td style="width:25px;background-color:#66CD00;color:white;font-weight: bold; ">
+	                                        {!rec.recordTypeName}
+	                                    </td> 
+	                                </tr>
+	                                
+	                                <apex:repeat id="assetTypeRepeat" value="{!rec.assetTypeList}" var="recType">
+	                                    <tr id="assetTypeTR" >
+	                                        <td style="height:25px;background-color:#A1E96B; font-weight: bold;">
+	                                            {!recType.assetTypeName}
+	                                        </td>
+	                                    </tr>
+	                                    
+	                                    <apex:repeat id="repeatAssetId" value="{!recType.assetDetailList}" var="recDt">
+	                                        <tr id="AssetIdTR:{!rec.index}:{!recType.index}:{!recDt.index}">
+<!-- 	                                            <apex:inputHidden id="goalId" value="{!recDt.entityId}"></apex:InputHidden> -->
+	                                            
+	                                            <td style="height:25px;background-color:#E4FBC5; "> 
+	                                            	<apex:inputHidden id="goalId" value="{!recDt.entityId}"></apex:InputHidden>
+	                                                {!recDt.entityName}
+	                                            </td>
+	                                            
+	                                            <!-- Mahesh Test -->
+	                                            <td class="textStyle" style="background-color:#E4FBC5;text-align:left;">
+	                                                <apex:outputText id="assetDescription" style="border:none; ">
+														{!recDt.Description}
+<!-- 														 <apex:outputLabel id="lblDescription" value="{!if(rec.recordTypeName == 'Investment Assets','-', recDt.Description)}"/> -->
+	                                                </apex:outputText>
+	                                            </td>
+	                                            <!-- Mahesh Test -->
+	                                            
+	                                            <td class="textStyle" style="background-color:#E4FBC5;text-align:right;">
+	                                                <apex:outputText id="assetCurrentValue" value="{0, number, ,##,##0}" style="border:none; ">
+	                                                    <apex:param value="{!recDt.assetCurrentValue}"/>
+	                                                </apex:outputText>
+	                                            </td>
+	                                            
+	                                            <td class="textStyle" style="background-color:#E4FBC5;text-align:Center;">
+	                                                <apex:outputText id="availablePercent" value="{0, number, ,##,##0.0}" style="border:none; ">
+	                                                    <apex:param value="{!recDt.availablePercent}"/>
+	                                                </apex:outputText>
+	                                            </td>
+	                                            <td class="textStyle" style="background-color:#E4FBC5;text-align:Center;">{!recDt.allocatedPercent}
+<!-- 	                                                <apex:InputText disabled="true" style="background-color:#E4FBC5;text-align:left;"  -->
+<!-- 	                                                                    id="allocated" value="{!recDt.allocatedPercent}"/> -->
+	                                            </td>
+	                                            <td class="textStyle" style="background-color:#E4FBC5;text-align:right;">
+	                                                <apex:outputText id="balance" value="{0, number, ,##,##0}" style="border:none;background-color:#E4FBC5;text-align:right;" >
+	                                                    <apex:param value="{!recDt.balance}"/>
+	                                                </apex:outputText>
+	                                            </td>
+	                                            
+	                                            <apex:repeat id="repeatId" value="{!recDt.goalAssetMappingList}" var="goalDesc">    
+	                                            	<td id='goalPercentCol' class="textStyle" style="border:none;background-color:#E4FBC5; text-align:right;">
+	                                                    <apex:InputText style="text-align:right;" id="descId" size="3" 
+	                                                                    value="{!goalDesc.assetAllocated}" onchange="calculate(this,{!rec.index},{!recType.index},{!recDt.index})"/>
+	                                                    <apex:inputHidden id="goalId" value="{!goalDesc.goalId}"></apex:InputHidden>
+	                                                </td>                
+	                                            </apex:repeat>
+	                                            
+	                                             <!-- Prajakta - FP Enhancement II - 20-5-2013 - Changes width from 100% to 160px for action column -->
+	                                            <td class="textStyle" id="actionId" style="border:1;background-color:#E4FBC5; text-align:right;"> 
+	                                                <apex:selectList size="1" value="{!recDt.Action}" style="width:160px; height:20px; direction: rtl;" styleclass="textStyle" multiselect="false">
+	                                                    <apex:selectOptions value="{!recDt.actionList}"/>                                               
+	                                                </apex:selectList> 
+	                                            </td>                
+	                                        </tr>
+	                                    </apex:repeat>
+	                                </apex:repeat>
+	                            </apex:repeat>
+	                        </tbody>
+                        </table>
+                    </div>
+                  </apex:pageBlock>
+                  <br/> <br/>
+                   <apex:pageBlock >
+                    
+                    <center>
+<!--                    <apex:commandButton style="margin-top:15px;" styleClass="standardFontStyle" value="Save"   action="{!save}"/> rerender="dummy" /> -->
+                    	<!--  onClick="validateAction();"  -->
+<!--                    <apex:commandButton value="SAVE PLEASE" action="{!PleaseSave}"></apex:commandButton> -->
+<!-- 						<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+						<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+							<apex:commandButton style=" margin-top:15px; " styleClass="standardFontStyle" value="Save" onClick="validateAction();" rerender="dummy" />
+                    	</apex:outputPanel>
+                    </center>
+                </apex:pageBlock>
+            </apex:form>
+        </apex:define>
+    </apex:composition>
+</apex:page>

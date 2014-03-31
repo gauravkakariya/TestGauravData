@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Renewal Emailer for the members – NILL EXECUTION</name>
+    <style>freeForm</style>
+    <subject>Ffreedom Membership Yearly Review</subject>
+    <textOnly>Dear {!Account.Name}
+
+Our continuous endeavor is to help you live your dream &amp; achieve financial freedom.
+
+To begin with, we would like to thank you for placing your trust with us and giving us an opportunity to prepare your Personalized Financial Plan.
+
+ 
+We have observed that you have not acted upon your Financial Plan. We would like to state that not acting on the Financial Plan is similar to not having a Financial Plan.
+
+At this point we would like to propose a meeting where we can review the actions we can take to implement your Financial Plan. Through this session, we will also take the opportunity of gathering fresh data [in terms of goals, income flows etc.]. Post this, your Financial Plan will be restructured &amp; we can start the implementation of the same.
+
+ 
+
+We would also like to inform you that your membership fee is due. Please act upon the same, so that you continue to avail the following services:
+
+Dedicated Financial Planner [FP]
+Conference calls/meetings with the FP at member’s discretion.
+Dedicated FP will be the single point contact &amp; will act as the Financial coach
+
+Restructuring of the plan, if required, due to changes in personal circumstances
+
+Access to Member portal [www.ffreedom.in]
+Consolidation &amp; Monitoring
+Approved Financial Plan &amp; Action Plan will be uploaded
+Goal Based reports [along with other reports]
+
+Implementation
+Ffreedom team will help the member to execute every single action plan
+
+Member Update - At least once a Q
+
+Annual review [Goal Based Reports] &amp; Rebalancing
+
+Other Services
+Monthly statements of your Financial Plan
+SIP &amp; Premium reminders (through SMS &amp; Email).
+Weekly update &amp; monthly Commentary mailers
+
+Additional Offerings [at an extra price]
+Estate Planning
+Income Tax Filing
+
+Your Financial Planner will soon be in touch with you to take these forward and  incase if you have already acted upon the same please ignore this email. 
+
+Warm Regards,
+
+Ffreedom Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

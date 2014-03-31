@@ -1,0 +1,50 @@
+<apex:page sidebar="false" controller="PortalController">
+  <apex:composition template="PortalFinancialMgrTemp"> 
+ <apex:define name="rightcontent"> 
+<div class="BankdetailsMainDiv">
+<table id="table1" width="650" height="30" cellpadding="0" cellspacing="0" border="0" >
+<tr>
+<td width="14"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/header1.png')}" width="30px" height="30px" /></td>
+<td class="BlockHeader">My Bank Details</td>
+<td width="14"><img src="{!URLFOR($Resource.PortalImages,'PortalImages/header2.png')}" width="30px" height="30px" /></td>
+</tr>
+</table>
+
+
+<table border="1" width="650" height="40" cellspacing="6" class="personalInfoTable">
+<tr><td><br/></td></tr>
+<tr>
+<td class="boldStyle">Bank Name:</td>
+<td  style="text-align:left;"><apex:outputText style="text-align:left" value="{!Account.Bank_Name__c}"/></td>
+</tr>
+<tr>
+<td class="boldStyle" >Bank Account Type:</td>
+<td  style="text-align:left;"><apex:outputText style="" value="{!Account.Bank_Account_Type__c}"/></td>
+</tr>
+<tr> 
+<td class="boldStyle" width="200px">Bank Account Number:</td>
+<td  style="text-align:left;"><apex:outputText style="" value="{!Account.bank_Account_Number__c}"/></td>
+</tr>
+<tr>
+<td class="boldStyle">MICR Number:</td>
+<td  style="text-align:left;"><apex:outputText style="" value="{!Account.MICR_Number__c }"/></td>
+</tr>
+<tr>
+<td class="boldStyle">IFSC Number:</td>
+<td  style="text-align:left;"><apex:outputText style="" value="{!Account.IFSC_Number__c}"/></td>
+</tr>
+<tr>
+<td class="boldStyle" style="">Bank Address:</td>
+<td style="text-align:left;"><apex:outputText value="{!Account.Branch_details__c}"/></td>
+</tr>
+
+
+<tr><td><br/></td></tr>
+</table> 
+ </div>
+ 
+ 
+ 
+  </apex:define> 
+ </apex:composition>
+</apex:page>

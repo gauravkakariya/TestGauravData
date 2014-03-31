@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Assignment for Career</name>
+    <style>freeForm</style>
+    <subject>Inquiry from Careers (website)</subject>
+    <textOnly>The below inquiry has come from the website on {!Lead.CreatedDate}
+ 
+First Name : {!Lead.FirstName}
+Last Name : {!Lead.LastName}
+Email id:  {!Lead.Email}
+Mobile number : {!Lead.MobilePhone}
+Preferred Department :  {!Lead.PreferredDepartment__c}
+
+Please respond to the same ASAP.</textOnly>
+    <type>html</type>
+</EmailTemplate>

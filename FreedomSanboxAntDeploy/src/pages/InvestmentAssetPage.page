@@ -1,0 +1,257 @@
+<!-- /*
+	
+Revision History:
+
+   Version     Version Author     Date          Comments
+   1.0         Persistent         NA  		  	Initial Draft
+   
+   2.0 		   Manasi Ranade	  3/1/2011   	Issue id: FS0398 : Added style class to make field as Required.
+*/-->
+<apex:page id="myPage" standardController="Investment_Asset__c" extensions="InvestmentAssetController" showHeader="false">
+
+	<link rel="stylesheet" href="{!URLFOR($Resource.AutoComplete, 'jqueyCss/jquery-ui.css')}" />
+	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-1.9.1.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-ui.js')}"></script>
+	<style>
+		.inputSchemeName{
+	          	padding: 0px;
+	     }
+	</style>
+
+<apex:stylesheet value="{!$Resource.FFStyle}"/>   
+   <apex:composition template="TabPage">
+        <apex:define name="contents"> 
+            <apex:form id="FullTable">
+                <apex:outputPanel id="SummaryTable">  
+                    <apex:pageBlock tabStyle="Account" title="Investment Assets">
+                        <table id="DataTable" cellSpacing="0" cellPadding="0" border="1" align="center" class="list" style="border-width:thin;border-style:solid;width:50%;border-color:gray;">
+                            <tr class="headerRow">  
+                                <td>
+                                    <apex:outputText value="Investment Assets" />
+                                </td>
+                     
+                                <apex:repeat value="{!accountList}" var="acc">
+                                    <td class="labelCol" style="text-align:left;">
+                                        <apex:outputText value="{!acc.name}"/>
+                                    </td>
+                                </apex:repeat>
+                            </tr>
+                            <apex:repeat value="{!SummaryTableList}" var="STList" >
+                                <tr>
+                                    <td>  
+                                        <apex:commandLink value="{!STList.RecordType}" action="{!showPopUp}" reRender="PopupPanel">
+                                            <apex:param name="selRType" value="{!STList.RecordTypeIdStr}" assignTo="{!selRecordTypeId}"/>
+                                            <apex:param name="selRName" value="{!STList.RecordType}" assignTo="{!selRecordTypeName}"/>
+                                        </apex:commandLink>   
+                                    </td>                     
+                                    <apex:repeat value="{!STList.InnerClassList}" var="innerList">
+                                        <td class="labelCol">  
+                                            <apex:outputText value="{0, number, ##,##0}">
+                                                <apex:param value="{!innerList.AmountValue}"/>
+                                            </apex:outputText> 
+                                        </td>
+                                    </apex:repeat>
+                                </tr>
+                            </apex:repeat>  
+                             <tr class="headerRow">  
+                                 <td class="dataCol" style="padding-left:10px">
+                                     <apex:outputText value="Total" />
+                                 </td>
+                                 
+                                 <apex:repeat value="{!accountList}" var="account">
+                                 <td class="labelCol" style="width:15%;padding-right:10px;">
+                                       <apex:outputText value="{0, number, ##,##0}">
+                                    <apex:param value="{!account.Investment_Asset_Rollup__c}"/>
+                                    </apex:outputText> 
+                                 </td>
+                                 </apex:repeat>
+                             </tr>
+                        </table>
+                        <apex:pageBlockButtons location="bottom" >
+                            <apex:commandButton action="/apex/AssetSummaryPage?entityId={!entityId}&tabname=Financial Planning" value="Previous" reRender="SummaryTable" style="margin-left:120px;"/>
+                            <apex:commandButton action="/apex/Loan?entityId={!entityId}&tabname=Financial Planning" value="Next" reRender="SummaryTable"/>
+                        </apex:pageBlockButtons>
+                    </apex:pageBlock>
+      
+                </apex:outputPanel>            
+            </apex:form> 
+            
+            <apex:form id="myForm"> 
+                <apex:outputPanel id="PopupPanel" >
+                    <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}" />
+                    <apex:outputPanel styleClass="investmentAssetpopupForeground" layout="block" rendered="{!displayPopUp}" id="innerPanel">
+                        <apex:pageBlock id="investmentAssetPage" tabStyle="Account" title="{!selRecordTypeName}" >                            
+                            <apex:outputText value="| indicates required fields" styleClass="requiredInfoMsg"/>
+                            <BR/>
+                            <apex:pageMessages rendered="true" id="Pagemsg"/>
+                            <apex:pageBlockTable style="width:100%;" id="tableInvest" value="{!investmentAssetBeanInstance.investmentAssetWrapperList}" align="center" var="investmentWrapper" rowClasses="odd,even" width="100%">
+                                <apex:column style="width:1%" headerValue="Remove">
+                                    <apex:inputCheckbox value="{!investmentWrapper.investmentAsset.Remove_Checkbox__c}"/>
+                                </apex:column>
+<!-- 		                        Prajakta - FP changes II - 27-05-2013 - Added one column "Include In HLV" -->
+		                        <apex:column headerValue="{!$ObjectType.Investment_Asset__c.fields.Is_Include_In_HLV_Inv_Asset__c.label}" style="width:4%;">
+		                            <apex:inputCheckbox value="{!investmentWrapper.investmentAsset.Is_Include_In_HLV_Inv_Asset__c}" style="align:center;"/>
+		                        </apex:column>
+		                        
+<!-- 		                        <apex:column headerValue="{!$ObjectType.Investment_Asset__c.fields.isIncludeActionPlan__c.label}" style="width:4%;"> -->
+<!-- 		                            <apex:inputCheckbox value="{!investmentWrapper.investmentAsset.isIncludeActionPlan__c}" style="align:center;"/> -->
+<!-- 		                        </apex:column> -->
+		                        
+                                
+                                <!--  FS0235 Commented Previous Code -->
+                                <!-- 
+                                <apex:column headerValue="AMC Name" rendered="{!if(recordType=='Mutual_Fund',true,false)}" style="width:4%">                                                                         
+                                    <apex:selectList value="{!investmentWrapper.selectedAMCName}" multiselect="false" size="1" onchange="schemeJS(this.value,'{!investmentWrapper.index}');" styleClass="requiredField" style="width:100%">
+                                        <apex:selectOptions id="selAMCOptions" value="{!investmentWrapper.amcNameList}"/>                                   
+                                    </apex:selectList>
+                                    <apex:actionFunction name="schemeAF" action="{!dummy}" reRender="innerPanel,counterStatusData" status="counterStatusData">
+                                        <apex:param name="selectedAMCName" value="" />
+                                        <apex:param name="Index" value=""/>                                                                                                                  
+                                    </apex:actionFunction>                                  
+                                </apex:column>
+                                
+                                <apex:column headerValue="Scheme Name" rendered="{!if(recordType=='Mutual_Fund',true,false)}" style="width:12%">                                      
+                                    <apex:selectList id="scheme" value="{!investmentWrapper.selectedSchemeName}" multiselect="false" size="1" style="width:100%" styleClass="requiredField">
+                                        <apex:selectOptions id="selOptions" value="{!investmentWrapper.schemeNameList}"/>
+                                    </apex:selectList>
+                                </apex:column>
+                                  -->
+                                <!-- /** Eternus Solutions  **/
+								/** Author  : Manasi Ranade	**/
+								/** Issue Id: FS0398     	**/
+								/** Date    : 3/1/2011 	**/
+								/** Purpose : Added style class to make field as Required**/
+								/****************************************************/-->
+                                <apex:column headerValue="AMC Name" rendered="{!if(recordType=='Mutual_Fund',true,false)}" style="width:4%">                                                                         
+                                    <apex:inputField value="{!investmentWrapper.investmentAsset.AMC_Name_Text__c}" style="width:95%" styleClass="requiredField"/>
+                                </apex:column>
+                                
+                                <!-- Prajakta - FP changes - 25-02-2013 -->
+                                <apex:column headerValue="Asset Name" rendered="{!if(recordType=='Gold and Silver',true,false)}" style="width:6%">
+                                    <apex:inputField value="{!investmentWrapper.investmentAsset.Asset_Name__c}" styleClass="requiredField" style="width:95%"/>
+                                </apex:column> 
+<!--                                 styleClass="requiredField" -->
+                                <apex:column headerValue="Scheme Name" rendered="{!if(recordType=='Mutual_Fund',true,false)}" style="width:12%">                                      
+                                    <apex:inputField value="{!investmentWrapper.investmentAsset.Scheme_Name_Text__c}" style="width:95%" styleClass="inputSchemeName requiredField "/>
+                                    
+                                    <script>
+											$(document).ready(function()
+									        {
+									        	var availableProductName =[{!strProductSchemeName}];
+									        	
+									            $(".inputSchemeName").autocomplete({
+									        		source: availableProductName,
+												  	select: function(event, ui) 
+												  	{
+													  	var strVal = ui.item.value;	  
+												  	} 
+												});		
+									        
+									        });
+										</script>
+                                </apex:column>                                  
+                                <apex:column headerValue="Script Name" rendered="{!if(recordType=='Stocks',true,false)}" style="width:6%">
+                                    <apex:inputField value="{!investmentWrapper.investmentAsset.Script_Name__c}" styleClass="requiredField" style="width:95%"/>
+                                </apex:column> 
+                                
+                                <apex:column style="width:8%" headerValue="Description" rendered="{!if(recordType=='Fixed_Income',true,false)}" >
+                                    <apex:inputField value="{!investmentWrapper.investmentAsset.Description__c}" style="width:95%"/>
+                                </apex:column>
+                                
+                                <apex:column style="width:7%" headerValue="Owner" rendered="{!if(recordType=='Stocks' || recordType=='Mutual_Fund' || recordType=='Gold and Silver' || recordType=='Fixed_Income',true,false)}" >
+                                    <apex:selectList style="width:100%" id="EntitySelectList" value="{!investmentWrapper.investmentAsset.Entity__c}" multiselect="false" size="1" rendered="true" styleClass="requiredField">
+                                        <apex:selectOptions value="{!OwnerItems}" />
+                                    </apex:selectList>         
+                                </apex:column>
+								<!--00001485 For Investment Assets Page, in "Asset Type" we want this column as mandatory field.-->
+                                 <apex:column headerValue="Asset Type" style="width:6%" rendered="{!if(((fmBean.isCustomer)&& recordType=='Fixed_Income'),true,false)}">
+                                    <apex:inputField value="{!investmentWrapper.investmentAsset.Asset_Type__c}" style="width:100%" styleClass="requiredField"/>
+                                </apex:column>
+                                <apex:column headerValue="Asset Type" style="width:8%" rendered="{!NOT(fmBean.isCustomer)}" >
+                                    <apex:inputField value="{!investmentWrapper.investmentAsset.Asset_Type__c}" style="width:100%" styleClass="requiredField"/>
+                                </apex:column> 
+                                
+                                
+                                <apex:column headerValue="Face Value" rendered="{!if(recordType=='Fixed_Income',true,false)}" style="width:4%">
+                                    <apex:inputField id="facevalue" value="{!investmentWrapper.investmentAsset.Face_Value__c}"  onchange="showTotal('{!investmentWrapper.index}',this.value,document.getElementById('myPage:j_id1:j_id4:myForm:investmentAssetPage:tableInvest:'+{!investmentWrapper.index}+':quantity').value);" style="width:95%"/>
+                                </apex:column>
+                                <apex:column headerValue="Quantity" style="width:4%" rendered="{!if(recordType=='Stocks' || recordType=='Gold and Silver' || recordType=='Fixed_Income',true,false)}">
+                                    <apex:inputField id="quantity" value="{!investmentWrapper.investmentAsset.Quantity__c}"  onchange="showTotal('{!investmentWrapper.index}',document.getElementById('myPage:j_id1:j_id4:myForm:investmentAssetPage:tableInvest:'+{!investmentWrapper.index}+'{!if(recordType=='Fixed_Income',':facevalue',':currentprice')}').value,this.value);" style="width:95%"/>
+                                </apex:column>
+                                <apex:column headerValue="Units" style="width:3%" rendered="{!if(recordType=='Mutual_Fund',true,false)}">
+                                    <apex:inputField id="units" value="{!investmentWrapper.investmentAsset.Units__c}"  onchange="showTotal('{!investmentWrapper.index}',document.getElementById('myPage:j_id1:j_id4:myForm:investmentAssetPage:tableInvest:'+{!investmentWrapper.index}+':currentnav').value,this.value);" style="width:95%" />
+                                </apex:column>
+                   
+                                <apex:column rendered="{!if(recordType=='Stocks' || recordType=='Mutual_Fund',true,false)}" style="width:1%;">
+                                    <apex:facet name="header">Acquisition<br/>Date</apex:facet>
+                                    <apex:inputField value="{!investmentWrapper.investmentAsset.Acquisition_Date__c}" style="width:95%;"/>
+                                </apex:column>
+                                <apex:column rendered="{!if(recordType=='Mutual_Fund',true,false)}" style="width:1%">
+                                    <apex:facet name="header">Purchase<br/>NAV</apex:facet>
+                                    <apex:inputField value="{!investmentWrapper.investmentAsset.Purchase_NAV__c}"  style="width:95%"/>
+                                </apex:column>
+                                <apex:column headerValue="Current NAV" rendered="{!if(recordType=='Mutual_Fund',true,false)}" style="width:1%">
+                                    <apex:facet name="header">Current<br/>NAV</apex:facet>
+                                    <apex:inputField id="currentnav" value="{!investmentWrapper.investmentAsset.Current_NAV__c}"  onchange="showTotal('{!investmentWrapper.index}',this.value,document.getElementById('myPage:j_id1:j_id4:myForm:investmentAssetPage:tableInvest:'+{!investmentWrapper.index}+':units').value);" style="width:95%"/>
+                                </apex:column>
+                                           
+                                <apex:column headerValue="Purchase Price" rendered="{!if(recordType=='Stocks' || recordType=='Gold and Silver',true,false)}" style="width:1%">
+                                    <apex:inputField value="{!investmentWrapper.investmentAsset.Purchase_Price__c}" style="width:95%"/>
+                                </apex:column>
+                                <apex:column headerValue="Current Price" rendered="{!if(recordType=='Stocks' || recordType=='Gold and Silver',true,false)}" style="width:1%">
+                                    <apex:inputField id="currentprice" value="{!investmentWrapper.investmentAsset.Current_Price__c}"  onchange="showTotal('{!investmentWrapper.index}',this.value,document.getElementById('myPage:j_id1:j_id4:myForm:investmentAssetPage:tableInvest:'+{!investmentWrapper.index}+':quantity').value);" style="width:95%"/>
+                                </apex:column>
+                                
+                                <apex:column rendered="{!if((recordType=='Mutual_Fund' || recordType=='Gold and Silver'),true,false)}" style="width:3%;">   <!-- Prajakta - 21-03-2013 -->
+                                    <apex:facet name="header">Monthly<br/>SIP<br/>Amount</apex:facet>
+                                    <apex:inputField value="{!investmentWrapper.investmentAsset.Monthly_SIP_Amount__c}" style="width:95%"/>
+                                </apex:column>
+                                
+                                
+                                <apex:column headerValue="Coupon Rate(%)" rendered="{!if(recordType=='Fixed_Income',true,false)}" style="width:1%" >
+                                    <apex:inputField value="{!investmentWrapper.investmentAsset.Coupon_Rate__c}" style="width:95%"/>
+                                </apex:column>
+                                <apex:column headerValue="Maturity Date" rendered="{!if(recordType=='Fixed_Income',true,false)}" style="width:4%">
+                                    <apex:inputField value="{!investmentWrapper.investmentAsset.Maturity_Date__c}" style="width:95%"/>
+                                </apex:column> 
+                                <apex:column headerValue="Maturity Value" rendered="{!if(recordType=='Fixed_Income',true,false)}" style="width:4%">
+                                    <apex:inputField value="{!investmentWrapper.investmentAsset.Maturity_Value__c}" style="width:95%"/>
+                                </apex:column> 
+                                  
+                                <apex:column headerValue="Total" style="width:4%">
+                                    <apex:inputField id="totalfield" value="{!investmentWrapper.investmentAsset.TotalAsset__c}" style="width:95%"/>
+                                </apex:column>    
+                                                             
+                            </apex:pageBlockTable>     
+                             <apex:actionStatus stopText="" id="counterStatusData">
+
+                                                      <apex:facet name="start">                
+                                                             <apex:outputPanel style="padding-left:45%;">
+                                                                <apex:image value="{!$Resource.loading_image}" width="3%" height="3%"/>
+                                                             </apex:outputPanel>
+                                                      </apex:facet>
+                            </apex:actionStatus>             
+                            <apex:pageBlockButtons location="bottom" >
+<!--                             	<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+								<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+	                                <apex:commandButton value="Add New" action="{!addNewRow}" reRender="PopupPanel,counterStatusData" status="counterStatusData" style="margin-left:90px;"/>
+	                                <apex:commandButton value="Remove" action="{!remove}" reRender="PopupPanel,SummaryTable,counterStatusData" status="counterStatusData"/>
+	                                <apex:commandButton value="Save" action="{!Save}" reRender="PopupPanel,SummaryTable,counterStatusData, Pagemsg" status="counterStatusData" oncomplete="focusMessage();"/>
+                                </apex:outputPanel>
+                                <apex:commandButton value="Cancel" immediate="true" action="{!closePopup}" rerender="PopupPanel,SummaryTable" />
+                            </apex:pageBlockButtons>
+                        </apex:pageBlock>
+                    </apex:outputPanel>
+                </apex:outputPanel>         
+            </apex:form> 
+        </apex:define>
+    </apex:composition> 
+    
+	<script>
+	    function focusMessage(){
+	        window.scrollTo(10,10);
+	    }
+	
+	</script>
+    <apex:includeScript value="{!$Resource.ffreedomJavascript}"/>
+</apex:page>

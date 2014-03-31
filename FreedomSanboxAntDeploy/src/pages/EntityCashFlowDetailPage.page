@@ -1,0 +1,30 @@
+<!-- Created on : 2/9/2013 : New to create Entity wise CashFlow Report -->
+<apex:page controller="EntityCashFlowDetails" showHeader="false" standardStylesheets="true" title="Cash Flow Details" contenttype="application/vnd.ms-excel#EntityCashFlowDetails.xls"> 
+		<apex:pageBlock >
+<!-- 			<div align="center"> -->
+<!-- 				<apex:commandButton value="Export Data" action="{!ExportData}"/> -->
+<!-- 			</div> -->
+			<apex:pageBlockSection title="Entity Wise Cash Flow Details" collapsible="true" columns="2" id="section1">
+<!-- 				<div align="center"> -->
+<!-- 					Entity Wise Cash Flow Details -->
+<!-- 				</div> -->
+				<apex:variable var="i" value="{!0}" />
+		 		<apex:pageBlockTable border="1" value="{!lstCashFlowDetails}" var="objCashFlow" style="margin-left:48px;" width="50%">
+		 			<apex:column headerValue="Sr. No." width="25%" style="align:center;">
+					   	<apex:variable var="i" value="{!i+1}"/>
+					    <apex:outputText value="{0, number, ,##,##0}">
+		                     <apex:param value="{!i}"/>
+                 		</apex:outputText>
+                	</apex:column>
+					<apex:column headerValue="Entity Name" width="25%">
+					    <apex:outputText value="{!objCashFlow.EntityName}"/>
+	                </apex:column>
+	                <apex:column headerValue="Cash Flow Surplus" width="25%">
+	                	<apex:outputText value="{0, number, ,##,##0}">
+                             <apex:param value="{!objCashFlow.totalCashFlow}"/>
+                    	</apex:outputText>
+	                </apex:column>
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+</apex:page>

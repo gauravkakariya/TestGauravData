@@ -1,0 +1,16 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p><font face="Verdana,Helvetica,Sans-Serif" size="2">Hello {!Account.OwnerFirstName},</font></p>
+<p><font face="Verdana,Helvetica,Sans-Serif" size="2"></font>&nbsp;</p>
+<p><font face="Verdana,Helvetica,Sans-Serif" size="2">The Data Collection duration for the entity <strong>{!Account.Name}</strong>&nbsp;has crossed 3 days.</font></p>
+
+<p><font face="Verdana" size="2"></font>&nbsp;</p>
+<p><font face="Verdana" size="2">Herein is the link of the same:{!Account.Link}</font></p>
+<p>&nbsp;</p>
+<p><font face="Verdana,Helvetica,Sans-Serif" size="2">Please accomplish the task as early as possible.</font></p>
+<p><font face="Verdana,Helvetica,Sans-Serif" size="2"></font>&nbsp;</p>
+<p><font face="Verdana,Helvetica,Sans-Serif" size="2">Thank You,</font></p><p><font face="Verdana,Helvetica,Sans-Serif" size="2">Compliance Team.<br></font></p>
+<p><font size="2"><font size="3"></font></font><br></p>]]></td>
+</tr>
+</table>

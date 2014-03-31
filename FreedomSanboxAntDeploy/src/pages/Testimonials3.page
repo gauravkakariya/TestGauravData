@@ -1,0 +1,67 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | Testimonials | Investor Without the Destination Is Like A Ship Without An Anchor">
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+<div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+      
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/result_img_new.png')}" style="height:30%;width:100%;"/></div>
+       <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+        </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+             
+      </div>
+      <div id="innerpage_textcontainer_middle">
+         <div class="innerpage_titletext"><span class="innerpagetexttitle">Testimonials</span></div>
+        <div class="innerpage_titletext"><center><span class="innerpagetexttitle">“Investor Without the Destination Is Like A Ship Without An Anchor.”</span></center></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        This is a <strong>special thank you to Sunitha , a Ffreedom Financial Planner</strong> before I say thank you, I would like state that I have been practicing for last 25 years and have been doing various investments which has been mainly for tax benefits or save for the rainy day since I am a profession that does not give us regular income or salary we have to toil and give our profession advice every day based on which we get paid for the service rendered and sometimes we do not get payment from our client even after when our is to rendered to them. 
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">I had done a one to one with Sunitha and she was an eye-opener to me and made me realize the value of investment. 
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        <strong>She did not give a scheme that this is good investment therefore invest in it but she said she has to study the investment I have made</strong> and then give me and my wife Anuradha whether our investments are productive or inactive and then will inform us how to invest and the most importantly to invest wisely to gain financial freedom. 
+        </span></div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><br /><strong>I now believe in her words that we should be FINANANCIALLY FREE and just not be investor without a destination i.e. a ship without an anchor in your life.</strong></span></div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+       I will always recommend you to all my clients for any financial freedom.</span></div>
+         <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><br /><br /><strong>Thank You<br />
+Ramu Vedaraman<br />
+Advocate/Regd. Trade Mark &amp; Patent Agent<br />
+Founder of  Ramu &amp; Associates</strong></span></div>
+       <center><a href="Testimonials" class="otherslink" alt="Testimonials"><strong>Back</strong></a>
+        </center>
+        <br /> 
+       </div>
+    
+    
+    
+      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" /></div>
+       
+       <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}"  border="0" usemap="#Map2" />
+         <map name="Map2" id="Map2">
+           <area shape="rect" coords="3,0,230,50" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map></div>
+       <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+         <div class="title123"><span class="imgtext">Related Links</span></div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Comprehensive_fp"><strong>Services Basket</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know our Financial Planers</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Why_do_you_need_a_plan"><strong>Why do you need a financial plan?</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Who_can_be_your_financial_planner"><strong>Who can be a financial planner?</strong></a></span> </div>
+<!--        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="why_fees"><strong> Financial Planning Fees</strong></a></span> </div> -->
+       <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

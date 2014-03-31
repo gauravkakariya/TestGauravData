@@ -1,0 +1,216 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<!--StartFragment-->
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Dear {!Lead.Name},<o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><o:p><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></span></o:p></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><span class="Apple-style-span" style="-webkit-border-horizontal-spacing: 5px; -webkit-border-vertical-spacing: 5px; "><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Thank you for taking the&nbsp;</font></span><b><span style="color: rgb(234, 155, 39); "><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Ffreedom Score [Financial Health Checkup Questionnaire],&nbsp;</font></span></span></b></span><span class="Apple-style-span" style="-webkit-border-horizontal-spacing: 5px; -webkit-border-vertical-spacing: 5px; "><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">by doing so you have taken the first step towards</font></span><b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;achieving complete financial freedom</font></span></b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">. You will find below your personal&nbsp;</font></span><b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">"Ffreedom Score"</font></span></b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;generated on the basis of the financial health checkup questionnaire.</font></span></span></p><span class="Apple-style-span" style="-webkit-border-horizontal-spacing: 5px; -webkit-border-vertical-spacing: 5px; "><p class="MsoNormal" style="margin-top: 0px; margin-bottom: 0.0001pt; "><o:p><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></span></o:p></p><p class="MsoNormal" style="margin-top: 0px; margin-bottom: 0.0001pt; "><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Your score is an indicator of how far you are in realizing complete Financial Freedom.<o:p></o:p></font></span></p><p class="MsoNormal" style="margin-top: 0px; margin-bottom: 0.0001pt; "><o:p><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></span></o:p></p><p class="MsoNormal" style="margin-top: 0px; margin-bottom: 0.0001pt; "><b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">What is Financial Freedom?<o:p></o:p></font></span></b></p><p class="MsoNormal" style="margin-top: 0px; margin-bottom: 0.0001pt; "><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Financial Freedom is equal to having enough resources to achieve ones financial goals, having all your risks covered and also being prepared for any type of contingency or life event. This is the time on one is free from financial stress &amp; is experiencing peace of mind.</font></span></p></span><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">You have scored </font></span><b><span style="color:#EA9B27;mso-no-proof:yes"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">{!Lead.Ffreedom_Score__c}</font></span></span></b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;compared to the ideal
+Ffreedom Score of </font></span><b><span style="color:#EA9B27"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">100</font></span></span></b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"> which is an
+indicator of complete Financial Freedom.<o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><o:p><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></o:p></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><o:p><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">{!Lead.Ffreedom_Score_Explanation__c}&nbsp;</font></span></o:p></p>
+
+<p class="MsoNormal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></p><p class="MsoNormal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Noted Below are </font></span><span style="color:black"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">certain Suggestions for Improvement according to your
+answers:</font></span></span></p><p class="MsoNormal"><span style="color:black"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></span></p>
+
+<table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;mso-yfti-tbllook:191;mso-padding-alt:0cm 5.4pt 0cm 5.4pt">
+ <tbody><tr>
+  <td width="426" valign="top" style="width:425.8pt;background:#C2D69B;mso-background-themecolor:
+  accent3;mso-background-themetint:153;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><font class="Apple-style-span" face="'Times New Roman', Times, serif">1. Financial Goals<o:p></o:p></font></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><o:p><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></o:p></span></p>
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif">{!Lead.Ffreedom_Score_Question_One__c}</font></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;background:#C2D69B;mso-background-themecolor:
+  accent3;mso-background-themetint:153;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><font class="Apple-style-span" face="'Times New Roman', Times, serif">2. Plan for your Financial Goals<o:p></o:p></font></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><o:p><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></o:p></span></p>
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif">{!Lead.Ffreedom_Score_Question_Two__c}</font></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;background:#C2D69B;mso-background-themecolor:
+  accent3;mso-background-themetint:153;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><font class="Apple-style-span" face="'Times New Roman', Times, serif">3. </font></span><font class="Apple-style-span" face="'Times New Roman', Times, serif">Rebalancing your Portfolio<o:p></o:p></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><o:p><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></o:p></span></p>
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif">{!Lead.Ffreedom_Score_Question_Three__c}</font></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;background:#C2D69B;mso-background-themecolor:
+  accent3;mso-background-themetint:153;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif">4. Reviewing your
+  Investments<o:p></o:p></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><o:p><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></o:p></span></p>
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif">{!Lead.Ffreedom_Score_Question_Four__c}</font></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;background:#C2D69B;mso-background-themecolor:
+  accent3;mso-background-themetint:153;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><font class="Apple-style-span" face="'Times New Roman', Times, serif">5. </font></span><font class="Apple-style-span" face="'Times New Roman', Times, serif">Set Asset Allocation<o:p></o:p></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><o:p><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></o:p></span></p>
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif">{!Lead.Ffreedom_Score_Question_Five__c}</font></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;background:#C2D69B;mso-background-themecolor:
+  accent3;mso-background-themetint:153;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><font class="Apple-style-span" face="'Times New Roman', Times, serif">6. Retirement<o:p></o:p></font></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><o:p><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></o:p></span></p>
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif">{!Lead.Ffreedom_Score_Question_Six__c}</font></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;background:#C2D69B;mso-background-themecolor:
+  accent3;mso-background-themetint:153;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><font class="Apple-style-span" face="'Times New Roman', Times, serif">7. Retirement Amount<o:p></o:p></font></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><o:p><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></o:p></span></p>
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif">{!Lead.Ffreedom_Score_Question_Seven__c}</font></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;background:#C2D69B;mso-background-themecolor:
+  accent3;mso-background-themetint:153;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><font class="Apple-style-span" face="'Times New Roman', Times, serif">8. Written Will<o:p></o:p></font></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><o:p><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></o:p></span></p>
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif">{!Lead.Ffreedom_Score_Question_Eight__c}</font></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;background:#C2D69B;mso-background-themecolor:
+  accent3;mso-background-themetint:153;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><font class="Apple-style-span" face="'Times New Roman', Times, serif">9. Joint Accounts &amp; Power of
+  Attorney<o:p></o:p></font></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><o:p><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></o:p></span></p>
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif">{!Lead.Ffreedom_Score_Question_Nine__c}</font></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;background:#C2D69B;mso-background-themecolor:
+  accent3;mso-background-themetint:153;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><font class="Apple-style-span" face="'Times New Roman', Times, serif">10. Nominees for Bank Acoounts<o:p></o:p></font></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="426" valign="top" style="width:425.8pt;padding:0cm 5.4pt 0cm 5.4pt">
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><span style="color: black; "><o:p><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></o:p></span></p>
+  <p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt"><font class="Apple-style-span" face="'Times New Roman', Times, serif">{!Lead.Ffreedom_Score_Question_Ten__c}</font></p>
+  </td>
+ </tr>
+</tbody></table>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><i><span style="color: rgb(153, 153, 153); "><o:p><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></span></o:p></span></i></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><i><span style="color: rgb(153, 153, 153); "><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">The
+Ffreedom Score is a quantitative model that is used to measure how&nbsp;healthy
+your&nbsp;Finances are and is a proprietary tool of Ffreedom Financial
+Planners.</font></span></span></i><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><o:p><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></span></o:p></p><p class="MsoNormal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><br></font></span></p><p class="MsoNormal"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">
+
+
+</font></span><!--StartFragment--></p><p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify;mso-pagination:none;mso-layout-grid-align:none;text-autospace:none"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">You can also avail a </font></span><b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Complimentary Consultation with a *Certified
+Financial Planner.</font></span></b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"> To know the agenda of the Consultation &amp; fix up an
+appointment </font></span><span style="color:blue"><a href="http://www.ffreedom.in/Comp_Con"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">click here</font></span></a></span><a href="http://www.ffreedom.in/Comp_Con"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><o:p></o:p></font></span></a></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify;mso-pagination:none;mso-layout-grid-align:none;text-autospace:none"><o:p><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></span></o:p></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;text-align:
+justify;mso-pagination:none;mso-layout-grid-align:none;text-autospace:none"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">[* There are currently only 1031 Certified Financial
+Planners in India as per the Financial Planning Standards Board of India Journal,
+August 2010.]<o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><o:p><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></span></o:p></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Regards&nbsp;<o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Ffreedom Team<o:p></o:p></font></span></b></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><b><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Dream
+&gt; Decide &gt; Do</font></span></b></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><b><o:p><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></span></o:p></b></p>
+
+<p class="MsoNormal" align="center" style="margin-bottom:0cm;margin-bottom:.0001pt;
+text-align:center;mso-pagination:none;mso-layout-grid-align:none;text-autospace:
+none"><b><i><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">Join
+the Ffreedom Tribe, Connect with Ffreedom Financial Planners at:<o:p></o:p></font></span></i></b></p>
+
+<p class="MsoNormal" align="center" style="margin-bottom:0cm;margin-bottom:.0001pt;
+text-align:center;mso-pagination:none;mso-layout-grid-align:none;text-autospace:
+none"><a href="http://www.ffreedom.in"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><font class="Apple-style-span" color="#000000">www.ffreedom.in</font></font></span></a><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;|&nbsp;</font></span><a href="http://www.facebook.com/Ffreedom"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><font class="Apple-style-span" color="#000000">www.facebook.com/Ffreedom</font></font></span></a><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;|&nbsp;</font></span><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><a href="http://www.twitter.com/_ffreedom"><font class="Apple-style-span" color="#000000">www.twitter.com/_ffreedom</font></a>&nbsp;|</font></span><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><o:p></o:p></font></span></p>
+
+<p class="MsoNormal" align="center" style="margin-bottom:0cm;margin-bottom:.0001pt;
+text-align:center;mso-pagination:none;mso-layout-grid-align:none;text-autospace:
+none"><a href="http://www.youtube.com/ffreedomin"><span style="mso-bidi-font-size:
+13.0pt;mso-bidi-font-family:Arial;color:windowtext"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">www.youtube.com/ffreedomin</font></span></span></a><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;| </font></span><a href="http://www.youtube.com/ffreedomtube"><span style="mso-bidi-font-size:
+13.0pt;mso-bidi-font-family:Arial;color:windowtext"><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">www.youtube.com/ffreedomtube</font></span></span></a><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif"><o:p></o:p></font></span></p>
+
+<p class="MsoNormal" style="margin-bottom:0cm;margin-bottom:.0001pt;mso-pagination:
+none;mso-layout-grid-align:none;text-autospace:none"><o:p><span class="Apple-style-span" style="font-size: medium;"><font class="Apple-style-span" face="'Times New Roman', Times, serif">&nbsp;</font></span></o:p></p>
+
+<!--EndFragment-->
+
+
+<p></p>
+
+<!--EndFragment-->]]></td>
+</tr>
+</table>

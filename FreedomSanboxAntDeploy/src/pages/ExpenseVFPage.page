@@ -1,0 +1,129 @@
+<apex:page controller="ExpenseVFPageController" standardStylesheets="true" showHeader="false" sidebar="false">
+	<apex:stylesheet value="{!$Resource.FFStyle}"/>
+	<apex:includeScript value="{!$Resource.ffreedomJavascript}"/>
+	
+	<style>
+		th.colWrapClass div{
+		                   white-space:pre-wrap;
+		                        width:10%;
+		}
+	</style>
+	
+	<apex:composition template="TabPage" >
+	    <apex:define name="contents">
+	        <apex:form >
+	            <apex:outputPanel id="expenseSummaryTable" style="width:30%">  
+	                <apex:pageBlock tabStyle="Account" title="Expenses">
+	
+		                <div style="margin:15px;">
+		                    <apex:outputText value="{!$Label.GlobalNote}" styleClass="standardFontStyle" style="font-weight:bold;"/> 
+		                    <apex:outputText value="<br/>{!$Label.ExpenseGlobalNote}" styleClass="standardFontStyle" escape="false"/> 
+		                </div>
+		                
+	                    <table id="DataTable" cellSpacing="0" cellPadding="0" style="border-width:thin;border-style:solid;width:50%;border-color:gray;" border="1" align="center" class="list">
+	                        <tr class="headerRow">  
+	                            <td style="width:7%;text-align:left">
+	                            <apex:outputText value="Household Expense" />
+	                            </td>
+	                            <td style="width:8%;text-align:right" >
+	                            <apex:outputText value="Monthly Expense"/>
+	                            </td>
+	                        </tr>
+	                        <apex:repeat value="{!expenseBeanInstance.GeneralExpensesList}" var="expense" >
+	                            <tr >
+	                                <td style="width:7%" class="dataCol"> 
+	                                    <apex:commandLink value="{!expense.GeneralExpensesType}" action="{!showPopUp}"  reRender="PopupPanel">
+	                                        <apex:param name="selRType" value="{!expense.GeneralExpensesType}" assignTo="{!expenseBeanInstance.selGeneralExpense}"/>
+	                                    </apex:commandLink>   
+	                                </td>
+	                                <td class="labelCol">
+	                                <apex:outputText value="{0, number, ##,##0}" >
+	                                <apex:param value="{!expense.AmountValue}"/>
+	                                </apex:outputText>
+	                                </td>
+	                            </tr>
+	                        </apex:repeat> 
+	                        <tr class="headerRow">
+	                            <td class="dataCol" style="padding-left:10px;"> <apex:outputText value="Total" /></td>
+	                             <td class="labelCol" style="padding-right:10px;"><apex:outputText id="Total" value="{0, number, ##,##0}" > <apex:param value="{!ExpenseBeanInstance.totalExpenses}" /></apex:outputText></td>
+	                        </tr>
+	                     </table>
+	                     
+	                     <apex:pageBlockButtons location="bottom">
+	                     <apex:commandButton value="Previous" action="/apex/IncomeSummaryPage?entityId={!expenseBeanInstance.entityId}&tabname=Financial Planning" reRender="PopupPanel" style="margin-left:120px;"/>                                             
+	                     <apex:commandButton value="Next" action="/apex/AssetSummaryPage?entityId={!expenseBeanInstance.entityId}&tabname=Financial Planning" reRender="PopupPanel"/>                                             
+	                     </apex:pageBlockButtons>
+	                </apex:pageBlock>
+	            </apex:outputPanel>
+	        </apex:form> 
+	        
+	        <apex:form > 
+	            <apex:outputPanel id="PopupPanel" >
+	                <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!expenseBeanInstance.displayPopUp}" />
+	                <apex:outputPanel styleClass="popupForeground" layout="block" rendered="{!expenseBeanInstance.displayPopUp}" style="width:60%;">
+	                    
+	                    <apex:pageBlock id="expenseEdit" title="{!expenseBeanInstance.selGeneralExpense}">
+	                    
+	                        <apex:outputText value="| indicates required fields" styleClass="requiredInfoMsg"/>
+	                        
+	                        <apex:pageMessages ></apex:pageMessages>
+	                        
+	                        <apex:pageBlockTable value="{!ExpenseDisplayPageList}" var="expense" align="center"  headerClass="colWrapClass">
+	                        
+	                            <apex:column headerValue="{!$ObjectType.Expense__c.fields.Sub_Expenses__c.label}" style="width:10%">
+	                                <apex:outputText value="{!expense.Sub_Expenses__c}" style="width:30%;"></apex:outputText>
+	                            </apex:column>
+	                            <!--<apex:column headerValue="{!$Label.Owner}" >
+	                                 <apex:selectList id="EntitySelectList"  styleClass="requiredField" value="{!expense.Entity_Name__c}" multiselect="false" size="1" style="width:100%;" >
+	                                     <apex:selectOptions value="{!OwnerItems}" />
+	                                 </apex:selectList>         
+	                            </apex:column>-->
+	                            <apex:column headerValue="{!$ObjectType.Expense__c.fields.Start_Year__c.label}" style="width:6%;" >
+	                                 <apex:inputField value="{!expense.Start_Year__c}" style="width:90%;" onkeypress="return isNumberKey(event)" onblur="yearLength(this);"/>
+	                            </apex:column>
+	                            
+	                            <apex:column headerValue="{!$ObjectType.Expense__c.fields.End_Year__c.label}"  style="width:6%;" title="{!$Label.Expense_end_year_note}">
+	                                 <apex:inputField value="{!expense.End_Year__c}" style="width:90%;"  onkeypress="return isNumberKey(event)" onblur="yearLength(this);"/>
+	                            </apex:column>
+	                            
+	                            <apex:column headerValue="{!$ObjectType.Expense__c.fields.Current_Expenses__c.label}"  style="width:10%;" >
+	                                 <apex:inputField value="{!expense.Current_Expenses__c}" styleClass="requiredField" style="width:90%;"/>
+	                            </apex:column>
+	                            
+	                            <apex:column headerValue="{!$ObjectType.Expense__c.fields.Frequency__c.label}" style="width:10%;" >
+	                                <apex:selectList id="FrequencySelectList"  styleClass="requiredField" value="{!expense.Frequency__c}"  multiselect="false" size="1" style="width:100%;" >
+	                                     <apex:selectOptions value="{!frequency}" />
+	                                 </apex:selectList>  
+	                             </apex:column>
+	                             
+	                            <apex:column headerValue="{!$ObjectType.Expense__c.fields.Expense_Growth_Rate__c.label}" style="width:3%;" title="{!$Label.Expense_growth_rate_note}">
+	                                 <apex:inputField value="{!expense.Expense_Growth_Rate__c}" style="width:85%;" />
+	                            </apex:column>   
+	                              
+	                            <apex:column headerValue="{!$ObjectType.Expense__c.fields.Essential__c.label}" style="width:2%;">
+	                                 <apex:inputField value="{!expense.Essential__c}"/>
+	                            </apex:column>    
+	                        </apex:pageBlockTable>
+	                        
+	                        <apex:actionStatus stopText="" id="counterStatusData">
+                                 <apex:facet name="start">                
+                                        <apex:outputPanel style="padding-left:45%;">
+                                           <apex:image value="{!$Resource.loading_image}" width="3%" height="3%"/>
+                                        </apex:outputPanel>
+                                 </apex:facet>
+	                        </apex:actionStatus>  
+	                        
+	                        <apex:pageBlockButtons location="bottom">
+<!-- 	                        	<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+								<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+		                            <apex:commandButton value="Save" action="{!Save}"  reRender="PopupPanel,expenseSummaryTable,totalPanel,counterStatusData" status="counterStatusData" />
+		                        </apex:outputPanel>
+	                            <apex:commandButton value="Cancel" action="{!closePopup}" immediate="true" rerender="PopupPanel,expenseSummaryTable,totalPanel" />
+	                        </apex:pageBlockButtons>
+	                    </apex:pageBlock>
+	                </apex:outputPanel>
+	            </apex:outputPanel>
+	        </apex:form>      
+	    </apex:define>
+	</apex:composition>
+</apex:page>

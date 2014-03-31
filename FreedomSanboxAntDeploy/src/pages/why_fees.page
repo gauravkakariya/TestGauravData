@@ -1,0 +1,182 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | Financial Planning Fees">
+<link rel="shortcut icon" href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+ <div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+        <div class="sidemenucontainer">
+         <div id="sidemenu1">
+             <ul style="list-style-type:none">
+              <li><a href="our_process">Our Process</a></li>
+              <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+                <li><a href="our_advisors">Our Financial Planners</a></li>
+                <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+                <li><span class="selected_btn">Financial Planning Fees</span></li>
+               <!--<li style="padding-left:10px;"><span class="selected_btn"><apex:image url="{!URLFOR($Resource.images,'images/bullet.jpg')}" />&nbsp;Why Fees?</span></li>
+                    <li style="padding-left:10px;"><a href="#"><img src="{!URLFOR($Resource.images,'images/bullet.jpg')}" border="0" />&nbsp;Fee Structure</a></li>-->
+                <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+                <li><a href="Client_Stories">Our Client Stories</a></li>
+                
+        </ul>
+        </div>
+        </div>
+        <!-- Changed Image from "result_img" to "result_img_new" -->
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/result_img_new.png')}" style="height:30%; width:100%" /></div>
+        <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+        </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+              <div class="leftlinkselectedimg" style="margin-top:100px; height:150px; background-repeat:no-repeat;"></div>
+      </div>
+      <div id="innerpage_textcontainer_middle">
+      <div class="innerpage_titletext"><span class="innerpagetexttitle">Financial Planning Fees</span> </div> 
+        <!--<div class="innerpage_titletext"><span class="innerpagetopheading">Why Fees</span></div>
+    <div class="innerpage_titletext"><span class="innerpagetexttitle">Money Matters - Why should you pay us?</span> </div>-->
+     <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Money Matters - Why should you pay us?</strong></span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">Every individual is different: their needs, desires and dreams. But it is the need to have a secure future that binds them all. And with the highly talented team of Financial Planners we know exactly how to enrich and secure the financial lives of our clients.</span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">For each and every planner in our team, your priorities come first. We are allied with you, not any financial institution. We charge fees to help provide you with unbiased advice, counseling, planning and implementation.</span></div>
+    
+    <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>How much Fees do you need to pay us?</strong></span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+           Fees are based on the plan you choose. You will know up front exactly what you will receive as a part of the plan that you opt for. Our clients are not obligated to proceed with financial planning unless they are completely comfortable about their plan and their planner.
+           We are confident that you will find value in the plan our financial planner creates for you. With your active involvement and inputs, you can enhance the value of your financial plan.  
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+           We, at Ffreedom, know and understand the value of your money. And if you feel that we have not delivered what we promise you, or if you feel unhappy about the way the plan is proceeding, you can discontinue our services.  
+        </span></div>
+        
+    <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Financial Planning Fees:</strong></span> </div> 
+    <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+    
+    <!-- 
+        <div class="settable">
+        <table class="textmatter" width="480" frame="void" cellpadding="8px" cellspacing="3px">        
+          <tr>
+          <td bgcolor="#feeddd"><a href="Comprehensive_fp">Comprehensive Financial Planning Premium:<br />(Financial Planning + Succession Planning)</a></td>
+          <td width="20%" align="right" valign="top" bgcolor="#f4be8b" style="color:#000000">25,000</td>
+          </tr>
+          <tr>
+          <td bgcolor="#feeddd"><a href="What_is_financial_planning">Comprehensive Financial Planning Standard:<br />(Only Financial Plan)</a></td>
+          <td align="right" valign="top" bgcolor="#f4be8b" style="color:#000000">15,000</td>
+          </tr>
+          <tr>
+          <td bgcolor="#feeddd"><a href="One_Goal_Plan">One Goal Plan:</a></td>
+          <td align="right" bgcolor="#f4be8b" style="color:#000000">2,500</td>
+          </tr>
+          <tr>
+          <td bgcolor="#feeddd"><a href="Risk_Planning">Risk Planning:</a></td>
+          <td align="right" bgcolor="#f4be8b" style="color:#000000">2,500</td>
+          </tr>
+          <tr>
+          <td bgcolor="#feeddd"><a href="Estate_Planning">Succession Planning 1<sup>*</sup>:<br/ >(Power of Attorney &amp; Nomination check)</a></td>
+          <td align="right" valign="top" bgcolor="#f4be8b" style="color:#000000">5,000</td>
+          </tr>
+          <tr>
+          <td bgcolor="#feeddd"><a href="Estate_Planning">Succession Planning 2:<br/>(Trust Creation &amp; Nomination check)</a></td>
+          <td align="right" valign="top" bgcolor="#f4be8b" style="color:#000000">10,000</td>
+          </tr>
+          <tr>
+          <td colspan="2" bgcolor="#ebebeb"><i>* The amount stated is only for a simple will, if the will is complex the fees will differ &amp; will be told in the first meeting.</i></td>
+          </tr>
+          </table>          
+    
+     -->
+    
+    <!-- changed above table to the Following -->
+    <div class="settable">
+        <table class="textmatter" width="525" frame="void" cellpadding="8px" cellspacing="3px">        
+          <tr>
+          <td bgcolor="#feeddd" ><a href="Comprehensive_fp">Comprehensive Financial Planning<br /><br/>Registration Fees <br/><br/> Annual Fees</a></td>
+          <td width="48%" align="left" valign="top" bgcolor="#f4be8b" style="color:#000000"><br/><br/></br>Rs. 5,000/-(plus taxes as applicable)<br/><br/>Rs. 10,000/-(plus taxes as applicable)</td>
+          </tr>
+          <tr>
+          <td bgcolor="#feeddd"><a href="What_is_financial_planning">Succession Planning</a></td>
+          <td align="left" valign="top" bgcolor="#f4be8b" style="color:#000000">Depends on the complexity involved</td>
+          </tr>
+          <tr>
+          <td bgcolor="#feeddd"><a href="why_fees">Income Tax Services</a></td>
+          <td align="left" valign="top" bgcolor="#f4be8b" style="color:#000000">Depends on the complexity involved</td>
+          </tr>
+          
+          <!-- Mahesh : To Neat the contents of Page : Assignment - Niket Sir -->
+          <!-- <tr>
+          <td bgcolor="#feeddd"><a href="One_Goal_Plan">Income Tax Services</a></td>
+          <td align="left" bgcolor="#f4be8b" style="color:#000000">Depends on the complexity involved</td>
+          </tr> -->
+          
+          <tr>
+          <!----<td bgcolor="#feeddd"><a href="Risk_Planning">Risk Planning:</a></td>
+          <td align="right" bgcolor="#f4be8b" style="color:#000000">2,500</td>
+          </tr>
+          <tr>
+          <td bgcolor="#feeddd"><a href="Estate_Planning">Succession Planning 1<sup>*</sup>:<br/ >(Power of Attorney &amp; Nomination check)</a></td>
+          <td align="right" valign="top" bgcolor="#f4be8b" style="color:#000000">5,000</td>
+          </tr>
+          <tr>
+          <td bgcolor="#feeddd"><a href="Estate_Planning">Succession Planning 2:<br/>(Trust Creation &amp; Nomination check)</a></td>
+          <td align="right" valign="top" bgcolor="#f4be8b" style="color:#000000">10,000</td>
+          </tr>
+          <tr>-->
+          <td colspan="2" bgcolor="#ebebeb"><i>* The amount stated is only for a simple will, if the will is complex the fees will differ &amp; will be told in the first meeting.</i></td>
+          </tr>
+          </table>          
+      </div>
+           
+    </span></div>      
+       
+        
+    <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>The First Meeting is Complimentary :</strong></span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+           The initial meeting with our advisors is Complimentary &amp; will help you answer all your doubts that you have about financial planning. Rest assured you do not have to pay us till you are satisfied about the need for financial planning.
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+           Our planners will answer your queries about costs and fees and will present you with a complete picture of the course of action that they would take with your interest in mind.
+        </span></div>   
+
+   <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Financial planning is a journey, not a destination :</strong></span> </div>
+   <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+      Our advisors frequently get asked by clients about how soon reviews of financial plans need to happen? Every phase in life presents itself with a challenge that, at times cannot be tackled alone, including financial woes.
+    </span></div> 
+   <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+      While financial plans are created with an assessment of your short-term and long-term goals, over a period of time our priorities change and so do market conditions. To tackle such eventualities, our plans include period review of your progress.
+    </span></div> 
+   <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+      For best results, we advise our clients to collaborate with our advisors on a semiannual to yearly basis to help you derive optimum returns from your assets and investments. This time frame may certainly change depending upon the situation and need of the client. Problems and woes may change its time and course, but reliable advisors are the assets that stay true. Please be advised that a renewal fee is charged at the time of reviewal.
+    </span></div>
+   <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+      Financial Planning is not a onetime process and to fulfill your dreams and aspirations we will always be available to assist you. 
+    </span></div>
+    <a href="#top" class="otherslink">Top</a>
+    
+   </div>
+     
+      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" />
+      </div>
+     
+     <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}"  border="0" usemap="#Map2" />
+         <map name="Map2" id="Map2">
+           <area shape="rect" coords="3,0,230,50" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map></div>
+         <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+          People dream &amp; remain happy.<br/>
+          Imagine people dreaming &amp; living their dreams.<br /><br />
+          <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+          For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+        <div class="title123"><span class="imgtext">Related Links</span></div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Comprehensive_fp"><strong>Services Basket</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know our Financial Planers</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Why_do_you_need_a_plan"><strong>Why do you need a financial plan?</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Who_can_be_your_financial_planner"><strong>Who can be a financial planner?</strong></a></span> </div>
+       <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="why_fees"><strong> Financial Planning Fees</strong></a></span> </div>
+       <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

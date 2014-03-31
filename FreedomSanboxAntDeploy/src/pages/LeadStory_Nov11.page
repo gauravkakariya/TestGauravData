@@ -1,0 +1,159 @@
+<!-- 
+						Eternus Solutions
+                        Author  : Trupti Gaikwad
+                        Issue Id: FS0266
+                        Date    : 11/10/2011
+                        Purpose : Newsletter for the Month of November   2011(website pages)     			--> 
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="LeadStory_Oct11">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script type="text/javascript">
+ 			var _gaq = _gaq || [];
+  			_gaq.push(['_setAccount', 'UA-26313496-1']);
+  			_gaq.push(['_trackPageview']);
+ 
+			  (function() {
+			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			  })();
+ 		</script>
+ 		
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.images5,'images5/top.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.images,'images/headL.gif')}" width="9" height="40" /></td>
+                      <td width="98%" valign="top" background="{!URLFOR($Resource.images,'images/headbg.gif')}" style="padding-top:6px;"><font face="Arial, Helvetica, sans-serif" color="#FFFFFF" style="font-size:14px;"><strong>Be financially prepared for the festivities!</strong></font></td>
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /></td>
+                    </tr>
+                  </table></td>
+                </tr>
+                
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">
+                              	
+                               <em>Manoj was pleased with himself post Diwali. In addition to the festive season, he had a few extra reasons to celebrate. Manoj had finally tied the knot a few months back, and just before Diwali had received a handsome bonus from his employer. Yet, the euphoria was short lived.
+                               </em> <br />
+                                <br />
+                                <em>Within a week following Diwali, Manoj received a rude shock in the form of his credit card statement. While he was aware that he had exhausted his bonus during the festivities, he never realised that his credit card swipes had added up to an amount almost equal to his bonus. The problem for Manoj now was that his savings were insufficient to clear his card bills and he also did not have money for a foreign New Year trip that he promised his wife when he got the bonus… </em><br />
+                                <br />
+                               Manoj’s is not an isolated case. In fact, many of us ourselves may be guilty of committing mistakes similar to Manoj’s during the past month when we ended up spending more than we should have. More often than not – problems like these arise due to lack of planning for the festive season.<br />
+                                <br />
+                                <strong>Planning for Diwali – Really? </strong> <br />
+                                Yes, Diwali is the one time of the year when we all have the license to splurge and we would like to avail of this ‘liberty’ to the fullest. Yet, that should not be at the cost of your overall financial health. Wouldn’t it be better if you really spend without any worries during Diwali? And planning for this is not difficult. Diwali comes every year in October or November. There are no surprises here. So, if you start now, you get a full year to plan and prepare. 
+                                <br /><br/>
+                                <strong>Simple rules to follow  </strong>
+                             <br />
+                             When planning for the festive period, just follow the basics – create an independent fund that can be utilized during the festival. And stick to your plan of building this fund with the same discipline as other aspects of your financial plan. 
+                                <br /><br/>
+                                Take a stock of your finances. Also, jot down list of things you would want to buy – clothes, gifts, mithai, crackers, charity everything. Estimate how much it would all cost. Start putting aside funds to add up to this amount. Doing this is critical and would help you in two ways.
+                                <br/><br/>
+                                <strong>Avoiding bad credit</strong><br/>
+                                Not having a festival fund will force you to borrow. The easiest way to borrow is using the credit card or borrowing from friends. Credit card expenses tend to pile up at a time when we are not conscious about our spending patterns. Credit cards are to be avoided for some good reasons. One – credit cards can be convenient and addictive and have the tendency to weaken your self-discipline. Two – they are the most expensive way of borrowing @ something like 36% interest. Borrowing from friends for spending on festivals is not what smart people would do. Disturbing your long term plan
+                                <br/><br/>
+                                Not having a festival fund will also force you to withdraw money saved for other goals. For many years one of our friends would start an SIP for his son’s education and end up using the money for Diwali because he thought, the happiness bursting crackers brought to his son was worth anything. But how happy will his son be, if he cannot send him to the university of his choice? He did not think about.
+                                
+                                <br/><br/>
+                                The festive season is a time when there is joy and happiness all around. With just a little planning you can ensure that you enjoy every festive season to the hilt without guilt. Avoid the ‘financial hangovers’ and have fun. 
+                               </td></tr>  
+                                
+                              
+                                
+                           <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+                            </tr>
+                            
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              
+                            </tr>
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+                            </tr>
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="images/space.gif" width="2" height="1" /></td>
+        </tr>
+    </table>
+    </td>
+  </tr>
+  
+ <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+</apex:page>

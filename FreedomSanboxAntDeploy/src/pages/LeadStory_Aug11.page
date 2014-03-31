@@ -1,0 +1,174 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="LeadStory_Aug11">
+<site:googleAnalyticsTracking />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/top.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.images,'images/headL.gif')}" width="9" height="40" /></td>
+                      <td width="98%" valign="top" background="{!URLFOR($Resource.images,'images/headbg.gif')}" style="padding-top:6px;"><font face="Arial, Helvetica, sans-serif" color="#FFFFFF" style="font-size:14px;"><strong>What Do You Know That The Market Doesn’t?</strong></font></td>
+                      <td width="1%" valign="top"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /></td>
+                    </tr>
+                  </table></td>
+                </tr>
+                
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">Here is an Associated Press headline which I saw one morning not long ago when I turned on my computer and logged on to Yahoo! Finance: “Stock Futures Rise On Hope For Greece Bailout”<br />
+                                <br />
+                                Now, here is another headline, also from AP, which later appeared on the self-same Yahoo! Finance:<br />
+                                “Stocks Down On Greece Default Fears”<br />
+                                <br />
+                                What I need you to know about these two headlines is that the second appeared fortyfi ve minutes after the fi rst. Friends, I could not, or at least would not, make this up.<br />
+                                <br />
+                                Benjamin Graham, the teacher of Warren Buffett, always said that he found it helpful to think of the equity market as one person, whom Graham named Mister Market. He said further that the most important thing for the investor to realize about Mister Market his presenting symptom, in medical parlance is that he is an untreated manic-depressive.<br />
+                                <br />
+                                But, in heaven’s name: forty-five minutes between episodes? It boggles the mind. And what it tells you is that if you follow the markets closely enough, especially as distilled through the reportage of the 24-hour financial “news” cycle, you can become a raging manic-depressive, too.<br />
+                                <br />
+                                Do I believe that all of the hundreds of thousands of market participants in a $12.5 trillion market for that’s roughly the current market capitalization of the S&amp;P 500 bid the futures up one June morning because they thought Greece (which is insolvent) would get bailed out, and then, within an hour, all sold stocks because they suddenly feared that Greece (which is insolvent) would default? Friends, I do not.<br />
+                                <br />
+                                Rather, I believe two things. (1) Stock prices wander around randomly, changing directions several times, during any average trading day (or week, or month), for as many different reasons as there are buyers and sellers. (2) Nobody knows, and no long-term investor should care, why they’re doing that. And (3), fi nancial journalism has to have a narrative a constant, incessant chain of “because” for if it ever told the truth (“stocks are meandering around for a hundred thousand unfathomable reasons, and right this minute there are more buyers than sellers, or vice versa”), people would stop watching/reading it.<br />
+                                <br />
+                                OK, so that’s three things.<br />
+                                <br />
+                                Before going on, did I mention that Greece is insolvent? (It most often is: according to Reinhart and Rogoff ’s book This Time Is Different: Eight Centuries of Financial Folly, Greece has been in sovereign default during 105 of the last 200 years.) Th is is an incontrovertible fact, and every market participant with a three digit IQ and more than about 72 hours of investing experience knows it. Reasonable people differ over how the inevitable bankruptcy and restructuring will take place which is a euphemism for “who will take the hit” and there are a number of plausible scenarios, most of which aren’t pretty. But the essential fact of insolvency is not at issue. And no one believes that a “bailout” can do anything but buy time for an orderly bankruptcy proceeding.<br />
+                                <br />
+                                (If any of this is news to you, it’s probable that you’ve been consuming too much minute-to-minute fi nancial pornography…uh, journalism. If it’s all news to you, it’s time you got into intensive therapy with your financial advisor, refocusing on your long-term goals. Th is is 2011, and manic-depression is treatable.)<br />
+                                <br />
+                                And now just as you began to despair that I would ever get to the point let me remind you of a few salient facts.
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">
+                                  <tr>
+                                    <td height="40" valign="top">(1)&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td height="40" valign="top">That Greece was potentially moribund has been obvious to all market participants and bruited about endlessly by financial journalism since mid-January 2010. In mid-January 2010, the S&amp;P 500 was around 1150.</td>
+                                  </tr>
+                                  <tr>
+                                    <td height="40" valign="top">(2)</td>
+                                    <td height="40" valign="top"> On April 23, 2010, the Greek government requested that the first big EU/ IMF bailout package, consisting of highinterest-rate loans which it can never repay, be activated. On April 23, 2010, the S&amp;P 500 closed at 1217.</td>
+                                  </tr>
+                                  <tr>
+                                    <td height="40" valign="top">(3) </td>
+                                    <td height="40" valign="top">On April 27, 2010, S&amp;P cut Greece’s debt rating to junk status to reflect the rising possibility of imminent default. On April 27, 2010, the S&amp;P 500 closed at 1184.<br /></td>
+                                  </tr>
+                                </table>
+                                And as I write, on this hot and sunny morning of July 22, 2011 with Greece’s real economy having cratered in the intervening year, and its government debt markedly closer to the inevitable default the S&amp;P 500 seems to be meandering just at the moment around 1340…for no particular reason I or anyone else can fathom.<br />
+                                <br />
+                                  In other words, the market which is smarter than everybody in the world, not least of all because it is everybody in the world has had all the time it needed to analyze the Greek situation. And has apparently decided that, distressing as the whole eurozone fi nancial conundrum was and is, on balance the outlook for the world’s great businesses continues to be positive, and strengthening. And it’s easy to see why the market thinks that: Greece or no Greece, the world’s wealth went up a staggering eight percent in 2010 (according to the respected Boston Consulting Group), and its 500 greatest businesses (“the market”) have continued to prosper mightily.<br />
+                                  <br />
+                                  Thus, if one got out of the market at virtually any point during the much-ballyhooed (and quite real) European debt “crisis” because one believed Europe in general and/or Greece in particular was/ is hurtling helplessly toward its “Lehman moment” (a phrase wildly popular in fi nancial journalism) one made an important mistake. Specifically, one decided he knew more than the market did.<br />
+                                  <br />
+                                  Which brings us to yet another debt “crisis:” ours.<br />
+                                  <br />
+                                  This should be fun, because I’m going to make a guess on a political event whose outcome is perfectly unclear as I write. But by the time you read this, you will know how it shook out. So here goes:<br />
+                                  <br />
+                                  It is one man’s best guess that the United States isn’t going to default on its debt, and plunge itself and the world into a new Great Depression. Why? Because such a disaster is preventable, and in some ugly political agreement that angers virtually everyone it will probably be prevented. And everyone who got out of the market because of this imaginary Armageddon will end up feeling…pretty much like everyone who previously got out over Greece.<br />
+                                  <br />
+                                  And why do I think this? For a hundred reasons, but only one that need concern us here: the markets are saying it isn’t going to happen.<br />
+                                  <br />
+                                  The debt ceiling “crisis” with time running out and rhetoric escalating on both sides has been going on all year. And at 1340, the S&amp;P 500 is less than two percent off its high for the year, set almost three months ago. If the Republicans and the Democrats were going to clutch one another in a death grip as they plunged into the abyss, like Sherlock Holmes and Professor Moriarty at the Reichenbach Falls, I assume that by now the market would know this, and would be declining precipitously. I assume further that interest 
+                                  rates on soon-to-default U.S. Treasury bonds would be soaring, yet there sits the government’s ten-year note, calmly yielding 
+                                  the same paltry three percent it did when snow was still on the ground.<br />
+                                  <br />
+                                  To bet on default, then, I’d have to think that I know something the market doesn’t. But after four and a half decades of professional investing, I’m perfectly sure I never know anything the market doesn’t. How about you?<br />
+                                  <br />
+                                  This is not an idle question. Because if I’m right, and the debt ceiling “crisis” is averted for the moment, journalism will be on to another catastrophist narrative before you can blink. Maybe it will go back to Greece. Or on to Portugal.</td>
+                            </tr>
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td align="center" style="font-family:Arial, Helvetica, sans-serif; color:#006C3B; font-size:14px; text-align: center;"><strong>                                Everyone who got out of the market because of this imaginary Armageddon will end up<br />
+                                feeling... pretty much like everyone who previously got out over Greece.</strong></td>
+                            </tr>
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">                                Or even Spain. Then again, maybe the new “crisis” will have something to do with China, always a fertile fi eld of potential disturbances its dollar holdings, its property bubble and infl ation, its banks and thus always a reliable source of apocalyptic possibilities. Here at home, credit card use has turned up again, with as many as a third of Americans using them to buy necessities they can’t otherwise aff ord, according to Pricewaterhouse Coopers. The tapped-out American consumer is a narrative staple in fi nancial journalism. And in a pinch, there’s always the unemployment situation. That can be used to “explain” any market decline, even one of forty-five minutes’ duration. This is not just another plea that you not let yourself get frightened out of your long-term portfolio by current events. It’s both narrower and more pointed than that. It’s the strong suggestion that when, as now, the market is studiously ignoring the apocalypse du jour, even as media hysteria escalates, it is usually the market which turns out to be right in the long run.<em> © 2011 Nick Murray. All rights reserved. Reprinted by permission.</em></td>
+                            </tr>
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+                            </tr>
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="images/space.gif" width="2" height="1" /></td>
+        </tr>
+    </table>
+    </td>
+  </tr>
+  
+ <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+</html>
+</apex:page>

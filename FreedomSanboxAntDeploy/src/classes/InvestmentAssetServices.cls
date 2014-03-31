@@ -1,0 +1,252 @@
+/*
+    Service class to deal with Investment Asset Object and to keep business logic if applicable.
+*/
+public class InvestmentAssetServices 
+{
+    
+    public DatabaseSOQL databaseSOQLObj {get; set;}
+    DatabaseDML databaseDMLObj {get; set;}
+    
+    public InvestmentAssetServices()
+    {
+        databaseSOQLObj = new DatabaseSOQL();
+        databaseDMLObj = new DatabaseDML();
+    }
+    
+    /*
+        This method is populating AMC name list.
+    */
+   /* public List<SelectOption> getAMCNameList() {
+        
+        List<AMC_Name__c> amcNameList = databaseSOQLObj.getAMCList();               
+        List<SelectOption> optionList = new List<SelectOption>();
+        optionList.add(new SelectOption('NONE','--None--'));        
+        for(AMC_Name__c amcName: amcNameList) {
+            optionList.add(new SelectOption(amcName.id,amcName.AMC_Field__c));      
+        }
+        return  optionList; 
+    }*/
+    //This method is to get AMC name ID to store in Investment Asset
+   /* public ID getAMCNameId(String amcName) {
+        AMC_Name__c amcNameObj = [SELECT Id FROM AMC_Name__c WHERE AMC_Field__c=:amcName];
+        return amcNameObj.Id;
+    }
+    //This method is to get Scheme name ID to store in Investment Asset
+    public ID getSchemeNameId(String schemeName) {
+        Fund__c fundObj = [SELECT Id FROM Fund__c WHERE Scheme_Name__c = :schemeName];
+        return fundObj.Id;
+    }*/
+    /*
+        This method is populating Scheme name list.
+    */
+        
+    /*public List<SelectOption> getSchemeNameList(String amcName){
+        List<Fund__c> fundList = [select Id,Scheme_Name__c from Fund__c WHERE AMCName__c = :amcName];
+        System.debug('fundList====='+fundList);
+        List<SelectOption> optionList = new List<SelectOption>();        
+        optionList.add(new SelectOption('NONE','--None--'));
+        for(Fund__c fund: fundList) {
+            optionList.add(new SelectOption(fund.id,fund.Scheme_Name__c));      
+        }       
+        return  optionList; 
+    }*/
+    
+    public void addRow(InvestmentAssetBean bean,String recordTypeIdString, Boolean includeHLV) 
+    {
+        Investment_Asset__c investmentObj = new Investment_Asset__c();
+        investmentObj.RecordTypeId = recordTypeIdString;    //Create new record of given RecordType  
+        investmentObj.Is_Include_In_HLV_Inv_Asset__c = includeHLV; /* Prajakta - FP changes - 13-6-13 */
+        system.debug('includeHLV====>'+includeHLV);        
+        //bean.addInvestmentInstanceInList(investmentObj,amcNameList,schemeNameList);
+        bean.addInvestmentInstanceInList(investmentObj);          
+    }
+    
+    public void getInvestmentList(InvestmentAssetBean bean,String selRecordTypeId,String entityId) 
+    {
+        List<Investment_Asset__c>  assetList = databaseSOQLObj.getInvestmentAsset(selRecordTypeId, entityId);
+       // List<SelectOption> amcNameList = getAMCNameList();        
+        //List<SelectOption> schemeNameList = getSchemeNameList(amcNameList.get(0).getValue());
+        for(Investment_Asset__c invAsset: assetList)
+        {
+        	bean.addInvestmentInstanceInList(invAsset);
+        	//bean.addInvestmentInstanceInList(invAsset,amcNameList ,getSchemeNameList(invAsset.AMC_Name__c));
+        }       
+    }
+
+    public List<SelectOption> getOwnerItems(String entityId,List<Account> accountList) 
+    {
+        List<SelectOption> options = new List<SelectOption>();      
+        for(Account TempAccount : accountList )
+        {
+            options.add(new SelectOption(tempAccount.Id,tempAccount.Name));        
+        }
+        return options;
+    }
+    
+    /*public List<RecordType> getRecordTypeList(String objectName) {
+        return databaseSOQLObj.getObjectRecordTypes(objectName);        
+    }*/
+    public List<Account> getFamilyDetails(String entityId) 
+    {
+        List<Account> accountList = databaseSOQLObj.getFamilyDetails(entityId);
+        
+        system.debug('===========accountList======Service====='+accountList);
+        
+        return accountList;               
+    } 
+        
+    public void save(InvestmentAssetBean bean, String recordType, String recordTypeId, String entityId)
+    {
+    	List<InvestmentAssetBean.InvestmentWrapper> investmentAssetWrapperList = bean.investmentAssetWrapperList;  
+        List<Investment_Asset__c> investmentAssetList = new List<Investment_Asset__c>();
+        
+        for(InvestmentAssetBean.InvestmentWrapper wrapper: investmentAssetWrapperList) 
+        {
+        	if(!InvestmentAssetBean.isRowEmpty(wrapper.investmentAsset)) 
+            {
+            	 /*if(!'NONE'.equals(wrapper.selectedAMCName) )
+                    wrapper.investmentAsset.AMC_Name__c = wrapper.selectedAMCName;
+                if(!'NONE'.equals(wrapper.selectedSchemeName))  
+                    wrapper.investmentAsset.Fund__c = wrapper.selectedSchemeName;*/
+                InvestmentAssetBean.validate(wrapper.investmentAsset,recordType);
+                wrapper.investmentAsset.Remove_Checkbox__c = false;
+                investmentAssetList.add(wrapper.investmentAsset);
+            }                              
+        }
+        investmentAssetList = checkOwnerChange(recordTypeId,entityId,investmentAssetList);
+        upsert investmentAssetList;           
+    }
+    
+    /** 
+    * checkOwnerChange() checks if owner is changed in records
+    * Param: List<Income__c>
+    * Returns: List<Income__c>            
+    */ 
+    public List<Investment_Asset__c> checkOwnerChange(String recordTypeId,String entityId,List<Investment_Asset__c> investmentAssetList)
+    {
+        try
+        {
+            List<Investment_Asset__c> dbRecords = databaseSOQLObj.getInvestmentAsset(recordTypeId, entityId);
+            List<Investment_Asset__c> ownerChangeList = new List<Investment_Asset__c>();
+            List<Investment_Asset__c> modifiedList = new List<Investment_Asset__c>();
+            
+            for(Investment_Asset__c investment:investmentAssetList){
+                if(investment.id!=null){
+                    for(Investment_Asset__c investmentdb:dbRecords){
+                        if(investment.id==investmentdb.id && investment.entity__c != investmentdb.entity__c){
+                            Investment_Asset__c obj1=new Investment_Asset__c();
+                            obj1 = investment.clone(false);
+                            modifiedList.add(obj1);
+                            ownerChangeList.add(investmentdb);
+                        }
+                        else if(investment.id==investmentdb.id)
+                            modifiedList.add(investment);
+                    }
+                }
+                else
+                    modifiedList.add(investment);
+            }
+            investmentAssetList = null;
+            investmentAssetList = modifiedList;
+            databaseDMLObj.deleteRecords(ownerChangeList);
+        }
+       catch(Exception e) 
+       {
+            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING,e.getMessage()));
+       }                     
+       return investmentAssetList;
+    }   
+    /*public IncomeBean Cancel(IncomeBean IncomeBeanObj){
+        IncomeBeanObj=null;
+        return IncomeBeanObj;
+    }*/
+    
+    public List<OuterClass> getSummaryTableList(String entityId,List<Account> accountList) 
+    {
+        List<AggregateResult> resultList = databaseSOQLObj.getInvestmentSummaryList(entityId);
+        /**
+	    	Added By : Aditi Satpute
+	    	Purpose : need to display the recordTypes in following order : Stocks, Mutual Funds, Gold and Silver and Fixed Income
+	    	Date : 18/6/2013
+    	**/
+    	
+    	//List<RecordType> recordTypeList =  databaseSOQLObj.getObjectRecordTypes('Investment_Asset__c');
+    	
+        List<RecordType> recordTypeList =  databaseSOQLObj.getInvestmentAssetRecordTypes('Investment_Asset__c');
+        
+        List<OuterClass> summaryTableList = new List<OuterClass>();
+        for(RecordType rType : recordTypeList)
+        {
+            OuterClass OuterClassobj = new OuterClass();
+            OuterClassObj.RecordType = rType.Name;
+            OuterClassObj.RecordTypeIdStr = rType.Id;
+            //Populating AccountNames with AccountNames and AmountValue to zero
+            for(Account account : accountList) {
+                Double amt = 0;
+                InnerClass InnerClassObj = new InnerClass(account.name,amt);
+                OuterClassobj.InnerClassList.add(InnerClassObj);
+            }
+            summaryTableList.add(outerClassObj);
+        }
+        populateSummaryTableList(resultList, summaryTableList);
+        return summaryTableList;                                            
+    }
+    
+    private void populateSummaryTableList(List<AggregateResult> aggQueryResult, List<OuterClass> summaryTableList )
+    {
+        for( AggregateResult ar : aggQueryResult) 
+        {
+        	system.debug('==========for===========');
+            String recordType=(String)ar.get('RTName');
+            for( OuterClass oObj : summaryTableList )
+            {
+                if( oObj.RecordType == recordType)
+                {                 
+                    for(InnerClass iobj : oObj.InnerClassList ) 
+                    {
+                    	system.debug('==========InnerClass==========='+iobj);
+                        if(iObj.AccountName==((String)ar.get('Entity'))) 
+                        {
+                            if((Double)ar.get('assetTotal')!=null)
+                                iObj.amountValue=(Double)AR.get('assetTotal');
+                            else    
+                                iObj.amountValue=0.0;
+                        }                       
+                    }
+                } 
+            } 
+        }           
+    } 
+    
+    public void removeRecords(InvestmentAssetBean bean)
+    {
+        try
+        {
+            List<Integer> removeIndexList =new List<Integer>();
+            List<Investment_Asset__c> deleteList=new List<Investment_Asset__c>();
+            Integer index=0;
+            for(InvestmentAssetBean.InvestmentWrapper wrapper:bean.investmentAssetWrapperList)
+            {
+                if(wrapper.investmentAsset.Remove_Checkbox__c==true && wrapper.investmentAsset.id!=null)
+                {
+                    removeIndexList.add(index);
+                    deleteList.add(wrapper.investmentAsset);
+                }
+                else if(wrapper.investmentAsset.Remove_Checkbox__c==true)
+                {
+                    removeIndexList.add(index);
+                }
+                index++;
+            }
+           for(Integer i=removeIndexList.size();i>0;i--)
+           {
+               bean.investmentAssetWrapperList.remove(removeIndexList.get(i-1));
+           }
+           databaseDMLObj.deleteRecords(deleteList);
+        }
+        catch(Exception e)
+        {
+            system.debug('======Service removeRecords Exception======'+e.getmessage());
+        }   
+    }
+}

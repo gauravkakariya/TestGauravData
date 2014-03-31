@@ -1,0 +1,265 @@
+<apex:page controller="EditPurchasedServicesController" sidebar="false">
+    <apex:sectionHeader title="Purchased Services"/>
+    <apex:pageMessages id="pMsg"/>
+    <script> 
+        var tableId;
+        var topUpAmountId;
+        var topUpPayableAmountId;
+        var topUpDiscountId;
+        var discountId;
+        var baseId;
+        function callTopUpGoalValue(selValue)
+        {
+            document.getElementById(topUpAmountId).innerHTML = selValue * '{!topUpGoalBasePrice}';
+            document.getElementById(topUpDiscountId).value = selValue * '{!topUpGoalBaseDiscount}';
+            document.getElementById(topUpPayableAmountId).innerHTML = (selValue * '{!topUpGoalBasePrice}') - document.getElementById(topUpDiscountId).value;
+            if(selValue == 0)
+            {
+                document.getElementById(topUpDiscountId).value = 0;
+                document.getElementById(topUpPayableAmountId).innerHTML = 0;
+            }
+        }
+        
+        function setFocus() 
+        {
+            document.getElementById(discountId).focus();    
+        }
+        
+        function changeBaseProudctPayableAmount(x, price)
+        {
+            var discount = x.value;
+            //discountId = x.id;
+            
+            if(parseInt(discount) > parseInt(price))
+            {
+                alert('Product Discount should be less than Product Price.');
+                setTimeout(setFocus, 500);
+                return false;
+            }
+            
+            if(parseInt(discount) < 0)
+            {
+                alert('Product Discount should be greater than Zero.');
+                setTimeout(setFocus, 500);
+                return false;
+            }
+            
+            document.getElementById("baseProudctPayableAmountId").innerHTML = price - parseInt(discount);
+        }
+        
+        function setFocusTopupDiscount() 
+        {
+            document.getElementById(topUpDiscountId).focus();   
+        }
+        function changeTopUpGoalPayableAmount(discount)
+        {
+            if(parseInt(discount) > parseInt(document.getElementById(topUpAmountId).innerHTML))
+            {
+                alert('Topup Discount should be less than Topup Amount.');
+                setTimeout(setFocusTopupDiscount, 500);
+                return false;
+            }
+            
+            if(parseInt(discount) < 0)
+            {
+                alert('Topup Discount should be greater than Zero.');
+                setTimeout(setFocusTopupDiscount, 500);
+                return false;
+            }
+            document.getElementById(topUpPayableAmountId).innerHTML = document.getElementById(topUpAmountId).innerHTML - discount;
+        }
+    </script>
+    
+    <apex:form id="purchaseServiceform">
+    
+        <apex:actionFunction name="callBaseProductPrice" action="{!baseProductPrice}" status="statusId" rerender="purchaseOrderId,baseServicepageBlock,purchaseServiceform" >
+            <apex:param name="baseproductName" value=""/>
+        </apex:actionFunction>
+        
+        <apex:actionFunction name="callValueAddedServices" action="{!valueAddedService}"  status="statusId1" rerender="valueAddedPageBlockId">
+            <apex:param name="index" value=""/>
+        </apex:actionFunction>
+        
+        <apex:pageBlock title="Base Service" id="baseServicepageBlock">
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Save" action="{!saveProduct}" rerender="pMsg" status="statusId"/>
+                <apex:commandButton value="Cancel" action="{!cancelProduct}" immediate="true" status="statusId"/>
+                <apex:actionStatus stopText="" id="statusId">
+                    <apex:facet name="start">
+                        <apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                            <img src="/img/loading.gif" width="16" height="16"/>
+                        </apex:outputPanel>
+                    </apex:facet>
+               </apex:actionStatus> 
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockTable value="{!lstPurchaseOrderForBaseProduct}" var="rec" id="purchaseOrderId">
+                    
+                <apex:column headerValue="Product Name" >
+                    <apex:selectList id="productNameId"  value="{!rec.Selected_Product__c}" size="1" onchange="callBaseProductPrice(this.value);">
+                       <apex:selectOptions value="{!baseProductOptions}" ></apex:selectOptions>                        
+                    </apex:selectList> 
+                 </apex:column>    
+                <apex:column headerValue="Product Price(Rs.)" >
+                    <apex:outputText value="{!rec.Product_Price__c}"/> 
+                </apex:column>  
+                <apex:column headerValue="Product Discount(Rs.)" >
+                    <apex:outputText value="{!rec.Discount__c}" rendered="{!!isProfileMatch}"/> 
+                    <apex:inputField value="{!rec.Discount__c}" id="discountInputId" 
+                                     onblur="changeBaseProudctPayableAmount(this,'{!rec.Product_Price__c}');" rendered="{!isProfileMatch}" />
+<!--                                      rendered="{!rec.Selected_Product__c != currentBaseProductName}" />  -->
+                    <script>
+                        discountId = '{!$Component.discountInputId}';
+                    </script>
+                </apex:column>  
+                <apex:column headerValue="Payable Amount(Rs.)" >
+                    <span id= "baseProudctPayableAmountId">{!rec.Payable_Amount__c}</span>
+                </apex:column>  
+                <apex:column headerValue="No Of Goals" >
+                    <apex:outputField value="{!rec.Product_Master__r.No_of_Goals_Allowed__c}"/> 
+                </apex:column> 
+            </apex:pageBlockTable> 
+        </apex:pageBlock>  
+       
+            
+        <apex:pageBlock title="Top Up" rendered="{!isTopUpBlock}">
+            
+            <apex:outputPanel >
+                <apex:outputLabel value="Number of Top - Up Goal :" /> 
+                <apex:outputText value="{!topUpCount}" /> 
+            </apex:outputPanel> 
+            
+            <apex:pageBlockTable value="{!objProductOrder}" var="topupProduct" id="topupProductId">
+                    
+                    <apex:column headerValue="Total Goals" >
+                        <apex:selectList id="topupOptionId"  value="{!selectedTopUpGoals}" size="1" onchange="callTopUpGoalValue(this.value);">
+                           <apex:selectOptions value="{!topUpGoalValueOptions}" ></apex:selectOptions>                         
+                         </apex:selectList>   
+                         
+                     </apex:column>
+                     
+                    <apex:column headerValue="Product Price(Rs.)" >
+                           <apex:outputText value="{!topUpGoalPrice}" id="topUpProductPriceId"/> 
+                           <script>
+                            topUpAmountId = '{!$Component.topUpProductPriceId}';
+                           </script> 
+                    </apex:column>  
+                    
+                    <apex:column headerValue="Product Discount(Rs.)" >
+                          <apex:inputText value="{!topUpGoalDiscount}" id="topUpDiscountId" onblur="changeTopUpGoalPayableAmount(this.value);"/> 
+                          <script>
+                            topUpDiscountId = '{!$Component.topUpDiscountId}';
+                          </script>  
+                    </apex:column>  
+                    <apex:column headerValue="Payable Amount(Rs.)" >
+                         <apex:outputText value="{!topUpPayableAmount}" id="topUpPaybleAmountId"/> 
+                         <script>
+                            topUpPayableAmountId = '{!$Component.topUpPaybleAmountId}';
+                         </script>
+                    </apex:column>  
+                    
+            </apex:pageBlockTable> 
+        </apex:pageBlock>   
+        
+        
+        <apex:pageBlock title="Value Added Service" id="valueAddedPageBlockId">
+            <apex:pageMessages id="msgId"/>
+            
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Add" action="{!addValueAddedServices}" rerender="valueAddedPageBlockId, msgId" 
+                                 status="statusId1"/>
+                <apex:actionStatus stopText="" id="statusId1">
+                    <apex:facet name="start">
+                        <apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                            <img src="/img/loading.gif" width="16" height="16"/>
+                        </apex:outputPanel>
+                    </apex:facet>
+               </apex:actionStatus>                 
+            </apex:pageBlockButtons>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Save" action="{!saveProduct}" rerender="pMsg" status="statusId"/>
+                <apex:commandButton value="Cancel" action="{!cancelProduct}" immediate="true" status="statusId"/>
+            </apex:pageBlockButtons>
+             <script>
+                tableId = '{!$Component.productPriceId}';
+            </script>
+            
+            <apex:pageBlockTable value="{!lstWrapperPurchaseOrder}" var="product" id="productPriceId">
+            
+                  <apex:column headerValue="Action" >
+                        <apex:outputText value="Delete" rendered="{!product.objPurchaseOrder.Order_status__c != 'New' && product.objPurchaseOrder.Order_status__c != ''}" 
+                                                        style="color:grey;background-color:#ffc;"/> 
+                        <apex:commandLink value="Delete" action="{!deleteService}"  status="statusId1" onclick="return confirmDelete();"
+                                                            rendered="{!(product.objPurchaseOrder.Order_status__c == 'New' || product.objPurchaseOrder.Order_status__c == '')}"> 
+                            <apex:param name="indexNumber" value="{!product.index}"/>
+                            <apex:param name="serviceId" value="{!product.objPurchaseOrder.Id}"/>
+                         </apex:commandLink>
+                 </apex:column> 
+<!--                 rerender="valueAddedPageBlockId, msgId, pMsg" -->
+                 <apex:column headerValue="Service Name" >
+                     <apex:selectList id="productNameId"  value="{!product.selectedServiceName}" size="1"  rendered="{!!product.isValueAddedService}" 
+                                                    onchange="callValueAddedServices('{!product.index}');">
+                           <apex:selectOptions value="{!valueAddedServiceNameOptions}" ></apex:selectOptions>                          
+                        </apex:selectList> 
+                     <apex:outputField value="{!product.objPurchaseOrder.Selected_Product__c}" rendered="{!product.isValueAddedService}"/> 
+                 </apex:column>
+                 
+                 <apex:column headerValue="Service Price(Rs.)" >
+                        <apex:outputText value="{!product.objPurchaseOrder.Product_Price__c}" rendered="{!product.isValueAddedService}"/> 
+                        <apex:outputField value="{!product.productPriceBook.Price_value__c}" rendered="{!!product.isValueAddedService}"/>
+                 </apex:column>  
+                 
+                 <apex:column headerValue="Service Discount(Rs.)">
+                         <apex:outputField value="{!product.objPurchaseOrder.Discount__c}" rendered="{!product.isValueAddedService}"/> 
+                         <apex:inputField value="{!product.productPriceBook.Discount__c}" rendered="{!!product.isValueAddedService}" 
+                                            onblur="changeVASPayableAmount(this, this.value, '{!product.productPriceBook.Price_value__c}');"/>
+                 </apex:column>  
+                 
+                 <apex:column headerValue="Payable Amount(Rs.)" >
+                        <apex:outputText value="{!product.objPurchaseOrder.Payable_Amount__c}" rendered="{!product.isValueAddedService}"/> 
+                        <apex:outputText value="{!product.payableAmount}" rendered="{!!product.isValueAddedService}"/>
+                 </apex:column>  
+                 
+                  <apex:column headerValue="Description" >
+                        <apex:outputField value="{!product.objPurchaseOrder.Description__c}" rendered="{!product.isValueAddedService}"/> 
+                        <apex:inputText value="{!product.descriptionPurchaseOrder}" rendered="{!!product.isValueAddedService}"/>
+                 </apex:column> 
+             </apex:pageBlockTable> 
+                
+        </apex:pageBlock>   
+        <script>
+            var serviceDiscountId;
+            function setServiceDiscountFocus() 
+            {
+                document.getElementById(serviceDiscountId).focus(); 
+            }
+            function changeVASPayableAmount(x, discountVal, price)
+            {
+                serviceDiscountId = x.id; 
+                var currentSelectRow = x.parentNode.parentNode.rowIndex;
+                
+                if(parseInt(discountVal) > parseInt(price))
+                {
+                    alert('Service Discount should be less than Service Amount.');
+                    setTimeout(setServiceDiscountFocus, 500);
+                    return false;
+                }
+                
+                if(parseInt(discountVal) < 0)
+                {
+                    alert('Service Discount should be greater than Zero.');
+                    setTimeout(setServiceDiscountFocus, 500);
+                    return false;
+                }
+                var theTbl = document.getElementById(tableId);
+                theTbl.rows[currentSelectRow].cells[4].innerHTML = price - discountVal;
+            }
+            
+            function confirmDelete() 
+            {
+                var doDelete = confirm('Are you sure? ');
+                return doDelete;
+            }
+      </script>  
+    </apex:form>
+</apex:page>

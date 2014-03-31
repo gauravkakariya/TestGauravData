@@ -1,0 +1,397 @@
+<apex:page controller="FinancialWellnessController"
+	standardStyleSheets="false" action="{!Init}" sidebar="false"
+	showheader="false" cache="false" >
+<!-- 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" /> -->
+	<link rel="shortcut icon"
+		href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+	        <apex:stylesheet value="{!$Resource.Wellness}" />
+	        <apex:stylesheet value="{!$Resource.WellnessPopup}" />
+			<apex:stylesheet value="{!$Resource.NewWellnessStyle}" />
+
+	<script>
+		function showProgress(Percentage) {
+			$("#progressbar").progressbar({
+				value : parseInt(Percentage)
+			});
+			var txtPercentage = Percentage + '%';
+			$("#progresstext").html(txtPercentage);
+		}
+		
+// 		function checkGroupSelected(){
+// 			//var IsChecked = $('{!$Component.idCheckRadio}').is(':checked');			           
+//             var IsChecked = $('idCheckRadio').is(':checked'); 
+//             alert('****IsChecked'+$('idCheckRadio').is(':checked').value);
+// 		    if(!IsChecked)
+// 			{
+// 				alert("select some thing");
+// 			}
+          
+//         }
+		
+	</script>
+
+	<style type="text/css">
+.ui-progressbar {
+	height: 1em;
+	text-align: center;
+}
+
+        
+.ui-widget-header {
+	background-image: url('{!URLFOR($Resource.FWell,' download.jpg ')}');
+}
+
+
+.TextFieldStyle {
+	width: 190px;
+}
+
+.ageTextFieldStyle {
+	width: 30px;
+}
+
+.TextStyle {
+	font-weight: bold;
+	font-family: Verdana, sans-serif;
+	font-size: 13px;
+}
+
+.TextStyleNote {
+	color: #5842f4;
+	font-size: 11px;
+	font-family: Verdana, sans-serif;
+	font-style: Italic;
+}
+
+.TextExplain {
+	font-weight: bold;
+	color: #4285F4;
+}
+
+.loadingImage{
+         top: 100px;           
+         left: 400px;     
+         z-index:1000;  
+         position:absolute;
+}  
+            
+input.groovybutton {
+	font-family: Verdana, sans-serif;
+	border-top-style: outset;
+	border-bottom-style: outset;
+	border-left-style: outset;
+	border-right-style: outset;
+}
+.errorMsg
+{
+	color:red !important;
+}
+.wellnessImage{
+background: url(/resource/1357886178000/WellnessImages/img/WellnessEmailLogo.gif) 
+no-repeat left top;
+height: 98px;
+width: 265px;
+}
+/*input.nextButton{
+    background-image:url('/resource/1327056519000/FWell/next1.png');
+    }*/
+</style>
+
+	<apex:form id="outerForm">
+	<div class="wrapper">
+		<div class="header"><div class="logo"></div></div>
+		
+				<span style="color:red;"> <apex:PageMessages id="pgMsg" />
+						</span>		
+<!-- 		<div class="topcontainer" align="left" style="height: 100px;"> -->
+<!-- 			<div class="logo" style="float: left; position: absolute;"> -->
+<!-- 				<img src="{!URLFOR($Resource.WellnessImages,'img/logo.gif')}" -->
+<!-- 					usemap="#Map5" alt="Ffreedom Financial Planners" -->
+<!-- 					title="Ffreedom Financial Planners" /> -->
+<!-- 				<map name="Map5" id="Map5"> -->
+<!-- 					<area shape="rect" coords="3,4,200,78" href="index" /> -->
+<!-- 				</map> -->
+<!-- 			</div> -->
+
+<!-- 			<div style="float: right; position: relative;"> -->
+<!-- 				<img -->
+<!-- 					src="{!URLFOR($Resource.WellnessImages,'img/header.gif')}" -->
+<!-- 					style="margin-right: 90px;" /> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+
+
+			<apex:pageBlock id="pbMain">
+				<div style="margin-left: 39px; width: 900px; height:100%;" class = "que-ans">
+					<apex:repeat var="qa" value="{!lstOfQuestionAnswer}" id="idRepeat">
+					
+							<table  width="100%">
+								<tr width="100%">
+									 <div Class="que"> 
+										 <apex:outputText value="{!qa.objQuestionnaire.Display_Sequence__c}.  " />
+									 	 <apex:outputText value="{!qa.objQuestionnaire.Question_Bank_List__r.Question__c}" /><br />
+									 	 <span class="discriptipn"> <apex:outputText value="{!qa.objQuestionnaire.Question_Bank_List__r.Notes__c}" /></span><br />
+									 </div><br />
+								</tr>
+								
+								<tr width="100%">
+									<td width="60%">	
+										<div class="ans">
+												<apex:selectRadio value="{!qa.selectedAnswer}"
+													rendered="{!NOT(qa.isMultiChoice)}" layout="pageDirection"
+													id="idCheckRadio">
+													<apex:selectOptions value="{!qa.strAnswer}" />
+													<br />
+												</apex:selectRadio><br />
+												
+											<div style="margin-left: 10px;">
+												<span> <apex:outputText > {!$Label.Wellness_Remark}</apex:outputText><br/>
+		                        				<apex:inputField value="{!qa.objQuestionnaire.Explanation__c}" style="width: 300px;"/></span><br/><br/>
+		                        			</div>	
+		                        					
+										</div>
+									</td>
+									<td width="40%">
+<!-- 										<img src="{!$Resource.TestWellnessImage}" />  -->
+										<img src="{!URLFOR($Resource.WellnessQustionImage, 'images/'+'Q'+ qa.objQuestionnaire.Display_Sequence__c +'.jpg')}" style="height: 200px"/>
+									</td>
+										
+								</tr>		
+										
+							</table>			
+<!-- 						<apex:outputPanel styleClass="popupBackground" layout="block" > -->
+                    
+						<div style="height:50%; margin-left: 50%; " id="loadingImage">
+							<apex:actionStatus id="counterStatusData">
+								<apex:facet name="start">
+									<img src="{!URLFOR('/img/loading.gif')}" />
+									<span style="font-weight: bold"> {!$Label.Wellness_Processing}</span>
+								</apex:facet>
+							</apex:actionStatus>
+						</div>
+						
+<!-- 						</apex:outputPanel> -->
+						
+						
+						<apex:commandButton value="Submit" action="{!showPopUp}"
+							reRender="pgMsg,PopupPanel,loadingImage" status="counterStatusData"				
+							style="margin-left: 40%;"
+							rendered="{!IF(lstOfQuestionAnswer.size - 1 == qa.qno, true, false)}"
+							styleclass="groovybutton"/>
+					
+				</apex:repeat>
+				
+						<apex:commandButton value="Cancel" immediate="true"
+								action="{!closeWindow}" status="counter"
+								style="margin-left: 10px;" styleclass="groovybutton" />
+								
+						<span style="color: red;"> <apex:PageMessages id="pgMsg" />
+						</span>		
+				</div>
+				<div id="theHiddenInput" style="display: none;">{!quesSequence}</div>
+				
+				<div class="footer">{!$Label.Wellness_Freedom_Contact}
+				<img src ="{!URLFOR($Resource.FfreedomFacebookLogo)}" />
+				{!$Label.Wellness_Freedom_Contact_2} 
+				</div>
+			</apex:pageBlock>
+					
+		</div>
+
+		<!--**** Pop up panel of Lead ****  onclick="return checkGroupSelected();" -->
+		<apex:outputPanel id="PopupPanel">
+			<apex:outputPanel styleClass="popupBackground" layout="block"
+				rendered="{!displayPopUp}" />
+			<apex:outputPanel styleClass="investmentAssetpopupForeground"
+				layout="block" rendered="{!displayPopUp}" id="innerPanel"
+				Style="width:60%;height:90%;overflow:hidden;margin-left: 250px;margin-top:20px;">
+				<apex:actionStatus id="counter">
+					<apex:facet name="start">
+						<img src="{!URLFOR('/img/loading.gif')}" />
+						<span style="font-weight: bold">  {!$Label.Wellness_Processing}</span>
+					</apex:facet>
+				</apex:actionStatus>
+				<div align="center">
+					<div id="wrapper">
+       				<div id="headerwrap">
+        		     <div id="header">
+					<apex:pageBlock title="Please let us know you a bit more…"><br />
+						<div id="contentwrap">
+		        				<div id="content">
+						<table style="width:100%; height:100%;">
+							
+									<tr><td><br/></td></tr>
+									
+									<tr>
+										<td style="float:left;"><span style="font-weight: bold;"><apex:outputLabel value="{!$Label.Wellness_First_Name}" /></span><span
+											style="color: red;">*</span></td>
+										<td style="text-align: left"><apex:inputField value="{!objLead.FirstName}"
+												required="true" styleClass="TextFieldStyle"
+												rendered="{!!strEntityCheck}" /> <apex:outputLabel value="{!objAccount.FirstName }" styleClass="TextFieldStyle"
+												rendered="{!strEntityCheck}" /></td>
+									</tr>
+		
+									<tr>
+										<td style="float:left;"><span style="font-weight: bold;"><apex:outputLabel value="{!$Label.Wellness_Last_Name}" />
+										</span><span style="color: red;">*</span></td>
+										<td style="text-align: left"><apex:inputField value="{!objLead.LastName}"
+												styleClass="TextFieldStyle" rendered="{!!strEntityCheck}" />
+											<apex:outputLabel value="{!objAccount.LastName}"
+												styleClass="TextFieldStyle" rendered="{!strEntityCheck}" /></td>
+		
+									</tr>
+		
+									<tr>
+										<td style="float:left;"><span style="font-weight: bold;"><apex:outputLabel value="{!$Label.Wellness_Age}" /> </span><span style="color: red;">*</span></td>
+										<td style="text-align: left"><apex:inputField value="{!objLead.Age__c}"
+												required="true" styleClass="ageTextFieldStyle"
+												rendered="{!!strEntityCheck}" /> 
+												<apex:outputLabel value="{!FLOOR(objAccount.Age__pc) }" styleClass="ageTextFieldStyle" rendered="{!strEntityCheck}" />
+										</td>
+									</tr> 
+		
+									<tr>
+										<td style="float:left;"><span style="font-weight: bold;"><apex:outputLabel value="{!$Label.Wellness_Income_Source}" /></span></td>
+										<td style="text-align: left"><apex:selectRadio value="{!objLead.Income_Source__c}"
+												id="incomeSourceValue" onclick="displayTextBox(this);"
+												rendered="{!!strEntityCheck}">
+												<apex:selectoptions value="{!incomeTypes}"></apex:selectoptions>
+											</apex:selectRadio> <apex:outputpanel id="pIncomeSource" style="display:none">
+												<apex:inputField id="fOccupation"
+													value="{!objLead.Occupation__c}" styleClass="TextFieldStyle" />
+												<br />
+												<br />
+											</apex:outputpanel> <script>
+												function displayTextBox(
+														incomeSourceValue) {
+													var pickVal = incomeSourceValue.value;
+													if (pickVal == 'Others') {
+														document
+																.getElementById('{!$Component.fOccupation}').disabled = false;
+														document
+																.getElementById('{!$Component.pIncomeSource}').style.display = '';
+														document
+																.getElementById('{!$Component.fOccupation}').value = '';
+													} else if (pickVal == 'Salaried') {
+														//document.getElementById('{!$Component.fOccupation}').disabled = true;
+														document.getElementById('{!$Component.pIncomeSource}').style.display = 'none';
+														document.getElementById('{!$Component.fOccupation}').value = 'Salaried';
+		
+													} else if (pickVal == 'Business / Profession') {
+														document
+																.getElementById('{!$Component.fOccupation}').disabled = true;
+														document
+																.getElementById('{!$Component.pIncomeSource}').style.display = 'none';
+														document
+																.getElementById('{!$Component.fOccupation}').value = ' Business / Profession';
+		
+													} else {
+														//alert('jjj');
+														document
+																.getElementById('{!$Component.pIncomeSource}').style.display = 'none';
+													}
+												}
+											</script>
+										</td>
+									</tr>
+		
+									<tr>
+										<td style="float:left;"><span style="font-weight: bold;"><apex:outputLabel value="{!$Label.Wellness_Email}" /></span><span style="color: red;">*</span></td>
+										<td style="text-align: left"><apex:inputField value="{!objLead.Email}"
+												required="true" id="Email" styleClass="TextFieldStyle"
+												rendered="{!!strEntityCheck}" /> <apex:outputLabel value="{!objAccount.PersonEmail}" styleClass="TextFieldStyle"
+												rendered="{!strEntityCheck}" /></td>
+									</tr>
+		
+									<tr>
+										<td style="float:left;"><span style="font-weight: bold;"><apex:outputLabel value="{!$Label.Wellness_Phone_Number}" /> </span></td>
+										<td style="text-align: left"><apex:outputLabel value="{!objAccount.Phone}"
+												styleClass="TextFieldStyle" rendered="{!strEntityCheck}" /> <apex:inputField value="{!objLead.MobilePhone}" id="Mobile"
+												styleClass="TextFieldStyle" rendered="{!!strEntityCheck}" />
+										</td>
+									</tr>
+									
+									<tr><td><br/><br/></td>
+									</tr>
+									
+									<tr>
+										<td colspan="2">
+											<div>
+<!-- 												<apex:commandButton value="Submit" -->
+<!-- 													action="{!saveDetailsOfCustomer}" -->
+<!-- 													reRender="innerpgMsg,PopupPanel" status="counter" -->
+<!-- 													style="margin-right: 20px; float:left;margin-left: 170px;" styleclass="groovybutton">  oncomplete="callLeadSubmit();-->
+<!-- 												</apex:commandButton> -->
+												<apex:actionFunction name="callLeadSubmit" action="{!sendMail}" status="counter" />
+												<apex:actionFunction name="callSubmit" action="{!saveDetailsOfCustomer}" status="counter" oncomplete="callLeadSubmit();" />
+												<input type="button" value="Submit"
+													onclick="callSubmit();"
+													style="margin-right: 10px; float:left;margin-left: 170px;" class="groovybutton" />
+												<apex:commandButton value="Cancel" immediate="true"
+													action="{!closePopup}" status="counter"
+													style="margin-left: 10px;" styleclass="groovybutton" />
+											</div><div style="clear:both;"></div>
+										</td>
+									</tr>
+								</table>
+							</div>
+							
+						</div>
+						<br />
+						
+						
+						<div id="footerwrap">
+        					<div id="footer">
+								<div Class="TextStyleNote">
+									<apex:outputText >
+										<br/>
+										<div style="color: black;">{!$Label.Wellness_Contact_Text}</div><br/>
+										<div style="color: black;">{!$Label.Wellness_Contact_Text2}</div>
+										<div style="color: black;">{!$Label.Wellness_Contact_Text3}</div><br/>
+										<div style="color: black;">{!$Label.Wellness_Contact_Text4}</div><br/>
+									</apex:outputText>
+
+								</div>
+							</div>
+						</div>
+
+
+
+						<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<!-- 						<apex:pageblockButtons location="bottom"> -->
+<!-- 							<apex:commandButton value="Submit" -->
+<!-- 								action="{!saveDetailsOfCustomer}" -->
+<!-- 								reRender="innerpgMsg,PopupPanel" status="counter" -->
+<!-- 								style="margin-left: 20px;" styleclass="groovybutton"> -->
+<!-- 							</apex:commandButton> -->
+
+<!-- 							<apex:commandButton value="Cancel" immediate="true" -->
+<!-- 								action="{!closePopup}" status="counter" -->
+<!-- 								style="margin-left: 20px;" styleclass="groovybutton" /> -->
+							
+<!-- 						</apex:pageblockButtons><br /> -->
+						
+						<br /><br />
+					
+						<!--                                   oncomplete="methodSendMail();" -->
+						
+						<!--                                     <apex:actionFunction action="{!sendMail}" name="methodSendMail"/> -->
+					
+
+					</apex:pageBlock>
+					
+					</div>
+					</div>
+					</div>
+
+				</div>
+			</apex:outputPanel>
+		</apex:outputPanel>
+	</apex:form>
+</apex:page>

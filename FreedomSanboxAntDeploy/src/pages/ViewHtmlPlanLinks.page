@@ -1,0 +1,22 @@
+<apex:page standardStylesheets="false" controller="ViewHTMLPlanLinksController">
+    <apex:form >
+    	<apex:pageMessage summary="There are no plans saved for {!objAccount.Name}, 
+     						Please save one and try again." 
+     						severity="info" 
+     						rendered="{!lstAttachment.size==0}"
+     						strength="3"/>
+		<br/>
+		<apex:outputLink value="/{!objAccount.Id}"> Back to Entity : {!objAccount.Name}</apex:outputLink>
+		<br/>
+        <apex:pageBlock title="Plans for {!objAccount.Name}" rendered="{!lstAttachment.size!=0}">
+        	<apex:pageBlockTable value="{!lstAttachment}" var="a">
+        		<apex:column headerValue="Name">
+        			<apex:outputLink value="/servlet/servlet.FileDownload?file={!a.Id}">
+        				{!a.Name}
+        			</apex:outputLink>
+        		</apex:column>
+        		<apex:column value="{!a.CreatedDate}" headerValue="Created Date"/>
+        	</apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

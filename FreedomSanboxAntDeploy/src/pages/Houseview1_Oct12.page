@@ -1,0 +1,273 @@
+<apex:page showheader="false" title="Ffreedom Financial Planners | News Letters"	id="Houseview1_Oct12">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.images,'images/top_Oct12.gif')}" width="740" height="104" /></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                <tr>
+
+                  <td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/houseviewHIn.gif')}" width="132" height="40" /></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+                      <tr>
+
+                        <td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+
+                          <tr>
+
+                            <td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Ready for Possession flat or New Project which is better option</em></strong></font></td>
+
+                          </tr>
+
+                            
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">With the interest rates likely to soften in the  coming days, there seems to be a buzz in the real estate market. People  who&nbsp;had their money locked up in fixed deposits for a while now are checking  out property adverts. If you are looking at buying a second property, read this  before anything else. <br />
+
+                                <br />
+
+                                If you are looking at investing in real estate,  there a 2 options available. Remember we said, ‘invest’ in real estate and not  purchase to ‘occupy’ the property. A house is an investment when you look at  making money from it – either in the form of rentals or by re-selling it at a  higher price. That’s why in personal finance, the self occupied property is  never counted as an investment asset. <br />
+
+                                <br />
+
+                                The options available are: <br />
+
+                                You can book a flat when the project is launched  and sell it off when the project is completed.<br />
+
+                                You can book a ready to move in property and  start getting rentals right away. These rentals can partially fund EMIs. <br />
+
+                                <br />
+
+                                Which of these is better? For now forget the  practicality angle, financially which of the options make sense? <br />
+
+                                <br />
+
+                                Option 1 – <br />
+
+                                When you book a flat, you have to put in only a  smaller sum of money. The return on investment far higher. For an investment of  Rs. 5 lacs you could book a Rs. 50 lac property. If you get a short term  funding for the rest of the payments and if you are able to sell off the  property when the project is completed for about Rs.60 65 lacs your ROI is  more than&nbsp;100%.&nbsp; <br />
+
+                                <br />
+
+                                While at the same,&nbsp;if you were to borrow to  purchase the flat, you might have to keep paying pre-EMI or interest on the  amount borrowed till you can sell the property. This is an expense without any  tax benefits. <br />
+
+                                <br />
+
+                                Not to also forget the capital gains tax angle.  If the property is resold for a profit within 3 years of agreement date, then  the gains are fully taxed with no scope of tax saving. <br />
+
+                                <br />
+
+                                Option 2 – <br />
+
+                                The above problems with purchasing and selling a  flat can be partially negated when you purchase a ready to occupy property.                              </td>
+
+                            </tr>
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;"><ul>
+
+                                <li>You can purchase the property with a loan and  start paying EMIs immediately. Which means both the interest paid without any  limit and also the principle repaid upto a maximum of Rs. 1 lac (under Sec 80C)  can be claimed as deduction from taxable income. </li>
+
+                                <li> There are many options to also save tax on  capital gains when a property is sold after 3 years. Till then rentals can also  be enjoyed. </li>
+
+                              </ul></td>
+
+                            </tr>
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">But it has its own bit of issues.</td>
+
+                            </tr>
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;"><ul>
+
+                                <li> Income earned as rental is taxable as income from  house property </li>
+
+                                <li> On an average the rental income from house  property will be in the range of 3% to 5% of the value of the house. Which  means, say you buy a house for Rs.50 lacs and avail an 80% loan, your EMI for a  20 year loan @ 10% will be about Rs.39000. And the same property will yield  about Rs.15000 to Rs.18000 as rent. The rest of the EMI is a cash outflow from  your side. If you have the capability of shelling out the  additional Rs.20000 from your other income, Or if you have a bulk amount of Rs.  30 lacs which you can invest in the property and restrict your loan to about  Rs.20 lacs so that your EMI matches the rent – then this whole proposition will  work wonderfully. </li>
+
+                                <li>More importantly, finding a good tenant is a big  task in itself. On an average expect your house to earn only 9 months rental in  a year. Assume that for about 2-3 months in the year the property will lie  unoccupied but your EMI remains. You should have the ability to stomach this.</li>
+
+                              </ul></td>
+
+                            </tr>
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">The tax advantages and the fact that you may be  able to resell the property for a substantially higher price after a longer  period are the exciting. But remember doing this will adversely affect your  current cash flows. &nbsp;Also a house property is an illiquid asset, cannot be  sold at short notice. If you are stuck with it, that will be a long term stuck  together affair. And if you are borrowing for buy the house, your insurance  needs go up as&nbsp;your family now faces higher risk for repaying liabilities. Go for it, if you understand these well enough.<br />
+
+                                <br />
+
+                                Regards,<br />
+
+                                  Bhuvana<br />
+
+                                  HeadKnowledge Hub</td>
+
+                            </tr>
+
+                            
+
+                            <tr>
+
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+
+                            </tr>
+
+                            
+
+                            
+
+                         </table></td>
+
+                      </tr>
+
+                      <tr>
+
+                        <td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+
+                      </tr>
+
+                  </table></td>
+
+                </tr>
+
+              </table>
+
+              </td>
+
+          </tr>
+
+          <tr>
+
+            <td valign="top">&nbsp;</td>
+
+            </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        </tr>
+
+    </table></td>
+
+  </tr>
+
+  <tr>
+
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+      <tr>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          <tr>
+
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+
+                </tr>
+
+                <tr>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+
+                </tr>
+
+            </table></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+
+          </tr>
+
+          <tr>
+
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+
+          </tr>
+
+          <tr>
+
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+
+          </tr>
+
+        </table></td>
+
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+
+      </tr>
+
+    </table></td>
+
+  </tr>
+
+  <tr>
+
+    <td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+
+  </tr>
+
+</table>
+
+</body>
+
+	</html>
+</apex:page>

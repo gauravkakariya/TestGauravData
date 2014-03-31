@@ -1,0 +1,74 @@
+<messaging:emailTemplate subject="Happy Birthday" recipientType="Lead" relatedToType="Account">
+<messaging:htmlEmailBody >
+<table border="0">
+    <tr>
+        <td colspan="2" width="100%" style="font-size:15px;font-weight:bold;">
+            Dear {!Relatedto.FirstName}
+        </td>
+    </tr>
+
+    <tr>
+        <td width="5%"></td>
+        <td width="95%" align="center" style="font-size:24px;font-weight:bold;font-face:Arial;">
+            Ffreedom Team wishes you
+            
+        </td>
+    </tr>
+    <tr>
+        <td><br/></td>
+    </tr>
+    <tr >
+        <td width="5%"></td>
+        <td width="95%" align="center" style="font-size:30px;font-weight:bold;font-face:Arial;color:red;font-style:italic;">
+          Happy Birthday &amp; Happy Moments
+           
+        </td>
+        
+    </tr>
+   <tr>
+        <td><br/></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td align="center" style="font-size:18px;font-weight:bold;color:green;">
+            “LIVE YOUR DREAMS AND MAKE LIFE SMILE WITH YOU”
+        </td>
+    </tr>
+     <tr>
+        <td><br/></td>
+    </tr>
+    <tr>
+     <td width="5%"></td>
+        <td align="center">
+            <apex:image url="https://ffreedom.my.salesforce.com/servlet/servlet.ImageServer?id=01520000000sOhL&oid=00D20000000JZVv" width="400px;" height="250px;" style="align:center;"/>
+        </td>
+    </tr>
+   <!-- /*  <tr>
+        <td></td>
+        <td align="center" style="font-size:14px;font-weight:bold;color:green;">
+        Thank you for your continued association with Ffreedom Financial Planners and we will keep working towards our endeavor of brining happiness &amp; smiles for you &amp; your family.
+        </td>
+    </tr>
+    
+     <tr>
+        <td><br/></td>
+    </tr>
+    <tr>
+        <td>
+        </td>
+        <td align="center" style="font-size:22px;font-weight:bold;color:black;">
+            "May all your Dreams come true"
+        </td>
+    </tr>
+      <tr>
+        <td><br/></td>
+    </tr> */-->
+    <tr>
+     <td width="5%"></td>
+        <td align="center">
+            <apex:image url="https://emea.salesforce.com/servlet/servlet.ImageServer?id=01520000000ribD&oid=00D20000000JZVv" width="320px;" height="100px;" style="align:center;"/>
+        </td>
+    </tr>
+</table>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

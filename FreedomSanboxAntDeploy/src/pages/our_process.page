@@ -1,0 +1,263 @@
+<apex:page showHeader="false" sidebar="false"
+	title="Ffreedom Financial Planners | One Process">
+	<link rel="shortcut icon"
+		href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+	<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+	<apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />
+	<apex:stylesheet value="{!URLFOR($Resource.css)}" />
+	<apex:includeScript value="{!URLFOR($Resource.newMenu)}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}" />
+	<apex:composition template="WebsiteTemplate">
+		<apex:define name="bodycontent">
+			<div class="leftcontainer">
+				<div id="innerpage_textcontainer_left">
+					<div class="sidemenucontainer">
+						<div id="sidemenu1">
+							<ul style="list-style-type: none">
+								<li><span class="selected_btn">Our Process</span></li>
+								<div id="sidesaprate">
+									<apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}"
+										width="162" height="1" />
+								</div>
+								<li><a href="our_advisors">Our Financial Planners</a></li>
+								<div id="sidesaprate">
+									<apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}"
+										width="162" height="1" />
+								</div>
+<!-- 								<li><a href="why_fees">Financial Planning Fees</a></li> -->
+<!-- 								<div id="sidesaprate"> -->
+<!-- 									<apex:image -->
+<!-- 										url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" -->
+<!-- 										width="162" height="1" /> -->
+<!-- 								</div> -->
+								<li><a href="#">Our Client Stories</a></li>
+							</ul>
+						</div>
+					</div>
+					<div id="innerpage_textcontainer_left">
+						<apex:image url="{!URLFOR($Resource.images,'images/result_img_new.png')}"
+							style="height:30%;width:100%;" />
+					</div>
+					<!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+				</div>
+				<div class="borderimg">
+					<!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+					<div class="leftlinkselectedimg"
+						style="margin-top: 34px; height: 66px; background-repeat: no-repeat;"></div>
+				</div>
+				<div id="innerpage_textcontainer_middle">
+					<!--<div class="innerpage_titletext"><span class="innerpagetopheading">Why Ffreedom</span></div>-->
+					<div class="innerpage_titletext">
+						<span class="innerpagetexttitle">Our Process</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">Financial Planning is
+							not just about tying your money up in a bank or some investments.
+							It takes appropriate planning to understand where you would want
+							to invest and in which areas to achieve your goals.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">More than just being a
+							method, it is a process to understand how financially well
+							settled you are and how settled you can be. And we, at Ffreedom,
+							know that though it may sound like a complex process, we are here
+							to offer you an uncomplicated financial life.</span>
+					</div>
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage">The path to financial
+							freedom begins with your dream. We believe your dreams, your
+							decisions and our expertise will help you attain your financial
+							freedom. It’s the <strong>“Dream-Decide-Do”</strong> approach
+							that we follow.
+						</span><br />
+					</div>
+
+					<div class="innerpage_titletext">
+						<span class="txtmatterbig_innerpage"> Once you approach us,
+							we follow a step-step by approach to comprehend you and provide a
+							financial plan -</span><br />
+						<br />
+					</div>
+
+					<!--   <div class="innerpage_litext"><apex:image url="{!URLFOR($Resource.images,'images/flowchart.png')}" /></div>-->
+					<div class="innerpage_litext">
+						<img src="{!URLFOR($Resource.images,'images/flowchart.png')}"
+							alt="Our_Process" border="0" usemap="#MapF" />
+						<map name="MapF" id="MapF">
+
+							<area shape="poly"
+								coords="2,123,2,82,64,83,64,63,100,103,65,141,63,124"
+								href="#Data" alt="Data Collection" />
+							<area shape="poly"
+								coords="109,126,107,79,154,79,184,52,229,52,226,89,215,106,197,141,188,121,171,125,149,127,129,127,113,127"
+								href="#Goal" alt="Goal Setting" />
+							<area shape="poly"
+								coords="184,52,204,32,219,22,237,13,253,7,272,4,286,2,308,2,318,7,328,18,337,28,338,25,332,30,321,44,312,52,303,59,272,63,259,67,250,72,243,76,236,80,226,88,227,72,228,62,228,57,230,53"
+								href="#Analize" alt="Analize your " />
+							<area shape="poly"
+								coords="306,58,336,26,311,1,350,6,372,16,393,27,412,40,421,50,423,86,374,87,345,67"
+								href="#Revising" alt="Revising" />
+							<area shape="poly"
+								coords="377,86,423,86,421,50,440,73,451,93,458,112,465,135,466,153,466,169,461,174,452,184,439,200,407,163,401,126"
+								href="#Develop" alt="Develop a" />
+							<area shape="poly"
+								coords="143,127,160,126,187,121,197,142,196,163,198,185,202,200,207,213,165,196,153,229,142,199,138,160"
+								href="#Monitor" alt="Monitor" />
+							<area shape="poly"
+								coords="219,304,189,280,165,251,153,229,166,197,206,213,223,236,251,260,209,271"
+								href="#Implementation" alt="Implementation" />
+							<area shape="poly"
+								coords="342,323,325,327,312,327,291,327,276,326,257,320,239,314,220,303,209,270,251,260,272,267,295,271,311,272,333,266,314,304"
+								href="#List" alt="List and" />
+							<area shape="poly"
+								coords="389,226,393,271,430,266,398,298,362,316,342,324,315,303,332,268,366,251"
+								href="#Final" alt="Final Revi" />
+							<area shape="poly"
+								coords="407,164,437,199,464,172,461,209,456,226,447,242,436,259,431,266,394,270,388,225,397,212,403,197,405,185"
+								href="#Initial" alt="Initial Plan" />
+						</map>
+						<a name="Data" id="Data"></a>
+					</div>
+
+
+					<div class="innerpage_litext">
+						<span class="txtmatterbig_innerpage"><br />
+							<li><strong>Data Collection:</strong> Collection of personal
+								details like your current investments, loans, savings mutual
+								funds help us give an idea as to the tools where you have
+								invested and how we can help you achieve more out of this. These
+								details help our planners to understand exactly where we can
+								improve and how we can help you achieve maximumreturns.</li>
+						<br />
+							<li><a name="Goal" id="Goal"></a><strong>Goal
+									Setting:</strong> Based on your dreams and desires you will know where
+								you want to be in the future. It is at this stage that you need
+								to start converting these dreams into goals and set about steps
+								to achieve them. When we start working with you, our planners
+								will help you map your goals to financial targets. These
+								financial goals enable you to start working towards your dreams.</li>
+						<br />
+							<li><a name="Analize" id="Analize"></a><strong>Analyze
+									your financial resources:</strong> It is very crucial to understand your
+								financial resources. Once they have been identified, our
+								planners can help you analyze them and understand how you can
+								cut down on costs and increase your returns, without trimming
+								the edges.</li>
+						<br />
+							<li><a name="Revising" id="Revising"></a><strong>Revising
+									your goals:</strong> Understanding your financial resources can help you
+								outline and prioritize your goals. There are often times when
+								you may feel that a particular need or goal may be more
+								important that the others. However, often times this may not be
+								the case. Revising and understanding the priority of your goals
+								will allow us to help you plan your finances in a better way.</li>
+						<br />
+							<li><a name="Develop" id="Develop"></a><strong>Develop
+									a strategy for each goal:</strong> Every goal in life is different. And
+								we know that we cannot use one strategy to develop different
+								goals. Our planners know that the success of each goal depends
+								on how we can make the best of our available resources and
+								develop a unique plan to execute them. Our planners prepare a
+								list of recommendations and alternative strategies for achieving
+								those goals.</li>
+						<br />
+							<li><a name="Initial" id="Initial"></a><strong>Initial
+									plan representation:</strong> Once a goal and a strategy has been set,
+								our planners present an initial plan to you. This plan will give
+								you an idea as to the course of action that has been taken by
+								our planners and if they gel with your goals. This presentation
+								is done so that you, as a client, know exactly where you stand.
+								It also allows you to give your feedback and suggestions to your
+								planner, at any step of the plan.</li>
+						<br />
+							<li><a name="Final" id="Final"></a><strong>Final
+									Reviewed Plan Presentation:</strong> A final presentation is done with
+								the client, so that you know how the process has taken its
+								course and what steps will be taken. This process also gives you
+								an insight to understand, if all your pointers have been taken
+								into consideration.</li>
+						<br />
+							<li><a name="List" id="List"></a><strong>List and
+									schedule the action steps:</strong> Our planners help draw a list of the
+								scheduled steps so that you as a client will know the final
+								steps that will be taken for efficient planning of your
+								finances. A schedule is drawn to make sure that we comply with
+								your needs and fit in a tour timeline for the execution.</li>
+						<br />
+							<li><a name="Implementation" id="Implementation"></a><strong>Implementation
+									of the plan:</strong> Once you’ve decided which recommendations to
+								follow, the planner helps you implement those decisions. This
+								implementation will happen as per your needs.</li>
+						<br />
+							<li><a name="Monitor" id="Monitor"></a><strong>Monitor
+									and evaluate the plan:</strong> Periodical review and revision of the
+								plan is necessary, as financial planning is not a
+								one-size-fits-all package. It is a set of goals and strategies
+								tailored to meet your specific values, abilities and needs.</li>
+						<br /> </span>
+					</div>
+
+					<br />
+					<br /> <a href="#top" class="otherslink">Top</a>
+				</div>
+
+				<div class="innerpageborderimg">
+					<apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}"
+						width="5" height="579" alt="" />
+				</div>
+
+				<div class="callmeheadingCall">
+					<img
+						src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}"
+						border="0" usemap="#Map2" />
+					<map name="Map2" id="Map2">
+						<area shape="rect" coords="3,0,230,50" href="Comp_Con"
+							alt="Let our advisor call" title="Let our advisor call" />
+					</map>
+				</div>
+				<div class="callmeheadingCall">
+					<span class="txtmatterbig_innerpage"><br />
+					<br /> People dream &amp; remain happy.<br /> Imagine people
+						dreaming &amp; living their dreams.<br />
+					<br /> <a href="Comp_Con"><strong>Sign up today!</strong></a> <br />
+					<br /> For a one to one session at the place convenient to you.<br />
+					<br />
+					<br /></span>
+				</div>
+				<div class="title123">
+					<span class="imgtext">Related Links</span>
+				</div>
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a
+						href="Comprehensive_fp"><strong>Services Basket</strong></a></span>
+				</div>
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know
+								our Financial Planers</strong></a></span>
+				</div>
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a
+						href="Why_do_you_need_a_plan"><strong>Why do you need
+								a financial plan?</strong></a></span>
+				</div>
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a
+						href="Who_can_be_your_financial_planner"><strong>Who
+								can be a financial planner?</strong></a></span>
+				</div>
+<!-- 				<div class="relatedinfoheading"> -->
+<!-- 					<span class="txtmatterbig_innerpage"><a href="why_fees"><strong> -->
+<!-- 								Financial Planning Fees</strong></a></span> -->
+<!-- 				</div> -->
+				<div class="relatedinfoheading">
+					<span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom
+								Hub</strong></a></span>
+				</div>
+			</div>
+
+		</apex:define>
+
+	</apex:composition>
+</apex:page>

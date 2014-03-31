@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>CA with Oracle Financial Services</name>
+    <style>freeForm</style>
+    <subject>Ffreedom Financial Planners</subject>
+    <textOnly>Hello {!Lead.Name},
+ 
+It was nice meeting you and thanks for expressing an interest in Ffreedom Financial Planners. 
+ 
+Attached are a couple of links to articles featured in The Indian Express, Business Standard that have been authored by our Founder &amp; CEO, Mr. Sumeet Vaid. I have also attached links to the Smart Money show on UTVI Bloomberg and CNBC TV 18 that Sumeet Vaid has participated in. 
+ 
+Please feel free to get in touch with us for any questions and concerns that you may have. 
+ 
+We look forward to our meeting with you.
+ 
+To access Sumeet Vaid&apos;s Blog on &quot;The Economic Times&quot; please click the following link:
+http://blogs.economictimes.indiatimes.com/simplified-finance/
+ 
+Click below to view Sumeet&apos;s Q&amp;A featured today in &quot;Business Standard&quot;:
+http://www.business-standard.com/india/storypage.php?autono=394077
+ 
+To access the Smart Money Show on UTVI Bloomberg &amp; CNBC TV 18 please click on the following links:
+http://www.youtube.com/watch?v=85hI3nG5yos
+http://www.youtube.com/watch?v=nwf2uIsnagM
+http://www.youtube.com/watch?v=uEy0fp1reJI
+http://www.youtube.com/watch?v=41BYQZ6-XPs
+ 
+To follow Ffreedom on Twitter please click on the following link:
+http://twitter.com/_ffreedom
+ 
+ 
+ 
+Regards
+ 
+Ffreedom Financial Planners
+506/507, Morya Landmark II, Near Infinity Mall, Link Road
+Andheri (W), Mumbai 400 053
+T: 91 22 42224333 | Fax: 91 22 42224314
+E: contact@ffreedom.in
+Get to Know Ffreedom better by viewing the Ffreedom Anthem
+
+NOTICE: This email message, including any attachments, may contain information that is confidential and/or proprietary. If you are not an intended recipient, please be advised that any review, use, reproduction or distribution of this message is prohibited. If you have received this message in error, please completely destroy all electronic and hard copies, and contact the sender at contact@ffreedom.in</textOnly>
+    <type>html</type>
+</EmailTemplate>

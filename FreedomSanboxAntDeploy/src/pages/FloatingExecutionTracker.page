@@ -1,0 +1,321 @@
+<!-- 
+	Page for creating new ET records
+    Version     Version Author     Date           Comments
+    1.0         Anupam/Aditi       27/12/2012      Displays page to create new Floating ET records
+-->
+
+<apex:page controller="FloatingExecutionTrackerController" sidebar="false" tabStyle="Account">
+	<style>
+		.rightPadding
+		{
+			padding-right: 10px;
+		}
+	</style>
+	
+	<!-- Java Script 	-->
+	<script>
+		
+	    function confirmDelete(actionId , number) 
+        {
+	       var doDelete = confirm('Are you sure you want to delete the Execution Tracker? ');
+	       if(doDelete)
+			callOnCancel(actionId);	
+		   else	
+			return doDelete; 
+	    }
+	    
+	</script>	
+	
+	
+	<apex:sectionheader title="Create/View Execution Tracker"/>
+	<apex:form >
+		<apex:actionfunction name="callOnCancel"  action="{!deleteExecutionTracker}"   rerender="optPanelShowET" >
+			<apex:param name="etId" value="" />
+		</apex:actionfunction>
+		
+		<!-- 	    Product type selection   -->
+		<apex:outputPanel id="outputPanelId">
+			<apex:pageBlock rendered="{!isProductSelection}">
+				<table>
+					<tr>
+						<td class="rightPadding"> 
+							<apex:outputText value="Select Product Type"/>
+						</td>
+						<td class="rightPadding">
+							<apex:selectList value="{!selectedProductType}" size="1"> 
+								 <apex:selectoption itemValue="Mutual Fund" itemLabel="Mutual Fund" />
+								 <apex:selectoption itemValue="Life Insurance" itemLabel="Life Insurance" />
+								 <apex:selectoption itemValue="General Insurance" itemLabel="General Insurance" />
+							</apex:selectList>
+						</td>
+						<td class="rightPadding">
+							<apex:commandLink action="{!create}" value="Create" rerender="outputPanelId, optPanelCreate, optPanelShowET"/> 
+							|&nbsp; 
+							<apex:outputLink value="/{!entityId}">Back</apex:outputLink>
+						</td>
+					</tr>
+				</table>
+			</apex:pageBlock>
+		</apex:outputPanel>
+		
+		<!-- 	    Create Execution Tracker   -->
+		<apex:outputPanel id="optPanelCreate">
+			<apex:pageBlock rendered="{!isCreate}" title="Create Execution Tracker">
+			<apex:pageMessages id="msg"/>
+				<apex:pageBlockButtons >	
+					<apex:commandButton value="Save" action="{!saveExecutionTracker}" rerender="msg,outputPanelId, optPanelCreate, optPanelShowET"/>
+					<apex:commandButton value="Cancel" action="{!cancel}" rerender="outputPanelId, optPanelCreate, optPanelShowET"/>
+				</apex:pageBlockButtons>
+				
+				<apex:outputPanel rendered="{!selectedProductType == 'Mutual Fund'}">
+				    <apex:pageBlockSection title="Mutual Fund Lumpsum Execution Tracker Details" columns="1">
+				     	<apex:pageBlockSection title="Personal Details" columns="2">
+<!-- 							<apex:inputField value="{!objMFExecutionTracker.Type__c}"></apex:inputField> -->
+							<apex:pageBlockSectionItem >
+								<apex:outputText value="Type "/>
+								<apex:selectList value="{!selectSIPorLumpsumType}" size="1">
+									<apex:selectoption itemValue="SIP" itemLabel="SIP" />
+									<apex:selectoption itemValue="Lumpsum" itemLabel="Lumpsum" />
+								</apex:selectList>
+							</apex:pageBlockSectionItem>
+<!-- 							<apex:inputField value="{!objMFExecutionTracker.Goal__c}"></apex:inputField> -->
+							<apex:inputField value="{!objMFExecutionTracker.Communication_Address__c}" />
+                           	<apex:inputField value="{!objMFExecutionTracker.Investor_Name_as_in_PAN_card__c}" />
+                           	<apex:inputField value="{!objMFExecutionTracker.Mobile__c}" />
+                           	<apex:inputField value="{!objMFExecutionTracker.Email__c}" />
+                           	<apex:inputField value="{!objMFExecutionTracker.DOB__c}" />
+                           	<apex:inputField value="{!objMFExecutionTracker.PAN__c}" />
+                           	<apex:inputField value="{!objMFExecutionTracker.Guardian_Name_as_PAN_card__c}" />
+                           	<apex:inputField value="{!objMFExecutionTracker.PAN_No_Guardian__c}" />
+                           	<apex:inputField value="{!objMFExecutionTracker.DOB_Guardian__c}" />
+		                </apex:pageBlockSection>
+                        <apex:pageBlockSection title="Execution Tracker Details" columns="2">
+                           	<apex:inputField value="{!objMFExecutionTracker.Completion_Date__c}"/>
+							<apex:inputField value="{!objMFExecutionTracker.Target_Revenue__c}"/>
+                           	<apex:inputField value="{!objMFExecutionTracker.Suggested_Amount__c}"/>
+                           	<apex:inputField value="{!objMFExecutionTracker.Booked_Revenue__c}"/>
+                           	<apex:inputField value="{!objMFExecutionTracker.Agreed_Amount__c}"/>
+                           	<apex:inputField value="{!objMFExecutionTracker.Cancelled_Reason__c}"/>
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection title="Bank Details" columns="2">
+						  	<apex:inputField value="{!objMFExecutionTracker.Nominee_s_Name__c}" />
+                       		<apex:inputField value="{!objMFExecutionTracker.Nominee_s_DOB__c}" />
+                       		<apex:inputField value="{!objMFExecutionTracker.Guardian_Name_In_case_nominee_is_minor__c}" />
+						    <apex:inputField value="{!objMFExecutionTracker.Mode_of_holding__c}" />
+						    <apex:inputField value="{!objMFExecutionTracker.Status__c}" />
+						    <apex:inputField value="{!objMFExecutionTracker.Account_Type__c}" />
+                       		<apex:inputField value="{!objMFExecutionTracker.Bank_Name__c}" />
+                       		<apex:inputField value="{!objMFExecutionTracker.Branch_Address__c}" />
+                       		<apex:inputField value="{!objMFExecutionTracker.Account_Number__c}" label="Account No" />
+                       		<apex:inputField value="{!objMFExecutionTracker.Investor_Name_As_in_bank_record__c}" />
+                     		<apex:pageBlockSectionItem >
+						 		<apex:outputLabel value="Name of First Holder "/> 
+								<apex:selectList value="{!objMFExecutionTracker.Holder_Name__c}" size="1"  >
+                             			<apex:selectOptions value="{!Entities}"></apex:selectOptions>
+                   				</apex:selectList> 
+							</apex:pageBlockSectionItem>
+							<apex:inputField value="{!objMFExecutionTracker.DOB_Second_holder__c}" label="DOB (Second holder)(DD/MM/YYYY)" />
+                       		<apex:inputField value="{!objMFExecutionTracker.Name_of_Second_holder__c}" />
+                       		<apex:inputField value="{!objMFExecutionTracker.PAN_No_Second_holder__c}" />
+                       		<apex:inputField value="{!objMFExecutionTracker.Name_of_Third_holder__c}" />
+                       		<apex:inputField value="{!objMFExecutionTracker.DOB_Third_holder__c}" label="DOB (Third holder)(DD/MM/YYYY)" />
+                       		<apex:inputField value="{!objMFExecutionTracker.STP_Installments__c}" />
+                       		<apex:inputField value="{!objMFExecutionTracker.PAN_No_Third_holder__c}" />
+                       		<apex:inputField value="{!objMFExecutionTracker.STP_Amount_per_transfer__c}" />
+                       		<apex:inputField value="{!objMFExecutionTracker.IFSC_Code__c}" />
+                       		<apex:inputField value="{!objMFExecutionTracker.MICR_Code__c}" />
+                        </apex:pageBlockSection>
+				 	</apex:pageBlockSection>
+				 	
+				</apex:outputPanel>
+				
+				<apex:outputPanel rendered="{!selectedProductType == 'Life Insurance'}">
+				    <apex:pageBlockSection title="Life Insurance Execution Tracker Detail" columns="1">
+				      	<apex:pageBlockSection title="Personal Details" columns="1">
+<!-- 				      		<apex:inputField value="{!objExecutionTracker.Type__c}"></apex:inputField> -->
+							<apex:pageBlockSectionItem >
+								<apex:outputText value="Type "/>
+				      			<apex:outputText value="{!selectedProductType}" />
+				      		</apex:pageBlockSectionItem>
+				      		<apex:pageBlockSection title="Insured 1" columns="2">
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_1_Name__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_1_DOB__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_1_Gender__c}" />
+                           	</apex:pageBlockSection>
+                           	<apex:pageBlockSection title="Insured 2" columns="2">
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_2_Name__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_2_DOB__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_2_Gender__c}" />
+                           	</apex:pageBlockSection>
+                           	<apex:pageBlockSection title="Insured 3" columns="2">
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_3_Name__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_3_DOB__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_3_Gender__c}" />
+                           	</apex:pageBlockSection>
+                           	<apex:pageBlockSection title="Insured 4" columns="2">
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_4_Name__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_4_DOB__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_4_Gender__c}" />
+                           	</apex:pageBlockSection>
+                           	<apex:pageBlockSection title="Insured 5" columns="2">
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_5_Name__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_5_DOB__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_5_Gender__c}" />
+                           	</apex:pageBlockSection>
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection title="Execution Tracker Details" columns="2">
+                           	<apex:inputField value="{!objLIExecutionTracker.Completion_Date__c}" />
+							<apex:inputField value="{!objLIExecutionTracker.Target_Revenue__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Suggested_Amount__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Booked_Revenue__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Agreed_Amount__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Cancelled_Reason__c}" />
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection title="Bank Details" columns="2">
+					    	<apex:inputField value="{!objLIExecutionTracker.Login_Date__c}" />
+					    	<apex:inputField value="{!objLIExecutionTracker.Policy_Number__c}" />
+					    	<apex:inputField value="{!objLIExecutionTracker.Previous_Policy_Number__c}" />
+                         	<apex:inputField value="{!objLIExecutionTracker.Risk_Commencement_Date__c}" />
+                          	<apex:inputField value="{!objLIExecutionTracker.Sum_Assured__c}" />
+						    <apex:inputField value="{!objLIExecutionTracker.Mode__c}" />
+                         	<apex:inputField value="{!objLIExecutionTracker.Annualised_Premium_Amount__c}" />
+<!--                           	<apex:inputField value="{!objLIExecutionTracker.Renewal_Alert__c}"/> -->
+                          	<apex:inputField value="{!objLIExecutionTracker.Renewal_Status__c}" />
+                          	<apex:inputField value="{!objLIExecutionTracker.Renewal_Date__c}" />
+                          	<apex:inputField value="{!objLIExecutionTracker.Renewal_Remark__c}" />
+                          	<apex:inputField value="{!objLIExecutionTracker.Gross_Premium__c}" />
+                          	<apex:inputField value="{!objLIExecutionTracker.Net_Premium__c}" />
+                         	<apex:inputField value="{!objLIExecutionTracker.Nominee__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Cheque_Amount__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Cheque_No__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Term_No_Of_Years__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Application_No__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Mode_Of_Payment__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Policy_Status__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Pol_Doc_Recd_Status__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Remarks__c}" />
+                       	</apex:pageBlockSection>
+				 	</apex:pageBlockSection>
+				</apex:outputPanel>
+				
+				<apex:outputPanel rendered="{!selectedProductType == 'General Insurance'}">
+					 <apex:pageBlockSection title="Life Insurance Execution Tracker Detail" columns="1">
+				      	<apex:pageBlockSection title="Personal Details" columns="1">
+<!-- 				      		<apex:inputField value="{!objGIExecutionTracker.Type__c}"></apex:inputField> -->
+							<apex:pageBlockSectionItem >
+								<apex:outputText value="Type "/>
+				      			<apex:outputText value="{!selectedProductType}" />
+				      		</apex:pageBlockSectionItem>
+                           	<apex:pageBlockSection title="Insured 1" columns="2">
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_1_Name__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_1_DOB__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_1_Gender__c}" />
+                           	</apex:pageBlockSection>
+                           	<apex:pageBlockSection title="Insured 2" columns="2">
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_2_Name__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_2_DOB__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_2_Gender__c}" />
+                           	</apex:pageBlockSection>
+                           	<apex:pageBlockSection title="Insured 3" columns="2">
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_3_Name__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_3_DOB__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_3_Gender__c}" />
+                           	</apex:pageBlockSection>
+                           	<apex:pageBlockSection title="Insured 4" columns="2">
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_4_Name__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_4_DOB__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_4_Gender__c}" />
+                           	</apex:pageBlockSection>
+                           	<apex:pageBlockSection title="Insured 5" columns="2">
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_5_Name__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_5_DOB__c}" />
+	                           	<apex:inputField value="{!objLIExecutionTracker.Other_Insured_5_Gender__c}" />
+                           	</apex:pageBlockSection>
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection title="Execution Tracker Details" columns="2">
+                           <apex:inputField value="{!objLIExecutionTracker.Completion_Date__c}" />
+							<apex:inputField value="{!objLIExecutionTracker.Target_Revenue__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Suggested_Amount__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Booked_Revenue__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Agreed_Amount__c}" />
+                           	<apex:inputField value="{!objLIExecutionTracker.Cancelled_Reason__c}" />
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection title="Bank Details" columns="2">
+					    	<apex:inputField value="{!objGIExecutionTracker.Login_Date__c}" />
+					    	<apex:inputField value="{!objGIExecutionTracker.Policy_Number__c}" />
+					    	<apex:inputField value="{!objGIExecutionTracker.Previous_Policy_Number__c}" />
+                         	<apex:inputField value="{!objGIExecutionTracker.Risk_Commencement_Date__c}" />
+                          	<apex:inputField value="{!objGIExecutionTracker.Sum_Assured__c}" />
+						    <apex:inputField value="{!objGIExecutionTracker.Mode__c}" />
+                         	<apex:inputField value="{!objGIExecutionTracker.Annualised_Premium_Amount__c}" />
+<!--                           	<apex:inputField value="{!objGIExecutionTracker.Renewal_Alert__c}"/> -->
+                          	<apex:inputField value="{!objGIExecutionTracker.Renewal_Status__c}" />
+                          	<apex:inputField value="{!objGIExecutionTracker.Renewal_Date__c}" />
+                          	<apex:inputField value="{!objGIExecutionTracker.Renewal_Remark__c}" />
+                          	<apex:inputField value="{!objGIExecutionTracker.Gross_Premium__c}" />
+                          	<apex:inputField value="{!objGIExecutionTracker.Net_Premium__c}" />
+                         	<apex:inputField value="{!objGIExecutionTracker.Nominee__c}" />
+                           	<apex:inputField value="{!objGIExecutionTracker.Cheque_Amount__c}" />
+                           	<apex:inputField value="{!objGIExecutionTracker.Cheque_No__c}" />
+                           	<apex:inputField value="{!objGIExecutionTracker.Term_No_Of_Years__c}" />
+                           	<apex:inputField value="{!objGIExecutionTracker.Application_No__c}" />
+                           	<apex:inputField value="{!objGIExecutionTracker.Mode_Of_Payment__c}" />
+                           	<apex:inputField value="{!objGIExecutionTracker.Policy_Status__c}" />
+                           	<apex:inputField value="{!objGIExecutionTracker.Pol_Doc_Recd_Status__c}" />
+                           	<apex:inputField value="{!objGIExecutionTracker.Remarks__c}" />
+                       	</apex:pageBlockSection>
+				 	</apex:pageBlockSection>
+				</apex:outputPanel>
+			</apex:pageBlock>
+		</apex:outputPanel>
+		
+		<!-- 	    Edit Execution Tracker   -->
+		<apex:outputPanel id="optPanelEdit">
+			<apex:pageBlock rendered="{!!isProductSelection}" title="Edit Execution Tracker">
+			
+				<apex:pageBlockButtons >
+					<apex:commandButton id="btn1" value="Save" action="{!updateExecutionTracker}" rerender="outputPanelId, optPanelEdit, optPanelCreate, optPanelShowET"/> 
+					<apex:commandButton id="btn2" value="Cancel" action="{!cancel}" rerender="outputPanelId, optPanelEdit, optPanelCreate, optPanelShowET"/>
+				</apex:pageBlockButtons>
+				
+				<apex:pageBlockSection >
+					<apex:outputField value="{!objExecutionTracker.Name}"></apex:outputField>	
+					<apex:inputField value="{!objExecutionTracker.Type__c}"></apex:inputField>
+<!-- 					<apex:inputField value="{!objExecutionTracker.Goal__c}"></apex:inputField> -->
+					<apex:inputField value="{!objExecutionTracker.Suggested_Amount__c}"></apex:inputField>
+					<apex:inputField value="{!objExecutionTracker.Agreed_Amount__c}"></apex:inputField>
+					<apex:inputField value="{!objExecutionTracker.Executed_Amount__c}"></apex:inputField>
+					<apex:inputField value="{!objExecutionTracker.Target_Revenue__c}"></apex:inputField>
+					<apex:inputField value="{!objExecutionTracker.Booked_Revenue__c}"></apex:inputField>
+					<apex:inputField value="{!objExecutionTracker.Remarks__c}"></apex:inputField>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		</apex:outputPanel>
+		
+		<!-- 	    Show all Execution Records    -->
+		<apex:outputPanel id="optPanelShowET">
+			<apex:pageBlock rendered="{!isETDetail && lstExecutionTracker.size >0}"> 
+				<apex:pageBlockTable value="{!lstExecutionTracker}" var="rec" >
+				   <apex:column headerValue="Edit/Delete"> 
+				       <apex:commandLink value="Edit" action="{!editExecutionTracker}" rerender="outputPanelId, optPanelEdit, optPanelShowET"> 
+				           <apex:param name="etId" value="{!rec.Id}" />
+				       </apex:commandLink>
+				       |&nbsp;
+				        <a  style="cursor: pointer;text-decoration: underline;" 
+				        		onclick="confirmDelete('{!rec.Id}');">Delete</a>
+				   </apex:column>
+		           <apex:column headerValue="Execution Tracker Name"> {!rec.Name}</apex:column>
+		           <apex:column headerValue="Goal Type"> {!rec.Goal__r.Goal_Type__c} </apex:column>
+		           <apex:column headerValue="Type"> {!rec.Type__c} </apex:column>  
+		           <apex:column headerValue="Suggested Amount"> {!rec.Suggested_Amount__c} </apex:column>
+		           <apex:column headerValue="Agreed Amount"> {!rec.Agreed_Amount__c} </apex:column>
+		           <apex:column headerValue="Executed Amount"> {!rec.Executed_Amount__c} </apex:column>
+		           <apex:column headerValue="Target Revenue"> {!rec.Target_Revenue__c} </apex:column>  
+		           <apex:column headerValue="Booked Revenue"> {!rec.Booked_Revenue__c} </apex:column>
+		           <apex:column headerValue="Remarks__c"> {!rec.Remarks__c} </apex:column>
+				</apex:pageBlockTable>
+			
+			</apex:pageBlock>
+		</apex:outputPanel>
+	</apex:form>
+</apex:page>

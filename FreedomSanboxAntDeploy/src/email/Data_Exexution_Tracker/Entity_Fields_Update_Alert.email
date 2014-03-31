@@ -1,0 +1,18 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<P>&nbsp;</P>
+<P><FONT size=2 face=Verdana,Helvetica,Sans-Serif>Hello {!Account.OwnerFirstName},</FONT></P>
+<P><FONT size=2 face=Verdana></FONT>&nbsp;</P>
+<P><FONT size=2 face=Verdana>Congratulations for&nbsp;getting us&nbsp;a new client, let us all endeavour to give him/her a valuable service&nbsp;!!&nbsp;&nbsp;&nbsp;&nbsp;</FONT></P>
+<P><FONT size=2 face=Verdana,Helvetica,Sans-Serif>&nbsp;</FONT></P>
+<P><FONT size=2 face=Verdana,Helvetica,Sans-Serif>Please fill in the following details of your client <STRONG>{!Account.Name}</STRONG>:</FONT></P>
+<P><FONT size=2 face=Verdana,Helvetica,Sans-Serif>1. Entity Status,<BR>2. The entire Additional Information Section (Agreement Structure, Amount Received, Services Offered, Cross-sell/Upsell Opp sneized along with its date, Recurring fees, Agreement Received, Cheque date, Cheque Satus),<BR>3. Entity Details Section along with its Entity Stage details,<BR>4. Client Satisfaction Section.</FONT></P>
+<P><FONT size=2 face=Verdana,Helvetica,Sans-Serif>&nbsp;</FONT></P>
+<P><FONT size=2 face=Verdana,Helvetica,Sans-Serif>Herein is the link of the same: {!Account.Link}&nbsp;</FONT></P>
+<P><FONT size=2 face=Verdana,Helvetica,Sans-Serif>&nbsp;</FONT></P>
+<P><FONT size=2 face=Verdana,Helvetica,Sans-Serif></FONT>&nbsp;</P>
+<P><FONT size=2 face=Verdana,Helvetica,Sans-Serif>&nbsp;</FONT></P>
+<P><FONT size=2 face=Verdana,Helvetica,Sans-Serif>Thank You !!</FONT></P>]]></td>
+</tr>
+</table>

@@ -1,0 +1,1473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>AMC_Name_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>AMC Name</label>
+        <length>200</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMC_Name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>AMC Name</label>
+        <referenceTo>AMC_Name__c</referenceTo>
+        <relationshipLabel>Investment Assets</relationshipLabel>
+        <relationshipName>Investment_Assets</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Acquisition_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Acquisition Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Action__c</fullName>
+        <externalId>false</externalId>
+        <label>Action</label>
+        <picklist>
+            <picklistValues>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Liquidate (Align to goal)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Liquidate (sell)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hold (Align to goal)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Allocated_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Allocated Amount</label>
+        <summarizedField>GoalInvestmentAssetAssociation__c.Allocation__c</summarizedField>
+        <summaryForeignKey>GoalInvestmentAssetAssociation__c.Investment_Asset__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Asset_Class__c</fullName>
+        <externalId>false</externalId>
+        <label>Asset Class</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Small Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Corporate Bonds</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RBI Bonds</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Capital Gains Tax Saving Bonds</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Non Convertible Debentures</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Large Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mid Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Index</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Diversified</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Large Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Mid Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Small Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Sectoral</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt - Long Term</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt - Medium Term</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt - Short Term</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt - Ultra Short Term</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Arbitrage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Asset Allocation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Debt Oriented</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Equity Oriented</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Monthly Income</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Asset_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Asset Name</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Asset_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Asset Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Corporate Bonds</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RBI Bonds</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Capital Gains Tax Saving Bonds</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Non Convertible Debentures</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Large Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mid Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Small Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Index</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Diversified</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Large Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Mid Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Small Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Sectoral</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - International</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt - Long Term</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt - Medium Term</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt - Short Term</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt - Ultra Short Term</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Arbitrage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Asset Allocation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Debt Oriented</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Equity Oriented</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Monthly Income</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Physical</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ETF</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fund</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Coupon_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Coupon Rate (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Current_NAV__c</fullName>
+        <externalId>false</externalId>
+        <label>Current NAV</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Current_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Current Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EmergencyFundAction__c</fullName>
+        <externalId>false</externalId>
+        <label>EmergencyFundAction</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Entity__c</fullName>
+        <externalId>false</externalId>
+        <label>Entity</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Investment Assets</relationshipLabel>
+        <relationshipName>Investment_Assets</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Face_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Face Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>From_Portal__c</fullName>
+        <externalId>false</externalId>
+        <label>From_Portal</label>
+        <precision>1</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FundValue__c</fullName>
+        <externalId>false</externalId>
+        <formula>Units__c *  Current_NAV__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FundValue</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Fund__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Fund</label>
+        <referenceTo>Fund__c</referenceTo>
+        <relationshipLabel>Investment Assets</relationshipLabel>
+        <relationshipName>Investment_Assets</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IsSynched__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>IsSynched</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Include_In_HLV_Inv_Asset__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>To include only checked assets in HLV calculations</description>
+        <externalId>false</externalId>
+        <label>Include In HLV</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Maturity_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Maturity Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Maturity_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Maturity Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Monthly_SIP_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Monthly SIP Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Portal_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Portal Id</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Portal_Parent_Entity__c</fullName>
+        <externalId>false</externalId>
+        <label>Portal Parent Entity</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Purchase_NAV__c</fullName>
+        <externalId>false</externalId>
+        <label>Purchase NAV</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Purchase_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Purchase Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remove_Checkbox__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Remove Checkbox</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SIP_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>SIP Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Scheme_Name_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Scheme Name</label>
+        <length>200</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Scheme_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Scheme Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Scheme_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Scheme Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Equity - Index</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Diversified</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Large Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Mid Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Small Cap</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equity - Sectoral</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt - Long Term</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt - Medium Term</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt - Short Term</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Debt - Ultra Short Term</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Arbitrage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Asset Allocation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Debt Oriented</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Equity Oriented</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hybrid - Monthly Income</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Script_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Script Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Stock_Value__c</fullName>
+        <externalId>false</externalId>
+        <formula>Quantity__c   *   Current_Price__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Stock_Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Synched_Date_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Synched Date Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>TotalAsset__c</fullName>
+        <description>Formula to calculate stock , Mutual Fund and Fixed Income total for a given record.</description>
+        <externalId>false</externalId>
+        <formula>IF(CONTAINS(RecordTypeId , &apos;01220000000HYx5&apos; ) ,  Quantity__c  *  Current_Price__c ,
+            IF(CONTAINS(RecordTypeId , &apos;01220000000HYx4&apos; ),  Units__c *  Current_NAV__c,
+                         IF(CONTAINS(RecordTypeId, &apos;01220000000HYx3&apos; ),   Face_Value__c *  Quantity__c ,
+                                    IF(CONTAINS(RecordTypeId, &apos;012W00000004OxK&apos; ),   Quantity__c  *  Current_Price__c ,
+                                     0)
+                          )
+             )
+ )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>TotalAsset</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total__c</fullName>
+        <externalId>false</externalId>
+        <label>Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Units__c</fullName>
+        <externalId>false</externalId>
+        <label>Units</label>
+        <precision>17</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>fixedIncomesValue__c</fullName>
+        <externalId>false</externalId>
+        <formula>Quantity__c  *  Face_Value__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>fixedIncomesValue</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>isIncludeActionPlan__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Include in Action Plan</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Investment Asset</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>IA-{00000}</displayFormat>
+        <label>Investment Asset Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Investment Assets</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Fixed_Income</fullName>
+        <active>true</active>
+        <label>Fixed Income</label>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Hold %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28sell%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Class__c</picklist>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Type__c</picklist>
+            <values>
+                <fullName>Capital Gains Tax Saving Bonds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporate Bonds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non Convertible Debentures</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RBI Bonds</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Scheme_Type__c</picklist>
+            <values>
+                <fullName>Debt - Long Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Medium Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Short Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Ultra Short Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Diversified</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Index</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Large Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Mid Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Sectoral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Small Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Arbitrage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Asset Allocation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Debt Oriented</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Equity Oriented</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Monthly Income</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Gold</fullName>
+        <active>true</active>
+        <description>Added regarding new FP changes</description>
+        <label>Gold and Silver</label>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Hold %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28sell%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Class__c</picklist>
+            <values>
+                <fullName>Capital Gains Tax Saving Bonds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporate Bonds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Long Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Medium Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Short Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Ultra Short Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Diversified</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Index</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Large Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Mid Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Sectoral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Small Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Arbitrage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Asset Allocation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Debt Oriented</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Equity Oriented</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Monthly Income</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Large Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mid Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non Convertible Debentures</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Others</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RBI Bonds</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small Cap</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Type__c</picklist>
+            <values>
+                <fullName>ETF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fund</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Physical</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Scheme_Type__c</picklist>
+            <values>
+                <fullName>Debt - Long Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Medium Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Short Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Ultra Short Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Diversified</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Index</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Large Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Mid Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Sectoral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Small Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Arbitrage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Asset Allocation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Debt Oriented</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Equity Oriented</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Monthly Income</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Mutual_Fund</fullName>
+        <active>true</active>
+        <label>Mutual Fund</label>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Hold %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28sell%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Class__c</picklist>
+            <values>
+                <fullName>Debt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Type__c</picklist>
+            <values>
+                <fullName>Debt - Long Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Medium Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Short Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Ultra Short Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Diversified</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Index</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Large Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Mid Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Sectoral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Small Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Arbitrage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Asset Allocation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Debt Oriented</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Equity Oriented</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Monthly Income</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Scheme_Type__c</picklist>
+            <values>
+                <fullName>Debt - Long Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Medium Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Short Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Ultra Short Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Diversified</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Index</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Large Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Mid Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Sectoral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Small Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Arbitrage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Asset Allocation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Debt Oriented</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Equity Oriented</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Monthly Income</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Stocks</fullName>
+        <active>true</active>
+        <label>Stocks</label>
+        <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Hold %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28Align to goal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Liquidate %28sell%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity and continue saving</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be grown till maturity but stop saving more</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Class__c</picklist>
+            <values>
+                <fullName>Small Cap</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Asset_Type__c</picklist>
+            <values>
+                <fullName>Large Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mid Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small Cap</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Scheme_Type__c</picklist>
+            <values>
+                <fullName>Debt - Long Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Medium Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Short Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt - Ultra Short Term</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Diversified</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Index</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Large Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Mid Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Sectoral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equity - Small Cap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Arbitrage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Asset Allocation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Debt Oriented</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Equity Oriented</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid - Monthly Income</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

@@ -1,0 +1,197 @@
+<apex:page showHeader="false" sidebar="false"  controller="PortfolioController" renderAs="pdf">
+<apex:stylesheet value="{!URLFOR($Resource.PortalStyleSheet1)}"/>
+
+<div id="CompanyHeader" style="width:710px;font-size:11px; height:155px; border:1px solid black;">
+<img src="https://cs1.salesforce.com/servlet/servlet.ImageServer?id=015S0000000EyqP&oid=00DS00000006sj5"/>
+
+<apex:outputPanel id="organisationDetails" layout="block" style="padding-left:220px;position:absolute;top:15px;">
+<apex:outputText style="font-size:14px;font-weight:bold;" value="{!$Organization.Name}"/><br/>
+<apex:outputText value="{!$Organization.Street}"/><br/>
+ <apex:outputText value="{!$Organization.City}"/>.<br/> <apex:outputText value="{!$Organization.State}"/>.<br/>
+ Phone: <apex:outputText value="{!$Organization.Phone}"/>, Fax: <apex:outputText value="{!$Organization.Fax}"/><br/>
+ Email: <apex:outputLink value="www.gmailo.com">www.info@ffreedom.in</apex:outputLink>&nbsp;  Web:<apex:outputLink value="www.ffreedom.in">www.ffreedom.in</apex:outputLink>
+</apex:outputPanel> 
+
+<apex:outputPanel id="accountDetail" layout="block" style="padding-left:20px;position:absolute;top:100px;">
+<apex:outputText style="font-size:12px;font-weight:bold;" value="{!Account.Name}"/><br/>
+<apex:outputText value="{!Account.BillingStreet}"/><br/>
+<apex:outputText value="{!Account.BillingCity}"/>,&nbsp;<apex:outputText value="{!Account.BillingState}"/><br/>
+Email:&nbsp; <apex:outputText value="{!Account.PersonEmail}"/><br/>
+</apex:outputPanel>
+
+<div id="myPlanner" style="border:0px solid black; width:170px;height:60px;float:right;position:absolute;top:100px;left:500px;"> 
+<apex:outputPanel >
+Your Relationship Manager:<br/>
+<apex:outputText value="{!PlannerDescription.Name}"/><br/>
+<apex:outputText value="{!PlannerDescription.MobilePhone__c}"/>
+</apex:outputPanel>
+</div>
+</div>
+
+<div style="700px;">
+ <apex:outputPanel styleClass="boldStyle" rendered="{!(AllDataList.size = 0)}">Currently you do not have any Investments</apex:outputPanel>
+          <div class="scrollSection" >
+          <apex:outputPanel rendered="{!(AllDataList.size != 0)}">
+          <table border="1" width="700px;" class="mainTable">
+            <tr>
+                <td>
+                    <table width="700px;" height="50" >
+                   <!----HEADERS START-->
+                <tr class="lightPistaGreen" style="text-align:center;font-size:11px;">
+                    <td width="20%">Scheme Name</td>
+                    <td width="12%">Nav Date</td>
+                    <td width="6%">Type</td>
+                    <td width="15%">Purchase Amt</td>
+                  
+                    <td width="15%">Current Value</td>
+                    <td width="10%">NAV</td>
+                    <td width="14%">Net Gain</td>
+                    <td width="4%">Absolute Returns</td>
+                    <td width="2%">Annualized Returns</td>
+                </tr>
+
+              </table>
+         <!----HEADERS END-->
+            <table width="700px;" style="text-align:left;font-size:11px;">
+                <tr  class="accountName"><td><apex:outputText value="{!Account.Name}"/></td></tr>
+                <apex:repeat value="{!allDataList}" var="allData" >    
+                    <tr>
+                        <td><b>
+                            <apex:outputText value="{!allData.scheme_Name}"/>
+                            &nbsp;<apex:outputText value="{!allData.folio_Number}"/>
+                            &nbsp;[NAV As On &nbsp; <apex:outputText value="{!allData.current_Date}"/>]
+                            </b>
+                       </td>
+                   </tr>
+                   <tr>
+                    <td> 
+                      <table width="700px;"> 
+                  <!----all purchase reports START-->
+                        <apex:repeat value="{!allData.purchaseSalesList}" var="purchase">
+                 
+                         <tr >
+                            <td width="20%" style="text-align:left"><apex:outputField value="{!purchase.Scheme_Name__c}"/> </td>
+                            <td width="10%" style="text-align:left"><apex:outputField value="{!purchase.NAV_Date__c }"/> </td>
+                            <td width="3%" style="text-align:left"><apex:outputField value="{!purchase.Type__c}"/> </td>
+                            <td width="15%" style="text-align:right"><apex:outputField value="{!purchase.Amount__c}"/> </td>
+                      
+                            <td width="15%" style="text-align:right"><apex:outputField value="{!purchase.Current_Value__c}"/> </td>
+                            <td width="11%" style="text-align:center"><apex:outputField value="{!purchase.NAV__c}"/> </td>
+                            <td width="11%" style="text-align:right"><apex:outputField value="{!purchase.Net_Gain__c}"/> </td>
+                            <td width="7%" style="text-align:right"><apex:outputField value="{!purchase.Absolute_Return__c}"/> </td>
+                            <td width="8%" style="text-align:right"><apex:outputField value="{!purchase.Annualized_Return__c}"/> </td>
+                        </tr>
+
+                        </apex:repeat> 
+                    </table>
+                   <!----all purchase reports END-->
+                   </td>
+                  </tr>
+                  
+                  <!----summary--portfolio report START-->
+                   <tr>
+                        <td>
+                            <table width="700px;">
+                                   <tr class="childRow" >
+                                       <td width="35%" style="text-align:left;">
+                                           <apex:outputField value="{!allData.portfolioReport.Scheme_Scrip_Name__c}"/>[Folio:<apex:outputField value="{!allData.portfolioReport.Folio_Number__c}"/>]<span style="font-weight:bold;"> Subtotal:</span>
+                                       </td>
+                                      
+                                       <td  width="14%" style="text-align:right;"><apex:outputField value="{!allData.portfolioReport.Purchase_Amount__c}"/> </td>
+                                      
+                                       <td width="15%" style="text-align:right;"><apex:outputField value="{!allData.portfolioReport.Current_Value__c}"/> </td>
+                                        <!---<td width="8%"><apex:outputField value="{!allData.portfolioReport.Nav_p__c}"/> </td>--->
+                                        <td width="11%" style="text-align:center;">--</td>
+                                       <td width="11%" style="text-align:right;"><apex:outputField value="{!allData.portfolioReport.Gain__c}"/> </td>
+                                       <td  width="7%" style="text-align:right;"><apex:outputField value="{!allData.portfolioReport.Absolute_Ret__c}"/> </td>
+                                       <td  width="7%" style="text-align:right;">--</td>
+                                 </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+                   
+                    <tr><td><br/></td></tr>       
+                           <!----summary--portfolio report END-->
+              </apex:repeat> 
+          </table>
+          </td>
+          </tr>
+          </table>
+          </apex:outputPanel>
+          <br/><br/>
+<!----   Child Reports Start---->
+<apex:outputPanel rendered="{!(AllChildDetailedRecords.size != 0)}">
+ <table border="0" width="700" class="childReportTable">
+     
+        <apex:repeat value="{!AllChildDetailedRecords}" var="OuterWrapper">
+         
+             <tr  class="accountName" style=" background-color:#CEF6F5;">
+                 <td ><apex:outputField styleClass="accountName" value="{!OuterWrapper.childEntity.Name}"/></td>
+             </tr> 
+              <apex:repeat value="{!OuterWrapper.DetailedReportWrapperList}" var="InnerWrapper">
+                 <tr >
+                      <td class="boldStyle" style="text-align:left;font-size:11px;">
+                                <apex:outputText value="{!InnerWrapper.scheme_Name}"/>
+                                &nbsp;<apex:outputText value="{!InnerWrapper.folio_Number}"/>
+                                 &nbsp;[NAV As On &nbsp; <apex:outputText value="{!InnerWrapper.current_Date}"/>]
+                                
+                      </td>
+                 </tr>
+                 <tr>
+                    <td> 
+                         <table width="700px;" >
+                 <!---- Child all purchase reports START-->
+                        <apex:repeat value="{!InnerWrapper.purchaseSalesList}" var="purchase" >
+                            
+                                <tr style="font-size:11px;">
+                                   <td width="20%" style="text-align:left;"><apex:outputField value="{!purchase.Scheme_Name__c}"/> </td>
+                                   <td width="10%" style="text-align:left"><apex:outputField value="{!purchase.NAV_Date__c }"/> </td>
+                                   <td width="3%" style="text-align:left"><apex:outputField value="{!purchase.Type__c}"/> </td>
+                                   <td width="15%" style="text-align:right"><apex:outputField value="{!purchase.Amount__c}"/> </td>
+                                   
+                                   <td width="15%" style="text-align:right"><apex:outputField value="{!purchase.Current_Value__c}"/> </td>
+                                       <td width="11%" style="text-align:center"><apex:outputField value="{!purchase.NAV__c}"/> </td>
+                                   <td width="11%" style="text-align:right" ><apex:outputField value="{!purchase.Net_Gain__c}"/> </td>
+                                   <td width="7%" style="text-align:right" ><apex:outputField value="{!purchase.Absolute_Return__c}"/> </td>
+                                   <td width="8%" style="text-align:right"><apex:outputField value="{!purchase.Annualized_Return__c}"/> </td>
+                               </tr>
+
+                              
+                            
+                          </apex:repeat> 
+                           </table>
+                   <!----Child  all purchase reports END-->
+                    </td>
+                    </tr>
+                     <!----Child  summary--portfolio report START-->
+                    <tr class="childRow" style="width:40px;font-size:11px;">
+                        <td>
+                           <table width="700px;">
+                             <tr>
+                               <td width="35%" style="text-align:left">
+                                   <apex:outputField value="{!InnerWrapper.portfolioReport.Scheme_Scrip_Name__c}"/>[Folio:<apex:outputField value="{!InnerWrapper.portfolioReport.Folio_Number__c}"/>]<span class="boldStyle"> Subtotal:</span>
+                               </td>
+                               <td width="14%" style="text-align:right"><apex:outputField value="{!InnerWrapper.portfolioReport.Purchase_Amount__c}"/> </td>
+                               
+                               <td width="15%"  style="text-align:right"><apex:outputField value="{!InnerWrapper.portfolioReport.Current_Value__c}"/> </td>
+                              <!--- <td width="8%"><apex:outputField value="{!InnerWrapper.portfolioReport.Nav_p__c}"/> </td>----->
+                              <td width="11%"  style="text-align:center">--</td>
+                               <td width="11%"  style="text-align:right"><apex:outputField value="{!InnerWrapper.portfolioReport.Gain__c}"/> </td>
+                               <td width="7%" style="text-align:right"><apex:outputField value="{!InnerWrapper.portfolioReport.Absolute_Ret__c}"/> </td>
+                               <td width="7%" style="text-align:right">--</td>
+                             </tr>
+
+                          </table>
+                        </td>
+                    </tr>
+                           <!----Child  summary--portfolio report END-->
+                     <tr><td><br/></td></tr>       
+              </apex:repeat>    
+        </apex:repeat>            
+ </table>
+<!----   Child Reports End----> 
+</apex:outputPanel>   
+</div>
+ </div>
+</apex:page>

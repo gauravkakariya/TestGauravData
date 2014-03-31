@@ -1,0 +1,213 @@
+<apex:page > 
+<!-- standardController="ecare__Lab_Panel__c" -->
+<!-- 			extensions="NewLabPanelController"  -->
+<!--     	   title="New Lab Panel" -->
+<!--     	   sidebar="false" -->
+<!--     	   tabStyle="ecare__Lab_Panel__c"> -->
+	
+<!-- 	<apex:stylesheet value="{!URLFOR($Resource.AutoSuggest ,'css/ui-lightness/jquery-ui-1.8.21.custom.css')}" /> -->
+<!--     <apex:includeScript value="{!URLFOR($Resource.AutoSuggest ,'js/jquery-1.7.2.js')}" /> -->
+<!--     <apex:includeScript value="{!URLFOR($Resource.AutoSuggest ,'js/jquery-1.7.2.min.js')}" /> -->
+<!--     <apex:includeScript value="{!URLFOR($Resource.AutoSuggest ,'js/jquery-ui-1.8.21.custom.min.js')}" /> -->
+       
+<!--     <apex:includeScript value="{!URLFOR($Resource.AutoSuggest ,'development-bundle/ui/jquery.ui.core.js')}" /> -->
+<!--     <apex:includeScript value="{!URLFOR($Resource.AutoSuggest ,'development-bundle/ui/jquery.ui.widget.js')}" /> -->
+<!--     <apex:includeScript value="{!URLFOR($Resource.AutoSuggest ,'development-bundle/ui/jquery.ui.position.js')}" /> -->
+<!--     <apex:includeScript value="{!URLFOR($Resource.AutoSuggest ,'development-bundle/ui/jquery.ui.autocomplete.js')}" /> -->
+	
+<!-- 	<script type="text/javascript"> -->
+
+<!-- 		/* Store the list of Lab Test names from the controller and store it in a hidden div for  -->
+<!-- 		 * displaying as a list of autosuggest options  -->
+<!-- 		 */ -->
+<!--         j$=jQuery.noConflict(); -->
+<!--         j$(document).ready(function(){ -->
+<!--               var labtestString = '{!labTestNames}'; -->
+<!--               j$("#labTestDiv").val( -->
+<!--               	labtestString.toString().substring(1, labtestString.toString().length - 1)); -->
+              
+<!--               //Bind the auto complete feature 	 -->
+<!--               attachAutoSuggestFeature(); -->
+<!--         }); -->
+		
+<!-- 		/* Attaches the jquery auto suggest feature to every inputField that is added to  -->
+<!-- 	     * repeater  -->
+<!-- 	     */ -->
+<!-- 	    function attachAutoSuggestFeature(){ -->
+
+<!-- 	          var labtests = j$("#labTestDiv").val().split(","); -->
+	          
+<!-- 	          /* Bind the autocomplete feature to every component having its class attribute set  -->
+<!-- 	           * to bindSuggest  -->
+<!-- 	           */ -->
+<!-- 	          j$(".bindSuggest").autocomplete({ -->
+<!--                    source: labtests, -->
+<!--                    minLength: 2, -->
+<!--                    delay: 100 -->
+<!--               }); -->
+<!-- 	    } -->
+	    
+<!-- 	    /* Select all the subsequent checkboxes */ -->
+<!-- 	    function selectAllCheckboxes(pIsChecked){ -->
+<!-- 	    	j$(".selectAllChk").attr("checked", pIsChecked); -->
+<!-- 	    } -->
+<!-- 	</script> -->
+
+
+<!-- 	<style type="text/css"> -->
+<!-- 	    #tbltestDetails{  -->
+<!-- 			font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; -->
+<!-- 			width:40%;  -->
+<!-- 			border-collapse:collapse; -->
+<!-- 			overflow:true; -->
+<!-- 		} -->
+<!-- 		#tbltestDetails td, #tbltestDetails th{ -->
+<!-- 			font-size:1em;  -->
+<!-- 			border:1px solid #8A9EBE; -->
+<!-- 			padding:3px 7px 12px 7px;  -->
+<!-- 		}  -->
+<!-- 		#tbltestDetails th{   -->
+<!-- 			font-size:12.2px;  -->
+<!-- 			text-align:left;  -->
+<!-- 			padding-top:5px;  -->
+<!-- 			padding-left:5px; -->
+<!-- 			padding-bottom:4px; -->
+<!-- 			background-color:#8A9EBE; -->
+<!-- 			color:#ffffff; -->
+<!-- 		}  -->
+<!-- 	</style> -->
+	
+<!-- 	<!-- Holds the a comma separated list of lab test names to be displayed as auto suggest  -->
+<!-- 		 feature --> -->
+<!-- 	<div id="labTestDiv" hidden="true"></div> -->
+	
+<!-- 	<apex:form > -->
+<!-- 	<apex:sectionHeader title="LabPanel" /> -->
+<!-- 	<apex:pageBlock > -->
+	
+<!-- 		<apex:actionStatus id="processing" stopText=""> -->
+<!-- 			<apex:facet name="start"> -->
+<!--           			  <img src="{!URLFOR('/img/loading.gif')}"/><span style="font-weight: bold"> Processing....</span><br/> -->
+<!-- 			</apex:facet>     -->
+<!-- 		</apex:actionStatus> -->
+		
+<!-- 		<apex:outputPanel id="pnlMsg"> -->
+<!-- 			<apex:pageMessages id="pageMsgs"/> -->
+<!-- 		</apex:outputPanel> -->
+		
+<!-- 		<apex:actionStatus id="loading" stopText=""> -->
+<!--                 <apex:facet name="start"> -->
+<!--                     <apex:outputPanel > -->
+<!--                         <apex:image url="/img/loading.gif" /> -->
+<!--                         <apex:outputLabel value="Loading..."/>          -->
+<!--                     </apex:outputPanel>                  -->
+<!--                 </apex:facet> -->
+<!--         </apex:actionStatus> -->
+		
+<!-- 		<apex:pageBlockButtons location="Both"> -->
+<!-- 			<apex:commandButton action="{!saveLabPanelRecord}"  -->
+<!-- 								value="{!$Label.Save}"  -->
+<!-- 								oncomplete="attachAutoSuggestFeature(); return false;"  -->
+<!-- 								id="saveButton" -->
+<!-- 								rerender="pnlLabTest, pnlMsg"/> -->
+								
+<!-- 			<apex:actionRegion id="regCancel"> -->
+<!-- 				<apex:commandButton action="{!cancelLabPanelRecord}"  -->
+<!-- 									value="{!$Label.Cancel}"  -->
+<!-- 									id="cancelButton"   -->
+<!-- 									rerender="regCancel"/> -->
+<!-- 			</apex:actionRegion>	 -->
+<!-- 		</apex:pageBlockButtons> -->
+		
+<!-- 		<apex:actionFunction name="populateLabPrice"  -->
+<!-- 								 action="{!populatePrice}" -->
+<!-- 								 oncomplete="attachAutoSuggestFeature();return false;"  -->
+<!-- 								 rerender="price" -->
+<!-- 								 status="processing"/> -->
+	    
+<!-- 		<apex:pageBlockSection title="{!$Label.BasicInformation}"> -->
+<!-- 			<apex:pageBlockSectionItem > -->
+<!-- 				<apex:outputLabel value="{!$Label.PanelName}"/> -->
+<!-- 				<apex:panelGroup > -->
+<!-- 				    <apex:inputField id="Name"  value="{!objLabPanel.Name}" required="true" /> -->
+<!-- 				</apex:panelGroup>  -->
+<!-- 			</apex:pageBlockSectionItem> -->
+<!-- 		</apex:pageBlockSection> -->
+<!-- 		<apex:pageBlockSection > -->
+<!-- 			<apex:pageBlockSectionItem > -->
+<!-- 					<apex:outputLabel value="{!$ObjectType.ecare__Lab_Panel__c.fields.Descriptions__c.label}"/> -->
+<!-- 			<apex:panelGroup > -->
+<!-- 			    <apex:inputField id="Name"   -->
+<!-- 			    				 value="{!objLabPanel.Descriptions__c}"  -->
+<!-- 			    				 style="width:200px;height:48px;" /> -->
+<!-- 			</apex:panelGroup> -->
+<!-- 			</apex:pageBlockSectionItem> -->
+			
+<!-- 		</apex:pageBlockSection> -->
+		
+<!-- 		<apex:pageBlockSection title="{!$Label.TestDetails}"> </apex:pageBlockSection>  -->
+<!-- 			<br/> -->
+<!-- 			<apex:outputPanel id="pnlLabTest" > -->
+<!-- 				<apex:actionStatus id="panelStatus" stopText=""> -->
+<!-- 					<apex:facet name="start"> -->
+<!--             			  <img src="{!URLFOR('/img/loading.gif')}"/><span style="font-weight: bold"> Processing....</span><br/> -->
+<!-- 					</apex:facet>     -->
+<!-- 				</apex:actionStatus> -->
+				   
+<!-- 				 <apex:actionRegion id="regLabTest"> -->
+<!-- 					<apex:outputpanel style="overflow:auto; height:185px; width:35%" layout="block"> -->
+<!-- 					 <table width="100%" id="tbltestDetails" >   -->
+<!-- 						<tr width="60%" > -->
+<!-- 							<th width="5%">{!$Label.Sr_No}</th> -->
+<!-- 							<th width="10%"> -->
+<!-- 								<apex:inputCheckbox id="selectAll"  -->
+<!-- 													onclick="selectAllCheckboxes(this.checked);" /> -->
+<!-- 							</th> -->
+<!-- 							<th>{!$Label.TestName}</th> -->
+<!-- 							<th>{!$ObjectType.Lab_Test_Panel_Items__c.fields.Price__c.label}</th> -->
+<!-- 						</tr> -->
+						
+<!-- 						<apex:repeat value="{!labPanelItemList}" var="lt"> -->
+<!-- 							<tr width="60%"> -->
+<!-- 								<td width="5%"><apex:outputText value="{!lt.rowIndex}"/></td> -->
+<!-- 								<td width="10%"> -->
+<!-- 									<apex:inputCheckbox value="{!lt.isSelected}"  -->
+<!-- 														styleClass="selectAllChk" /> -->
+<!-- 								</td> -->
+<!-- 								<td><apex:inputText styleClass="bindSuggest"  -->
+<!-- 													value="{!lt.labPanelItemName}"  -->
+<!-- 													onblur="populateLabPrice();"/></td> -->
+<!-- 								<td><apex:inputText value="{!lt.price}" id="price"/></td>			 -->
+<!-- 							</tr>          -->
+<!-- 						</apex:repeat> -->
+<!-- 					</table> -->
+<!-- 					</apex:outputpanel> -->
+					
+<!-- 					<br/> -->
+<!-- 					<table width="100%" >	 -->
+<!-- 						<tr> -->
+<!-- 							<td width="15%"> -->
+<!-- 								<apex:selectList value="{!numberOfRows}" size="1" id="numOfRows"> -->
+<!-- 									<apex:selectOptions value="{!addRowCntList}"/>	 -->
+<!-- 								</apex:selectList> -->
+<!-- 								<apex:commandButton action="{!addRows}" -->
+<!-- 													oncomplete="attachAutoSuggestFeature(); return false;"  -->
+<!-- 													rerender="pnlLabTest" -->
+<!-- 													value="{!$Label.AddNewTest}" -->
+<!-- 													status="loading"/> -->
+<!-- 							</td> -->
+<!-- 							<td> -->
+<!-- 								<apex:commandButton action="{!removeRows}"  -->
+<!-- 													oncomplete="attachAutoSuggestFeature(); return false;"  -->
+<!-- 													value="{!$Label.RemoveTest}" -->
+<!-- 													rerender="pnlLabTest,pageMsgs" -->
+<!-- 													status="loading"/> -->
+<!-- 							</td> -->
+<!-- 						</tr> -->
+<!-- 					</table> -->
+					
+<!-- 				</apex:actionRegion> -->
+<!-- 			</apex:outputPanel> -->
+<!-- 	</apex:pageBlock> -->
+<!-- 	</apex:form> -->
+</apex:page>

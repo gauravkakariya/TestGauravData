@@ -1,0 +1,297 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | Ffreedom Hub">
+    <apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+    <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+    <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+
+<apex:define name="bodycontent">
+     <script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+		_gaq.push([ '_trackPageview' ]);
+	
+		(function() {
+			var ga = document.createElement('script');
+			ga.type = 'text/javascript';
+			ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+					: 'http://www')
+					+ '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+	<div class="hubtopleftimg"><apex:image url="{!URLFOR($Resource.images,'images/FfreedomHub_01.jpg')}" width="42" height="489" /></div>
+	<div class="hubtoprightimg"><apex:image url="{!URLFOR($Resource.images,'images/FfreedomHub_03.jpg')}" width="42" height="489" /></div>     
+	
+	<div class="hubleftcontainer">
+		
+		<div id="hubmain">
+			<a href="FfreedomBuzz" alt="Ffreedom Buzz" title="Ffreedom Buzz" style="color:#414040;" >
+				<div id="hubinnerpage_thumbcontainer_left">
+					<img src="{!URLFOR($Resource.images,'images/buzz.jpg')}" width="262" height="61" border="0" />
+					<div class="hubimgfortext">
+						<div class="hubtitletext"><span class="txtmatterbig_innerpage">
+							What’s Buzzing in the Financial Services Industry? What’s the latest Buzz about Personal Finances? 
+							Fulfill your thirst for knowledge about Personal Finances here at the Ffreedom Buzz.</span> <br />
+						</div>
+					</div>
+				</div>
+			</a>
+			<apex:image url="{!URLFOR($Resource.images,'images/FfreedomHub_12.jpg')}" width="262" height="28" />
+			<a href="Bolg" alt="Blog" title="Blog" style="color:#414040;">
+				<div id="hubinnerpage_thumbcontainer_left">
+					<img src="{!URLFOR($Resource.images,'images/FfreedomHub_15.jpg')}" width="262" height="61" border="0" />
+					<div class="hubimgfortext">
+						<div class="hubtitletext"><span class="txtmatterbig_innerpage">Hear it from the Horses mouth itself</span></div>
+						<div class="hubtitletext">
+							<span class="txtmatterbig_innerpage">
+								Click here to know about Personal Finances, Business, Financial Services Industry &amp; 
+								more directly from Ffreedom &amp; its Team members.
+							</span>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+		
+		<div class="hubborderimg"><apex:image url="{!URLFOR($Resource.images,'images/FfreedomHub_05.jpg')}"  width="40" height="434" /></div>
+		<div id="hubmain">
+			<a href="SocialMedia" alt="Socia lMedia" title="SocialMedia" style="color:#414040;" >
+				<div id="hubinnerpage_thumbcontainer_left">
+					<img src="{!URLFOR($Resource.images,'images/FfreedomHub_06.jpg')}" width="262" height="61" border="0" />
+					<div class="hubimgfortext">
+						<div class="hubtitletext" style="padding-top:40px;">
+							<center><img src="{!URLFOR($Resource.images,'images/Social-Media-Icon.jpg')}" width="178" height="49" border="0"  /></center>
+							<div class="hubtitletext"><span class="txtmatterbig_innerpage">Connect with us, Join the Ffreedom Tribe</span></div>
+						</div>
+					</div>
+				</div>
+			</a>
+			<apex:image url="{!URLFOR($Resource.images,'images/FfreedomHub_12.jpg')}" width="262" height="28" />
+			<a href="video" alt="Video" title="Video" style="color:#414040;">
+				<div id="hubinnerpage_thumbcontainer_left">
+					<img src="{!URLFOR($Resource.images,'images/FfreedomHub_16.jpg')}" width="262" height="61" border="0" />
+					<div class="hubimgfortext">
+						<div class="hubtitletext" style="padding-top:10px;">
+							<img src="{!URLFOR($Resource.images,'images/Video.jpg')}" width="240" height="94" alt="" border="0" />
+							<div class="hubtitletext"><span class="txtmatterbig_innerpage">Click here to watch Ffreedom in News &amp; other Financial Planning Videos.</span></div>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+		
+		<div class="hubborderimg"><apex:image url="{!URLFOR($Resource.images,'images/FfreedomHub_05.jpg')}"  width="40" height="434" /></div>
+		<div id="hubmain">
+<!-- 			<a href="http://www.ffreedomscore.in/" alt="Ffreedom Score" title="Ffreedom Score" target="_blank"> -->
+				<a href="http://www.ffreedom.in/XRAYWizard" alt="Ffreedom Score" title="Ffreedom Score" target="_blank">
+				<div id="hubinnerpage_thumbcontainer_left" style="color:#414040;">
+					<img src="{!URLFOR($Resource.images,'images/FfreedomHub_08.jpg')}" width="262" height="61" border="0" />
+					<div class="hubimgfortext">
+						<div class="hubtitletext">
+							<span class="txtmatterbig_innerpage">
+								Ffreedom Score is a quantitative model that is used to measure how healthy your Finances are &amp; 
+								helps to become aware about your current financial status.
+							</span>
+						</div>
+						<div class="hubtitletext"><span class="txtmatterbig_innerpage">Once you have a Financial Goal in Mind it is very Important to know where are you are in terms of your Finances. </span> <br /></div>
+					</div>
+				</div>
+			</a>
+			<apex:image url="{!URLFOR($Resource.images,'images/FfreedomHub_12.jpg')}" width="262" height="28" />
+			<div id="hubinnerpage_thumbcontainer_left">
+				<img src="{!URLFOR($Resource.images,'images/Ffundamental.png')}" style="height:9%; width:100%" border="0"/><!-- Mahesh -->
+				<div class="hubimgfortext" style="overflow-y:scroll">
+<!-- 				<div style="overflow:auto"> -->
+					<div class="hubtitletext" >
+						<span class="txtmatterbig_innerpage">
+							
+							<!--
+							Eternus Solutions
+							Author  : Setty
+							Date    : 24/05/2013
+							Purpose : Newsletter for the Month of May2013(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+								<a href="http://www.ffreedom.in/Newsletter_May13" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental May News Letters">Vol.I May 2013</a>
+							</div>
+							
+							<!--
+							Eternus Solutions
+							Author  : Setty
+							Date    : 18/04/2013
+							Purpose : Newsletter for the Month of April2013(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+								<a href="http://www.ffreedom.in/Newsletter_April13" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental May News Letters">Vol.I April 2013</a>
+							</div>
+							
+							<!--
+							Eternus Solutions
+							Author  : Setty
+							Date    : 16/12/2012
+							Purpose : Newsletter for the Month of December2012(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+								<a href="http://www.ffreedom.in/Newsletter_Dec12" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental May News Letters">Vol.I December 2012</a>
+							</div>
+							
+							<!--
+							Eternus Solutions
+							Author  : Setty
+							Date    : 09/11/2012
+							Purpose : Newsletter for the Month of November2012(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+								<a href="http://www.ffreedom.in/Newsletter_Nov12" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental May News Letters">Vol.I November 2012</a>
+							</div>
+							
+							<!--
+							Eternus Solutions
+							Author  : Setty
+							Date    : 15/10/2012
+							Purpose : Newsletter for the Month of October2012(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+								<a href="http://www.ffreedom.in/Newsletter_Oct12" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental May News Letters">Vol.I October 2012</a>
+							</div>
+							
+							<!--
+							Eternus Solutions
+							Author  : Setty
+							Date    : 17/09/2012
+							Purpose : Newsletter for the Month of September2012(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+								<a href="http://www.ffreedom.in/Newsletter_Sep12" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental May News Letters">Vol.I September 2012</a>
+							</div>
+							
+							
+							<!--
+							Eternus Solutions
+							Author  : Setty
+							Date    : 17/08/2012
+							Purpose : Newsletter for the Month of August2012(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+								<a href="http://www.ffreedom.in/Newsletter_Aug2012" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental May News Letters">Vol.I August 2012</a>
+							</div>
+							
+							<!--
+							Eternus Solutions
+							Author  : Setty
+							Date    : 17/08/2012
+							Purpose : Newsletter for the Month of July2012(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+								<a href="http://www.ffreedom.in/Newsletter_July2012" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental May News Letters">Vol.I July 2012</a>
+							</div>
+							
+							<!--
+							Eternus Solutions
+							Author  : Prajakta Sanap
+							Date    : 20/6/2012
+							Purpose : Newsletter for the Month of June2012(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+								<a href="http://www.ffreedom.in/Newsletter_June12" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental May News Letters">Vol.I June 2012</a>
+							</div>
+							
+							<!--
+							Eternus Solutions
+							Author  : Mahesh Hirugade
+							Date    : 10/5/2012
+							Purpose : Newsletter for the Month of May2012(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+								<a href="http://www.ffreedom.in/Newsletter_May12" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental May News Letters">Vol.I May 2012</a>
+							</div>
+							
+							<!--
+							Eternus Solutions
+							Author  : Mahesh Hirugade
+							Date    : 12/4/2012
+							Purpose : Newsletter for the Month of April2012(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+								<a href="http://www.ffreedom.in/Newsletter_April12" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental April News Letters">Vol.I April 2012</a>
+							</div>
+							
+							<!--
+							Eternus Solutions
+							Author  : Mahesh Hirugade
+							Date    : 14/3/2012
+							Purpose : Newsletter for the Month of March2012(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+								<a href="http://www.ffreedom.in/Newsletter_Mar12" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental March News Letters">Vol.I March 2012</a>
+							</div>
+							
+							<!-- 
+							Eternus Solutions
+							Author  : Mahesh Hirugade
+							Date    : 16/1/2012
+							Purpose : Newsletter for the Month of January2012(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+								<a href="http://www.ffreedom.in/Newsletter_Feb12" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental March News Letters">Vol.I February 2012</a>
+							</div>
+							
+							<!-- 
+							Eternus Solutions
+							Author  : Mahesh Hirugade
+							Date    : 16/1/2012
+							Purpose : Newsletter for the Month of January2012(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+							<a href="http://www.ffreedom.in/Newsletter_Jan12" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental November News Letters">Vol.I January 2012</a>
+							</div>
+		
+							<!-- 
+							Eternus Solutions
+							Author  : Mahesh Hirugade
+							Date    : 13/12/2011
+							Purpose : Newsletter for the Month of December2011(website pages)-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+							<a href="http://www.ffreedom.in/Newsletter_Dec11" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental November News Letters">Vol.I December 2011</a>
+							</div>
+							
+							<!-- 
+							Eternus Solutions
+							Author  : Trupti Gaikwad
+							Issue Id: FS0266
+							Date    : 11/10/2011
+							Purpose : Newsletter for the Month of November   2011(website pages)     			-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+							<a href="http://www.ffreedom.in/Newsletter_Nov11" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental November News Letters">Vol.I November 2011</a>
+							</div>
+							
+							<!--       
+							Eternus Solutions
+							Author  : Trupti Gaikwad
+							Issue Id: FS0195
+							Date    : 13/10/2011
+							Purpose : Added Link of Newsletter_Oct11 page  (Newsletter for the Month of October  2011)
+							-->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+							<a href="http://www.ffreedom.in/Newsletter_Oct11" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental October News Letters">Vol.I October 2011</a>
+							</div>
+							
+							<!--
+							Eternus Solutions
+							Author  : Pravin Patil
+							Issue Id: FS0148
+							Date    : 14/09/2011
+							Purpose : Added Link of Newsletter_Sep3 page  (Newsletter for the Month of September  2011)   -->
+							<div Style="padding-top:5px;padding-bottom:2px;">
+							<a href="http://www.ffreedom.in/Newsletter_Sep3" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental September News Letters">Vol.I September 2011</a>
+							</div>
+							
+							<div Style="padding-top:5px;padding-bottom:2px;">
+							<a href="http://www.ffreedom.in/Newsletter_Aug11" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental August News Letters">Vol.I August 2011</a>
+							</div>
+							
+							<div Style="padding-top:2px; padding-bottom:2px;">
+							<a href="http://www.ffreedom.in/FPNewsLettersJuly2011" target="_blank" style="color: blue;" title="Ffundamental News Letters" alt="Ffundamental July News Letters">Vol.I July 2011</a>
+							</div>
+						</span><br />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</apex:define>
+</apex:composition>
+</apex:page>

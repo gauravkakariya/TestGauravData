@@ -1,0 +1,74 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | Client Story | Ashley Lobo">
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+<div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+      
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/result_img_new.png')}" style="height:30%;width:100%;" /></div>
+       <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+        </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+             
+      </div>
+      <div id="innerpage_textcontainer_middle">
+        
+        <div class="innerpage_titletext"><span class="innerpagetexttitle">Client Story 1</span></div>
+        <div class="innerpage_titletext"><img src="{!URLFOR($Resource.images,'images/no_image.jpg')}" border="0" width="75" height="100" /></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        <b>Client Name:</b> Ashley Lobo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Financial Planner:</b> Vivek Shah
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Description :</strong> Senior Management Executive for one of the leading commodity companies and he lives in Mumbai with his wife and three daughters [one is a special/ mentally challenged child].
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>My Story :</strong> I came across Freedom Financial Planners at an event that they held for Financial Planning for special children”. As my child has autism I thought of attending the seminar to gain insights as to how I can help secure the future of my special child. After listening to Mr. Sumeet Vaid I was very impressed with the concept of financial planning and I decided to go for Comprehensive Financial planning for my entire family. 
+       </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">My Financial advisor, Vivek Shah helped me create my Comprehensive Financial Plan which covers my risk planning, my child’s education and marriage, retirement planning for myself and creation of a trust for my special child. After going through the Financial Planning process I feel a  lot better and relieved since I know that the future of my child is secure if in case anything should happen to me or my wife.  
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        I know that my child will be financially secure and will be able to live a comfortable and wholesome life after we are gone and that provides to me a great sense of security and relief. 
+        </span></div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">
+        Vivek has always been available for advice and guidance whenever I have needed it. I would like to thank Vivek Shah and Ffreedom Financial Planners for opening up my eyes to the concept of Financial Planning and providing me with this wonderful opportunity to change the life of my family. 
+        </span></div>        
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Towards Financial Freedom,
+        </strong></span> </div>  
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Mr. Ashley Lobo
+        </strong></span> </div>     
+        
+       <a href="#top" class="otherslink">Top</a>
+       <center><a href="Client_Stories" class="otherslink" alt="Client Stories"><strong>Back</strong></a>
+        </center>
+        <br /> 
+       </div>
+    
+    
+    
+      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" /></div>
+       
+       <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}"  border="0" usemap="#Map2" />
+         <map name="Map2" id="Map2">
+           <area shape="rect" coords="3,0,230,50" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map></div>
+       <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+         <div class="title123"><span class="imgtext">Related Links</span></div>
+         <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Comprehensive_fp"><strong>Services Basket</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know our Financial Planers</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Why_do_you_need_a_plan"><strong>Why do you need a financial plan?</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Who_can_be_your_financial_planner"><strong>Who can be a financial planner?</strong></a></span> </div>
+<!--        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="why_fees"><strong> Financial Planning Fees</strong></a></span> </div> -->
+       <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

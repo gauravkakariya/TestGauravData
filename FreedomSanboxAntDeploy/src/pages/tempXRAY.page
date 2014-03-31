@@ -1,0 +1,44 @@
+<apex:page controller="tempXRAY"  standardStyleSheets="false" action="{!Init}" sidebar="false" showheader="false">
+	<link rel="shortcut icon" href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+<!-- <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/> -->
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	
+	<apex:stylesheet value="{!$Resource.FFStyle}"/>
+
+    <script type="text/javascript">
+			
+		var PARA_BEGIN = '<p>';
+		var PARA_END = '</p>';
+		
+		j$ = jQuery.noConflict();
+        j$(document).ready(function(){
+			//alert('document.ready fired !!');
+        	constructDom();
+        });
+        
+        function constructDom(){
+        
+//         	 tempXRAY.generateHtml(function(result,event)
+// 		     {
+// 		        var temp ='';
+// 				temp = temp +'</br>'+ result.GenerateHtml__c;
+				
+// 				 //document.getElementById('main').innerHTML = 'Account Records: '+temp;
+// 				document.getElementById('main').innerHTML = temp;
+// 	      	 	//document.getElementById('test').innerHTML = '<table><tr>'+result[0]+'</tr></br><tr>'+result[1]+'</tr></br><tr>'+result[2]+'</tr></br><tr>'+result[3]+'</tr></table>';
+// 	     	 });	
+	     	 
+	     	 
+        }
+
+    </script>
+    
+    <apex:form id="outerForm">
+    	<div id="main"></div>
+	</apex:form> 
+
+		<apex:outputField value="{!obj1.GenerateHtml__c}"/>
+
+</apex:page>

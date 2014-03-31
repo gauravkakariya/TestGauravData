@@ -1,0 +1,354 @@
+<!-- 
+	
+Revision History:
+
+   Version     Version Author     Date          Comments
+   1.0         Persistent         NA  		  	Initial Draft
+   2.0 		   Manasi Ranade	  16/01/2012	Issue id: 00001449 :Added Add new and remove functionality
+   2.0  	   Mahesh Hirugade    27/04/2012    Case No : 00001611 : 1. Added the picklist : getMedicalPolicyTypeItems() : To show Policy Type picklist in under 
+    																 	Suggested Medical Insurancne section on General Insurance Planning Page 
+    																 	Medical Insurancne section on General Insurance Planning Page
+-->
+<apex:page showHeader="false" controller="GeneralInsurancePlanningController">
+
+	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-1.9.1.js')}"></script>
+	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-ui.js')}"></script>
+	
+	<script> 
+	     $(document).ready(function(){
+	
+	         CKEDITOR.on('instanceReady', function(e) {
+	             if (e.editor.config.magic) 
+	                return;
+	             var target = e.editor.config.bodyId;
+	             var name = e.editor.name;
+	             e.editor.destroy();
+	
+	             CKEDITOR.editorConfig = function( config ) { config.magic = true; }
+	             CKEDITOR.replace(name, {
+	                         height : 300, 
+	                         bodyId : target
+	             });
+	         });
+	     });
+	</script>
+
+	<apex:stylesheet value="{!$Resource.FFStyle}" />
+	<apex:composition template="TabPage">
+		<apex:define name="contents">
+			<apex:form id="pageForm">
+				<apex:pageBlock id="pBlock">
+					<div style="margin: bottom:20px; width: 100%; margin-left: 60px;">
+						<apex:outputLabel value="Analysis" styleclass="button"
+							style=" width:10%;  background-image:none;background-color:#A9C5EB !important; " />
+						<apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}"
+							style="margin-left:20px; vertical-align:bottom;" />
+						<apex:outputLabel value="General Insurance Planning"
+							styleclass="button"
+							style="margin-left:20px;  background-image:none;background-color:#A9C5EB !important; " />
+						<apex:image id="theImage2" value="{!URLFOR($Resource.Ffimage)}"
+							style="margin-left:20px; vertical-align:bottom;" />
+						<apex:outputLabel id="theCommandLink2" styleclass="button"
+							value="Analysis"
+							style="margin-left:20px; background-image:none;background-color:#F5D0A9 !important;" />
+						<apex:commandButton id="theCommandLink1" styleclass="button"
+							value="Output"
+							action="/apex/GeneralInsuranceOutputPage?entityId={!entityId}&tabname=Financial Planning"
+							reRender="componentPanel"
+							style="margin-left:20px; background-image:none;background-color:#A9C5EB !important;" />
+					</div>
+					<br />
+					<div class="divContainerStyle">
+						<apex:pageMessages />
+						<div class="divStyle">
+							<apex:outputText value="GENERAL INSURANCE" />
+						</div>
+						<br />
+
+						<div class="subHeader">
+							<b><apex:outputText value="Medical Insurance"
+									styleClass="textStyle" />
+							</b>
+						</div>
+						<br />
+						<apex:outputText value="Current"
+							style="font-weight:bold;margin-left:10%;" styleClass="textStyle" />
+						<apex:dataTable value="{!bean.CurrentMedInsurance}" var="medIns"
+							title="Current" columnsWidth="25%,20%,20%,22%,22%" rules="all"
+							headerClass="tableHeader"
+							style="margin-top:15px;margin-left:10%;" cellpadding="5"
+							border="1" width="80%">
+							<apex:column headerValue="{!$Label.Insured}">
+								<apex:outputText value="{!medIns.Entity__r.Name}"
+									styleClass="textStyle" />
+							</apex:column>
+							<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Type__c.label}">
+								<apex:outputText value="{!medIns.Policy_Type__c}"
+									styleClass="textStyle" />
+							</apex:column>
+							<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Name__c.label}">
+								<apex:outputText value="{!medIns.Policy_Name__c}"
+									styleClass="textStyle" />
+							</apex:column>
+							<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Sum_Assured_Rs__c.label}"
+								style="text-align:right !important;">
+								<apex:outputText value="{0, number, ,##0}"
+									styleClass="textStyle">
+									<apex:param value="{!medIns.Sum_Assured_Rs__c}" />
+								</apex:outputText>
+							</apex:column>
+							<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}"
+								style=" text-align:right !important;">
+								<apex:outputText value="{0, number, ,##0}"
+									styleClass="textStyle">
+									<apex:param value="{!medIns.Premium_Amount_Rs__c}" />
+								</apex:outputText>
+							</apex:column>
+
+						</apex:dataTable>
+						<br />
+						<!-- 00001449 -->
+						<!-- /** Eternus Solutions  **/
+					/** Author  : Manasi Ranade	**/
+					/** Issue Id: 00001449      **/
+					/** Date    : 16/01/2012 	**/
+					/** Purpose : Added Add new and remove functionality**/
+					/****************************************************/-->
+						<apex:outputText value="Suggested"
+							style="font-weight:bold;margin-left:10%;" styleClass="textStyle" />
+						<apex:outputPanel id="PopupPanelMedicalInsuranceSuggested"
+							style="height:100%;overflow:auto; width:100%;">
+							<apex:dataTable value="{!bean.SuggestedMedInsurance}"
+								var="suggestedmedIns" title="Suggested"
+								columnsWidth="2%25%,25%,24%"
+								style="width:80%;margin-top:15px;margin-left:10%;"
+								headerClass="tableHeader" cellpadding="5" border="1">
+								<apex:column headerValue="Remove">
+									<apex:inputCheckbox value="{!suggestedmedIns.RemoveCheckbox__c}" />
+								</apex:column>
+								<apex:column headerValue="{!$Label.Insured}">
+									<apex:selectList value="{!suggestedmedIns.Entity__c}" size="1"
+										multiselect="false" styleClass="requiredField textStyle"
+										style="width:98%;">
+										<apex:selectOptions value="{!InsuredItems}" />
+									</apex:selectList>
+								</apex:column>
+
+								<!-- /** Eternus Solutions  **/
+							/** Author  : Mahesh Hirugade	**/
+							/** Issue ID: 00001611      **/
+							/** Date    : 27/04/2012 	**/
+							/** Purpose : Added medical Policy Types picklist**/
+							/****************************************************/-->
+								<apex:column headerValue="Policy Type">
+									<apex:selectList value="{!suggestedmedIns.Policy_Type__c}"
+										size="1" multiselect="false"
+										styleClass="requiredField textStyle" style="width:98%;">
+										<apex:selectOptions value="{!PolicyType}" />
+									</apex:selectList>
+								</apex:column>
+
+<!-- 								<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Name__c.label}"> -->
+<!-- 									<apex:inputText value="{!suggestedmedIns.Policy_Name__c}" -->
+<!-- 										style="width:95%;" styleClass="textStyle" /> -->
+<!-- 								</apex:column> -->
+
+								<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Sum_Assured_Rs__c.label}">
+									<apex:inputField value="{!suggestedmedIns.Sum_Assured_Rs__c}"
+										style="text-align:right !important;width:95%;"
+										styleClass="textStyle" />
+								</apex:column>
+								<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}">
+									<apex:inputField value="{!suggestedmedIns.Premium_Amount_Rs__c}"
+										styleClass="requiredField"
+										style="text-align:right !important;width:95%;" />
+								</apex:column>
+							</apex:dataTable>
+						</apex:outputPanel>
+						<!-- 00001449 -->
+						<!-- /** Eternus Solutions  **/
+						/** Author  : Manasi Ranade	**/
+						/** Issue Id: 00001449      **/
+						/** Date    : 16/01/2012 	**/
+						/** Purpose : Added Add new and remove functionality**/
+						/****************************************************/-->
+<!-- 						<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+						<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+							<apex:commandButton value="Add New"
+								action="{!AddNewMedicalInsuranceSuggestedRow}"
+								style="margin-left:110px;"
+								reRender="PopupPanelMedicalInsuranceSuggested"
+								status="counterStatusDataMed" />
+							<apex:commandButton value="Remove"
+								action="{!RemoveSuggestedMedInsurance}"
+								reRender="PopupPanelMedicalInsuranceSuggested"
+								status="counterStatusDataMed" />
+						</apex:outputPanel>
+						<apex:actionStatus stopText="" id="counterStatusDataMed">
+							<apex:facet name="start">
+								<apex:outputPanel style="padding-left:45%;">
+									<apex:image value="{!$Resource.loading_image}" width="3%"
+										height="3%" />
+								</apex:outputPanel>
+							</apex:facet>
+						</apex:actionStatus>
+						<br />
+						<div class="subHeader">
+							<b><apex:outputText value="Asset Insurance"
+									styleClass="textStyle" />
+							</b>
+						</div>
+						<br />
+						<!--   <apex:pageBlockSection columns="1" collapsible="false" title="Asset Insurance" > -->
+						<apex:outputText value="Current"
+							style="font-weight:bold;margin-left:10%;" styleClass="textStyle" />
+						<apex:dataTable value="{!bean.CurrentAssetInsurance}"
+							var="assetIns" title="Current" columnsWidth="25%,20%,20%,22%,22%"
+							rules="all" headerClass="tableHeader"
+							style="margin-top:15px;margin-left:10%;" cellpadding="5"
+							border="1" width="80%">
+							<apex:column headerValue="{!$Label.Insured}">
+								<apex:outputText value="{!assetIns.Entity__r.Name}"
+									styleClass="textStyle" />
+							</apex:column>
+							<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Type__c.label}">
+								<apex:outputText value="{!assetIns.Policy_Type__c}"
+									styleClass="textStyle" />
+							</apex:column>
+							<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Name__c.label}">
+								<apex:outputText value="{!assetIns.Policy_Name__c}"
+									styleClass="textStyle" />
+							</apex:column>
+							<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Sum_Assured_Rs__c.label}"
+								style="text-align:right !important;">
+								<apex:outputText value="{0, number, ,##0}"
+									styleClass="textStyle">
+									<apex:param value="{!assetIns.Sum_Assured_Rs__c}" />
+								</apex:outputText>
+							</apex:column>
+							<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}"
+								style=" text-align:right !important;">
+								<apex:outputText value="{0, number, ,##0}"
+									styleClass="textStyle">
+									<apex:param value="{!assetIns.Premium_Amount_Rs__c}" />
+								</apex:outputText>
+							</apex:column>
+
+						</apex:dataTable>
+						<br />
+						<apex:outputText value="Suggested"
+							style="font-weight:bold;margin-top:10px;margin-left:10%;"
+							styleClass="textStyle" />
+						<!-- 00001449 -->
+						<!-- /** Eternus Solutions  **/
+					/** Author  : Manasi Ranade	**/
+					/** Issue Id: 00001449      **/
+					/** Date    : 16/01/2012 	**/
+					/** Purpose : Added Add new and remove functionality**/
+					/****************************************************/-->
+						<apex:outputPanel id="PopupPanelAssetInsuranceSuggested"
+							style="height:100%;overflow:auto; width:100%;">
+							<apex:dataTable value="{!bean.SuggestedAssetInsurance}"
+								var="suggestedassetIns" title="Suggested"
+								columnsWidth="2%25%,25%,24%"
+								style="width:80%;margin-top:15px;margin-left:10%;"
+								headerClass="tableHeader" cellpadding="5" border="1">
+								<apex:column headerValue="Remove">
+									<apex:inputCheckbox value="{!suggestedassetIns.RemoveCheckbox__c}" />
+								</apex:column>
+								<apex:column headerValue="{!$Label.Insured}">
+									<apex:selectList value="{!suggestedassetIns.Entity__c}"
+										size="1" multiselect="false"
+										styleClass="requiredField textStyle" style="width:98%;">
+										<apex:selectOptions value="{!InsuredItems}" />
+									</apex:selectList>
+								</apex:column>
+								<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Type__c.label}">
+									<apex:selectList value="{!suggestedassetIns.Policy_Type__c}"
+										size="1" multiselect="false"
+										styleClass="requiredField textStyle" style="width:95%">
+										<apex:selectOptions value="{!PolicyTypeItems}" />
+									</apex:selectList>
+								</apex:column>
+								<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Sum_Assured_Rs__c.label}">
+									<apex:inputField value="{!suggestedassetIns.Sum_Assured_Rs__c}"
+										style="width:95%;text-align:right !important;"
+										styleClass="textStyle" />
+								</apex:column>
+								<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}">
+									<apex:inputField value="{!suggestedassetIns.Premium_Amount_Rs__c}"
+										styleClass="requiredField"
+										style="width:95%;text-align:right !important;" />
+								</apex:column>
+							</apex:dataTable>
+							<!-- 00001449 -->
+							<!-- /** Eternus Solutions  **/
+						/** Author  : Manasi Ranade	**/
+						/** Issue Id: 00001449      **/
+						/** Date    : 16/01/2012 	**/
+						/** Purpose : Added Add new and remove functionality**/
+						/****************************************************/-->
+<!-- 							<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+							<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+								<apex:commandButton value="Add New"
+									action="{!AddNewAssetInsuranceSuggestedRow}"
+									style="margin-left:110px;"
+									reRender="PopupPanelAssetInsuranceSuggested"
+									status="counterStatusData" />
+								<apex:commandButton value="Remove"
+									action="{!RemoveSuggestedAssetInsurance}"
+									reRender="PopupPanelAssetInsuranceSuggested"
+									status="counterStatusData" />
+							</apex:outputPanel>
+							<apex:actionStatus stopText="" id="counterStatusData">
+								<apex:facet name="start">
+									<apex:outputPanel style="padding-left:45%;">
+										<apex:image value="{!$Resource.loading_image}" width="3%"
+											height="3%" />
+									</apex:outputPanel>
+								</apex:facet>
+							</apex:actionStatus>
+						</apex:outputPanel>
+						<!-- FS0309 -->
+						<br />
+						<br />
+						<br />
+						<div>
+							<apex:outputLabel style="font-weight:bold;">{!$Label.EnterYourRemarks}</apex:outputLabel>
+						</div>
+						<div>
+							<!--<apex:inputTextArea id="txtRemark"  style="width:400px;height:80px;" value="{!strRemark}" /> -->
+							<apex:inputField id="txtRemark" style="width:400px;height:80px;"
+								value="{!objRemark.RichText_Remark__c}" />
+						</div>
+						<!-- </apex:pageblockSection> -->
+						<apex:pageBlockButtons location="bottom">
+							<apex:actionStatus id="StatusData">
+								<apex:facet name="start">
+									<apex:outputPanel >
+										<apex:image value="{!$Resource.loading_image}" width="4%"
+											height="4%" />
+										<br />
+									</apex:outputPanel>
+								</apex:facet>
+								<apex:facet name="stop">
+									<apex:outputPanel >
+<!-- 										<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+										<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">											
+												<apex:commandButton value="Save" action="{!save}"
+												reRender="pageForm,StatusData" status="StatusData"
+												style="margin-left:170px;" />
+											<apex:commandButton value="Cancel" immediate="true"
+											action="{!cancel}" reRender="pageForm,StatusData"
+											status="StatusData" />
+										</apex:outputPanel>
+									</apex:outputPanel>
+								</apex:facet>
+							</apex:actionStatus>
+						</apex:pageBlockButtons>
+					</div>
+				</apex:pageBlock>
+			</apex:form>
+		</apex:define>
+	</apex:composition>
+</apex:page>

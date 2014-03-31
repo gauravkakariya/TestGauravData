@@ -1,0 +1,306 @@
+<apex:page showHeader="false" sidebar="false" controller="XrayWizardController">
+<link rel="shortcut icon" href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+<!-- <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/> -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<apex:stylesheet value="{!$Resource.FFStyle}"/>
+
+    <script>
+        function showProgress(Percentage)
+        {
+            $( "#progressbar" ).progressbar( { value: parseInt( Percentage ) } );
+            var txtPercentage = Percentage +'%'; 
+            $("#progresstext").html(txtPercentage);
+        }
+        
+    </script>
+    
+    <style type="text/css">
+    .ui-progressbar {
+    height: 1em;
+    text-align: center;
+   }
+   .ui-widget-header{
+    background-image: url('{!URLFOR($Resource.xrayimage,'download.jpg')}');
+   }
+   
+    .TextFieldStyle{
+            width: 190px;
+       }
+       
+     .TextStyle{
+     	font-weight: bold; 
+     	font-family:Verdana,sans-serif;
+     }  
+       
+    input.groovybutton{
+	   font-family:Verdana,sans-serif;
+	   border-top-style:outset;
+	   border-bottom-style:outset;
+	   border-left-style:outset;
+	   border-right-style:outset;
+	}
+	/*input.nextButton{
+	background-image:url('/resource/1327056519000/xrayimage/next1.png');
+	}*/
+</style>
+
+	<apex:form id="iframeform">
+		<apex:pageBlock id="idpageblock">
+			<table height="100%" width="100%">
+				<tr>
+					<td width="48%">
+						<table height="100%" width="100%">
+							<tr>
+								<td style="height:350px; align:justify; margin-right:10px;">
+<!-- 									<iframe height="420px" id="theIframe" name="theIframe" src="onlinepromotionpagediscription" width="100%" frameborder="0" scrolling="no"></iframe> -->
+										<div style="float: left; width:100%; height:108px;">
+								            <img src="{!URLFOR($Resource.images,'images/logobg.PNG')}" alt="Ffreedom Financial Planners" title="Ffreedom Financial Planners"/>
+								       </div>
+											<div style="align:justify; margin-right:40px"><font face="Arial, Helvetica, sans-serif" color="#333333"
+											style="font-size: 13px; align:justify;">
+											<p>You may have dreams for yourself, for your family, for the society. Are you doing anything,
+												are you doing enough to	make those dreams a reality? Or do you fear about the financial 
+												feasibility of achieving them?</p>
+											<p>If only you could do more of the right things with your money, your dreams would probably
+												come true. To reach your infinite goals with the finite money you have, Financial Planning
+												is the only way.</p>
+											<p>Financial Planning will help you understand family income and expenses, manage your loans 
+												and taxes, ensure family safety and comfort at all times, help you build wealth and live the
+												life of your dreams. Simply put, unbiased and customized financial advise can help you build
+												a healthy financial life.</p> <br/>
+												<strong>Check how financially healthy you are right now. </strong>
+											<p>Fill up the Financial X Ray questionnaire and we will provide you with a COMPLIMENTARY 
+												customized financial health check-up session by a Qualified Financial Planner. 
+												This will be at a time, date, place convenient to you</p> 
+										</font></div>
+								</td>	
+							</tr>
+							<tr>
+								<td style="background-color: #F8F8F8;" height="312px">
+<!-- 									<iframe height="450px" id="theIframe1" name="theIframe" src="XRayTemplate" width="100%" frameborder="0" style="background-color:#FFFFFF;"></iframe> -->
+										<apex:PageMessages id="pgMsg1"></apex:PageMessages>
+<!-- 										<apex:form id="frm" style="height:334px;"> -->
+										<apex:actionStatus id="counter1">
+											<apex:facet name="start">
+												<img src="{!URLFOR('/img/loading.gif')}" />
+												<span style="font-weight: bold"> Processing....</span>
+											</apex:facet>
+										</apex:actionStatus>
+										<div>
+											<font size="4Px"><br/><B>Freedom Financial Planning</B></font><br />
+											<font size="2px">Free Financial Health Check Up. Try Now!</font><br /><br />
+										<table>
+											<tr>
+												<td><span style="font-weight: bold;"> First Name</span><span style="color: red;">*</span></td>
+												<td><apex:inputField value="{!objLead.FirstName}" required="true" styleClass="TextFieldStyle"/></td>
+											</tr>
+								
+											<tr>
+												<td><span style="font-weight: bold;"> Last Name</span><span style="color: red;">*</span></td>
+												<td><apex:inputField value="{!objLead.LastName}" styleClass="TextFieldStyle"/></td>
+								
+											</tr>
+								
+											<tr>
+												<td><span style="font-weight: bold;">Age</span></td>
+												<td><apex:inputField value="{!objLead.Age__c}" styleClass="TextFieldStyle"/></td>
+											</tr>
+								
+											<tr>
+												<td><span style="font-weight: bold;">Email</span><span style="color: red;">*</span></td>
+												<td><apex:inputField value="{!objLead.Email}" required="true" id="Email" styleClass="TextFieldStyle"/></td>
+											</tr>
+								
+											<tr>
+												<td><span style="font-weight: bold;">Mobile</span><span style="color: red;">*</span></td>
+												<td><apex:inputField value="{!objLead.MobilePhone}" required="true" id="Mobile" styleClass="TextFieldStyle"/></td>
+											</tr>
+								
+											<tr>
+												<td><span style="font-weight: bold;">Location</span></td>
+												<td><apex:inputField value="{!objLead.Location__c}" styleClass="TextFieldStyle"/></td>
+											</tr>
+								
+											<tr>
+												<td><span style="font-weight: bold;">Occupation</span></td>
+												<td><apex:inputField value="{!objLead.Occupation__c}" styleClass="TextFieldStyle"/><br/></td>
+											</tr>
+											<tr>
+												<td><apex:commandButton value="Submit" action="{!saveDetailsOfCandidatewithoutScore}" status="counter" rerender="pgMsg"/></td>
+												<td><apex:commandButton value="Cancel" immediate="true" action="{!closePopup}" status="counter" /></td>
+											</tr>
+										</table>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td width="65%">	
+<!-- ******************************************************************************************************************88 -->
+<div class="topcontainer" align="left" style="height:100px;" >
+        <div class="logo" style="float: left;position: absolute;">
+            <img src="{!URLFOR($Resource.images,'images/logobg.PNG')}" usemap="#Map5" alt="Ffreedom Financial Planners" title="Ffreedom Financial Planners" />
+                <map name="Map5" id="Map5">
+                    <area shape="rect" coords="3,4,200,78"  href="index" />
+                </map>
+        </div>
+        
+        <div style="float: right;position: relative;">
+            <img src="{!URLFOR($Resource.xrayimage,'fxray.jpg')}" style="margin-right:90px;"/>
+        </div>
+        
+    </div>
+   
+    <div align="right">
+       <div id="progresstext" style = "float: none; font-size: 0.7em;margin-left: 75%;position: absolute;" ></div>
+       <div id="progressbar" Style="width: 50%" ></div>
+   </div>
+    <div>
+	<div style="height:50px;">
+            <span style="color: red;"> <apex:PageMessages id="pgMsg"></apex:PageMessages></span>
+ 	</div> 
+   <div style="height:25px;">
+            <apex:actionStatus id="counterStatusData">
+                    <apex:facet name="start">
+                          <img src="{!URLFOR('/img/loading.gif')}"/><span style="font-weight: bold"> Processing....</span>
+                    </apex:facet>
+              </apex:actionStatus>
+        </div>
+       <div style="height: 20px;"></div>
+    	<apex:pageBlock id="pbMain"><!--  Title="Financial X-Ray" -->
+    	<div> <apex:outputText value="{!lstOfQuestionAnswer.size}"/></div>
+             <apex:repeat var="qa" value="{!lstOfQuestionAnswer}" id="idRepeat">
+                        
+                       <apex:outputPanel id="pbPanel" rendered="{!qa.isCurrentQuestn}" >
+                        	
+                        	<div>  
+                        		<img src="{!URLFOR($Resource.xrayimage,'img'+ qa.objQuestionnaire.Display_Sequence__c +'.png')}" style="float: right;height: 370px"/>
+                        	</div>
+                        	 
+                        	<div style ="margin-left:100px;width: 715px;" ><!-- style="border:1px solid black;width: 594px;height: 300px" -->
+	                            <span Class="TextStyle"><apex:outputText value="{!qa.objQuestionnaire.Display_Sequence__c}.  " /> </span>
+	                            
+	                            <span Class="TextStyle"><apex:outputText value="{!qa.objQuestionnaire.Question_Bank_List__r.Question__c}" /> </span><br/>
+	                            
+	                            
+	                            <apex:selectRadio value="{!qa.selectedAnswer}" rendered="{!NOT(qa.isMultiChoice)}" layout="pageDirection" id="idCheckRadio">
+	                                  <apex:selectOptions value="{!qa.strAnswer}"/><br/>
+	                            </apex:selectRadio>
+	                            
+	                            <apex:selectcheckboxes value="{!qa.selMultipleAnswrs}" rendered="{!qa.isMultichoice}" layout="pageDirection" id="idCheckBox">
+	                                    <apex:selectOptions value="{!qa.strAnswer}"/><br/>
+	                            </apex:selectcheckboxes><br/>
+	                        
+	                        	<apex:commandButton value="Prev" action="{!goToPrevQuestn}" rerender="pgMsg,pbMain"  oncomplete="showProgress($('#theHiddenInput').text());" disabled="{!IF(qa.qno == 0, true, false)}" status="counterStatusData" styleclass="groovybutton"><!-- styleclass="button" -->
+	                                <apex:param name="queNo" value="{!qa.qno}" assignTo="{!queNo}"/>
+	                            </apex:commandButton>
+	                        	
+	                            <apex:commandButton oncomplete="showProgress($('#theHiddenInput').text());" value="Next" action="{!goToNextQuestn}" rerender="pgMsg,pbMain,theHiddenInput,pbPanel,counterStatusData" disabled="{!IF(qa.qno == lstOfQuestionAnswer.size - 1, true, false)}"  status="counterStatusData" style="margin-left: 20px;" styleclass="groovybutton"><!-- background-image:{!URLFOR($Resource.xrayimage,'next1.png')} -->
+	                                <apex:param name="queNo" value="{!qa.qno}" assignTo="{!queNo}"/>
+	                            </apex:commandButton>
+	                        
+	                            <apex:commandButton value="Submit" action="{!showPopUp}" reRender="pgMsg,PopupPanel" status="counterStatusData"  style="margin-left: 20px;" rendered="{!IF(lstOfQuestionAnswer.size - 1 == qa.qno, true, false)}" styleclass="groovybutton" />
+                          </div>
+                </apex:outPutPanel>
+                </apex:repeat>
+        <div  id="theHiddenInput" style="display: none;">{!quesSequence}</div> 
+	</apex:pageBlock> 
+        </div>
+   
+<!--    **** Pop up panel of Lead **** -->
+                <apex:outputPanel id="PopupPanel" >
+                    <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}" />
+                        <apex:outputPanel styleClass="investmentAssetpopupForeground" layout="block" rendered="{!displayPopUp}" id="innerPanel" Style="width:80%;height:85%;">
+                            <apex:actionStatus id="counter">
+                                 <apex:facet name="start">
+                                     <img src="{!URLFOR('/img/loading.gif')}"/><span style="font-weight: bold"> Processing....</span>
+                                </apex:facet>
+                            </apex:actionStatus>
+                            <div align="center">
+                                <apex:pageBlock title="Details Form" >
+                                    
+                                    <span style="font-weight: bold;">
+                                        <apex:outputText value="Your Freedom Score:  {0}">
+                                            <apex:param value="{!dblFreedomScore}"/>
+                                        </apex:outputText>
+                                    </span><br/> 
+                                    
+                                    <span style="font-weight: bold;">To avail a Complimentary Detailed Analysis of your Financial X Ray by a QUALIFIED FINANCIAL PLANNER  please fill up the following details.</span><br/><br/>
+                                    
+                                      <table>
+                                         <tr>
+                                             <td>
+                                             	<span style="font-weight: bold;"> First Name</span><span style="color:red;">*</span>
+                                             </td>
+                                             <td>
+                                                 <apex:inputField value="{!objLead.FirstName}" required="true" styleClass="TextFieldStyle"/>
+                                             </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                              <td>
+                                                  <span style="font-weight: bold;"> Last Name</span><span style="color:red;">*</span>
+                                              </td>
+                                             <td>
+                                                 <apex:inputField value="{!objLead.LastName}" styleClass="TextFieldStyle"/>
+                                             </td>
+                                             
+                                        </tr>
+                                        
+                                        <tr>
+                                             <td><span style="font-weight: bold;">Age</span></td>
+                                              <td>
+                                                 <apex:inputField value="{!objLead.Age__c}" styleClass="TextFieldStyle" />
+                                             </td>
+                                             
+                                        </tr>
+                                        
+                                        <tr>
+                                              <td><span style="font-weight: bold;">Email</span><span style="color:red;">*</span></td>
+                                              <td>
+                                                 <apex:inputField value="{!objLead.Email}" required="true" id="Email" styleClass="TextFieldStyle"/>
+                                              </td>
+                                              
+                                        </tr>   
+                                       
+                                        <tr>
+                                              <td><span style="font-weight: bold;">Mobile</span><span style="color:red;">*</span></td>
+                                              <td>
+                                                 <apex:inputField value="{!objLead.MobilePhone}" required="true" id="Mobile" styleClass="TextFieldStyle" />
+                                              </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                              <td><span style="font-weight: bold;">Location</span></td>
+                                              <td>
+                                                 <apex:inputField value="{!objLead.Location__c}" styleClass="TextFieldStyle"/>
+                                              </td>
+                                       </tr>
+                                        
+                                        <tr>
+                                              <td>
+                                                  <span style="font-weight: bold;">Occupation</span>
+                                              </td>
+                                              <td>
+                                                 <apex:inputField value="{!objLead.Occupation__c}" styleClass="TextFieldStyle" /><br/><br/>
+                                              </td>
+                                        </tr>
+                                    </table>
+                                    <apex:pageblockButtons location="bottom">
+                                        <apex:commandButton value="Submit" action="{!saveDetailsOfCandidate}" reRender="innerpgMsg,PopupPanel" status="counter" style="margin-left: 20px;" styleclass="groovybutton"/>styleclass="button"
+                                        <apex:commandButton value="Cancel" immediate="true" action="{!closePopup}" status="counter"   style="margin-left: 20px;"  styleclass="groovybutton"/> styleclass="button"
+                                    </apex:pageblockButtons>
+                                    
+                                </apex:pageBlock>
+                        </div>  
+                    </apex:outputPanel>
+         </apex:outputPanel>
+******************************************************************************************************************88
+<!-- 						<iframe id="theIframe2" name="theIframe" src="OnlinePromotionpage" width="100%" height="500px" frameborder="1" scrolling="yes" style="background-color:#D6DDEF; margin-top: -70px;"></iframe>	 -->
+					</td>
+				</tr>	
+			</table>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

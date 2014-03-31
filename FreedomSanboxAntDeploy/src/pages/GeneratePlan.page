@@ -1,0 +1,48 @@
+<!-- /*
+	
+Revision History:
+
+   Version     Version Author     Date          Comments
+   
+   1.0 		   Manasi Ranade	  28/12/2011	Issue Id : FS0384 :
+   												While generating Execution Tracker for given entity, save his Approved plan and his PDF as an attachment.
+*/-->
+<apex:page controller="GeneratePlanContoller" showHeader="false" sidebar="false" standardStylesheets="false">
+
+     <apex:composition template="TabPage">  
+     
+     <apex:define name="contents" >
+     <apex:form id="myForm">
+     <apex:pageBlock title="Generate Plan">
+         <apex:selectList value="{!selectedOption}" multiselect="false" size="1" >
+            <apex:selectOptions value="{!options}" />
+         </apex:selectList>     
+         <apex:pageBlockButtons location="bottom">
+             <apex:commandButton value="Create" action="{!create}" />
+         </apex:pageBlockButtons>
+     </apex:pageBlock>
+		<!--/** Eternus Solutions      **/
+		/** Author  : Manasi Ranade*/
+		/** Issue Id: FS0384      **/
+		/** Date    : 28/12/2011  **/
+		/** Purpose : While generating Execution Tracker for given entity, save his Approved plan and his PDF as an attachment. **/
+		/****************************************************/-->
+		<apex:outputPanel id="panDisplayET">
+	        <!--<apex:pageBlockSection columns="2" rendered="true"> -->
+	        	<apex:outputLabel value="{!$Label.DoYouWantToSaveThisPlan}" /> &nbsp;&nbsp;&nbsp;&nbsp;
+	        	<apex:commandButton value="Save" action="{!Save}"  rerender="panDisplayET,counterStatusData" status="counterStatusData"/>
+	        <!--</apex:pageBlockSection> -->
+	        <apex:actionStatus stopText="" id="counterStatusData">
+		                            <apex:facet name="start">                
+			                            <!-- <apex:outputPanel style="padding-left:45%;"> -->
+			                            <apex:outputPanel >
+			                            	<apex:image value="{!$Resource.loading_image}" width="3%" height="3%"/>
+			                            </apex:outputPanel>
+		                            </apex:facet>
+	         </apex:actionStatus>
+       </apex:outputPanel>
+     </apex:form>
+       </apex:define>
+      </apex:composition>
+
+</apex:page>

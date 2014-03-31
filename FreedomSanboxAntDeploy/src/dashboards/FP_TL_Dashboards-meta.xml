@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DashboardFolder xmlns="http://soap.sforce.com/2006/04/metadata">
+    <accessType>Shared</accessType>
+    <name>FP &amp; TL Dashboards</name>
+    <publicFolderAccess>ReadWrite</publicFolderAccess>
+    <sharedTo>
+        <group>ETeam</group>
+        <role>FPsGALAXYDELHI</role>
+        <role>FPsGALAXYMUMBAI</role>
+        <role>FPsGALAXYUJJAIN</role>
+        <role>FPsMAEGANMUMBAI</role>
+        <role>FpsAMETHYSTPUNE</role>
+        <role>MgrFinancialPlanningAMETHYSTMUMBAI</role>
+        <role>MgrFinancialPlanningGALAXYDELHI</role>
+        <role>MgrFinancialPlanningGALAXYMUMBAI</role>
+        <role>MgrFinancialPlanningGALAXYMUMBAI2</role>
+        <role>MgrFinancialPlanningGALAXYUJJAIN</role>
+        <role>MgrFinancialPlanningMAEGANMUMBAI</role>
+    </sharedTo>
+</DashboardFolder>

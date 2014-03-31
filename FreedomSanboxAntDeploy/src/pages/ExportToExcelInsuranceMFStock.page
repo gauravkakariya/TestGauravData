@@ -1,0 +1,214 @@
+<apex:page controller="ExportToExcelInsuranceMFStockController" showheader="false" sidebar="false" contenttype="application/vnd.ms-excel#download.xls" >
+<!-- 	contenttype="application/vnd.ms-excel#download.xls"  standardStylesheets="false"-->
+	<div style="font-weight: bold; font-size: large;"> Entity Name : {!entityName} </div>
+	<apex:pageBlock title="Stocks">
+		<apex:pageBlockTable border="1" id="tableInvest" value="{!lstStock}" var="stock">
+			                            
+			<apex:column headerValue="Script Name" >
+				<apex:outputField value="{!stock.Script_Name__c}" />
+			</apex:column> 
+			
+			<apex:column headerValue="Owner"  >
+				   <apex:outputField value="{!stock.Entity__r.Name}" />      
+			</apex:column>
+			
+			<apex:column headerValue="Asset Type"  >
+				<apex:outputField value="{!stock.Asset_Type__c}" />
+			</apex:column> 
+			
+			<apex:column headerValue="Quantity" >
+				<apex:outputField id="quantity" value="{!stock.Quantity__c}"  />
+			</apex:column>
+		
+			<apex:column headerValue="Acquisition Date" style="text-align:right">
+				<apex:outputField value="{!stock.Acquisition_Date__c}" style="width:95%;text-align:right"/>
+			</apex:column>
+			
+			<apex:column headerValue="Purchase Price" >
+				<apex:outputField value="{!stock.Purchase_Price__c}" style="width:95%"/>
+			</apex:column>
+			
+			<apex:column headerValue="Current Price" >
+				<apex:outputField id="currentprice" value="{!stock.Current_Price__c}"  />
+			</apex:column>
+			  
+			<apex:column headerValue="Total" style="text-align:right">
+				<apex:outputField id="totalfield" value="{!stock.TotalAsset__c}" />
+			</apex:column>    
+									 
+		</apex:pageBlockTable>
+	</apex:pageBlock>
+	
+	<apex:pageBlock title="Mutual Fund">
+		<apex:pageBlockTable border="1" value="{!lstMutualFund}" var="mutualFund">
+	
+			<apex:column headerValue="AMC Name" >                                                                         
+				<apex:outputField value="{!mutualFund.AMC_Name_Text__c}" />
+			</apex:column>
+			
+			<apex:column headerValue="Scheme Name" >                                      
+				<apex:outputField value="{!mutualFund.Scheme_Name_Text__c}" />
+			</apex:column>   
+			
+			<apex:column headerValue="Owner" >
+				   <apex:outputField value="{!mutualFund.Entity__r.Name}" />    
+			</apex:column>
+			
+			<apex:column headerValue="Asset Type" >
+				<apex:outputField value="{!mutualFund.Asset_Type__c}" />
+			</apex:column> 
+			
+			<apex:column headerValue="Units" >
+				<apex:outputField id="units" value="{!mutualFund.Units__c}" style="text-align:right"/>
+			</apex:column>
+			
+			<apex:column headerValue="Acquisition Date" style="text-align:right">
+				<apex:outputField value="{!mutualFund.Acquisition_Date__c}" />
+			</apex:column>
+		
+			<apex:column headerValue="Purchase NAV">
+				<apex:outputField value="{!mutualFund.Purchase_NAV__c}" />
+			</apex:column>
+			
+			<apex:column headerValue="Current NAV" >
+				<apex:outputField id="currentnav" value="{!mutualFund.Current_NAV__c}" />
+			</apex:column>
+					   
+			<apex:column headerValue="Monthly SIP Amount" style="text-align:right">
+				<apex:outputField value="{!mutualFund.Monthly_SIP_Amount__c}" />
+			</apex:column>	
+			
+			<apex:column headerValue="Total" style="text-align:right">
+				<apex:outputField id="totalfield" value="{!mutualFund.TotalAsset__c}" />
+			</apex:column> 
+			
+		</apex:pageBlockTable>
+	</apex:pageBlock>
+	
+	
+	<apex:pageBlock title="Life Insurance">
+		<apex:pageBlockTable border="1" value="{!lstLifeinsurance}" var="insurance" >
+		
+			 <apex:column headerValue="Insured" >
+				  <apex:outputField value="{!insurance.Entity__r.Name}" />   
+			 </apex:column>
+			 
+<!-- 			 <apex:column headerValue="Nominee" > -->
+<!-- 				 <apex:outputField id="NomineeSelectList" value="{!insurance.Nominee__r.Name}" /> -->
+<!-- 			 </apex:column> -->
+			 
+			 <apex:column headerValue="Insurance Company">
+				 <apex:outputField value="{!insurance.Insurance_Company__c}" />
+			 </apex:column>
+			 
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Type__c.label} " >
+				 <apex:outputField value="{!insurance.Policy_Type__c}" />
+			 </apex:column>
+			 
+			
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Name__c.label}" >
+				 <apex:outputField value="{!insurance.Policy_Name__c}" />
+			 </apex:column>
+			 
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Number__c.label}" >
+				 <apex:outputField value="{!insurance.Policy_Number__c}" />
+			 </apex:column>  
+			 
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Commencement_Date__c.label}" style="text-align:right">
+				 <apex:outputField value="{!insurance.Commencement_Date__c}" /> 
+			 </apex:column>   
+			  
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Next_Premium_Due_Date__c.label}" style="text-align:right">
+				 <apex:outputField value="{!insurance.Next_Premium_Due_Date__c}"/>
+			 </apex:column>   
+			
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Death_Benefit_Rs__c.label}" style="text-align:right">
+				 <apex:outputField value="{!insurance.Death_Benefit_Rs__c}" />
+			 </apex:column>   
+			  
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}" style="text-align:right">
+				 <apex:outputField value="{!insurance.Premium_Amount_Rs__c}" />
+			 </apex:column>   
+			  
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Premium_Frequency__c.label}" style="text-align:center">
+				 <apex:outputField value="{!insurance.Premium_Frequency__c}" />
+			 </apex:column>   
+			  
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Tenure_of_Insurance__c.label}" style="text-align:center">
+				 <apex:outputField value="{!insurance.Tenure_of_Insurance__c}" />
+			 </apex:column>
+			 
+			 
+			  <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Premium_Paying_Term__c.label}" >
+				 <apex:outputField value="{!insurance.Premium_Paying_Term__c}" />
+			 </apex:column>  
+			
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Surrender_Cash_Value__c.label}" >
+				 <apex:outputField value="{!insurance.Surrender_Cash_Value__c}" />
+			 </apex:column>  
+			 
+			
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Current_Amount__c.label}" style="text-align:right">
+				<apex:outputField value="{!insurance.Current_Amount__c}" />
+			 </apex:column>
+			 
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Maturity_Amount__c.label}" style="text-align:right">
+			  	<apex:outputText value="{0, number, ,##,##0}" style="width:80px;height:16px;text-align:right;" styleclass="standardFontStyle">
+					<apex:param value="{!insurance.Maturity_Amount__c}" />
+				</apex:outputText>
+			 </apex:column>
+			 
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Revised_Maturity_Amount__c.label}" style="text-align:right">
+			  	<apex:outputText value="{0, number, ,##,##0}" style="width:80px;height:16px;text-align:right;" styleclass="standardFontStyle">
+					<apex:param value="{!insurance.Revised_Maturity_Amount__c}" />
+				</apex:outputText>
+			</apex:column>  
+			    
+		
+		</apex:pageBlockTable>
+	</apex:pageBlock>
+	
+	<apex:pageBlock title="General Insurance">
+		<apex:pageBlockTable border="1" value="{!lstGeneralInsurance}" var="gi" >
+	
+			 <apex:column headerValue="Insured">
+				   <apex:outputField value="{!gi.Entity__r.Name}" />   
+			 </apex:column>
+			 
+			 <apex:column headerValue="Insurance Company">
+				 <apex:outputField value="{!gi.Insurance_Company__c}" />
+			 </apex:column>
+			 
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Type__c.label} " >
+				 <apex:outputField value="{!gi.Policy_Type__c}" />
+			 </apex:column>
+			 
+			
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Name__c.label}" >
+				 <apex:outputField value="{!gi.Policy_Name__c}" />
+			 </apex:column>
+			 
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Policy_Number__c.label}" >
+				 <apex:outputField value="{!gi.Policy_Number__c}" />
+			 </apex:column>  
+			 
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Next_Premium_Due_Date__c.label}" style="text-align:right">
+				 <apex:outputField value="{!gi.Next_Premium_Due_Date__c}"/>
+			 </apex:column>   
+			
+			<apex:column headerValue="{!$ObjectType.Insurance__c.fields.Sum_Assured_Rs__c.label}" style="text-align:right">
+				 <apex:outputField value="{!gi.Sum_Assured_Rs__c}" />
+			 </apex:column> 
+			 
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Premium_Amount_Rs__c.label}" style="text-align:right" >
+				 <apex:outputField value="{!gi.Premium_Amount_Rs__c}" />
+			 </apex:column>   
+			  
+			 <apex:column headerValue="{!$ObjectType.Insurance__c.fields.Premium_Frequency__c.label}" style="text-align:center">
+				 <apex:outputField value="{!gi.Premium_Frequency__c}" />
+			 </apex:column>   
+			 	
+		</apex:pageBlockTable>
+	
+	</apex:pageBlock>
+</apex:page>

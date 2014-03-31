@@ -1,0 +1,113 @@
+<apex:page showHeader="false" sidebar="false"title="Ffreedom Financial Planners | Risk Planning">
+<link rel="shortcut icon" href="{!URLFOR($Resource.images,'images/favicon.ico')}"></link>
+<apex:stylesheet value="{!URLFOR($Resource.ffreedom)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.newMenuCss)}" />   
+    <apex:stylesheet value="{!URLFOR($Resource.css)}" />  
+     <apex:includeScript value="{!URLFOR($Resource.newMenu)}"/>  
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/prototype.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/menu.js')}"/>
+     <apex:includeScript value="{!URLFOR($Resource.js,'js/global.js')}"/>
+<apex:composition template="WebsiteTemplate" >
+<apex:define name="bodycontent">
+  <div class="leftcontainer">
+      <div id="innerpage_textcontainer_left">
+        <div class="sidemenucontainer">
+         <div id="sidemenu1">
+            <ul style="list-style-type:none">
+            <li><a href="Comprehensive_fp">Comprehensive FP</a></li>
+            <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+           <!--  <li><a href="One_Goal_Plan ">One Goal Plan </a></li> -->
+            <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+            <li><span class="selected_btn">Risk Planning</span></li>
+            <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+            <li><a href="Estate_Planning">Succession Planning</a></li>
+            <!-- <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+            <li><a href="#">NRI Plan</a></li>
+            <div id="sidesaprate"><apex:image url="{!URLFOR($Resource.images,'images/left_link_divider.png')}" width="162" height="1" /></div>
+            <li><a href="#">Free Plan Calculation</a></li> -->
+            </ul>
+        </div>
+        </div>
+        <div id="innerpage_textcontainer_left"><apex:image url="{!URLFOR($Resource.images,'images/Service_img.jpg')}" /></div>
+         <!-- <div class="innerpage_text_left"><a href="#">Learn more about our recent study</a></div>-->
+        </div>
+              <div class="borderimg"><!--<apex:image url="{!URLFOR($Resource.images,'images/inner_vertical_divider.jpg')}">-->
+              <div class="leftlinkselectedimg" style="margin-top:99px; height:148px; background-repeat:no-repeat;"></div>
+              </div>
+      <div id="innerpage_textcontainer_middle">
+        <!--<div class="innerpage_titletext"><span class="innerpagetopheading">Services</span></div>-->
+         <div class="innerpage_titletext"><span class="innerpagetexttitle">Risk Planning</span> </div>
+        <div class="innerpage_titletext"><span class="txtmatterbig_innerpage">Uncertainties are prevalent at every possible way of life. No matter how much you anticipate them, actions and situations can arise that can catch you by surprise. This is where risk planning comes into play.<p>
+        This plan is crated to foresee risks, to estimate the effectiveness, and to create response plans to alleviate them.  Once you meet with our advisors, we will help you chalk down all the risk that you would face and the draw out a summary as to how we can help you handle them. You get to decide as to which of the risks you would like to be tackle on priority basis.</p> 
+        <p>Once a risk has been identified, our advisors would then carve a plan with all the possibilities and considerations to help you be financially prepared, and still let you attain your dreams and goals. </p>
+</span></div>
+<div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>How does it helps you?</strong></span> </div>
+<div class="innerpage_titletext"><span class="txtmatterbig_innerpage">Risk planning can either be a long term plan or a short term one, as one cannot predict the occurrence of a particular event. Events such as sudden death of head of the family, accidents, financial crisis are amongst the most commonly covered under this plan.<br /><br />
+        We, at Ffreedom, enable you to –
+ </span></div>
+   <div class="innerpage_litext"><span class="txtmatterbig_innerpage">
+   <li>Identifying ways to reduce those risks</li>
+   <li>Prioritize risk reduction measures based on a strategy</li>
+   <li>Create a plan that would ensure that you don’t have to pause to achieve your goals</li>
+   <li>Mitigate the risk, so that when it strikes, its impact would not your life, financially</li>
+   </span></div>   
+   <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"> Being prepared for any sort of risk: financial or personal, would mean that you would not have to compromise on your goals and go ahead with the plan that has been slotted for this benefit.
+ </span></div>   
+    
+    
+    <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><strong>Our Risk Planning service includes:</strong></span> </div>        
+    
+   <div class="innerpage_litext"><span class="txtmatterbig_innerpage">  
+    <li>A net worth &amp; cash flow analysis.</li>
+    <li>We perform a need-based analysis.</li> 
+    <li>The Financial Planner will present to you, your Risk Plan through phone or web 
+    conferencing.</li> 
+    <li>An Action Plan is created that includes the product recommendation based on your risk 
+    plan.</li> 
+    <li>Implementation of the Action Plan for your Risk Planning.</li> 
+    <li>Premium reminders (through SMS &amp; Email).</li>     
+   </span> </div>
+   <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><a href="#"><strong>To know about our fees check out Financial Planning Fees</strong></a><br/><br/></span></div>
+  
+   
+ <div class="innerpage_titletextOE"><span class="txtmatterbig_innerpage"><strong>Our Expertise:</strong></span> </div>
+ 
+       <div class="innerpage_titletextOE"><span class="txtmatterbig_innerpage">We, at Ffreedom, will provide you with the best of our services which will include:</span></div> 
+   <div class="innerpage_litextOE"><span class="txtmatterbig_innerpage">
+       <li><span class="txtmatterbig_innerpage"><strong>A written financial plan:</strong></span>  Analyzing your budget and your current financial situation will help us draw a written financial plan that will be tailor made to suit your needs and achieve your goals.</li><br/>
+       <li><span class="txtmatterbig_innerpage"><strong>One advisor - All products:</strong></span>We are a single Window for all the products [eg: Mutual Funds, Insurance, Gold ETFs, Bonds, Loans, Real estate, will, trust, power of attorney and more] We will assign you a single advisor, who will answer all your doubts, recommend you the products  &amp; also procure for you the products suitable for you according to the term and nature of your goal. </li><br/>
+       <li><span class="txtmatterbig_innerpage"><strong>Consolidation of all statements: </strong></span> All your investments will be mapped onto a single consolidated statement. Your entire Investments basket will be mark to market making it convenient for you to have one statement will all investments. So more trying to go through different statements to find out where you stand in terms of your goals.</li><br/>
+       <li><span class="txtmatterbig_innerpage"><strong>Review and rebalancing: </strong></span> Reviewing your current plan to understand the changes and rebalancing it to fit your goals is what we offer and believe in.</li><br/>
+   </span></div> 
+   
+     <div class="innerpage_titletext"><span class="txtmatterbig_innerpage"><i>*Registration, if required, will be charged extra. Services of a lawyer (if required) are not included in the above mentioned fees.</i><br /><br />
+ </span>
+<a href="#top" class="otherslink">Top</a></div>
+   </div>
+   
+    
+     
+      <div class="innerpageborderimg"><apex:image url="{!URLFOR($Resource.images,'images/inner_right_divider.jpg')}" width="5" height="579" alt="" />
+      </div>
+      
+     <div class="callmeheadingCall"><img src="{!URLFOR($Resource.images,'images/letsouradvisorcallbg.png')}"  border="0" usemap="#Map2" />
+         <map name="Map2" id="Map2">
+           <area shape="rect" coords="3,0,230,50" href="Comp_Con" alt="Let our advisor call" title="Let our advisor call"/>
+         </map></div>
+       <div class="callmeheadingCall"><span class="txtmatterbig_innerpage"><br /><br />
+        People dream &amp; remain happy.<br/>
+        Imagine people dreaming &amp; living their dreams.<br /><br />
+        <a href="Comp_Con"><strong>Sign up today!</strong></a> <br /><br />
+        For a one to one session at the place convenient to you.<br /><br /><br /></span></div> 
+         <div class="title123"><span class="imgtext">Related Links</span></div>
+<!--          <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="why_fees"><strong>Financial Planning Fees</strong></a></span> </div> -->
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="our_process"><strong>Our process</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Planning_Team"><strong>Know Our Financial Planners</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Client_Stories"><strong>Our client stories</strong></a></span> </div>
+        <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="Why_do_you_need_a_plan"><strong>Why do you need a plan?</strong></a></span> </div>
+      <div class="relatedinfoheading"><span class="txtmatterbig_innerpage"><a href="FfreedomHub"><strong>Ffreedom Hub</strong></a></span> </div>
+      </div>
+</apex:define>  
+
+  </apex:composition>
+</apex:page>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Discontinuation Membership Template</name>
+    <style>freeForm</style>
+    <subject>Discontinuation of Ffreedom Membership</subject>
+    <textOnly>Dear {!Account.Name},
+
+ Our continuous endeavor is to help you live your dream &amp; achieve financial freedom.  
+
+ To begin with, we would like to thank you for placing your trust with us. We immensely appreciate your continued support &amp; journey with us.
+
+ It is very unfortunate that you have opted not to renew your membership with us.
+
+ We would again like to reiterate that on renewal of your membership with us you can continue to avail of the following services:  
+
+        Dedicated Certified Financial Planner [CFP]
+               o   Conference calls/meetings at your discretion with your Financial Plannero   Single point contact [who will act as a coach] for any queries
+
+         Restructuring of the plan, if required, due to changes in personal  circumstances    
+     Access to Member portal
+               o   will help in Consolidation &amp; tracking
+
+         Implementation
+               o   Ffreedom team will help you to execute every single action   plan
+              o   Help get the best possible rates,wherever possible            Reviews
+              o   Ongoing Review
+              o   Annual review
+
+         Other Services
+             o   Monthly statements &amp; updates on your Financial Plan
+             o   Ffreedom Team proactively interacting with you on an ongoing basiso   SIP &amp; Premium reminders 
+             o   You will be part of our weekly update &amp; monthly Commentary  mailers [to keep you updated on the environment] 
+
+Additional Offerings [at an extra price]
+            o   Estate Planning
+            o  Income Tax Filing
+
+Your Financial Planner will soon be in touch with you
+to take these forward.
+ 
+Please ignore, if already acted upon.
+
+Warm Regards, 
+Ffreedom Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

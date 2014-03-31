@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Alert For Close Date Over Due</name>
+    <style>formalLetter</style>
+    <subject>Alert! Close Date Over Due</subject>
+    <textOnly>Dear {!Lead.OwnerFullName},
+
+The Close Date for the Lead {!Lead.Name} is Over due by 4 days. Please take the necessary action on the lead to accomplish conversion of the lead.
+
+Click on the following link to go to the Lead&apos;s page: {!Lead.Name}
+
+Regards,
+FFreedom Team.</textOnly>
+    <type>html</type>
+</EmailTemplate>

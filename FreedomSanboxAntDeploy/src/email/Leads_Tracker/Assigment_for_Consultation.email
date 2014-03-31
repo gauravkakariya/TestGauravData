@@ -1,0 +1,9 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<p style="margin: 0in 0in 0pt;" class="MsoNormal"><span style="font-family: 'Arial','sans-serif';">The below person has requested for a </span><span style="font-family: 'Arial','sans-serif'; font-size: 13pt;">Complimentary Consultation with a ‘Ffreedom Financial Planner’. This request </span><span style="font-family: 'Arial','sans-serif';">has come from the website on </span>{!Lead.CreatedDate}<br>&nbsp;<br>First Name : {!Lead.FirstName}<br>Last Name : {!Lead.LastName}</p>
+<p style="margin: 0in 0in 10pt;" class="MsoNormal"><span style="font-family: 'Arial','sans-serif';">Date/Time of Consultation : {!Lead.Appointment_Time__c}</span><br>Location: {!Lead.Address}<br>Email id:&nbsp; {!Lead.Email}<br>Mobile number : {!Lead.MobilePhone}<br></p>
+<p>&nbsp;</p>
+<p>Please respond to the same ASAP.</p>]]></td>
+</tr>
+</table>

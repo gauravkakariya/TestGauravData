@@ -1,0 +1,19 @@
+<apex:page controller="AttachXrayRecordController" >
+	<apex:PageMessages rendered="{!toperrmsg}" id="err1"/>
+    <apex:form id="theForm">
+    
+      <apex:pageBlock >
+      	<apex:messages />
+          <apex:pageBlockSection title="Xray - Form">
+          	<table align="center" rows="2"  border="0" columns="1" width="60%" cellpadding="2" cellspacing="2">
+	          	 <tr>
+	           		 <apex:inputFile value="{!xmlFileBody}" filename="{!fileName}"/>
+	           	 </tr>
+	           	 <tr>
+            		<apex:commandButton action="{!readXmlFileBody}" value="Submit" id="theButton" />
+            	</tr>	
+           </table>	
+          </apex:pageBlockSection>
+       </apex:pageBlock>
+    </apex:form>
+</apex:page>

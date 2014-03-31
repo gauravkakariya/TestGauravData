@@ -1,0 +1,159 @@
+<apex:page showheader="false" title="Ffreedom Financial Planners | News Letters"	id="Houseview1_May13">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ffreedom Financial Planners</title>
+</head>
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/top_May13.gif')}" width="740" height="104" /></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td background="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headbg.gif')}"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/houseviewHIn.gif')}" width="132" height="40" /></td>
+                </tr>
+                <tr>
+                  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="9" valign="top" background="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="185" /></td>
+                        <td width="8" valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="8" height="1" /></td>
+                        <td valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Mumbai&rsquo;s residential realty bubble may burst anytime now </em></strong></font></td>
+                          </tr>
+                            
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">It has been about 2-3 years now since the sudden surge in new apartment prices across Mumbai and its peripheral areas. What makes this surge in prices unique is that unlike the previous years (2003-08) the rise in property prices has not been accompanied by a rise in GDP and income growth. In this article, I point-out several indicators that make a strong case for a sharp correction in residential realty prices in Mumbai any time over the next 6-18 months.<br />
+  <br />
+                                The disconnect between apartment prices and income levels could well be at an all-time high in Mumbai at present. A comparison of apartment prices and income levels in Mumbai and New York, both economic power-houses of their respective countries, provides some food for thought. The house to income ratio in Mumbai is an astounding 54X compared to New York&rsquo;s 26X. And this is after assuming a nearly 100% increase over and above the official per capita income estimate released by the state economic survey, which is 125,000 per annum as of 2010-11.<br />
+  <br />
+  <table border="1" cellpadding="3" cellspacing="0" bordercolor="#FFF3E1" style=" font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333;">
+      <tr>
+        <td bgcolor="#FFF3E1"><strong>Data</strong></td>
+        <td bgcolor="#FFF3E1"><strong>New York (USD)&nbsp;&nbsp;</strong></td>
+        <td bgcolor="#FFF3E1"><strong>Mumbai (INR)&nbsp;&nbsp;</strong></td>
+        </tr>
+      <tr>
+        <td>Median apartment cost</td>
+        <td>1,300,000</td>
+        <td>1,30,00,000</td>
+        </tr>
+      <tr>
+        <td>Median net take-home income</td>
+        <td>50,000</td>
+        <td>240,000</td>
+        </tr>
+      <tr>
+        <td>Apartment price-Income multiple&nbsp;&nbsp;</td>
+        <td>26</td>
+        <td>54.17</td>
+        </tr>
+  </table>
+  <p>The oft heard question &ldquo;when will the bubble burst&rdquo; however may not have a simple answer. What follows are a few indicators which to my mind signal a looming correction in new apartment prices in Mumbai.<br />
+    <br />
+    For starters, unlike commodities like gold or crude oil, there is no one price that represents the value of a square foot of residential property. So discounts which developers are increasingly offering upon site visit and negotiation are not easy to account for unless someone poses as a serious buyer and visits and negotiates with all developers, and then creates an index of the price data gathered!<br />
+    <br />
+    Another bias that creeps into real estate pricing is the vested-interest bias.The sources that disseminate price information are usually real estate brokerage firms who earn commission usually as a percentage of the sale value and hence stand to benefit from over-reporting prices. <br />
+    <br />
+    Drawing upon my contacts in the real estate industry, and my own personal experience (which includes over 15 actual site visits), it appears that although most developers are not issuing front-page advertisements announcing price-cuts, most are agreeing to 4-7% cut on the base cost (excluding indirect taxes) of the apartment at the time of cheque-signing. <br />
+    <br />
+    A strong indication of an impending crash in prices is the stark and rising difference between apartment prices in new buildings and similar apartments in the &lsquo;resale market&rsquo; — older buildings in the same neighborhood. Let us take the case of Ghodbunder Road, Thane as an illustration. Ghodbunder Road or SH 42 is an arterial road which connects the western suburbs of Mumbai via NH 8 with Thane (via NH 3) which is practically an eastern suburb of Mumbai.<br />
+    <br />
+    Till about 7 years back, Ghodbunder road was considered a desolate jungle road bisecting the Sanjay Gandhi National Park area. The first crop of residential projects were launched at Rs. 2000-3000 psft in 2005-06. Cut to circa 2013: Ghodbunder Road is a smooth 4-lane toll road boasting of multiple hypermarkets, malls, and townships by prestigious developers as Hiranandani. New projects for delivery in 2015 are now asking for 6500-7000 psft as of mid-April.<br />
+    <br />
+    While few would doubt the real and stupendous development that has occurred at Ghodbunder Road, this newly developed suburb has not remained untouched by the &ldquo;great Indian property price disconnect&rdquo; if we may call it so. Let&rsquo;s discuss some specific cases. As of April 21, Lodha Splendora and Puranik Rumah Bali are asking for about 66-70 lakhs (inclusive of stamp duty, registration, service tax, and VAT) for a 1 BHK apartment to be delivered in 2015. A meeting with just 3 real estate brokers / consultants along GB Road however, reveals that a 1 BHK flat in 5-10 year old buildings (without star-shaped gardens and egg shaped swimming pools of course) are available for 44-48 lakhs TODAY, without any project execution risks. One seller was keen enough to bypass an agent and call me directly offering to sell his 610 sqft flat for Rs. 39 lakhs!  An average price of 45 lakhs for a 1 BHK translates into a whopping 40-50% discount to new construction flats!<br />
+    <br />
+    The situation isn&rsquo;t very different in the Borivali-Malad belt. While developers are asking for about 1-1.3 Crores for a new 2 BHK flat, similar flats in the resale market are actually being transacted at 60-70 Lakhs. This again, is a mammoth 40% discount! The situation isn&rsquo;t very different in the rest of the city either. The stark resale-new construction price disparity has no historic precedent anywhere in the country and may well be an indicator of an impending burst of the realty bubble. There are cases where price discounts have been openly offered such as in Lodha&rsquo;s Blue Moon project; will not cite more such cases as they are quite well known already.<br />
+    <br />
+    Yet another indicator of the impending real estate price correction is the recent &ldquo;decoupling&rdquo; of residential and commercial real estate prices. The two have always been strongly correlated across the globe, with India being no exception. Again, there is no one index that captures the fall but the drop in office absorption space and rentals has been widely covered in mainstream media. But residential realty prices have largely remained unchanged, disconnected from every possible economic indicator. For how long, we shall see.<br />
+    <br />
+    Finally, the most entertaining indicator of the impending bubble has to be the &ldquo;project launch&rdquo; mass mailers that have become ubiquitous lately. Many such advertisements start with &ldquo;book a flat now and gain X% in 6 months!&rdquo;. Clearly, these mails are aimed unabashedly at speculators. I have produced one such gem that I received just this morning.<br />
+    <br />
+    As they say, a picture is worth a thousand words. It is the disclaimer in this mailer however, that is priceless! As if suggesting 42% returns in 6 months wasn&rsquo;t funny enough, the fine print reads like this:<br />
+    <br />
+    Our Country (they surely mean company here!) makes no warranties or representations as to the accuracy of the information provided. Our company accepts no liability for the content of this email including its being upto date, or for theconsequences of any actions taken on the basis of the information provided. <br />
+    <br />
+    Not only do they refrain from citing the source of the base selling rate data or the number of transactions that took place at that price (Rs. 8,500 in August 2012 and Rs. 9,400 in February 2013) respectively but actually muster the audacity to mention that they do not assure the factual accuracy of the data they have provided! No source and no assurance of data based upon which they expect people to invest about Rs. 70-90 lakhs! <br />
+    <br />
+    But then, what better could you expect from an advertisement that begins on a presumptuous note that your investment would only be 25% of the flat&rsquo;s value, because in an year&rsquo;s time when the balance 75% payment becomes due, the developer would have already lined-up another &ldquo;investor&rdquo; for you to cash out! This is pretty much how the realty markets in the US and Dubai were functioning just before the great meltdown of 2008!<br />
+    <br />
+    As with all bubbles, it is seriously difficult to predict the exact time-frame of its occurrence. Nevertheless, I will stick my neck out and predict that a serious bout of correction – about 20-30% would happen some time over the next 6-18 months. One of the reasons for this time-frame is the general elections due in 2014, which would prompt redemption of politician black-money deployed in the sector. So, my advice to potential house-buyers would be to put on hold any house purchase plans that you may have for the next 6-12 months at the very least. If you have to make a purchase, negotiate with a dog-like persistence, and do not settle for anything more than a 15-20% discount on the base rate that the developer offers. Do drop by to thank me for this little piece of advice a few years later! <br />
+    <br />
+    Apr 24<br />
+    By Vinay Upponi<br />
+    <br />
+    The article was originally published on StockMusings.com. The views expressed in the article are that of the author and we don't necessarily agree or subscribe to it.<br />
+  </p></td>
+                            </tr>
+                            <tr>
+                              <td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+                            </tr>
+                            
+                            
+                         </table></td>
+                      </tr>
+                      <tr>
+                        <td valign="top"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/boxLeftbg.gif')}" width="9" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                        <td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="1" height="1" /></td>
+                      </tr>
+                  </table></td>
+                </tr>
+              </table>
+              </td>
+          </tr>
+          <tr>
+            <td valign="top">&nbsp;</td>
+            </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+        </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+        <td valign="top"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+            <td width="24%" rowspan="3"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+                  <td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+                </tr>
+                <tr>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+                  <td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+                </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+          </tr>
+          <tr>
+            <td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+          </tr>
+          <tr>
+            <td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+          </tr>
+        </table></td>
+        <td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/space.gif')}" width="2" height="1" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><img src="{!URLFOR($Resource.NewsLetterImages,'NewsLetterImages/footer.gif')}" width="740" height="15" /></td>
+  </tr>
+</table>
+</body>
+
+</html>
+</apex:page>

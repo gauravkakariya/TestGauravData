@@ -1,0 +1,374 @@
+<!-- 
+    Version     Version Author     Date           Comments
+    1.0         Aditi/Anupam      02/01/2013      Display all Pop Up fields on ET page
+-->
+<apex:page controller="ExecutionTrackerViewRecordController" showHeader="false" sidebar="fasle">
+	<apex:sectionHeader title="Edit Execution Tracker"/>
+	<apex:pageMessages id="Pagemsg"/>
+	<script>
+		function populateParent()
+	    {
+	        return top.window.opener.closeETWindow();
+	        return false; 
+	    } 
+		
+	</script>
+	<apex:form rendered="{!!isClosed}">
+		<apex:pageBlock title="Execution Tracker" rendered="{!!isReadOnly}">
+			<apex:pageBlockButtons >
+            	<apex:commandButton value="Save" action="{!updateExecutionTracker}" rerender="Pagemsg" oncomplete="return populateParent();"/>
+               	<input type="button" class="btn" value="Cancel"  onClick="return populateParent();" />
+            </apex:pageBlockButtons>
+            <apex:outputPanel rendered="{!isSipOrLumpsum}">
+<!-- 				<apex:pageBlockSection title="Mutual Fund Lumpsum Details" columns="2"> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" label="Owner" rendered="{!strType == 'Lumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" label="Scheme Name" rendered="{!strType == 'Lumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Asset_Type__c}" label="Asset Class" rendered="{!strType == 'Lumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Lumpsum_Action__c}" label="Action" rendered="{!strType == 'Lumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'Lumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Action_Amount__c}" rendered="{!strType == 'Lumpsum'}"/> -->
+					
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" label="Owner" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" label="Scheme Name" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Asset_Type__c}" label="Asset Class" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Monthly_SIP_Amount__c}" label="Current SIP" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.SIP_Action__c}" label="SIP Action" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.SIP_Action_Amount__c}" label="Action Amount" rendered="{!strType == 'SIP'}"/>  -->
+					
+<!-- 					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" rendered="{!strType == 'SIP'}" label="Goal Name"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" label="SIP Funds" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Transaction_Type__c}" label="Transaction Type" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" label="Amount" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" rendered="{!strType == 'SIP'}"/> -->
+				
+<!-- 					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" rendered="{!strType == 'GoalLumpsum'}" label="Goal Name" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" label="Lumpsum Funds" rendered="{!strType == 'GoalLumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Transaction_Type__c}" label="Transaction Type" rendered="{!strType == 'GoalLumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Fund__c}" rendered="{!strType == 'GoalLumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" label="Amount" rendered="{!strType == 'GoalLumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" rendered="{!strType == 'GoalLumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount_Per_Installment__c}" label="Amount per Installments" rendered="{!strType == 'GoalLumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" rendered="{!strType == 'GoalLumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" rendered="{!strType == 'GoalLumpsum'}"/> -->
+					
+<!-- 				</apex:pageBlockSection> -->
+				
+	    		<apex:pageBlockSection title="Mutual Fund Lumpsum Execution Tracker Details" columns="1">
+	     			<apex:pageBlockSection title="Personal Details" columns="2">
+	                	<apex:inputField value="{!objExecutionTracker.Investor_Name_as_in_PAN_card__c}" />
+	                    <apex:inputField value="{!objExecutionTracker.Communication_Address__c}" />
+	                    <apex:inputField value="{!objExecutionTracker.Mobile__c}" />
+	                    <apex:inputField value="{!objExecutionTracker.Email__c}" />
+	                    <apex:inputField value="{!objExecutionTracker.DOB__c}" />
+	                    <apex:inputField value="{!objExecutionTracker.PAN__c}" />
+	                    <apex:inputField value="{!objExecutionTracker.Guardian_Name_as_PAN_card__c}" />
+	                    <apex:inputField value="{!objExecutionTracker.PAN_No_Guardian__c}" />
+	                    <apex:inputField value="{!objExecutionTracker.DOB_Guardian__c}" />
+	                 </apex:pageBlockSection> 
+	           		 <apex:pageBlockSection title="Execution Tracker Details" columns="2">
+		            	<apex:inputField value="{!objExecutionTracker.Completion_Date__c}" /> 
+						<apex:inputField value="{!objExecutionTracker.Target_Revenue__c}" />
+						<apex:outputField value="{!objExecutionTracker.Suggested_Amount__c}" />
+						<apex:inputField value="{!objExecutionTracker.Booked_Revenue__c}" />
+		                <apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" />
+<!-- 		                <apex:inputField value="{!objExecutionTracker.Executed_Amount__c}" /> -->
+						<apex:inputField value="{!objExecutionTracker.Cancelled_Reason__c}" />
+		             </apex:pageBlockSection>
+		             <apex:pageBlockSection title="Bank Details" columns="2">
+<!-- 					     <apex:inputField value="{!objExecutionTracker.ET_Status__c}" /> -->
+					     <apex:inputField value="{!objExecutionTracker.Mode_of_holding__c}"/>
+					     <apex:inputField value="{!objExecutionTracker.Status__c}" />
+					     <apex:inputField value="{!objExecutionTracker.Account_Type__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.Bank_Name__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.Branch_Address__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.Account_Number__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.Investor_Name_As_in_bank_record__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.Nominee_s_Name__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.Nominee_s_DOB__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.Guardian_Name_In_case_nominee_is_minor__c}" />
+						 <apex:inputField value="{!objExecutionTracker.Holder_Name__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.Name_of_Second_holder__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.DOB_Second_holder__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.PAN_No_Second_holder__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.Name_of_Third_holder__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.DOB_Third_holder__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.PAN_No_Third_holder__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.STP_Installments__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.STP_Amount_per_transfer__c}" />
+		           		 <apex:inputField value="{!objExecutionTracker.IFSC_Code__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.MICR_Code__c}" />
+	            	</apex:pageBlockSection>
+	          	</apex:pageBlockSection>
+          	</apex:outputPanel>
+          	 
+          	<apex:outputPanel rendered="{!isGeneralOrLife}">
+<!--           	 	<apex:pageBlockSection title="Life Insurance Detail" columns="2"> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Entity__r.Name}" rendered="{!strType == 'Life Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Suggested_Cover_General_Insurance__c}" rendered="{!strType == 'Life Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Policy_Name__c}" rendered="{!strType == 'Life Insurance'}"/> -->
+<!--                     <apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Premium_Amount_Rs__c}" rendered="{!strType == 'Life Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Type__c}" rendered="{!strType == 'Life Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Tenure_of_Insurance__c}" rendered="{!strType == 'Life Insurance'}"/> -->
+<!-- 					<apex:pageBlockSectionItem rendered="{!strType == 'Life Insurance'}"> -->
+<!-- 						<apex:outputLabel value="Holder Name " rendered="{!strType == 'Life Insurance'}"/>  -->
+<!-- 						<apex:outputLabel value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Entity__r.Name}" rendered="{!strType == 'Life Insurance'}"/> -->
+<!-- 					</apex:pageBlockSectionItem> -->
+					
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Entity__r.Name}" rendered="{!strType == 'General Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Type__c}" rendered="{!strType == 'General Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Name__c}" rendered="{!strType == 'General Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" rendered="{!strType == 'General Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Sum_Assured_Rs__c}" rendered="{!strType == 'General Insurance'}"/> -->
+<!--                     <apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Premium_Amount_Rs__c}" rendered="{!strType == 'General Insurance'}"/> -->
+<!--                     <apex:pageBlockSectionItem > -->
+<!-- 						<apex:outputLabel value="Holder Name " rendered="{!strType == 'General Insurance'}"/>  -->
+<!-- 						<apex:outputLabel value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Entity__r.Name}" rendered="{!strType == 'General Insurance'}"/> -->
+<!-- 					</apex:pageBlockSectionItem> -->
+					
+<!-- 			    </apex:pageBlockSection> -->
+			    <apex:pageBlockSection title="Life Insurance Execution Tracker Detail" columns="1">
+			       	<apex:pageBlockSection title="Personal Details" columns="2">
+                       	<apex:inputField value="{!objExecutionTracker.Other_Insured_1_Name__c}" />
+                     	<apex:inputField value="{!objExecutionTracker.Other_Insured_1_DOB__c}" />
+                     	<apex:inputField value="{!objExecutionTracker.Other_Insured_1_Gender__c}" />
+                     	<apex:inputField value="{!objExecutionTracker.Other_Insured_2_Name__c}" />
+                     	<apex:inputField value="{!objExecutionTracker.Other_Insured_2_DOB__c}" />
+                     	<apex:inputField value="{!objExecutionTracker.Other_Insured_2_Gender__c}" />
+                     	<apex:inputField value="{!objExecutionTracker.Other_Insured_3_Name__c}" />
+                     	<apex:inputField value="{!objExecutionTracker.Other_Insured_3_DOB__c}" />
+                       	<apex:inputField value="{!objExecutionTracker.Other_Insured_3_Gender__c}" />
+                       	<apex:inputField value="{!objExecutionTracker.Other_Insured_4_Name__c}" />
+                       	<apex:inputField value="{!objExecutionTracker.Other_Insured_4_DOB__c}" />
+                       	<apex:inputField value="{!objExecutionTracker.Other_Insured_4_Gender__c}" />
+                       	<apex:inputField value="{!objExecutionTracker.Other_Insured_5_Name__c}" />
+                       	<apex:inputField value="{!objExecutionTracker.Other_Insured_5_DOB__c}" />
+                       	<apex:inputField value="{!objExecutionTracker.Other_Insured_5_Gender__c}" />
+                    </apex:pageBlockSection>
+                	<apex:pageBlockSection title="Execution Tracker Details" columns="2">
+                       	<apex:inputField value="{!objExecutionTracker.Completion_Date__c}" />
+						<apex:inputField value="{!objExecutionTracker.Target_Revenue__c}" />
+						<apex:outputField value="{!objExecutionTracker.Suggested_Amount__c}" />
+						<apex:inputField value="{!objExecutionTracker.Booked_Revenue__c}" />
+		                <apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" />
+<!-- 		            <apex:inputField value="{!objExecutionTracker.Executed_Amount__c}" /> -->
+						<apex:inputField value="{!objExecutionTracker.Cancelled_Reason__c}" />
+<!--                       	<apex:inputField value="{!objExecutionTracker.Send_SMS__c}"/> -->
+<!--                        	<apex:inputField value="{!objExecutionTracker.Send_SMS_Datetime__c}" /> -->
+<!--                       	<apex:inputField value="{!objExecutionTracker.Send_Email__c}"/> -->
+<!--                        	<apex:inputField value="{!objExecutionTracker.Send_Email_Datetime__c}" /> -->
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection title="Bank Details" columns="2">
+				    	<apex:inputField value="{!objExecutionTracker.Login_Date__c}" />
+				    	<apex:inputField value="{!objExecutionTracker.Policy_Number__c}" />
+				    	<apex:inputField value="{!objExecutionTracker.Previous_Policy_Number__c}" />
+                   		<apex:inputField value="{!objExecutionTracker.Risk_Commencement_Date__c}" />
+                   		<apex:inputField value="{!objExecutionTracker.Sum_Assured__c}" />
+					    <apex:inputField value="{!objExecutionTracker.Mode__c}" />
+                  		<apex:inputField value="{!objExecutionTracker.Annualised_Premium_Amount__c}" />
+                  		<apex:inputField value="{!objExecutionTracker.Remarks__c}" />
+                		<apex:inputField value="{!objExecutionTracker.Renewal_Alert__c}"/>
+                		<apex:inputField value="{!objExecutionTracker.Renewal_Status__c}" />
+                		<apex:inputField value="{!objExecutionTracker.Renewal_Date__c}" />
+                		<apex:inputField value="{!objExecutionTracker.Renewal_Remark__c}" />
+                		<apex:inputField value="{!objExecutionTracker.Gross_Premium__c}" />
+                		<apex:inputField value="{!objExecutionTracker.Net_Premium__c}" />
+               			<apex:inputField value="{!objExecutionTracker.Nominee__c}" />
+                		<apex:inputField value="{!objExecutionTracker.Cheque_Amount__c}" />
+                		<apex:inputField value="{!objExecutionTracker.Cheque_No__c}" />
+                		<apex:inputField value="{!objExecutionTracker.Term_No_Of_Years__c}" />
+                		<apex:inputField value="{!objExecutionTracker.Application_No__c}" />
+                		<apex:inputField value="{!objExecutionTracker.Mode_Of_Payment__c}" />
+                		<apex:inputField value="{!objExecutionTracker.Policy_Status__c}" />
+                		<apex:inputField value="{!objExecutionTracker.Pol_Doc_Recd_Status__c}" />
+                    </apex:pageBlockSection>
+                </apex:pageBlockSection> 
+          	 </apex:outputPanel>
+          	 
+		</apex:pageBlock>
+		 
+		<apex:pageBlock title="Execution Tracker" rendered="{!isReadOnly}">
+            <apex:outputPanel rendered="{!isSipOrLumpsum}">
+<!-- 				<apex:pageBlockSection title="Mutual Fund Lumpsum Details" columns="2"> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'Lumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" rendered="{!strType == 'Lumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Asset_Type__c}" rendered="{!strType == 'Lumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Lumpsum_Action__c}" rendered="{!strType == 'Lumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'Lumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Action_Amount__c}" rendered="{!strType == 'Lumpsum'}"/> -->
+					
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Monthly_SIP_Amount__c}" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Asset_Type__c}" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.SIP_Action__c}" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.SIP_Action_Amount__c}" rendered="{!strType == 'SIP'}"/> -->
+					
+<!-- 					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" rendered="{!strType == 'SIP'}" label="Goal Name "/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Transaction_Type__c}" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" rendered="{!strType == 'SIP'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" rendered="{!strType == 'SIP'}"/> -->
+				
+<!-- 					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" rendered="{!strType == 'GoalLumpsum'}" label="Goal Name " /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" rendered="{!strType == 'GoalLumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Transaction_Type__c}" rendered="{!strType == 'GoalLumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'GoalLumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" rendered="{!strType == 'GoalLumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" rendered="{!strType == 'GoalLumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" rendered="{!strType == 'GoalLumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount_Per_Installment__c}" rendered="{!strType == 'GoalLumpsum'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Fund__c}" rendered="{!strType == 'GoalLumpsum'}"/> -->
+					
+<!-- 				</apex:pageBlockSection> -->
+				
+	    		<apex:pageBlockSection title="Mutual Fund Lumpsum Execution Tracker Details" columns="1">
+	     			<apex:pageBlockSection title="Personal Details" columns="2">
+	                	<apex:outputField value="{!objExecutionTracker.Investor_Name_as_in_PAN_card__c}" />
+	                    <apex:outputField value="{!objExecutionTracker.Communication_Address__c}" />
+	                    <apex:outputField value="{!objExecutionTracker.Mobile__c}" />
+	                    <apex:outputField value="{!objExecutionTracker.Email__c}" />
+	                    <apex:outputField value="{!objExecutionTracker.DOB__c}" />
+	                    <apex:outputField value="{!objExecutionTracker.PAN__c}" />
+	                    <apex:outputField value="{!objExecutionTracker.Guardian_Name_as_PAN_card__c}" />
+	                    <apex:outputField value="{!objExecutionTracker.PAN_No_Guardian__c}" />
+	                    <apex:outputField value="{!objExecutionTracker.DOB_Guardian__c}" />
+	                 </apex:pageBlockSection> 
+	           		 <apex:pageBlockSection title="Execution Tracker Details" columns="2">
+		            	<apex:outputField value="{!objExecutionTracker.Completion_Date__c}" />
+						<apex:outputField value="{!objExecutionTracker.Target_Revenue__c}" />
+						<apex:outputField value="{!objExecutionTracker.Suggested_Amount__c}" />
+						<apex:outputField value="{!objExecutionTracker.Booked_Revenue__c}" />
+		                <apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" />
+<!-- 		                <apex:outputField value="{!objExecutionTracker.Executed_Amount__c}" /> -->
+						<apex:outputField value="{!objExecutionTracker.Cancelled_Reason__c}" />
+		             </apex:pageBlockSection>
+		             <apex:pageBlockSection title="Bank Details" columns="2">
+					     <apex:outputField value="{!objExecutionTracker.ET_Status__c}" />
+					     <apex:outputField value="{!objExecutionTracker.Mode_of_holding__c}"/>
+					     <apex:outputField value="{!objExecutionTracker.Status__c}" />
+					     <apex:outputField value="{!objExecutionTracker.Account_Type__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.Bank_Name__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.Branch_Address__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.Account_Number__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.Investor_Name_As_in_bank_record__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.Nominee_s_Name__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.Nominee_s_DOB__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.Guardian_Name_In_case_nominee_is_minor__c}" />
+						 <apex:outputField value="{!objExecutionTracker.Holder_Name__c}" label="Holder Name"/>
+					
+<!-- 		           		 <apex:pageBlockSectionItem > -->
+<!-- 							<apex:outputLabel value="Name of Second holder "/>  -->
+<!-- 							<apex:selectList value="{!objExecutionTracker.Name_of_Second_holder__c}" size="1" styleClass="textStyle" style="width:100px;"> -->
+<!-- 	                              <apex:selectOptions value="{!Entities}"></apex:selectOptions> -->
+<!-- 	                    	</apex:selectList> -->
+<!-- 						 </apex:pageBlockSectionItem> -->
+		           		 <apex:outputField value="{!objExecutionTracker.Name_of_Second_holder__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.DOB_Second_holder__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.PAN_No_Second_holder__c}" />
+<!-- 		           		 <apex:pageBlockSectionItem > -->
+<!-- 							<apex:outputLabel value="Name of Third holder "/>  -->
+<!-- 							<apex:selectList value="{!objExecutionTracker.Name_of_Third_holder__c}" size="1" styleClass="textStyle" style="width:100px;"> -->
+<!-- 	                              <apex:selectOptions value="{!Entities}"></apex:selectOptions> -->
+<!-- 	                    	</apex:selectList> -->
+<!-- 						 </apex:pageBlockSectionItem> -->
+		           		 <apex:outputField value="{!objExecutionTracker.Name_of_Third_holder__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.DOB_Third_holder__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.PAN_No_Third_holder__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.STP_Installments__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.STP_Amount_per_transfer__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.IFSC_Code__c}" />
+		           		 <apex:outputField value="{!objExecutionTracker.MICR_Code__c}" />
+	            	</apex:pageBlockSection>
+	          	</apex:pageBlockSection>
+          	</apex:outputPanel>
+          	 
+          	<apex:outputPanel rendered="{!isGeneralOrLife}">
+<!--           	 	<apex:pageBlockSection title="Life Insurance Detail" columns="2"> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Entity__r.Name}" rendered="{!strType == 'Life Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Suggested_Cover_General_Insurance__c}" rendered="{!strType == 'Life Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Policy_Name__c}" rendered="{!strType == 'Life Insurance'}"/> -->
+<!--                     <apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Premium_Amount_Rs__c}" rendered="{!strType == 'Life Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Type__c}" rendered="{!strType == 'Life Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Tenure_of_Insurance__c}" rendered="{!strType == 'Life Insurance'}"/> -->
+<!-- 					<apex:pageBlockSectionItem > -->
+<!-- 						<apex:outputLabel value="Holder Name " rendered="{!strType == 'Life Insurance'}"/>  -->
+<!-- 						<apex:outputLabel value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Entity__r.Name}" rendered="{!strType == 'Life Insurance'}"/> -->
+<!-- 					</apex:pageBlockSectionItem> -->
+					
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Entity__r.Name}" rendered="{!strType == 'General Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Type__c}" rendered="{!strType == 'General Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Policy_Name__c}" rendered="{!strType == 'General Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" rendered="{!strType == 'General Insurance'}"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Sum_Assured_Rs__c}" rendered="{!strType == 'General Insurance'}"/> -->
+<!--                     <apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Premium_Amount_Rs__c}" rendered="{!strType == 'General Insurance'}"/> -->
+<!--                     <apex:pageBlockSectionItem > -->
+<!-- 						<apex:outputLabel value="Holder Name " rendered="{!strType == 'General Insurance'}"/>  -->
+<!-- 						<apex:outputLabel value="{!objExecutionTracker.Approve_Action_Plan__r.Insurance__r.Entity__r.Name}" rendered="{!strType == 'General Insurance'}"/> -->
+<!-- 					</apex:pageBlockSectionItem> -->
+					
+<!-- 			    </apex:pageBlockSection> -->
+			    <apex:pageBlockSection title="Life Insurance Execution Tracker Detail" columns="1">
+			       	<apex:pageBlockSection title="Personal Details" columns="2">
+                       	<apex:outputField value="{!objExecutionTracker.Other_Insured_1_Name__c}" />
+                     	<apex:outputField value="{!objExecutionTracker.Other_Insured_1_DOB__c}" />
+                     	<apex:outputField value="{!objExecutionTracker.Other_Insured_1_Gender__c}" />
+                     	<apex:outputField value="{!objExecutionTracker.Other_Insured_2_Name__c}" />
+                     	<apex:outputField value="{!objExecutionTracker.Other_Insured_2_DOB__c}" />
+                     	<apex:outputField value="{!objExecutionTracker.Other_Insured_2_Gender__c}" />
+                     	<apex:outputField value="{!objExecutionTracker.Other_Insured_3_Name__c}" />
+                     	<apex:outputField value="{!objExecutionTracker.Other_Insured_3_DOB__c}" />
+                       	<apex:outputField value="{!objExecutionTracker.Other_Insured_3_Gender__c}" />
+                       	<apex:outputField value="{!objExecutionTracker.Other_Insured_4_Name__c}" />
+                       	<apex:outputField value="{!objExecutionTracker.Other_Insured_4_DOB__c}" />
+                       	<apex:outputField value="{!objExecutionTracker.Other_Insured_4_Gender__c}" />
+                       	<apex:outputField value="{!objExecutionTracker.Other_Insured_5_Name__c}" />
+                       	<apex:outputField value="{!objExecutionTracker.Other_Insured_5_DOB__c}" />
+                       	<apex:outputField value="{!objExecutionTracker.Other_Insured_5_Gender__c}" />
+                    </apex:pageBlockSection>
+                	<apex:pageBlockSection title="Execution Tracker Details" columns="2">
+	                   	<apex:outputField value="{!objExecutionTracker.Completion_Date__c}" />
+						<apex:outputField value="{!objExecutionTracker.Target_Revenue__c}" />
+						<apex:outputField value="{!objExecutionTracker.Booked_Revenue__c}" />
+                       	<apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" />
+                       	<apex:outputField value="{!objExecutionTracker.Suggested_Amount__c}" />
+                       	<apex:outputField value="{!objExecutionTracker.Executed_Amount__c}" />
+                      	<apex:outputField value="{!objExecutionTracker.Send_SMS__c}"/>
+                       	<apex:outputField value="{!objExecutionTracker.Send_SMS_Datetime__c}" />
+                      	<apex:outputField value="{!objExecutionTracker.Send_Email__c}"/>
+                       	<apex:outputField value="{!objExecutionTracker.Send_Email_Datetime__c}" />
+                       	<apex:outputField value="{!objExecutionTracker.Cancelled_Reason__c}" />
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection title="Bank Details" columns="2">
+				    	<apex:outputField value="{!objExecutionTracker.Login_Date__c}" />
+				    	<apex:outputField value="{!objExecutionTracker.Policy_Number__c}" />
+				    	<apex:outputField value="{!objExecutionTracker.Previous_Policy_Number__c}" />
+                   		<apex:outputField value="{!objExecutionTracker.Risk_Commencement_Date__c}" />
+                   		<apex:outputField value="{!objExecutionTracker.Sum_Assured__c}" />
+					    <apex:outputField value="{!objExecutionTracker.Mode__c}" />
+                  		<apex:outputField value="{!objExecutionTracker.Annualised_Premium_Amount__c}" />
+                  		<apex:outputField value="{!objExecutionTracker.Remarks__c}" />
+                		<apex:outputField value="{!objExecutionTracker.Renewal_Alert__c}"/>
+                		<apex:outputField value="{!objExecutionTracker.Renewal_Status__c}" />
+                		<apex:outputField value="{!objExecutionTracker.Renewal_Date__c}" />
+                		<apex:outputField value="{!objExecutionTracker.Renewal_Remark__c}" />
+                		<apex:outputField value="{!objExecutionTracker.Gross_Premium__c}" />
+                		<apex:outputField value="{!objExecutionTracker.Net_Premium__c}" />
+               			<apex:outputField value="{!objExecutionTracker.Nominee__c}" />
+                		<apex:outputField value="{!objExecutionTracker.Cheque_Amount__c}" />
+                		<apex:outputField value="{!objExecutionTracker.Cheque_No__c}" />
+                		<apex:outputField value="{!objExecutionTracker.Term_No_Of_Years__c}" />
+                		<apex:outputField value="{!objExecutionTracker.Application_No__c}" />
+                		<apex:outputField value="{!objExecutionTracker.Mode_Of_Payment__c}" />
+                		<apex:outputField value="{!objExecutionTracker.Policy_Status__c}" />
+                		<apex:outputField value="{!objExecutionTracker.Pol_Doc_Recd_Status__c}" />
+                    </apex:pageBlockSection>
+                </apex:pageBlockSection> 
+          	 </apex:outputPanel>
+          	 
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

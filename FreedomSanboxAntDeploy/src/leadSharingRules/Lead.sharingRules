@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LeadSharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <ownerRules>
+        <fullName>FPsGALAXYMUMBAI1A</fullName>
+        <sharedTo>
+            <role>FPsGALAXYMUMBAI</role>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>SrMgrFPGALAXY</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <leadAccessLevel>Edit</leadAccessLevel>
+        <name>FPs [GALAXY MUMBAI 1]A</name>
+    </ownerRules>
+    <ownerRules>
+        <fullName>FPsGALAXYUJJAINA</fullName>
+        <sharedTo>
+            <role>FPsGALAXYUJJAIN</role>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>MgrFinancialPlanningGALAXYUJJAIN</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <leadAccessLevel>Edit</leadAccessLevel>
+        <name>FPs [GALAXY UJJAIN]A</name>
+    </ownerRules>
+    <ownerRules>
+        <fullName>FPsMAEGANMUMBAIA</fullName>
+        <sharedTo>
+            <role>FPsMAEGANMUMBAI</role>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>MgrFinancialPlanningMAEGANMUMBAI</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <leadAccessLevel>Edit</leadAccessLevel>
+        <name>FPs [MAEGAN MUMBAI]A</name>
+    </ownerRules>
+    <ownerRules>
+        <fullName>MgrMarketingHeadComplianceandTech</fullName>
+        <sharedTo>
+            <group>MgrMarketingHeadComplianceandTech</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>FounderCEO</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <leadAccessLevel>Edit</leadAccessLevel>
+        <name>Mgr.Marketing,Head Compliance and Tech</name>
+    </ownerRules>
+    <ownerRules>
+        <fullName>MgrMktgI</fullName>
+        <sharedTo>
+            <roleAndSubordinatesInternal>MgrMktg</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>FounderCEO</roleAndSubordinatesInternal>
+        </sharedFrom>
+        <leadAccessLevel>Edit</leadAccessLevel>
+        <name>Mgr. - Mktg.I</name>
+    </ownerRules>
+</LeadSharingRules>

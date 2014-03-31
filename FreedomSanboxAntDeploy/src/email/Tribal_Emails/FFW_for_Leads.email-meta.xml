@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>FFW for Leads</name>
+    <style>newsletter</style>
+    <subject>FFW - The Power Of Writing your Goals</subject>
+    <textOnly>This e-mailer is an initiative by Ffreedom Financial Planners, if you wish to unsubscribe this e-mailer kindly click here
+
+
+Dear {!Lead.Name},
+
+
+We at “Ffreedom Financial Planners” continue to spread the message of financial freedom.
+We at Ffreedom endevour to help you understand financial planning &amp; how writing down your financial goals can take you closer on the path of financial freedom. Failing to plan is planning to fail. 
+
+
+Please let us know if you liked the information &amp; if it was of use to you.
+
+Thank you again.
+
+
+Warm Regards,
+Ffreedom Team
+
+Article: Write down your financial goals for clearer perspective 
+
+
+
+
+Publication: Financial Express
+ 
+Brief: This article talks about how defining your financial goals now can make you get a clearer perspective of your life. 
+
+
+
+
+
+
+Link: Click Here</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Meeting Conformation Email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>MeetingConfirmationEmail</name>
+    <style>freeForm</style>
+    <subject>Thank You For Confirming Our Meeting - Ffreedom Wealth Solutions</subject>
+    <textOnly>Dear &quot;{!Lead.LastName}&quot;
+
+Thanks for the opportunity to meet you. As agreed we will meet on {!Lead.Appointment_Time__c} to better understand your specific needs and explore if we can in any way help you achieve your life goals.
+
+Look forward to interesting conversations.
+
+Warm Regards
+{!Lead.OwnerFullName}</textOnly>
+    <type>html</type>
+</EmailTemplate>

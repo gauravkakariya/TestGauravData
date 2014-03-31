@@ -1,0 +1,2 @@
+<apex:page action="/sfc/#workspaces" tabstyle="Learning__tab">
+</apex:page>

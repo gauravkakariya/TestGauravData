@@ -1,0 +1,236 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="LeadStory_April12">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Ffreedom Financial Planners</title>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+		_gaq.push([ '_trackPageview' ]);
+	
+		(function() {
+			var ga = document.createElement('script');
+			ga.type = 'text/javascript';
+			ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+					: 'http://www')
+					+ '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+</head>
+
+<body>
+	<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+		<tr>
+			<td><img src="{!URLFOR($Resource.Images,'images/top_April12.gif')}" width="740" height="104" /></td>
+		</tr>
+		<tr>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2" height="1" /></td>
+						<td valign="top">
+							<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+								<tr>	
+									<td valign="top">
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td>
+													<table width="100%" border="0" cellspacing="0" cellpadding="0">
+														<tr>
+															<td width="1%" valign="top"><img src="{!URLFOR($Resource.Images,'images/headL.gif')}" width="9" height="40" /></td>
+															<td width="98%" valign="top" background="{!URLFOR($Resource.Images,'images/headbg.gif')}" style="padding-top:6px;">
+																<font face="Arial, Helvetica, sans-serif" color="#FFFFFF" style="font-size:14px;">
+																	<strong>WHICH COMES FIRST, WHICH GOES FIRST – INVESTMENTS OR INSURANCE?</strong>
+																</font>
+															</td>
+															<td width="1%" valign="top"><img src="{!URLFOR($Resource.Images,'images/headR.gif')}" width="9" height="40" align="right" /></td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+				
+											<tr>
+												<td>
+													<table width="100%" border="0" cellpadding="0" cellspacing="0">
+														<tr>
+															<td width="9" valign="top" background="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}">
+																<img src="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}" width="9" height="185" />
+															</td>
+															<td width="8" valign="top"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="8" height="1" /></td>
+															<td valign="top">
+																<table width="98%" border="0" cellpadding="0" cellspacing="0">
+																	<tr>
+																		<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">
+																			<p>It was one more case of a client member who  started making investments in mutual funds, bonds and fixed deposits while insurances  were pending. 
+																				Casually quizzing the financial planner on how he permitted his  client to start investing for goals while his risks have not been taken care  of, 
+																				he replies “I tried to convince the client, but he wouldn’t listen to me”.<br />
+																				<br />
+																				Nick Murray says, “Only when you have taken  care of all the bad things that may happen to you, do you earn the right to  aspire for the good things”. 
+																				Popular ad that goes – “Sapne dekhne can license  hai kya?” rings the bell. Bad things can happen – you may fall critically ill,  meet with an accident, 
+																				your employers may decide to close down operations over  night and move on, when you are out on a dinner with your family your house may  catch fire, 
+																				if an earthquake can shake Gujarat it can shake Mumbai. <br />
+																				<br />
+																				Risk planning is critical, sensitive and  there is a reason why it is placed on priority before investments in the  financial planning process. <br />
+																				<br />
+																				<strong>Planning a risk involves 4 steps – </strong><br />
+																				<br />
+																				One, identify  what all risks exist. Please note, we say risks exist. Whether you like it or  not, the risk exists. Risk of loss of life, resulting loss of income, 
+																				risk of  falling sick or meeting with an accident and resulting hospitalization and loss  of income, risk of dependents falling sick and resulting expenses, 
+																				risk of  assets getting stolen or destroyed. Bad luck, if any of these happen, that will  burn a huge hole in your pocket. You are not special that 
+																				it will not happen to  you.<br />
+																				<br />
+																				Step two, if the  risk happens how much would you be put back financially? What would it cost you  to pull your life together again? 
+																				If life of an earning member is lost, the  family will be set back by how much ever that person was earning. 
+																				If your car  gets stolen, the cost of repurchasing the car would be the impact of the risk.<br />
+																				<br />
+																				Step three, how  would you like to deal with this risk? You may choose to avoid or reduce the  risk partially. Like old people can stay indoors 
+																				in the dark and avoid or  reduce the possibility of falling down. Not all risks can be avoided or  reduced. You may retain or fund the risk. 
+																				Create a back up resource to handle  expenses if the risk happens. You may start saving up for long term care in old  age, right now. 
+																				Finally you may transfer the risk through insurance. <br />
+																				<br />
+																				Step four,  choose the right option and implement action point. You may have a choice to  fund or transfer the risk. You will choose whichever option 
+																				makes economic  sense – like insurance against critical illnesses for senior citizens, if at  all available, may be ridiculously expensive. 
+																				You may just provide for such a  risk with available resources (if available) and the cost of that would be the  opportunity lost of investing and 
+																				yielding higher returns. <br />
+																				<br />
+																				Finally,  implement or act on the option chosen. Do the paperwork for insurance or start  building the funding corpus or move resources allocated 
+																				for the risk to safe  options or just whatever has to be done.<br />
+																				<br />
+																				Now, this sounds like a lot of work. Yes,  it is a lot of work and your financial planner would do this for you. What you  need to do is understand 
+																				what might happen if you do not plan for emergencies  or risks?<br />
+																				<br />
+																				You  might have to borrow to handle emergencies. We know the pitfalls of borrowing  which include loss of money on interest, future cash flows taking 
+																				drastic turns, stress and strain in relationships, if not more.<br />
+																				<br />
+																				Or,  you may try and sell off one of your existing assets to handle the emergency.  We know of people who sold houses to treat a family member for cancer.  
+																				Lovingly, painstaking built and bought assets – vaporized. Distress selling can  depreciate value of assets substantially.<br />
+																				<br />
+																				Or,  you may pull out money set aside for other goals. Investments earmarked for  children’s education and marriage goes to the hospital. 
+																				After the hospital  drama is over, children still have to go to college and get married, right? And  it was because you had to invest for children 
+																				education and marriage that you  did not have money to take insurance? How is that for financial prudence?<br />
+																				<br />
+																				That financial planner that day got an  earful for letting his client take a chance. I am not sure any of us can afford  to let things to chance. 
+																				It is not worth the risk. Build the emergency fund.  Assess risks and take appropriate insurances. Then, invest in peace and enjoy  the benefits.<br />
+																				<br />
+																				I remember the  signature on one of our insurance product manager’s e-mail profile which simply  said, “Take insurance. Feel the difference”. You should try.
+																			</p>
+																		</td>
+																	</tr>
+				
+																	<tr>
+																		<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+																	</tr>
+				
+																</table>
+															</td>
+														</tr>
+														<tr>
+															<td valign="top"><img src="{!URLFOR($Resource.Images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+															<td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="1" height="1" /></td>
+															<td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="1" height="1" /></td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td valign="top">&nbsp;</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2" height="1" /></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	
+		<tr>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2" height="1" /></td>
+						<td valign="top">
+							<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="76%" height="20" valign="top">
+										<font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;">
+											<strong>Ffreedom Financial Planners</strong>
+										</font>
+									</td>
+									<td width="24%" rowspan="3">
+										<table border="0" align="center" cellpadding="0" cellspacing="0">
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;">
+													<strong> Follow us on&nbsp;&nbsp;&nbsp;</strong>
+												</font></td>
+												<td>
+													<a href="http://www.facebook.com/Ffreedom" target="_blank">
+														<img src="{!URLFOR($Resource.Images,'images/fb.png')}" width="20" height="20" border="0" />
+													</a>
+													<a href="http://twitter.com/_Ffreedom" target="_blank">
+														<img src="{!URLFOR($Resource.Images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" />
+													</a>
+													<a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank">
+														<img src="{!URLFOR($Resource.Images,'images/LinkedIn.png')}" width="20" height="20" border="0" />
+													</a>
+												</td>
+											</tr>
+											<tr>
+												<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+												<td>
+													<strong>
+														<a href="http://www.youtube.com/user/ffreedomtube" target="_blank">
+															<img src="{!URLFOR($Resource.Images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" />
+														</a>
+													</strong>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td height="20" valign="top">
+										<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">
+											506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+								</tr>
+								<tr>
+									<td height="20" valign="top">
+										<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">
+											Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: 
+											<a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; 
+											<a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a>
+										</font>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" valign="top">
+										<div align="justify">
+											<font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">
+												Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. 
+												This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility 
+												for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. 
+												It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does 
+												not substitute the need to refer to the original pronouncements.
+											</font>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.Images,'images/space.gif')}" width="2" height="1" /></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	
+		<tr>
+			<td><img src="{!URLFOR($Resource.Images,'images/footer.gif')}" width="740" height="15" /></td>
+		</tr>
+	</table>
+</body>
+</apex:page>

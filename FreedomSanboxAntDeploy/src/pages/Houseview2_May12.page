@@ -1,0 +1,139 @@
+<apex:page showHeader="false" sidebar="false" title="Ffreedom Financial Planners | News Letters" id="Houseview2_May12">
+<head>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push([ '_setAccount', 'UA-26313496-1' ]);
+		_gaq.push([ '_trackPageview' ]);
+	
+		(function() {
+			var ga = document.createElement('script');
+			ga.type = 'text/javascript';
+			ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+					: 'http://www')
+					+ '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0];
+			s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Ffreedom Financial Planners</title>
+</head>
+
+<body>
+<table width="740" border="0" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td><img src="{!URLFOR($Resource.images,'images/top_May12.gif')}" width="740" height="104" /></td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+					<td valign="top">
+						<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+							<tr>
+								<td valign="top">
+									<table width="100%" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td background="{!URLFOR($Resource.images,'images/headbg.gif')}"><img src="{!URLFOR($Resource.images,'images/headR.gif')}" width="9" height="40" align="right" /><img src="{!URLFOR($Resource.images,'images/houseviewHIn.gif')}" width="132" height="40" /></td>
+										</tr>
+										<tr>
+											<td>
+												<table width="100%" border="0" cellpadding="0" cellspacing="0">
+													<tr>
+														<td width="9" valign="top" background="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="185" /></td>
+														<td width="8" valign="top"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="8" height="1" /></td>
+														<td valign="top">
+															<table width="98%" border="0" cellpadding="0" cellspacing="0">
+																<tr>
+																	<td height="25" valign="top"><font face="Arial, Helvetica, sans-serif" color="#683400" style="font-size:14px;"><strong><em>Nomination or WILL!!</em></strong></font></td>
+																</tr>
+																<tr>
+																	<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">Nomination or Will – which is better? Do you think if you have nominated somebody on your investments and bank accounts you don't need a Will? Think again. <br />                                    <br />
+																		Mr. Gupta had opened different bank accounts and had bought different insurance policies and shares in his name. In some of these investments he had nominated his wife and in some investments which he made from the money his father gave him he had nominated his father. Now please note that Mr.Gupta's father who was old and ailing, after the death of his wife sold his property, gave all the money including his retirement benefits to his only son and now lived with them and was completely dependent on them. <br />  <br />
+																		In an unfortunate accident Mr. Gupta died leaving behind his wife, two children and his father. His father was aware of the nominations and submitted all necessary documents to the bank claiming the proceeds. But to his shock, the bank refused to give him the money. <br />  <br />
+																		His daughter in law meanwhile tried to access the money herself. She claimed that she and her two children were entitled to the entire property of Mr. Gupta and that was of course a fact. She got court documents to prove that she and her children were the legal heirs.<br />  <br />
+																		Mr.Gupta Sr is now left with no choice but to let his daughter in law decide his fate. Maybe he would be sent to an old age home, maybe she would give him some money with which he should try and manage. He was sick and very nervous.<br />  <br />
+																		What should we learn from this incident?<br />  <br />
+																		When a person dies without a Will the law decides who gets the money. Under the Hindu Succession Act, the property of a male Hindu, dying without making a Will, devolves upon the Class I heirs who are the mother, the wife and the children of the male Hindu, in equal proportions. Only in the event when class I heirs are not alive, the property of a male hindu, dying intestate, goes to class II heirs who are the father, brothers, sisters etc.<br />  <br />
+																		Mr. Gupta had thought that by merely nominating his father he would be securing his father's life but he was ignorant of the fact that he was only making him a trustee and not the owner of his assets. Had Mr. Gupta made a WILL and included his father as one of the beneficiaries his father would not have to fight for his claim.<br />  <br />
+																		Nomination only gives trusteeship, it does not give ownership, which means that even if you are being nominated you do not become the owner, you will only hold that money as a trustee for the legal heir.<br />  <br />
+																		Where what the WILL says and nominations say are not the same – the WILL is considered final. When the nomination is different from what the law says – no points for guessing that the law supersedes. But when it is between the WILL and succession laws, a valid Will wins and becomes the most legally acceptable document to distribute assets.<br />  <br />
+																		When you go to open a bank account, you are asked who you would like to nominate. Please always nominate somebody younger than you are and who would be capable of running around and talking their way a bit to claim the proceeds. And then write the Will. Along with the Will don't forget to keep a list of your assets with details so that the executor of the Will will have necessary information to act on.<br />  <br />
+																		That way, you can ensure that your hard earned assets would be accessed easily and inherited and used by those you care for and for those you are responsible for.
+																		<p Style="font-style:italic;font-weight:bold;">Neha Jaiswal,  Manager - Legal</p>
+																	</td>
+																</tr>
+																<tr>
+																	<td valign="top" style="font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; text-align:justify;">&nbsp;</td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+													<tr>
+														<td valign="top"><img src="{!URLFOR($Resource.images,'images/boxLeftbg.gif')}" width="9" height="1" /></td>
+														<td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+														<td valign="top" bgcolor="#BD6105"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="1" height="1" /></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top">&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+					<td valign="top">
+						<table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+							<tr>
+								<td width="76%" height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#035728" style="font-size:13px;"><strong>Ffreedom Financial Planners</strong></font></td>
+								<td width="24%" rowspan="3">
+									<table border="0" align="center" cellpadding="0" cellspacing="0">
+										<tr>
+											<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong> Follow us on&nbsp;&nbsp;&nbsp;</strong></font></td>
+											<td><a href="http://www.facebook.com/Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/fb.png')}" width="20" height="20" border="0" /></a><a href="http://twitter.com/_Ffreedom" target="_blank"><img src="{!URLFOR($Resource.images,'images/tw.png')}" width="20" height="20" hspace="6" border="0" /></a><a href="http://www.linkedin.com/companies/ffreedom-financial-planners" target="_blank"><img src="{!URLFOR($Resource.images,'images/LinkedIn.png')}" width="20" height="20" border="0" /></a></td>
+										</tr>
+										<tr>
+											<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong>Watch us on</strong></font></td>
+											<td><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:12px;"><strong><a href="http://www.youtube.com/user/ffreedomtube" target="_blank"><img src="{!URLFOR($Resource.images,'images/youtube.png')}" width="20" height="20" vspace="6" border="0" /></a></strong></font></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</font></td>
+							</tr>
+							<tr>
+								<td height="20" valign="top"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Boardline: +91 22 4222 4333 &nbsp;|&nbsp;  Fax: +91 22 4222 4332 &nbsp;|&nbsp; Email: <a href="mailto:contact@ffreedom.in">contact@ffreedom.in</a> &nbsp;|&nbsp; <a href="http://www.ffreedom.in" target="_blank">www.ffreedom.in</a></font></td>
+							</tr>
+							<tr>
+								<td colspan="2" valign="top"><div align="justify"><font face="Arial, Helvetica, sans-serif" color="#333333" style="font-size:11px;">Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.</font></div></td>
+							</tr>
+						</table>
+					</td>
+					<td width="2" valign="top" bgcolor="#9CB82B"><img src="{!URLFOR($Resource.images,'images/space.gif')}" width="2" height="1" /></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td><img src="{!URLFOR($Resource.images,'images/footer.gif')}" width="740" height="15" /></td>
+	</tr>
+</table>
+</body>
+</apex:page>

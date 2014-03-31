@@ -1,0 +1,349 @@
+<!-- /*
+	
+Revision History:
+
+   Version     Version Author     Date          Comments
+   1.0         Persistent         NA  		  	Initial Draft
+   
+   2.0 		   Manasi Ranade	  11/06/2011	Issue id: F0041 : If selected entity is parent entity or earning spouce entity then display 
+   												retirement Age field as Required field else it should not be required field.
+   												So added two apex:inputField ,one is for required field and other is for not required type
+   2.0 		   Manasi Ranade	  27/06/2011	Issue id: F0058 : If selected entity is parent entity or earning spouce entity then display
+   												Estimated Life Expectancy field as Required field else it should not be required field.
+												So added two apex:inputField ,one is for required field and other is for not required type
+   2.0 		   Manasi Ranade	  23/1/2012		Issue id: 00001447 : Added Button to delete the entity 
+   
+   2.0 		   Mahesh Hirugade	  02/05/2012	Issue id: 00001616 : Added drop down named as Dependent to show list of family member 
+  												to select Dependent of an entity
+*/-->
+
+<apex:page showHeader="false" extensions="FamilyMemberInfoContoller" standardController="account">
+    <apex:stylesheet value="{!$Resource.FFStyle}" />
+    <apex:composition template="TabPage">
+        <apex:define name="contents">
+            <apex:pageMessages rendered="true" />
+            <apex:form id="familyInfoForm">
+                <apex:pageBlock Title="Personal Information" id="block1" mode="Edit">
+                
+                    <apex:pageBlockButtons >
+<!--                         <apex:outputPanel rendered="{!isDisplaySaveButton}"> -->
+						<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+	                        <apex:commandButton id="saveBtn" value="Save" action="{!save}" styleClass="standardFontStyle" />
+	                        <apex:commandButton id="saveNextBtn" value="Save & Next"
+	                            action="{!saveNext}" styleClass="standardFontStyle" />
+							<!-- /** Eternus Solutions  **/
+							/** Author  : Manasi Ranade	**/
+							/** Issue Id: 00001447      **/
+							/** Date    : 23/1/2012 	**/
+							/** Purpose : Added Button to delete the entity  **/
+							/****************************************************/-->
+	                        <apex:commandButton id="delete" value="Delete" action="{!DeleteRecords}" onclick="return confirm('Are you sure?')" styleClass="standardFontStyle"  immediate="True"/>
+                        </apex:outputPanel>	
+                        <apex:commandButton id="cancel" value="Cancel" action="{!cancel}" styleClass="standardFontStyle" />
+                    </apex:pageBlockButtons>
+                    
+                    <apex:pageBlockSection columns="2">
+                        <apex:inputField id="titleTxt" 
+                            value="{!fmbean.acc.Salutation}"  styleClass="standardFontStyle"/>
+                        <apex:inputField id="middleNameTxt"
+                            value="{!fmbean.con.Middle_Name__c}"   styleClass="standardFontStyle"/>
+                        <apex:inputField id="firstNameTxt" required="true"
+                            value="{!fmbean.acc.FirstName}"  styleClass="standardFontStyle"/>
+                        <apex:inputField required="true" id="genderLabel1"
+                            value="{!fmBean.con.Gender__c}"  styleClass="standardFontStyle"/>
+                        <apex:inputField id="contactTxt" required="true"
+                            value="{!fmbean.acc.LastName}"  styleClass="standardFontStyle"/>
+                        <apex:inputField id="dateOfBirthTxt" required="true"
+                            value="{!fmbean.acc.PersonBirthdate}"  styleClass="standardFontStyle" />
+                        <apex:inputField id="maritalStatusTxt" required="true"
+                            value="{!fmbean.con.Marital_Status__c}"  styleClass="standardFontStyle"/>
+                          <apex:inputField id="panIdTxt" required="true"  rendered="{!NOT(fmBean.isFamily)}"
+                            value="{!fmbean.con.PAN_ID__c}"  styleClass="standardFontStyle"/>
+                            <apex:inputField id="familyPanIdTxt"  rendered="{!fmBean.isFamily}"
+                            value="{!fmbean.con.PAN_ID__c}"  styleClass="standardFontStyle"/>
+                    </apex:pageBlockSection>
+                    
+                    <apex:pageblockSection columns="2" rendered="{!fmBean.isCustomer}">
+                        <apex:inputField id="relationshipToEntityTxt" required="true"
+                        	value="{!fmBean.con.Relationship_to_Entity__c}"  styleClass="standardFontStyle"/>
+<!--                             value="{!fmBean.acc.Relationship_to_Entity__pc}"  styleClass="standardFontStyle"/> -->
+                            
+                    </apex:pageBlockSection>
+
+<!--                     	Prajakta - FP changes II - 21-05-2013 - Commented attribute as field to be shown on parent entity detail page -->                    
+                    <apex:pageblockSection columns="2" rendered="{!NOT(fmBean.isFamily)}">
+                        <apex:outputField id="relationshipToEntityTxt" 
+                            value="{!fmBean.acc.Relationship_to_Entity__pc}"  styleClass="standardFontStyle"/>
+<!--                             value="{!fmBean.con.Relationship_to_Entity__c}"  styleClass="standardFontStyle"/> -->
+                    </apex:pageBlockSection>
+                        
+                    <apex:pageblockSection columns="2">
+	                    <apex:inputField id="mobileNoTxt"  value="{!fmbean.acc.PersonMobilePhone}" styleClass="standardFontStyle"/>
+	                    <apex:inputField id="alternateMobileNoTxt" value="{!fmbean.acc.Alternate_Mobile__c}"  styleClass="standardFontStyle" />
+	                    <apex:inputField id="homePhoneTxt" value="{!fmbean.acc.PersonHomePhone}"  styleClass="standardFontStyle"/>
+	                    <apex:inputField id="officePhoneTxt" value="{!fmbean.con.Office_Phone1__c}"  styleClass="standardFontStyle"/>
+	                    <apex:inputField id="emailIdTxt" value="{!fmbean.acc.PersonEmail}" />
+	                    <apex:inputField id="faxTxt" value="{!fmbean.acc.Fax}"  styleClass="standardFontStyle" />
+                                  
+                                       
+                        <!-- /** Eternus Solutions  **/
+						/** Author  : Manasi Ranade	**/
+						/** Issue Id: F0041      	**/
+						/** Date    : 11/06/2011 	**/
+						/** Purpose : If selected entity is parent entity or earning spouce entity then display retirement Age
+									  field as Required field else it should not be required field.
+									  So added two apex:inputField ,one is for required field and other is for not required type **/
+						/****************************************************/-->
+		                 <apex:inputField id="familyretirementAgeTxt" rendered="{!NOT(fmBean.blnIsRetimentAgeRequired)}" value="{!fmbean.acc.Retirement_Age__c}"  styleClass="standardFontStyle"/>
+		                 <apex:inputField id="retirementAgeTxt"  required="true"  rendered="{!fmBean.blnIsRetimentAgeRequired}"	 value="{!fmbean.acc.Retirement_Age__c}"  styleClass="standardFontStyle"/>
+                         
+                         <!-- Previous code -->
+                         <!-- <apex:inputField id="estimatedLifeExpectancyTxt"
+                             value="{!fmbean.acc.Estimated_Life_Expectancy__c}"   styleClass="requiredField standardFontStyle" />  -->
+                         <!-- /** Eternus Solutions  **/
+						/** Author  : Manasi Ranade	**/
+						/** Issue Id: F0058      	**/
+						/** Date    : 27/06/2011 	**/
+						/** Purpose : If selected entity is parent entity or earning spouce entity then display Estimated Life Expectancy
+									  field as Required field else it should not be required field.
+									  So added two apex:inputField ,one is for required field and other is for not required type **/
+						/****************************************************/-->
+                        <apex:inputField id="estimatedLifeExpectancyTxt" rendered="{!NOT(fmBean.blnIsLifeExpectancyAgeRequired)}"
+                            			 value="{!fmbean.acc.Estimated_Life_Expectancy__c}"   styleClass="standardFontStyle" /> 
+                        <apex:inputField id="estimatedLifeExpectancyRequiredTxt" required="true"  rendered="{!fmBean.blnIsLifeExpectancyAgeRequired}"
+                             			  value="{!fmbean.acc.Estimated_Life_Expectancy__c}"   styleClass="standardFontStyle" /> 
+                    </apex:pageBlockSection>
+                    
+                    <apex:pageblockSection columns="2" rendered="{!NOT(fmBean.isCustomer)}">
+                        <apex:inputField id="alternateEmailTxt"
+                            			 value="{!fmbean.acc.Alternate_E_Mail_Address__c}"  styleClass="standardFontStyle" />
+                        <apex:inputField id="passportNoTxt" 
+                           				 value="{!fmbean.con.Passport__c}"  styleClass="standardFontStyle"/>
+                        
+         			</apex:pageBlockSection>
+                    <!-- Prajakta - FP changes - 27-02-2013 -->
+                    <apex:pageBlockSection >             
+                        <apex:inputField id="planGenDate" rendered="{!NOT(fmBean.isFamily)}"
+                           				 value="{!fmbean.acc.Plan_Generation_Date__c}" styleClass="standardFontStyle"/>                
+	                </apex:pageBlockSection>
+	                <apex:pageBlockSection >             
+                        <apex:pageBlockSectionItem rendered="{!NOT(fmBean.isFamily)}">
+                           	<apex:outputLabel value="Retirement Planning Entity"/>
+                            <apex:selectList value="{!fmbean.acc.Retirement_Planning_Entity__c}" size="1" multiselect="false">
+                            	<apex:selectOptions value="{!RetirementEntities}"/>
+                            </apex:selectList>
+						</apex:pageBlockSectionItem>            
+	                </apex:pageBlockSection>
+	                
+	                <apex:pageBlockSection columns="2">
+		                <apex:pageBlockSectionItem >
+		                <apex:outputLabel style="font-weight: bold;" styleClass="standardFontStyle"  value="Do you have a will?" rendered="{!NOT(fmBean.isFamily)}"/>
+		                  <apex:selectList id="Will" value="{!fmBean.acc.Will__c}" size="1" rendered="{!NOT(fmBean.isFamily)}">
+		                  <apex:selectOption itemValue="True" itemLabel="Yes"/>
+		                   <apex:selectOption itemValue="False" itemLabel="No" />
+		                  </apex:selectList>
+		                </apex:pageBlockSectionItem>  
+		            </apex:pageBlockSection>
+                                        
+                     <apex:pageBlockSection columns="2">
+                         <apex:inputField id="relationshipToEntityTxt" rendered="{!AND((fmBean.isFamily), NOT(fmBean.isCustomer))}"
+                            			 value="{!fmBean.con.Relationship_to_Entity__c}"  styleClass="standardFontStyle" />
+                         
+                     </apex:pageBlockSection>
+                                        
+                    <!-- 
+                     /** Eternus Solutions       	**/
+					/** Issue Id : 00001616			**/ 
+					/** Author  :Mahesh Hirugade	**/
+					/** Date    : 02/05/2012 		**/
+					/** Purpose : To show list of family member to select Dependent of an entity -->
+	                                
+                    <apex:pageblockSection rendered="{!OR(NOT(isSpouse), (fentityId != null))}"><!-- rendered="{!NOT(fmBean.isFamily)}" -->
+                       	<apex:pageBlockSectionItem >
+                           	<apex:outputLabel value="Dependent"/>
+                            <apex:selectList value="{!fmbean.acc.Dependent__c}" size="1" multiselect="false">
+                            	<apex:selectOptions value="{!FamilyMembers}"/>
+                            </apex:selectList>
+						</apex:pageBlockSectionItem>
+                   </apex:pageblockSection>
+                                        
+                   <apex:pageBlockSection columns="1">
+                       <apex:inputField style="width:82%" id="healthHistoryTxt"
+                          				 value="{!fmbean.acc.Health_History_del__c}"  styleClass="standardFontStyle"/>
+                   </apex:pageBlockSection>
+                   
+                   <apex:pageBlockSection columns="3" rendered="{!NOT(fmBean.isFamily)}">
+                       <apex:pageBlockSection id="billingAddr" title="Billing Address" columns="1" collapsible="false" >
+                           <apex:pageBlockSectionItem />
+                           
+                           <apex:pageBlockSection id="billingAddrSection" columns="2">
+                               <apex:outputlabel value="Street"  styleClass="standardFontStyle"/>
+                               <apex:inputTextArea id="billingStreetTxt"
+                                   value="{!fmbean.acc.BillingStreet}"  styleClass="standardFontStyle"/>
+                               <apex:outputlabel value=" City"  styleClass="standardFontStyle"/>
+                               <apex:inputText id="billingCityTxt"
+                                   value="{!fmbean.acc.BillingCity}"  styleClass="standardFontStyle"/>
+                               <apex:outputlabel value=" State"  styleClass="standardFontStyle"/>
+                               <apex:inputText id="billingStateTxt"
+                                   value="{!fmbean.acc.BillingState}"  styleClass="standardFontStyle"/>
+                               <apex:outputlabel value="Country"  styleClass="standardFontStyle"/>
+                               <apex:inputText id="billingCountryTxt"
+                                   value="{!fmbean.acc.BillingCountry}"  styleClass="standardFontStyle"/>
+                               <apex:outputlabel value="Zip/Postal Code"  styleClass="standardFontStyle"/>
+                               <apex:inputText id="billingZipCodeTxt"
+                                   value="{!fmbean.acc.BillingPostalCode}"  styleClass="standardFontStyle"/>
+                           </apex:pageBlockSection>
+                    	</apex:pageBlockSection>
+                    
+	                    <apex:pageBlockSection id="mailingAddr" title="Mailing Address" columns="1" collapsible="false" >
+	                        <apex:pageBlockSectionItem >                                                    
+	                            <apex:outputLabel styleClass="standardFontStyle">Same-as<br/>Billing</apex:outputLabel>
+	                            <apex:inputCheckbox id="copy1" onClick="copyValues(this);" />
+	                        </apex:pageBlockSectionItem>
+	                        
+	                        <apex:pageBlockSection id="mailingAddrSection" columns="2">
+	                            <apex:outputlabel style="align:left;" styleClass="standardFontStyle" value="Street" />
+	                            <apex:inputTextArea id="personStreetTxt" styleClass="requiredField standardFontStyle" value="{!fmbean.acc.PersonMailingStreet}" />
+	                            
+	                            <apex:outputlabel value="City" styleClass="standardFontStyle"/>
+	                            <apex:inputText id="personCityTxt" styleClass="requiredField standardFontStyle" value="{!fmbean.acc.PersonMailingCity}" />
+	                            
+	                            <apex:outputlabel value="State" styleClass="standardFontStyle"/>
+	                            <apex:inputText id="personStateTxt" styleClass="requiredField standardFontStyle" value="{!fmbean.acc.PersonMailingState}" />
+	                            
+	                            <apex:outputlabel value="Country" styleClass="standardFontStyle"/>
+	                            <apex:inputText id="personCountryTxt"  styleClass="requiredField standardFontStyle"  value="{!fmbean.acc.PersonMailingCountry}" />
+	                            
+	                            <apex:outputlabel value="Zip/Postal Code" styleClass="standardFontStyle"/>
+	                            <apex:inputText id="personZipCodeTxt" styleClass="requiredField standardFontStyle" value="{!fmbean.acc.PersonMailingPostalCode}" />
+	                        </apex:pageBlockSection>
+	                    </apex:pageBlockSection>
+	                    <apex:pageBlockSection title="Office Address" columns="1" collapsible="false" >
+	                        <apex:pageBlockSectionItem />
+	                        
+	                        <apex:pageBlockSection columns="2">
+	                            <apex:outputlabel value="Street"  styleClass="standardFontStyle" />
+	                            <apex:inputTextArea id="otherStreetTxt"
+	                                value="{!fmbean.acc.PersonOtherStreet}"  styleClass="standardFontStyle"/>
+	                            <apex:outputlabel value="City"  styleClass="standardFontStyle"/>
+	                            <apex:inputText id="otherCityTxt"
+	                                value="{!fmbean.acc.PersonOtherCity}"  styleClass="standardFontStyle"/>
+	                            <apex:outputlabel value="State"  styleClass="standardFontStyle"/>
+	                            <apex:inputText id="otherStateTxt"
+	                                value="{!fmbean.acc.PersonOtherState}"  styleClass="standardFontStyle"/>
+	                            <apex:outputlabel value="Country"  styleClass="standardFontStyle" />
+	                            <apex:inputText id="otherCountryTxt"
+	                                value="{!fmbean.acc.PersonOtherCountry}"  styleClass="standardFontStyle"/>
+	                            <apex:outputlabel value="Zip/Postal Code"  styleClass="standardFontStyle"/>
+	                            <apex:inputText id="otherZipCodeTxt"
+	                                value="{!fmbean.acc.PersonOtherPostalCode}"  styleClass="standardFontStyle"/>
+	                        </apex:pageBlockSection>
+	                    </apex:pageBlockSection>
+	                    <script>
+	                       function copyValues(input){
+	                         var street=document.getElementById('{!$Component.mailingAddr.mailingAddrSection.personStreetTxt}');
+	                         var city=document.getElementById('{!$Component.mailingAddr.mailingAddrSection.personCityTxt}');  
+	                         var state=document.getElementById('{!$Component.mailingAddr.mailingAddrSection.personStateTxt}');
+	                         var country=document.getElementById('{!$Component.mailingAddr.mailingAddrSection.personCountryTxt}'); 
+	                         var zipCode=document.getElementById('{!$Component.mailingAddr.mailingAddrSection.personZipCodeTxt}');
+	                         if(input.checked){
+	                        
+	                        
+	                         street.value=document.getElementById('{!$Component.billingAddr.billingAddrSection.billingStreetTxt}').value;
+	                         city.value=document.getElementById('{!$Component.billingAddr.billingAddrSection.billingCityTxt}').value;
+	                         state.value=document.getElementById('{!$Component.billingAddr.billingAddrSection.billingStateTxt}').value;
+	                         country.value=document.getElementById('{!$Component.billingAddr.billingAddrSection.billingCountryTxt}').value;
+	                         zipCode.value=document.getElementById('{!$Component.billingAddr.billingAddrSection.billingZipCodeTxt}').value;
+	                         }
+	                         else{
+	                         street.value='';
+	                         city.value='';
+	                         state.value='';
+	                         country.value='';
+	                         zipCode.value='';
+	                         }
+	                       }
+	                     </script>
+                	</apex:pageBlockSection>
+                	
+                    <apex:pageBlock title="Bank Account Details"  >
+                          <apex:pageBlockButtons location="bottom" >
+<!--                             <apex:outputPanel rendered="{!isDisplaySaveButton}"> -->
+							<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+	                            <apex:commandButton id="addNewBankBtn" value="Add New"
+	                                 action="{!addNewRow}" reRender="dummy,bankTable"  styleClass="standardFontStyle" style="margin-left:140px;">
+	                                <apex:param name="financialRecordType" value="{!fmBean.bankRec.name}" />
+	                            </apex:commandButton>
+                            </apex:outputPanel>
+                          </apex:pageBlockButtons>
+                    
+
+                          <apex:pageBlockTable style="width:100%;" id="bankTable" value="{!fmbean.bankList}" var="bank" rowClasses="odd,even" >
+                          
+                              <apex:column headerValue="Account Number"  styleClass="standardFontStyle">
+                                  <apex:inputField value="{!bank.Account_Number__c}"  styleClass="standardFontStyle"/>
+                              </apex:column>
+                              
+                              <apex:column headerValue="Account Type" styleClass="standardFontStyle">
+                                  <apex:inputField value="{!bank.Account_type__c}" styleClass="standardFontStyle" />
+                              </apex:column>
+                              
+                              <apex:column headerValue="Bank Name"  styleClass="standardFontStyle">
+                                  <apex:inputField value="{!bank.Bank_Name__c}"
+                                      style="height:16px;"  styleClass="standardFontStyle"/>
+                              </apex:column>
+                              
+                              <apex:column headerValue="Branch Details"  styleClass="standardFontStyle">
+                                  <apex:inputField value="{!bank.Branch_detail__c}"
+                                      style="height:16px;"  styleClass="standardFontStyle"/>
+                              </apex:column>
+                              
+                              <apex:column headerValue="MICR No"  styleClass="standardFontStyle">
+                                  <apex:inputField value="{!bank.MICR_No__c}"  styleClass="standardFontStyle"/>
+                              </apex:column>
+                              
+                              <apex:column headerValue="IFSC No" styleClass="standardFontStyle">
+                                  <apex:inputField value="{!bank.IFSC_No__c}"  styleClass="standardFontStyle"/>
+                              </apex:column>
+                              
+                          </apex:pageBlockTable>
+                      </apex:pageBlock>
+                      
+                      <apex:pageBlock title="Demat Account Details" >
+                          <apex:pageBlockButtons location="bottom">
+<!--                            <apex:outputPanel rendered="{!isDisplaySaveButton}"> -->
+							<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+                              <apex:commandButton id="addNewDematBtn" value="Add New"
+                                  action="{!addNewRow}" reRender="dummy,dematTable"  styleClass="standardFontStyle" style="margin-left:140px;">
+                                  <apex:param name="financialRecordType2" value="{!fmBean.dematRec.name}" />
+                              </apex:commandButton>
+                            </apex:outputPanel> 
+                          </apex:pageBlockButtons>
+                    
+                          <apex:pageBlockTable style="width:100%;" id="dematTable" value="{!fmbean.dematList}" var="demat" rowClasses="odd,even">
+                          
+                              <apex:column headerValue="Account Number"  styleClass="standardFontStyle">
+                                  <apex:inputField value="{!demat.Account_Number__c}"  styleClass="standardFontStyle"/>
+                              </apex:column>
+                              
+                              <apex:column headerValue="DP Name"  styleClass="standardFontStyle">
+                                  <apex:inputField value="{!demat.DP_Name__c}"
+                                      style="height:16px;"  styleClass="standardFontStyle"/>
+                              </apex:column>
+                              
+                              <apex:column headerValue="DP ID"  styleClass="standardFontStyle">
+                                  <apex:inputField value="{!demat.DP_Id__c}"
+                                      style="height:16px;"  styleClass="standardFontStyle"/>
+                              </apex:column>
+                              
+                              <apex:column headerValue="Branch Details"  styleClass="standardFontStyle">
+                                  <apex:inputField value="{!demat.Branch_detail__c}"
+                                      style="height:16px;"  styleClass="standardFontStyle"/>
+                              </apex:column>
+                          </apex:pageBlockTable>
+                      </apex:pageBlock>
+                </apex:pageBlock>
+            </apex:form>
+        </apex:define>
+    </apex:composition>
+</apex:page>

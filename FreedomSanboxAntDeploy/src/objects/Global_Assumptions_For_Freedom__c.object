@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>Global Assumptions For Freedom</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Default_Estimated_Life_Expectancy__c</fullName>
+        <description>Stores Default Estimated Life Expectancy of Freedom</description>
+        <externalId>false</externalId>
+        <label>Default Estimated Life Expectancy</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Default_Retirement_Age__c</fullName>
+        <description>Default Retirement Age of Freedom</description>
+        <externalId>false</externalId>
+        <label>Default Retirement Age</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Expected_Return_on_Investment__c</fullName>
+        <description>Expected Return on Investment of Freedom</description>
+        <externalId>false</externalId>
+        <label>Expected Return on Investment</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Income_Growth_Rate__c</fullName>
+        <description>Income Growth Rate of Freedom</description>
+        <externalId>false</externalId>
+        <label>Income Growth Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Inflation_Rate__c</fullName>
+        <description>Inflation Rate of Freedom</description>
+        <externalId>false</externalId>
+        <label>Inflation Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Number_Of_Months__c</fullName>
+        <description>Number Of Months of Freedom</description>
+        <externalId>false</externalId>
+        <label>Number Of Months</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Global Assumptions For Freedom</label>
+</CustomObject>

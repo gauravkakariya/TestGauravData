@@ -1,0 +1,113 @@
+<apex:page standardController="smagicbasic__smsMagic__c" extensions="smagicbasic.smsMagicExtension" tabStyle="SM_Home__tab">
+
+<script type="text/javascript">
+	function clearText(fieldId)
+	{
+		document.getElementById(fieldId).value="";
+	}
+</script>
+
+<apex:includeScript value="/soap/ajax/15.0/connection.js"/>
+<apex:includeScript value="/soap/ajax/15.0/apex.js"/>
+<apex:includeScript value="{!$Resource.smagicbasic__BulkSMSJS}"/>
+<apex:sectionHeader title="SMS Magic - {!$User.FirstName} {!$User.LastName}" subtitle="New SMS"/>
+
+<apex:form >
+<apex:pageBlock id="main" title="Compose New SMS" helpTitle="Help For this Page?" helpUrl="/apex/SMSMagic_Help?from=NewSMS" >
+  <apex:pageMessages /><br/>
+  
+
+<apex:pageBlockButtons location="top">
+	<apex:commandButton value="Dashboard" immediate="true" onclick="redirectTo('/apex/SMHome','');return false;"/>
+	<apex:commandButton value="New SMS Template" immediate="true" onclick="redirectTo('/apex/NewSMSTemplate','/apex/SMHome');return false;"/>
+	<apex:outputLink style="margin-right:5px;" value="{!returnURL}">[back]</apex:outputLink>
+</apex:pageBlockButtons>  
+<apex:pageBlockSection id="sectionSenderId" title="Sender Id" >
+<apex:selectList size="1"  value="{!senderId}">
+    <apex:selectOptions value="{!senderIds}"/>
+</apex:selectList>
+</apex:pageBlockSection>
+
+<apex:pageBlockSection id="SendToSection" title="Send To (Please prefix ISD code)" onmouseover="showMsg();">
+<apex:selectList size="1"  value="{!lookupType}">
+    <apex:actionSupport event="onchange" rerender="lookupSection" action="{!changeLookupType}" status="lookupStatus"/>
+    <apex:selectOption itemValue="MobileNumber"/>
+    <apex:selectOption itemValue="Contact"/>
+    <apex:selectOption itemValue="User"/>
+    <apex:selectOption itemValue="Lead"/>
+</apex:selectList>
+</apex:pageBlockSection>
+<div style="width:400px;float:left;margin-top:0px;">
+<apex:pageBlockSection id="lookupSection" columns="2" >
+    <apex:pageBlockSectionItem rendered="{!isMobile}" > 
+        <apex:inputText id="name" value="{!smagicbasic__smsMagic__c.smagicbasic__Name__c}" onfocus="clearText(this.id);"/>
+    </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem rendered="{!isMobile}">
+        <apex:inputText id="phonenumber" value="{!smagicbasic__smsMagic__c.smagicbasic__PhoneNumber__c}" onfocus="clearText(this.id);"/>
+    </apex:pageBlockSectionItem>
+
+    <apex:pageBlockSectionItem rendered="{!isContact}"  >
+    </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem rendered="{!isContact}"  >
+        <apex:inputField value="{!smagicbasic__smsMagic__c.smagicbasic__Contact__c}" />
+</apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem rendered="{!isUser}" >
+     
+    </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem rendered="{!isUser}"  >
+        <apex:inputField value="{!smagicbasic__smsMagic__c.smagicbasic__User__c}" />
+    </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem rendered="{!isLead}"  >
+    </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem rendered="{!isLead}"   >
+        <apex:inputField value="{!smagicbasic__smsMagic__c.smagicbasic__Lead__c}" />
+    </apex:pageBlockSectionItem>
+
+</apex:pageBlockSection>
+</div>
+<div style="float:left;margin-top:10px;">
+<apex:commandButton value="add" action="{!addToList}" rerender="RecipientsList" status="rcptListStatus"/>
+</div>  
+<div style="clear:both"></div>
+
+<apex:actionStatus id="lookupStatus" startText="wait..." stopText="" layout="inline" />
+
+
+<apex:pageBlockSection id="RecipientsList" title="Recipients"  >
+
+ <apex:pageBlockTable value="{!smsObjects}" var="item">
+    <apex:column >
+        <apex:facet name="header">Name</apex:facet>
+         <apex:outputText value="{!item.smagicbasic__Name__c}"/>
+    </apex:column>
+    <apex:column >
+        <apex:facet name="header">MobileNumber</apex:facet>
+        <apex:outputText value="{!item.smagicbasic__PhoneNumber__c}"/>
+    </apex:column>
+ </apex:pageBlockTable>
+<br/>     
+<apex:actionStatus id="rcptListStatus" startText="reloading recipients list..." stopText=""/>
+<br/>     
+ 
+</apex:pageBlockSection>
+             
+<apex:pageBlockSection id="textSection"  title="SMS Text">
+ <apex:pageBlockSectionItem >
+<apex:outputText style="color:green;font-size:14px;" id="numberOfChars" value="You can type max. {!numberOfChars} characters."></apex:outputText> 
+</apex:pageBlockSectionItem>
+<br/>
+ <apex:pageBlockSectionItem labelStyle="text-align:left;" >
+<apex:inputField id="SMSText" style="width:400px;height:80px;text-align:left;" value="{!smagicbasic__smsMagic__c.smagicbasic__SMSText__c}"  >
+</apex:inputField>   
+</apex:pageBlockSectionItem>
+
+</apex:pageBlockSection>
+
+<apex:pageBlockButtons location="bottom" >
+    <apex:commandButton action="{!send}" value="send" disabled="{!IF (disableMe,true, false)}"/>
+    <apex:commandButton action="{!cancel}" value="cancel" />
+    
+</apex:pageBlockButtons>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

@@ -1,0 +1,20 @@
+<apex:page controller="ExportToExcelActionPlanController" action="{!getExecutionTrackerProduct}">
+	
+	<apex:pageBlock >
+	 	<apex:pageBlockTable value="{!lstETRecord}" var="executionTracker">
+	 	
+	 		<apex:column headerValue="Account Id" >
+				<apex:outputText value="{!executionTracker.Entity_Name__c}" />
+			</apex:column>
+			
+	 		<apex:column headerValue="Actual Product Name" >
+				<apex:outputText value="{!executionTracker.Executed_Product_Name__c}" />
+			</apex:column>
+			
+			<apex:column headerValue="Product Type" >
+				<apex:outputText value="{!executionTracker.Type__c}" />
+			</apex:column>
+			
+		</apex:pageBlockTable>
+	</apex:pageBlock>
+</apex:page>

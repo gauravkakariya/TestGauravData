@@ -1,0 +1,262 @@
+<!-- /*
+	
+Revision History:
+
+   Version     Version Author     Date          Comments
+   1.0         Persistent         NA  		  	Initial Draft
+   
+   2.0 		   Manasi Ranade	  04/06/2011	 Added style to the div to add scrollbars.
+
+   3.0 		   Mahesh Hirugade	  04/13/2012	 On new cash flow page, if an Annual Amount of Net Cash Surplus/(Shortage) is negative, then it should be shown in Bracket without 
+												 negative sign. So used ABS() & rendered="{!cashFlowBean.getMonthlyDifference >= 0}" & rendered="{!cashFlowBean.getMonthlyDifference >= 0}"
+												 in TD and in Repeat
+					  											
+*/-->
+<apex:page controller="NewCashFlowController" cache="false" showheader="false">
+	<style type="text/css">
+		.DataTableEven { background-color:#FFFFFF; }
+        .DataTableOdd { background-color:#EFFBEF; }
+    </style>
+	<apex:composition template="TabPage" >
+		<apex:define name="contents" >  
+			<apex:form id="ProjectionPage1">
+				<apex:messages />
+				<apex:pageBlock >
+		        	<div style="margin:bottom:20px; width:100%;margin-left:10px;">
+						<apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;  background-image:none;background-color:#A9C5EB !important; font-size:11px !important;padding-top:4px; padding-bottom:4px;" />
+			            <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+			            <apex:outputLabel value="Cash Flow" styleclass="button" style=" width:10%;margin-left:20px;  background-image:none;background-color:#A9C5EB !important;font-size:11px !important; padding-top:4px; padding-bottom:4px;" />
+			            <apex:image id="theImage2" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+			            <apex:commandButton id="theCommandLink1" styleclass="button" value="Output" action="{!newCashFlow}" style="margin-left:20px; background-image:none;background-color:#A9C5EB !important; " rerender="ProjectionPage"/>
+			            <apex:outputLabel id="theCommandLink2" styleclass="button" value="Projection"  style="margin-left:20px; background-image:none;background-color:#F5D0A9!important;font-size:11px !important;padding-top:4px; padding-bottom:4px;"  />
+					</div>
+					
+					<!-- /** Eternus Solutions  **/
+						/** Author  : Manasi Ranade	**/
+						/** Issue Id: F0036      	**/
+						/** Date    : 04/06/2011 	**/
+						/** Purpose : Added style to the div to add scrollbars **/
+						/****************************************************/  --> 
+					<br/>
+					
+					<!--
+			       		Added by : Aditi Satpute
+			       		Date: 2/8/13 :  FP changes part-2 : issue-23 - Enhancement
+			       		Purpose: Added new section which contains checkbox and Save button.
+			       				 On Click of Save button checks the checkbox value and decides whether CashFlow Projection should be included in FP
+		     		-->  
+					<div style="height: 50px;width:400px;padding: 20px;"> 
+ 						<table class="gridtable"  style="margin-top:25px; border-left:2;" > 
+ 							<tr> 
+	                        <td width="40%"><apex:outputText value="{!$Label.IncludeInFinancialPlan}" styleClass="textStyle"/></td>
+		                    <td width="5%"><apex:inputCheckbox value="{!includeProjection}" id="chkIsInclude"/></td>
+		                    <td width="5%"><apex:commandButton styleclass="button" value="Save" status="topStatus" rerender="DataTable" action="{!saveDisplayProjection}"/></td> 
+		                    <td width="5%">
+		                    	<apex:actionStatus stopText="" id="topStatus">
+					                <apex:facet name="start">
+					               		<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+					                    	<img src="/img/loading.gif" width="16" height="16"/>
+										</apex:outputPanel>
+					                </apex:facet>
+					           	</apex:actionStatus></td>   
+							</tr>
+						</table>             
+					</div>
+					<br/>  
+ 					<div style="height: 600px;width: 970px;overflow: auto;border: 1px solid #666;padding: 8px;"> 
+ 						<table id="DataTable" class="gridtable"  style="margin-top:25px; border-left:2;" > 
+ 							<tr> 
+ 								<th colspan="2" class="gridtableHeader"></th> 
+ 								<th class="gridtableHeader"> 
+ 									Monthly Snapshot     
+ 								</th> 
+ 								<apex:repeat value="{!getYearList}" var="yearStr">                     
+ 									<th class="gridtableHeader"> 
+ 										{!yearStr} 
+ 									</th> 
+ 								</apex:repeat>                       
+ 							</tr> 
+ 							<apex:repeat value="{!cashFlowBean.summaryList}" var="summaryBean"> 
+ 								<tr style="border-right:1px solid;"> 
+ 									<td  class="gridtableColumn textStyle" style=" font-weight:bold;border-right:none;"> 
+ 										{!summaryBean.header} 
+ 									</td> 
+ 									<apex:repeat value="{!getYearList}" var="yearStr"> 
+ 										<td class="textStyle"/> 
+ 									</apex:repeat> 
+ 									<td/><td/> 
+ 								</tr>
+ 								 
+ 								<apex:repeat value="{!summaryBean.summaryRecordTypeBeanList}" var="summaryRecordType"> 
+ 									<tr style="page-break-after:always;"> 
+ 										<td class="gridtableColumn" colspan="2"> 
+ 											{!summaryRecordType.name} 
+ 										</td> 
+ 										<td class="gridtableColumn" style="text-align:right;"> 
+ 											<apex:outputText value="{0, number, ,##,##0}" styleclass="textStyle"> 
+ 												<apex:param value="{!summaryRecordType.monthlySummary}" /> 
+ 											</apex:outputText> 
+ 										</td> 
+ 										
+ 										<apex:repeat value="{!summaryRecordType.totalValueByYear}" var="totalValue"> 
+ 											<td class="gridtableColumn textStyle" style="text-align:right;">                                     
+ 												<apex:outputText value="{0, number, ,##,##0}" styleclass="textStyle"> 
+ 													<apex:param value="{!totalValue}"/> 
+ 												</apex:outputText>  
+ 											</td> 
+ 										</apex:repeat>     
+ 									</tr>    
+ 								</apex:repeat> 
+ 								<tr> 
+ 									<td class="gridtableColumn" colspan="2" style=" font-weight:bold;"> 
+ 										Total {!summaryBean.header} 
+ 									</td> 
+ 									<td class="gridtableColumn" style="font-family:arial; font-weight:bold; text-align:right;"> 
+ 										<apex:outputText value="{0, number, ,##,##0}" styleclass="textStyle"> 
+ 											<apex:param value="{!summaryBean.monthlySummary}"/> 
+ 										</apex:outputText> 
+ 									</td> 
+ 									<apex:repeat value="{!summaryBean.totalValueByYear}" var="totalValue"> 
+ 										<td class="gridtableColumn" style="font-family:arial; font-weight:bold; text-align:right;"> 
+ 											<apex:outputText value="{0, number, ,##,##0}" styleclass="textStyle"> 
+ 												<apex:param value="{!totalValue}"/> 
+ 											</apex:outputText> 
+ 										</td> 
+ 									</apex:repeat>                           
+ 								</tr>                     
+ 								<tr></tr> 
+ 							</apex:repeat> 
+ 							<tr> 
+ 								<td class="gridtableColumn" colspan="2" style=" font-weight:bold;"> 
+ 									INCOME SURPLUS/(SHORTAGE) 
+ 								</td> 
+<!-- 								 /** Eternus Solutions  **/ -->
+<!-- 									/** Author  : Mahesh Hirugade	**/ -->
+<!-- 									/** Case No : 00001592      	**/ -->
+<!-- 									/** Date    : 04/13/2012 	**/ -->
+<!-- 									/** Purpose : On new cash flow page, if an Annual Amount of Net Cash Surplus/(Shortage) is negative, then it should be shown in Bracket without -->
+<!-- 												  negative sign. So used ABS() & rendered="{!cashFlowBean.getMonthlyDifference >= 0}" & rendered="{!cashFlowBean.getMonthlyDifference >= 0}" -->
+<!-- 												  in TD and in Repeat -->
+<!-- 									/****************************************************/   -->
+ 								<td class="gridtableColumn textStyle" style="text-align:right; font-family:arial; font-weight:bold;"> 
+ 									<apex:outputText value="{0, number, ,##,##0}" styleClass="textStyle" rendered="{!cashFlowBean.getMonthlyDifference >= 0}"> 
+ 										<apex:param value="{!cashFlowBean.getMonthlyDifference}"/> 
+ 									</apex:outputText> 
+ 									<apex:outputText value="({0, number, ,##,##0})" styleClass="textStyle" rendered="{!cashFlowBean.getMonthlyDifference < 0}"> 
+ 										<apex:param value="{!ABS(cashFlowBean.getMonthlyDifference)}"/> 
+ 									</apex:outputText> 
+ 								</td> 
+ 								<apex:repeat value="{!cashFlowBean.getDifference}" var="difference"> 
+ 									<td class="gridtableColumn" style="font-family:arial; font-weight:bold; text-align:right;"> 
+ 										<apex:outputText value="{0, number, ,##,##0}" styleclass="textStyle" rendered="{!difference >= 0}"> 
+ 											<apex:param value="{!difference}"/> 
+ 										</apex:outputText> 
+<!-- 										00001592 -->
+ 										<apex:outputText value="({0, number, ,##,##0})" styleclass="textStyle" rendered="{!difference < 0}"> 
+ 											<apex:param value="{!ABS(difference)}"/> 
+ 										</apex:outputText> 
+ 									</td> 
+ 								</apex:repeat> 
+ 							</tr> 
+ 						</table> 
+ 					</div> <br/>
+					<br/>
+					
+<!-- 				/************ Anupam Agrawal ***************/ -->
+<!-- 				    <div style="height: 600px;width: 970px;overflow: auto;border: 1px solid #666;padding: 8px;">  -->
+<!-- 				    	<apex:repeat value="{!lstProjectionDetail}" var="rec"> -->
+<!-- 							<table id="DataTable" class="gridtable"  style="margin-top:25px; border-left:2;" > -->
+<!-- 								<tr>  -->
+<!-- 									<th colspan="2" class="gridtableHeader"></th> -->
+<!-- 									<apex:repeat value="{!rec.lstYear}" var="yearStr"> -->
+<!-- 										<th class="gridtableHeader"> -->
+<!-- 											{!yearStr} -->
+<!-- 										</th> -->
+<!-- 									</apex:repeat> -->
+<!-- 								</tr> -->
+<!-- 								<apex:repeat value="{!rec.lstNewSummaryBean}" var="summaryBean"> -->
+<!-- 									<tr style="border-right:1px solid;"> -->
+<!-- 										<td  class="gridtableColumn textStyle" style=" font-weight:bold;border-right:none;"> -->
+<!-- 											{!summaryBean.header} -->
+<!-- 										</td> -->
+<!-- 										<apex:repeat value="{!rec.lstYear}" var="yearStr"> -->
+<!-- 											<td class="textStyle"/> -->
+<!-- 										</apex:repeat> -->
+<!-- 										<td/><td/> -->
+<!-- 									</tr> -->
+<!-- 									<apex:repeat value="{!summaryBean.lstSummaryRecordTypeBean}" var="summaryRecordType"> -->
+<!-- 										<tr style="page-break-after:always;"> -->
+<!-- 											<td class="gridtableColumn" colspan="2"> -->
+<!-- 												{!summaryRecordType.name} -->
+<!-- 											</td> -->
+											
+<!-- 											<apex:repeat value="{!summaryRecordType.lstTotalValueByYear}" var="totalValue"> -->
+<!-- 												<td class="gridtableColumn textStyle" style="text-align:right;"> -->
+<!-- 													<apex:outputText value="{0, number, ,##,##0}" styleclass="textStyle"> -->
+<!-- 														<apex:param value="{!totalValue}"/> -->
+<!-- 													</apex:outputText> -->
+<!-- 												</td> -->
+<!-- 											</apex:repeat> -->
+<!-- 										</tr> -->
+<!-- 									</apex:repeat> -->
+<!-- 									<tr> -->
+<!-- 										<td class="gridtableColumn" colspan="2" style=" font-weight:bold;"> -->
+<!-- 											Total {!summaryBean.header} -->
+<!-- 										</td> -->
+<!-- 										<apex:repeat value="{!summaryBean.lstSumByYear}" var="totalValue"> -->
+<!-- 											<td class="gridtableColumn" style="font-family:arial; font-weight:bold; text-align:right;"> -->
+<!-- 												<apex:outputText value="{0, number, ,##,##0}" styleclass="textStyle"> -->
+<!-- 													<apex:param value="{!totalValue}"/> -->
+<!-- 												</apex:outputText> -->
+<!-- 											</td> -->
+<!-- 										</apex:repeat> -->
+<!-- 									</tr> -->
+<!-- 									<tr></tr> -->
+<!-- 								</apex:repeat> -->
+<!-- 								<tr> -->
+<!-- 	 								<td class="gridtableColumn" colspan="2" style=" font-weight:bold;"> -->
+<!-- 	 									INCOME SURPLUS/(SHORTAGE) -->
+<!-- 	 								</td> -->
+<!-- 	 								<apex:repeat value="{!rec.lstIncomeSurplus}" var="difference"> -->
+<!-- 	 									<td class="gridtableColumn" style="font-family:arial; font-weight:bold; text-align:right;"> -->
+<!-- 	 										<apex:outputText value="{0, number, ,##,##0}" styleclass="textStyle" rendered="{!difference >= 0}"> -->
+<!-- 	 											<apex:param value="{!difference}"/> -->
+<!-- 	 										</apex:outputText> -->
+<!-- 	 										<apex:outputText value="({0, number, ,##,##0})" styleclass="textStyle" rendered="{!difference < 0}"> -->
+<!-- 	 											<apex:param value="{!ABS(difference)}"/> -->
+<!-- 	 										</apex:outputText> -->
+<!-- 	 									</td> -->
+<!-- 	 								</apex:repeat> -->
+<!-- 	 							</tr> -->
+<!-- 							</table> -->
+<!-- 						</apex:repeat> -->
+<!-- 					</div> -->
+				</apex:pageBlock>
+			</apex:form>
+		</apex:define>
+    </apex:composition>
+	<script>
+		<!-- This is for styling alternate rows of SummaryTable -->
+        function altRows(id)
+        {
+			// alert('hello'+id);
+            if(document.getElementsByTagName)
+            {
+                var table = document.getElementById(id);
+                var rows = table.getElementsByTagName("tr");
+                for(i = 1; i < rows.length; i++)
+                {
+                    if(i % 2 == 0)
+                    {
+                        rows[i].className = "DataTableEven";
+                    }
+                    else
+                    {
+                        rows[i].className = "DataTableOdd";
+                    }
+                }
+			}
+        }
+        window.onload = altRows('DataTable');
+    </script>
+</apex:page>

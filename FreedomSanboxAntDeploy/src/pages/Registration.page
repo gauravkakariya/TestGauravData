@@ -1,0 +1,3 @@
+<apex:page standardController="Registration__c" recordSetVar="registrations" showheader="false" sidebar="false" extensions="RegistrationController" action="{!sendInvite}">
+
+</apex:page>

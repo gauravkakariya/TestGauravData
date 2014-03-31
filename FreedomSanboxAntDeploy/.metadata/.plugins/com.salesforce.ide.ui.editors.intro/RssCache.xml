@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss2full.xsl"?>
+<?xml-stylesheet type="text/css" media="screen" href="http://feeds.feedburner.com/~d/styles/itemcontent.css"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" version="2.0">
+
+<channel>
+	<title>Force.com Blogs</title>
+	
+	<link>http://blogs.developerforce.com</link>
+	<description/>
+	<lastBuildDate>Thu, 27 Mar 2014 21:55:20 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	
+		<atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" href="http://feeds.feedburner.com/SforceBlog" rel="self" type="application/rss+xml"/><feedburner:info uri="sforceblog"/><atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" href="http://pubsubhubbub.appspot.com/" rel="hub"/><feedburner:emailServiceId>SforceBlog</feedburner:emailServiceId><feedburner:feedburnerHostname>http://feedburner.google.com</feedburner:feedburnerHostname><feedburner:feedFlare href="http://add.my.yahoo.com/rss?url=http%3A%2F%2Ffeeds.feedburner.com%2FSforceBlog" src="http://us.i1.yimg.com/us.yimg.com/i/us/my/addtomyyahoo4.gif">Subscribe with My Yahoo!</feedburner:feedFlare><feedburner:feedFlare href="http://www.newsgator.com/ngs/subscriber/subext.aspx?url=http%3A%2F%2Ffeeds.feedburner.com%2FSforceBlog" src="http://www.newsgator.com/images/ngsub1.gif">Subscribe with NewsGator</feedburner:feedFlare><feedburner:feedFlare href="http://feeds.my.aol.com/add.jsp?url=http%3A%2F%2Ffeeds.feedburner.com%2FSforceBlog" src="http://o.aolcdn.com/favorites.my.aol.com/webmaster/ffclient/webroot/locale/en-US/images/myAOLButtonSmall.gif">Subscribe with My AOL</feedburner:feedFlare><feedburner:feedFlare href="http://www.bloglines.com/sub/http://feeds.feedburner.com/SforceBlog" src="http://www.bloglines.com/images/sub_modern11.gif">Subscribe with Bloglines</feedburner:feedFlare><feedburner:feedFlare href="http://www.netvibes.com/subscribe.php?url=http%3A%2F%2Ffeeds.feedburner.com%2FSforceBlog" src="http://www.netvibes.com/img/add2netvibes.gif">Subscribe with Netvibes</feedburner:feedFlare><feedburner:feedFlare href="http://fusion.google.com/add?feedurl=http%3A%2F%2Ffeeds.feedburner.com%2FSforceBlog" src="http://buttons.googlesyndication.com/fusion/add.gif">Subscribe with Google</feedburner:feedFlare><feedburner:feedFlare href="http://www.pageflakes.com/subscribe.aspx?url=http%3A%2F%2Ffeeds.feedburner.com%2FSforceBlog" src="http://www.pageflakes.com/ImageFile.ashx?instanceId=Static_4&amp;fileName=ATP_blu_91x17.gif">Subscribe with Pageflakes</feedburner:feedFlare><item>
+		<title>Force.com SOQL Best Practice: Sort Optimization</title>
+		<link>http://feedproxy.google.com/~r/SforceBlog/~3/j35Tll5p6v4/force-com-soql-best-practice-sort-optimization.html</link>
+		<comments>http://blogs.developerforce.com/engineering/2014/03/force-com-soql-best-practice-sort-optimization.html#comments</comments>
+		<pubDate>Thu, 27 Mar 2014 18:35:36 +0000</pubDate>
+		<dc:creator>Daisuke Kawamoto</dc:creator>
+				<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[architecture]]></category>
+		<category><![CDATA[Best Practices]]></category>
+		<category><![CDATA[LDV]]></category>
+		<category><![CDATA[Performance]]></category>
+		<category><![CDATA[SOQL]]></category>
+
+		<guid isPermaLink="false">http://25.16691</guid>
+		<description><![CDATA[<a href="http://blogs.developerforce.com/engineering/2014/03/force-com-soql-best-practice-sort-optimization.html"><img align="left" hspace="5" width="150" src="http://res.cloudinary.com/hzxejch6p/image/upload/v1395884775/Sort_optimization_-_featured_image_c_tvpj8x.png" class="alignleft wp-post-image tfe" alt="Force.com SOQL Best Practice: Sort Optimization" title="Force.com SOQL Best Practice: Sort Optimization" /></a>Do you have a SOQL query or a report that takes a long time to complete because you are querying data from an object that has tens of millions of rows, yet your business requirements won’t allow you to add a selective filter? Read on to learn more about sort optimization, a simple technique that many developers and architects overlook when applying SOQL performance tuning best practices.]]></description>
+				<content:encoded><![CDATA[<p><img class="wp-image-16761 alignright" title="Force.com SOQL Best Practice: Sort Optimization" alt="Force.com SOQL Best Practice: Sort Optimization" src="http://res.cloudinary.com/hzxejch6p/image/upload/v1395884775/Sort_optimization_-_featured_image_c_tvpj8x.png" width="180" height="127" /></p>
+<p>Do you have a SOQL query or a report that takes a long time to complete because you are querying data from an object that has tens of millions of rows, yet your business requirements won’t allow you to add a selective filter? Read on to learn more about sort optimization, a simple technique that many developers and architects overlook when applying SOQL performance tuning best practices.</p>
+<h1>What is Sort Optimization?</h1>
+<p dir="ltr">So what is sort optimization? The concept is very simple.</p>
+<p dir="ltr">Let’s say that you contacted salesforce.com Customer Support to place a custom index on a field to optimize the performance of your SOQL query. As the number of records in your object increases, or the data distribution changes over time, your filters might no longer meet the appropriate Force.com query optimizer selectivity threshold. (See the <a href="http://help.salesforce.com/help/pdfs/en/salesforce_query_search_optimization_developer_cheatsheet.pdf">Database Query &amp; Search Optimization Cheatsheet</a>.) When the filters don’t meet that selectivity threshold, the Force.com query optimizer does a full table scan instead of using the index, and the query takes significantly longer to complete or simply times out altogether.</p>
+<p dir="ltr">For a variety of business reasons, it might be difficult to add filters to make the query more selective. But if you could add just one sort clause (ORDER BY) on an indexed field, which in many cases makes the data more consumable by end users, you would have a good chance of bringing back the performance benefits offered by using an index.</p>
+<p dir="ltr">So how would adding a sort clause make the query more selective? It wouldn’t. Sort clauses have nothing to do with selectivity. You might also ask, “Wouldn’t adding an ORDER BY clause increase the overhead because Salesforce must complete a sorting task in addition to selecting the appropriate rows?” The answer is “no.” When you have an ORDER BY clause bound by a LIMIT clause&#8211;and chances are that you already have one in place to avoid hitting governor limits&#8211;the Force.com query optimizer considers using the index because the index, by nature, is a presorted list of values. The query starts from either end of the index, depending on your ascending or descending order preference, and then works its way up or down until it reaches the number or records specified by the LIMIT clause. It knows exactly when to stop searching and can return the query results without having to do a full table scan.</p>
+<h1>Applying Sort Optimization</h1>
+<p dir="ltr">Let’s dig in a bit deeper. There are a few best practices that you should know and follow when applying the sort optimization technique.</p>
+<ul>
+<li><strong>Sort on a number or date field.  </strong><br />
+The Force.com query optimizer considers number (e.g., order number, customer ID) or date (e.g., CreatedDate) data type fields as candidates for sorting. If you need to use a field that does not have a number or date type, you can add a “hidden” field, populate it with converted number values, and then place an index on it.</li>
+</ul>
+<ul>
+<li><strong>Sort on the second field for a two-column index.</strong><br />
+If your custom index is a two-column index, make sure that you have an equality filter for the first field and are sorting on the second field. The equality filter for the first field doesn’t need to meet the Force.com query optimizer’s selectivity threshold, but it does need to appear in the query’s WHERE clause for the Force.com query optimizer to consider using the two-column index.</li>
+</ul>
+<ul>
+<li><strong>Exclude null records.</strong><br />
+If you sort on a field that might contain null records&#8211;regardless of whether you actually have any&#8211;add a filter in the WHERE clause to exclude those records. Otherwise, the Force.com query optimizer won’t consider using the index. This means you cannot apply sort optimization if you want to include records that have null values in the sorting fields as part of your results.</li>
+</ul>
+<ul>
+<li><strong>Evaluate optimization.</strong><br />
+When you have multiple filters, and the matching records don’t appear anywhere close to the beginning or end of the index, Salesforce might end up scanning a large number of records on the index. Similarly, if you target a large number of records with your LIMIT clause, the query might take a long time to complete.</li>
+</ul>
+<h1>Best Use Cases for Sort Optimization</h1>
+<p>In summary, sort optimization takes advantage of available indexes by picking up records in a limited, orderly fashion. The best sort optimization use cases involve running your SOQL queries to list most recent purchase orders, or to find record set boundaries such as “largest,” “least,” “top 50,” and so on for your record set. Sort optimization might have your queries less of a performance boost for something like a list of the 5,000 customers who most recently purchased a product that the company stopped selling 10 years ago. This performance difference exists because the query might need to scan a few thousand records on the index before it finds the first matching record, then keep searching until it reaches the five thousandth record. Unless this product sold so well until 10 years ago that filtering on “product” does not meet the Force.com query optimizer’s appropriate selectivity threshold, the Force.com query optimizer is most likely going to use indexes on dates and products instead of using sort optimization.</p>
+<h1>Related Resources</h1>
+<ul>
+<li><a href="http://help.salesforce.com/help/pdfs/en/salesforce_query_search_optimization_developer_cheatsheet.pdf">Database Query &amp; Search Optimization Cheat Sheet</a></li>
+<li><a href="http://wiki.developerforce.com/page/Webinar:_Inside_the_Force.com_Query_Optimizer_(2013-Apr)">Webinar: Inside the Force.com Query Optimizer</a></li>
+<li><a href="http://blogs.developerforce.com/engineering/2013/07/maximizing-the-performance-of-force-com-soql-reports-and-list-views.html">Maximizing the Performance of Force.com SOQL, Reports, and List Views</a></li>
+<li><a href="http://blogs.developerforce.com/engineering/2013/02/force-com-soql-best-practices-nulls-and-formula-fields.html">Force.com SOQL Best Practices: Nulls and Formula Fields</a></li>
+<li><a href="http://events.developerforce.com/conferences/dreamforce?session=27321">Performance Tuning for Visualforce and Apex</a></li>
+<li><a href="http://developer.force.com/architect">Architect Core Resources</a></li>
+</ul>
+<h1>About the Author and CCE Technical Enablement</h1>
+<p dir="ltr"><a href="https://twitter.com/DaisukeSfdc">Daisuke Kawamoto</a> is an Architect Evangelist within the Technical Enablement team of the salesforce.com Customer-Centric Engineering group. The team’s mission is to help customers understand how to implement technically sound salesforce.com solutions. Check out all of the resources that this team maintains on the <a href="http://developer.force.com/architect">Architect Core Resources</a> page of Developer Force.</p>
+<div class="feedflare">
+<a href="http://feeds.feedburner.com/~ff/SforceBlog?a=j35Tll5p6v4:wvhiB862lVg:yIl2AUoC8zA"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=yIl2AUoC8zA" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=j35Tll5p6v4:wvhiB862lVg:qj6IDK7rITs"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=qj6IDK7rITs" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=j35Tll5p6v4:wvhiB862lVg:V_sGLiPBpWU"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=j35Tll5p6v4:wvhiB862lVg:V_sGLiPBpWU" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=j35Tll5p6v4:wvhiB862lVg:F7zBnMyn0Lo"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=j35Tll5p6v4:wvhiB862lVg:F7zBnMyn0Lo" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=j35Tll5p6v4:wvhiB862lVg:l6gmwiTKsz0"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=l6gmwiTKsz0" border="0"></img></a>
+</div><img src="http://feeds.feedburner.com/~r/SforceBlog/~4/j35Tll5p6v4" height="1" width="1"/>]]></content:encoded>
+			<wfw:commentRss>http://blogs.developerforce.com/engineering/2014/03/force-com-soql-best-practice-sort-optimization.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<feedburner:origLink>http://blogs.developerforce.com/engineering/2014/03/force-com-soql-best-practice-sort-optimization.html</feedburner:origLink></item>
+		<item>
+		<title>See Your Visualforce Pages on TV with Chromecast!</title>
+		<link>http://feedproxy.google.com/~r/SforceBlog/~3/mKBRZl-3H4c/see-your-visualforce-pages-on-tv-with-chromecast.html</link>
+		<comments>http://blogs.developerforce.com/developer-relations/2014/03/see-your-visualforce-pages-on-tv-with-chromecast.html#comments</comments>
+		<pubDate>Wed, 26 Mar 2014 15:54:57 +0000</pubDate>
+		<dc:creator>Pat Patterson</dc:creator>
+				<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[Chromecast]]></category>
+		<category><![CDATA[visualforce]]></category>
+
+		<guid isPermaLink="false">http://26.57331</guid>
+		<description><![CDATA[<a href="http://blogs.developerforce.com/developer-relations/2014/03/see-your-visualforce-pages-on-tv-with-chromecast.html"><img align="left" hspace="5" width="150" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_250/v1395847461/IMG_1579_sznaqh.jpg" class="alignleft wp-post-image tfe" alt="" title="" /></a>With a $35 Google Chromecast and the 'Visualforce on Chromecast' app, you can display any Visualforce Page on any HD TV or monitor - perfect for your conference booth, office, or den!]]></description>
+				<content:encoded><![CDATA[<p><img class="alignleft wp-image-57341" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_250/v1395847461/IMG_1579_sznaqh.jpg" width="250" height="188" />In <a href="http://blogs.developerforce.com/developer-relations/2014/03/getting-started-with-chromecast-on-visualforce.html">my last blog post</a>, I reported on my initial progress in loading a Visualforce Page on the <a href="http://www.google.com/chromecast">Google Chromecast</a>, a $35 media player intended for streaming content via HDMI. I was able to deploy the the Google Cast SDK &#8216;Hello World&#8217; sample to a Visualforce Page on a Force.com Site. That done, my next goal was to display business data from Salesforce on TV via Chromecast. Some investigation and experimentation led me to frontdoor.jsp, <a href="http://docs.releasenotes.salesforce.com/en-us/winter14/release-notes/security_frontdoorjsp.htm">formally documented and supported since the Winter &#8217;14 Salesforce release</a>, which &#8220;gives users access to Salesforce from a custom Web interface, such as a remote access Force.com site or other API integration, using their existing session ID and the server URL&#8221;. To authenticate users with frontdoor.jsp, you pass the server URL and session ID to frontdoor.jsp in this format:</p>
+<p><code>https://instance.salesforce.com/secur/frontdoor.jsp?sid=<i>session_ID</i>&amp;retURL=<i>optional_relative_url_to_open</i></code></p>
+<p>I found that, with the correct session ID, I could send a frontdoor URL to a &#8216;receiver&#8217; app on the Chromecast, which would load it into an iframe. To obtain that session ID, I used <a href="https://twitter.com/kevino80">Kevin O&#8217;Hara</a>&#8216;s excellent <a href="https://github.com/kevinohara80/nforce">nforce</a> to build <a href="https://github.com/metadaddy-sfdc/CastDemo/tree/master/vf-chromecast">vf-chromecast</a>, a Node.js &#8216;sender&#8217; app which runs you through the OAuth flow, showing you a list of Visualforce Pages in your org. <img class="alignnone wp-image-57351" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_730/v1395847768/Screen_Shot_2014-03-25_at_4_32_32_PM_qo4fhj.png" width="730" height="566" /> Pick a Visualforce Page, hit &#8216;Send&#8217;, and the sender app constructs the frontdoor URL, sends it to the receiver app, and you see your page on TV. Since the Chromecast is effectively a tiny Linux computer running Google Chrome, <em>any</em> Visualforce Page will work; pages using the <a href="http://wiki.developerforce.com/page/Getting_Started_with_the_Force.com_Streaming_API">Force.com Streaming API</a> are particularly effective. Here&#8217;s one in action:</p>
+<p><iframe width="500" height="281" src="http://www.youtube.com/embed/0tWnaOYqUzM?feature=oembed" frameborder="0" allowfullscreen></iframe></p>
+<p>As soon as I had vf-chromecast running, I realized that I could deploy it on <a href="http://heroku.com/">Heroku</a>, so <i>anyone</i> with a Chromecast and API access to Salesforce can display Visualforce Pages on TV via Chromecast. Just go to <a href="https://vf-chromecast.herokuapp.com/">Visualforce on Chromecast</a>, follow the instructions, and &#8216;cast&#8217; your charts, tables and dashboards to an HD TV or monitor near you! <img class="alignnone wp-image-57361" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_730/v1395847958/Screen_Shot_2014-03-25_at_4_30_42_PM_e9u2d3.png" width="730" height="566" /></p>
+<p>If you want to dive deeper, all <a href="https://github.com/metadaddy-sfdc/CastDemo">the code for this project is on GitHub</a>, and I&#8217;ve written a series of three posts over at <a href="http://blog.superpat.com/">my personal blog</a> with more detail:</p>
+<ul>
+<li><a href="http://blog.superpat.com/2014/03/07/getting-started-with-chromecast-on-visualforce/">Getting Started with Chromecast on Visualforce</a></li>
+<li><a href="http://blog.superpat.com/2014/03/21/display-any-visualforce-page-on-google-chromecast/">Display ANY Visualforce Page on Google Chromecast</a></li>
+<li><a href="http://blog.superpat.com/2014/03/25/visualforce-on-chromecast-as-a-service/">Visualforce on Chromecast, as a Service!</a></li>
+</ul>
+<p><a title="Controlling Physical Devices via Approval Processes in Force.com" href="http://blogs.developerforce.com/developer-relations/2013/03/controlling-physical-devices-via-approval-processes-in-force-com.html">Raspberry Pi</a>, <a title="Visualizing Salesforce Data… in Minecraft!?" href="http://blogs.developerforce.com/developer-relations/2014/01/visualizing-salesforce-data-in-minecraft.html">Minecraft</a>, and now Chromecast &#8211; I&#8217;m always looking for new ideas for interesting Salesforce integrations. Leave a comment if you have one!</p>
+<div class="feedflare">
+<a href="http://feeds.feedburner.com/~ff/SforceBlog?a=mKBRZl-3H4c:v55r7GD4fQ8:yIl2AUoC8zA"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=yIl2AUoC8zA" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=mKBRZl-3H4c:v55r7GD4fQ8:qj6IDK7rITs"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=qj6IDK7rITs" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=mKBRZl-3H4c:v55r7GD4fQ8:V_sGLiPBpWU"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=mKBRZl-3H4c:v55r7GD4fQ8:V_sGLiPBpWU" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=mKBRZl-3H4c:v55r7GD4fQ8:F7zBnMyn0Lo"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=mKBRZl-3H4c:v55r7GD4fQ8:F7zBnMyn0Lo" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=mKBRZl-3H4c:v55r7GD4fQ8:l6gmwiTKsz0"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=l6gmwiTKsz0" border="0"></img></a>
+</div><img src="http://feeds.feedburner.com/~r/SforceBlog/~4/mKBRZl-3H4c" height="1" width="1"/>]]></content:encoded>
+			<wfw:commentRss>http://blogs.developerforce.com/developer-relations/2014/03/see-your-visualforce-pages-on-tv-with-chromecast.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<feedburner:origLink>http://blogs.developerforce.com/developer-relations/2014/03/see-your-visualforce-pages-on-tv-with-chromecast.html</feedburner:origLink></item>
+		<item>
+		<title>Control Your Quadcopter Drone Fleet with Salesforce1</title>
+		<link>http://feedproxy.google.com/~r/SforceBlog/~3/idlCB5uwGIg/control-your-quadcopter-drone-fleet-with-salesforce1.html</link>
+		<comments>http://blogs.developerforce.com/developer-relations/2014/03/control-your-quadcopter-drone-fleet-with-salesforce1.html#comments</comments>
+		<pubDate>Mon, 24 Mar 2014 15:45:44 +0000</pubDate>
+		<dc:creator>Reid Carlberg</dc:creator>
+				<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[drone]]></category>
+		<category><![CDATA[iot]]></category>
+		<category><![CDATA[quadcopter]]></category>
+		<category><![CDATA[streaming API]]></category>
+
+		<guid isPermaLink="false">http://26.57151</guid>
+		<description><![CDATA[Let's say -- hypothetically --  your VP of Drone Fleet Operations just asked you to help her handle drone management, route planning, payload optimization and more. What do you do? Well, there's a few approaches to tackling the problem. Approach #1 is all about controlling drones using the Salesforce1 Mobile app. That's what I'm going to talk about today.]]></description>
+				<content:encoded><![CDATA[<p><strong><em>Note: this is a cross post from my personal blog.  Click through to read the original <a href="http://reidcarlberg.com/2014/03/19/control-your-quadcopter-drone-fleet-with-salesforce1/">Control Your Quadcopter Drone Fleet with Salesforce1</a>.</em></strong></p>
+<p>Let&#8217;s say &#8212; hypothetically &#8212;  your VP of Drone Fleet Operations just asked you to help her handle drone management, route planning, payload optimization and more. What do you do? Well, there&#8217;s a few approaches to tackling the problem. Approach #1 is all about controlling drones using the <a href="http://www.salesforce.com/salesforce1/">Salesforce1</a> Mobile app. That&#8217;s what I&#8217;m going to talk about today. Note that all of this is done with a free <a href="http://events.developerforce.com/signup">Developer Edition</a> and a little code.</p>
+<p><iframe width="500" height="281" src="http://www.youtube.com/embed/CBG9kKvGp0c?feature=oembed" frameborder="0" allowfullscreen></iframe></p>
+<p><strong><em><a href="http://reidcarlberg.com/2014/03/19/control-your-quadcopter-drone-fleet-with-salesforce1/">Continue reading</a>.</em></strong></p>
+<p>&nbsp;</p>
+<div class="feedflare">
+<a href="http://feeds.feedburner.com/~ff/SforceBlog?a=idlCB5uwGIg:2RVy_b9fVdM:yIl2AUoC8zA"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=yIl2AUoC8zA" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=idlCB5uwGIg:2RVy_b9fVdM:qj6IDK7rITs"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=qj6IDK7rITs" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=idlCB5uwGIg:2RVy_b9fVdM:V_sGLiPBpWU"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=idlCB5uwGIg:2RVy_b9fVdM:V_sGLiPBpWU" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=idlCB5uwGIg:2RVy_b9fVdM:F7zBnMyn0Lo"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=idlCB5uwGIg:2RVy_b9fVdM:F7zBnMyn0Lo" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=idlCB5uwGIg:2RVy_b9fVdM:l6gmwiTKsz0"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=l6gmwiTKsz0" border="0"></img></a>
+</div><img src="http://feeds.feedburner.com/~r/SforceBlog/~4/idlCB5uwGIg" height="1" width="1"/>]]></content:encoded>
+			<wfw:commentRss>http://blogs.developerforce.com/developer-relations/2014/03/control-your-quadcopter-drone-fleet-with-salesforce1.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<feedburner:origLink>http://blogs.developerforce.com/developer-relations/2014/03/control-your-quadcopter-drone-fleet-with-salesforce1.html</feedburner:origLink></item>
+		<item>
+		<title>Women in Tech: Keep Trying and You Will Become a Force.com Developer</title>
+		<link>http://feedproxy.google.com/~r/SforceBlog/~3/ZVBknxw16Vs/women-in-tech-keep-trying-and-you-will-become-a-force-com-developer.html</link>
+		<comments>http://blogs.developerforce.com/developer-relations/2014/03/women-in-tech-keep-trying-and-you-will-become-a-force-com-developer.html#comments</comments>
+		<pubDate>Wed, 19 Mar 2014 15:58:29 +0000</pubDate>
+		<dc:creator>Mary Scotton</dc:creator>
+				<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[developer community]]></category>
+		<category><![CDATA[Dreamforce 2013]]></category>
+		<category><![CDATA[force.com]]></category>
+		<category><![CDATA[Salesforce1 Mobile app]]></category>
+		<category><![CDATA[women in tech]]></category>
+
+		<guid isPermaLink="false">http://26.55091</guid>
+		<description><![CDATA[<a href="http://blogs.developerforce.com/developer-relations/2014/03/women-in-tech-keep-trying-and-you-will-become-a-force-com-developer.html"><img align="left" hspace="5" width="150" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_200/v1395151180/profilePictureDF_1_xc21b8.jpg" class="alignleft wp-post-image tfe" alt="" title="" /></a>Carolina Ruiz-Medina loves geeky stuff and fashion. She brought both of those passions to Dreamforce '13 and recently launched a new blog: Carol Code and Vogue. She's making a big impact in the Force.com community, and it's all the more impressive because her love of computing began in a little village in Spain. She shares her story.]]></description>
+				<content:encoded><![CDATA[<p><img class="alignleft wp-image-55391" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_200/v1395151180/profilePictureDF_1_xc21b8.jpg" width="200" height="248" />This <a title="WIT series" href="http://blogs.developerforce.com/developer-relations/tag/women-in-tech" target="_blank">series</a> highlights women developers in our community, as a way to raise their visibility and hopefully break down some of the unconscious biases that block the path of women and people of color when it comes to technology jobs. I encourage you to share these stories, and your own, with someone who doesn’t “fit” the stereotype of a programmer. In this small way, we can change the ratio.</p>
+<p><a title="twitter" href="https://twitter.com/CarolEnLaNube" target="_blank">Carolina Ruiz-Medina</a> loves geeky stuff and fashion. She brought both of those passions to Dreamforce &#8217;13 and recently launched a new blog: <a title="vogue" href="http://codeandvogue.com/" target="_blank">Carol Code and Vogue</a>. She&#8217;s making a big impact in the Force.com community, and it&#8217;s all the more impressive because her love of computing began in a little village in Spain. She shares her story and advice.</p>
+<h2><strong>When did you learn to code? What do you love about it?</strong></h2>
+<p>The first time I was in front of proper code was in University. But, my love for computers and programming probably started when I was 7 years old. I lived in a little village in Spain, near Granada. It was not very common to go to the big city as a student. I grew up with my grandmother and grandfather, who were like my parents really, as they raised me like their daughter, encouraging me to take a course on MS-DOS. You had to see me at 7 years old, with all grown ups, working in front of a big computer, executing MS-DOS commands. I really enjoyed it!</p>
+<p>Some years later, I fell in love with video games, one of them was <a title="doom" href="http://en.wikipedia.org/wiki/Doom_(video_game)" target="_blank">DOOM</a> (I’m sure every geek in the 90’s remembers this one). When I finished high school, I told myself “I want to learn something that I love doing. I can spend hours and hours in front of a computer…why not use that?” So, I went to University and studied computer engineering, and the first time I was in front of code I was like “Wow!” I’m so lucky and grateful to have had good teachers. One in particular come to mind, Juan Manuel Luna, who inspired me so much.</p>
+<p>Initially, I thought coding was so difficult, but that was the beauty, because in the end my love for problem solving and coming up with ideas made me discover how much I enjoy writing code. I am always asking, &#8220;What&#8217;s the next thing I can learn? What is the next thing I can do? Can I modify this to improve that part?&#8221; It never stops. <a title="force" href="https://developer.salesforce.com/platform/overview#force-com" target="_blank">Force.com</a> allows you to continuously learn and try new things. People ask, &#8220;Why are you working with this platform?&#8221; It&#8217;s because it challenges me to come up with new ideas and to keep learning.</p>
+<h2><strong>How did you get started with Force.com?</strong></h2>
+<p>I went to one of my first job interviews in Spain. One of the questions was “Carolina, if you have to work on a project in English, would you be able to handle that?” My English proficiency was not that great (all I had ever done was in high school), but I said “Of course! Why not?” The company at the time was called Agresso, which later became Unit4. They had a project with a company in England (<a title="FF" href="http://www.financialforce.com/" target="_blank">FinancialForce</a>), on a new platform that no one knew (Force.com). They asked if I wanted to work on it, and I said “Yes!” I didn’t know how I would do it, but I knew I would try.</p>
+<p>It was the end of 2007, and Apex Code, coming from C++ and Java, was limited and basic. It was challenging to work around limits. It was a new age of coding, I think. It is also at this point that I had the opportunity to work with <a title="andy" href="https://twitter.com/andyinthecloud" target="_blank">Andy Fawcett</a> and <a title="stephen" href="https://twitter.com/stephenwillcock" target="_blank">Stephen Willcock</a> who were, and are still, our gurus.</p>
+<p>In 2010, I left work to take care of my grandfather.  After his death, my former boss called and asked me if I would like to join his team again. However, at that point I wanted to go abroad, having taking some inspirational advice from my grandfather. With the knowledge that FinancialForce UK was searching for Force.com developers, I put myself forward and got that job.</p>
+<h2><strong>How was the learning curve for Apex/Visualforce?</strong></h2>
+<p>It was not difficult. However, in Java you have a freedom that you couldn’t get in Apex, as you need to know that the platform has Governor limits. This means that your code needs to be written efficiently so that your code doesn’t hit them. If done properly, the Governor limits are not your enemy they are actually your friend, because they help you write a better code.</p>
+<p>I also like using point-and-click in order to build apps in Force.com. It makes your life easier. As a programmer, I like coding best, of course, but the idea is to use code strictly when necessary. You don&#8217;t need to start the house with the roof. When building a house you start from the foundations, and it is the same here, you start with point-and-click and add coding only when necessary as an enhancement. I call it &#8220;Point&gt;Click&gt;Enhance&#8221;. <em>Author&#8217;s Note: I reserved the right to trademark this!</em></p>
+<h2><strong>You presented at Dreamforce &#8217;13. Which sessions?</strong></h2>
+<p>Yes! It was my first experience of going to America, and going to <a title="DF" href="http://www.salesforce.com/dreamforce/DF13/" target="_blank">Dreamforce</a>. I couldn’t imagine I was actually doing that. Me, from that little village in Granada, I was going to travel to Dreamforce to meet all these people!</p>
+<p>I did three sessions. I was quite nervous, as it was my first time in front of the Force.com community. The first one was <strong>Behavior Driven Development</strong> with one of my good friends, <a title="paul" href="https://twitter.com/pbattisson" target="_blank">Paul Battisson</a>, who I regularly take a drink with and constantly talk about Force.com. The second was with my manager and mentor Stephen Willcock, which was <a title="chatter" href="http://www.youtube.com/watch?v=AEBJE3qwtXQ" target="_blank">Practical Introduction to Chatter Publisher Actions and Salesforce1</a>, where I talked about the experience that I had building a Salesforce1 mobile app. The last one was <strong>Force.com Careers</strong>, where I had the opportunity to be part of a great panel.</p>
+<p style="text-align: center"><img class="aligncenter wp-image-55801" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_400/v1395156306/SteveAndy_sycnf5.png" width="400" height="283" /><em>Stephen Willcock, Andy Fawcett, and Carolina Ruiz-Medina at Dreamforce &#8217;13</em></p>
+<h2><strong>What was your favorite part of Dreamforce?</strong></h2>
+<p>I have two favorites: the DevZone and the <a title="GG" href="https://success.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F9300000001oES" target="_blank">Girly Geeks</a>. In the DevZone it was like a child in a sweet shop. Incredible! Little workshops and sessions all around. You could stop and chat with anyone, it was great. You didn’t need to know them. You have something in common, Force.com, and you can share ideas and thoughts.</p>
+<p>It was great to have the Girly Geeks and the <a title="WIT" href="http://blogs.developerforce.com/developer-relations/2013/12/the-power-of-women-dreamforce-13.html" target="_blank">Women in Technology Salon</a> – I am going to use the word “awesome”, because in this industry, you are predominantly around guys. When I came to Dreamforce it was like “hey, we are here too, we are an important part too and we are doing this too.” It is not about men or women, it is about the Force.com community, and everyone gets a say. It’s great!</p>
+<h2><strong>What is it like being a woman in a technology field?</strong></h2>
+<p>At the beginning, I felt I little weird because the technology world doesn’t have too many women, but I accepted this and it has become normal. I’ve been raised thinking that anything is possible regardless of gender. Maybe this is because I don’t have brothers or sisters, and my grandfather raised me like his little boy. I like motorcycles, football, video games, technology … and fashion: clothes, bags, shoes.</p>
+<p>Sometimes there is a stereotype of women in the workplace and perhaps people believe that you are not capable, but I do not feel this way, because sometimes other people really praise me for the hard work that I put in even though I’m a woman. After they get to know me, I find that men respect me and also start to ask me questions and treat me like an equal.</p>
+<p>When I started to go for interviews, I knew it was going to be difficult, but I was clear that I wanted to become a developer, so I kept trying, and got the job.</p>
+<h2><strong>You blog about tech and fashion &#8211; did you have a chance to pursue both passions in San Francisco?<img class="alignright wp-image-56281" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_200/v1395245128/2014-03-18_18_03_33_sjsewa.jpg" width="200" height="150" /></strong></h2>
+<p>Yes, the blog is <a title="blog" href="http://codeandvogue.com/" target="_blank">Carol Code and Vogue</a>. The first time I went to San Francisco, it was purely for Dreamforce, I didn’t get a chance to go shopping even though on my way to Dreamforce and back I was always passing by some spectacular shops.</p>
+<p>The second time (in January), I kept one whole day for the purpose of shopping: to see the shoes, the bags, the new collections. But, I didn’t buy the Louis Vuitton bag, I bought an iPhone instead. I like all these new collections, but at the end of the day, everyone is going to have their own style. Me, I love red shoes, but red shoes can’t go with everything, but an iPhone can!</p>
+<h2><strong>Tell me about your current role at FinancialForce.</strong></h2>
+<p>I am a Principal Developer in Product Innovation, and it’s great. Before this, I was working in a team which focused on product delivery. This meant I was not so free to explore new ideas, because my main task was to focus on delivering the release. Now, from a different perspective, I’m able to review the product and customer requirements, see how to fit them together and how to apply new platform features to them. I have time for research and a form of experimentation which enables me to explore ideas and create prototypes.</p>
+<p>Sometimes ideas explode. But, sometimes they don’t. It is quite tricky, but fun too. You might have to restart, but that’s ok. That’s just the process. To have the opportunity to put your ideas in a prototype without restrictions – it is great!</p>
+<h2><strong>Sounds exciting! What projects are you working on (or is it a secret?)?</strong></h2>
+<p>It&#8217;s a secret!</p>
+<h2><strong>I&#8217;ve met many Salesforce Admins who are interested in learning to code. What is your advice to them?</strong></h2>
+<p>Take it easy. Don’t try to get to learn everything at once. Today, try to create an Apex Trigger and put a simple validation in it. The next day, try to make an Apex Class. Or if you prefer, do a little script for data creation.</p>
+<p>Working with the Business Analyst in my old team, I had this approach: on one day we looked at how a formula field works, another day how a query is formed, another the parts of a trigger and at the end, she was telling me how an Apex batch process works and its parts.</p>
+<h2><strong>Which resources do you recommend for Force.com newbies?</strong></h2>
+<p>I think a <a title="DUG" href="http://events.developerforce.com/dugs?title=page/Force.com_User_Groups" target="_blank">Developer User Groups</a> (DUGs) are good resources, for example in Spain, there is a DUG in Bilbao, and I am starting one in Granada to introduce Force.com to new developers. I also spoke at the DUG in London recently, talking about the new features in the Salesforce1 Mobile App: publisher actions, Flexipages, and Mobile Cards.<b></b></p>
+<p>The Success Community is a great resource, too. There is a group that I would recommend for Spanish developers: <a title="Spanish" href="https://success.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F9300000001oYN" target="_blank">Spanish Developers [ESPAÑA]</a>.</p>
+<p>The Force.com <a title="forums" href="https://developer.salesforce.com/forums/#!/feedtype=RECENT&amp;criteria=ALLQUESTIONS" target="_blank">developer forums</a> are a really good resource, perhaps one of my favorites.</p>
+<p>I use IRC a lot. There are more informal conversations there. If you are new to the IRC, check out <a title="blog" href="http://blogs.developerforce.com/developer-relations/2014/01/the-extended-salesforce-community-on-irc-and-stack-exchange.html" target="_blank">The Extended Salesforce Community on IRC and Stack Exchange</a> from <a title="peter" href="https://twitter.com/pchittum" target="_blank">Peter Chittum</a>.</p>
+<h2><strong>I&#8217;m curious, why did your grandparents choose a computer course for you?</strong><img class="alignright wp-image-55971" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_200/v1395151225/gparents_xm0owy.png" width="200" height="203" /></h2>
+<p>I was a busy child. Constantly doing something, always finding things to do, something to break, something to build. My grandma called me “<i>Culo de mal asiento</i>“, which translates to a person that can’t stop moving! Perhaps they thought the computer would entertain me and I would not give them too much trouble or bother them.</p>
+<p>Also, they wanted to give me the best opportunity in life, which they didn’t have. I was the first person in my family to get a degree. My family is all working class with a farming background. My mother had to leave school at 10 years old. My grandmother never even had the opportunity to learn to read, she had to teach herself.</p>
+<p>My grandmother is the one that taught me to keep striving for better things in life, which meant doing my best for everything. She always encouraged me, saying, &#8220;I never had these opportunities, and now that I see you being student and trying hard, I am so proud.&#8221; I&#8217;ll always remember the lesson my grandparents taught me: if you fail, don’t stop there &#8211; keep trying.</p>
+<div class="feedflare">
+<a href="http://feeds.feedburner.com/~ff/SforceBlog?a=ZVBknxw16Vs:sEFCSZ7XV80:yIl2AUoC8zA"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=yIl2AUoC8zA" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=ZVBknxw16Vs:sEFCSZ7XV80:qj6IDK7rITs"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=qj6IDK7rITs" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=ZVBknxw16Vs:sEFCSZ7XV80:V_sGLiPBpWU"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=ZVBknxw16Vs:sEFCSZ7XV80:V_sGLiPBpWU" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=ZVBknxw16Vs:sEFCSZ7XV80:F7zBnMyn0Lo"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=ZVBknxw16Vs:sEFCSZ7XV80:F7zBnMyn0Lo" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=ZVBknxw16Vs:sEFCSZ7XV80:l6gmwiTKsz0"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=l6gmwiTKsz0" border="0"></img></a>
+</div><img src="http://feeds.feedburner.com/~r/SforceBlog/~4/ZVBknxw16Vs" height="1" width="1"/>]]></content:encoded>
+			<wfw:commentRss>http://blogs.developerforce.com/developer-relations/2014/03/women-in-tech-keep-trying-and-you-will-become-a-force-com-developer.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<feedburner:origLink>http://blogs.developerforce.com/developer-relations/2014/03/women-in-tech-keep-trying-and-you-will-become-a-force-com-developer.html</feedburner:origLink></item>
+		<item>
+		<title>Styling for Salesforce1 Mobile with the OneStarter jQuery Plugin</title>
+		<link>http://feedproxy.google.com/~r/SforceBlog/~3/x5ooq5J5Imo/styling-for-salesforce1-mobile-with-the-onestarter-jquery-plugin.html</link>
+		<comments>http://blogs.developerforce.com/developer-relations/2014/03/styling-for-salesforce1-mobile-with-the-onestarter-jquery-plugin.html#comments</comments>
+		<pubDate>Wed, 19 Mar 2014 09:00:49 +0000</pubDate>
+		<dc:creator>Josh Birk</dc:creator>
+				<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[jquery]]></category>
+		<category><![CDATA[mobile]]></category>
+		<category><![CDATA[onestarter]]></category>
+		<category><![CDATA[salesforce1]]></category>
+		<category><![CDATA[visualforce]]></category>
+
+		<guid isPermaLink="false">http://26.54961</guid>
+		<description><![CDATA[<a href="http://blogs.developerforce.com/developer-relations/2014/03/styling-for-salesforce1-mobile-with-the-onestarter-jquery-plugin.html"><img align="left" hspace="5" width="150" src="http://res.cloudinary.com/hzxejch6p/image/upload/v1394832132/Screen_Shot_2014-03-14_at_4_21_45_PM_o2mb31.png" class="alignleft wp-post-image tfe" alt="" title="" /></a>As it turns out, there is an online resource to help developers style pages like Salesforce1: The Salesforce1 Style Guide.  This shows several examples of how the HTML within the Salesforce1 mobile interface is built out, complete with CSS styles.  This is great, but I had a couple of complications in trying to use it ... the first was there was no handy download to get all the CSS and supporting files, and the second that quite a bit of the CSS relies on using several different classes.  That was when I started pulling things together and it occurred to me that jQuery could handle the CSS transformations for me.]]></description>
+				<content:encoded><![CDATA[<p>There are projects I have worked on which are highly organized affairs.  There project managers, timelines, the occasional scrum meeting, quality assurance tests to pass and all manner of boxes to check and letters to dot and cross before anything is made public.</p>
+<p>This is not one of those projects.  However, I&#8217;ve delayed posting about it long enough that Brian Kwong (AKA <a href="https://twitter.com/kwongerific" target="_blank">@Kwongerific</a> AKA The Salesforce Wizard) has actually already <a href="http://salesforcewizard.wordpress.com/2014/02/20/salesforce1-getting-started-with-onestarter/" target="_blank">beaten me to the punch by writing up his first impressions</a> of <a href="https://github.com/joshbirk/onestarter">OneStarter, a jQuery plugin</a> I&#8217;ve written to make it easier to style pages (particularly Visualforce) to look like the Salesforce1 mobile interface.</p>
+<p>A little backstory here: like many developers I&#8217;ve been tinkering with Visualforce in Salesforce1 since around Dreamforce of last year.  With these attempts, I kept using existing frameworks like our <a href="http://www2.developerforce.com/mobile/services/mobile-templates" target="_blank">Mobile Templates</a> or <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a> to make my pages mobile friendly.  It worked, but it didn&#8217;t entirely match the style of Salesforce1.</p>
+<h1>Enter the Salesforce1 Style Guide</h1>
+<p>As it turns out, there is an online resource to help developers style pages like the <a href="http://sfdc-styleguide.herokuapp.com/" target="_blank">Salesforce1: The Salesforce1 Style Guide</a>.  This shows several examples of how the HTML within the Salesforce1 mobile interface is built out, complete with CSS styles.  This is great, but I had a couple of complications in trying to use it &#8230; the first was there was no handy download to get all the CSS and supporting files, and the second that quite a bit of the CSS relies on using several different classes.  That was when I started pulling things together and it occurred to me that jQuery could handle the CSS transformations for me.</p>
+<h1>The Target Audience</h1>
+<p>One thing I find interesting about Salesforce1 is that it is well geared to what we&#8217;ve been calling <em>micromoments</em>.  This is different than an app design which is trying to create a wholesale solution for a business process.  This is more in line with a custom button or link on a page layout.  My goal was is to give a developer who was trying create a solution out of a page or two a solution where they didn&#8217;t spend as much time styling the application as they did building it out in the first place.</p>
+<p>If you are building out a truly complex application for Salesforce1, then OneStarter may still help &#8211; but isn&#8217;t probably your biggest concern.  More on that later.</p>
+<h1>What does OneStarter do?</h1>
+<p>OneStarter basically has three goals:</p>
+<ol>
+<li><span style="line-height: 13px">Easy packaging of CSS which matches closely to the Salesforce1 style guide</span></li>
+<li>Use jQuery&#8217;s DOM manipulation to automatically apply as many styles as feasible</li>
+<li>Add navigation functionality which resembles Salesforce1 or otherwise connects to it, namely:
+<ol>
+<li>A carousel UI widget to mimic the carousel navigation on many Salesforce1 layouts</li>
+<li>Interactivity with the top navigation submit button</li>
+<li>Handle adjustments depending on a page being displayed as a left nav app, record action or global action</li>
+</ol>
+</li>
+</ol>
+<p>&#8230;and I don&#8217;t expect it to get much more complicated than that.  There may be more widgets to add in the future, but the focus of OneStarter will be this core functionality.</p>
+<h1>How is it used?</h1>
+<p>First, <a href="https://github.com/joshbirk/onestarter/" target="_blank">go to the github repo</a>.  Clone or download the zip of the repo locally.  There are both zip and staticresource files, which are basically the same thing with different extension &#8211; but one might be more useful than the other depending on how you are deploying.  Then basically:</p>
+<p><strong>1. Add the Static Resources to your Visualforce page</strong></p>
+<p>A full set of them would look like this:</p>
+<pre>   &lt;apex:stylesheet value="{!URLFOR($Resource.OneStarter,'icons.css')}"/&gt;
+	&lt;apex:stylesheet value="{!URLFOR($Resource.OneStarter,'styles.css')}"/&gt;
+	&lt;apex:stylesheet value="{!URLFOR($Resource.OneStarter,'OneStarter.css')}"/&gt;
+
+	&lt;!-- JavaScript files --&gt;
+	&lt;apex:includeScript value="{!URLFOR($Resource.jquery)}"/&gt;
+	&lt;apex:includeScript value="{!URLFOR($Resource.TouchSwipe,'jquery.touchSwipe.min.js')}"/&gt;
+	&lt;apex:includeScript value="{!URLFOR($Resource.OneStarter,'jquery.onestarter.js')}"/&gt;
+	&lt;apex:includeScript value="/canvas/sdk/js/publisher.js"/&gt;</pre>
+<p>Note that TouchSwipe is only needed if you are using the carousel widget, and the publisher is just to use any of the action related functions (like accessing the submit button).</p>
+<p><strong>2. Write some HTML, for example:</strong></p>
+<pre>&lt;div id="one-app"&gt;
+        &lt;apex:form &gt;
+        	&lt;apex:outputPanel id="errors"&gt;
+        			&lt;apex:pageMessages /&gt;
+        	&lt;/apex:outputPanel&gt;
+        	&lt;div id="form"&gt;
+                &lt;h2&gt;Test&lt;/h2&gt;	                 
+                    &lt;section&gt;
+                        &lt;apex:inputfield  value="{!Account.OwnerId}" /&gt;				  
+                        &lt;apex:commandButton value="Change" action="{!fakeError}" rerender="errors"  /&gt;
+                    &lt;/section&gt;               
+            &lt;/div&gt;  
+
+            &lt;apex:outputpanel id="results"  &gt;
+                &lt;div id="detail-example"&gt;				
+                    &lt;h2&gt;Account Information&lt;/h2&gt;
+                    &lt;section&gt;
+                        &lt;label class="field-label"&gt;Account Name&lt;/label&gt;
+                        &lt;span class="field-value"&gt;&lt;apex:outputField value="{!Account.Name}" /&gt;&lt;/span&gt;
+                    &lt;/section&gt;
+                    &lt;section&gt;
+                        &lt;label class="field-label"&gt;Account Phone&lt;/label&gt;
+                        &lt;span class="field-value"&gt;&lt;apex:outputField value="{!Account.Phone}" /&gt;&lt;/span&gt;
+                    &lt;/section&gt;
+
+                &lt;/div&gt;       
+                &lt;apex:commandButton value="Error" action="{!fakeError}" rerender="errors" oncomplete="restyle();" /&gt;
+                &lt;apex:commandButton value="Go To Page" action="{!changePage}" /&gt;
+
+            &lt;/apex:outputpanel&gt;
+        &lt;/apex:form&gt; 
+    &lt;/div&gt;</pre>
+<p><strong>3. Call OneStarter with jQuery</strong><br />
+From jQuery&#8217;s document read event, call OneStarter to apply the additional styling:</p>
+<pre>&lt;script&gt;
+	var s1 = {};
+	$(document).ready(function() {
+   		s1 = $('div#one-app').oneStarter('record-action');
+       });
+&lt;/script&gt;</pre>
+<p>Which in this specific case will apply the styles to everything in the div with the id of &#8220;one-app&#8221;. Note that some styling will occur just from including the CSS itself (but not too much).  Now we see something like:</p>
+<p style="text-align: center"><img class="wp-image-55031 aligncenter" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/v1394832132/Screen_Shot_2014-03-14_at_4_21_45_PM_o2mb31.png" width="515" height="484" /></p>
+<p>&nbsp;</p>
+<p>To see more examples checkout the <em>pages</em> folder within the github repo.</p>
+<h1>The Right Tool for the Right Job</h1>
+<p>OneStarter is meant to get simple interfaces styled like Salesforce1 quickly, but it is not meant to replace other MVC style frameworks (Angular, Backbone, Ember, etc.) or even necessarily to replace UI frameworks like Bootstrap (see Sam&#8217;s recent post on using <a href="http://blogs.developerforce.com/developer-relations/2014/03/twitter-bootstrap-and-visualforce-in-minutes.html">Twitter BootStrap with Visualforce</a>).  It&#8217;s another tool in your toolkit &#8211; but be sure you are doing all your due diligence before jumping into your next project.</p>
+<h1>What&#8217;s Next?</h1>
+<p>OneStarter is a work in progress and I&#8217;ll be enhancing it and the documentation around it in the near future.  If you do use it and want enhancements or find issues with it, use github to file those.  Or better, grab a fork and jump into the code.  Give me a shoutout about it on <a href="http://twitter.com/joshbirk" target="_blank">twitter</a>. Keep an eye on the blogs for upcoming posts about updates, different tricks and use cases for OneStarter.  I&#8217;ll do some deeper dives into some of the more specific aspects like using the carousel widget and communicating with navigation elements like the submit button soon.</p>
+<div class="feedflare">
+<a href="http://feeds.feedburner.com/~ff/SforceBlog?a=x5ooq5J5Imo:dgBrdklNA9s:yIl2AUoC8zA"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=yIl2AUoC8zA" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=x5ooq5J5Imo:dgBrdklNA9s:qj6IDK7rITs"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=qj6IDK7rITs" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=x5ooq5J5Imo:dgBrdklNA9s:V_sGLiPBpWU"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=x5ooq5J5Imo:dgBrdklNA9s:V_sGLiPBpWU" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=x5ooq5J5Imo:dgBrdklNA9s:F7zBnMyn0Lo"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=x5ooq5J5Imo:dgBrdklNA9s:F7zBnMyn0Lo" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=x5ooq5J5Imo:dgBrdklNA9s:l6gmwiTKsz0"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=l6gmwiTKsz0" border="0"></img></a>
+</div><img src="http://feeds.feedburner.com/~r/SforceBlog/~4/x5ooq5J5Imo" height="1" width="1"/>]]></content:encoded>
+			<wfw:commentRss>http://blogs.developerforce.com/developer-relations/2014/03/styling-for-salesforce1-mobile-with-the-onestarter-jquery-plugin.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<feedburner:origLink>http://blogs.developerforce.com/developer-relations/2014/03/styling-for-salesforce1-mobile-with-the-onestarter-jquery-plugin.html</feedburner:origLink></item>
+		<item>
+		<title>Announcing the New Partner Community</title>
+		<link>http://feedproxy.google.com/~r/SforceBlog/~3/nVe2epfPOAI/announcing-the-new-partner-community.html</link>
+		<comments>http://blogs.developerforce.com/isv/2014/03/announcing-the-new-partner-community.html#comments</comments>
+		<pubDate>Tue, 18 Mar 2014 17:58:53 +0000</pubDate>
+		<dc:creator>Heather Conklin</dc:creator>
+				<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[Announcements]]></category>
+		<category><![CDATA[appexchange]]></category>
+		<category><![CDATA[Partners]]></category>
+
+		<guid isPermaLink="false">http://30.12231</guid>
+		<description><![CDATA[<a href="http://blogs.developerforce.com/isv/2014/03/announcing-the-new-partner-community.html"><img align="left" hspace="5" width="150" src="http://res.cloudinary.com/hzxejch6p/image/upload/v1395163834/Partner_Community_Home_Page_zbztnh.png" class="alignleft wp-post-image tfe" alt="" title="" /></a>Have you ever wished you had somewhere to go to quickly get advice from other partners? Looked for an easier way to collaborate with salesforce.com? Well, we are delivering just that! We’re thrilled to introduce the new Partner Community &#8211; a world class partner experience with a Chatter community just for partners. The new Partner [...]]]></description>
+				<content:encoded><![CDATA[<p>Have you ever wished you had somewhere to go to quickly get advice from other partners? Looked for an easier way to collaborate with salesforce.com? Well, we are delivering just that! We’re thrilled to introduce the new Partner Community &#8211; a world class partner experience with a Chatter community just for partners.</p>
+<p dir="ltr">The new Partner Community will launch on March 24th at <a href="http://partners.salesforce.com">http://partners.salesforce.com</a>, including these great features:</p>
+<ul>
+<li>
+<p dir="ltr">Collaboration &#8211; collaborate with other partners and <a href="http://salesforce.com/">salesforce.com</a> in our Chatter community</p>
+</li>
+<li>
+<p dir="ltr">Education &#8211; one-stop-shop for all ISV content, now including public pages and shareable links</p>
+</li>
+<li>
+<p dir="ltr">News, Events, &amp; Alerts &#8211; stay up to date on news, events, &amp; alerts related to the ISV program</p>
+</li>
+</ul>
+<p dir="ltr">For now <a href="http://partners.salesforce.com">http://partners.salesforce.com</a> will redirect to <a href="http://www.salesforce.com/partners">www.salesforce.com/partners</a> &#8211; but bookmark it and look out for the change on March 24th!</p>
+<p dir="ltr"><img class="wp-image-12271 aligncenter" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/v1395163834/Partner_Community_Home_Page_zbztnh.png" width="1099" height="1089" /></p>
+<p dir="ltr">But wait, not everything is changing: ISV partners will still use the Partner Portal to log cases and create test orgs.  This summer we will migrate that functionality into the Partner Community as well, retiring the Partner Portal for ISVs.</p>
+<p dir="ltr">Thought it couldn’t get any better?  Try this &#8211; unlike the Partner Portal, no special login is needed for the Partner Community.  You can login with your Salesforce credentials that you use to access the Success Community and AppExchange!  The first time you visit, you will have to register with your Partner Portal credentials so we can connect your partnership to your user, but going forward you’ll only need your Salesforce login.  Don’t kiss your Partner Portal credentials goodbye just yet though, you’ll still need them until cases are available in the Partner Community this summer.</p>
+<p dir="ltr">If you’re a consulting partner, the Partner Portal is still your primary resource.  Get content, sign up for training, create leads, projects and cases &#8211; but you are welcome to collaborate in the Partner Community!</p>
+<p dir="ltr">Be sure to attend the Partner Roadmap Webinar on April 3 where we will cover more details about the new Partner Community.  You can sign up for this new webinar at <a href="http://p.force.com/roadmap">http://p.force.com/roadmap</a> (login required).</p>
+<p dir="ltr">We can’t wait to collaborate with you in the new Partner Community!</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="feedflare">
+<a href="http://feeds.feedburner.com/~ff/SforceBlog?a=nVe2epfPOAI:ciJjRCrsnbI:yIl2AUoC8zA"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=yIl2AUoC8zA" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=nVe2epfPOAI:ciJjRCrsnbI:qj6IDK7rITs"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=qj6IDK7rITs" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=nVe2epfPOAI:ciJjRCrsnbI:V_sGLiPBpWU"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=nVe2epfPOAI:ciJjRCrsnbI:V_sGLiPBpWU" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=nVe2epfPOAI:ciJjRCrsnbI:F7zBnMyn0Lo"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=nVe2epfPOAI:ciJjRCrsnbI:F7zBnMyn0Lo" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=nVe2epfPOAI:ciJjRCrsnbI:l6gmwiTKsz0"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=l6gmwiTKsz0" border="0"></img></a>
+</div><img src="http://feeds.feedburner.com/~r/SforceBlog/~4/nVe2epfPOAI" height="1" width="1"/>]]></content:encoded>
+			<wfw:commentRss>http://blogs.developerforce.com/isv/2014/03/announcing-the-new-partner-community.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<feedburner:origLink>http://blogs.developerforce.com/isv/2014/03/announcing-the-new-partner-community.html</feedburner:origLink></item>
+		<item>
+		<title>Salesforce.com and Unbounce Present Tech Security Talks</title>
+		<link>http://feedproxy.google.com/~r/SforceBlog/~3/eeSmuYvGDsk/salesforce-com-and-unbounce-present-tech-security-talks.html</link>
+		<comments>http://blogs.developerforce.com/engineering/2014/03/salesforce-com-and-unbounce-present-tech-security-talks.html#comments</comments>
+		<pubDate>Tue, 18 Mar 2014 15:45:13 +0000</pubDate>
+		<dc:creator>Clayten Hamacher</dc:creator>
+				<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[bsides]]></category>
+		<category><![CDATA[cansacwest]]></category>
+		<category><![CDATA[carl schmidt]]></category>
+		<category><![CDATA[clio]]></category>
+		<category><![CDATA[devanshu patel]]></category>
+		<category><![CDATA[gamification]]></category>
+		<category><![CDATA[google]]></category>
+		<category><![CDATA[jack newton]]></category>
+		<category><![CDATA[salesforce]]></category>
+		<category><![CDATA[salesforce.com]]></category>
+		<category><![CDATA[Security]]></category>
+		<category><![CDATA[techsec]]></category>
+		<category><![CDATA[the profile]]></category>
+		<category><![CDATA[unbounce]]></category>
+
+		<guid isPermaLink="false">http://25.16451</guid>
+		<description><![CDATA[<a href="http://blogs.developerforce.com/engineering/2014/03/salesforce-com-and-unbounce-present-tech-security-talks.html"><img align="left" hspace="5" width="150" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_150/v1395075947/screenshot_10_embuju.png" class="alignleft wp-post-image tfe" alt="" title="" /></a>Vancouver presented a solid week of world-class information security conferences and courses geared at developers and hackers between CanSacWest and BSides. Salesforce.com and Unbounce collaborated to present an accessible security discussion, our Tech Security Talks (#techsec) event. We decided on an evening fireside chat with industry experts followed by a Q&#38;A session that would be geared towards covering the implications of security issues ranging from bugs to privacy laws.]]></description>
+				<content:encoded><![CDATA[<p dir="ltr"><img class="wp-image-16471 alignleft" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_150/v1395075947/screenshot_10_embuju.png" width="150" height="108" />Vancouver presented a solid week of world-class information security conferences and courses geared at developers and hackers between <a href="http://cansecwest.com/" target="_blank">CanSacWest</a> and <a href="http://bsidesvancouver.com/" target="_blank">BSides</a>. I attended these events for work and personal interest and wanted to help everyone understand more about what security means, and means to them. I approached <a href="https://twitter.com/sarahailish" target="_blank">Sarah</a> and <a href="https://twitter.com/smgrieser" target="_blank">Stefanie</a> at <a href="http://unbounce.com/" target="_blank">Unbounce</a> with the idea of collaborating on a <a href="https://www.picatic.com/techsecuritytalks" target="_blank">Tech Security Talk</a> (<a href="https://twitter.com/search?src=typd&amp;q=%23techsec" target="_blank">#techsec</a>) event. We decided on an evening fireside chat with industry experts followed by a Q&amp;A session that would be geared towards covering the implications of security issues ranging from bugs, to privacy laws and began reaching out to developer and business/startup focused groups.</p>
+<p dir="ltr"><a href="http://www.salesforce.com/" target="_blank">Salesforce.com</a> provided the venue and pizza, and Unbounce emceed the event and supplied the beer. The 110+ attendees included graphic artists, lawyers, legal and financial professionals, virus/threat researchers, software developers, and business development consultants.</p>
+<p dir="ltr"><a href="https://twitter.com/carl_schmidt" target="_blank">Carl Schmidt</a>, the CTO of Unbounce, opened the event with a conversation with Chris Evans, the head of security for <a href="https://twitter.com/googlechrome" target="_blank">Google Chrome</a>, about Chrome web browser security. Chris answered questions about the Google bug bounty program and his advice to other companies who are thinking about implementing a similar program. He also talked about software security in general, internet-facing security, auto-updating, certificate pinning, and hiring from the bug-bounty program.</p>
+<p dir="ltr">Salesforce.com&#8217;s Devanshu Patel discussed how human vulnerability affects security and illustrated how to influence more secure behavior using gamification and behavioral psychology. He talked about drawing employees in using games as intrinsic motivators to understand the importance of their role in keeping customers&#8217; data private and safe. Devanshu demonstrated how <a href="http://salesforce.com/" target="_blank">salesforce.com</a> makes employees partners in security efforts through awareness and training programs. He concluded with some takeaways for other companies interested in using these principles for their own awareness programs.</p>
+<p dir="ltr"><img class="alignnone wp-image-16521" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_537/v1395076875/P1011547_zkw1wu.jpg" width="537" height="358" /></p>
+<p dir="ltr"><a href="https://twitter.com/jack_newton" target="_blank">Jack Newton</a>, CEO of <a href="https://www.goclio.com/" target="_blank">Clio</a> &#8211; a cloud Software-as-a-Service provider targeted at lawyers and legal professionals, talked about reliability and trust. He covered data escrow, data-locality requirements, and the importance of understanding the contract with your provider. He provided an example of how many service-level agreements guaranteeing reliability merely promise to refund payment pro-rated to the actual delivered service-level. A small refund may be little comfort if you haven&#8217;t been able to access your and your client&#8217;s data for days. He also talked about what customers need to do to fulfill due diligence requirements in the selection of service providers.</p>
+<p dir="ltr">The speakers came together at the end for a group Q&amp;A and fielded a wide range of audience questions. They stayed after the event ended, taking more questions and socializing.</p>
+<p dir="ltr"><img class="wp-image-16511 alignnone" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_537/v1395076681/P1011558_sd9k6u.jpg" width="537" height="358" /></p>
+<p dir="ltr">Let&#8217;s continue the discussion: What other ways can companies reinforce the importance of security, internally and to their customers?</p>
+<div class="feedflare">
+<a href="http://feeds.feedburner.com/~ff/SforceBlog?a=eeSmuYvGDsk:yCP0QIR-FOk:yIl2AUoC8zA"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=yIl2AUoC8zA" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=eeSmuYvGDsk:yCP0QIR-FOk:qj6IDK7rITs"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=qj6IDK7rITs" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=eeSmuYvGDsk:yCP0QIR-FOk:V_sGLiPBpWU"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=eeSmuYvGDsk:yCP0QIR-FOk:V_sGLiPBpWU" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=eeSmuYvGDsk:yCP0QIR-FOk:F7zBnMyn0Lo"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=eeSmuYvGDsk:yCP0QIR-FOk:F7zBnMyn0Lo" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=eeSmuYvGDsk:yCP0QIR-FOk:l6gmwiTKsz0"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=l6gmwiTKsz0" border="0"></img></a>
+</div><img src="http://feeds.feedburner.com/~r/SforceBlog/~4/eeSmuYvGDsk" height="1" width="1"/>]]></content:encoded>
+			<wfw:commentRss>http://blogs.developerforce.com/engineering/2014/03/salesforce-com-and-unbounce-present-tech-security-talks.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<feedburner:origLink>http://blogs.developerforce.com/engineering/2014/03/salesforce-com-and-unbounce-present-tech-security-talks.html</feedburner:origLink></item>
+		<item>
+		<title>‘Save the Day, Code for Good’ – Hacking for Social Change at UC Berkeley</title>
+		<link>http://feedproxy.google.com/~r/SforceBlog/~3/4-IToSkftjo/save-the-day-code-for-good-hacking-for-social-change-at-uc-berkeley.html</link>
+		<comments>http://blogs.developerforce.com/developer-relations/2014/03/save-the-day-code-for-good-hacking-for-social-change-at-uc-berkeley.html#comments</comments>
+		<pubDate>Thu, 13 Mar 2014 16:56:16 +0000</pubDate>
+		<dc:creator>Pat Patterson</dc:creator>
+				<category><![CDATA[Uncategorized]]></category>
+
+		<guid isPermaLink="false">http://26.54601</guid>
+		<description><![CDATA[<a href="http://blogs.developerforce.com/developer-relations/2014/03/save-the-day-code-for-good-hacking-for-social-change-at-uc-berkeley.html"><img align="left" hspace="5" width="150" src="http://res.cloudinary.com/hzxejch6p/image/upload/v1394672517/blueprint_gc9uyd.png" class="alignleft wp-post-image tfe" alt="" title="" /></a>Blueprint is a non-profit organization founded in late 2012 by students at University of California, Berkeley aiming to match the talents of university students to the needs of the community around them. Last weekend, they ran their first hackathon; Salesforce was a sponsor, and I was privileged to be able to attend, work with and judge the students solving real-world problems for local non-profits.]]></description>
+				<content:encoded><![CDATA[<p><a href="http://bptech.berkeley.edu/"><img class="wp-image-54631 alignleft" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/v1394672517/blueprint_gc9uyd.png" width="233" height="56" />Blueprint</a> is a non-profit organization founded in late 2012 by students at University of California, Berkeley aiming to match the talents of university students to the needs of the community around them. Last weekend, they ran their first hackathon, <a href="http://bptech.berkeley.edu/hackathons/save-the-day-code-for-good/">Save the Day, Code for Good</a>; Salesforce was a sponsor, and I was privileged to be able to attend, work with and judge the students solving real-world problems for local non-profits.</p>
+<p>The hackathon was designed around building technology to impact the community, both locally and globally. At 5pm on Saturday, ten local non-profit organizations pitched ideas for addressing their issues:</p>
+<ul>
+<ul>
+<li><a href="http://odalc.org/">Oakland Digital Arts &amp; Literacy Center (ODALC)</a></li>
+<li><a href="http://collegetrack.org/">College Track</a></li>
+<li><a href="http://iisme.org/">Industry Initiatives for Science and Math Education (IISME)</a></li>
+<li><a href="http://www.lawrencehallofscience.org/">Lawrence Hall of Science</a></li>
+<li><a href="http://www.partnersinschools.org/">Partners in School Innovation</a></li>
+<li><a href="https://www.facebook.com/pages/Support-Oakland-Artists/151193078251356">Support Oakland Artists</a></li>
+<li><a href="http://www.stridecenter.org/">The Stride Center</a></li>
+<li><a href="http://www.universalgiving.org/">Universal Giving</a></li>
+<li><a href="http://centrolegal.org/youth-law-academy/">Youth Law Academy</a></li>
+<li><a href="https://www.commonchange.com/">Common Change</a></li>
+</ul>
+</ul>
+<p><img class="alignnone wp-image-54721" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_750/v1394672958/IMG_9996_xp7rwg.jpg" width="750" height="500" /></p>
+<p>After the presentations, the students organized into teams. About half of the teams already had a hack in mind; the remainder got to work discussing their ideas with the non-profit representatives. Throughout Saturday evening, the students&#8217; apps took shape. A few participants were seasoned programmers (one team, ineligible for prizes, just competing for fun, comprised Berkeley alumni already working in commerce and industry), many were using the hackathon as an opportunity to add a new technology to their arsenal, and, surprisingly, one team was writing code for the very first time. It was great to wander around the room and see the range of technology in use; two or three mobile apps, a couple of completely client-side HTML5/CSS/JS hacks, Ruby, Python, Node.js and PHP web apps, many deployed on Heroku, and one very interesting project that used an Arduino to reimagine automobile console displays.</p>
+<p><img class="wp-image-54731 alignleft" alt="2am sushi" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_250/v1394727286/IMG_1607_mhw6xq.jpg" width="200" />As the evening wore on, most students drifted away for some well earned sleep, but a few teams stuck it out through the night. A highlight of the event was the sushi &#8211; delivered just before the clocks skipped an hour at 2am!</p>
+<p>On Sunday morning, the room again became a hive of activity as the participants raced to complete their projects before the 11am judging. Fourteen teams presented apps, which ranged from the whimsical (&#8216;<a href="http://inspired.comyr.com/">Inspired by Us</a>&#8216;, a web app displaying inspirational quotes) to the purposeful (&#8216;<a href="http://bptech.berkeley.edu/hackathons/save-the-day-code-for-good/hacks/readability-score">Readability Score</a>&#8216;, a mobile app that captured text from the camera, fed it through OCR, and applied an algorithm to calculate the reading grade level of the text). Hacks were judged on four criteria: effective presentation, innovation, scalability and potential social impact, and prizes were awarded for overall first, second, third, as well as &#8216;best design&#8217;, &#8216;best beginner hack&#8217; and &#8216;best non-profit organization hack&#8217;. You can see all of the entries and their placings at the <a href="http://bptech.berkeley.edu/hackathons/save-the-day-code-for-good/hacks">Save the Day, Code for Good archive</a>.</p>
+<p><span style="clear: both">The winning app, &#8216;<a href="http://bptech.berkeley.edu/hackathons/save-the-day-code-for-good/hacks/bridgethegap">Bridge the Gap</a>&#8216;, focused on connecting students with non-profits, allowing them to &#8216;like&#8217;, donate and volunteer. The app looked great, with a solid implementation in Ruby on Heroku, but what tipped the scales was that the team displayed a real passion for positive change in their community.</span></p>
+<p><img class="alignnone wp-image-54781" alt="Bridge the Gap team" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_750/v1394728570/IMG_0407_fhde5c.jpg" width="750" height="485" /></p>
+<p>At the close of the event, I reflected on the energy and commitment I saw at Berkeley. <a href="https://www.youtube.com/watch?v=u6XAPnuFjJc">Dan Pink&#8217;s &#8216;Drive&#8217;</a> argues that motivation arises from mastery, autonomy and purpose; every hackathon gives developers the opportunity to hone their craft, freed of the constraints of work or school, but adding the element of <em>purpose</em> brought out the best in these student hackers.</p>
+<p>If you&#8217;re studying at UC Berkeley, check out <a href="http://bptech.berkeley.edu/">Blueprint</a>; if you&#8217;re a student elsewhere, and would like to start a similar group, I&#8217;m sure the Blueprint team would be delighted to share their experience. Finally, if you&#8217;re interested in setting up a similar hackathon, <a href="https://twitter.com/jabancroft">Josh Bancroft</a> at Intel has written a very useful guide: <a href="http://software.intel.com/codeforgood/hackathon-in-a-box/">How To Conduct Your Own Code For Good Hackathon Event</a>.</p>
+<div class="feedflare">
+<a href="http://feeds.feedburner.com/~ff/SforceBlog?a=4-IToSkftjo:v2xFb2cNg18:yIl2AUoC8zA"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=yIl2AUoC8zA" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=4-IToSkftjo:v2xFb2cNg18:qj6IDK7rITs"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=qj6IDK7rITs" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=4-IToSkftjo:v2xFb2cNg18:V_sGLiPBpWU"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=4-IToSkftjo:v2xFb2cNg18:V_sGLiPBpWU" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=4-IToSkftjo:v2xFb2cNg18:F7zBnMyn0Lo"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=4-IToSkftjo:v2xFb2cNg18:F7zBnMyn0Lo" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=4-IToSkftjo:v2xFb2cNg18:l6gmwiTKsz0"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=l6gmwiTKsz0" border="0"></img></a>
+</div><img src="http://feeds.feedburner.com/~r/SforceBlog/~4/4-IToSkftjo" height="1" width="1"/>]]></content:encoded>
+			<wfw:commentRss>http://blogs.developerforce.com/developer-relations/2014/03/save-the-day-code-for-good-hacking-for-social-change-at-uc-berkeley.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<feedburner:origLink>http://blogs.developerforce.com/developer-relations/2014/03/save-the-day-code-for-good-hacking-for-social-change-at-uc-berkeley.html</feedburner:origLink></item>
+		<item>
+		<title>IoT Roundup: Philips Hue, Staples Easy Button, XMLStreamReader &amp; Real Time Data</title>
+		<link>http://feedproxy.google.com/~r/SforceBlog/~3/WSnXEkK6tek/iot-roundup-philips-hue-staples-easy-button-xmlstreamreader-real-time-data.html</link>
+		<comments>http://blogs.developerforce.com/developer-relations/2014/03/iot-roundup-philips-hue-staples-easy-button-xmlstreamreader-real-time-data.html#comments</comments>
+		<pubDate>Thu, 13 Mar 2014 14:40:44 +0000</pubDate>
+		<dc:creator>Reid Carlberg</dc:creator>
+				<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[iot]]></category>
+		<category><![CDATA[node]]></category>
+		<category><![CDATA[packaging]]></category>
+		<category><![CDATA[visualforce]]></category>
+
+		<guid isPermaLink="false">http://26.54641</guid>
+		<description><![CDATA[<a href="http://blogs.developerforce.com/developer-relations/2014/03/iot-roundup-philips-hue-staples-easy-button-xmlstreamreader-real-time-data.html"><img align="left" hspace="5" width="150" src="http://res.cloudinary.com/hzxejch6p/image/upload/v1394718935/RobotSticker150x150_sqcge6.png" class="alignleft wp-post-image tfe" alt="" title="" /></a>I've been talking about Internet Of Things related topics (and more) over on ReidCarlberg.com, and I wanted to highlight a couple of the posts here.]]></description>
+				<content:encoded><![CDATA[<p><img class="alignleft wp-image-54651" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/v1394718935/RobotSticker150x150_sqcge6.png" width="150" height="150" /></p>
+<p>I&#8217;ve been talking about Internet Of Things related topics (and more) over on <a href="http://reidcarlberg.com">ReidCarlberg.com</a>, and I wanted to highlight a couple of the posts here.</p>
+<p><a href="http://reidcarlberg.com/2014/03/12/create-a-case-in-salesforce-com-with-a-staples-easy-button/">Create A Case Using the Staples Easy Button</a> &#8211; I hacked a Staples Easy Button so it creates a case when you press it.  Pretty fun project, and it raised a few new questions for me.  Includes full code, and works on a standard Developer Edition.</p>
+<p><a href="http://reidcarlberg.com/2014/02/21/philips-hue-raspberry-pi-node-js-salesforce-and-you/">Control Philips Hue Lightbulbs Using Salesforce1</a> &#8211; I built a control panel for the popular RGB LED lights using Visualforce, a Connected App and the Streaming API. It displays nicely on the Salesforce1 mobile client and also lets you control these lights based on events, such as adding a lead.  Includes full Apex, Visualforce and Node.js code.</p>
+<p><a href="http://reidcarlberg.com/2014/03/04/salesforce-apex-rss-reader-featuring-xmlstreamreader/">Read RSS Feeds Using XMLStreamReader</a> &#8211; I&#8217;ve seen quite a few examples of parsing RSS feeds over the years, but haven&#8217;t seen one using the super fast XMLStreamReader class.  So I built one.  Includes all code.</p>
+<p><a href="http://reidcarlberg.com/2014/02/27/smoothie-charts-super-cool-way-to-visualize-streaming-data-in-salesforce-mobile-app-or-otherwise/">Visualize Real Time Streaming Data in Visualforce and Salesforce1</a> - A customer asked me about displaying graphs of real time data in the Salesforce1 mobile container, which I hadn&#8217;t thought about before, so I took a look around and found the super cool Smoothie.js.  Yes, it includes all the code.</p>
+<p>All of these are usable in a regular <a href="http://events.developerforce.com/signup">Developer Edition</a>.  The RSS reader and Real Time Streaming Data app are installable via unmanaged packages, so you can use them quickly right out of the box.</p>
+<p>Questions or comments, please let me know.  <a href="https://twitter.com/ReidCarlberg">@ReidCarlberg</a></p>
+<div class="feedflare">
+<a href="http://feeds.feedburner.com/~ff/SforceBlog?a=WSnXEkK6tek:sjKj4EjoLHs:yIl2AUoC8zA"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=yIl2AUoC8zA" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=WSnXEkK6tek:sjKj4EjoLHs:qj6IDK7rITs"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=qj6IDK7rITs" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=WSnXEkK6tek:sjKj4EjoLHs:V_sGLiPBpWU"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=WSnXEkK6tek:sjKj4EjoLHs:V_sGLiPBpWU" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=WSnXEkK6tek:sjKj4EjoLHs:F7zBnMyn0Lo"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=WSnXEkK6tek:sjKj4EjoLHs:F7zBnMyn0Lo" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=WSnXEkK6tek:sjKj4EjoLHs:l6gmwiTKsz0"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=l6gmwiTKsz0" border="0"></img></a>
+</div><img src="http://feeds.feedburner.com/~r/SforceBlog/~4/WSnXEkK6tek" height="1" width="1"/>]]></content:encoded>
+			<wfw:commentRss>http://blogs.developerforce.com/developer-relations/2014/03/iot-roundup-philips-hue-staples-easy-button-xmlstreamreader-real-time-data.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<feedburner:origLink>http://blogs.developerforce.com/developer-relations/2014/03/iot-roundup-philips-hue-staples-easy-button-xmlstreamreader-real-time-data.html</feedburner:origLink></item>
+		<item>
+		<title>New Energy Brings Telco CRM to the Salesforce1 Platform</title>
+		<link>http://feedproxy.google.com/~r/SforceBlog/~3/R1znBUaTq5M/newenergy-telco-force-heroku.html</link>
+		<comments>http://blogs.developerforce.com/isv/2014/03/newenergy-telco-force-heroku.html#comments</comments>
+		<pubDate>Wed, 12 Mar 2014 17:10:34 +0000</pubDate>
+		<dc:creator>Nicolas Pujol</dc:creator>
+				<category><![CDATA[Uncategorized]]></category>
+
+		<guid isPermaLink="false">http://30.10941</guid>
+		<description><![CDATA[<a href="http://blogs.developerforce.com/isv/2014/03/newenergy-telco-force-heroku.html"><img align="left" hspace="5" width="150" src="http://res.cloudinary.com/hzxejch6p/image/upload/v1393023090/newenergy_jh6cds.png" class="alignleft wp-post-image tfe" alt="" title="" /></a>From consultants to SaaS entrepreneurs: today we showcase how New Energy leveraged the Salesforce Platform to build an enterprise app for the Telco industry. New Energy is an ICT company founded in 2005 by a group of IT professionals. It has gained experience on complex and mission critical systems delivered to verticals including telco, automotive, [...]]]></description>
+				<content:encoded><![CDATA[<p><img class="alignnone wp-image-11001" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/v1393023090/newenergy_jh6cds.png" width="183" height="52" /></p>
+<p>From consultants to SaaS entrepreneurs: today we showcase how <a href="http://www.newenergygroup.com/en/home.html" target="_blank">New Energy</a> leveraged the Salesforce Platform to build an enterprise app for the Telco industry. New Energy is an ICT company founded in 2005 by a group of IT professionals. It has gained experience on complex and mission critical systems delivered to verticals including telco, automotive, insurance and high tech. As new applications are developed in the cloud New Energy wanted to leverage the power of Salesforce together with its longtime technical skills in Java. The combination of Force.com for core CRM components and Heroku to run <a href="https://devcenter.heroku.com/categories/java" target="_blank">Java</a> proved to be ideal.</p>
+<h1>New Energy’s App: Bit2Win</h1>
+<p>As an extension to Salesforce CRM, <a href="https://appexchange.salesforce.com/listingDetail?listingId=a0N30000009w7xnEAA" target="_blank">Bit2Win</a> is a “CPQ” application, standing for Configure-Price-Quote. The goal of CPQ is to make the Salesforce CRM and Force.com platforms more configurable and customizable in the areas of catalogue management, order management and pricing. For example it’s customary in Europe for Telco retailers to put together custom offering packages for household customers and businesses defining complex business rules. These can be hard to customize on the fly while understanding vendor’s costs. Bit2Win automates this via a rules engine that lets retailers know instantly defining the promotions’ financial details from customer value to costs.</p>
+<p><img class="alignnone wp-image-11021" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/v1393024712/bitwin_compare_lje1si.png" width="1598" height="730" /></p>
+<h1>Fastweb: New Energy&#8217;s Customer</h1>
+<p>Fastweb Wholesale Srl is FASTWEB Spa’s fully-controlled company, since 2007 part of the Swisscom Group. FASTWEB Wholesale focuses on the sales of data, Internet, housing, voice, and Telco infrastructure services to the most important national and international TLC players (both on fixed and mobile network) in the Italian market, and to the Internet Service Providers (ISP).</p>
+<p>Bit2Win enabled Fastweb to extend the core functionalities in Salesforce’s Sales Cloud by adding functionalities and customization:<br />
+- advanced quote and order management<br />
+- adding business rules: product compatibility, constraints, customer eligibility<br />
+- advanced pricing: discounts, price override, promotions, commitments, commercial bundles<br />
+- upselling and cross-selling by helping sales associates identify the next best offer</p>
+<h1>Underneath the Covers: Force.com and Heroku</h1>
+<p>Force.com and Heroku are building blocks of the Salesforce Platform. Where did New Energy use each of them?</p>
+<p><img class="alignnone wp-image-11091" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_200/v1393025431/sfdc_force_rgb_evicqe.png" width="200" height="53" /></p>
+<p>The New Energy app is built natively on <a href="http://www.salesforce.com/platform/overview/" target="_blank">Force.com</a>. This allows it to have the entire infrastructure abstracted from the application with nothing to maintain. All New Energy needs to do is focus on innovation. Force.com is a declarative platform that allows the definition of objects and workflows that leverage customer objects and CRM functionalities built into Salesforce <a href="http://www.salesforce.com/sales-cloud/overview/" target="_blank">Sales</a>, <a href="http://www.salesforce.com/marketing-cloud/overview/" target="_blank">Marketing</a> and <a href="http://www.salesforce.com/service-cloud/overview/" target="_blank">Service</a> Clouds. Building on Force.com also allows New Energy to sell on the <a href="https://appexchange.salesforce.com/" target="_blank">Appexchange</a> and make its application available to the entire Salesforce ecosystem of customers.</p>
+<p>With Force.com the bit2win app was on its way. When New Energy looked to create granular business logic through middleware it turned to Heroku to augment the application.</p>
+<p><img class="alignnone wp-image-11051" alt="" src="http://res.cloudinary.com/hzxejch6p/image/upload/c_scale,w_200/v1393025067/sfdc_heroku_rgb_nhur3i.png" width="200" height="60" /></p>
+<p><a href="http://heroku.com/" target="_blank">Heroku</a> is an application delivery platform that provides developers with the tools they need to build, deliver, and manage modern and maintainable apps on any device. Using programmatic and open languages like <a href="https://devcenter.heroku.com/categories/ruby" target="_blank">Ruby</a>, <a href="https://devcenter.heroku.com/categories/java" target="_blank">Java</a>, <a href="https://devcenter.heroku.com/categories/python" target="_blank">Python</a>, <a href="https://devcenter.heroku.com/articles/third-party-buildpacks" target="_blank">PHP</a>, <a href="https://devcenter.heroku.com/categories/nodejs" target="_blank">Node.js</a> and <a href="https://devcenter.heroku.com/articles/getting-started-with-scala" target="_blank">Scala</a> you can code, customize, and connect data stored in Heroku with your data stored in Salesforce into one cohesive app. This opens the path for <a href="https://devcenter.heroku.com/articles/oauth" target="_blank">extending Force.com applications</a> and core Salesforce implementations. In the case of New Energy, the team had long-time expertise in Java programming, allowing them to build the functionalities their customers need and deploy the code on Heroku immediately.</p>
+<p>New Energy built the following product functionalities on Heroku:</p>
+<div dir="ltr">
+<table>
+<col width="234" />
+<col width="390" />
+<tbody>
+<tr>
+<td>
+<p dir="ltr"><strong>Product eligibility</strong></p>
+</td>
+<td>
+<p dir="ltr">Decide which products consumers are eligible for based on their past purchases and which segment they belong to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p dir="ltr"><strong>Upsell recommendations</strong></p>
+</td>
+<td>
+<p dir="ltr">Display specific products this customer is most likely to benefit from and like using historical data and market research.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p dir="ltr"><strong>Product compatibility</strong></p>
+</td>
+<td>
+<p dir="ltr">Avoid costly product returns by removing incompatible devices with customer phone plans or location from the pick list.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p dir="ltr"><strong>Dynamic pricing</strong></p>
+</td>
+<td>
+<p dir="ltr">Manage promotions and discounts based on total purchase and marketing initiatives.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p dir="ltr"><strong>Dynamic product ID integration</strong></p>
+</td>
+<td>
+<p dir="ltr">Integrate order management applications with backend systems where product IDs may differ. Automate data flow from the cloud to legacy systems.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<h1>Connect your Apps to Customers with the Salesforce Platform</h1>
+<p>Using Java or other technologies along with Salesforce? Run them on Heroku and make it all work together.</p>
+</div>
+<div class="feedflare">
+<a href="http://feeds.feedburner.com/~ff/SforceBlog?a=R1znBUaTq5M:osx_85nLFUo:yIl2AUoC8zA"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=yIl2AUoC8zA" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=R1znBUaTq5M:osx_85nLFUo:qj6IDK7rITs"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=qj6IDK7rITs" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=R1znBUaTq5M:osx_85nLFUo:V_sGLiPBpWU"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=R1znBUaTq5M:osx_85nLFUo:V_sGLiPBpWU" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=R1znBUaTq5M:osx_85nLFUo:F7zBnMyn0Lo"><img src="http://feeds.feedburner.com/~ff/SforceBlog?i=R1znBUaTq5M:osx_85nLFUo:F7zBnMyn0Lo" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/SforceBlog?a=R1znBUaTq5M:osx_85nLFUo:l6gmwiTKsz0"><img src="http://feeds.feedburner.com/~ff/SforceBlog?d=l6gmwiTKsz0" border="0"></img></a>
+</div><img src="http://feeds.feedburner.com/~r/SforceBlog/~4/R1znBUaTq5M" height="1" width="1"/>]]></content:encoded>
+			<wfw:commentRss>http://blogs.developerforce.com/isv/2014/03/newenergy-telco-force-heroku.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		<feedburner:origLink>http://blogs.developerforce.com/isv/2014/03/newenergy-telco-force-heroku.html</feedburner:origLink></item>
+	</channel>
+</rss>

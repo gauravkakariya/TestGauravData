@@ -1,0 +1,192 @@
+<!-- /*
+	
+Revision History:
+
+   Version     Version Author     Date          Comments
+   1.0         Persistent         NA  		  	Initial Draft
+   
+   2.0 		   Manasi Ranade	  13/9/2011 	Issue id: FS0167 : Made field 'Expected Growth Rate' Required
+   2.0 		   Manasi Ranade	  26/9/2011 	Issue id: FS0163 : Added Interest rate field on ‘Retirement Accounts’ and ‘Post Office Saving Schemes
+*/-->
+ <!-- /** Eternus Solutions  **/
+						/** Author  : Manasi Ranade	**/
+						/** Issue Id: FS0163      	**/
+						/** Date    : 26/9/2011 	**/
+						/** Purpose : Added Interest rate field on ‘Retirement Accounts’ and ‘Post Office Saving Schemes **/
+						/****************************************************/-->
+<apex:page controller="AssetSummaryTableController"  showHeader="false" standardStylesheets="true">
+	<apex:stylesheet value="{!$Resource.FFStyle}"/> 
+	<apex:includeScript value="{!$Resource.ffreedomJavascript}"/>  
+	<style>
+		.list .headerRow th
+		{
+		    white-space:pre-wrap !important;
+		}	
+		.DummyClass{ }
+	</style>
+	<apex:composition template="TabPage">
+		<apex:define name="contents">
+		    <apex:form >
+		        <apex:outputPanel id="SummaryTable">  
+		        <apex:pageBlock tabStyle="account" title="Assets" >
+		              <table id="DataTable" cellSpacing="0" cellPadding="0" border="1" class="list" align="center" style="border-width:thin;border-style:solid;width:50%;border-color:gray;" >
+		                 <tr class="headerRow">  
+		                     <td class="dataCol" style="width:35%;">
+		                         <apex:outputText value="Asset Class" />
+		                     </td> 
+		                     
+		                     <apex:repeat value="{!AssetBeanObj.AccountList}" var="Account">
+		                     <td class="labelCol" style="text-align:left;">
+		                          <apex:outputText value="{!Account.Name}"/>
+		                     </td>
+		                     </apex:repeat>
+		                 </tr>
+		                 <apex:repeat value="{!AssetBeanObj.SummaryTableList}" var="STList" >
+		                 <tr>
+		                     <td class="dataCol" style="width:33%;"> 
+		                         <apex:commandLink value="{!STList.RecordType}" action="{!showPopUp}" reRender="PopupPanel"> 
+		                             <apex:param name="RtId" value="{!STList.RecordTypeIdStr}" assignTo="{!AssetBeanObj.selRecordTypeId}" />
+		                             <apex:param name="RtName" value="{!STList.RecordType}" assignTo="{!AssetBeanObj.selRecordTypeName}" />
+		                         </apex:commandLink>
+		                         <apex:actionFunction name="showPopUpfun" action="{!showPopUp}"/>
+		                     </td>
+		                     
+		                     <apex:repeat value="{!STList.InnerClassList}" var="InnerList">
+		                     <td class="labelCol" >  
+		                       <apex:outputText value="{0, number, ##,##0}">
+		                        <apex:param value="{!InnerList.AmountValue}"/>
+		                        </apex:outputText> 
+		                     </td>
+		                     </apex:repeat>
+		                 </tr>
+		                 </apex:repeat>
+		                 <tr class="headerRow">  
+		                     <td class="dataCol" style="padding-left:10px">
+		                         <apex:outputText value="Total" />
+		                     </td>
+		                     
+		                     <apex:repeat value="{!AssetBeanObj.AccountList}" var="Account">
+		                     <td class="labelCol" style="width:15%;padding-right:10px;">
+		                           <apex:outputText value="{0, number, ##,##0}">
+		                        <apex:param value="{!Account.Total_Assets__c}"/>
+		                        </apex:outputText> 
+		                     </td>
+		                     </apex:repeat>
+		                 </tr>
+		             </table>
+		             <apex:pageBlockButtons location="bottom">
+		                 <apex:commandButton action="/apex/ExpenseVFPage?entityId={!AssetBeanObj.entityId}&tabname=Financial Planning" value="Previous" reRender="PopupPanel" style="margin-left:150px;"/>
+		                 <apex:commandButton action="/apex/InvestmentAssetPage?entityId={!AssetBeanObj.entityId}&tabname=Financial Planning" value="Next" reRender="PopupPanel"/>
+		             </apex:pageBlockButtons>
+		             </apex:pageBlock>
+		        </apex:outputPanel>
+		
+		        <apex:outputPanel id="PopupPanel" >
+		            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!AssetBeanObj.displayPopUp}" />
+		            <apex:outputPanel styleClass="assetPopupForeground" layout="block" rendered="{!AssetBeanObj.displayPopUp}">
+		                <apex:pageBlock id="AssetEditPage" tabStyle="Account" title="{!AssetBeanObj.selRecordTypeName}" >
+		                    <apex:outputText value="| indicates required fields" styleClass="requiredInfoMsg"/>
+		                    <apex:pageMessages />
+		                    <apex:pageBlockTable style="width:100%;" rules="rows" id="popuptable" value="{!AssetBeanObj.AssetList}" align="center" var="Asset" rowClasses="odd,even" >
+		                        <apex:column headerValue="Remove" style="width:4%;">
+		                            <apex:inputCheckbox value="{!Asset.RemoveCheckbox__c}"/>
+		                        </apex:column>
+<!-- 		                        Prajakta - FP changes II - 27-05-2013 - Added one column "Include In HLV" -->
+		                        <apex:column headerValue="{!$ObjectType.Asset__c.fields.Is_Include_In_HLV_Asset__c.label}" style="width:4%;">
+		                            <apex:inputField value="{!Asset.Is_Include_In_HLV_Asset__c}"/>
+		                        </apex:column>
+		                        <apex:column style="width:10%" headerValue="{!$Label.Owner}"  >
+		                             <apex:selectList id="EntitySelectList" value="{!Asset.Entity__c}" multiselect="false" size="1" styleClass="requiredField" style="width:100%;">
+		                                        <apex:selectOptions value="{!OwnerItems}" />
+		                             </apex:selectList>         
+		                         </apex:column>
+		                         <apex:column style="width:2%;" headerValue="{!$ObjectType.Asset__c.fields.Start_Year__c.label}" rendered="{!(if(AssetBeanObj.RecordTypeName=='POSaving' || AssetBeanObj.RecordTypeName=='Retirement' ||AssetBeanObj.RecordTypeName=='BankDeposit',true,false))}">
+		                             <apex:inputField value="{!Asset.Start_Year__c}" onkeypress="return isNumberKey(event)" onblur="yearLength(this);" style="width:95%;"/> 
+		                         </apex:column>
+		                         <apex:column style="width:3%;" headerValue="{!AssetBeanObj.endYearLabel}" rendered="{!(if(AssetBeanObj.RecordTypeName=='POSaving' || AssetBeanObj.RecordTypeName=='Retirement' || AssetBeanObj.RecordTypeName=='BankDeposit',true,false))}" title="{!$Label.AssetEndYearHelpText}">
+		                             <apex:inputField value="{!Asset.End_Year__c}" onkeypress="return isNumberKey(event)" onblur="yearLength(this);" style="width:95%;" />
+		                         </apex:column>
+		                         <apex:column style="width:9%" headerValue="{!$ObjectType.Asset__c.fields.Account_Type__c.label}" rendered="{!(if(AssetBeanObj.RecordTypeName=='PersonalAsset' || AssetBeanObj.RecordTypeName=='RealEstate' || AssetBeanObj.RecordTypeName=='BusinessAsset',false,true))}">
+		                             <apex:inputField value="{!Asset.Account_Type__c}" style="width:100%;" styleClass="requiredField"/>
+		                         </apex:column>
+		                         <apex:column style="width:12%" headerValue="{!$ObjectType.Asset__c.fields.Account_Number__c.label}" rendered="{!(if(AssetBeanObj.RecordTypeName=='POSaving' || AssetBeanObj.RecordTypeName=='Retirement' || AssetBeanObj.RecordTypeName=='BankDeposit',true,false))}">
+		                             <apex:inputField value="{!Asset.Account_Number__c}" style="width:95%;"/>
+		                         </apex:column>     
+		                         <apex:column style="width:10%" headerValue="{!$ObjectType.Asset__c.fields.Bank_Name__c.label}" rendered="{!(if(AssetBeanObj.RecordTypeName=='BankDeposit',true,false))}">
+		                             <apex:inputField value="{!Asset.Bank_Name__c}" style="width:95%;"/>
+		                         </apex:column>     
+		                         <apex:column style="width:1%;" headerValue="{!$ObjectType.Asset__c.fields.Accumulated_Value__c.label}" rendered="{!(if(AssetBeanObj.RecordTypeName=='POSaving' || AssetBeanObj.RecordTypeName=='Retirement',true,false))}" title="{!$Label.AssetValueHelpText}">
+		                             <apex:inputField value="{!Asset.Accumulated_Value__c}" style="width:95%;" styleClass="requiredField"/>
+		                         </apex:column>     
+		                         <apex:column style="width:7%" headerValue="{!$ObjectType.Asset__c.fields.Current_Balance__c.label}" rendered="{!(if(AssetBeanObj.RecordTypeName=='BankDeposit',true,false))}" title="{!$Label.AssetValueHelpText}">
+		                             <apex:inputField value="{!Asset.Current_Balance__c}" styleClass="requiredField" style="width:95%;"/>
+		                         </apex:column>     
+		                         <apex:column style="width:3%;" headerValue="{!AssetBeanObj.annualContributionLabel}" rendered="{!(if(AssetBeanObj.RecordTypeName=='POSaving' || AssetBeanObj.RecordTypeName=='Retirement' || AssetBeanObj.RecordTypeName=='BankDeposit',true,false))}" title="{!$Label.AssetValueHelpText}">
+		                             <apex:inputField value="{!Asset.Annual_Contribution__c}" style="width:95%;" rendered="{!(if(AssetBeanObj.RecordTypeName=='POSaving' || AssetBeanObj.RecordTypeName=='Retirement',true,false))}" styleClass="requiredField"/>
+		                             <apex:inputField value="{!Asset.Annual_Contribution__c}" style="width:95%;" rendered="{!(if(AssetBeanObj.RecordTypeName=='BankDeposit',true,false))}"/>
+		                         </apex:column>
+		                         <!-- /** Eternus Solutions  **/
+								/** Author  : Manasi Ranade	**/
+								/** Issue Id: FS0163      	**/
+								/** Date    : 26/9/2011 	**/
+								/** Purpose : Added Interest rate field on ‘Retirement Accounts’ and ‘Post Office Saving Schemes **/
+								/****************************************************/-->
+		                             <!-- /** Eternus Solutions  **/
+								/** Author  : Dipak Nikam	**/
+								/** Issue Id: 0001498      	**/
+								/** Date    : 09/02/2012 	**/
+								/** Purpose : Made Interest rate field on ‘Retirement Accounts’ required **/
+		                        -->
+		                         <apex:column style="width:2%" headerValue="{!$ObjectType.Asset__c.fields.Interest_Rate__c.label}" title="{!$Label.InterestRateHelpText}" rendered="{!(if(AssetBeanObj.RecordTypeName=='BankDeposit' || AssetBeanObj.RecordTypeName=='Retirement' ||  AssetBeanObj.RecordTypeName=='POSaving',true,false))}">
+		                             <apex:inputField value="{!Asset.Interest_Rate__c}" style="width:90%;" styleClass="requiredField"/>
+		                         </apex:column>     
+		                         <apex:column style="width:2%;" headerValue="{!$ObjectType.Asset__c.fields.Acquisition_Year__c.label}" rendered="{!(if(AssetBeanObj.RecordTypeName=='PersonalAsset' || AssetBeanObj.RecordTypeName=='BusinessAsset' || AssetBeanObj.RecordTypeName=='RealEstate',true,false))}">
+		                             <apex:inputField value="{!Asset.Acquisition_Year__c}" onkeypress="return isNumberKey(event)" onblur="yearLength(this);" style="width:95%;"/>
+		                         </apex:column>     
+		                         <apex:column style="width:2%;" headerValue="{!$ObjectType.Asset__c.fields.Expected_Year_of_Sale__c.label}" rendered="{!(if(AssetBeanObj.RecordTypeName=='PersonalAsset' || AssetBeanObj.RecordTypeName=='BusinessAsset' || AssetBeanObj.RecordTypeName=='RealEstate',true,false))}" >
+		                             <apex:inputField value="{!Asset.Expected_Year_of_Sale__c}" onkeypress="return isNumberKey(event)" onblur="yearLength(this);" style="width:95%;"/>
+		                         </apex:column>     
+		                         <apex:column style="width:10%" headerValue="{!$ObjectType.Asset__c.fields.Asset_Types__c.label}" rendered="{!(if(AssetBeanObj.RecordTypeName=='PersonalAsset' || AssetBeanObj.RecordTypeName=='BusinessAsset' || AssetBeanObj.RecordTypeName=='RealEstate',true,false))}">
+		                             <apex:inputField value="{!Asset.Asset_Types__c}" style="width:100%;" styleClass="requiredField"/>
+		                         </apex:column>     
+		                         <apex:column style="width:15%" headerValue="{!$ObjectType.Asset__c.fields.Description__c.label}" rendered="{!(if(AssetBeanObj.RecordTypeName=='BankDeposit' || AssetBeanObj.RecordTypeName=='POSaving' || AssetBeanObj.RecordTypeName=='Retirement',false,true))}">
+		                             <apex:inputField value="{!Asset.Description__c}" style="width:98%; height:18px;"/>
+		                         </apex:column>     
+		                         <apex:column style="width:7%" headerValue="{!$ObjectType.Asset__c.fields.Current_Value__c.label}" rendered="{!(if(AssetBeanObj.RecordTypeName=='BankDeposit' || AssetBeanObj.RecordTypeName=='POSaving' || AssetBeanObj.RecordTypeName=='Retirement',false,true))}" title="{!$Label.AssetValueHelpText}">
+		                             <apex:inputField value="{!Asset.Current_Value__c}" style="width:95%;" styleClass="requiredField"/>
+		                         </apex:column>
+		                        <!-- /** Eternus Solutions  **/
+								/** Author  : Manasi Ranade	**/
+								/** Issue Id: FS0167      	**/
+								/** Date    : 13/9/2011 	**/
+								/** Purpose : Made field 'Expected Growth Rate' Required **/
+								/****************************************************/-->
+		                         <apex:column style="width:1%;" styleClass="colWrapStyle" headerValue="{!AssetBeanObj.GrowthRateLabel}" rendered="{!(if(AssetBeanObj.RecordTypeName=='Cash&Equivalents',false,true))}" title="{!$Label.GrowthRateHelpText}">
+		                             <apex:inputField value="{!Asset.Expected_Growth_Rate__c}" style="width:95%;" styleClass="{!(if(AssetBeanObj.RecordTypeName=='RealEstate' || AssetBeanObj.RecordTypeName=='PersonalAsset' || AssetBeanObj.RecordTypeName=='BusinessAsset','requiredField','DummyClass'))}"/>
+		                         <!--    -->
+		                         </apex:column>  
+		                    </apex:pageBlockTable>
+		                     <apex:actionStatus stopText="" id="counterStatusData">
+		
+		                                                      <apex:facet name="start">                
+		                                                             <apex:outputPanel style="padding-left:45%;">
+		                                                                <apex:image value="{!$Resource.loading_image}" width="3%" height="3%"/>
+		                                                             </apex:outputPanel>
+		                                                      </apex:facet>
+		                    </apex:actionStatus>  
+		                    <apex:pageBlockButtons location="bottom">
+<!-- 		                    	<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+								<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+				                    <apex:commandButton value="Add New" action="{!AddNewRow}" reRender="PopupPanel,counterStatusData" status="counterStatusData" style="margin-left:90px;"/>
+				                    <apex:commandButton value="Remove" action="{!Remove}" reRender="PopupPanel,SummaryTable,counterStatusData" status="counterStatusData" /> 
+				                    <apex:commandButton value="Save" action="{!Save}" reRender="PopupPanel,SummaryTable,counterStatusData" status="counterStatusData" />
+		                    	</apex:outputPanel>
+		                    	<apex:commandButton value="Cancel" action="{!closePopUp}" immediate="true" reRender="PopupPanel,SummaryTable" />
+		                    </apex:pageBlockButtons>    
+		                </apex:pageBlock>
+		            </apex:outputPanel>
+		        </apex:outputPanel>
+		    </apex:form>
+		 </apex:define>
+	</apex:composition>
+</apex:page>

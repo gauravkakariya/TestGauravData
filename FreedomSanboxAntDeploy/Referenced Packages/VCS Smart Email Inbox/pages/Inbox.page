@@ -1,0 +1,1753 @@
+<apex:page controller="VCSSA.MailBoxController" showheader="{!not(noheader)}" sidebar="false" action="{!init}" standardStylesheets="true" cache="false" tabStyle="VCSSA__VCSEmail__c">
+
+<!-- TODO: buscar como hacer que esta variable tenga https://naX.salesforce.com , no vcssa.naX.salesforce.com y que funcione confiablemente (inclyuendo sandboxes tipo tapp1.salesforce.com 
+esto no sirve: {!LEFT( $Api.Enterprise_Server_URL_25 , FIND('/', $Api.Enterprise_Server_URL_25, 9) )}
+-->
+<apex:variable var="url_salesforce" value="" />
+
+<apex:variable var="url_inboxpage"  value="{!URLFOR($Page.VCSSA__Inbox, null)}" />
+<apex:variable var="url_inboxextra"  value="{!if($CurrentPage.parameters.search!='','&search=1','')}{!if($CurrentPage.parameters.search_text!='','&search_text='+URLENCODE($CurrentPage.parameters.search_text),'')}{!if($CurrentPage.parameters.search_subject!='','&search_subject='+URLENCODE($CurrentPage.parameters.search_subject),'')}{!if($CurrentPage.parameters.search_from!='','&search_from='+URLENCODE($CurrentPage.parameters.search_from),'')}{!if($CurrentPage.parameters.search_tags!='','&search_tags='+URLENCODE($CurrentPage.parameters.search_tags),'')}{!if($CurrentPage.parameters.search_date1!='','&search_date1='+URLENCODE($CurrentPage.parameters.search_date1),'')}{!if($CurrentPage.parameters.search_date2!='','&search_date2='+URLENCODE($CurrentPage.parameters.search_date2),'')}" />
+<apex:variable var="url_inbox"  value="{!url_inboxpage}?aid={!aliasId}&ltags={!ltags}&p={!pageNo}{!url_inboxextra}" />
+<apex:variable var="url_inbox_nosearch"  value="{!url_inboxpage}?aid={!aliasId}&ltags={!ltags}&p={!pageNo}" />
+<apex:variable var="url_inbox1"  value="{!url_inboxpage}?aid={!aliasId}" />
+<apex:variable var="url_inbox2"  value="{!url_inboxpage}?ltags={!ltags}" />
+<apex:variable var="url_inbox3"  value="{!url_inboxpage}?aid={!aliasId}&ltags={!ltags}{!url_inboxextra}" />
+<apex:variable var="url_compose"  value="{!url_inbox}&action=compose&vmode=compose&inboxurl={!URLENCODE(url_inbox)}" /> 
+<apex:variable var="url_composesf"  value="/_ui/core/email/author/EmailAuthor?retURL={!URLENCODE(url_inbox)}&saveURL={!URLENCODE(url_inbox&'&cb=composesf&msg=The+message+was+sent')}" />
+<apex:variable var="url_addresses"  value="{!url_inbox}&vmode=addresses&inboxurl={!URLENCODE(url_inbox)}" />
+<apex:variable var="url_massbind"  value="{!url_inbox}&vmode=massbind&inboxurl={!URLENCODE(url_inbox)}" />
+<apex:variable var="url_back"  value="{! if($CurrentPage.parameters.inboxurl!='',$CurrentPage.parameters.inboxurl,url_inbox) }" />
+<apex:variable var="url_quickreply" value="{!url_inboxpage}?vmode=reply&action=replyall&inboxurl={! URLENCODE(url_inbox) }&ids=" />
+<apex:variable var="url_viewfrominbox" value="{!url_inbox}&vmode=view&action=untag&tags=@unread&inboxurl={!URLENCODE(url_inbox)}&ids=" />
+
+
+<!-- mantener estas urls simples, sin variable sin nada raro: -->
+<apex:variable var="url_rules"  value="{!URLFOR($Page.VCSSA__RedirectionRulesAdmin, null)}?inboxurl={!URLENCODE(url_inbox)}#rules" />
+<apex:variable var="url_tags"  value="{!URLFOR($Page.VCSSA__MailboxSettingsTags, null)}?inboxurl={!URLENCODE(url_inbox)}#tags" />
+<apex:variable var="url_settings"  value="{!URLFOR($Page.VCSSA__MailboxSettings, null)}?inboxurl={!URLENCODE(url_inbox)}&confid={!config.Id}" />
+<apex:variable var="url_help"  value="http://smartemail.vcs.com.ar/help/" />
+<apex:variable var="url_idea"  value="{!url_compose}&to=smart.ideas%40virtualcompanyservices.com&sbj=My%20Smart%20Idea" />
+<apex:variable var="url_review"  value="http://sites.force.com/appexchange/apex/reviews?listingId=a0N300000016ciJEAQ" />
+<apex:variable var="url_issues"  value="{!URLFOR($Page.VCSSA__Outbox, null)}" />
+
+<apex:variable var="url_vcs"  value="http://www.virtualcompanyservices.com/" />
+<apex:variable var="url_ComposeAutocomplete"  value="{!URLFOR($Page.VCSSA__ComposeAutocomplete, null)}" />
+
+<!-- referencias a nombres de bindings -->
+<apex:variable var="label_lead"  value="{!$ObjectType.Lead.label}" />
+<apex:variable var="label_contact"  value="{!$ObjectType.Contact.label}" />
+<apex:variable var="label_account"  value="{!$ObjectType.Account.label}" />
+<apex:variable var="label_opportunity"  value="{!$ObjectType.Opportunity.label}" />
+<apex:variable var="label_case"  value="{!$ObjectType.Case.label}" />
+<apex:variable var="label_event"  value="{!$ObjectType.Event.label}" />
+<apex:variable var="label_task"  value="{!$ObjectType.Task.label}" />
+<apex:variable var="label_campaign"  value="Campaign" />
+
+<script type="text/javascript">
+try{
+    console.debug('start');
+    console.log = console.debug;
+}catch(e) {
+	try{
+	    console.log('start');
+	}catch(e1) {
+	    console = { log:function() {} }
+	}
+}
+</script>
+
+<apex:outputPanel layout="none" rendered="{!not(noframe)}">
+
+<style type="text/css">
+.taglabel { display: inline; background-color: #E0ECFF; 
+	padding: 2px; padding-top: 1px; padding-bottom: 1px;  margin-right: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
+	}
+#tagsListSystem, #tagsListUser          { list-style: none; padding: 5px; padding-top: 0; margin: 0; }
+#tagsListSystem li,#tagsListUser li     { margin:0; margin-bottom:3px; padding: 3px; background-color: #CDE4EC; border: 1px solid #CDE4EC; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }
+#tagsList .selected { background-color: #1797C0; border: 1px solid #1797C0;  font-weight: bold; color: white; }
+#tagsListSystem li.hoverActive,#tagsListUser li.hoverActive { border-color: red; font-weight: bold; }
+
+#mainPageContentFr { background-color: white; }
+
+.horizBarFrame  { min-height: 45px; margin:3px; padding: 5px;  background-color: #64CBED; border: 1px solid white; 
+	vertical-align: text-bottom; margin-left: 0; margin-right:0; 
+	-moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; 
+	/*background: -moz-linear-gradient(top, lightblue, #ECF6F9);*/
+	background: transparent url({!URLFOR($Resource.scriptaculous, null)}/bar_background.png) repeat-x 0 0;
+	}
+#horizBarFrameHeader { background-color: #1695C0; }
+#messageHeaders { background: none; background-color: white; }
+#messageBody { background: none; background-color: white; }
+
+.messageListTableHeader    { background: transparent url({!URLFOR($Resource.scriptaculous, null)}/bar_background.png) repeat-x 0 0; margin:1px; }
+.messageListTableHeader th { background: transparent url({!URLFOR($Resource.scriptaculous, null)}/bar_background.png) repeat-x 0 0; padding:1px; }
+
+.dataRow    { max-height: 20px; overflow: hidden; padding: 1px; }
+.dataRow td { max-height: 20px; overflow: hidden; padding: 1px; }
+.dataRow th { max-height: 20px; overflow: hidden; padding: 1px; }
+
+.highlight td, .highlight th { background-color:ECF6F9; }
+
+ 
+.star_on { background: transparent url({!URLFOR($Resource.starred_email, null)}) no-repeat 0 0; border: 1px solid transparent; }
+.star_off { background: transparent url({!URLFOR($Resource.starred_email_grey, null)}) no-repeat 0 0; border: 1px solid transparent; }
+.has_attachments { background: transparent url({!URLFOR($Resource.paperclip, null)}) no-repeat 0 0; border: 1px solid transparent; }
+.subj_unread { font-weight: bold; }
+
+.toolbarframe  { margin:3px; padding: 5px;  background-color: #CDE4EC; border: 2px solid transparent; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; vertical-align: text-bottom; margin-left: 0; margin-right:0; }
+.toolbarframeInt { min-height: 30px; vertical-align: text-bottom; }
+
+.toolbarframe2  { margin:3px; padding: 5px; background-color: #CFEEF8; border: 2px solid transparent; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; vertical-align: text-bottom; margin-left: 0; margin-right:0; }
+.toolbarframe2Int { min-height: 30px; vertical-align: text-bottom }
+
+.ico_lead { background: transparent url(/img/icon/leads16.png) no-repeat; }
+.ico_account { background: transparent url(/img/icon/perAccounts16.png) no-repeat; }
+.ico_contact { background-image: url(/img/icon/contacts16.png); }
+.ico_case { background: transparent url(/img/icon/cases16.png) no-repeat; }
+.ico_opportunity { background: transparent url(/img/icon/opportunities16.png) no-repeat; }
+.ico_campaign { background: transparent url(/img/icon/campaigns16.png) no-repeat; }
+.ico_task { background-image: url(/img/icon/tasks16.png); }
+.ico_event { background-image: url(/img/icon/tasks16.png); }
+.ico_email { background: transparent url(/img/icon/documents16.png) no-repeat; }
+.ico_none {}
+.ico_salesforce { background: transparent url({!URLFOR($Resource.icon_salesforce, null)}) no-repeat; }
+
+
+.ico_repliesto { background: transparent url({!URLFOR($Resource.reply_icon, null)}) no-repeat 0 0; border: 1px solid transparent; }
+.ico_quickreply{ background: transparent url({!URLFOR($Resource.quickreply_icon, null)}) no-repeat 0 0; border: 1px solid transparent; }
+.ico_draft     { background: transparent url({!URLFOR($Resource.draft_icon, null)}) no-repeat 0 0; border: 1px solid transparent; }
+
+.tdnowrap { white-space: nowrap; }
+
+input.lk { width: 100px; }
+
+.bindingBlock { display: block; float: left; min-width: 60px; margin:2px; padding: 3px; }
+.bindingBlockUpdate { display: block; float: left; width: 50px; height: 70px; margin:2px; padding: 3px; }
+
+#workingMessage   { position: absolute; top:0px; min-height: 20px; width: 150px; left: 45%; right: 45%; padding: 5px; background-color: #FFF1A8; color: black; text-align: center;     display: none; -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; vertical-align: middle; }
+#alldoneMessage   { position: absolute; top:0px; min-height: 20px; width: 150px; left: 45%; right: 45%; padding: 5px; background-color: #FFF1A8; color: black; text-align: center; font-weight: bold; -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; vertical-align: middle; }
+#alldoneMessage1  { position: absolute; top:0px; min-height: 20px; width: 150px; left: 45%; right: 45%; padding: 5px; background-color: #FFF1A8; color: black; text-align: center; font-weight: bold; -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; vertical-align: middle; }
+
+pre {
+ white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+#fixme {
+}
+/* unused */
+#fixme1 {
+  /* used by Opera 5+, Netscape6+/Mozilla, Konqueror, Safari, OmniWeb 4.5+, iCab, ICEbrowser */
+  left: 10px; right: 10px; bottom: 0px; position: fixed; width: 100%;
+}
+
+.emailhover1 { background-color: white; border: 1px solid #6AACD8; padding: 3px; width: 480px; height: 400px; -moz-border-radius-bottomleft: 8px; -webkit-border-bottom-left-radius: 8px; -moz-border-radius-bottomright: 8px; -webkit-border-bottom-right-radius: 8px; }
+.emailhover2 { background-color: #6AACD8; border: 1px solid #6AACD8; padding: 3px; width: 480px; color: white; -moz-border-radius-topleft: 8px; -webkit-border-top-left-radius: 8px; -moz-border-radius-topright: 8px; -webkit-border-top-right-radius: 8px; }
+
+.labelCol { width: 10% !important; }
+
+/* SALESFORCE OVERRIDES */
+
+#myMainPage .bPageBlock { border: none; background: none; }
+#myMainPage .bPageBlock .pbBody { padding:0; border: none; background: none;  }
+#myMainPage .customnotabTab .secondaryPalette, #myMainPage .individualPalette .customnotabBlock .secondaryPalette { background: none; border: none; }
+
+</style>
+
+
+<script type="text/javascript">
+
+// fix para escape() con utf-8
+escapeurl = function(s) {
+	try{
+		return encodeURIComponent(s);
+	}catch(e) {
+		return escape(s);
+	}
+}
+function trim(str, chars) {
+	return ltrim(rtrim(str, chars), chars);
+}
+function ltrim(str, chars) {
+	chars = chars || "\\s";
+	return str.replace(new RegExp("^[" + chars + "]+", "g"), "");
+}
+function rtrim(str, chars) {
+	chars = chars || "\\s";
+	return str.replace(new RegExp("[" + chars + "]+$", "g"), "");
+}
+function createCookie(name,value) {
+	document.cookie = name+"="+value+"; path=/";
+}
+
+function readCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
+
+
+
+
+
+var workingDialog_timeoutid;
+function workingDialog(timeout) {
+    try{ window.clearTimeout(workingDialog_timeoutid); }catch(e) {}
+    var close = function() {
+        if(t=document.getElementById('workingMessage')) {
+            t.style.display ='none';
+        }
+    }
+    if(timeout) {
+        if(t=document.getElementById('alldoneMessage'))
+            t.style.display ='none';
+        if(t=document.getElementById('workingMessage')) {
+            t.style.display ='inline';
+        }
+        workingDialog_timeoutid = window.setTimeout(close, timeout*1000 );
+    }else{
+        close();
+    }
+}
+
+function refreshContent(url, cb) {
+    workingDialog(10);
+    new Ajax.Request(url, {
+        method:'get',
+        onSuccess: function(transport){
+            var content = transport.responseText?transport.responseText:transport.responseXML
+            var p1 = content.indexOf('<span class="VCS SMART_mainPageContent"></span>');
+            var p2 = content.lastIndexOf('<span class="VCS SMART_mainPageContent"></span>');
+            if(p1>-1 && p2>-1) {
+                stateManager(true);
+                document.getElementById('mainPageContentFr').innerHTML = content.substring(p1+47,p2);
+                stateManager(false);
+            }
+            if(cb) window.setTimeout(cb, 10);
+            workingDialog();
+        }
+    });
+}
+
+var req_count=0
+function starOnOff(elt,mid) {
+    workingDialog(1);
+    nowIsOn = (elt.className=='star_off');
+    var url = '{!url_inboxpage}?action=untag&ids='+mid+'&tags=@star';
+    if(nowIsOn) {
+        url = '{!url_inboxpage}?action=tag&ids='+mid+'&tags=@star';
+        elt.className='star_on';
+    }else{
+        elt.className='star_off';
+    }
+    url = url + '&RvL='+req_count+'-'+((new Date()).getTime());
+    console.log('starOnOff:',url);
+    req_count++;    
+    var e = document.createElement("img");
+    e.src = url;
+    document.getElementsByTagName("body")[0].appendChild(e);
+}
+function selectAll(elt) {
+    var ts=document.getElementsByTagName('input');
+    for(var i=0 ; i < ts.length ; i++ ) {
+        if(ts[i].id && ts[i].id.indexOf('msg_')==0) {
+            ts[i].checked = elt.checked;
+        }
+    }
+}
+function openClose(elt) {
+    if(t=document.getElementById(elt)) {
+        t.style.display = (t.style.display!='block')?'block':'none';
+    }
+    if(elt=='advanced_search') {
+        if(t=document.getElementById('search_from')) t.focus();
+    }
+    return t?(t.style.display=='block'): false;
+}
+function openCloseBind(elt, clear) {
+    var bindButton = document.getElementById('{!$Component.viewmode_view.bindingform1.bindingsend}');
+    if(openClose(elt)) {
+        bindButton.style.display = 'block';
+        if(t=document.getElementById(elt).getElementsByTagName('input')) {
+        	for(var i=0 ; i < t.length ; i++) {
+        		if(t[i].type=='text') {
+	        		t[i].focus();
+	        		break;
+	        	}
+        	}
+        }
+    }else{
+        bindButton.style.display = 'none';
+    }
+}
+
+var stateManager_checks=[];
+function stateManager(save_or_load) {
+    if(save_or_load) {
+        var ts=document.getElementsByTagName('input');
+        for(var i=0 ; i < ts.length ; i++ ) {
+            if(ts[i].id && ts[i].id.indexOf('msg_')==0 && ts[i].checked) {
+                stateManager_checks.push(ts[i].id);
+            }
+        }
+    }else{
+        for(var i=0 ; i < stateManager_checks.length ; i++ ) {
+            if(t=document.getElementById(stateManager_checks[i])) t.checked = true;
+        }
+        if( (tx=document.getElementById('selectAll')) ) {
+        	var check=true;
+        	var ts=document.getElementsByTagName('input');
+        	for(var i=0 ; i < ts.length ; i++ ) {
+            	if(ts[i].id && ts[i].id.indexOf('msg_')==0 && !ts[i].checked) {
+                	check=false;
+            	}
+        	}
+        	tx.checked = check;
+        }
+        stateManager_checks=[];
+        $A(document.getElementsByClassName('dragmsg')).each(function(item) {
+            new Draggable(item, {revert:true});
+        });
+        $A(document.getElementsByClassName('dropmsg')).each(function(item) {
+            Droppables.add(item, { hoverclass: 'hoverActive', onDrop: moveItem });
+        });
+        // if mode==view, redraw the message body.
+        viewmessage_redraw();
+    }
+}
+
+function draw_PrevNext(prev_next, dom_or_docwrite) {
+	// console.log('draw_PrevNext: INI', prev_next, dom_or_docwrite, ('{!$CurrentPage.parameters.inboxurl}'));
+	// there is no prev/next if this message is not viewed from the inbox.
+	if(!('{!$CurrentPage.parameters.inboxurl}')) return;
+	var cook = readCookie('email_set');
+	// console.log('draw_PrevNext MID', prev_next, dom_or_docwrite, cook);
+	var cklist = (cook||'').split(' ');
+	var id = null;
+	if(prev_next) {
+		for(var i=1 ; i < cklist.length ; i++ )
+			if(cklist[i]=='{!email.m.id}') {
+				id = cklist[i-1];
+				break;
+			}
+		// console.log('prev:',id, '{!email.m.id}');
+		if(id) {
+			var t2 = '<a href="{!url_viewfrominbox}'+id+'">« Prev</a>';
+			if( dom_or_docwrite && (t=document.getElementById('prevmsg_link')) )
+				t.innerHTML = t2;
+			else
+				document.write(t2);
+			if(t1=document.getElementById('prevmsg_link1')) t1.innerHTML=t2;
+		}
+	}else{
+		for(var i=0 ; i < cklist.length-1 ; i++ )
+			if(cklist[i]=='{!email.m.id}') {
+				id = cklist[i+1];
+				break;
+			}
+		// console.log('next:',id, '{!email.m.id}');
+		if(id) {
+			var t2 = '<a href="{!url_viewfrominbox}'+id+'">Next »</a>';
+			if( dom_or_docwrite && (t=document.getElementById('nextmsg_link')) )
+				t.innerHTML = t2;
+			else
+				document.write(t2);
+			if(t1=document.getElementById('nextmsg_link1')) t1.innerHTML=t2;
+		}
+	}
+}
+
+function viewmessage_redraw() {
+    draw_PrevNext(true, true);
+    draw_PrevNext(false, true);
+	if( (t=document.getElementById('viewMessageHolder')) && (t2=document.getElementById('viewMessageContent')) )
+   		t.innerHTML = cleanupHTML(t2.getAttribute('value'));
+}
+
+function extra_createnewtag(t) {
+	var nt = prompt('New Tag?');
+	if(nt) {
+		if(t) t[1]=nt;
+		return '&newtag='+escapeurl(nt);
+	}
+	return '';
+}
+function list_createnewtag(s) {
+   	var urlextra_newtag = extra_createnewtag();
+   	if(!urlextra_newtag)
+   		return;
+    var msg='The tag was created';
+    var base1 = '{!url_inbox}';//top.location.href;
+    if(base1.indexOf('?')==-1) base1+='?dummy1=1';
+    refreshContent(base1+'&frominbox=1&noframe=1&msg='+escapeurl(msg)+urlextra_newtag, function() {
+	    store_prev_next_cookie();
+    });
+}
+
+function list_moreAction(s,action) {
+	var urlextra_newtag = '';
+	if(!s)
+		s = document.getElementById('moreAction');
+	if(!action)
+	    action = s.options[s.selectedIndex].value;
+    s.selectedIndex = 0;
+    if(!action) return;
+    var urlextra_newtag='';
+    // collect the selected messages.
+    var ts=document.getElementsByTagName('input');
+    var ids=[];
+    for(var i=0 ; i < ts.length ; i++ ) {
+        if(ts[i].id && ts[i].id.indexOf('msg_')==0 && ts[i].checked) {
+            ids.push(ts[i].id.substr(4,18));
+        }
+    }
+    if(!ids.length) {
+        alert('You must select at least one message');
+        return;
+    }
+    var msg='';
+    var t = action.split(';',2);
+    if(t[1]=='') {
+    	urlextra_newtag = extra_createnewtag(t);
+    	if(!urlextra_newtag)
+    		return;
+    }
+    if(t[1]=='@delete') {
+        if(t[0]=='tag' && !confirm('Are your sure you want to DELETE the selected messages?'))
+            return;
+        if(t[0]=='untag' && !confirm('Are your sure you want to RECOVER the selected messages?'))
+            return;
+        msg = 'The messages were sent to the Trash';
+    }if(action=='tag;@archive') {
+        msg = 'The messages were archived';
+    }if(action=='untag;@archive') {
+        msg = 'The messages were moved to the inbox';
+    }if(action=='tag;@unread') {
+        msg = 'The messages were marked as unread';
+    }else if(t[0]=='tag') {
+        msg = 'The messages were tagged';
+    }else if(t[0]=='untag') {
+        msg = 'The messages were untagged';
+    }else if(t[0]=='applyrr') {
+        msg = 'The rules were processed';
+    }
+    var base1 = '{!url_inbox}';//top.location.href;
+    if(base1.indexOf('?')==-1) base1+='?dummy1=1';
+    if(t[0]=='massbind') {
+    	top.location.href = '{!url_massbind}&ids='+escapeurl(ids.join(';'));
+    	return;
+    }
+    refreshContent(base1+'&frominbox=1&noframe=1&action='+t[0]+'&ids='+escapeurl(ids.join(';'))+'&tags='+escapeurl(t[1])+'&msg='+escapeurl(msg)+urlextra_newtag, function() {
+	    store_prev_next_cookie();
+    });
+}
+
+function view_moreAction(s,burl) {
+    var action = s.options[s.selectedIndex].value;
+    s.selectedIndex = 0;
+    if(!action) return;
+    var urlextra_newtag='';
+    var t = action.split(';',2);
+	if(t[0]=='showOrig') {
+		showOriginal();
+		return;
+	}
+	if(t[0]=='showIssues') {
+		showIssues();
+		return;
+	}
+    if(t[1]=='') {
+    	urlextra_newtag = extra_createnewtag();
+    	if(!urlextra_newtag)
+    		return;
+    }
+    var msg='';
+    if(t[0]=='tag') {
+        msg = 'The messages were tagged';
+    }else if(t[0]=='untag') {
+        msg = 'The messages were untagged';
+    }
+    if(burl.indexOf('?')==-1) burl+='?dummy1=1';
+    refreshContent(burl+'&noframe=1&action='+t[0]+'&tags='+escapeurl(t[1])+urlextra_newtag, function() {
+    	viewmessage_redraw();
+    });
+}
+
+function moveItem(draggable,droparea){
+    var base1 = '{!url_inbox}';//top.location.href;
+    if(base1.indexOf('?')==-1) base1+='?dummy1=1';
+    refreshContent(base1+'&frominbox=1&noframe=1&action=tag&ids='+draggable.title+'&tags='+droparea.title+'&msg=The+messages+were+tagged', function() {
+	    store_prev_next_cookie();
+    });
+}
+
+var setof_tips=[];
+function change_setof_tips() {
+    var idx = Math.round(Math.random()*3);
+    if( idx<setof_tips.length ) {
+        if(t=document.getElementById('fixme'))
+            t.innerHTML = setof_tips[idx];
+    }
+    window.setTimeout(change_setof_tips, 5*1000);
+}
+
+function inbox_refresh() {
+    refreshContent('{!url_inbox}&noframe=1', function() {
+    	store_prev_next_cookie(); // recargo las cookies.
+    });
+}
+
+var inbox_autorefresh_t = null;
+function inbox_autorefresh(reset) {
+	if(reset) {
+		window.clearTimeout(inbox_autorefresh_t);
+	}else{
+	    inbox_refresh();
+	}
+    inbox_autorefresh_t = window.setTimeout(inbox_autorefresh, 60000);
+}
+
+var window_onload_cbs = [];
+function window_onload(s) {
+    //window_onload_cbs.push(s);
+    window.sfdcPage.appendToOnloadQueue(s);
+}
+//window.onload = function() {
+//  for(var i=0 ; i < window_onload_cbs.length ; i++)
+//      window_onload_cbs[i]();
+//}
+
+window_onload(function() {
+    setof_tips.push('<b>Tip:</b> You can drag emails to the tag you want. Simply drag the icon <img src="/s.gif" width="16" class="ico_email dragmsg" align="absmiddle"/> to the tag name.<br/>');
+    setof_tips.push('<b>Tip:</b> You can select several messages to tag them all at once, using the "more actions..." menu.<br/>');
+    setof_tips.push('<b>Tip:</b> Search your contacts using the "Contacts" link.<br/>');
+    setof_tips.push('<b>Tip:</b> Archive your emails often, so you dont clutter your inbox.<br/>');
+    setof_tips.push('<b>Tip:</b> You have multiple email addresses? filter them or view them all at once using the "Show Alias:" dialog.<br/>');
+    setof_tips.push('<b>Tip:</b> you can quickly read your emails simply by hovering over the subject with the mouse.<br/>');
+    change_setof_tips();
+});
+window.scriptaculous_async = function() {
+	try {
+		$A(document.getElementsByClassName('dragmsg')).each(function(item) {
+		    new Draggable(item, {revert:true});
+		});
+		$A(document.getElementsByClassName('dropmsg')).each(function(item) {
+		    Droppables.add(item, { hoverclass: 'hoverActive', onDrop: moveItem });
+		});
+	}catch(e) {
+		// en IE no funciona esto y parece traer problemas
+	}
+}
+
+var email_set=[];
+function	store_prev_next_cookie() {
+	// solo los primeros 200 email se pueden grabar, por limitaciones de cookies ( no mas de 4096 bytes )
+	// en IE7 al menos falla con 210... si, ya se, (18+1)*200=3990 ... pero IE falla igual.
+	email_set=trim(''+document.getElementById('email_set').value);
+	//console.log('store_prev_next_cookie: ',email_set);
+	createCookie('email_set', email_set);
+}
+</script>
+</apex:outputPanel>
+
+<div id="mainPageContentFr">
+<span class="VCS SMART_mainPageContent"></span>
+ 
+
+<div class="horizBarFrame" id="horizBarFrameHeader">
+		
+		<apex:outputPanel layout="none" id="Alert_new_emails" rendered="{!newEmails}">
+			<span id="alldoneMessage1">New message available</span>
+			<EMBED SRC="/img/reminder.swf" TYPE="application/x-shockwave-flash" WIDTH="1" HEIGHT="1" AUTOSTART="true"/>
+		</apex:outputPanel>
+		
+		<span id="alldoneMessage" style="display: {!if($CurrentPage.parameters.msg!='','block','none')}">{!htmlencode($CurrentPage.parameters.msg)}</span>
+		<span id="workingMessage"><img src="/img/loading.gif" align="absmiddle"/> &nbsp; Working...</span>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td width="40">
+		    <img src="{!URLFOR($Resource.logosmart, null)}" align="top"/>
+		</td><td>
+		    VCS Smart Email Inbox - <b>
+		    	{!if(vmode=='mailbox',
+		    		if($CurrentPage.parameters.search=='','Mailbox','Search Results'),
+		    		if(vmode=='view','View Message', 
+		    		if(action=='compose','New Message', 
+		    			if(action=='forward', 'Forward Message', 
+		    				if(action=='reply','Reply Message', 
+		    				if(action=='replyall','Reply All',
+		    				if(vmode=='addresses','Search Contacts',
+		    				''
+		    				) ) ) ) ) )
+		    		)}
+				<apex:outputPanel layout="none" rendered="{!and(vmode=='inbox',$CurrentPage.parameters.search='1')}">Searching messages</apex:outputPanel>
+		    </b>
+		    <div style="padding-top: 5px;"><small>{!$User.FirstName} {!$User.LastName} ({!$User.Email})</small></div>
+		</td>
+		<td align="right">
+		    <div>
+		    	<apex:outputPanel layout="none" rendered="{! and(false,vmode!='mailbox') }">
+			        <a href="{!url_inbox}">Message List</a> &nbsp;|&nbsp;
+		        </apex:outputPanel>
+		        <a class="configLinks" href="{!url_compose}">Compose</a> &nbsp;|&nbsp;
+		        <a class="configLinks" href="{!url_addresses}">Contacts</a> &nbsp;|&nbsp;
+		        <a class="configLinks" href="{!url_rules}">Filtering Rules</a> &nbsp;|&nbsp;
+		        <a class="configLinks" href="{!url_tags}">Manage Tags</a> &nbsp;|&nbsp;
+		        <a class="configLinks" href="{!url_settings}">Settings</a> &nbsp;|&nbsp;
+			    <a class="configLinks" href="{!url_help}" target="_blank">Need help?</a> 
+		    </div>
+		</td>
+		</tr></table>
+</div>
+
+<apex:outputPanel layout="none" rendered="{! and(not(config.VCSSA__hideHelpPage__c),IsAdministrator) }">
+<apex:include pageName="VCSSA__Installation"/>
+</apex:outputPanel>
+
+<div id="myMainPage">
+
+<apex:pageBlock rendered="{! vmode=='mailbox' }">
+<script src="{!$Resource.scriptaculous_async}" type="text/javascript"></script>
+
+<textarea id="email_set" style="display:none;">
+<apex:repeat var="a" value="{!emailsForPrevNext}"> {!a.m.id}  </apex:repeat></textarea>
+<script type="text/javascript">
+window.setTimeout(inbox_autorefresh, 30000); // 30 segundos despues de la primer carga.
+window_onload(function() {
+    // si toco algo de la pagina, reseteo el autorefresh, que lo haga 30 segundos despues del evento.
+    document.onkeypress = function() { inbox_autorefresh(true); };
+    document.onmousemove = function() { inbox_autorefresh(true); }
+    
+});
+store_prev_next_cookie();
+</script>
+
+    <div class="horizBarFram1e">
+	    <form method="get">
+	    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;"><tr>
+	        <td align="left" width="40%" valign="middle">
+	            <a href="javascript:void(openClose('select_alias'))">Show Alias: <b>
+	            	{!if(or(aliasId==null,aliasId==''),'All','')}
+			        <apex:repeat value="{!actionj.userAliases}" var="a">
+			            {!if( aliasId==blankvalue(a.Id,'usr'),a.Name,'')}
+			        </apex:repeat>
+	            </b></a>
+	        </td>
+	        <td width="60%" align="left" valign="top" nowrap="nowrap">
+	            <input type="hidden" name="search" value="1" />
+	            <input type="hidden" name="aid" value="{!aliasId}" />
+	            <input type="hidden" name="ltags" value="{!ltags}" />
+	            <input type="text" name="search_text" value="{!search_text}"/>
+	            <input type="submit" name="search" value="Search" class="btn"/>
+	            <small><a href="javascript:void(openClose('advanced_search'))">Advanced search</a></small>
+	        </td>
+	    </tr>
+	    </table>
+	    <fieldset id="advanced_search" class="horizBarFrame" style="display: {!if($CurrentPage.parameters.search!='','block','none')};">
+	        <b>From/To:</b> <input type="text" name="search_from" value="" id="search_from" value="{!search_from}" /> &nbsp;
+	        <b>Subject:</b> <input type="text" name="search_subject" value="{!search_subject}" /> &nbsp;
+	        
+	        <b>Date from:</b> <input  id="search_date1" name="search_date1" onfocus="DatePicker.pickDate(false, 'search_date1', false);" size="10" type="text" value="{!search_date1}" /> &nbsp;
+	        <b>Date to:</b>   <input  id="search_date2" name="search_date2" onfocus="DatePicker.pickDate(false, 'search_date2', false);" size="10" type="text" value="{!search_date2}" /> &nbsp;
+	        <nobr><b>With Tag:</b> <select id="search_tags" name="search_tags">
+	            <option value="@all" >All</option>
+	            <option value="@inbox">Inbox</option>
+	            <option value="@archive">Archived</option>
+	            <option value="@sent">Sent</option>
+	            <option value="@delete">Deleted</option>
+	            <apex:repeat value="{!actionj.userTags}" var="tag">
+	                <option value="{!tag.tag}">{!LEFT(tag.tag,32)}</option>
+	            </apex:repeat>
+	        </select>
+	        <input type="submit" name="search" value="Search" class="btn"/>
+	        </nobr>
+	        
+	    </fieldset>
+    	</form>
+	    <fieldset id="select_alias" class="horizBarFrame" style="display: none;">
+	        <br/>
+	        <a href="{!url_inbox2}&aid=" class="{!if(aliasId=='','selected','')}">All Aliases</a>
+	        <apex:repeat value="{!actionj.userAliases}" var="a">
+	            &nbsp; &nbsp; &nbsp; <a href="{!url_inbox2}&aid={!blankvalue(a.Id,'usr')}" class="{!if( aliasId==blankvalue(a.Id,'usr'),'selected','')}">{!a.Name}</a>
+	        </apex:repeat>
+	    </fieldset>
+		    
+	    
+	    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 5px; margin-bottom: 10px;"><tr>
+	    	<td width="140" align="left" nowrap="nowrap" valign="middle">
+	    	<img width="16" src="/s.gif" width="142" height="10"/>
+	    	<!-- 
+	    	<input type="button" name="search" value="New tag" class="btn" onclick="list_createnewtag();"/>
+	    	 --> &nbsp;
+			</td>
+	        <td width="80%" align="left" nowrap="nowrap" valign="middle">
+	            <input type="button" class="btn" onclick="list_moreAction(null,'tag;@archive')" value="Archive"/><input type="button" class="btn" onclick="list_moreAction(null,'untag;@unread')" value="Mark as Read"/><input type="button" class="btn" onclick="list_moreAction(null,'tag;@unread')" value="Mark as Unread"/><input type="button" class="btn" onclick="list_moreAction(null,'tag;@delete')" value="Delete"/> &nbsp; 
+	            <select id="moreAction" name="moreAction" onchange="list_moreAction(this)">
+	                <option value="">More actions...</option>
+	                <optgroup label="Actions">
+	                    <option value="tag;@archive">Archive</option>
+	                    <option value="untag;@archive">Move to inbox</option>
+	                    <option value="untag;@unread">Mark as read</option>
+	                    <option value="tag;@unread">Mark as unread</option>
+	                    <option value="tag;@delete">Delete</option>
+	                    <option value="untag;@delete">Undelete</option>
+	                    <option value="tag;@star">Add star</option>
+	                    <option value="untag;@star">Remove star</option>
+	                    <option value="applyrr;applyrr">Apply filtering rules</option>
+	                    <option value="massbind;massbind">Bind emails to...</option>
+	                </optgroup>
+	                <optgroup label="Apply tag">
+	                    <apex:repeat value="{!actionj.userTags}" var="tag">
+	                        <option value="tag;{!tag.tag}">{!LEFT(tag.tag,32)}</option>
+	                    </apex:repeat>
+	                    <option value="tag;">(new tag...)</option>
+	                </optgroup>
+	                <optgroup label="Remove tag">
+	                    <apex:repeat value="{!actionj.userTags}" var="tag">
+	                        <option value="untag;{!tag.tag}">{!LEFT(tag.tag,32)}</option>
+	                    </apex:repeat>
+	                </optgroup>
+	            </select>
+	            <!-- 
+	            <input type="submit" value="Go" class="btn"/>
+	             -->
+	        	&nbsp; <a href="javascript:void(inbox_refresh())">Refresh</a>
+	        </td>
+	    <td align="right" width="200" valign="middle" nowrap="nowrap">
+	        <apex:outputPanel layout="none" rendered="{! pageNo > 1}"><a href="{!url_inbox3}&p=1">«« First</a></apex:outputPanel>
+	        <apex:outputPanel layout="none" rendered="{! pageNo > 2}"> &nbsp;<a href="{!url_inbox3}&p={!pageNo-1}">« Prev</a></apex:outputPanel>
+	        &nbsp; <span>{!if(mailCount >= 600,'600+ msgs',''+text(mailCount)+' msgs')}</span> &nbsp;
+	        <apex:outputPanel layout="none" rendered="{! pageNo < pageCount-1}"><a href="{!url_inbox3}&p={!pageNo+1}">Next »</a> &nbsp;</apex:outputPanel>
+	        <apex:outputPanel layout="none" rendered="{! pageNo < pageCount}"><a href="{!url_inbox3}&p={!pageCount}">Last »»</a></apex:outputPanel>
+	    </td>
+	    </tr></table>
+    
+    </div>
+    
+    <apex:pageMessages />
+    <table border="0" cellspacing="0" cellpadding="0" width="100%"><tr><td valign="top" width="150" id="tagsList" style="vertical-align: top;">
+        <ul id="tagsListSystem">
+        <li title="@inbox" class="dropmsg {!if(or(ltags=='@inbox',ltags==''),'selected','')}"> <a href="{!url_inbox1}">Inbox {!if(actionj.countInbox>0,if(actionj.countInbox>=600,'(600+)','('+text(actionj.countInbox)+')'),'')}</a> </li>
+        <li title="@unread" class="dropmsg {!if(ltags=='@unread','selected','')}"> <a href="{!url_inbox1}&ltags=@unread">Unread {!if(actionj.countUnread>0,if(actionj.countUnread>=600,'(600+)','('+text(actionj.countUnread)+')'),'')}</a> </li>
+        <li title="@star" class="dropmsg {!if(ltags=='@star','selected','')}"> <a href="{!url_inbox1}&ltags=@star">Starred {!if(actionj.countStarred>0,if(actionj.countStarred>=600,'(600+)','('+text(actionj.countStarred)+')'),'')}</a> </li>
+        <li title="@draft" class="dropmsg {!if(ltags=='@draft','selected','')}"> <a href="{!url_inbox1}&ltags=@draft">Drafts {!if(actionj.countDrafts>0,if(actionj.countDrafts>=600,'(600+)','('+text(actionj.countDrafts)+')'),'')}</a> </li>
+        <li title="@archive" class="dropmsg {!if(ltags=='@archive','selected','')}"> <a href="{!url_inbox1}&ltags=@archive">Archived</a> </li>
+        <li title="@delete" class="dropmsg {!if(ltags=='@delete','selected','')}"> <a href="{!url_inbox1}&ltags=@delete">Deleted</a> </li>
+        <li title="@outub" class=" {!if(ltags=='@sent','selected','')}"> <a href="{!url_inbox1}&ltags=@sent">Sent</a> </li>
+        <li title="@all" class=" {!if(ltags=='@all','selected','')}"> <a href="{!url_inbox1}&ltags=@all">All Mail</a> </li>
+        <apex:outputPanel layout="none" rendered="{! config.VCSSA__Email_Service_Debug_Mode__c }">
+        <li title="@logging_success" class=" {!if(ltags=='@logging_success','selected','')}"> <a href="{!url_inbox1}&search=1&aid=&ltags=@logging_success&search_subject=[smart+email]&search_tags=@delete&search=Search" style="font-weight: bold;">ADMIN. LOGGING</a> </li>
+        </apex:outputPanel>
+        <li> <a href="{!url_tags}" onclick="list_createnewtag(); return false;">(new tag)</a> </li>
+        </ul>
+        <ul id="tagsListUser">
+        <apex:repeat value="{!userTagsWithCount}" var="tag">
+            <li title="{!tag.tag}" class="dropmsg {!if(ltags==tag.tag,'selected','')}" style="background-color: #{!tag.tagColor}"> <a href="{!url_inbox1}&ltags={!tag.tag}">{!tag.tag} {!if(tag.msgCount>0,if(tag.msgCount>=300,'(300+)','('+text(tag.msgCount)+')'),'')}</a></li>
+        </apex:repeat>
+        </ul>
+    </td><td valign="top">
+    	<apex:outputPanel layout="none" rendered="{! ltags=='@delete' }">
+    	&nbsp; &nbsp; <b>You can remove all the deleted messages by selecting them and deleting them again.</b>
+    	</apex:outputPanel>
+    	<apex:outputPanel layout="none" rendered="{! emails.size==0 }">
+    		<br/>
+    		<center><h3>There are no messages to display</h3></center>
+    	</apex:outputPanel>
+        <apex:pageBlockTable value="{!emails}" var="email" rendered="{! emails.size>0 }" headerClass="messageListTableHeader" style="padding:0;margin:0;">
+            <apex:column styleClass="tdnowrap">
+                <apex:facet name="header"><img width="16" src="/s.gif" class="ico_email"/> <input type="checkbox" id="selectAll" onclick="selectAll(this)"/></apex:facet>
+                <img src="/s.gif" width="16" class="ico_email dragmsg" title="{!email.m.id}" align="absmiddle"/>
+                <input type="checkbox" name="msg_{!email.m.Id}" id="msg_{!email.m.Id}" />
+            </apex:column>
+            <apex:column styleClass="tdnowrap">
+                <apex:facet name="header"><img width="16" src="/s.gif" class="star_on"/></apex:facet>
+                <a href="#" onclick="starOnOff(this,'{!email.m.id}'); return false;" id="star_{!email.m.id}" class="{!if(contains(email.tagstring,'|@star|'),'star_on','star_off')}" style="border: 1px solid transparent;"><img width="16" src="/s.gif" /></a> 
+            </apex:column>
+            <apex:column styleClass="tdnowrap">
+                <apex:facet name="header">
+                    <apex:outputPanel layout="none" >
+                    <apex:image value="/s.gif" width="16" height="16" rendered="{! config.VCSSA__Use_Leads__c }" styleClass="ico_lead" title="{!label_lead}" />
+                    <apex:image value="/s.gif" width="16" height="16" rendered="{! config.VCSSA__Use_Contacts__c }" styleClass="ico_contact" title="{!label_contact}" />
+                    <apex:image value="/s.gif" width="16" height="16" rendered="{! or(config.VCSSA__Use_Contacts__c,config.VCSSA__Use_Person_Accounts__c) }" styleClass="ico_account" title="{!label_account}" />
+                    <apex:image value="/s.gif" width="16" height="16" rendered="{! config.VCSSA__Use_Opportunities__c }" styleClass="ico_opportunity" title="{!label_opportunity}" />
+                    <apex:image value="/s.gif" width="16" height="16" rendered="{! config.VCSSA__Use_Cases__c }" styleClass="ico_case" title="{!label_case}" />
+                    <apex:image value="/s.gif" width="16" height="16" rendered="{! config.VCSSA__Use_Campaigns__c }" styleClass="ico_campaign" title="{!label_campaign}" />
+                    <img width="16" border="0" src="/s.gif" class="ico_salesforce"/>
+                    </apex:outputPanel>
+                </apex:facet>
+                    <apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Leads__c,email.m.Lead__r.Name!='') }"><a href="/{!email.m.VCSSA__Lead__c}" target="_blank"><img width="16" border="0" src="/s.gif" class="{!if(email.m.Lead__c!='','ico_lead','ico_none')}" title="{!label_lead}: {!email.m.Lead__r.name}"/></a></apex:outputPanel>
+                    	<apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Leads__c,email.m.Lead__r.Name=='') }"><img width="16" border="0" src="/s.gif"/></apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Contacts__c,email.m.Contact__r.Name!='') }"><a href="/{!email.m.VCSSA__Contact__c}" target="_blank"><img width="16" border="0" src="/s.gif" class="{!if(email.m.Contact__c!='','ico_contact','ico_none')}" title="{!label_contact}: {!email.m.Contact__r.Name}/"/></a></apex:outputPanel>
+                    	<apex:outputPanel rendered="{! and(config.VCSSA__Use_Contacts__c,email.m.Contact__r.Name=='') }"><img width="16" border="0" src="/s.gif"/></apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{! and(or(config.VCSSA__Use_Contacts__c,config.VCSSA__Use_Person_Accounts__c),email.m.Account__r.Name!='') }"><a href="/{!email.m.VCSSA__Account__c}" target="_blank"><img width="16" border="0" src="/s.gif" class="{!if(email.m.Account__c!='','ico_account','ico_none')}" title="{!label_account}: {!email.m.Account__r.Name}"/></a></apex:outputPanel>
+                    	<apex:outputPanel layout="none" rendered="{! and(or(config.VCSSA__Use_Contacts__c,config.VCSSA__Use_Person_Accounts__c),email.m.Account__r.Name=='') }"><img width="16" border="0" src="/s.gif"/></apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Opportunities__c,email.m.Opportunity__r.Name!='') }"><a href="/{!email.m.VCSSA__Opportunity__c}" target="_blank"><img width="16" border="0" src="/s.gif" class="{!if(email.m.Opportunity__c!='','ico_opportunity','ico_none')}" title="{!label_opportunity}: {!email.m.Opportunity__r.Name}"/></a></apex:outputPanel>
+                    	<apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Opportunities__c,email.m.Opportunity__r.Name=='') }"><img width="16" border="0" src="/s.gif"/></apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Cases__c,email.m.Case__r.Id!='') }"><a href="/{!email.m.VCSSA__Case__c}" target="_blank"><img width="16" border="0" src="/s.gif" class="{!if(email.m.Case__c!='','ico_case','ico_none')}" title="{!label_case}: {!email.m.Case__r.Subject}"/></a></apex:outputPanel>
+                    	<apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Cases__c,email.m.Case__r.Id=='') }"><img width="16" border="0" src="/s.gif"/></apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Campaigns__c,email.m.Campaign__r.Name!='') }"><a href="/{!email.m.VCSSA__Campaign__c}" target="_blank"><img width="16" border="0" src="/s.gif" class="{!if(email.m.Campaign__c!='','ico_campaign','ico_none')}" title="{!label_campaign}: {!email.m.Campaign__r.Name}"/></a></apex:outputPanel>
+                    	<apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Campaigns__c,email.m.Campaign__r.Name=='') }"><img width="16" border="0" src="/s.gif"/></apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{! email.m.VCSSA__From_SFDC_User__c }"><img width="16" border="0" src="/s.gif" class="ico_salesforce"/></apex:outputPanel>
+            </apex:column>
+            <apex:column rendered="{! not(ltags=='@sent'||ltags=='@draft') }">
+                <apex:facet name="header">From</apex:facet>
+                <a href="{!url_inbox_nosearch}&p=1&search=1&search_from={!URLENCODE(email.m.From__c)}&search_tags=@all" title="click here to view all conversations with {!email.m.From__c}" class="{!if(contains(email.tagstring,'|@unread|'),'subj_unread','')}">
+                    {!LEFT(if(email.m.From_Name__c!='', email.m.From_Name__c, email.m.From__c),32)}
+                </a>
+                <!-- 
+                    <apex:outputpanel layout="none" rendered="{! $Organization.Id='00D80000000L8I2' }">
+                    <span title="{!email.debug_to_cc_list}">[to/cc]</span>
+                    </apex:outputpanel>
+                 -->
+            </apex:column>
+            <apex:column rendered="{! ltags=='@sent'||ltags=='@draft' }">
+                <apex:facet name="header">To</apex:facet>
+                <apex:repeat value="{!email.ToHTML}" var="t"><span title="{!t.address}">{!if(t.name!='',t.name,t.address)} &nbsp;</span></apex:repeat>
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Subject</apex:facet>
+                <apex:repeat value="{!email.tagcolorlist}" var="t">
+                    <apex:outputPanel layout="none" rendered="{! and(t.tag!='@inbox',t.tag!='@star',t.tag!='@unread') }">
+                        <span class="taglabel" style="background-color: #{!t.tagColor}">{!LEFT(t.tag,32)}</span>
+                    </apex:outputPanel>
+                </apex:repeat>
+                <apex:outputPanel layout="none" rendered="{!not(contains(email.tagstring,'|@draft|'))}">
+                    <a href="{!url_viewfrominbox}{!email.m.id}" class="{!if(contains(email.tagstring,'|@unread|'),'subj_unread','')}" 
+                        title="{!HTMLENCODE(BLANKVALUE(email.m.Subject__c,'(no subject)'))}">{!LEFT(BLANKVALUE(email.m.Subject__c,'(no subject)'),128)}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!(contains(email.tagstring,'|@draft|'))}">
+                    <a href="{!url_inbox}&vmode=compose&action=composedraft&ids={!email.m.id}&inboxurl={!URLENCODE(url_inbox)}"
+                    	title="{!HTMLENCODE(BLANKVALUE(email.m.Subject__c,'(no subject)'))}">{!LEFT(BLANKVALUE(email.m.Subject__c,'(no subject)'),128)}</a>
+                </apex:outputPanel>
+            </apex:column>
+            <apex:column styleClass="tdnowrap">
+                <apex:outputPanel layout="none" rendered="{!email.m.VCSSA__RepliedBy__c!=null}">
+                	<a href="{!url_quickreply}{!email.m.Id}"><img width="16" border="0" src="/s.gif" class="ico_repliesto" title="this message was replied" /></a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!email.m.VCSSA__RepliedBy__c==null}">
+                	<a href="{!url_quickreply}{!email.m.Id}"><img width="16" border="0" src="/s.gif" class="ico_quickreply" title="reply to this message"/></a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!email.m.VCSSA__Has_Attachments__c}">
+                    <img width="16" border="0" src="/s.gif" class="has_attachments"/>
+                </apex:outputPanel>
+            </apex:column>
+            <apex:column styleClass="tdnowrap">
+                <apex:facet name="header">Date</apex:facet>
+                <span>{!email.mdate}</span>
+            </apex:column>
+        </apex:pageBlockTable>
+    </td></tr></table>
+
+	    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 5px; margin-bottom: 10px;"><tr>
+	    	<td width="140" align="left" nowrap="nowrap" valign="middle">
+	    	<img width="16" src="/s.gif" width="142" height="10"/>
+	    	<!-- 
+	    	<input type="button" name="search" value="New tag" class="btn" onclick="list_createnewtag();"/>
+	    	 --> &nbsp;
+			</td>
+	        <td width="80%" align="left" nowrap="nowrap" valign="middle">
+	            <input type="button" class="btn" onclick="list_moreAction(null,'tag;@archive')" value="Archive"/><input type="button" class="btn" onclick="list_moreAction(null,'untag;@unread')" value="Mark as Read"/><input type="button" class="btn" onclick="list_moreAction(null,'tag;@unread')" value="Mark as Unread"/><input type="button" class="btn" onclick="list_moreAction(null,'tag;@delete')" value="Delete"/> &nbsp; 
+	            <select id="moreAction1" name="moreAction1" onchange="list_moreAction(this)">
+	                <option value="">More actions...</option>
+	                <optgroup label="Actions">
+	                    <option value="tag;@archive">Archive</option>
+	                    <option value="untag;@archive">Move to inbox</option>
+	                    <option value="untag;@unread">Mark as read</option>
+	                    <option value="tag;@unread">Mark as unread</option>
+	                    <option value="tag;@delete">Delete</option>
+	                    <option value="untag;@delete">Undelete</option>
+	                    <option value="tag;@star">Add star</option>
+	                    <option value="untag;@star">Remove star</option>
+	                    <option value="applyrr;applyrr">Apply filtering rules</option>
+	                    <option value="massbind;massbind">Bind emails to...</option>
+	                </optgroup>
+	                <optgroup label="Apply tag">
+	                    <apex:repeat value="{!actionj.userTags}" var="tag">
+	                        <option value="tag;{!tag.tag}">{!LEFT(tag.tag,32)}</option>
+	                    </apex:repeat>
+	                    <option value="tag;">(new tag...)</option>
+	                </optgroup>
+	                <optgroup label="Remove tag">
+	                    <apex:repeat value="{!actionj.userTags}" var="tag">
+	                        <option value="untag;{!tag.tag}">{!LEFT(tag.tag,32)}</option>
+	                    </apex:repeat>
+	                </optgroup>
+	            </select>
+	        </td>
+	    <td align="right" width="200" valign="middle" nowrap="nowrap">
+	        <apex:outputPanel layout="none" rendered="{! pageNo > 1}"><a href="{!url_inbox3}&p=1">«« First</a></apex:outputPanel>
+	        <apex:outputPanel layout="none" rendered="{! pageNo > 2}"> &nbsp;<a href="{!url_inbox3}&p={!pageNo-1}">« Prev</a></apex:outputPanel>
+	        &nbsp; <span>{!if(mailCount >= 600,'600+ msgs',''+text(mailCount)+' msgs')}</span> &nbsp;
+	        <apex:outputPanel layout="none" rendered="{! pageNo < pageCount-1}"><a href="{!url_inbox3}&p={!pageNo+1}">Next »</a> &nbsp;</apex:outputPanel>
+	        <apex:outputPanel layout="none" rendered="{! pageNo < pageCount}"><a href="{!url_inbox3}&p={!pageCount}">Last »»</a></apex:outputPanel>
+	    </td>
+	    </tr></table>
+
+<div class="horizBarFrame" style="height: 50px;">
+	<table width="100%">
+	<tr>
+		<td width="80%"><div id="fixme">&nbsp;</div></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<br/>
+		    <a href="{!url_help}" target="_blank">Need help?</a> &nbsp;|&nbsp; 
+		    <a href="{!url_issues}" target="_blank">Report an issue</a> &nbsp;|&nbsp;
+		    <a href="{!url_idea}">Leave us your idea!</a> &nbsp;|&nbsp;
+		    <a href="{!url_review}" target="_blank">Review our app!</a> &nbsp;|&nbsp;
+		    <a href="{!url_vcs}" target="_blank">About us</a>
+		</td>
+	</tr>
+	</table>
+</div>
+
+<!-- Inicio del datepicker -->
+<div class="datePicker" id="datePicker" style="display:none"><div class="dateBar"><img src="/s.gif" alt="Mes anterior"  class="calLeft" onblur="this.className = 'calLeft';" onclick="DatePicker.datePicker.prevMonth();" onfocus="this.className = 'calLeftOn';" onmouseout="this.className = 'calLeft';" onmouseover="this.className = 'calLeftOn';" title="Mes anterior"/><select  id="calMonthPicker" name="calMonthPicker" title="Mes"><option value="0">enero</option>
+<option value="1">febrero</option>
+<option value="2">marzo</option>
+<option value="3">abril</option>
+<option value="4">mayo</option>
+<option value="5">junio</option>
+<option value="6">julio</option>
+<option value="7">agosto</option>
+<option value="8">septiembre</option>
+<option value="9">octubre</option>
+<option value="10">noviembre</option>
+<option value="11">diciembre</option>
+</select><img src="/s.gif" alt="Mes siguiente"  class="calRight" onblur="this.className = 'calRight';" onclick="DatePicker.datePicker.nextMonth();" onfocus="this.className = 'calRightOn';" onmouseout="this.className = 'calRight';" onmouseover="this.className = 'calRightOn';" title="Mes siguiente"/><select  id="calYearPicker" name="calYearPicker" title="A�o">
+<option value="2006">2006</option>
+<option value="2007">2007</option>
+<option value="2008">2008</option>
+<option value="2009">2009</option>
+<option value="2010">2010</option>
+<option value="2011">2011</option>
+<option value="2013">2013</option>
+<option value="2014">2014</option>
+<option value="2015">2015</option>
+</select></div><div class="calBody"><table  class="calDays" border="0" cellpadding="0" cellspacing="0" id="datePickerCalendar"><tr><TH class="dayOfWeek" scope="col">lun</TH><TH class="dayOfWeek" scope="col">mar</TH><TH class="dayOfWeek" scope="col">mie</TH><TH class="dayOfWeek" scope="col">jue</TH><TH class="dayOfWeek" scope="col">vie</TH><TH class="dayOfWeek" scope="col">sab</TH><TH class="dayOfWeek" scope="col">dom</TH></tr>
+<tr id="calRow1"><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td></tr>
+<tr id="calRow2"><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td></tr>
+<tr id="calRow3"><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td></tr>
+<tr id="calRow4"><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td></tr>
+<tr id="calRow5"><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td></tr>
+<tr id="calRow6"><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td><td onblur="hiOff(this);" onclick="DatePicker.datePicker.selectDate(this);" onfocus="hiOn(this);" onmouseout="hiOff(this);" onmouseover="hiOn(this);">&nbsp;</td></tr>
+</table>
+<div class="buttonBar"><a href="javascript:DatePicker.datePicker.selectDate('today');" class="calToday">Hoy</a></div></div></div>
+
+<!-- Fin del datepicker -->
+
+</apex:pageBlock>
+
+
+<apex:pageBlock id="viewmode_view" rendered="{! vmode=='view' }">
+	<!-- estas urls estan duplicadas en vmode=compose/reply/replyall/forward etc -->
+    <apex:variable var="url_view" value="{!url_inboxpage}?vmode=view&ids={!email.m.id}&inboxurl={! URLENCODE($CurrentPage.parameters.inboxurl) }" />
+    <apex:variable var="url_forward" value="{!url_inboxpage}?vmode=forward&action=forward&ids={!email.m.id}&viewurl={!URLENCODE(url_view)}&inboxurl={! URLENCODE($CurrentPage.parameters.inboxurl) }" />
+    <apex:variable var="url_reply" value="{!url_inboxpage}?vmode=reply&action=reply&ids={!email.m.id}&viewurl={!URLENCODE(url_view)}&inboxurl={! URLENCODE($CurrentPage.parameters.inboxurl) }" />
+    <apex:variable var="url_replyAll" value="{!url_inboxpage}?vmode=reply&action=replyall&ids={!email.m.id}&viewurl={!URLENCODE(url_view)}&inboxurl={! URLENCODE($CurrentPage.parameters.inboxurl) }" />
+    <apex:variable var="url_aback" value="{! if($CurrentPage.parameters.inboxurl!='',$CurrentPage.parameters.inboxurl,url_inbox) }&ids={!email.m.id}" />
+	<script type="text/javascript">
+	function showIssues() {
+		window.open('{!url_issues}?id={!email.m.id}');
+		return;
+	}
+	
+	function showOriginal(printit) {
+	    var content = document.getElementById('viewMessageContent').getAttribute('value');
+	    var w = window.open('/apex/Blank');
+	    var buf=[];
+	    buf.push('<div><b>From: </b> {!JSINHTMLENCODE(email.m.From_Name__c)} ({!JSINHTMLENCODE(email.m.From__c)})</div>');
+	    buf.push('<div><b>Date: </b> {!JSINHTMLENCODE(email.mdate)} ({!JSINHTMLENCODE(email.mdate)})}</div>');
+	    buf.push('<div><b>To: </b> {!JSINHTMLENCODE(email.m.To__c)}</div>');
+	    buf.push('<div><b>Subject: </b> {!JSINHTMLENCODE(email.m.Subject__c)}</div>');
+	    buf.push('<hr/>');
+	    buf.push('<div style="white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; }">');
+	    buf.push(cleanupHTML(content,true));
+	    buf.push('</div>');
+	   	if(printit)
+	   		buf.push('<script>window.print();<'+'/script>');
+	   	else
+		    buf.push('<div>{!JSINHTMLENCODE(email.tostring)} </div>');
+	    w.document.write(buf.join('') );
+	    w.document.close();
+	}
+	function cleanupHTML(content, securityonly) {
+	    content = content.replace( /^(.|\n)*<\s*body[^>]*>/ig,'');
+	    content = content.replace( /<\s*\/\s*body[^>]*>(.|\n)*$/ig,'');
+		var rs=['script','style','applet','embed','object','frame','iframe'];
+		if(securityonly) rs=['script','applet','embed','object','frame','iframe'];
+	    for(var i=0 ; i < rs.length ; i++ ) {
+	    	rex = new RegExp('<\s*'+rs[i]+'[^>]*>(.|\n)*<\s*\/\s*'+rs[i]+'[^>]*>','ig');
+		    content = content.replace( rex,'');
+	    }
+	    var rs = 'onblur onchange onclick ondblclick onfocus onkeydown onkeypress onkeyup onload onmousedown onmousemove onmouseout onmouseover onmouseup onreset onselect onsubmit onunload'.split(' ');
+	    for(var i=0 ; i < rs.length ; i++ )
+	        content = content.replace(/(<[^>]+)'+s+'\s*=\s*(["\\\']?)[^"\\\'\s>]*(["\\\']?)([^>]*>)/ig,'$1 $4');
+        content = content.replace(/([^"=/>])(www\.[^"\s><]+)/gm,'$1<a href="http://$2">$2</a>');
+        content = content.replace(/([^"=>])(https?:\/\/[^"\s><]+)/gm,'$1<a href="$2">$2</a>');
+        content = content.replace(/ href="/gm,' target="_blank" href="');
+	    return content;
+	}
+	</script>
+    <div class="horizBarFrame">
+    <table width="100%" height="43" border="0" cellspacing="0" cellpadding="0"><tr>
+        <td valign="middle">
+            <a href="{!url_back}">« Back to list</a>
+            &nbsp; | &nbsp;
+            <apex:outputPanel layout="none" rendered="{!contains(email.tagstring,'|@star|')}">
+                <a href="#" onclick="starOnOff(this,'{!email.m.id}'); return false;" id="star_{!email.m.id}" class="star_on" style="border: 1px solid transparent;"><img width="14" border="0" src="/s.gif"/></a> 
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!not(contains(email.tagstring,'|@star|'))}">
+                <a href="#" onclick="starOnOff(this,'{!email.m.id}'); return false;" id="star_{!email.m.id}" class="star_off" style="border: 1px solid transparent;"><img width="14" border="0" src="/s.gif"/></a> 
+            </apex:outputPanel>
+            
+           	<input type="button" class="btn" value="Reply" onclick="top.location.href='{!url_reply}'"/>
+           	<input type="button" class="btn" value="Reply All" onclick="top.location.href='{!url_replyAll}'"/>
+           	<input type="button" class="btn" value="Forward" onclick="top.location.href='{!url_forward}'"/>
+           	
+           <apex:outputPanel layout="none" rendered="{!contains(email.tagstring,'|@delete|')}">
+           	<input type="button" class="btn" value="Undelete" onclick="top.location.href='{!url_aback}&action=untag&tags=@delete&msg=The+message+was+undeleted'"/>
+           </apex:outputPanel>
+           <apex:outputPanel layout="none" rendered="{!not(contains(email.tagstring,'|@delete|'))}">
+           	<input type="button" class="btn" value="Delete" onclick="top.location.href='{!url_aback}&action=tag&tags=@delete&msg=The+message+was+deleted'"/>
+           </apex:outputPanel>
+           <apex:outputPanel layout="none" rendered="{!or(contains(email.tagstring,'|@archive|'),contains(email.tagstring,'|@sent|'))}">
+           	<input type="button" class="btn" value="Move to Inbox" onclick="top.location.href='{!url_aback}&action=untag&tags=@archive&msg=The+message+was+moved+to+the+Inbox'"/>
+           </apex:outputPanel>
+           <apex:outputPanel layout="none" rendered="{!not(contains(email.tagstring,'|@archive|'))}">
+           	<input type="button" class="btn" value="Archive" onclick="top.location.href='{!url_aback}&action=tag&tags=@archive&msg=The+message+was+archived'"/>
+           </apex:outputPanel>
+           	<input type="button" class="btn" value="Mark as Unread" onclick="top.location.href='{!url_aback}&action=tag&tags=@unread&msg=The+message+was+tagged'"/>
+           	<input type="button" class="btn" value="Print" onclick="showOriginal(true)"/>
+             <select id="moreAction" onchange="view_moreAction(this,'{!url_view}&msg=The+message+was+tagged')">
+                <option value="">More actions...</option>
+                <option value="showOrig;showOrig">View original</option>
+                <option value="showIssues;showIssues">Report an issue with this email</option>
+                <optgroup label="Apply tag">
+                    <apex:repeat value="{!actionj.userTags}" var="tag">
+                        <option value="tag;{!tag.tag}">{!LEFT(tag.tag,32)}</option>
+                    </apex:repeat>
+                    <option value="tag;">(new tag...)</option>
+                </optgroup>
+                <optgroup label="Remove tag">
+                    <apex:repeat value="{!actionj.userTags}" var="tag">
+                        <option value="untag;{!tag.tag}">{!LEFT(tag.tag,32)}</option>
+                    </apex:repeat>
+                </optgroup>
+            </select>
+        </td>
+        <td  valign="middle" nowrap="nowrap">
+        	<span id="prevmsg_link"><script type="text/javascript">draw_PrevNext(true);</script></span>
+        	&nbsp;
+        	<span id="nextmsg_link"><script type="text/javascript">draw_PrevNext(false);</script></span>
+        </td>
+    </tr></table>
+    </div>
+    <apex:pageMessages />
+    
+    <div class="horizBarFrame" id="messageHeaders">
+   	<table width="100%" border="0">
+   	<colgroup width="10%"></colgroup>
+	<colgroup width="60%"></colgroup>
+	<colgroup width="5%"></colgroup>
+	<colgroup width="25%"></colgroup>
+   	<tr>
+   		<th>From:</th><td>
+            <apex:repeat value="{!email.FromHTML}" var="t"><span title="{!t.address}">{!if(t.name!='',t.name,t.address)} &nbsp;</span></apex:repeat>
+   			</td>
+   		<th>Date:</th><td><apex:outputPanel layout="none" ><span>{!email.mdate}</span></apex:outputPanel></td>
+   	</tr>
+   	<tr>
+   		<th>To:</th><td colspan="3">
+            <apex:repeat value="{!email.ToHTML}" var="t">
+            	<span title="{!t.address}">{!if(t.name!='',t.name,t.address)} &nbsp;  &nbsp;</span></apex:repeat>
+   		</td>
+   	</tr>
+   	<tr>
+   		<th>Cc:</th><td colspan="3">
+            <apex:repeat value="{!email.CcHTML}" var="t"><span title="{!t.address}">{!if(t.name!='',t.name,t.address)} &nbsp;</span></apex:repeat>
+   			</td>
+   	</tr>
+   	<tr>
+   		<th>Subject:</th><td><apex:outputPanel layout="none" ><b>{!email.m.VCSSA__Subject__c}</b></apex:outputPanel></td>
+   		<th>Tags:</th><td>
+            <apex:outputPanel >
+                <apex:repeat value="{!email.tagcolorlist}" var="t">
+                    <apex:outputPanel layout="none" rendered="{! and(t.tag!='@inbox',t.tag!='@star',t.tag!='@unread') }">
+                        <span class="taglabel" style="background-color: #{!t.tagColor}">{!t.tag}</span>
+                    </apex:outputPanel>
+                </apex:repeat>
+                <apex:outputPanel layout="none" rendered="{!email.m.VCSSA__Has_Attachments__c}">
+                    <a href="#listofattachments"><img width="16" border="0" src="/s.gif" class="has_attachments"/></a>
+                </apex:outputPanel>
+           </apex:outputPanel>
+		</td>
+   	</tr>
+   	
+   	<apex:outputPanel layout="none" rendered="{!if( LEFT(email.m.OwnerId,15) != LEFT($User.Id,15) ,true,false)}">
+   	<tr>
+   		<th>&nbsp;</th><td>&nbsp;</td>
+   		<th>Email Owner:</th><td>
+   			<apex:outputField value="{!email.m.OwnerId}"/>
+		</td>
+   	</tr>
+   	</apex:outputPanel>
+   	
+   	</table> 
+   	</div>
+    
+    <apex:outputPanel layout="none" id="sfeditbindings" style="vertical-align: middle;">
+    <fieldset id="view_bindings" class="horizBarFrame" style="vertical-align: middle;">
+        <apex:form id="bindingform1" onsubmit="if(window.flagsend1) { return true; }else{ window.flagsend1=false; document.getElementById('{!$Component.bindingsend}').click(); return false; }">
+            <apex:outputPanel rendered="{! config.VCSSA__Use_Leads__c }" styleClass="bindingBlock">
+            	<img width="16" border="0" align="absmiddle" src="/s.gif" class="ico_lead"/>  {!label_lead}: 
+            	<a href="/{!email.m.VCSSA__Lead__c}" target="_blank" title="{!email.m.Lead__r.Name}"><b>{!LEFT(email.m.Lead__r.Name,32)}</b></a>
+                &nbsp;
+                <a href="javascript:void(openCloseBind('bind_lead'))">Bind</a>
+                <a href="{!url_salesforce}/00Q/e?name_lastlea2={!URLENCODE(email.lastname)}&name_firstlea2={!URLENCODE(email.firstname)}{!if(config.Use_Person_Accounts__c,'','&lea3='&URLENCODE(email.faddress_domain))}&lea11={!URLENCODE(email.m.From__c)}&retURL={!URLENCODE(url_view)}&saveURL={!URLENCODE(url_view)&'%26action%3Dbind%26field%3DLead__c'}">Create</a>
+	            &nbsp; &nbsp; &nbsp; &nbsp; 
+                <div id="bind_lead" style="display: none;">
+                <div><apex:inputField value="{!email.m.VCSSA__Lead__c}" styleClass="lk" /></div>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! config.VCSSA__Use_Contacts__c }" styleClass="bindingBlock">
+            	<img width="16" border="0" align="absmiddle" src="/s.gif" class="ico_contact"/> {!label_contact}: 
+            	<a href="/{!email.m.VCSSA__Contact__c}" target="_blank" title="{!email.m.Contact__r.Name}"><b>{!LEFT(email.m.Contact__r.Name,32)}</b></a>
+                &nbsp;
+                <a href="javascript:void(openCloseBind('bind_contact'))">Bind</a>
+                <a href="{!url_salesforce}/003/e?con15={!URLENCODE(email.m.From__c)}&name_lastcon2={!URLENCODE(email.lastname)}&name_firstcon2={!URLENCODE(email.firstname)}&retURL={!URLENCODE(url_view)}&saveURL={!URLENCODE(url_view)&'%26action%3Dbind%26field%3DContact__c'}">Create</a>
+             	&nbsp; &nbsp; &nbsp; &nbsp;
+                <div id="bind_contact" style="display: none;">
+                <div><apex:inputField value="{!email.m.VCSSA__Contact__c}" styleClass="lk" /></div>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! or(config.VCSSA__Use_Contacts__c,config.VCSSA__Use_Person_Accounts__c) }" styleClass="bindingBlock">
+            	<img width="16" border="0" align="absmiddle" src="/s.gif" class="ico_account"/> {!label_account}: 
+            	<a href="/{!email.m.VCSSA__Account__c}" target="_blank" title="{!email.m.Account__r.Name}"><b>{!LEFT(email.m.Account__r.Name,32)}</b></a>
+                &nbsp;
+                <a href="javascript:void(openCloseBind('bind_account'))">Bind</a>
+                <a href="{!url_salesforce}/001/e?PersonEmail={!URLENCODE(email.m.From__c)}&name_lastacc2={!URLENCODE(email.lastname)}&name_firstacc2={!URLENCODE(email.firstname)}&retURL={!URLENCODE(url_view)}&saveURL={!URLENCODE(url_view)&'%26action%3Dbind%26field%3DAccount__c'}">Create</a>
+             	&nbsp; &nbsp; &nbsp; &nbsp; 
+                <div id="bind_account" style="display: none;">
+                <div><apex:inputField value="{!email.m.VCSSA__Account__c}" styleClass="lk" /></div>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! config.VCSSA__Use_Opportunities__c }" styleClass="bindingBlock">
+            	<img width="16" border="0" align="absmiddle" src="/s.gif" class="ico_opportunity"/> {!label_opportunity}: 
+            	<a href="/{!email.m.VCSSA__Opportunity__c}" target="_blank" title="{!email.m.Opportunity__r.Name}"><b>{!LEFT(email.m.Opportunity__r.Name,32)}</b></a>
+                &nbsp;
+                <a href="javascript:void(openCloseBind('bind_opportunity'))">Bind</a>
+                <a href="{!url_salesforce}/006/e?opp3={!URLENCODE(LEFT(email.m.Subject__c,120))}&opp4={!URLENCODE(email.m.contact__r.Account.Name)}&retURL={!URLENCODE(url_view)}&saveURL={!URLENCODE(url_view)&'%26action%3Dbind%26field%3DOpportunity__c'}">Create</a>
+             	&nbsp; &nbsp; &nbsp; &nbsp; 
+                <div id="bind_opportunity" style="display: none;">
+                <div><apex:inputField value="{!email.m.VCSSA__Opportunity__c}" styleClass="lk" /></div>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! config.VCSSA__Use_Cases__c }" styleClass="bindingBlock">
+            	<img width="16" border="0" align="absmiddle" src="/s.gif" class="ico_case"/> {!label_case}:
+            	<apex:outputpanel layout="none" rendered="{!email.m.Case__r.Id!=''}"> 
+            	<a href="/{!email.m.VCSSA__Case__c}" target="_blank" title="{!email.m.Case__r.Subject}"><b>{!LEFT(BLANKVALUE(email.m.Case__r.Subject,'(no subject)'),32)}</b></a>
+                </apex:outputpanel>
+                &nbsp;
+                <a href="javascript:void(openCloseBind('bind_case'))">Bind</a>
+                <a href="{!url_salesforce}/500/e?cas3_lkid={!URLENCODE(email.m.Contact__c)}&cas15={!SUBSTITUTE(URLENCODE(email.ShortBodyText),'%08','%0D%0A')}&cas3={!URLENCODE(LEFT(email.m.Contact__r.Name,80))}&cas11=Email&cas14={!URLENCODE(LEFT(email.m.Subject__c,80))}&retURL={!URLENCODE(url_view)}&saveURL={!URLENCODE(url_view)&'%26action%3Dbind%26field%3DCase__c'}">Create</a>
+             	&nbsp; &nbsp; &nbsp; &nbsp; 
+                <div id="bind_case" style="display: none;">
+                <div><apex:inputField value="{!email.m.VCSSA__Case__c}" styleClass="lk" /></div>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! config.VCSSA__Use_Campaigns__c }" styleClass="bindingBlock">
+            	<img width="16" border="0" align="absmiddle" src="/s.gif" class="ico_campaign"/> {!label_campaign}: 
+            	<a href="/{!email.m.VCSSA__Campaign__c}" target="_blank" title="{!email.m.Campaign__r.Name}"><b>{!LEFT(email.m.Campaign__r.Name,32)}</b></a>
+                &nbsp;
+                <a href="javascript:void(openCloseBind('bind_campaign'))">Bind</a>
+             	&nbsp; &nbsp; &nbsp; &nbsp; 
+                <div id="bind_campaign" style="display: none;">
+                <div><apex:inputField value="{!email.m.VCSSA__Campaign__c}" styleClass="lk" /></div>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel styleClass="bindingBlock"><img width="16" border="0" align="absmiddle" src="/s.gif" class="ico_task"/> {!label_task}: <a href="/{!email.m.VCSSA__Task__c}" target="_blank" style="{!IF(email.m.Task__c!='','','display:none')}" title="{!label_task}"><b>View {!LEFT(label_task,32)}</b></a>
+                &nbsp;
+                <a href="{!url_salesforce}/00T/e?tsk5={!URLENCODE(LEFT(email.m.Subject__c,80))}&tsk2_lktp={!URLENCODE(IF(email.m.Contact__c!=null,'003',IF(email.m.Lead__c!=null,'00Q','')))}&tsk2={!URLENCODE(IF(email.m.Contact__c!=null,email.m.contact__r.name,IF(email.m.Lead__c!=null,email.m.lead__r.name,'')))}&tsk2_lkid={!URLENCODE(IF(email.m.Contact__c!=null,email.m.Contact__c,IF(email.m.Lead__c!=null,email.m.Lead__c,'')))}&tsk3_mlktp={!URLENCODE(IF(email.m.Contact__c!=null||email.m.Lead__c==null,left(email.m.id,3),'006'))}&tsk3={!URLENCODE(IF(email.m.Contact__c!=null||email.m.Lead__c==null,email.m.name,''))}&tsk3_lkid={!URLENCODE(IF(email.m.Contact__c!=null||email.m.Lead__c==null,email.m.id,''))}&tsk6={!URLENCODE(LEFT(email.ShortBodyText,5000))}&retURL={!URLENCODE(url_view)}&saveURL={!URLENCODE(url_view)&'%26action%3Dbind%26field%3DTask__c'}">Create</a>
+             &nbsp; &nbsp; &nbsp; &nbsp; 
+            </apex:outputPanel>
+            <apex:outputPanel styleClass="bindingBlock"><img width="16" border="0" align="absmiddle" src="/s.gif" class="ico_event"/> {!label_event}: <a href="/{!email.m.VCSSA__Event__c}" target="_blank" style="{!IF(email.m.Event__c!='','','display:none')}" title="{!label_event}"><b>View {!LEFT(label_event,32)}</b></a>
+                &nbsp;
+                <a href="{!url_salesforce}/00U/e?evt5={!URLENCODE(LEFT(email.m.Subject__c,80))}&evt2_lktp={!URLENCODE(IF(email.m.Contact__c!=null,'003',IF(email.m.Lead__c!=null,'00Q','')))}&evt2={!URLENCODE(IF(email.m.Contact__c!=null,email.m.contact__r.name,IF(email.m.Lead__c!=null,email.m.lead__r.name,'')))}&evt2_lkid={!URLENCODE(IF(email.m.Contact__c!=null,email.m.Contact__c,IF(email.m.Lead__c!=null,email.m.Lead__c,'')))}&evt3_mlktp={!URLENCODE(IF(email.m.Contact__c!=null||email.m.Lead__c==null,left(email.m.id,3),'006'))}&evt3={!URLENCODE(IF(email.m.Contact__c!=null||email.m.Lead__c==null,email.m.name,''))}&evt3_lkid={!URLENCODE(IF(email.m.Contact__c!=null||email.m.Lead__c==null,email.m.id,''))}&evt6={!URLENCODE(LEFT(email.ShortBodyText, 5000))}&retURL={!URLENCODE(url_view)}&saveURL={!URLENCODE(url_view)&'%26action%3Dbind%26field%3DEvent__c'}">Create</a>
+             &nbsp; &nbsp; &nbsp; &nbsp; 
+            </apex:outputPanel>
+            <br clear="both"/>
+            <apex:outputPanel id="bindingsend1">
+            	<center>
+                <apex:commandButton id="bindingsend" action="{!updateBindings}" reRender="sfeditbindings" value="Update" onclick="window.flagsend1=true;" style="display: none;"/>
+                </center>
+            </apex:outputPanel>
+        </apex:form>
+    </fieldset>
+    </apex:outputPanel>
+
+	<!-- MESSAGE BODY -->
+	<div class="horizBarFrame" id="messageBody">
+    <div id="viewMessageHolder"></div>
+    <intput type="hidden" id="viewMessageContent" value="{!ViewBodyHTML}"/>
+    <script type="text/javascript">
+    viewmessage_redraw();
+    </script>
+	</div>
+
+    <div class="horizBarFrame">
+    <table width="100%" height="43" border="0" cellspacing="0" cellpadding="0"><tr>
+        <td valign="middle">
+            <a href="{!url_back}">« Back to list</a>
+            &nbsp; | &nbsp;
+            <img width="14" border="0" src="/s.gif"/>
+            
+           	<input type="button" class="btn" value="Reply" onclick="top.location.href='{!url_reply}'"/>
+           	<input type="button" class="btn" value="Reply All" onclick="top.location.href='{!url_replyAll}'"/>
+           	<input type="button" class="btn" value="Forward" onclick="top.location.href='{!url_forward}'"/>
+           	
+           <apex:outputPanel layout="none" rendered="{!contains(email.tagstring,'|@delete|')}">
+           	<input type="button" class="btn" value="Undelete" onclick="top.location.href='{!url_aback}&action=untag&tags=@delete&msg=The+message+was+undeleted'"/>
+           </apex:outputPanel>
+           <apex:outputPanel layout="none" rendered="{!not(contains(email.tagstring,'|@delete|'))}">
+           	<input type="button" class="btn" value="Delete" onclick="top.location.href='{!url_aback}&action=tag&tags=@delete&msg=The+message+was+deleted'"/>
+           </apex:outputPanel>
+           <apex:outputPanel layout="none" rendered="{!contains(email.tagstring,'|@archive|')}">
+           	<input type="button" class="btn" value="Move to Inbox" onclick="top.location.href='{!url_aback}&action=untag&tags=@archive&msg=The+message+was+moved+to+the+Inbox'"/>
+           </apex:outputPanel>
+           <apex:outputPanel layout="none" rendered="{!not(contains(email.tagstring,'|@archive|'))}">
+           	<input type="button" class="btn" value="Archive" onclick="top.location.href='{!url_aback}&action=tag&tags=@archive&msg=The+message+was+archived'"/>
+           </apex:outputPanel>
+           	<input type="button" class="btn" value="Mark as Unread" onclick="top.location.href='{!url_aback}&action=tag&tags=@unread&msg=The+message+was+tagged'"/>
+           	<input type="button" class="btn" value="Print" onclick="showOriginal(true)"/>
+             <select id="moreAction1" onchange="view_moreAction(this,'{!url_view}&msg=The+message+was+tagged')">
+                <option value="">More actions...</option>
+                <option value="showOrig;showOrig">View original</option>
+                <optgroup label="Apply tag">
+                    <apex:repeat value="{!actionj.userTags}" var="tag">
+                        <option value="tag;{!tag.tag}">{!LEFT(tag.tag,32)}</option>
+                    </apex:repeat>
+                    <option value="tag;">(new tag...)</option>
+                </optgroup>
+                <optgroup label="Remove tag">
+                    <apex:repeat value="{!actionj.userTags}" var="tag">
+                        <option value="untag;{!tag.tag}">{!LEFT(tag.tag,32)}</option>
+                    </apex:repeat>
+                </optgroup>
+            </select>
+        </td>
+        <td  valign="middle" nowrap="nowrap">
+        	<span id="prevmsg_link1"><script type="text/javascript">draw_PrevNext(true);</script></span>
+        	&nbsp;
+        	<span id="nextmsg_link1"><script type="text/javascript">draw_PrevNext(false);</script></span>
+        </td>
+    </tr></table>
+    </div>
+    
+    <a name="listofattachments">&nbsp;</a>
+    <apex:outputPanel layout="none" rendered="{!not(email.m.VCSSA__Has_Attachments__c)}">
+    <fieldset id="view_attachments" class="toolbarframe">
+    	No attachments
+    </fieldset>
+    </apex:outputPanel>
+    <apex:outputPanel layout="none" rendered="{!email.m.VCSSA__Has_Attachments__c}">
+    <fieldset id="view_attachments" class="toolbarframe">
+   	<ul style="list-style: none">
+    <apex:repeat value="{!EmailAttachments}" var="att">
+    	<apex:outputPanel layout="none" rendered="{! not(begins(att.ContentType,'x-vcs-smart-email/error')) }">
+        <li><a href="{!URLFOR($Action.Attachment.Download,att.Id)}" target="_new"><b>{!att.Name}</b></a> ({!CEILING(att.BodyLength/1024)} kb) <a href="{!URLFOR($Action.Attachment.Download,att.Id)}" target="_new">view</a> <a href="{!URLFOR($Action.Attachment.Download,att.Id)}" target="_new">download</a>
+            <apex:outputPanel layout="none" rendered="{! contains(att.ContentType,'image/')}">
+                <p><img src="{!URLFOR($Action.Attachment.Download,att.Id)}" border="1" style="max-width: 800px;"/></p>
+            </apex:outputPanel>
+            <br/>
+            <br/>
+        </li>
+        </apex:outputPanel>
+    	<apex:outputPanel layout="none" rendered="{! att.ContentType=='x-vcs-smart-email/error' }">
+        <li><b>{!att.Name}</b> <small>(attachment size too large to be processed and stored on salesforce.com)</small>
+            <br/>
+            <br/>
+        </li>
+        </apex:outputPanel>
+    	<apex:outputPanel layout="none" rendered="{! att.ContentType=='x-vcs-smart-email/error1' }">
+        <li><b>{!att.Name}</b> <small>(this attachment was not accepted by your salesforce.com organization)</small>
+            <br/>
+            <br/>
+        </li>
+        </apex:outputPanel>
+    </apex:repeat>
+    </ul>
+    </fieldset>
+    </apex:outputPanel>
+
+<br/><br/>
+
+<apex:outputPanel layout="block" id="preview_Lead" rendered="{! and(config.VCSSA__Show_binding_details_after_email_body__c,config.VCSSA__Use_Leads__c,email.m.Lead__r.Name!='',email.m.Lead__r.ConvertedContactId=='') }"><apex:detail subject="{!email.m.VCSSA__Lead__c}" relatedList="false" title="false"/></apex:outputPanel>
+<apex:outputPanel layout="block" id="preview_Contact1" rendered="{! and(config.VCSSA__Show_binding_details_after_email_body__c,config.VCSSA__Use_Contacts__c,email.m.Lead__r.ConvertedContactId!='') }"><apex:detail subject="{!email.m.Lead__r.ConvertedContactId}" relatedList="false" title="false"/></apex:outputPanel>
+<apex:outputPanel layout="block" id="preview_Contact" rendered="{! and(config.VCSSA__Show_binding_details_after_email_body__c,config.VCSSA__Use_Contacts__c,email.m.Contact__r.Name!='') }"><apex:detail subject="{!email.m.VCSSA__Contact__c}" relatedList="false" title="false"/></apex:outputPanel>
+<apex:outputPanel layout="block" id="preview_Account" rendered="{! and(config.VCSSA__Show_binding_details_after_email_body__c,config.VCSSA__Use_Person_Accounts__c,email.m.Account__r.Name!='') }"><apex:detail subject="{!email.m.VCSSA__Account__c}" relatedList="false" title="false"/></apex:outputPanel>
+<apex:outputPanel layout="block" id="preview_Opportunity" rendered="{! and(config.VCSSA__Show_binding_details_after_email_body__c,config.VCSSA__Use_Opportunities__c,email.m.Opportunity__r.Name!='') }"><apex:detail subject="{!email.m.VCSSA__Opportunity__c}" relatedList="false" title="false"/></apex:outputPanel>
+<apex:outputPanel layout="block" id="preview_Case" rendered="{! and(config.VCSSA__Show_binding_details_after_email_body__c,config.VCSSA__Use_Cases__c,email.m.Case__r.Subject!='') }"><apex:detail subject="{!email.m.VCSSA__Case__c}" relatedList="false" title="false"/></apex:outputPanel>
+<apex:outputPanel layout="block" id="preview_Campaign" rendered="{! and(config.VCSSA__Show_binding_details_after_email_body__c,config.VCSSA__Use_Campaigns__c,email.m.Campaign__r.Name!='') }"><apex:detail subject="{!email.m.VCSSA__Campaign__c}" relatedList="false" title="false"/></apex:outputPanel>
+
+<apex:outputPanel layout="block" id="preview_Task" rendered="{! and(config.VCSSA__Show_binding_details_after_email_body__c,email.m.VCSSA__Task__c!='') }"><apex:detail subject="{!email.m.VCSSA__Task__c}" relatedList="false" title="false"/></apex:outputPanel>
+<apex:outputPanel layout="block" id="preview_Event" rendered="{! and(config.VCSSA__Show_binding_details_after_email_body__c,email.m.VCSSA__Event__c!='') }"><apex:detail subject="{!email.m.VCSSA__Event__c}" relatedList="false" title="false"/></apex:outputPanel>
+
+    
+
+</apex:pageBlock>
+
+
+<apex:outputPanel rendered="{! or(vmode=='compose',vmode=='reply',vmode=='forward') }">
+<style type="text/css">
+@import url("{!$Resource.smartyui}/yui.css");
+</style>
+<style type="text/css">
+.yui-skin-sam .yui-ac {position:relative;font-family:arial;font-size:100%;}
+.yui-skin-sam .yui-ac-container{position:absolute;top:1.6em;width:100%;}
+.yui-skin-sam .yui-ac-content{position:absolute;width:100%;border:1px solid #808080;background:#fff;overflow:hidden;z-index:9050;}
+.yui-skin-sam .yui-ac-shadow{position:absolute;margin:.13em;width:100%;background:#000;-moz-opacity:.10;opacity:.10;filter:alpha(opacity=10);z-index:9049;}.yui-skin-sam .yui-ac iframe{opacity:0;filter:alpha(opacity=0);padding-right:.3em;padding-bottom:.3em;}.yui-skin-sam .yui-ac-content ul{margin:0;padding:0;width:100%;}.yui-skin-sam .yui-ac-content li{margin:0;padding:2px 5px;cursor:default;white-space:nowrap;list-style:none;zoom:1;}.yui-skin-sam .yui-ac-content li.yui-ac-prehighlight{background:#B3D4FF;}.yui-skin-sam .yui-ac-content li.yui-ac-highlight{background:#426FD9;color:#FFF;}
+</style>
+
+<script type="text/javascript">
+window.confirmDiscard = function() {
+	try{
+		return event.returnValue=confirm('If you made any changes you will lose them. Are you sure?'); 
+	}catch(e) {
+		return confirm('If you made any changes you will lose them. Are you sure?');
+	}
+}
+</script>
+
+<!-- estas urls estan duplicadas en vmode=view -->
+<apex:variable var="url_view" value="{!url_inboxpage}?vmode=view&ids={!email.m.id}&inboxurl={! URLENCODE($CurrentPage.parameters.inboxurl) }" />
+<apex:variable var="url_forward" value="{!url_inboxpage}?vmode=forward&action=forward&ids={!email.m.id}&viewurl={!URLENCODE(url_view)}&inboxurl={! URLENCODE($CurrentPage.parameters.inboxurl) }" />
+<apex:variable var="url_reply" value="{!url_inboxpage}?vmode=reply&action=reply&ids={!email.m.id}&viewurl={!URLENCODE(url_view)}&inboxurl={! URLENCODE($CurrentPage.parameters.inboxurl) }" />
+<apex:variable var="url_replyAll" value="{!url_inboxpage}?vmode=reply&action=replyall&ids={!email.m.id}&viewurl={!URLENCODE(url_view)}&inboxurl={! URLENCODE($CurrentPage.parameters.inboxurl) }" />
+
+<apex:form onsubmit="beforeTextSave(); return true;">
+<apex:pageBlock id="block1">
+    <div class="toolbarframe toolbarframeInt">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0"><tr>
+        <td>
+            <apex:outputPanel layout="none" rendered="{! $CurrentPage.parameters.viewurl!='' }">
+            	<a href="{!$CurrentPage.parameters.viewurl}" onclick="return window.confirmDiscard()">« Back to message</a>
+	            &nbsp; | &nbsp;
+        	</apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{! $CurrentPage.parameters.viewurl=='' }">
+           		<a href="{!url_back}" onclick="return window.confirmDiscard()">« Back to list</a>
+	            &nbsp; | &nbsp;
+           	</apex:outputPanel>
+           	
+           	<input type="button" class="btn" value="Compose with email tracking and templates"  onclick="return window.use_composetosf();" title="If you use this feature, bear in mind you will have to re-upload the attachments, and certain features, such as save as draft will not be available."/>
+            <apex:outputPanel layout="none" rendered="{! or(vmode=='reply',vmode=='forward') }">
+	           	&nbsp;
+	           	<input type="button" class="btn" value="Reply" onclick="if(window.confirmDiscard()) top.location.href='{!url_reply}'"/>
+	           	<input type="button" class="btn" value="Reply All" onclick="if(window.confirmDiscard()) top.location.href='{!url_replyAll}'"/>
+	           	<input type="button" class="btn" value="Forward" onclick="if(window.confirmDiscard()) top.location.href='{!url_forward}'"/>
+			</apex:outputPanel>
+<!-- 
+            <apex:outputPanel layout="none" rendered="{! $CurrentPage.parameters.viewurl!='' }">
+            	<a href="{!$CurrentPage.parameters.viewurl}" onclick="return window.confirmDiscard()">« Back to message</a>
+        	</apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{! $CurrentPage.parameters.viewurl=='' }">
+           		<a href="{!url_back}" onclick="return window.confirmDiscard()">« Back to list</a>
+           	</apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="true">
+	            &nbsp; | &nbsp;
+            	<a href="{!url_composesf}" onclick="return window.use_composetosf();" title="If you use this feature, bear in mind you will have to re-upload the attachments, and certain features, such as save as draft will not be available.">Compose with email tracking &amp; templates</a>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{! or(vmode=='reply',vmode=='forward') }">
+	            &nbsp; | &nbsp;
+	           <a href="{!url_reply}" onclick="return window.confirmDiscard()">Reply</a>
+	            &nbsp; | &nbsp;
+	           <a href="{!url_replyAll}" onclick="return window.confirmDiscard()">Reply all</a>
+	            &nbsp; | &nbsp;
+	           <a href="{!url_forward}" onclick="return window.confirmDiscard()">Forward</a>
+            </apex:outputPanel>
+ -->
+         </td>
+    </tr></table>
+    </div>
+    <center>
+    <apex:commandButton action="{!send}" value="Send" onclick="if( (t=document.getElementById('{!$Component.block1.section1.item5.msubject}')) && !t.value ) return confirm('This message is being sent without a SUBJECT.\nAre you sure you want to continue?'); return true;" />
+    <apex:commandButton action="{!attachFiles}" value="Attach files"/>
+    <apex:commandButton action="{!saveAsDraft}" value="Save as Draft"/>
+    <apex:commandButton action="{!discardDraft}" value="Discard" onclick="return window.confirmDiscard()" />
+    </center>
+    <apex:pageMessages />
+    <apex:pageBlockSection id="section1" columns="1">
+        <apex:pageBlockSectionItem id="item0">
+            <apex:outputLabel for="mfrom" value="From"/>
+            <apex:outputPanel styleClass="yui-skin-sam">
+			<apex:selectList id="mfrom" value="{!newmsg.m.VCSSA__From__c}" size="1">
+			    <apex:selectOptions value="{!fromAliases}"/>
+			</apex:selectList>
+            </apex:outputPanel>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem id="item1">
+            <apex:outputLabel for="mto" value="To"/>
+            <apex:outputPanel layout="block" styleClass="yui-skin-sam" style="height: 22px">
+            <apex:inputText id="mto" value="{!newmsg.m.VCSSA__To__c}" size="80" style="width: 640px;" />
+            <div id="myContainer_to" style="width: 640px"></div>
+            <br/>
+            </apex:outputPanel>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem id="item2">
+            <apex:outputLabel for="mcc" value="Cc"/>
+            <apex:outputPanel layout="block" styleClass="yui-skin-sam" style="height: 22px">
+            <apex:inputText id="mcc"  value="{!newmsg.m.VCSSA__Cc__c}" size="80" style="width: 640px;" />
+            <div id="myContainer_cc" style="width: 640px"></div>
+            </apex:outputPanel>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem id="item3">
+            <apex:outputLabel for="mbcc" value="Bcc"/>
+            <apex:outputPanel layout="block" styleClass="yui-skin-sam" style="height: 22px">
+            <apex:inputText id="mbcc"  value="{!newmsg.m.VCSSA__Bcc__c}" size="80" style="width: 640px;" />
+            <div id="myContainer_bcc" style="width: 640px"></div>
+            </apex:outputPanel>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem id="item5">
+            <apex:outputLabel for="msubject" value="Subject"/>
+            <apex:inputText id="msubject"  value="{!newmsg.m.VCSSA__Subject__c}" size="80" style="width: 640px;" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem id="item4">
+            <apex:outputPanel styleClass="yui-skin-sam">
+            <apex:inputTextArea id="mbodyhtml"  value="{!newmsg.m.VCSSA__Html_Body__c}" rows="20" cols="120" style="width: 100%" />
+            <apex:inputHidden id="mbodytext"  value="{!newmsg.m.VCSSA__Text_Body__c}" />
+            </apex:outputPanel>
+        </apex:pageBlockSectionItem>
+    </apex:pageBlockSection>
+    <apex:outputPanel >
+    <fieldset id="view_attachments" class="toolbarframe">
+        <legend> Attachments </legend>
+        <div class="toolbarframeInt">
+            <apex:repeat value="{!curattachments}" var="att">
+                <div><apex:inputCheckbox value="{!att.s}" /><a href="{!URLFOR($Action.Attachment.Download,att.a.Id)}" target="_new"><b>{!att.a.Name}</b></a> ({!CEILING(att.a.BodyLength/1024)} kb) <a href="{!URLFOR($Action.Attachment.Download,att.a.Id)}" target="_new">view</a> <a href="{!URLFOR($Action.Attachment.Download,att.a.Id)}" target="_new">download</a>
+                    <apex:outputPanel rendered="{! contains(att.a.ContentType,'image/')}">
+                        <p><a href="{!URLFOR($Action.Attachment.Download,att.a.Id)}" target="_blank"><img src="{!URLFOR($Action.Attachment.Download,att.a.Id)}" border="1" style="max-width: 100px;" /></a></p>
+                    </apex:outputPanel>
+                    <br/>
+                    <br/>
+                </div>
+            </apex:repeat>
+            <apex:outputPanel rendered="{! curattachments_size>0 }">
+            	<small>Salesforce.com attachment size limitations: After a total of 3 megabytes of attachments, they will be sent as URL's to download, not as the actual attachments.</small>
+            </apex:outputPanel>
+        </div>
+    </fieldset>
+    </apex:outputPanel>
+    
+    <center>
+    <apex:commandButton action="{!send}" value="Send" onclick="if( (t=document.getElementById('{!$Component.block1.section1.item5.msubject}')) && !t.value ) return confirm('This message is being sent without a SUBJECT.\nAre you sure you want to continue?'); return true;"/>
+    <apex:commandButton action="{!attachFiles}" value="Attach files"/>
+    <apex:commandButton action="{!saveAsDraft}" value="Save as Draft"/>
+    <apex:commandButton action="{!discardDraft}" value="Discard" onclick="return confirm('Are you sure you want to discard the message?')" />
+    </center>
+</apex:pageBlock>
+
+<script type="text/javascript" src="{!$Resource.smartyui}/yui.js"></script>
+
+<script type="text/javascript">
+window.use_composetosf = function() {
+	var id_to  = '{!$Component.block1.section1.item1.mto}';
+	var id_cc  = '{!$Component.block1.section1.item2.mcc}';
+	var id_bcc = '{!$Component.block1.section1.item3.mbcc}';
+	var id_subj= '{!$Component.block1.section1.item5.msubject}';
+	var id_body= '{!$Component.block1.section1.item4.mbodyhtml}';
+	var url = '{!url_composesf}&no_scan=1&textmode=r';
+	if( (t='{!newmsg.m.VCSSA__Contact__c}') ) { 
+		url+='&p2_lkid={!newmsg.m.VCSSA__Contact__c}&rtype=003';
+	}else if( (t='{!newmsg.m.VCSSA__Lead__c}') ) { 
+		url+='&p2_lkid={!newmsg.m.VCSSA__Lead__c}&rtype=00Q';
+	}
+	// aparte del contact/lead agrego otros posibles TO
+	if( (t=document.getElementById(id_to)) && t.value ) { 
+		url+='&p24='+escapeurl(t.value);
+	}
+	if( (t='{!newmsg.m.VCSSA__Case__c}') ) { 
+		url+='&p3_lkid={!newmsg.m.VCSSA__Case__c}';
+	}else if( (t='{!newmsg.m.VCSSA__Opportunity__c}') ) { 
+		url+='&p3_lkid={!newmsg.m.VCSSA__Opportunity__c}';
+	}else if( (t='{!newmsg.m.VCSSA__Account__c}') ) { 
+		url+='&p3_lkid={!newmsg.m.VCSSA__Account__c}';
+	}
+	if( (t=document.getElementById(id_cc)) && t.value )  url+='&p4='+escapeurl(t.value);
+	if( (t=document.getElementById(id_bcc)) && t.value ) url+='&p5='+escapeurl(t.value);
+	if( (t=document.getElementById(id_subj)) && t.value )url+='&p6='+escapeurl( (''+t.value).substr(0,99) );
+	if( (t=document.getElementById(id_body)) && t.value )url+='&p23='+escapeurl( (''+t.value).substr(0,1500) );
+	if(url.length>=2048) url = url.substr(0,2020);
+	top.location.href = url;
+	return false;
+}
+
+var myEditor = null;
+(function() {
+	if(YAHOO) {
+	    var Dom = YAHOO.util.Dom,
+	        Event = YAHOO.util.Event;
+	    var myConfig = {
+	        height: '300px',
+	        width: '100%',
+	        animate: true,
+	        dompath: true
+	        {!if(or(vmode=='reply',vmode=='replyall'), ',focusAtStart: true', '')} // esto hace que el foco del editor al cargar se active o no, dependidendo de si es compose/forward/reply/etc
+	    };
+	    myEditor = new YAHOO.widget.Editor('{!$Component.block1.section1.item4.mbodyhtml}', myConfig);
+	    myEditor.render();
+	}
+})();
+function beforeTextSave() {
+	var t = ''+myEditor.getEditorHTML();
+	document.getElementById('{!$Component.block1.section1.item4.mbodyhtml}').value = t;
+	t = t.replace(/<br>/gi, '\n').replace(/<\S[^><]*>/g, '');
+	document.getElementById('{!$Component.block1.section1.item4.mbodytext}').value = t;
+}
+
+focusEltId = '{!if( or(vmode=='forward',vmode=='compose'), $Component.block1.section1.item1.mto, $Component.block1.section1.item4.mbodyhtml)}'
+
+RemoteCustomRequest = function() {
+    var FR = function(oResultData, sQuery, sResultMatch) { 
+        console.log('RemoteCustomRequest',oResultData)
+        // nahuel@virtualcompanyservices.com|00580000001lnfjAAA|User|Desde SmartDevel
+        if(!oResultData||!oResultData[2]) return;
+        var query = sQuery.toLowerCase(), n= oResultData[3]||"", e= oResultData[0]||"", ty= oResultData[2]||"";
+        var ri1 = n.toLowerCase().indexOf(query), ri2 = e.toLowerCase().indexOf(query);
+        var dn = (ri1>-1) ?highlightMatch(n,query,ri1) :n ;
+        var de = (ri2>-1) ?highlightMatch(e,query,ri2) :e ;
+        return dn +' &lt; '+de+' &gt; ';
+    };  
+    var highlightMatch = function(full, snippet, matchindex) {  
+        return full.substring(0, matchindex)+"<"+"span class='match'>"+full.substr(matchindex, snippet.length)+"</span>"+full.substring(matchindex + snippet.length);
+    };
+
+    var oConfigs = {
+        minQueryLength: 2,
+        maxResultsDisplayed: 100,
+        delimChar: [";"],
+        autoHighlight: true,
+        queryDelay: 0.2,
+        useShadow: true,
+        autoHighlight: true,
+        allowBrowserAutocomplete: false
+    }
+    var oDS = new YAHOO.util.XHRDataSource("{!url_ComposeAutocomplete}");
+    oDS.responseType = YAHOO.util.XHRDataSource.TYPE_TEXT;
+    oDS.responseSchema = { recordDelim: "\n", fieldDelim: "|" };
+    oDS.maxCacheEntries = 30;
+    var oAC = new YAHOO.widget.AutoComplete(document.getElementById("{!$Component.block1.section1.item1.mto}"), "myContainer_to", oDS, oConfigs);
+    var oAC1 = new YAHOO.widget.AutoComplete(document.getElementById("{!$Component.block1.section1.item2.mcc}"), "myContainer_cc", oDS, oConfigs);
+    var oAC2 = new YAHOO.widget.AutoComplete(document.getElementById("{!$Component.block1.section1.item3.mbcc}"), "myContainer_bcc", oDS, oConfigs);
+    oAC.resultTypeList = false;
+    oAC.formatResult = FR;
+    oAC.sendQuery("");
+    oAC1.resultTypeList = false;
+    oAC1.formatResult = FR;
+    oAC2.resultTypeList = false;
+    oAC2.formatResult = FR;
+    return {
+        oDS: oDS,
+        oAC: oAC,
+        oAC1: oAC1,
+        oAC2: oAC2
+    };
+}();
+
+</script>
+</apex:form>
+
+</apex:outputPanel>
+
+
+<apex:pageBlock rendered="{! or(vmode=='addresses') }">
+    <div class="toolbarframe toolbarframeInt">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0"><tr>
+        <td width="20%">
+            <a href="{!url_back}">« Back to list</a> &nbsp;|&nbsp;
+        </td>
+        <td width="60%" align="center">
+            <form>
+                <input type="hidden" name="aid" value="{!aliasId}" />
+                <input type="hidden" name="ltags" value="{!ltags}" />
+                <input type="hidden" name="vmode" value="addresses" />
+                <input type="hidden" name="inboxurl" value="{!url_inbox}" />
+                    <div style="text-align: center;" class="toolbarframeInt">
+                    <b>Name or address:</b> <input type="text" name="search_contact" value="{!search_contact}" id="search_contact" value="" /> &nbsp;
+                    <input type="submit" value="search" class="btn"/>
+                    </div>
+            </form>
+        </td>
+        <td width="20%">&nbsp;</td>
+    </tr></table>
+    </div>
+
+        <apex:pageBlockTable value="{!Recipients}" var="c">
+			<apex:column >
+				<!-- href="{!url_compose}&toid={!URLENCODE(c.email)}">Compose</a> | --> 
+				<a href="{!url_inbox}&search=1&search_from={!URLENCODE(c.email)}&search_tags=@all">Search</a> 
+			</apex:column>
+            <apex:column > <a href="/{!c.sobjid}">{!c.name}</a></apex:column>
+            <apex:column > {!c.email} </apex:column>
+            <apex:column > {!c.sobjtype} </apex:column>
+        </apex:pageBlockTable>
+<script type="text/javascript">
+focusEltId = 'search_contact';
+</script>
+</apex:pageBlock>
+
+
+
+<apex:pageBlock rendered="{! vmode=='massbind' }">
+    <apex:form >
+    <div class="toolbarframe toolbarframeInt">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0"><tr>
+        <td width="20%">
+            <a href="{!url_back}">« Back to list</a> &nbsp;|&nbsp;
+        </td>
+        <td width="60%" align="center">
+			<apex:commandButton action="{!updateMassBindings}" value="Mass update bindings" />
+        </td>
+        <td width="20%">&nbsp;</td>
+    </tr></table>
+    </div>
+
+	<br/>
+    <h3>The following bindings will be applied to all the selected newmsgs listed below</h3><br clear="both"/>
+    <br/>
+    
+            <apex:outputPanel rendered="{! config.VCSSA__Use_Leads__c }" styleClass="bindingBlock">
+            	<img width="16" border="0" align="absmiddle" src="/s.gif" class="ico_lead"/>  {!label_lead}: 
+            	<a href="/{!newmsg.m.VCSSA__Lead__c}" target="_blank" title="{!newmsg.m.Lead__r.Name}"><b>{!LEFT(newmsg.m.Lead__r.Name,32)}</b></a>
+                &nbsp;
+                <div><apex:inputField value="{!newmsg.m.VCSSA__Lead__c}" styleClass="lk" /></div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! config.VCSSA__Use_Contacts__c }" styleClass="bindingBlock">
+            	<img width="16" border="0" align="absmiddle" src="/s.gif" class="ico_contact"/> {!label_contact}: 
+            	<a href="/{!newmsg.m.VCSSA__Contact__c}" target="_blank" title="{!newmsg.m.Contact__r.Name}"><b>{!LEFT(newmsg.m.Contact__r.Name,32)}</b></a>
+                &nbsp;
+                <div><apex:inputField value="{!newmsg.m.VCSSA__Contact__c}" styleClass="lk" /></div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! or(config.VCSSA__Use_Contacts__c,config.VCSSA__Use_Person_Accounts__c) }" styleClass="bindingBlock">
+            	<img width="16" border="0" align="absmiddle" src="/s.gif" class="ico_account"/> {!label_account}: 
+            	<a href="/{!newmsg.m.VCSSA__Account__c}" target="_blank" title="{!newmsg.m.Account__r.Name}"><b>{!LEFT(newmsg.m.Account__r.Name,32)}</b></a>
+                &nbsp;
+                <div><apex:inputField value="{!newmsg.m.VCSSA__Account__c}" styleClass="lk" /></div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! config.VCSSA__Use_Opportunities__c }" styleClass="bindingBlock">
+            	<img width="16" border="0" align="absmiddle" src="/s.gif" class="ico_opportunity"/> {!label_opportunity}: 
+            	<a href="/{!newmsg.m.VCSSA__Opportunity__c}" target="_blank" title="{!newmsg.m.Opportunity__r.Name}"><b>{!LEFT(newmsg.m.Opportunity__r.Name,32)}</b></a>
+                &nbsp;
+                <div><apex:inputField value="{!newmsg.m.VCSSA__Opportunity__c}" styleClass="lk" /></div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! config.VCSSA__Use_Cases__c }" styleClass="bindingBlock">
+            	<img width="16" border="0" align="absmiddle" src="/s.gif" class="ico_case"/> {!label_case}:
+            	<apex:outputpanel layout="none" rendered="{!newmsg.m.Case__r.Id!=''}"> 
+            	<a href="/{!newmsg.m.VCSSA__Case__c}" target="_blank" title="{!newmsg.m.Case__r.Subject}"><b>{!LEFT(BLANKVALUE(newmsg.m.Case__r.Subject,'(no subject)'),32)}</b></a>
+                </apex:outputpanel>
+                &nbsp;
+                <div><apex:inputField value="{!newmsg.m.VCSSA__Case__c}" styleClass="lk" /></div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! config.VCSSA__Use_Campaigns__c }" styleClass="bindingBlock">
+            	<img width="16" border="0" align="absmiddle" src="/s.gif" class="ico_campaign"/> {!label_campaign}: 
+            	<a href="/{!newmsg.m.VCSSA__Campaign__c}" target="_blank" title="{!newmsg.m.Campaign__r.Name}"><b>{!LEFT(newmsg.m.Campaign__r.Name,32)}</b></a>
+                &nbsp;
+                <div><apex:inputField value="{!newmsg.m.VCSSA__Campaign__c}" styleClass="lk" /></div>
+            </apex:outputPanel>
+            <br clear="both"/>
+    </apex:form>
+	<br/>
+        <apex:pageBlockTable value="{!emailsSelected}" var="email" rendered="{! emailsSelected.size>0 }" headerClass="messageListTableHeader" style="padding:0;margin:0;">
+            <apex:column styleClass="tdnowrap">
+                <apex:facet name="header"><img width="16" src="/s.gif" class="ico_email"/> </apex:facet>
+                <img src="/s.gif" width="16" class="ico_email dragmsg" title="{!email.m.id}" align="absmiddle"/>
+            </apex:column>
+            <apex:column styleClass="tdnowrap">
+                <apex:facet name="header"><img width="16" src="/s.gif" class="star_on"/></apex:facet>
+                <span class="{!if(contains(email.tagstring,'|@star|'),'star_on','star_off')}" style="border: 1px solid transparent;"><img width="16" src="/s.gif" /></span> 
+            </apex:column>
+            <apex:column styleClass="tdnowrap">
+                <apex:facet name="header">
+                    <apex:outputPanel layout="none" >
+                    <apex:image value="/s.gif" width="16" height="16" rendered="{! config.VCSSA__Use_Leads__c }" styleClass="ico_lead" title="{!label_lead}" />
+                    <apex:image value="/s.gif" width="16" height="16" rendered="{! config.VCSSA__Use_Contacts__c }" styleClass="ico_contact" title="{!label_contact}" />
+                    <apex:image value="/s.gif" width="16" height="16" rendered="{! or(config.VCSSA__Use_Contacts__c,config.VCSSA__Use_Person_Accounts__c) }" styleClass="ico_account" title="{!label_account}" />
+                    <apex:image value="/s.gif" width="16" height="16" rendered="{! config.VCSSA__Use_Opportunities__c }" styleClass="ico_opportunity" title="{!label_opportunity}" />
+                    <apex:image value="/s.gif" width="16" height="16" rendered="{! config.VCSSA__Use_Cases__c }" styleClass="ico_case" title="{!label_case}" />
+                    <apex:image value="/s.gif" width="16" height="16" rendered="{! config.VCSSA__Use_Campaigns__c }" styleClass="ico_campaign" title="{!label_campaign}" />
+                    <img width="16" border="0" src="/s.gif" class="ico_salesforce"/>
+                    </apex:outputPanel>
+                </apex:facet>
+                    <apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Leads__c,email.m.Lead__r.Name!='') }"><a href="/{!email.m.VCSSA__Lead__c}" target="_blank"><img width="16" border="0" src="/s.gif" class="{!if(email.m.Lead__c!='','ico_lead','ico_none')}" title="{!label_lead}: {!email.m.Lead__r.name}"/></a></apex:outputPanel>
+                    	<apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Leads__c,email.m.Lead__r.Name=='') }"><img width="16" border="0" src="/s.gif"/></apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Contacts__c,email.m.Contact__r.Name!='') }"><a href="/{!email.m.VCSSA__Contact__c}" target="_blank"><img width="16" border="0" src="/s.gif" class="{!if(email.m.Contact__c!='','ico_contact','ico_none')}" title="{!label_contact}: {!email.m.Contact__r.Name}/"/></a></apex:outputPanel>
+                    	<apex:outputPanel rendered="{! and(config.VCSSA__Use_Contacts__c,email.m.Contact__r.Name=='') }"><img width="16" border="0" src="/s.gif"/></apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{! and(or(config.VCSSA__Use_Contacts__c,config.VCSSA__Use_Person_Accounts__c),email.m.Account__r.Name!='') }"><a href="/{!email.m.VCSSA__Account__c}" target="_blank"><img width="16" border="0" src="/s.gif" class="{!if(email.m.Account__c!='','ico_account','ico_none')}" title="{!label_account}: {!email.m.Account__r.Name}"/></a></apex:outputPanel>
+                    	<apex:outputPanel layout="none" rendered="{! and(or(config.VCSSA__Use_Contacts__c,config.VCSSA__Use_Person_Accounts__c),email.m.Account__r.Name=='') }"><img width="16" border="0" src="/s.gif"/></apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Opportunities__c,email.m.Opportunity__r.Name!='') }"><a href="/{!email.m.VCSSA__Opportunity__c}" target="_blank"><img width="16" border="0" src="/s.gif" class="{!if(email.m.Opportunity__c!='','ico_opportunity','ico_none')}" title="{!label_opportunity}: {!email.m.Opportunity__r.Name}"/></a></apex:outputPanel>
+                    	<apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Opportunities__c,email.m.Opportunity__r.Name=='') }"><img width="16" border="0" src="/s.gif"/></apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Cases__c,email.m.Case__r.Id!='') }"><a href="/{!email.m.VCSSA__Case__c}" target="_blank"><img width="16" border="0" src="/s.gif" class="{!if(email.m.Case__c!='','ico_case','ico_none')}" title="{!label_case}: {!email.m.Case__r.Subject}"/></a></apex:outputPanel>
+                    	<apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Cases__c,email.m.Case__r.Id=='') }"><img width="16" border="0" src="/s.gif"/></apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Campaigns__c,email.m.Campaign__r.Name!='') }"><a href="/{!email.m.VCSSA__Campaign__c}" target="_blank"><img width="16" border="0" src="/s.gif" class="{!if(email.m.Campaign__c!='','ico_campaign','ico_none')}" title="{!label_campaign}: {!email.m.Campaign__r.Name}"/></a></apex:outputPanel>
+                    	<apex:outputPanel layout="none" rendered="{! and(config.VCSSA__Use_Campaigns__c,email.m.Campaign__r.Name=='') }"><img width="16" border="0" src="/s.gif"/></apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{! email.m.VCSSA__From_SFDC_User__c }"><img width="16" border="0" src="/s.gif" class="ico_salesforce"/></apex:outputPanel>
+            </apex:column>
+            <apex:column rendered="{! not(ltags=='@sent'||ltags=='@draft') }">
+                <apex:facet name="header">From</apex:facet>
+                <span title="{!email.m.From__c}" class="{!if(contains(email.tagstring,'|@unread|'),'subj_unread','')}">
+                    {!LEFT(if(email.m.From_Name__c!='', email.m.From_Name__c, email.m.From__c),32)}
+                </span>
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Subject</apex:facet>
+                <apex:repeat value="{!email.tagcolorlist}" var="t">
+                    <apex:outputPanel layout="none" rendered="{! and(t.tag!='@inbox',t.tag!='@star',t.tag!='@unread') }">
+                        <span class="taglabel" style="background-color: #{!t.tagColor}">{!LEFT(t.tag,32)}</span>
+                    </apex:outputPanel>
+                </apex:repeat>
+                <apex:outputPanel layout="none" rendered="{!not(contains(email.tagstring,'|@draft|'))}">
+                    <span class="{!if(contains(email.tagstring,'|@unread|'),'subj_unread','')}" 
+                        title="{!HTMLENCODE(BLANKVALUE(email.m.Subject__c,'(no subject)'))}">{!LEFT(BLANKVALUE(email.m.Subject__c,'(no subject)'),128)}</span>
+                </apex:outputPanel>
+            </apex:column>
+            <apex:column styleClass="tdnowrap">
+                <apex:facet name="header">Date</apex:facet>
+                <span>{!email.mdate}</span>
+            </apex:column>
+        </apex:pageBlockTable>
+    
+</apex:pageBlock>
+
+<script type="text/javascript">
+window_onload(function() {
+    try{
+        if(t=document.getElementById(focusEltId)) {
+            t.focus();
+        }
+    }catch(e) { } // porque puede no estar seteado
+});
+
+</script>
+</div>
+
+<apex:pageBlock title="DEBUG (esto solo se ve en la org de desarrollo y en la de VCS )" rendered="{! and(true,or($Organization.Id='00D80000000L8I2', $Organization.Id='00D300000000B71')) }">
+<pre>{!NULLVALUE(DEBUG,'')}</pre>
+<hr/>
+<a href="{!url_inboxpage}?sendattachemail=4">[Send a test email with attachments up to 11 megas to {!$User.Email}]</a><br/>
+<a href="{!url_inboxpage}?sendattachemail=1">[Send a test email with attachments up to 8 megas to {!$User.Email}]</a><br/>
+<a href="{!url_inboxpage}?sendattachemail=2">[Send a test email with attachments up to 4 megas to {!$User.Email}]</a><br/>
+<a href="{!url_inboxpage}?sendattachemail=3">[Send a test email with attachments up to 3 megas to {!$User.Email}]</a><br/>
+<a href="{!url_inboxpage}?sendattachemail=5">[Send a test email with attachments up to 100k to {!$User.Email}]</a><br/>
+<a href="{!url_inboxpage}?sendattachemail=6">[Send a test email without attachments and without  Subject:/To: to {!$User.Email}</a><br/>
+<a href="{!url_inboxpage}?sendattachemail=7">[Send a test email with attachments up to 100k to {!$User.Email} and limo1.group@gmail.com and smartvcs1@gmail.com]</a><br/>
+</apex:pageBlock>
+
+</div>
+<span class="VCS SMART_mainPageContent"></span>
+</apex:page>

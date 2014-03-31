@@ -1,0 +1,59 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="PortalLoginController">
+
+	<style type="text/css">
+				
+				.mainbody{
+					background-color:#BDC1C7; 
+/* 					background-color:{!URLFOR($Resource.SiteSamples, 'img/clock.png')} */
+/* 					background-image:url('{!URLFOR($Resource.SiteSamples, 'img/clock.png')}'); */
+  					height: 300px;  
+ 					background-size:400x;
+					margin : 150px 350px 0; 
+				}
+	</style>
+	
+	<div align="center">
+		<apex:image url="{!URLFOR($Resource.xrayimage,'logo.png')}" width="20%" height="15%"/> 
+	</div>	
+	<div align = "center"  style="margin-top:30px;font-family:Calibri;
+				  	font-style: regular;
+				  	font-size: 22px;font-weight:bold;
+				  	color: #0D3F89;"> Partner Login</div>
+	<div class="mainbody" style="margin-top:10px">
+		<apex:form id="loginForm" forceSSL="true">
+		
+		<br/>
+			<div align = "center">
+			<apex:outputPanel layout="block" id="op1" style="margin-top:30px;">
+	<!-- 	      	<apex:outputLabel value="Please enter valid Username and Password." style="color:red; font-size:11px;"/> -->
+		        <apex:panelGrid columns="2" style="margin-top:1em;margin-bottom:10em;">
+		        	<apex:outputLabel value="{!$Label.site.username}" />
+			        <apex:inputText value="{!username}"/>
+			       	<apex:outputLabel value="" />
+			        <apex:outputLabel value=""/>
+			        <apex:outputLabel value="" />
+			        <apex:outputLabel value=""/>
+			        <apex:outputLabel value="{!$Label.site.password}" for="password"/>
+			        <apex:inputSecret id="password" value="{!password}"/>
+			        <apex:outputText value=""/>
+			        <apex:outputText value=""/>
+			        <apex:outputText value=""/>
+			        <apex:commandButton action="{!login}" value="{!$Label.site.login_button}" id="loginButton"/>
+			        <apex:outputText value=""/>
+			        <apex:outputText value=""/>
+			        <apex:outputText value=""/>
+			    
+				    <apex:panelGroup id="theLinks">
+				     <apex:outputLink value="{!$Page.PartnerForgotPassword}"> {!$Label.site.forgot_your_password_q}</apex:outputLink>
+<!-- 					<apex:commandButton id="submit" value="{!$Label.site.submit}" action="{!forgotPassword}"/> -->
+<!-- 			        	<apex:commandLink value="Forgot Password"/> -->
+<!-- 				        <apex:outputText value=" | " rendered="{!$Site.RegistrationEnabled}" /> -->
+<!-- 				        <apex:outputLink value="{!$Page.SiteRegister}" rendered="{!$Site.RegistrationEnabled}">{!$Label.site.new_user_q}</apex:outputLink> -->
+				    </apex:panelGroup>
+		      </apex:panelGrid>
+		      <apex:pageMessages id="Error" rendered="true"/>
+		   </apex:outputPanel>
+		   </div>
+		 </apex:form>
+	</div> 
+</apex:page>

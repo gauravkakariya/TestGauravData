@@ -1,0 +1,21 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><FONT face=Calibri>To,<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p></o:p></FONT></SPAN></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><FONT face=Calibri>Date: xxxx<o:p></o:p></FONT></SPAN></P>
+<P style="MARGIN: 0in 0in 10pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><FONT face=Calibri>Client Name: {!Account.Name}</FONT></SPAN></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><FONT face=Calibri>Address:&nbsp; {!Account.BillingAddress}</FONT></SPAN></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><FONT face=Calibri>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {!Account.BillingCity}, {!Account.BillingState},</FONT></SPAN></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><FONT face=Calibri>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{!Account.BillingCountry}</FONT></SPAN></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><FONT face=Calibri></FONT></SPAN>&nbsp;</P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><FONT face=Calibri>Sub: <U>Notice of bounced check</U><o:p></o:p></FONT></SPAN></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><FONT face=Calibri>Dear {!Account.Name},<o:p></o:p></FONT></SPAN></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><FONT face=Calibri>This is to inform you that payment on your cheque <B style="mso-bidi-font-weight: normal">No. xxxx</B> drawn against <B style="mso-bidi-font-weight: normal">Account No. xxxxxx</B> with <B style="mso-bidi-font-weight: normal">Bank Name</B> in the amount of <B style="mso-bidi-font-weight: normal">Rs. xxx</B> tendered to us on date has not cleared. <o:p></o:p></FONT></SPAN></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><FONT face=Calibri>Accordingly, we hereby request you to send us another cheque in the amount of <B style="mso-bidi-font-weight: normal">xxxxx</B>. The old cheque has been returned to you and your prompt attention in this matter is requested.<o:p></o:p></FONT></SPAN></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><o:p><FONT face=Calibri>&nbsp;</FONT></o:p></SPAN></P>
+<P style="MARGIN: 0in 0in 0pt" class=MsoNormal><SPAN style="LINE-HEIGHT: 115%; FONT-SIZE: 12pt"><FONT face=Calibri>Thank you &amp; Kind Regards,<o:p></o:p></FONT></SPAN></P>]]></td>
+</tr>
+</table>

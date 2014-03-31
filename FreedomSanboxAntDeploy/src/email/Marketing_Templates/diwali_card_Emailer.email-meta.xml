@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Test_Ashwin</letterhead>
+    <name>New Year - Emailer</name>
+    <style>freeForm</style>
+    <subject>Happy New Year</subject>
+    <textOnly>Happy New Year
+
+&quot;Year&apos;s end is neither an end nor a beginning but a going on, with all the wisdom that experience can instill in us.Reach high, for stars lie hidden in your soul. Dream deep, for every dream precedes the goal.&quot; 
+
+Regards 
+Ffreedom Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

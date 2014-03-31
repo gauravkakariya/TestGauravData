@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This is a weekly emailer that is sent to all the Entities.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Official</letterhead>
+    <name>Ffundamental News Letter Entity</name>
+    <style>newsletter</style>
+    <subject>Ffundamentals (Ffreedom Newsletter)- August issue</subject>
+    <textOnly>Click here to view Newsletter on our website
+Dear  {!Account.FirstName}
+
+Trust
+you are doing well.
+
+ 
+
+Please find below our Monthly Newsletter - Ffundamentals. 
+
+Kindly
+provide your feedback, for us to develop it further.
+
+ 
+
+Happy reading 
+
+ 
+
+Warm Regards
+
+Team Ffreedom
+
+Here
+ is an Associated Press headline which I saw one morning not long ago 
+when I turned on my computer and logged on to Yahoo! Finance: “Stock 
+Futures Rise On Hope For Greece Bailout” Now, here is another headline, 
+also from AP, which later appeared on the self-same Yahoo! Finance: 
+“Stocks Down On Greece Default Fears”
+ 
+ 
+ 
+ 
+ 
+ What
+ I need you to know about these two headlines is that the second 
+appeared fortyfi ve minutes after the fi rst. Friends, I could not, or 
+at least would not, make this up.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ “I Feel Satisfied &amp; Experience Peace of Mind”
+ 
+ 
+ 
+ 
+ 
+ When
+ I heard term financial planning, I felt it is meant only for the rich. 
+ I will not need financial planning as my financial side is under 
+control. My conceptions changed when I met Mr. SumeetVaid. I found his 
+philosophy of living life freely, after one takes care of family 
+risks...
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Where there is a will, wishes come true...
+ 
+ 
+ 
+ 
+ 
+ Have
+ you ever wondered what would happen to your loved ones after you are no
+ more? Whether it happens as a result of old age or takes place 
+unexpectedly, have you prepared enough? 
+Whenever there is a human tragedy around us (like bomb blasts...
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Why you need Individual health insurance
+ 
+ 
+ 
+ 
+ 
+ Financial
+ products are often confused for most people, and similar sounding 
+products sometimes lead one into not realising which product is 
+important or not. A common case in point is the two kinds of health 
+insurance – individual and group. Most professionals, especially those 
+employed with...
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Term Cover + Mutual Funds Vs ULIPs which way should you go?
+ 
+ 
+ 
+ 
+ 
+ When
+ it comes to making investments people are often confused whether to 
+opt for a ULIP (Unit Linked Insurance Plan) or a mutual fund. Adding to
+ the confusion is that assumption that investment in a ULIP plan and in
+ a mutual fund...
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ NATIONAL NEWS
+ 
+ 
+ 
+ 
+ 
+ 
+ How to file income tax returns in simple and cost-effective manner
+ 
+ 
+ 
+ Examine these before you buy a life insurance policy
+ 
+ 
+ 
+ Don&apos;t trust blindly when you donate
+ 
+ 
+ 
+ Home and car loans to get more expensive as RBI hikes rate
+ 
+ 
+ 
+ RBI rate hike: Stay locked in FDs; avoid sensitive stocks like banking, auto &amp; realty
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ INTERNATIONAL NEWS
+ 
+ 
+ 
+ 
+ 
+ 
+ Fund managers dig deep to find value
+ 
+ 
+ 
+ Top earners miss out on pension tax relief
+ 
+ 
+ 
+ Inflation dip is good news for savers
+ 
+ 
+ 
+ Annuity rates continue to fall
+ 
+ 
+ 
+ Top one-year savings bonds come from smaller providers
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ The
+ second edition of Ffreedom Takeoff was organised in mid- July 2011 
+with a view to enhance the client experience at Ffreedom via 
+innovations. The session was conducted by Mr. Bhupender Sharma and 
+focussed on the Need of Financial Planning &amp; Way ahead for Ffreedom.
+ The interactive session began with a discussion on the current 
+problems in the financial industry, especially...
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Will the stock market&apos;s performance continue to remain weak in August? YesNoCan&apos;t SaySee results survey service
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Wimbledon lessons for your plan
+ 
+ 
+ 
+ 
+ 
+ 
+ In 2008, the then 22-year-old Rafael Nadal met his long-time on-court 
+nemesis Roger Federer on the centre court of Wimbledon. Federer had been
+ the world No. 1 player in tennis for 237 consecutive weeks and for the 
+past...
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ Limit credit card use to achieve your goal
+ 
+ 
+ 
+ 
+ 
+ 
+ The concept of using credit for purchasing was described by Edward 
+Bellamy in his 1887 novel Looking Backward, where he had used the term 
+credit card 11 times in the novel. Since then, credit and credit cards 
+have...
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ Click here to view CNBC Aawaz - I 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ Click here to view CNBC Aawaz - II 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ Click here to view CNBC Aawaz - III 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Mother had decided to 
+
+ trim 
+ her 
+ household budget 
+
+ wherever possible,
+ 
+
+ so instead of having a 
+
+ dress
+ dry-cleaned 
+
+ she washed it by hand.
+ 
+
+ Proud of her savings, 
+
+ she boasted 
+ to my father, 
+
+ Just think, Fred,
+ 
+
+ we are five dollars richer
+ 
+ because
+ I washed this 
+
+ dress by hand. 
+ 
+
+ Good, my dad quickly replied. 
+ 
+
+ Wash it again!
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Ffreedom Financial Planners
+ 
+ 
+ Follow us on   
+ 
+ 
+ 
+ Watch us on
+ 
+ 
+ 
+ 
+ 506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053
+ 
+ 
+ Boardline: +91 22 4222 4333  |  Fax: +91 22 4222 4332  |  Email: contact@ffreedom.in  |  www.ffreedom.in
+ 
+ 
+ Disclaimer:
+ This communication from Ffreedom provides general information existing 
+at the time of preparation. This mailer is intended as a news update and
+ Ffreedom Financial Planners neither assumes nor accepts any 
+responsibility for any loss arising to any person acting or refraining 
+from acting as a result of any material contained in this communication.
+ It is recommended that professional advice be taken based on the 
+specific facts and circumstances. This communication does not substitute
+ the need to refer to the original pronouncements.
+
+Click here to unsubscribe</textOnly>
+    <type>html</type>
+</EmailTemplate>

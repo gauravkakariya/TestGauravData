@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>Complimentary Consultation</name>
+    <style>formalLetter</style>
+    <subject>Complimentary Consultation with a ‘Ffreedom Financial Planner’</subject>
+    <textOnly>Greetings 
+Dear  {!Lead.Name},
+
+We appreciate you for taking out time to share with us your Dreams &amp; Goals and also Signing up for a Consultation Session on the {!Lead.Appointment_Time__c} with a Ffreedom Financial Planner.
+ 
+We have been helping our clients live their dreams.
+ 
+Now let us help you – starting with a Complimentary Consultation Session.
+ 
+What to expect?  The session shall include the following:
+      
+ A Financial Health Check up: It will give you an indication about how healthy your financial situation is. This assessment measures the quality of your personal finance habits &amp; your results are based on your own expectations.
+                 
+  Your goals: Our Financial Planner shall concentrate on understanding your lifestyle, needs and goals, rather than on promoting specific products or investments. And hence helps you create a road map to start living your dreams.
+ 
+ Guidance: Trained in a wide variety of retirement and investment strategies, our Financial Planner can lay out the facts and provide you with guidance. They are a good resource for discussing things like reducing taxes, college planning or preparing for a more secure retirement.
+                 
+ Our  Approach: The Dream &gt; Decide &gt; Do approach to financial planning is collaborative and exclusive to Ffreedom Financial Planners. We shall also help you address &amp; understand all concerns in regards to financial planning.
+ 
+                First Meeting, No fees, No obligation, Just Financial Guidance.
+ 
+*The initial consultation provides an overview of financial planning concepts. You will not receive written analysis and/or recommendations.
+
+Looking forward to meeting you 
+
+Warm Regards,
+Team - Ffreedom
+
+Ffreedom Financial Planners
+Email: contact@ffreedom.in
+Tel: 91 22 4222 4314 
+Fax: 91 22 4222 4314
+Visit: www.ffreedom.in
+Corporate Office: 506/507, Morya Landmark-II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053</textOnly>
+    <type>html</type>
+</EmailTemplate>

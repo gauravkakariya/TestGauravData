@@ -1,0 +1,28 @@
+<!--/*
+	Revision History:
+	
+    Version     Version Author     Date         Comments
+    1.0         Persistent         NA  		  	Initial Draft
+   
+	2.0			Manasi Ranade	   13/10/2011   Issue ID:FS0194: Added Attribute to component
+*/-->
+<apex:page controller="GoalOutputController" showHeader="false" sidebar="false">
+<apex:composition template="TabPage">
+        <apex:define name="contents" >
+        <apex:pageMessages rendered="true" />
+            <apex:form id="goalOutputForm">
+            	<!--  FS0194 -->
+            	<!--/** Eternus Solutions      **/
+				/** Author  : Manasi Ranade*/
+				/** Issue Id: FS0194      **/
+				/** Date    : 13/10/2011 **/
+				/** Purpose : Added Attribute to component**/
+				/****************************************************/-->	
+            	<c:GoalComponent goalMappingBean="{!goalMappingBean}" dblTotalSIP="{!dblTotalSIP}" dblEquitySIP="{!dblEquitySIP}"
+            			dblGoldSIP="{!dblGoldSIP}" dblDebtSIP="{!dblDebtSIP}" dblReturnsExpected="{!dblReturnExpected}">
+<!--             			dblGoldSIP="{!dblGoldSIP}" dblDebtSIP="{!dblDebtSIP}" dblReturnsExpected="{!dblReturnExpected}" dblRetirementFV="{!retirementFV}"> -->
+            	</c:GoalComponent>
+            </apex:form>
+        </apex:define>
+</apex:composition>
+</apex:page>

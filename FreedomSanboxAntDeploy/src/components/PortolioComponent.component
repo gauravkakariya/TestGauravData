@@ -1,0 +1,187 @@
+<!--
+/**
+Revision History:
+    
+    Version     Version Author     Date        Comments
+    1.0         --                 --           Initial Draft
+    2.0         Manasi Ranade      30/4/2012    Issue ID : 00001613 : Added output Filed to preserve new line characters
+*/ -->
+<apex:component controller="NewPortfolioSummaryController">
+    <apex:stylesheet value="{!$Resource.FFStyle}" />
+    <apex:attribute name="showButton" type="Boolean" description="Used to decide navigation button should be visible or not" default="true" />
+    <apex:outputPanel >
+        <apex:pageBlock id="block1">
+            <apex:pageMessages rendered="true" />
+            
+            <apex:outputPanel rendered="{!showButton}">
+                <div class="divNavigationContainerStyle">
+                    <apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;background-image:none;background-color:#A9C5EB !important;padding-top:4px; padding-bottom:4px;" />
+                    <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;" />
+                    <apex:outputLabel value="Portfolio Summary" styleclass="button" style=" width:10%;margin-left:20px;background-image:none;background-color:#A9C5EB !important;padding-top:4px; padding-bottom:4px;" />
+                </div>
+            </apex:outputPanel>
+            
+            <div class="divContainerStyle">
+                <div class="divStyle">
+                    <apex:outputText styleClass="textStyle" value="SUMMARIZING YOUR CURRENT ASSET ALLOCATION" />
+                </div>
+                <br/>
+                <apex:outputText styleClass="textStyle" value="Overview" style="font-weight:bold;" /><br/><br/>
+                <apex:outputText styleClass="textStyle" value="{!$Label.PortfolioHeader1}"/><br/><br/>
+                <apex:outputText styleclass="textStyle" value="{!$Label.PortfolioHeader2}"/><br/><br/>
+                <apex:outputText styleclass="textStyle" value="{!$Label.PortfolioHeader3}"/><br/><br/>
+            <div style="align:center;width:100%;">
+            
+            <table cellSpacing="0" cellPadding="0" class="" align="center" style="width:50%;margin-left:auto;margin-right:auto;">
+                <tr>
+                    <td style="width:47%;border-width:thin; border-style:solid; border-color:gray;">
+                        <apex:image url="{!chartData}" style="width:100%;"></apex:image>
+                    </td>
+<!--                     <td style="width:6%;"></td> -->
+<!--                     <td style="width:47%;border-width: thin; border-style: solid; border-color: gray;"> -->
+<!--                         <apex:image url="{!suggestedChartData}" style="width:100%;"></apex:image> -->
+<!--                     </td> -->
+                </tr>
+            </table>
+            
+            <br/>
+            <table id="DataTable" cellSpacing="0" cellPadding="3" border="1" align="center" style="margin-top: 10px;width:60%;margin-left:auto;margin-right:auto;">
+                <tr class="tableHeader">
+                    <th class="tableData" rowSpan="2" style="font-weight: bold;">
+                        <apex:outputText value="Asset Class" styleclass="textStyle" />
+                    </th>
+                    <th  class="tableData" colSpan="2" style="font-weight: bold;text-align: center;">
+                        <apex:outputText value="CURRENT ASSET ALLOCATION" styleclass="textStyle" />
+                    </th>
+<!--                     <th  class="tableData" colSpan="2" style="font-weight: bold;text-align: center;"> -->
+<!--                         <apex:outputText value="Suggested Asset Allocation" styleclass="textStyle" /> -->
+<!--                     </th> -->
+                </tr>
+
+                <tr class="tableHeader">
+                    <td style="text-align: center;font-weight: bold;" class="tableData">
+                        <apex:outputText value="Amount" styleclass="textStyle" />
+                    </td>
+                    <td style="text-align: center;font-weight: bold;" class="tableData">
+                        <apex:outputText value="%" styleclass="textStyle" />
+                    </td>
+<!--                     <td style="text-align: center;font-weight: bold;" class="tableData"> -->
+<!--                         <apex:outputText value="Amount" styleclass="textStyle" /> -->
+<!--                     </td> -->
+<!--                     <td style="text-align: center;font-weight: bold;" class="tableData"> -->
+<!--                         <apex:outputText value="%" styleclass="textStyle" /> -->
+<!--                     </td> -->
+                </tr>
+
+                <apex:repeat value="{!portfolioBeanList}" var="pf">
+                    <tr class="tableData">
+                        <td >
+                            <apex:outputText value="{!pf.recordType}" style="font-weight:bold;" styleclass="textStyle" />
+                        </td>
+                        <td align="right">
+                            <apex:outputText value="{0, number, ##,##0}" styleclass="textStyle">
+                                <apex:param value="{!pf.currentAsset}" />
+                            </apex:outputText>
+                        </td>
+                        <td align="right">
+                            <apex:outputText value="{0, number, ##,##0.00}%" styleclass="textStyle">
+                                <apex:param value="{!pf.currentPercent}" />
+                            </apex:outputText>
+                         </td>
+<!--                          <td align="right"> -->
+<!--                            <apex:outputText value="{0, number, ##,##0}" styleclass="textStyle"> -->
+<!--                                <apex:param value="{!pf.suggestedAsset}" /> -->
+<!--                                </apex:outputText> -->
+<!--                             </td> -->
+                         
+<!--                          <td align="right"> -->
+<!--                            <apex:outputText value="{0, number, ##,##0.00}%" styleClass="textStyle"> -->
+<!--                                <apex:param value="{!pf.suggestedPercent}" /> -->
+<!--                                </apex:outputText> -->
+<!--                             </td> -->
+                    </tr>
+                </apex:repeat>
+                <tr >
+                    <td>
+                        <apex:outputText styleclass="textStyle" value="Total" style="font-weight:bold;"/>
+                    </td>
+                    <td align="right" class="tableAlign">
+                        <apex:outputText value="{0, number, ##,##0}" styleclass="textStyle" style="font-weight:bold;">
+                            <apex:param value="{!totalValue}" />
+                        </apex:outputText>
+                    </td>
+                    <td align="right" class="tableAlign" style="font-weight:bold;">
+                        100%    
+                    </td>
+<!--                     <td align="right" class="tableAlign"> -->
+<!--                        <apex:outputText value="{0, number, ##,##0}" styleclass="textStyle" style="font-weight:bold;"> -->
+<!--                            //13Feb2012 -->
+<!--                            <apex:param value="{!totalValueSuggested}" /> -->
+<!--                        </apex:outputText> -->
+<!--                    </td> -->
+<!--                        <td align="right" class="tableAlign" style="font-weight:bold;"> -->
+<!--                        100%     -->
+<!--                    </td>                            -->
+                    <!--   <td align="right" class="tableAlign">
+                                <apex:outputText value="{0, number, ##,##0.00}%" styleclass="textStyle"  style="font-weight:bold;">
+                                100
+                                </apex:outputText>
+                   </td> -->
+                </tr>
+            </table>
+          </div>
+        </div>
+        
+          <!-- Prajakta - 21-03-2013  -->    
+<!--                 <apex:outputPanel rendered="{!(if(objRemark.Remark__c=='',false,true))}"> -->
+<!--                    <div class="subHeader">          -->
+<!--                        <b><apex:outputText value="{!$Label.Remarks} " escape="false" styleClass="textStyle" /></b> -->
+<!--                    </div> -->
+<!--                    <div> -->
+<!--                        <apex:OutputField value="{!objRemark.Remark__c}" /> -->
+<!--                    </div> -->
+<!--                </apex:outputPanel> -->
+        
+        <!-- FS0309 -->
+        <apex:outputPanel rendered="{!(if(objRemark.Remark__c=='',false,true))}">
+            <ul class="TickList">
+              <li>
+                  {!$Label.Remarks}
+              </li>
+           </ul>
+           <div>
+          <!-- /** Eternus Solutions      **/
+          /** Author  : Manasi Ranade   **/
+          /** Issue Id: 00001613        **/
+          /** Date    : 30/4/2012       **/
+          /** Purpose : Commented previous Remark
+                        Added output field to preserve new line characters
+          /****************************************************/ -->
+<!--            {!Remark} -->
+              <apex:OutputField value="{!objRemark.Remark__c}"></apex:OutputField>
+           </div>
+         </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:outputPanel>
+    
+    <script>
+    <!-- This is for styling alternate rows of SummaryTable -->
+        function altRows(id)
+        {
+           // alert('hello'+id);
+            if(document.getElementsByTagName)
+            {  
+                var table = document.getElementById(id);  
+                var rows = table.getElementsByTagName("tr"); 
+                for(i = 1; i < rows.length; i++)
+                {  
+                    if(i % 2 == 0)
+                        rows[i].className = "DataTableEven";
+                    else
+                        rows[i].className = "DataTableOdd";
+                }
+            }
+        }
+        window.onload =   altRows('DataTable');
+    </script>
+</apex:component>

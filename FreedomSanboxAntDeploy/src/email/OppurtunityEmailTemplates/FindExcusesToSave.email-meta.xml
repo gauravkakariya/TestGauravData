@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>FindExcusesToSave</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>FindExcusesToSave</name>
+    <style>none</style>
+    <subject>FindExcusesToSave</subject>
+    <textOnly>Now, find excuses to save 
+
+Ranging from the time-tested bank fixed deposits to the so-called riskiest stock markets, the choices are aplenty if you decide to put your money to better use. 
+
+Savings is not just stuffing money into a mattress; it should earn a return. 
+
+Do you still remember the heady feeling when you received your first pay cheque and the way you spent every penny of it till you bought everything you wanted? 
+
+After the euphoria of club hopping, sumptuous eating outs and treating yourself to expensive clothes gradually dies down, most of us realise, “Oh God! What have I done with my money? I am close to being a pauper! I’m going to start saving from tomorrow”. But what is this saving all about?
+
+There is no exact definition for the word. There is one school of thought which believes that saving is just about stashing cash for a better tomorrow. For someone like Roshni, who works for an investment bank in Mumbai and is extremely frivolous with money, savings is trying to contain some unwanted spending. “Shopping during discount offers, reading a book in the store instead of buying it, taking public means of transport instead of auto rickshaw or filling my car with fuel, and sharing my room with more number of friends are alternatives I choose these days to stock up money”, she says. 
+
+But savings shouldn’t mean just stuffing your money into a mattress. Your savings should earn a return. This is the other school of thought which propagates the habit of “intelligent saving”. 
+
+This is where financial planning comes in handy. Ranging from the time-tested bank fixed deposits to the riskier stock markets, the choices are aplenty if you decide to put your money to better use. 
+
+The options 
+
+India is no doubt a country of savers, with household savings accounting for 24 per cent of the country’s GDP. However, whether those savings go into the right avenues is another question. 
+
+Statistics published by the Reserve Bank of India for 2007-08 reveal that when it comes to money, a good majority of India’s population prefer to play it safe. About 55 per cent of India’s total savings went into bank deposits. Insurance policies were the second most popular and accounted of 17 per cent. Only about 10.5 per cent of the entire savings goes into shares and debentures. 
+
+Over a year, the willingness to take chances with savings seems to have further reduced. When we interacted with a cross-section of people, we found that only one in six youngsters between the age 25 and 30 trusted their monies with the stock market. Even these people preferred the mutual funds route. 
+
+As many wanted to play it safe, they opted to park a part of their income in bank fixed deposits. Even here, the preference to public sector banks was higher when compared to others, including private sector banks. 
+
+ “Stock markets or mutual funds make sense if the investment will guarantee a handsome 15-20 per cent return without much interference. I stayed put in shares till the early part of 2008 and gradually shifting to bank deposits, post-May 2008. It was the fear of losing my capital that I was worried about then.” 
+
+When asked if he is tempted to re-enter the stock market, Rajeev appeared indecisive. While there are many like Rajeev, a few brave souls do exist. 
+
+“On days when I send my kid to the crèche, I feel bad that I’m not able to take care of her myself. I would feel the same way if I am to trust a mutual fund house with my money as well. I like to invest directly and made a killing when the going was good in the National Stock Exchange. When the markets tanked in March 2009, of course, I did take some loss, but a bit of intelligent investing has put me back into the green”. 
+
+True, there is no one-size-fits-all strategy for savings. Ideally, your savings package should depend on the ability to take risk with money, the time available with you to closely monitor your returns and taxation issues. 
+
+Do keep in mind the time value of money or the inflation factor, especially if you are putting your money in long-term plans such as deposits and insurance policies. 
+
+Pep up your imagination 
+
+A calculation of how much your investment will yield at the time of maturity is a must to make a wise decision. Take the case of term deposits. The inflation factor plays spoilsport. Though the principal money may remain intact, interest may look unappealing when adjusted for inflation. But why should I take on a risk or worry about inflation? Because if you are looking at a 10 or a 20 year horizon inflation will make a big difference to your kitty. 
+
+The recently published HSBC Future of Retirement report may have some pointers. It noted that while Indian do save a lot, they do not have retirement savings as a priority. The report says just about 12 per cent of India’s youthful population (taking the average age as 26 years) care to save for their retirement. 
+
+Whereas, thirty five per cent feel the need to save for their children. That may leave many of us underfunded for retirement, as according to the survey, formal pension arrangements cover only 13 per cent of the country’s paid employees, with a total of 284 million people without pension coverage. 
+
+There may be other long term goals for savers too. “I’m saving money, hoping that I’ll be able to buy a house in two years”, says Deepak Ramakrishnan who runs his start-up business. Suraj Sharma, who enjoys surprising his wife with jewellery, says he’s saving to spend on platinum jewellery for their wedding anniversary. 
+
+Whoever said being cautious with money could be boring!</textOnly>
+    <type>custom</type>
+</EmailTemplate>

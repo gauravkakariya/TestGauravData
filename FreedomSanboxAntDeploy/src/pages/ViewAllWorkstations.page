@@ -1,0 +1,47 @@
+<!-- 
+    Version     Version Author     Date           Comments
+    1.0         Anupam      27/12/2012         Added new column for Operations Member Team
+-->
+
+<apex:page controller="ViewWorkstationController" id="ViewAllWorkstations" action="{!Init}" tabStyle="Workstation__c" >
+<apex:pageMessages id="pgmsg"/>
+	<apex:form >
+		<apex:pageBlock title="All Workstations" >
+			<apex:outputLabel value="There is no any workstation present" id="ErrorMsg" rendered="{!Not(IF(lstWorkstations.size>0,true,false))}" style="font-size:20px; color:#FF0000; font-family: icon;  text-align: center;"/>
+				<apex:pageBlockTable id="tblId"  value="{!lstWorkstations}" var="workstation"  rendered="{!IF(lstWorkstations.size>0,true,false)}">
+					
+					<apex:column style="font-size:12px;">
+						<apex:commandLink action="{!Edit}" value="Edit" id="idEdit">
+							<apex:param name="Wid" value="{!workstation.Id}" assignTo="{!Wid}"/>
+						</apex:commandLink>
+					</apex:column>
+					
+					<apex:column headerValue="Financial Planner" value="{!workstation.Financial_Planner__c}" style="font-size:12px;"/>
+					
+					<apex:column headerValue="Location" value="{!workstation.Location__c}" style="font-size:12px;"/>
+					
+					<apex:column headerValue="Manager" value="{!workstation.Manager__c}" style="font-size:12px;"/>
+					
+					<apex:column headerValue="Business Developer" value="{!workstation.Business_Developer__c}" style="font-size:12px;"/>
+					
+					<apex:column headerValue="Compliance" value="{!workstation.Compliance__c}" style="font-size:12px;"/>
+					 
+					<apex:column headerValue="Tech" value="{!workstation.Tech__c}" style="font-size:12px;"/>
+					 
+					<apex:column headerValue="Member Engagement" value="{!workstation.Member_Engagement__c}" style="font-size:12px;"/>
+					
+					<apex:column headerValue="Operation Team Member" value="{!workstation.Operations__c}" style="font-size:12px;"/>
+					
+					<apex:column headerValue="Advisor" value="{!workstation.Advisory__c}" style="font-size:12px;"/>
+					 
+				</apex:pageBlockTable>
+				
+				<apex:pageBlockButtons location="bottom">
+					<apex:commandButton action="{!Close}" value="Close" />
+				</apex:pageBlockButtons><br/><br/>
+					
+				<apex:commandLink action="{!CreateWorkstation}" value="Create new Workstation" id="cmdlcreate"/>
+			
+	 	</apex:pageBlock>
+</apex:form>		
+</apex:page>

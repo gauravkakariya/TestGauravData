@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Official</letterhead>
+    <name>Ron Kaufman Event - Invite (clients)</name>
+    <style>freeForm</style>
+    <subject>Exclusive Invitation for a session with Mr. Ron Kaufman</subject>
+    <textOnly>Dear {!Account.Name}, 
+
+On behalf of Ffreedom Financial Planners &amp; in association with Gautam Ganglani of Right Selection Group &amp; Vikas Vij of The Ideas Exchange I would like to take this opportunity to invite you for an exclusive workshop conducted personally by Mr. Ron Kaufman, the world’s leading educator of Uplifting Customer Service Culture &amp; author of the book uplifting service. 
+
+We at Ffreedom strongly believe in the concept of Customer Service Culture &amp; hence bring to you a half day workshop scheduled for Friday, February 18th which will focus on  “Service Leadership”, the workshop is directed towards CEO’s, Directors &amp; Senior Management decision makers
+showing them how you can continue to spread the ‘uplifting service culture’ in their organizations.
+
+To give you an idea on what to expect here is a short high impact &amp;
+powerful video just released by Ron Kaufman.  Here it is for you http://www.ronkaufman.com/speaking/keynote-overview
+
+I am personally going to be attending this workshop &amp; I had you in mind and believe you would appreciate this opportunity, to come along as our VIP guests.
+
+Therefore kindly confirm to me if you will join me at the workshop
+that I am sincerely recommending. 
+
+I will be happy to register your name in the VIP Guest list.  
+
+Also here are the video links with a personal message from Ron
+for all of us on the events:
+
+The Service Leadership Workshop (Morning 9.00 am – 12.30 pm on Feb 18th):
+
+http://tinyurl.com/video-msg-from-RON-for-SLW&lt;br&gt;
+
+Looking forward to seeing you at the event,
+
+Regards 
+
+Sumeet Vaid 
+
+Founder &amp; CEO – Ffreedom Financial Planners</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,82 @@
+<apex:page controller="ProfilerOutputController" showHeader="false" sidebar="false">
+<style>
+  .divClass{
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:#FFFFFF url(/img/alohaSkin/grid_headerbg.gif) repeat-x scroll 0 bottom;
+    border-width:0 0 1px 1px;
+    color:#000000;
+    font-size:0.9em;
+    font-weight:bold;
+   
+    padding:5px 2px 4px 5px;
+     padding-left:40px;
+}
+</style>
+<apex:composition template="TabPage">
+<apex:define name="contents">
+    <apex:form id="form1">
+        <apex:pageBlock tabStyle="account" title="Profiler Questions Output" >
+                <apex:variable var="count" value="{!1}" /> 
+              <apex:pageBlockTable value="{!scorerList}" var="score" styleClass="HeaderClass" border="1" cellspacing="0" cellpadding="0" style="width:80%;">
+                  <apex:column headerValue="Sr.No." style="width:4%;" id="number" >
+                      <apex:outputText value="{0, number, ##,##0}" >
+                        <apex:param value="{!count}"/>
+                      </apex:outputText>
+                  </apex:column>
+                  <apex:column headerValue="Profile Question" style="width:45%;">
+                      <Apex:outputText value="{!score.ProfilerQuestion__r.Question__c}"></Apex:outputText>
+                  </apex:column>
+                  <apex:column headerValue="Score" style="width:6%;">
+                       <Apex:outputText value="{!score.Score__c}"  rendered="{!if(score.ProfilerQuestion__r.name=='PQ-04',false,true)}"></Apex:outputText>
+                       <!--<apex:inputText rendered="{!if(score.ProfilerQuestion__r.name=='PQ-04',true,false)}" style="width:20%;height:20%;"/>-->
+                      <apex:selectList value="{!delayReasonScore}" rendered="{!if(score.ProfilerQuestion__r.name=='PQ-04',true,false)}" multiselect="false" size="1" onchange="showTotalValue();">
+                          <apex:selectOptions value="{!ScoreOption}"></apex:selectOptions>
+                      </apex:selectList>
+                       <apex:variable value="{!count+1}" var="count"/>
+                  </apex:column>
+               <!--   <apex:column headerValue="Action" style="width:30%;">
+                       <Apex:outputText value="{!score.ProfilerQuestion__r.Action__c}"></Apex:outputText>
+                       <apex:variable value="{!count+1}" var="count"/>
+                  </apex:column>-->
+              </apex:pageBlockTable>
+              <apex:pageMessages ></apex:pageMessages>
+                <apex:actionFunction id="showtotal" name="showTotalValue" reRender="totalPanel"/>
+              <apex:outputPanel id="totalPanel" rendered="{!NOT(showTotalPanel)}">
+                  <div class="divClass" style="width:76%;">
+                      <apex:outputText value="Total"> </apex:outputText>
+                      <apex:outputText value="{!total}" style="padding-left:385px;"> </apex:outputText>
+                  </div><br/>
+                  <div class="divClass" style="width:76%;">
+                      <apex:outputText value="Cash Reserve Requirement"> </apex:outputText>
+                      <apex:outputText value="{!cashReserveRequirement} Months" style="padding-left:260px;"> </apex:outputText>
+                  </div><br/>
+                  <div class="divClass" style="width:76%;">
+                      <apex:outputText value="Overall Profile"> </apex:outputText>
+                      <apex:outputText value="{!profile}" style="padding-left:335px;"> </apex:outputText>
+                  </div>
+              </apex:outputPanel>    
+              <apex:outputPanel id="resultPanel" rendered="{!showTotalPanel}">
+                  <div class="divClass" style="width:76%;">
+                      <apex:outputText value="Total"> </apex:outputText>
+                      <apex:outputText value="{!total}" style="padding-left:385px;"> </apex:outputText>
+                  </div><br/> 
+                  <div class="divClass" style="width:76%;">
+                      <apex:outputText value="Cash Reserve Requirement"> </apex:outputText>
+                      <apex:outputText value="{!cashReserveRequirement} Months" style="padding-left:260px;"> </apex:outputText>
+                  </div><br/>
+                  <div class="divClass" style="width:76%;">
+                      <apex:outputText value="Overall Profile"> </apex:outputText>
+                      <apex:outputText value="{!profile}" style="padding-left:335px;"> </apex:outputText>
+                  </div>
+              </apex:outputPanel>
+              <apex:pageBlockButtons location="bottom" >
+                <apex:commandButton value="Save" action="{!Calculate}" reRender="resultPanel"/>
+              </apex:pageBlockButtons>
+        </apex:pageBlock>
+       
+    </apex:form>
+</apex:define>
+</apex:composition>
+</apex:page>

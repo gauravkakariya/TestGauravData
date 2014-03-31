@@ -1,0 +1,17 @@
+<apex:page showHeader="false" sidebar="false">
+   <apex:composition template="EventTemplate" >
+     <apex:define name="rightcontent">   
+     <br/>     <br/>
+  <span style="font:38px Brush Script MT;color:#0080FF;font-style:italic;padding-left:200px;">Thank You!!! </span>
+  <apex:outputPanel id="RegistrationConfirmPanel"  rendered="{!$CurrentPage.parameters.from='contactus'}">
+    <br/>   <br/><div style="font-size:14px;font-family:verdana;color:#000000;font-weight:normal;"><p>Thank you for showing interest in attending the Ffreedom Day Event.We shall be contacting you soon with regards to the Invite for the event.</p><br/>Meanwhile if you need any further information about The Ffreedom Day or about Ffreedom Financial Planners you can visit <a href="www.ffreedomday.in" target="_blank">www.ffreedomday.in</a> or <a href="www.ffreedom.in" target="_blank">www.ffreedom.in</a> respectively.<br/> Please feel free to contact us by email:<a href="www.gmail.com" target="_blank">contact@ffreedom.in</a> or call us at 022-4222-4333.<br/><br/> Looking forward to meeting you at the Ffreedom Day.<br/><br/><b>The Ffreedom Team.</b></div>
+  </apex:outputPanel>
+  
+  
+   <apex:outputPanel id="SubmitContactPanel"  rendered="{!$CurrentPage.parameters.from='registrationconfirm'}">
+  <br/>   <br/><div style="font-size:14px;font-family:verdana;color:#000000;font-weight:normal;"><p>Thank you for confirming your attendance for The Ffreedom Day to be held on the 22nd of August 2010.</p><br/><p>We have also sent an email confirmation along with the event itinerary &amp; other important details including direction to the venue.<b>[This has been sent to the email ID that you have provided us].</b></p><br/><p>Incase you have not received this email message, please feel free to contact us by email:<a href="www.gmail.com" target="_blank">contact@ffreedom.in</a> or call us at 022-4222-4333.</p><p><br/>Looking forward to meeting you at the Ffreedom Day.</p><br/><b>The Ffreedom Team.</b></div>
+  </apex:outputPanel>
+  
+   </apex:define>
+ </apex:composition>
+</apex:page>

@@ -1,0 +1,141 @@
+<!--  
+						Eternus Solutions
+                        Author  : Trupti Gaikwad
+                        Issue Id: FS0291
+                        Date    : 11/18/2011
+                        Purpose : Show Header for this page     			-->   
+
+<apex:page sidebar="false"  showheader="true" controller="PortfolioController">
+	<apex:composition template="PortalFinancialMgrTemp"> 
+		<apex:define name="rightcontent"> 
+			<a href="Portal_PrintSummaryReport" class="printreport" target="_blank">
+				<apex:outputText rendered="{!(SummaryDataList.size != 0)}">Print Report</apex:outputText>
+			</a>
+			<br/><br/>
+		
+			<apex:outputPanel style="font-size:bold;" rendered="{!(SummaryDataList.size = 0) && (AllChildSummaryRecords.size = 0)}">
+				Currently you do not have any Investments
+			</apex:outputPanel>
+			<div  class="scrollSection" style="font-size:11px;">
+				<apex:outputPanel rendered="{!(SummaryDataList.size != 0) || (AllChildSummaryRecords.size != 0)}">
+					<table border="1" class="mainTable" width="900px;">
+						<tr>
+							<td>
+								<table width="1050px;" height="50" >
+									<!----HEADERS START-->
+									<tr class="lightPistaGreen" style="text-align:center;">
+										<td width="12">Scheme Name</td>
+										<td width="8%">Folio No.</td>
+										<td width="4%">Type</td>
+										<td width="10%">Purchase Amt</td>
+										<td width="10%">STP/Switch</td>
+										<td width="9%">Dividend</td>
+										<td width="9%">Dividend Reinvestment</td>
+										<td width="10%">Current Value</td>
+										
+										<td width="4%">Units</td>
+										
+										<td width="4%">NAV</td>
+										<td width="6%">NAV Date</td>
+										<td width="6%">Net Gain</td>
+										<td width="4%">Absolute Returns</td>
+										<td width="4%">CAGR</td>
+										<!--- <td style="width:60px;">Annualized Returns</td>--->
+									</tr>
+								</table>
+							        
+								<table width="1050px;" border="1" style="background-color:#FFFFFF">
+									<!----HEADERS END-->
+									<tr  class="accountName">
+										<td colspan="13" ><apex:outputText value="{!Account.Name}"/></td>
+									</tr>
+									<apex:repeat value="{!SummaryDataList}" var="allData" >    
+										<tr>
+											<td class="boldStyle" Style="text-align:left;" colspan="13">
+												<apex:outputText value="{!allData.asset_Class}"></apex:outputText>
+											</td>
+										</tr>
+										<tr>
+											<td> 
+												<table width="1050px;" cellspacing="5px;" border="1">
+													<apex:repeat value="{!allData.portfolioList}" var="purchase" >
+														<tr >
+															<td width="12%" style="text-align:left"><apex:outputField value="{!purchase.Scheme_Scrip_Name__c}"/> </td>
+															<td width="8%" style="text-align:left"><apex:outputField value="{!purchase.Folio_Number__c}"/> </td>
+															<td width="4%" style="text-align:left"><apex:outputField value="{!purchase.Transaction_Type__c}"/> </td>
+															<td width="10%" style="text-align:right"><apex:outputField value="{!purchase.Purchase_Amount__c}"/> </td>
+															<td width="10%" style="text-align:right"><apex:outputField value="{!purchase.STP_Switch__c}"/> </td>
+															<td width="9%" style="text-align:right"><apex:outputField value="{!purchase.Dividend__c}"/> </td>
+															<td width="9%" style="text-align:right"><apex:outputField value="{!purchase.Dividend_Reinvested__c}"/> </td>
+															<td width="10%" style="text-align:right"><apex:outputField value="{!purchase.Current_Value__c}"/> </td>
+															
+															<td width="4%" style="text-align:right"><apex:outputField value="{!purchase.Units_Quanitity__c}"/> </td>
+															<!--
+															Commented by Mahesh to show Current_Price__c instead of Nav_p__c in NAV column
+															<td width="5%" style="text-align:center"><apex:outputField value="{!purchase.Nav_p__c}"/> </td>
+															-->
+															<td width="4%" style="text-align:center"><apex:outputField value="{!purchase.Current_Price__c}"/> </td>
+															<td width="6%" style="text-align:center"><apex:outputField value="{!purchase.Date__c}"/> </td>
+															<td width="6%" style="text-align:right"><apex:outputField value="{!purchase.Gain__c}"/> </td>
+															<td width="4%" style="text-align:right"><apex:outputField value="{!purchase.Absolute_Ret__c}"/> </td>
+															<td width="4%" style="text-align:right"><apex:outputField value="{!purchase.Annualized_Ret__c}"/> </td>
+														</tr>
+													</apex:repeat>
+												</table>
+											</td>
+										</tr>
+									</apex:repeat> 
+								</table>
+							</td>
+						</tr>
+					</table>
+				</apex:outputPanel>
+				<br/><br/>
+				
+				<apex:outputPanel rendered="{!(AllChildSummaryRecords.size != 0)}">
+					<table border="1" width="1050px;" class="mainTable" cellspacing="5px;">
+						<apex:repeat value="{!AllChildSummaryRecords}" var="OuterWrapper">
+							<tr class="accountName">
+								<td colspan="14" style="text-align:left;">  
+									<apex:outputText value="{!OuterWrapper.childEntity.Name}"/><br/>
+								</td>
+							</tr>
+							<apex:repeat value="{!OuterWrapper.summaryReportWrapperList}" var="innerWrapper">
+								<tr>
+									<td colspan="14" style="text-align:left;">
+										<apex:outputText style="font-weight:bold;text-align:left;" value="{!innerWrapper.asset_Class}"/>
+									</td>
+								</tr>
+								<tr><td></td></tr>
+								<apex:repeat value="{!innerWrapper.portfolioList}" var="rec">
+									<tr>
+										<td width="12%" style="text-align:left"><apex:outputField value="{!rec.Scheme_Scrip_Name__c}"/> </td>
+										<td width="8%" style="text-align:left"><apex:outputField value="{!rec.Folio_Number__c}"/> </td>
+										<td width="4%" style="text-align:left"><apex:outputField value="{!rec.Transaction_Type__c}"/> </td>
+										<td width="10%" style="text-align:right" ><apex:outputField value="{!rec.Purchase_Amount__c}"/> </td>
+										<td  width="10%" style="text-align:right"><apex:outputField value="{!rec.STP_Switch__c}"/> </td>
+										<td  width="9%" style="text-align:right"><apex:outputField value="{!rec.Dividend__c}"/> </td>
+										<td  width="9%" style="text-align:right"><apex:outputField value="{!rec.Dividend_Reinvested__c}"/> </td>
+										<td width="10%" style="text-align:right"><apex:outputField value="{!rec.Current_Value__c}"/> </td>
+										
+										<td width="4%" style="text-align:right"><apex:outputField value="{!rec.Units_Quanitity__c}"/> </td>
+										<!-- 
+										Commented by Mahesh to show Current_Price__c instead of Nav_p__c in NAV column
+										<td width="5%" style="text-align:center"><apex:outputField value="{!rec.Nav_p__c}"/> </td> 
+										-->
+										<td width="4%" style="text-align:center"><apex:outputField value="{!rec.Current_Price__c}"/> </td>
+										<td width="6%" style="text-align:center"><apex:outputField value="{!rec.Date__c}"/> </td>
+										<td width="6%" style="text-align:right"><apex:outputField value="{!rec.Gain__c}"/> </td>
+										<td width="4%" style="text-align:right"><apex:outputField value="{!rec.Absolute_Ret__c}"/> </td>
+										<td width="4%" style="text-align:right"><apex:outputField value="{!rec.Annualized_Ret__c}"/> </td>
+									</tr>
+								</apex:repeat>
+								<tr><td></td></tr>
+							</apex:repeat>
+						</apex:repeat>
+					</table>
+				</apex:outputPanel>    
+			</div>
+		</apex:define>
+	</apex:composition>
+</apex:page>

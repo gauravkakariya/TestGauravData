@@ -1,0 +1,29 @@
+<!doctype HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <script type="text/javascript" src="/js/functions.js"></script>
+    <script src="/soap/ajax/12.0/connection.js"></script>
+    <script type="text/javascript">
+        function readit(){
+            var r = "{!VCSEmail__c.Read__c}";
+            // mark as read the email if not
+            if (r == "0"){
+                var t = new sforce.SObject("VCSEmail__c");
+                t.Id = "{!VCSEmail__c.Id}";
+                t.Read__c = true;
+                sforce.connection.update([t]);
+            }
+        }
+    </script>
+</head>
+
+<body onload=readit()>
+
+{!VCSEmail__c.Html_Body__c}
+<hr/>
+{!VCSEmail__c.Text_Body__c}
+
+To read the email content use the Text Body field in the page layout.<br>
+This will mark the email as read.
+</body>
+</html>

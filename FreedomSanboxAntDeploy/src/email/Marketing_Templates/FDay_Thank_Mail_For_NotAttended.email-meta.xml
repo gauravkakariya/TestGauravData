@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Letterhead</letterhead>
+    <name>FDay Thank  Mail For NotAttended</name>
+    <style>freeForm</style>
+    <subject>Ffreedom Day Updates</subject>
+    <textOnly>Dear {!Registration__c.Name},
+
+The Ffreedom Day went really well &amp; it was really inspiring to have the whole Ffreedom Family together, along with the speakers who gave Ffreedom Talks which were not only Inspiring people but Inspiring Action.
+
+The topics for the Ffreedom Day were on the outcomes of Financial Planning i.e. Happiness, Dreams &amp; Financial Freedom.
+
+To keep you updated about the Happenings at the Ffreedom day, we will soon share with you the Pictures &amp; Videos of the Ffreedom Day, so that you don’t miss out on the thought provoking talks &amp; fun we had at the Ffreedom Day.
+
+You can also be in touch with us through social networking websites.
+
+www.facebook.com/Ffreedom
+
+www.twitter.com/_Ffreedom
+
+We hope to have many such Ffreedom Days &amp; we look forward to be together with you.
+
+Regards,
+Ffreedom Team.</textOnly>
+    <type>html</type>
+</EmailTemplate>

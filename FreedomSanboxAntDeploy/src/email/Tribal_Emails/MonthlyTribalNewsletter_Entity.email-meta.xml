@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Updated Newsletter for the Month of  Aug  2012</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Ffreedom_Official</letterhead>
+    <name>MonthlyTribalNewsletter_Entity</name>
+    <style>newsletter</style>
+    <subject>Ffundamental –May 2013</subject>
+    <textOnly>Click here to view Newsletter on our website
+
+
+Hi {!Account.FirstName}
+
+Inflation rate for 4.9% last month - so says the Government of India. Is that good news? Will products and services become cheaper? Will interest rates drop? Will loan EMIs come down? What all does that mean?
+
+
+We don&apos;t know yet whether loan rates may drop and whether your EMIs will actually come down. But what we know is that there is a buzz around the growth story.
+
+
+Last month we spoke about buying property and why it might make sense. This month we have an expert report reproduced here about house property demand - supply and prices.
+
+
+Even if property purchase gets interesting and loans get cheaper - will you actually get that loan? Check out the article on CIBIL scores and how they may impact your ability to achieve your goals. And don&apos;t miss the market commentary and our other regular stories.
+
+
+Summer is peaking, stay hydrated and take care. We&apos;ll catch up soon.
+
+
+Regards
+
+
+Bhuvana Shreeram
+
+Head - Member Success Team
+
+MARKET COMMENTARY
+
+The month of April went quite well for the markets and the  nifty gained close to 4.36%. Markets were expecting some positive news from the  RBI and hence it rallied from the lows of 5477 to close the month at 5930. The  RBI obliged the markets and cut the rate by 25 basis points. The Repo rate now  stands at 7.25%. On the international front the Dow Jones rallied to its  all-time highs and continued to remain strong throughout the month. Dow Jones  has generally been a leading indicator as far as stocks are concerned. Hence we  can expect our indices to continue its positive performance for few more  months. Coming back to  India the common man did not gain much from the RBI’s move as the bankers are  not ready to pass on the benefits of the rate cut to the consumers. So the  common will continue to service the loan at the same interest rate. In an ideal...
+
+
+MY FINANCIAL PLANNER
+
+Do you know you will get a loan?
+&quot;For every disciplined effort, there is a multiple reward,&quot; said American motivational speaker and author Jim Rohn. This is true in every aspect of life, more so when it comes to fulfilling our life’s goals and dreams. It takes more than just a set of guidelines to get you there, but following it perfectly can ensure its success.  The single most important step to make your financial plan successful is being disciplined in your approach – and the onus for this lies completely with you. Unfortunately, this is also the single most common mistake that people generally make.  Disciplined investing allows one to take advantage of long term regular investment, over a period of time, resulting in a sustainable increase in asset values. For e.g if you consistently invest in your savings account, you will notice a considerable augmentation in your savings. To...
+
+
+HOUSEVIEW
+
+Mumbai’s residential realty bubble may burst anytime now
+It has been about 2-3 years now since the sudden surge in new apartment prices across Mumbai and its peripheral areas. What makes this surge in prices unique is that unlike the previous years (2003-08) the rise in property prices has not been accompanied by a rise in GDP and income growth. In this article, I point-out several indicators that make a strong case for a sharp correction in residential realty prices in Mumbai any time over the next 6-18 months. The disconnect between apartment prices and income levels could well be at an all-time high in Mumbai at present. A comparison of apartment prices and income levels in Mumbai and New York, both economic power-houses of their respective countries, provides some food for thought. The house to income ratio in Mumbai is an astounding 54X compared to New York’s 26X. And this is after...
+
+
+TOP NEWS OF THE MONTH
+
+NATIONAL NEWS
+Is money outflow affecting your equity fund&apos;s performance?
+Advantages of investing in index funds and ETFs
+Why investors refuse to pay
+You Dont Have to Wait till October to Buy Insurance
+Health cover ensures emergencies don&apos;t erode your corpus
+
+INTERNATIONAL NEWS
+Get Off the Beaten Path for Vacation Deals
+Rate Risks for Target-Date Funds
+Insurance Can Be Worth the Money
+Are you paying too much tax on your savings?
+Big Four accountants blast tax scheme claims
+
+EPF scores over NPS
+Bangalore-based Dirk Lewis, 30, who works for a leading information technology services company, plans to subscribe to the National Pension System (NPS) from the next financial year (2014-15). His company offers the NPS option to its employees, over and above the mandatory Employees&apos; Provident Fund (EPF) provision. NPS would help me save more on the tax front. Also, knowing myself, I would...
+Good time to lock into tax-free bonds at 7%-plus
+With the fiscal year almost coming to an end, there is a clamour to raise money through last-minute bond issues. Dredging Corp. of India Ltd, Jawaharlal Nehru Port Trust (JNPT) and National Housing Bank (NHB) are first-timers raising money through secured, redeemable, non-convertible and tax-free debentures....
+Family finances: Savvy investments call for minor changes
+The Reddys present a welcome change from the families that we feature in this section. While most people shy away from equity, the Reddys have relied on it to realise their goals. They not only have a good asset allocation, but also realistic goals, which makes their portfolio a financial planner&apos;s delight....
+
+
+WATCH OUR VIDEOS
+
+Click here to view CNBC Aawaz
+16380 CNBC Markets &amp; Macros
+March 4, 2013 at YouTube
+16984 CNBC Markets &amp; Macros
+March 13, 2013 at YouTube
+Why dormant account, policies should be closed ASAP
+March 26, 2013 at Moneycontrol
+
+Ffreedom Financial Planners
+
+Follow us on
+Watch us on
+
+506 / 507, Morya Landmark II, Near Infinity Mall, Link Road, Andheri (W), Mumbai 400 053
+Boardline: +91 22 4222 4333  |   Fax: +91 22 4222 4332  |  Email: contact@ffreedom.in | www.ffreedom.in
+Disclaimer: This communication from Ffreedom provides general information existing at the time of preparation. This mailer is intended as a news update and Ffreedom Financial Planners neither assumes nor accepts any responsibility for any loss arising to any person acting or refraining from acting as a result of any material contained in this communication. It is recommended that professional advice be taken based on the specific facts and circumstances. This communication does not substitute the need to refer to the original pronouncements.
+
+Click here to Unsubscribe the Newsletter in Future</textOnly>
+    <type>html</type>
+</EmailTemplate>

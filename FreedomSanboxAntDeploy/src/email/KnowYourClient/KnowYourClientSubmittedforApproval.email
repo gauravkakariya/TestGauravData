@@ -1,0 +1,18 @@
+{!Receiving_User.FirstName}
+{!User.FirstName} {!User.LastName} has submitted a Know Your Client form on behalf of {!Know_Your_Client__c.Client__c} that requires your approval.
+
+Know Your Client Name: {!Know_Your_Client__c.Name}
+Client Rating: {!Account.Rating}
+Client Type: {!Account.Type}
+
+================================================================
+You can approve or reject this request from your desktop email program or mobile device:
+  1. Click the Reply button
+  2. Type the word APPROVE or REJECT in the first line of the reply
+  3. Click Send
+================================================================
+
+
+Click here: {!ApprovalRequest.Internal_URL}
+
+Please note that the approval history and any comments you enter will be visible to other employees.

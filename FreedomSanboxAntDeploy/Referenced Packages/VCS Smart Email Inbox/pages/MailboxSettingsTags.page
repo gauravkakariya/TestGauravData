@@ -1,0 +1,127 @@
+<apex:page standardController="VCSSA__VCS_MailBox_Config__c" extensions="VCSSA.MailboxSettingsController" showheader="true" sidebar="false" action="{!init}" standardStylesheets="true" cache="false">
+
+<apex:variable var="url_inboxpage"  value="{!URLFOR($Page.VCSSA__Inbox, null)}" />
+<apex:variable var="url_back"  value="{! if($CurrentPage.parameters.inboxurl!='',$CurrentPage.parameters.inboxurl,url_inboxpage) }" />
+
+<apex:pageBlock >
+<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td width="40">
+    <a href="{!url_inboxpage}"><img src="{!URLFOR($Resource.logosmart, null)}" align="top"/></a>
+</td><td>
+    VCS Smart Email Inbox - <b>Manage Tags</b>
+    <div style="padding-top: 5px;"><small>{!$User.FirstName} {!$User.LastName} ({!$User.Email})</small></div>
+</td>
+<td align="right">
+    <div style="margin-top: 5px;">
+        <a href="{!url_inboxpage}">Inbox</a>
+    </div>
+</td>
+</tr></table>
+</apex:pageBlock>
+
+
+<apex:pageMessages />
+<apex:form >
+<apex:pageBlock title="Tags">
+    <!-- BUTTONS -->
+    <apex:pageBlockButtons >
+        <apex:commandButton action="{!saveUserTags}" value="Update tags" styleClass="btn"/>
+ 		<apex:commandButton action="{!cancel1}" value="Back to mailbox" immediate="true" onclick="top.location.href='{!url_inboxpage}';" />
+    </apex:pageBlockButtons>                        
+    
+    <apex:pageBlockSection showHeader="false" title="Tags" columns="1" collapsible="false">
+        <apex:pageBlockSectionItem >
+            <apex:pageBlockTable value="{!tags}" var="t">
+                <apex:column title="Delete">
+                    <apex:facet name="header">Delete</apex:facet>
+                    <apex:inputCheckbox id="selected" value="{!t.selected}" onclick="if(this.checked) return confirm('Are you sure you want to mark this tag for deletion?'); return true;"/>
+                </apex:column>
+                <apex:column title="Name" id="tagname" value="{!t.tag}" style="{!if(t.tagcolor!='', 'background-color: #'+t.tagcolor, '')}" width="20%">
+                    <apex:facet name="header">Tag Name</apex:facet>
+                </apex:column>
+                <apex:column title="Action" style="align:right" width="80%">
+                    <apex:facet name="header">Color</apex:facet>
+                    <apex:inputHidden id="tagColorIdx" value="{!t.tagColorIdx}"/>
+                    <a href="#" onclick="picktagcolor('{!substitute(substitute(t.tag,'\"','\\\"'),'\'','\\\'')}','{!$Component.tagname}','{!$Component.tagColorIdx}',event);return false;">color</a> &nbsp; &nbsp;
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlockSectionItem>
+        
+        <apex:pageBlockSectionItem >
+            <apex:panelGrid columns="2" id="theGrid"> 
+                <apex:outputtext value="Create new tag" styleClass="labelCol first"/>
+                <apex:outputtext value=""/>
+                <apex:inputText id="newtag" value="{!newtag.tag}"/>
+                 &nbsp; &nbsp;<a href="#" onclick="picktagcolor('/*new*/','{!$Component.newtag}','{!$Component.newtagColorIdx}',event);return false;">color</a> &nbsp; &nbsp;
+                <apex:inputHidden id="newtagColorIdx" value="{!newtag.tagColorIdx}"/>
+            </apex:panelGrid>
+        </apex:pageBlockSectionItem>
+    </apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+
+<!-- ================================================= TAGS =================================================================== -->
+<script language="javascript1.2">
+        var picktagdata={}
+        function picktagcolor(tid, vid, hid, e) {
+            picktagdata.tid = tid;
+            picktagdata.vid = document.getElementById(vid);
+            picktagdata.hid = document.getElementById(hid);
+            var tt = document.getElementById('picktagcolor');
+            tt.style.display='block';
+            var height = tt.offsetHeight;
+            var left = 0;
+            var u = e.pageY;
+            var l = e.pageX;
+            tt.style.top = (u - height) + 'px';
+            tt.style.left = (l + left) + 'px';
+        }
+        
+        function tagcolor(color,colorno) {
+            if(picktagdata.vid) {
+                if(colorno) {
+                    picktagdata.vid.style._prev_backgroundColor = picktagdata.vid.style.backgroundColor;
+                    picktagdata.vid.style.backgroundColor = '#'+color;
+                    picktagdata.hid.value = colorno;
+                }else{
+                    picktagdata.vid.style.backgroundColor = picktagdata.vid.style._prev_backgroundColor;
+                    picktagdata.hid.value = '';
+                }
+            }
+            picktagdata={}
+            var tt = document.getElementById('picktagcolor');
+            tt.style.display='none';
+        }
+            
+</script>
+            <div id="picktagcolor" style="display: none; position: absolute;">
+            <table border="0" cellpadding="1" cellspacing="1" style="background-color: white; border: 2px outset black;">
+            <tbody><tr>
+            <td bgcolor="#c25454"><a href="javascript:tagcolor('C25454',1);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#c28b54"><a href="javascript:tagcolor('C28B54',2);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#c2c254"><a href="javascript:tagcolor('C2C254',3);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#8bc254"><a href="javascript:tagcolor('8BC254',4);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#54c254"><a href="javascript:tagcolor('54C254',5);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td></tr><tr>
+            <td bgcolor="#c2548b"><a href="javascript:tagcolor('C2548B',6);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#9c7954"><a href="javascript:tagcolor('9C7954',7);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#8b8b54"><a href="javascript:tagcolor('8B8B54',8);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#799c54"><a href="javascript:tagcolor('799C54',9);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#549c79"><a href="javascript:tagcolor('549C79',10);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td></tr><tr>
+            <td bgcolor="#c254c2"><a href="javascript:tagcolor('C254C2',11);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#9c5479"><a href="javascript:tagcolor('9C5479',12);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#8b548b"><a href="javascript:tagcolor('8B548B',13);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#54c28b"><a href="javascript:tagcolor('54C28B',14);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#548b8b"><a href="javascript:tagcolor('548B8B',15);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td></tr><tr>
+            <td bgcolor="#8b54c2"><a href="javascript:tagcolor('8B54C2',16);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#79549c"><a href="javascript:tagcolor('79549C',17);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#5454c2"><a href="javascript:tagcolor('5454C2',18);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#548bc2"><a href="javascript:tagcolor('548BC2',19);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#54799c"><a href="javascript:tagcolor('54799C',20);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td></tr><tr>
+            <td bgcolor="#54c2c2"><a href="javascript:tagcolor('54C2C2',21);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#aaaaaa"><a href="javascript:tagcolor('AAAAAA',22);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#666666"><a href="javascript:tagcolor('666666',23);"><img alt="" src="/s.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#ffffff"><a href="javascript:tagcolor('FFFFFF',0);"><img alt="transparent color" src="/img/transColorImage20.gif" border="0" height="20" width="20"/></a></td>
+            <td bgcolor="#ffffff"><a href="javascript:tagcolor('FFFFFF',0);"><img alt="transparent color" src="/img/transColorImage20.gif" border="0" height="20" width="20"/></a></td>
+            </tr>
+            </tbody></table>
+            </div>
+</apex:page>

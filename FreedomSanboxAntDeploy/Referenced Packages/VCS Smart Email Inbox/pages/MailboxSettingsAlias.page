@@ -1,0 +1,58 @@
+<apex:page standardController="VCSSA__VCS_MailBox_Config__c" extensions="VCSSA.MailboxSettingsController" showheader="false" sidebar="false" action="{!init}" standardStylesheets="true" cache="false">
+
+	<apex:form id="frm">
+		<apex:pageBlock title="{!labels.userInboxes}">
+				<!-- BUTTONS -->
+				<apex:pageBlockButtons >
+					<apex:commandButton action="{!saveUserInboxes}" value="{!labels.updateAlias}" styleClass="btn"/>
+					<apex:commandButton action="{!cancel1}" value="Administrator Alias Management" immediate="true" onclick="top.location.href='{!URLFOR($Action.User_Inbox__c.List,$ObjectType.User_Inbox__c)}'; return false;" rendered="{!IsAdministrator}"/>
+				</apex:pageBlockButtons>
+				
+				<apex:pageBlockSection showHeader="false" title="{!labels.userInboxes}" columns="1" collapsible="false">
+					<apex:pageBlockSectionItem >
+						<apex:pageBlockTable value="{!userInboxes}" var="bean">
+							<apex:column >
+	    						<apex:facet name="header">{!labels.userInboxName}</apex:facet>
+								<apex:inputField value="{!bean.inbox.name}" required="true"/>
+	    					</apex:column>
+	    					<apex:column >
+	    						<apex:facet name="header">{!labels.displayName}</apex:facet>
+								<apex:inputField value="{!bean.inbox.VCSSA__Display_Name__c}"/>
+	    					</apex:column>
+	    					<apex:column >
+	    						<apex:facet name="header">{!labels.emailAddressLbl}</apex:facet>
+								<apex:inputField value="{!bean.inbox.VCSSA__Email__c}"/>
+	    					</apex:column>
+	    					<apex:column title="{!labels.enabled}">
+	    						<apex:facet name="header">{!labels.enabled}</apex:facet>
+								<apex:inputField value="{!bean.inbox.VCSSA__Active__c}" rendered="{!bean.allowEditActive}" onclick="if(!this.checked){return confirm('{!JSINHTMLENCODE(labels.userInboxesConfirmDisable)}');}else{return true;}"/>
+								<apex:image id="activeImg" value="{!bean.activeImg}" rendered="{!not(bean.allowEditActive)}" title="{!IF(bean.inbox.VCSSA__Active__c,labels.enabled,labels.disabled)}"/>
+	    					</apex:column>
+						</apex:pageBlockTable>
+					</apex:pageBlockSectionItem>
+					
+					<apex:pageBlockSectionItem >
+						<apex:panelGrid columns="1" id="theGrid2">
+							<apex:outputPanel id="thetitle">
+								<apex:outputtext value="{!labels.createNewAlias}" styleClass="labelCol first"/>
+							</apex:outputPanel>
+							<apex:outputPanel id="theform">
+								<apex:panelGrid columns="3" id="formGrid" cellpadding="3">
+									<apex:outputtext value="{!labels.userInboxName}"/>
+									<apex:outputtext value="{!labels.displayName}"/>
+									<apex:outputtext value="{!labels.emailAddressLbl}"/>
+									<apex:inputField value="{!newUserInbox.inbox.name}" required="false"/>
+									<apex:inputField value="{!newUserInbox.inbox.VCSSA__Display_Name__c}"/>
+									<apex:inputText value="{!newUserInbox.inbox.VCSSA__Email__c}"/>
+								</apex:panelGrid>
+							</apex:outputPanel>
+							<apex:outputPanel id="thenote">
+								<apex:outputtext value="{!labels.createNewAliasNote}" styleClass="labelCol first"/>
+							</apex:outputPanel>
+						</apex:panelGrid>
+					</apex:pageBlockSectionItem>
+					
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+	</apex:form>
+</apex:page>

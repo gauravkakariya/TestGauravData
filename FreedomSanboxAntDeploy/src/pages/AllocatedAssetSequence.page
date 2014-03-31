@@ -1,0 +1,48 @@
+<apex:page controller="AllocatedAssetSequenceController" showHeader="false" sidebar="false">
+	<apex:sectionHeader title=" Asset Allocations" />
+	<apex:pageMessages id="messages"/>
+	<apex:form >
+		<apex:pageBlock title="Allocation Order" id="pageBlockId">
+			<script>
+				function populateParent()
+			    {
+			    	var isCheck = '{!strOncomplete}'; 
+			    	if(isCheck == 'yes')
+			    	{
+			    		//alert('If :'+'{!strOncomplete}');
+			    		return top.window.opener.closeWindow();
+			    	}
+			    	else
+			    	{
+			    		//alert('else :'+'{!strOncomplete}');
+			    		return false;
+			    	}
+			        	
+			        //return false;
+			    }
+			</script>
+			<apex:pageBlockButtons >
+				<apex:commandButton value="Save" action="{!saveOrder}" rerender="pageBlockId,messages" status="st" oncomplete="return populateParent();"/>
+				<apex:actionStatus id="st"> 
+					<apex:facet name="start">
+						<apex:image value="/img/loading.gif"/>
+					</apex:facet>
+		       </apex:actionStatus>
+			</apex:pageBlockButtons>
+			<apex:pageBlockTable value="{!lstAssetSelection}" var="rec">
+				<apex:column headerValue="Asset">
+					{!rec.assetName}
+				</apex:column>
+				<apex:column headerValue="Owner"> 
+					{!rec.entityName}
+				</apex:column>
+				<apex:column headerValue="Allocation Order"> 
+<!-- 					<apex:inputText value="{!rec.allocationSequence}"/> -->
+					<apex:selectList value="{!rec.allocationSequence}" size="1" required="true">
+				    	<apex:selectOptions value="{!orderList}"/>
+				    </apex:selectList>
+				</apex:column>
+			</apex:pageBlockTable>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

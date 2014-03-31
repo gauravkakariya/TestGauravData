@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Alternatives to FDs</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Alternatives To FD</name>
+    <style>none</style>
+    <subject>Alternatives to FDs</subject>
+    <textOnly>Alternatives to FDs
+ 
+For many of us who felt that the bank fixed deposit is the beginning and end of our debt investments, here are a few options that can be considered to maximise the returns on one’s debt investments. 
+
+
+Locking into debt instruments with longer maturity periods would help deliver higher yields. 
+
+
+Most investment products have delivered negative returns in recent times. And, investors are sitting tight on cash, not knowing where to invest. Given this scenario, a quick look at various debt instruments which seem attractive at this stage. 
+
+
+Income Funds 
+
+
+
+Income funds are debt funds that primarily invest in bonds, debentures, Government securities and short-term instruments, such as commercial papers and repos. They invest in debt instruments of various maturity periods. 
+
+
+Short-term income funds normally invest in bonds that mature within one year and long-term funds may go for maturities of up to even 15 years.
+
+
+An income fund’s performance is in inverse relation to the interest rate movement. This is because when interest rates decline, bonds will command a premium, because it will continue to earn interest at a rate higher than the market rate.
+
+
+Hence, there would be a capital appreciation on the face value of the bond. The vice-versa could happen if interest rates go up. 
+
+
+The current anticipated downtrend in interest rates is a good opportunity for investors to allocate a portion of the portfolio to this product. The funds are highly prone to interest rate risk, though in the long-time horizon, it may iron out the risk. 
+
+
+In the shorter term, one would see heightened interest rate volatility and, therefore, one needs to understand the interest rate dynamics to stay invested in income funds. 
+
+
+Given that long-term income funds are prone to interest rate risk, we suggest one does not go overboard on these funds; on the higher side one could have an exposure of about 25 per cent of overall debt investments at this point of time.
+
+
+Gilt Funds 
+
+
+The gilt funds protect investors from default risk, as the investments are made in Government securities. The RBI provides liquidity support to gilt funds by way of reverse repurchase agreements (reverse repos). 
+
+
+The quantum of liquidity support on any day is up to 20 per cent of the outstanding stock of Government securities, including treasury bills, held by the gilt funds as at the end of the previous working day. 
+
+
+Hence, despite the fact that one has the option of directly investing in Government of India or RBI bonds; lower taxes and higher liquidity make the Gilt Funds an attractive option. 
+
+
+Locking into debt instruments with longer maturity periods would help deliver higher yields. 
+
+
+As interest rates cool off, the yield of these gilt funds could move northwards. Short-term gilt funds could also be used. 
+
+
+There is lower interest rate risk on short-term gilt funds, since they would predominantly hold short-term Government bonds. One can consider a combination of short- and long-term gilt funds in one’s portfolio.
+
+
+FMPs &amp; FDs 
+
+
+FMPs are closed-ended debt funds that buy bonds/debentures and other debt instruments and hold them to maturity. 
+They aim at generating returns that are indicated at the time of launching the scheme. FMPs are the closest to fixed deposits and are for a specified term. 
+The key behind choosing FMPs over FDs is the tax efficiency. Appreciation in the NAV of the debt funds are treated as capital gains. For periods of over 1 year, it is treated as long-term capital gain. 
+
+
+Otherwise, it is treated as short-term capital gain. Long-term capital gains are taxed at 20 per cent after indexing (for cost inflation index) or 10 per cent flat. 
+The investor can choose the lower of the two options and, hence, the maximum tax one pays is 10 per cent. FD returns are treated as other income and taxed at normal rates, which could be as high as 33.99 per cent, irrespective of the deposit term. 
+
+
+FMPs in the short-term also score better with dividend distribution tax (DDT) applicable at 14.16 per cent (benefit of 19.83 per cent). 
+
+
+Substantially, lower taxes could result in significantly better yields of FMPs and debt mutual funds for an investor at the higher tax brackets.
+
+
+For someone who does not fall within the tax bracket, FDs could not get better with the surge in interest rates; this should be an obvious option. 
+
+
+However, for someone who falls well within the purview of higher tax slabs, FMPs are a better option due to their tax efficiency. 
+
+
+In fact, there are FMPs that invest in bank deposits, which are a good option for a low-risk investor. Since there is no interest rate risk, one can use FMPs aggressively. 
+
+
+PPF and post-office schemes 
+
+
+When you look at low-risk debt investments, one cannot ignore PPF which gives assured tax-free returns. 
+
+
+With a return of 8 per cent, the avenue remains in the limelight, irrespective of new entrants in the debt gamut. The only damper is the longer term (minimum of 15 years). 
+
+
+Post Office Schemes have had fanatics, especially among the aged investors. Monthly Income schemes , with a maturity period of 6 years and returns of around 8 per cent, attract many investors. 
+
+
+However, a major drawback of the scheme is that the returns herein are taxable and, hence, one is left with a meagre 5.28 per cent (post-tax of 33.99 per cent in highest tax bracket).
+
+
+A last word 
+
+
+For many of us who felt that the bank fixed deposit is the beginning and end of our debt investments, the options discussed can be considered in order to maximise the returns on one’s debt investments. 
+
+
+Debt is definitely an option to look at from a short-medium-term perspective. However, remember not to go all debt; continue to allocate a portion of your portfolio to diversified equity — the best investments happen when the past performance looks the worst.</textOnly>
+    <type>custom</type>
+</EmailTemplate>
