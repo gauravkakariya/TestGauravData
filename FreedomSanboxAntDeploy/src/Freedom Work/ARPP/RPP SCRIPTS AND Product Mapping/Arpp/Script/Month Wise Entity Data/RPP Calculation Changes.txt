@@ -1,0 +1,68 @@
+//Fetch all Lumpsum type ARPP Record 
+List<ARPP_Detail__c> lstArppDetailLumpsum = [Select Name, Id, Entity__c, Type__c, Product__c, 
+												Commission__c, Approve_Action_Plan__c,   
+												Action_Plan_Amount__c, Action_Plan_Upfront_Comm_Amount__c, 
+												Action_Plan_Trial_Comm_Amount__c,  Action_Amount_Revenue__c, Remark__c, 
+												Execution_Tracker_Actual_Product__c,  Actual_Commission__c, 
+												Execution_Tracker__c, Execution_Tracker_Amount__c, 
+												Execution_Tracker_upfront_Comm_Amount__c, Execution_Tracker_Trial_Comm_Amount__c, 
+												Execution_Tracker_Total_Revenue__c, Actual_Product_Name__c, ET_Remark__c  
+											From ARPP_Detail__c 
+											Where Type__c='Lumpsum' and CALENDAR_MONTH(Entity__r.CreatedDate) = 1 and CALENDAR_YEAR(Entity__r.CreatedDate) = 2011];
+
+Map<id,Commission__c> mapIdToCommission = new Map<id,Commission__c>([Select Upfront_Commission__c, Trail_Commission__c from Commission__c where Active__c = true]);
+
+List<ARPP_Detail__c> lstUpdateARPP = new List<ARPP_Detail__c>();
+for(ARPP_Detail__c objARPP : lstArppDetailLumpsum)
+{
+	Boolean isChange = false;
+	if(objARPP.Commission__c != null)
+	{
+		objARPP.Action_Plan_Upfront_Comm_Amount__c = (objARPP.Action_Plan_Amount__c * mapIdToCommission.get(objARPP.Commission__c).Upfront_Commission__c)/100;
+		objARPP.Action_Plan_Trial_Comm_Amount__c = (objARPP.Action_Plan_Amount__c  * mapIdToCommission.get(objARPP.Commission__c).Trail_Commission__c)/100;
+		isChange = true;
+	}
+	if(objARPP.Actual_Commission__c != null)
+	{	
+		objARPP.Execution_Tracker_upfront_Comm_Amount__c = (objARPP.Execution_Tracker_Amount__c * mapIdToCommission.get(objARPP.Actual_Commission__c).Upfront_Commission__c)/100;
+		objARPP.Execution_Tracker_Trial_Comm_Amount__c = (objARPP.Execution_Tracker_Amount__c * mapIdToCommission.get(objARPP.Actual_Commission__c).Trail_Commission__c)/100;
+		isChange = true;
+	}
+	if(isChange)
+		lstUpdateARPP.add(objARPP);
+}
+
+//Fetch all General Insurance type ARPP Record 
+List<ARPP_Detail__c> lstArppDetailInsurance = [Select Name, Id, Entity__c, Type__c, Product__c, 
+												Commission__c, Approve_Action_Plan__c,  Approve_Action_Plan__r.Premium_Amount_Rs__c, 
+												Action_Plan_Amount__c, Action_Plan_Upfront_Comm_Amount__c, 
+												Action_Plan_Trial_Comm_Amount__c,  Action_Amount_Revenue__c, Remark__c, 
+												Execution_Tracker_Actual_Product__c,  Actual_Commission__c, 
+												Execution_Tracker__c, Execution_Tracker_Amount__c, 
+												Execution_Tracker_upfront_Comm_Amount__c, Execution_Tracker_Trial_Comm_Amount__c, 
+												Execution_Tracker_Total_Revenue__c, Actual_Product_Name__c, ET_Remark__c  
+											From ARPP_Detail__c 
+											Where (Type__c='General Insurance' or Type__c='Life Insurance') and Entity__c IN('0012000000rJIzI', '0012000000qODPa')];
+
+
+for(ARPP_Detail__c objARPP : lstArppDetailInsurance)
+{
+	Boolean isChange = false;
+	objARPP.Action_Plan_Amount__c = objARPP.Approve_Action_Plan__r.Premium_Amount_Rs__c;
+	if(objARPP.Commission__c != null)
+	{
+		objARPP.Action_Plan_Upfront_Comm_Amount__c = (objARPP.Action_Plan_Amount__c * mapIdToCommission.get(objARPP.Commission__c).Upfront_Commission__c)/100;
+		objARPP.Action_Plan_Trial_Comm_Amount__c = (objARPP.Action_Plan_Amount__c  * mapIdToCommission.get(objARPP.Commission__c).Trail_Commission__c)/100;
+		isChange = true;
+	}
+	if(objARPP.Actual_Commission__c != null)
+	{	
+		objARPP.Execution_Tracker_upfront_Comm_Amount__c = (objARPP.Execution_Tracker_Amount__c * mapIdToCommission.get(objARPP.Actual_Commission__c).Upfront_Commission__c)/100;
+		objARPP.Execution_Tracker_Trial_Comm_Amount__c = (objARPP.Execution_Tracker_Amount__c * mapIdToCommission.get(objARPP.Actual_Commission__c).Trail_Commission__c)/100;
+		isChange = true;
+	}
+	if(isChange)
+		lstUpdateARPP.add(objARPP);
+}
+
+update lstUpdateARPP;

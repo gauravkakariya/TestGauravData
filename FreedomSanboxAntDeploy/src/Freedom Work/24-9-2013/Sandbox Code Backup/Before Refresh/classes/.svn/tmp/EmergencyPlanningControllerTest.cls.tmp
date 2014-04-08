@@ -1,0 +1,76 @@
+/*
+Revision History:
+
+		Version     Version Author     Date        Comments
+		1.0         --           	   --	  	   Initial Draft
+		2.0  		Prajakta Sanap     23/04/2013	Created TestData_Ffreedom which contains all the test data for this test class.				   				 					   
+*/
+
+@isTest
+private class EmergencyPlanningControllerTest 
+{
+    static Account acc;
+    static EmergencyPlanningController emergencyplanning;
+    static Investment_Asset__c inv;
+    
+    static void testData()
+    {
+    	TestData_Ffreedom testData = new TestData_Ffreedom();
+		acc = testData.initializeAccount();
+        insert acc;
+   
+      	system.assertNotEquals(null,acc);
+		
+		Asset__c asset1 = testData.initialize_Asset(acc, 'EPF', AssetRecTypes__c.getInstance('Real Estate Assets').RecordTypeId__c, '');      
+      	asset1.EmergencyFundAction__c = 'no';
+      	insert asset1;
+      	system.assertNotEquals(null,asset1.id);
+      	
+      	Goal_Profile__c goalProfile = testData.initialize_GoalProfile(acc, 'Aggressive', 'Customized');
+      	insert goalProfile;
+      	Goal__c goal2 = testData.initialize_Goal(acc, 'Emergency Fund', goalProfile);
+    	insert goal2;
+    	system.assertNotEquals(null,goal2.id);
+      	
+    	Insurance__c  insurance = testData.initialize_Insurance(acc);
+      	insert insurance;
+      	system.assertNotEquals(null,insurance.id);
+      	
+      	Goal__c goal3 = testData.initialize_Goal(acc, 'Emergency Fund', goalProfile);
+      	insert goal3;
+      	system.assertNotEquals(null,goal3.id);
+     	
+     	inv = testData.init_InvestmentAsset(acc, InvestmentAsset__c.getInstance ('Stocks').RecordTypeId__c);
+      	insert inv;
+      	system.assertNotEquals(null,inv.id);
+      	
+      	
+      	Goal__c goal4 = testData.initialize_Goal(acc, 'Emergency Fund', goalProfile);
+      	insert goal4;
+      	system.assertNotEquals(null,goal4.id);
+		
+		GoalAssetAssociation__c gasset = testData.intialize_GoalAssetAssociation(asset1, goal2);		      
+      	insert gasset;
+      	system.assertNotEquals(null,gasset.id);
+      	
+      	GoalInsuranceAssociation__c gasset1 = testData.initialize_GoalIA(insurance, goal3);
+      	System.debug('Allocation1s-->' +gasset1.Allocated__c);
+      	insert gasset1;
+      	system.assertNotEquals(null,gasset1.id);
+      	
+      	GoalInvestmentAssetAssociation__c gasset2 = testData.init_GoalInvAsset(inv, goal4);
+      	insert gasset2;
+      	system.assertNotEquals(null,gasset2.id);
+      	Apexpages.currentPage().getParameters().put('entityId',acc.id);
+      	emergencyplanning=new EmergencyPlanningController();
+    }
+    
+    static testMethod void emergencyPlanningTest1() 
+    {
+        Test.startTest();
+        testData();
+        emergencyplanning.save();
+        test.stopTest();
+    }
+        
+}

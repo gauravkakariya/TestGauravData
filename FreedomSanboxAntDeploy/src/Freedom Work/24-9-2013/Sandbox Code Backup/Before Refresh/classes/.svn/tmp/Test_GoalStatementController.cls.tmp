@@ -1,0 +1,126 @@
+/*
+Revision History:
+
+		Version     Version Author     Date        Comments
+		1.0         --           	   --	  	   Initial Draft
+		2.0  		Prajakta Sanap     23/04/2013	Created TestData_Ffreedom which contains all the test data for this test class.				   				 					   
+*/
+
+
+@isTest
+private class Test_GoalStatementController {
+
+    static testMethod void testGoalStatement() {
+          
+          Test.startTest();
+          List<Goal__c> allGoals = new List<Goal__c>();
+          List<Portfolio_Report__c> allPortfolios = new List<Portfolio_Report__c>();
+          List<GoalIAULIPAssociation__c> gList = new List<GoalIAULIPAssociation__c>();
+          //Deployement
+          //Account act = [select Id, PersonContactId from Account where Parent_Entity__c = null LIMIT 1];
+          
+<<<<<<< .mine
+		TestData_Ffreedom testData = new TestData_Ffreedom();
+		//User objUser = testData.initializeUser();
+        Account act = testData.initializeAccount(); 
+      	insert act;
+=======
+		TestData_Ffreedom testData = new TestData_Ffreedom();
+		//User objUser = testData.initializeUser();
+        Account act = testData.initializeAccount(); 
+        
+        //Account act = new Account(FirstName='Test_Fname1',LastName='Test_Lname',Entity_Status__c='Active');
+      	insert act;
+>>>>>>> .r13960
+      
+        Goal__c gl=new Goal__c(Entity__c=act.id,Goal_Type__c='Education',Start_Year__c=2003,End_Year__c=2016,Inflation_Rate__c=3,
+                              Cost_of_Goal_Annual__c=23015,Priority__c='High',Goal_Frequency__c=56,Goal_Start_Year__c='2004',
+                              Goal_End_Year__c='2031',Description__c='ABC');
+        insert gl;
+          
+<<<<<<< .mine
+        Goal__c goal1 = testData.initializeGoal(act,'Marriage');
+        allGoals.add(goal1);
+        Goal__c goal2 = testData.initializeGoal(act,'Education');
+        allGoals.add(goal2);
+        insert allGoals;     
+=======
+        Goal__c goal1 = testData.initializeGoal(act,'Marriage');  
+        //Goal__c goal1 = new Goal__c(Entity__c= act.Id, Accumulated_Amount__c=0,Cost_of_Goal_Annual__c=55000,Allocated_Equity__c=0,Allocated_Debt__c=0,Allocated_Real_Estate__c=0,Allocated_Others__c=0,Allocated_Gold__c=0,Goal_Type__c='Education' );               
+        allGoals.add(goal1);
+        Goal__c goal2 = testData.initializeGoal(act,'Education');
+        //Goal__c goal2 = new Goal__c( Entity__c= act.Id,Accumulated_Amount__c=0,Cost_of_Goal_Annual__c=660000,Allocated_Equity__c=0,Allocated_Debt__c=0,Allocated_Real_Estate__c=0,Allocated_Others__c=0,Allocated_Gold__c=0,Goal_Type__c='Marriage' );
+        allGoals.add(goal2);
+        insert allGoals;     
+>>>>>>> .r13960
+          
+<<<<<<< .mine
+        Portfolio_Report__c port1 = testData.initialize_PortfolioReport(act, 'Birla Sun Life', 'EQ');
+=======
+        //Portfolio_Report__c port1 = new Portfolio_Report__c( Entity__c=act.Id,Gain__c=10,Nav_p__c=10,Purchase_Amount__c=1000,Folio_Number__c='23456348',Date__c=System.today(),Absolute_Ret__c=0.81, Scheme_Scrip_Name__c='Birla Sun Life',Transaction_Type__c='SIP', Current_Value__c=2000,Portfolio_Type__c='EQ', Units_Quanitity__c=100);
+        Portfolio_Report__c port1 = testData.initialize_PortfolioReport(act, 'Birla Sun Life', 'EQ');
+>>>>>>> .r13960
+        allPortfolios.add(port1);
+<<<<<<< .mine
+        Portfolio_Report__c port2 = testData.initialize_PortfolioReport(act,'Kotak Mahindra', 'MF');
+=======
+        //Portfolio_Report__c port2 = new Portfolio_Report__c( Entity__c=act.Id,Gain__c=10,Nav_p__c=10,Purchase_Amount__c=1000, Folio_Number__c='23456348',Date__c=System.today(),Absolute_Ret__c=0.81,Scheme_Scrip_Name__c='Kotak Mahindra',Transaction_Type__c='SIP', Current_Value__c=2000,Portfolio_Type__c='MF',Units_Quanitity__c=100);
+        Portfolio_Report__c port2 = testData.initialize_PortfolioReport(act,'Kotak Mahindra', 'MF');
+>>>>>>> .r13960
+        allPortfolios.add(port2);
+        insert allPortfolios;
+        
+        List<GoalIAULIPAssociation__c> goalUlipList = [select Goal__c, Goal__r.Entity__c from GoalIAULIPAssociation__c where Goal__r.Entity__c = :act.Id];
+       
+      /* Deployment : Prajakta Sanap */       
+        GoalIAULIPAssociation__c objGoal = new GoalIAULIPAssociation__c (Portfolio_Report__c=port1.Id, Allocation__c=10, Goal__c=goal1.Id);
+        insert objGoal;
+        for(GoalIAULIPAssociation__c gua :goalUlipList){
+            gua.Allocation__c=10;
+            if(gua.Portfolio_Report__c==port1.Id){
+              System.assertEquals(gua.Portfolio_Report__c, port1.Id);
+            }
+            else if(gua.Portfolio_Report__c==port2.Id){
+              System.assertEquals(gua.Portfolio_Report__c, port2.Id);
+            }
+            gList.add(gua);
+        }
+        update gList;
+        
+      //  ID ProfileID = [ Select id from Profile where name = 'Customer Portal Standard - Custom'].id;
+      //Deployement
+      /*List<User> u1 = [select Id from User where contactid = :act.PersonContactId];
+      User user;
+      if(u1 == null || u1.isEmpty()){
+        user = new User( email='test-user@fakeemail.com', contactid = act.PersonContactId, profileid = ProfileID, UserName='test-user@fakeemail.com', alias='tuser1', CommunityNickName='tuser1',TimeZoneSidKey='America/New_York', LocaleSidKey='en_US', EmailEncodingKey='ISO-8859-1',LanguageLocaleKey='en_US', FirstName = 'Test_Parent_Fname', LastName = 'Test_Parent_Lname' );
+        insert user; 
+      
+      }
+      else{
+        user= u1[0];
+      }*/
+      //Deployement
+   //   User user = new User( email='test-user@fakeemail.com', contactid = act.PersonContactId, profileid = ProfileID, UserName='test-user@fakeemail.com', alias='tuser1', CommunityNickName='tuser1',TimeZoneSidKey='America/New_York', LocaleSidKey='en_US', EmailEncodingKey='ISO-8859-1',LanguageLocaleKey='en_US', FirstName = 'Test_Parent_Fname', LastName = 'Test_Parent_Lname' );
+    //  insert user; 
+        //System.runAs(user)
+        {
+          //Deployment : Aditi Satpute
+          //Added this statement because Customer Portal is not enabled and we could not get Account Id without that.
+            ApexPages.currentPage().getParameters().put('Id',act.id);
+          GoalStatementController gsc = new GoalStatementController();
+          Account acct = gsc.getAccount();
+          System.assertEquals(acct.Id, act.Id);
+          gsc.getGoals();
+          
+          
+            gsc.getGoalIAULIPAssociationMap();
+           // getUlipPortfolioMap();  
+            gsc.getPortfolioRecords();
+            gsc.getGoalPortfolioMap();
+          Planner_Details__c plannerDetails = gsc.getPlannerDescription();
+          List<GoalStatementController.goalPortfolioReportWrapper> wrapperList = gsc.getGoalPortfolioReportWrapper();
+        }      
+      Test.stopTest();
+     
+    }
+}

@@ -1,0 +1,56 @@
+public with sharing class AccountHandler 
+{
+	public void execute(List<Account> lstNewAccountList, Set<Id> setAccountId)
+	{
+		List<Renewal__c> lstRenewalToUpdate = new List<Renewal__c>();
+		List<Product_Master__c> lstProductMaster = new List<Product_Master__c>();
+		List<Purchase_Order__c> lstPurcahseOrder = new List<Purchase_Order__c>();
+	    Map<Id, Product_Master__c> mapProductMaster = new Map<Id, Product_Master__c>();
+		Map<Id, Purchase_Order__c> mapPurcahseOrder = new Map<Id, Purchase_Order__c>();
+		Map<Id, Renewal__c> mapRenewal = new Map<Id, Renewal__c>();
+		
+		lstPurcahseOrder = [Select Selected_Product__c From Purchase_Order__c 
+													Where Product_Type__c = 'Base Product' And Entity__c IN: setAccountId ];
+													
+													
+													
+		for(Account objAccount: lstNewAccountList)
+		{	
+			setPurchaseOrder.add(objAccount.Id);
+												
+			//setPurchaseOrder.add(objPurchaseOrder.Selected_Product__c);		
+											
+			if(objPurchaseOrder != Null && objPurchaseOrder.Selected_Product__c != Null)
+			{	
+				Product_Master__c objProductMaster = [Select Id, Name ,Renewal_Grace_Days__c, Renewal_Period_In_Days__c From Product_Master__c
+																 Where Product_Name__c =: objPurchaseOrder.Selected_Product__c];
+																 
+																 
+				
+				if(objProductMaster.Renewal_Grace_Days__c != Null || objProductMaster.Renewal_Period_In_Days__c != Null)
+				{
+					objAccount.Renewal_Start_Date__c = objAccount.Membership_End_Date__c.addDays(-1 * Integer.valueOf(objProductMaster.Renewal_Period_In_Days__c));
+					objAccount.Renewal_Lapse_Date__c = objAccount.Membership_End_Date__c.addDays(Integer.valueOf(objProductMaster.Renewal_Grace_Days__c));
+				}		
+				
+				Renewal__c objRenewal  = [Select Id, Renewal_Date__c, Entity__c,Is_Renew__c from Renewal__c where Entity__c =: objAccount.Id];
+				objRenewal.Renewal_Date__c =  objAccount.Membership_End_Date__c;
+					
+				lstRenewalToUpdate.add(objRenewal);		
+					
+			}//if outer	
+			}					
+		}//end for
+		
+		
+		update lstRenewalToUpdate;
+	}
+	
+	private List<Product_Master__c> getProductMaster(Set<String> setPurchaseOrder)
+	{
+		return [Select Id, Name ,Renewal_Grace_Days__c, Renewal_Period_In_Days__c From Product_Master__c
+																 Where Product_Name__c IN: setPurchaseOrder];
+		
+		
+	}
+}

@@ -1,0 +1,52 @@
+public without sharing class HandlerForParentForAsset extends AssetTrigger
+{
+	static Boolean flag=true;
+    public Integer count=0;
+    
+    public HandlerForParentForAsset(Asset__c[] AssetOldList, Asset__c[] AssetNewList){
+		super(AssetOldList,AssetNewList);
+	}
+	
+    public void beforeAssetInsert()
+	{
+		Map<String , List<Asset__c>> mapPortalIdAndList = new Map<String , List<Asset__c> >();
+	
+		for(Asset__c objAsset : assetNewList){
+			if(objAsset.Portal_Parent_Entity__c == null) continue;
+			
+			if(!mapPortalIdAndList.containsKey(objAsset.Portal_Parent_Entity__c))
+				mapPortalIdAndList.put(objAsset.Portal_Parent_Entity__c , new List<Asset__c>{objAsset});
+			else
+				mapPortalIdAndList.get(objAsset.Portal_Parent_Entity__c).add(objAsset);
+		}
+		
+		List<Account> lstAccount = new List<Account>([select id, Portal_Id__c , Name  from Account where Portal_Id__c IN: mapPortalIdAndList.keySet() ]);
+		for(Account objAccount : lstAccount ){
+			if(mapPortalIdAndList != null && mapPortalIdAndList.containsKey(objAccount.Portal_Id__c) && mapPortalIdAndList.get(objAccount.Portal_Id__c) != null)
+			{
+				for(Asset__c objAsset : mapPortalIdAndList.get(objAccount.Portal_Id__c)){				   	
+				   if(objAccount.Id != null)
+				   		objAsset.Entity__c = objAccount.Id;
+					count++;
+				} 
+			}
+		}		
+	}
+	
+	public void beforeUpdateAsset(){
+		for(Asset__c objNewAsset : assetNewList){
+			Asset__c objOldAsset = assetOldListMap.get(objNewAsset.Id);
+	       if(objOldAsset.From_Portal__c == 1 && objNewAsset.Synched_Date_Time__c > objOldAsset.LastModifiedDate ){
+			  objNewAsset.From_Portal__c = 0;
+			  objNewAsset.IsSynched__c = true;
+		   }
+		   else if(objOldAsset.From_Portal__c == 1 && objNewAsset.Synched_Date_Time__c < objOldAsset.LastModifiedDate )
+		   {
+			  objNewAsset.From_Portal__c = 0;
+			   objNewAsset.IsSynched__c = false;
+		   }
+		   else if(objNewAsset.From_Portal__c == 0)
+		   	 objNewAsset.IsSynched__c = false;
+		}
+	}
+}

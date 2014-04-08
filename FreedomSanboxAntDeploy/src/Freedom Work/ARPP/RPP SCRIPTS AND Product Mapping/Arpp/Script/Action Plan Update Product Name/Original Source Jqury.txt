@@ -1,0 +1,35 @@
+<apex:page ShowHeader="false" standardStylesheets="false" sidebar="false">
+
+
+<style>
+.slideshow { height: 200px; width: 200px; margin: center}
+.slideshow img { padding: 0px; border: 1px solid #ccc; background-color: #eee; }
+</style>
+
+
+<!-- include jQuery library -->
+ 
+<script type="text/javascript" src="{!URLFOR($Resource.JQueryFinal)}"></script>
+<!-- include Cycle plugin -->
+<script type="text/javascript" src="{!URLFOR($Resource.JQueryCycle)}"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.slideshow').cycle({
+       fx: 'fade'  //choose your transition type, ex: fade, scrollUp, shuffle, etc...
+        
+});
+        
+});
+</script>
+
+    <div class="slideshow">
+        <img src="http://malsup.github.com/images/beach1.jpg" width="100%" height="80%" />
+        <img src="http://malsup.github.com/images/beach2.jpg" width="100%" height="80%" />
+        <img src="http://malsup.github.com/images/beach3.jpg" width="100%" height="80%" />
+        <img src="http://malsup.github.com/images/beach4.jpg" width="100%" height="80%" />
+        <img src="http://malsup.github.com/images/beach5.jpg" width="100%" height="80%" />
+    </div>
+
+
+</apex:page>

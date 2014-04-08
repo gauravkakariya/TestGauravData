@@ -1,0 +1,1210 @@
+/*
+	Revision History:
+	
+    Version     Version Author     Date           Comments
+    1.0			Aditi	   		25/12/12		 Execution Tracker Controller for storing All ET records and displaying Read only AP.
+*/
+ 
+public with sharing class ExecutionTrackerController extends FPsidebarDispalyLink  
+{  
+    private ExecutionTrackerService objExecutionTrackerService;
+    private set<Id> familyIdSet{get;set;}
+    public List<Execution_Tracker__c> lstETCheckRecords{get;set;}
+ 	public EstatePlanningBean bean {get; set;}
+  	private EstatePlanningServices service {get; set;}
+  	public Boolean isETRecord{get;set;}
+  	
+  	public Boolean isSidebar{get;set;}
+  	public double SIPSummaryTotal{get;set;}
+  	public double LumpsumSummaryTotal{get;set;}
+  	public Goal_Profile__c objGoalProfile{get;set;}
+    public Boolean blnIsETAlreadyGenerated{get;set;}
+    public String strEntityName {get;set;}
+    public String strOwnerName {get;set;}
+    public String strGeneratedDate {get;set;}
+    public ApprovedPlanBean beanObj {get;set;}
+	public Boolean isFreedomUser{get;set;}
+	public Boolean isFreedomUserProp{get;set;}
+	public Account Partnerlogo{get;set;}
+	public Account Logo_partner{get;set;}
+	public Id AccOwnerId{get;set;}
+	public String addNewGoalId{get;set;}
+    public String addNewLumpsumGoalId{get;set;}
+    public String addNewInvestId{get;set;}
+	public List<List<ApprovedPlanBean.RecommendedInsurance>> lstRecommendedInsurancePDF{get;set;}
+	
+	//Added on 14/1/13
+	public Map<String,String> mapIdToETrecords{get;set;}
+	
+    public string owner{get;set;}		
+    public String emailBody {get; set;}
+    public Map<String, ApprovedPlanBean.SIPFunds> mapStringToSIPFunds{get;set;}	
+	
+	//Added on : 20/2/2013 : Aditi Satpute : AP Changes : Add Remark for MF - Lumpsum
+    public string mfLumpsumRemark{get;set;}
+    public string mfSIPRemark{get;set;}
+    public string generalInsuranceRemark{get;set;}
+    
+	public string openMutualFundPopup{get;set;}
+	private DatabaseSOQL dbSOQLObj = new DatabaseSOQL();
+  	public List<Goal__c> lstGoal {get; set;}
+  	
+  	public List<Goal_Profile__c> lstGoalProfile {get;set;}
+  
+  	public String strSIPholder{get;set;}
+  	public List<Approve_Action_Plan__c> lstSIPApproveActionPlan
+  	{
+  		get
+  		{
+  			if(lstSIPApproveActionPlan == null)
+  			{
+  				SIPSummaryTotal = 0;
+  				//Added on 24/12/2012 : for Retrieving Family member
+				Set<Id> setFamilyMemberId = new Set<Id>(); 
+				for(Account objAcc : dbSOQLObj.getFamilyMembers(beanObj.entityId))
+				{
+				    setFamilyMemberId.add(objAcc.Id);
+				}
+  				lstSIPApproveActionPlan = [Select a.Transaction_Type__c, a.Remarks__c,a.Goal__c ,a.isSIPexecutionTracker__c,a.Amount__c,a.Product_Name__c, 
+  													a.Option__c, a.Installments__c, a.CreatedDate, a.Category__c From Approve_Action_Plan__c a 
+  													where a.Item_Type__c = 'SIP' and Account__c IN : setFamilyMemberId and AP_Status__c = 'Opened'];
+  				for(Approve_Action_Plan__c obj : lstSIPApproveActionPlan)
+  				{
+  					SIPSummaryTotal = SIPSummaryTotal + obj.Amount__c;
+  				}
+  			}
+  			return lstSIPApproveActionPlan;
+  		}
+  		set;
+  	}
+    public List<Approve_Action_Plan__c> lstLumpsumApproveActionPlan{get;set;}
+    public List<ApprovedPlanBean.SIPFunds> lstSummarySIPFunds{get;set;}
+    //Added on : 21/2/2013 : Aditi Satpute : AP Changes : SIP Summary to be displayed with respect to Transaction Type
+    public Map<String,List<ApprovedPlanBean.SIPFunds>> mapSIPFundsAlreadyExists
+    {
+    	get
+    	{
+    		Map<String,List<ApprovedPlanBean.SIPFunds>> mapSIPFundsAlreadyExists = new Map<String,List<ApprovedPlanBean.SIPFunds>>();
+            for(ApprovedPlanBean.SIPFunds objSIPFunds : lstSummarySIPFunds)
+            {
+            	List<ApprovedPlanBean.SIPFunds> lstSIPFundsAlreadyExists = new List<ApprovedPlanBean.SIPFunds>();
+            	if(mapSIPFundsAlreadyExists.containsKey(objSIPFunds.transactionType))
+		   		{
+		   			lstSIPFundsAlreadyExists = mapSIPFundsAlreadyExists.get(objSIPFunds.transactionType);
+		   			lstSIPFundsAlreadyExists.add(objSIPFunds);
+		   		}
+		   		else
+		   			lstSIPFundsAlreadyExists.add(objSIPFunds);
+		   		mapSIPFundsAlreadyExists.put(objSIPFunds.transactionType,lstSIPFundsAlreadyExists);
+            }
+            return mapSIPFundsAlreadyExists;
+    	}
+    	set;
+    }
+    //Added on : 21/2/2013 : Aditi Satpute : AP Changes : Lumpsum Summary to be displayed with respect to Transaction Type
+    public Map<String,List<Approve_Action_Plan__c>> mapLumpsumFundsAlreadyExists
+    {
+    	get
+    	{
+    		Map<String,List<Approve_Action_Plan__c>> mapLumpsumFundsAlreadyExists = new Map<String,List<Approve_Action_Plan__c>>();
+    		system.debug('*******lstLumpsumApproveActionPlan********'+lstLumpsumApproveActionPlan);
+            for(Approve_Action_Plan__c objLumpsumFunds : lstLumpsumApproveActionPlan)
+            {
+            	List<Approve_Action_Plan__c> lstLumpsumFundsAlreadyExists = new List<Approve_Action_Plan__c>();
+            	if(mapLumpsumFundsAlreadyExists.containsKey(objLumpsumFunds.Transaction_Type__c))
+		   		{
+		   			lstLumpsumFundsAlreadyExists = mapLumpsumFundsAlreadyExists.get(objLumpsumFunds.Transaction_Type__c);
+		   			lstLumpsumFundsAlreadyExists.add(objLumpsumFunds);
+		   		}
+		   		else
+		   			lstLumpsumFundsAlreadyExists.add(objLumpsumFunds);
+		   		mapLumpsumFundsAlreadyExists.put(objLumpsumFunds.Transaction_Type__c,lstLumpsumFundsAlreadyExists);
+            }
+            system.debug('*******mapLumpsumFundsAlreadyExists********'+mapLumpsumFundsAlreadyExists);
+            return mapLumpsumFundsAlreadyExists;
+            	
+    	}
+    	set;
+    }
+    
+    
+    
+    
+    
+    public ExecutionTrackerController()
+    {
+    	//Changes by Gaurav   (15- -4 2013): To hide succesion palnning and Insurance disply on Execution Tracker
+    	super(System.currentPageReference().getParameters().get('entityId'));
+    	
+    	if(Apexpages.currentPage().getParameters().get('navigate') == null)
+    	{
+    		initialization();
+    		isSidebar = true;
+    	}
+    		
+    }
+    
+    public void initialization()
+    {
+    	lstGoalProfile = [Select Id,Name From Goal_Profile__c];
+    	lstGoal = new List<Goal__c>();
+        objExecutionTrackerService = new ExecutionTrackerService();
+        beanObj = new  ApprovedPlanBean();
+        beanObj.entityId = Apexpages.currentPage().getParameters().get('entityId');
+        blnIsETAlreadyGenerated = false;
+        isETRecord = false;
+        objExecutionTrackerService.getFamilyDetails(beanObj);
+        isSidebar = true;
+        if(beanObj.accList != null)
+	    {
+	   	   for(Account objAccout : beanObj.accList)
+	   	   {
+	   	   		if(objAccout.Id == beanObj.entityId)
+	   	   		{
+            		AccOwnerId = objAccout.OwnerId; //Added for Partner Portal implementation Use ,Date : 31/7/12
+	   	   			blnIsETAlreadyGenerated = objAccout.IsExecutionTrackerGenerated__c;
+	   	   			strEntityName = objAccout.FirstName + ' '+ objAccout.LastName;
+	   	   			strOwnerName = objAccout.Owner.Name;
+	   	   			strGeneratedDate = system.NOW().format('dd-MM-yyyy');
+	   	   		}
+	   	   }	
+	   }
+      	
+        if(beanObj.entityId!=null)
+        {
+            bean = new EstatePlanningBean();
+            service = new EstatePlanningServices();
+            bean.entity = service.getEntityDetails(beanObj.entityId);
+            if(bean.entity.Will__c==false)
+                bean.spouse = service.getSpouseDetails(beanObj.entityId);
+            else
+            	objExecutionTrackerService.getWillExecTrackerDetails(beanObj); // for execution tracker
+        }   
+	   
+	   
+       objExecutionTrackerService.getGoals(beanObj);
+     
+       objExecutionTrackerService.PrpeareSuggested(beanObj);
+
+       //Execution Tracker : Date : 24/12/12
+         familyIdSet = new set<Id>(); 
+		 List<Account> lstAcc = dbSOQLObj.getFamilyMembers(beanObj.entityId);
+		
+		 for(Account objAcc : lstAcc)
+		 {
+			familyIdSet.add(objAcc.Id);
+		 }
+   
+	   	lstGoal = beanObj.goalList;
+       
+  	    if(beanObj.entityId != null && beanObj.entityId != '')
+		{  
+			lstRecommendedInsurancePDF = new List<List<ApprovedPlanBean.RecommendedInsurance>>();
+			
+    		beanObj = objExecutionTrackerService.fetchGoalDetails(beanObj);
+			List<ApprovedPlanBean.RecommendedInsurance> lstRIForPDF = new List<ApprovedPlanBean.RecommendedInsurance>();
+    		for(Integer i = 0;  i < beanObj.lstRecommendedInsurance.size() ; i++)
+    		{
+    			lstRIForPDF.add(beanObj.lstRecommendedInsurance[i]);
+    			if(Math.mod((i+1), 5) == 0)
+    			{
+    				lstRecommendedInsurancePDF.add(lstRIForPDF);
+    				lstRIForPDF = new List<ApprovedPlanBean.RecommendedInsurance>();
+    			}
+    		}
+    		
+    		if(Math.mod(beanObj.lstRecommendedInsurance.size(), 5) != 0)
+    		{
+    			lstRecommendedInsurancePDF.add(lstRIForPDF);
+    		}
+		}
+		
+        blnIsETAlreadyGenerated = false;
+        
+        lstLumpsumApproveActionPlan = new List<Approve_Action_Plan__c>();
+    	getLumpsumApproveActionPlans();
+    	lstSummarySIPFunds = new List<ApprovedPlanBean.SIPFunds>();
+    	getSummarySIPFunds();
+    	
+    	List<Approve_Action_Plan__c> lstApproveActionPlan = [select Id,AP_Status__c,Investment_Asset__c,MF_LumpsumRemark__c,MF_SIPRemark__c ,Item_Type__c,InsuranceRemark__c
+        											from Approve_Action_Plan__c where Account__c =: familyIdSet and AP_Status__c = 'Opened'];
+        
+        for(Approve_Action_Plan__c objApprove : lstApproveActionPlan)
+        {
+        	if(objApprove.Investment_Asset__c != null)
+        	{
+        		mfLumpsumRemark = objApprove.MF_LumpsumRemark__c;
+        		mfSIPRemark = objApprove.MF_SIPRemark__c;
+        	}
+        	if(objApprove.Item_Type__c == 'General Insurance')
+        	{
+        		generalInsuranceRemark = objApprove.InsuranceRemark__c;
+        	}
+        }
+        if(lstApproveActionPlan.size() == 0)
+        {
+            Remarks__c objRemarks = new Remarks__c();
+            objRemarks = [select Entity__c,Remark__c from Remarks__c where entity__c =: beanObj.entityId 
+    								and recordtype.Name =: 'GeneralInsurancePlanning' limit 1];
+    		generalInsuranceRemark = objRemarks.Remark__c;
+        }
+    	
+    } 
+    
+    
+     /**
+    * @Description: Calculates SIP Summary Total
+    * param: None 
+    * return type: None 
+    */ 
+    public void getSummarySIPFunds()
+    {
+    	lstSummarySIPFunds = new List<ApprovedPlanBean.SIPFunds>();
+    	mapStringToSIPFunds = new Map<String, ApprovedPlanBean.SIPFunds>();
+    	//beanObj = objExecutionTrackerService.fetchGoalDetails(beanObj);
+    	for(ApprovedPlanBean.SIPFunds objSF : beanObj.objEmergencyFundGoalDetails.lstSIPFunds)
+    	{
+    		String strKey = objSF.productName + '-' + objSF.transactionType + '-' + objSF.installments + '-' + objSF.option;
+  			if(!mapStringToSIPFunds.containsKey(strKey))
+  			{		
+  				ApprovedPlanBean.SIPFunds objNewSIPFunds = new ApprovedPlanBean.SIPFunds();
+  				objNewSIPFunds.productName = objSF.productName;
+  				objNewSIPFunds.transactionType = objSF.transactionType;
+  				objNewSIPFunds.installments = objSF.installments;
+  				objNewSIPFunds.option = objSF.option;
+		        objNewSIPFunds.remarks = objSF.remarks; 
+		        objNewSIPFunds.category = objSF.category ;
+		        objNewSIPFunds.amount = objSF.amount;
+  				mapStringToSIPFunds.put(strKey, objNewSIPFunds);		
+  			}
+  			else
+  			{
+  				ApprovedPlanBean.SIPFunds objSIPFunds = mapStringToSIPFunds.get(strKey);
+  				objSIPFunds.amount +=  objSF.amount;
+  				mapStringToSIPFunds.put(strKey, objSIPFunds);
+  			}
+    	}
+    	
+    	for(ApprovedPlanBean.GoalDetails objGoals: beanObj.lstGoalDetails)
+	    {
+	    	for(ApprovedPlanBean.SIPFunds objSIPs: objGoals.lstSIPFunds)
+	       	{    
+	        	String strKey = objSIPs.productName + '-' + objSIPs.transactionType + '-' + objSIPs.installments + '-' + objSIPs.option;
+	  			if(!mapStringToSIPFunds.containsKey(strKey))
+	  			{		
+	  				ApprovedPlanBean.SIPFunds objNewSIPFunds = new ApprovedPlanBean.SIPFunds();
+	  				objNewSIPFunds.productName = objSIPs.productName;
+	  				objNewSIPFunds.transactionType = objSIPs.transactionType;
+	  				objNewSIPFunds.installments = objSIPs.installments;
+	  				objNewSIPFunds.option = objSIPs.option;
+			        objNewSIPFunds.remarks = objSIPs.remarks; 
+			        objNewSIPFunds.category = objSIPs.category ;
+			        objNewSIPFunds.amount = objSIPs.amount;
+	  				mapStringToSIPFunds.put(strKey, objNewSIPFunds);		
+	  			}
+	  			else
+	  			{
+	  				ApprovedPlanBean.SIPFunds objSIPFunds = mapStringToSIPFunds.get(strKey);
+	  				objSIPFunds.amount +=  objSIPs.amount;
+	  				mapStringToSIPFunds.put(strKey, objSIPFunds);
+	  			} 
+	      	}
+	    }
+    	lstSummarySIPFunds = new List<ApprovedPlanBean.SIPFunds>();
+  		lstSummarySIPFunds.addAll(mapStringToSIPFunds.values());
+    }
+    
+    
+     /**
+    * @Description: Calculates Lumpsum Summary Total
+    * param: None 
+    * return type: None 
+    */ 
+    public void getLumpsumApproveActionPlans()
+    {
+    	//Added on 24/12/2012 : for Retrieving Family member
+		Set<Id> setFamilyMemberId = new Set<Id>(); 
+		for(Account objAcc : dbSOQLObj.getFamilyMembers(beanObj.entityId))
+		{
+		    setFamilyMemberId.add(objAcc.Id);
+		}
+    	Map<String, Approve_Action_Plan__c> mapStringToActionPlan = new Map<String, Approve_Action_Plan__c>();
+    	lstLumpsumApproveActionPlan = [Select Transaction_Type__c, Remarks__c, Goal__c , Amount__c, Fund__c, Amount_Per_Installment__c,
+  														 Product_Name__c, Option__c, Installments__c, CreatedDate, Category__c From Approve_Action_Plan__c 
+  														 where Item_Type__c = 'Lumpsum' and Account__c IN: setFamilyMemberId and Amount__c != null
+  														 and AP_Status__c = 'Opened'];
+  		LumpsumSummaryTotal = 0;
+  		
+  		for(Approve_Action_Plan__c objApprovedActionPlan : lstLumpsumApproveActionPlan)
+  		{
+  			String strKey = objApprovedActionPlan.Product_Name__c + '-' + objApprovedActionPlan.Transaction_Type__c + '-' + 
+  							objApprovedActionPlan.Amount_Per_Installment__c + '-' + objApprovedActionPlan.Installments__c + '-' + objApprovedActionPlan.Option__c;
+  			if(!mapStringToActionPlan.containsKey(strKey))
+  			{
+  				mapStringToActionPlan.put(strKey, objApprovedActionPlan);		
+  			}
+  			else
+  			{
+  				Approve_Action_Plan__c objAAP = mapStringToActionPlan.get(strKey);
+  				objAAP.Amount__c +=  objApprovedActionPlan.Amount__c;
+  				mapStringToActionPlan.put(strKey, objAAP);
+  			}
+  			if(objApprovedActionPlan.Amount__c != null )
+  			{
+  				LumpsumSummaryTotal = LumpsumSummaryTotal + objApprovedActionPlan.Amount__c;
+  			}
+  		}
+  		lstLumpsumApproveActionPlan = new List<Approve_Action_Plan__c>();
+  		lstLumpsumApproveActionPlan.addAll(mapStringToActionPlan.values());
+    }
+   
+	/**************** Code Changes for Execution Tracker ****************************/
+	
+	 // Update ET record and assign to Operation Team.
+	public pageReference assignToOperations()
+	{
+		List<Execution_Tracker__c> lstFilledExecutionTrackerRecord = [select Id, Balance_Remaining__c, Agreed_Amount__c,Approve_Action_Plan__c,Approve_Action_Plan__r.Insurance__r.Policy_Type__c,
+							       	Approve_Action_Plan__r.Insurance__r.Policy_Name__c,Approve_Action_Plan__r.Product_Name__c,ET_Status__c,Type__c,Application_Status__c,isAssignedToOps__c,
+							       	Approve_Action_Plan__r.Insurance__r.Sum_Assured_Rs__c,Approve_Action_Plan__r.Insurance__r.Premium_Amount_Rs__c, ParentExecutionTracker__c  
+							       	from Execution_Tracker__c where Entity_Name__c =: familyIdSet 
+							       	and ((Agreed_Amount__c != null and Agreed_Amount__c != 0) or (Sum_Assured__c != null and Sum_Assured__c != 0))
+<<<<<<< .mine
+							        and  Is_Floating__c = false and isAssignedToOps__c = true];//Cancelled_Reason__c!=null //	and Application_Status__c = '' 	
+		List<Execution_Tracker__c> lstAssignToOpsETRecords = new List<Execution_Tracker__c>();
+		List<Execution_Tracker__c> lstAssignedToOpsETRecords = new List<Execution_Tracker__c>();
+	
+		for(Execution_Tracker__c objET : lstFilledExecutionTrackerRecord)
+=======
+							       	and Application_Status__c = '' and  Is_Floating__c = false and isAssignedToOps__c = true];//Cancelled_Reason__c!=null];
+		if(lstFilledExecutionTrackerRecord == null || lstFilledExecutionTrackerRecord.isEmpty())
+>>>>>>> .r13960
+		{
+			system.debug('***objET*******'+objET);
+			if(objET.Application_Status__c == '' || objET.Application_Status__c == null)
+			{
+				lstAssignToOpsETRecords.add(objET);
+			}
+			if(objET.isAssignedToOps__c)
+			{
+				lstAssignedToOpsETRecords.add(objET);
+			}
+		}
+		if(lstAssignedToOpsETRecords.isEmpty())
+		{
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO , Label.AssignToOps));
+			return null;
+		}    
+		if(lstAssignToOpsETRecords == null || lstAssignToOpsETRecords.isEmpty())
+		{
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO , Label.AssignedToOps));
+			return null;
+		}
+		   			       	
+		Account objAccount = [Select Id, Name,Related_To__c ,OwnerId,owner.name from Account where Id =: beanObj.entityId];
+	   	Map<Id,User> mapIdToUser = new Map<Id,User>([select Id,Name, ContactId, ManagerId, Email from User]);
+	   	
+	   	Account objBPAccount = new Account();
+		Contact objContact = new Contact();
+		Messaging.SingleEmailMessage emailToOperations = new Messaging.SingleEmailMessage();
+		List<String> lstToOperationAddresses = new List<String>();
+		
+	   	//Map to retrive all Business Entities
+		Map<Id, Account> mapIdToBPAccount = new Map<Id, Account>([select Id, OwnerId, Channel_Manager__c  ,Channel_Manager__r.Name
+																	from Account 
+																	where RecordTypeId =: RecTypes__c.getInstance('General_Business').Record_Type_Value__c]);
+		Map<Id, Contact> mapIdToContact = new Map<Id, Contact>([select Id, AccountId from Contact]);
+	   	if(objAccount != null)
+	    {
+	        //Assign Status & Owner to Operations team  - If Entity is Business Partner Entity
+	        if(objAccount.Related_To__c == 'Business Partner')
+	        {					       
+	        	if(mapIdToUser.containsKey(objAccount.OwnerId))
+	    		{
+		        	User objBusinessEntityUser = mapIdToUser.get(objAccount.OwnerId);
+		        	
+		        	if(mapIdToContact.containsKey(objBusinessEntityUser.ContactId))
+					{
+						objContact = mapIdToContact.get(objBusinessEntityUser.ContactId);
+						if(objContact != null)
+						{
+							if(mapIdToBPAccount.containsKey(objContact.AccountId))
+							{
+								objBPAccount = mapIdToBPAccount.get(objContact.AccountId);
+							}
+						}
+					}
+		        	Workstation__c objBPWorkstation = [Select Operations__c,Operations__r.Email,Operations__r.Name From Workstation__c 
+		        										where Financial_Planner__c = : objBPAccount.Channel_Manager__c];
+		        	for(Execution_Tracker__c objEtRecs : lstAssignToOpsETRecords)		
+					{
+						objEtRecs.ET_Status__c = 'Assigned to Operations';
+						objEtRecs.Application_Status__c = 'Opened';
+						if(objBPWorkstation.Operations__c != null)
+							objEtRecs.Owner__c = objBPWorkstation.Operations__c;
+					}
+					
+					if(objBPWorkstation.Operations__r.Email != null)
+		    			lstToOperationAddresses.add(objBPWorkstation.Operations__r.Email);
+		    		if(!lstToOperationAddresses.isEmpty())
+			        	emailToOperations.setToAddresses( lstToOperationAddresses );
+			        	
+			       emailToOperations.setSubject( 'Execution Tracker Generated for ' + objAccount.Name);		
+			       String domain = URL.getSalesforceBaseUrl().toExternalForm();
+			       String TargetLink = domain + '/' + objAccount.Id;
+			     	
+			       emailToOperations.setHtmlBody('Dear '+objBPWorkstation.Operations__r.Name+',<br/><br/>Execution Tracker records are filled by MET for "'
+			      								  +objAccount.Name+'". Please look into the Execution Tracker button on the detail page.<br/>Click here : <a href=\''
+				      								  +TargetLink+'\'>'+TargetLink+'</a> <br/><br/> Thanks,<br/>Member Engagement Team');//+objBPAccount.Channel_Manager__r.Name);
+				   //emailToOperations.setSenderDisplayName(objBPAccount.Channel_Manager__r.Name);
+				   emailToOperations.setSenderDisplayName('Member Engagement Team');
+					
+			        // Sends the email Notification to Operations User
+			       Messaging.SendEmailResult [] arrBPOperationResult = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {emailToOperations});
+			       
+			       	//Send Chatter Notification to Operations User
+				 	FeedItem post = new FeedItem();
+					post.ParentId = objBPWorkstation.Operations__c;
+					post.Body = 'Execution Tracker records are filled by MET for "'
+			      				+objAccount.Name+'". Please look into the Execution Tracker button on the detail page';
+					insert post;
+						
+	    		}
+	        }	
+	        //Assign Status & Owner to Operations team  - If Entity is Virtual Partner or Ffreedom Entity
+	        else
+	        {
+        		Workstation__c objWorkstation = [Select Operations__c, Operations__r.Email, Operations__r.Name From Workstation__c 
+		   									 		where Financial_Planner__c = : objAccount.Owner.Id];
+		   		for(Execution_Tracker__c objEtRecs : lstAssignToOpsETRecords)		
+				{
+					objEtRecs.ET_Status__c = 'Assigned to Operations';
+					objEtRecs.Application_Status__c = 'Opened';
+					if(objWorkstation.Operations__c != null)
+						objEtRecs.Owner__c = objWorkstation.Operations__c;
+				}
+				
+				if(objWorkstation.Operations__r.Email != null)
+		    			lstToOperationAddresses.add(objWorkstation.Operations__r.Email);
+	    		if(!lstToOperationAddresses.isEmpty())
+			        	emailToOperations.setToAddresses( lstToOperationAddresses );
+		
+			   	emailToOperations.setSubject( 'Execution Tracker Generated for ' + objAccount.Name);		
+		        String domain = URL.getSalesforceBaseUrl().toExternalForm();
+		     	String TargetLink = domain + '/' + objAccount.Id;
+		     	
+		     	emailToOperations.setHtmlBody('Dear '+objWorkstation.Operations__r.Name+',<br/><br/>Execution Tracker records are filled by MET for "'
+			      								  +objAccount.Name+'". Please look into the Execution Tracker button on the detail page.<br/>Click here : <a href=\''
+				      								  +TargetLink+'\'>'+TargetLink+'</a> <br/><br/> Thanks,<br/>Member Engagement Team');//+objAccount.Owner.Name);
+				      								  
+				//emailToOperations.setSenderDisplayName(objAccount.Owner.Name);
+				emailToOperations.setSenderDisplayName('Member Engagement Team');
+			    // Sends the email to Entity Owner
+		        Messaging.SendEmailResult [] arrOperationResult = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {emailToOperations});
+		        
+	           	//Send Chatter Notification to Operations User
+			 	FeedItem post = new FeedItem();
+				post.ParentId = objWorkstation.Operations__c;
+				post.Body = 'Execution Tracker records are filled by MET for "'
+		      				+objAccount.Name+'". Please look into the Execution Tracker button on the detail page';
+				insert post;
+	        }
+	    }
+		
+		if(!lstAssignToOpsETRecords.isEmpty())	
+			update lstAssignToOpsETRecords;	
+		pageReference pageRef = new pageReference('/apex/ExecutionTracker?entityId='+beanObj.entityId+'&tabname=Financial+Planning');
+		pageRef.setRedirect(true);
+		return pageRef;
+	 }
+	 
+	 //This action is called on Execution Tracker page load.
+	 public void createExecutionTracker()
+	 {
+	 	String urlParameter = Apexpages.currentPage().getParameters().get('navigate');
+	 	String strEntityId = Apexpages.currentPage().getParameters().get('entityId');
+ 		//Added on 24/12/2012 : for Retrieving Family member
+		Set<Id> setFamilyMemberId = new Set<Id>(); 
+		//Added on 31/1/2013 : for Fetching Mailing Address : also added mailing Address fields in getFamilyMembers function od Database SOQL
+		Map<Id,Account> mapFamilyMambers = new Map<Id,Account>();
+		for(Account objAcc : dbSOQLObj.getFamilyMembers(strEntityId))
+		{
+			System.debug('**objAcc.Id' + objAcc.Id); 		
+		    setFamilyMemberId.add(objAcc.Id);
+		    //Added on 31/1/2013 : for Fetching Mailing Address
+		  	mapFamilyMambers.put(objAcc.Id,objAcc);
+		}
+	 	Account objAccount;
+	 	if(urlParameter == 'sidebar')
+	 	{
+ 		 	List<Approve_Action_Plan__c> lstApproveActionPlan = [select Id from Approve_Action_Plan__c where Account__c IN: setFamilyMemberId and AP_Status__c = 'Opened'];
+ 		 	if(lstApproveActionPlan.isEmpty())
+ 		 	{
+ 		 		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO , 'There is no Action Plan generated for this Entity'));
+ 		 		isSidebar = false;
+ 		 		return;
+ 		 	}
+ 		 	
+ 		 	List<Execution_Tracker__c> lstExistingETrecords = [SELECT Id, ParentExecutionTracker__c  FROM Execution_Tracker__c where Entity_Name__c IN: setFamilyMemberId 
+ 		 														and (Application_Status__c = 'Opened' or Application_Status__c = '') and  Is_Floating__c = false];
+		 	if(lstExistingETrecords.size() == 0)
+		 	{
+		 		isSidebar = true;
+			   	 //Retieve all records from Action Plan whose ET to be opened is "Yes"
+		     	 List<Approve_Action_Plan__c> lstActionPlanETrecords = [Select Transaction_Type__c, isExecutionTracker__c, isInsuranceExecutionTracker__c,Tenure_of_Insurance__c, 
+		   		 																Remarks__c, Goal__c , isLumpsumExecTracker__c, Action_Amount__c,Scheme_Name__c,Insured__c,
+		   		 																Amount__c, Product_Name__c, Account__c , SIP_Action_Amount__c,Current_SIP__c ,
+		   		 																Option__c, Installments__c, Item_Type__c , Insurance__r.Premium_Amount_Rs__c,
+		   		 																CreatedDate, Category__c, isSIPexecutionTracker__c ,Investment_Asset__c,Sum_Assured_Rs__c,
+		   		 																Account__r.FirstName, Account__r.LastName ,Account__r.PersonMobilePhone, Account__r.PersonEmail,
+		   		 																Account__r.PersonBirthdate, Account__r.PAN_ID__pc, Policy_Name__c, Insurance__r.Policy_Name__c,
+		   		 																Insurance__r.Sum_Assured_Rs__c, Insurance__r.Suggested_Cover_General_Insurance__c,Insurance__r.Policy_Number__c, 
+		   		 																Account__r.Bank_Account_Number2__c,Insurance__r.Surrender_Cash_Value__c,Insurance__r.Insurance_Company__c,
+		   		 																Account__r.Bank_Name__c, Account__r.Branch_details__c,Account__r.Bank_Account_Type__c,Account__r.MICR_Number__c,
+		   		 																Account__r.IFSC_Number__c ,Account__r.Renewal_Date__c, Insurance__r.Policy_Type__c,Policy_Type__c,
+		   		 																Insurance__r.Entity__r.FirstName,Insurance__r.Entity__r.LastName,InsuranceRemark__c,Fund__c,
+		   		 																Amount_Per_Installment__c,SIP_Action__c,Lumpsum_Action__c 
+		   		 													 	From Approve_Action_Plan__c
+	   		 													 		where Account__c IN : setFamilyMemberId
+	   		 													 		 		and AP_Status__c = 'Opened'
+		   		 																and (isSIPexecutionTracker__c = true or isLumpsumExecTracker__c = true 
+		   		 																or isInsuranceExecutionTracker__c = true or isExecutionTracker__c = true)];
+		   		system.debug('***lstActionPlanETrecords**********'+lstActionPlanETrecords); 							
+			   	List<Execution_Tracker__c>  lstETrecords = new List<Execution_Tracker__c>();
+			   	for(Approve_Action_Plan__c objActionPlan : lstActionPlanETrecords)	
+			   	{
+			   		String strAddress = '';
+			   		//Added on 31/1/2013 : for Fetching Mailing Address
+			   		if(mapFamilyMambers.containsKey(objActionPlan.Account__c))
+			   		{
+			   			Account objAcc = mapFamilyMambers.get(objActionPlan.Account__c);
+			   			objAcc.PersonMailingStreet = objAcc.PersonMailingStreet != null ? objAcc.PersonMailingStreet : ''; 
+			   			objAcc.PersonMailingCity= objAcc.PersonMailingCity != null ? objAcc.PersonMailingCity: '';
+			   			objAcc.PersonMailingState = objAcc.PersonMailingState!= null ? objAcc.PersonMailingState : '';
+			   			objAcc.PersonMailingCountry = objAcc.PersonMailingCountry != null? objAcc.PersonMailingCountry :'';
+			   			objAcc.PersonMailingPostalCode = objAcc.PersonMailingPostalCode != null? objAcc.PersonMailingPostalCode:'';
+			   			
+			   			if(objAcc.PersonMailingStreet != null && objAcc.PersonMailingCity != null && objAcc.PersonMailingState != null || 
+			   							objAcc.PersonMailingCountry != null && objAcc.PersonMailingPostalCode != null )
+			   							if(objAcc.PersonMailingStreet.compareTo('') ==  0 &&
+		   								   objAcc.PersonMailingState.compareTo('') ==  0 &&
+		   							 	   objAcc.PersonMailingCountry.compareTo('') == 0 &&
+		   							 	   objAcc.PersonMailingPostalCode.compareTo('') == 0)
+			   							 		strAddress = '';
+			   							 
+			   			if(objAcc.PersonMailingStreet != null && objAcc.PersonMailingCity != null && objAcc.PersonMailingState != null || 
+			   							objAcc.PersonMailingCountry != null && objAcc.PersonMailingPostalCode != null )
+			   							
+			   							if(objAcc.PersonMailingStreet.compareTo('') ==  0 &&
+			   							   objAcc.PersonMailingState.compareTo('') ==  0 &&
+			   							   objAcc.PersonMailingCity.compareTo('') ==  0 &&
+			   							   objAcc.PersonMailingCountry.compareTo('') == 0 &&
+			   							   objAcc.PersonMailingPostalCode.compareTo('') == 0)
+			   							 		strAddress = '';
+			   							 		
+			   							else if(objAcc.PersonMailingStreet.compareTo('') ==  0 &&
+			   							   objAcc.PersonMailingState.compareTo('') !=  0 &&
+			   							   objAcc.PersonMailingCity.compareTo('') !=  0 &&
+			   							   objAcc.PersonMailingCountry.compareTo('') != 0 &&
+			   							   objAcc.PersonMailingPostalCode.compareTo('') != 0)	
+			   							   strAddress =  objAcc.PersonMailingCity+',\n'+
+							   									objAcc.PersonMailingState+', '+objAcc.PersonMailingCountry+',\n'+
+							   									objAcc.PersonMailingPostalCode+'.';
+			   							 
+			   							else if(objAcc.PersonMailingStreet.compareTo('') !=  0 &&
+			   							   objAcc.PersonMailingState.compareTo('') ==  0 &&
+			   							   objAcc.PersonMailingCity.compareTo('') !=  0 &&
+			   							   objAcc.PersonMailingCountry.compareTo('') != 0 &&
+			   							   objAcc.PersonMailingPostalCode.compareTo('') != 0)	
+			   							   strAddress =  objAcc.PersonMailingStreet+',\n'+
+							   									objAcc.PersonMailingCity+', '+objAcc.PersonMailingCountry+',\n'+
+							   									objAcc.PersonMailingPostalCode+'.';
+							   									
+							   			else if(objAcc.PersonMailingStreet.compareTo('') !=  0 &&
+			   							   objAcc.PersonMailingState.compareTo('') !=  0 &&
+			   							   objAcc.PersonMailingCity.compareTo('') ==  0 &&
+			   							   objAcc.PersonMailingCountry.compareTo('') != 0 &&
+			   							   objAcc.PersonMailingPostalCode.compareTo('') != 0)	
+			   							   strAddress =  objAcc.PersonMailingStreet+', '+objAcc.PersonMailingState+',\n'+
+							   									+objAcc.PersonMailingCountry+',\n'+
+							   									objAcc.PersonMailingPostalCode+'.';	
+							   									
+							   			else if(objAcc.PersonMailingStreet.compareTo('') !=  0 &&
+			   							   objAcc.PersonMailingState.compareTo('') !=  0 &&
+			   							   objAcc.PersonMailingCity.compareTo('') !=  0 &&
+			   							   objAcc.PersonMailingCountry.compareTo('') == 0 &&
+			   							   objAcc.PersonMailingPostalCode.compareTo('') != 0)	
+			   							   strAddress =  objAcc.PersonMailingStreet+', '+objAcc.PersonMailingState+',\n'+objAcc.PersonMailingCity+
+							   									',\n'+objAcc.PersonMailingPostalCode+'.';	
+							   									
+							   			else if(objAcc.PersonMailingStreet.compareTo('') !=  0 &&
+			   							   objAcc.PersonMailingState.compareTo('') !=  0 &&
+			   							   objAcc.PersonMailingCity.compareTo('') !=  0 &&
+			   							   objAcc.PersonMailingCountry.compareTo('') != 0 &&
+			   							   objAcc.PersonMailingPostalCode.compareTo('') == 0)	
+			   							   strAddress =  objAcc.PersonMailingStreet+', '+objAcc.PersonMailingState+',\n'+objAcc.PersonMailingCity+
+							   									',\n'+objAcc.PersonMailingCountry+'.';												
+			   							 else	 
+							   			{
+							   				strAddress = objAcc.PersonMailingStreet+', '+objAcc.PersonMailingCity+',\n'+
+							   									objAcc.PersonMailingState+', '+objAcc.PersonMailingCountry+',\n'+
+							   									objAcc.PersonMailingPostalCode+'.';
+						   					system.debug('******strAddress******'+strAddress);
+							   			}
+			   			else
+			   			{
+			   				strAddress = '';
+			   			}
+			   			
+			   		}		
+			   		
+			   		//Mutual Fund Lumpsum
+			   		if(objActionPlan.isExecutionTracker__c)
+			   		{
+			   			system.debug('****objActionPlan.Id***********'+objActionPlan);
+			   			Execution_Tracker__c objActionPlanMF = new Execution_Tracker__c();
+			   			objActionPlanMF.Approve_Action_Plan__c = objActionPlan.Id;
+			   			objActionPlanMF.Entity_Name__c = 	objActionPlan.Account__c;
+			   			objActionPlanMF.Goal__c = objActionPlan.Goal__c;
+			   			objActionPlanMF.ET_Status__c = 'Assigned to MET';
+			   			objActionPlanMF.Type__c = 'Lumpsum';
+			   			objActionPlanMF.Suggested_Amount__c = objActionPlan.Action_Amount__c;
+<<<<<<< .mine
+		   			 	objActionPlanMF.Actual_Action_Amount__c = objActionPlan.Action_Amount__c;
+	   			 	 	objActionPlanMF.Agreed_Amount_Base_Amount__c =  objActionPlan.Action_Amount__c;
+=======
+		   			 	objActionPlanMF.Actual_Action_Amount__c = objActionPlan.Action_Amount__c;
+>>>>>>> .r13960
+			   			objActionPlanMF.Amount__c = objActionPlan.Amount__c;
+			   			objActionPlanMF.Investor_Name_as_in_PAN_card__c = objActionPlan.Account__r.FirstName +' '+ objActionPlan.Account__r.LastName;
+			   			objActionPlanMF.Mobile__c = objActionPlan.Account__r.PersonMobilePhone;
+			   			objActionPlanMF.Email__c = objActionPlan.Account__r.PersonEmail;
+			   			objActionPlanMF.DOB__c = objActionPlan.Account__r.PersonBirthdate;
+			   			objActionPlanMF.PAN__c = objActionPlan.Account__r.PAN_ID__pc;
+			   			objActionPlanMF.Account_Number__c = objActionPlan.Account__r.Bank_Account_Number2__c;
+			   			objActionPlanMF.Bank_Name__c = objActionPlan.Account__r.Bank_Name__c;
+			   			objActionPlanMF.Branch_Address__c = objActionPlan.Account__r.Branch_details__c;
+			   			objActionPlanMF.Account_Type__c = objActionPlan.Account__r.Bank_Account_Type__c;
+			   			objActionPlanMF.MICR_Code__c = objActionPlan.Account__r.MICR_Number__c;
+			   			objActionPlanMF.Scheme_Name_Policy_Name__c = objActionPlan.Scheme_Name__c;
+			   			objActionPlanMF.IFSC_Code__c = objActionPlan.Account__r.IFSC_Number__c; 
+			   			objActionPlanMF.Renewal_Date__c = objActionPlan.Account__r.Renewal_Date__c;
+			   			objActionPlanMF.Communication_Address__c = strAddress;
+			   			system.debug('***Communication_Address__c'+objActionPlanMF.Communication_Address__c);
+			   			system.debug('***strAddress'+strAddress);
+   			            //Added on 22/3/13 : Aditi Satpute : To open different screens depending on Action for Ops Team
+                        objActionPlanMF.Action__c = objActionPlan.Lumpsum_Action__c;
+			   			/*Below change done by Gaurav - 7/2/2013 
+			   			  	  Changes in Scheme name = Schme name policy
+			   			 	  Purpose: Execution Tracker changes 
+			   			*/
+			   			objActionPlanMF.Agreed_Amount__c = objActionPlanMF.Suggested_Amount__c;
+			   			objActionPlanMF.Executed_Product_Name__c = objActionPlan.Scheme_Name__c;
+			   			lstETrecords.add(objActionPlanMF); 
+			   		}
+			   		//Mutual Fund Running SIP & SIP Funds
+			   		if(objActionPlan.isSIPexecutionTracker__c)
+			   		{
+			   			Execution_Tracker__c objActionPlanMF = new Execution_Tracker__c();
+			   			objActionPlanMF.Approve_Action_Plan__c = objActionPlan.Id;
+			   			objActionPlanMF.Entity_Name__c = 	objActionPlan.Account__c;
+			   			objActionPlanMF.Goal__c = objActionPlan.Goal__c;
+			   			objActionPlanMF.ET_Status__c = 'Assigned to MET';
+			   			objActionPlanMF.Type__c = 'SIP';
+			   			objActionPlanMF.Mobile__c = objActionPlan.Account__r.PersonMobilePhone;
+			   			objActionPlanMF.Email__c = objActionPlan.Account__r.PersonEmail;
+			   			objActionPlanMF.DOB__c = objActionPlan.Account__r.PersonBirthdate;
+			   			objActionPlanMF.PAN__c = objActionPlan.Account__r.PAN_ID__pc;
+			   			objActionPlanMF.Account_Number__c = objActionPlan.Account__r.Bank_Account_Number2__c;
+			   			objActionPlanMF.Bank_Name__c = objActionPlan.Account__r.Bank_Name__c;
+			   			objActionPlanMF.Branch_Address__c = objActionPlan.Account__r.Branch_details__c;
+			   			objActionPlanMF.Account_Type__c = objActionPlan.Account__r.Bank_Account_Type__c;
+			   			objActionPlanMF.MICR_Code__c = objActionPlan.Account__r.MICR_Number__c;
+			   			objActionPlanMF.IFSC_Code__c = objActionPlan.Account__r.IFSC_Number__c;
+			   			objActionPlanMF.Renewal_Date__c = objActionPlan.Account__r.Renewal_Date__c;
+			   			objActionPlanMF.Communication_Address__c = strAddress;
+			   			if(objActionPlan.Investment_Asset__c != null)
+			   			{
+			   				objActionPlanMF.Suggested_Amount__c = objActionPlan.SIP_Action_Amount__c;
+<<<<<<< .mine
+			   				objActionPlanMF.Actual_Action_Amount__c = objActionPlan.SIP_Action_Amount__c;
+			   				objActionPlanMF.Agreed_Amount_Base_Amount__c =  objActionPlan.SIP_Action_Amount__c;
+=======
+			   				objActionPlanMF.Actual_Action_Amount__c = objActionPlan.SIP_Action_Amount__c;
+>>>>>>> .r13960
+			   				objActionPlanMF.Amount__c = objActionPlan.Current_SIP__c;
+			   				objActionPlanMF.Investor_Name_as_in_PAN_card__c = objActionPlan.Account__r.FirstName +' '+ objActionPlan.Account__r.LastName;
+			   				objActionPlanMF.Scheme_Name_Policy_Name__c = objActionPlan.Scheme_Name__c;
+			   				
+			   				/*Below change done by Gaurav - 7/2/2013 
+			   			  	  Changes in Scheme name = Schme name policy
+			   			 	  Purpose: Execution Tracker changes 
+			   				*/
+			   				objActionPlanMF.Agreed_Amount__c = objActionPlanMF.Suggested_Amount__c;
+			   				objActionPlanMF.Executed_Product_Name__c =  objActionPlan.Scheme_Name__c;
+			   				//Added on 22/3/13 : Aditi Satpute : To open different screens depending on Action for Ops Team
+                         	objActionPlanMF.Action__c = objActionPlan.SIP_Action__c;
+			   			}
+			   			else//SIP Funds
+			   			{
+			   				objActionPlanMF.Suggested_Amount__c = objActionPlan.Amount__c;
+<<<<<<< .mine
+			   				objActionPlanMF.Actual_Action_Amount__c = objActionPlan.Amount__c;
+			   				objActionPlanMF.Agreed_Amount_Base_Amount__c =  objActionPlan.Amount__c;
+=======
+			   				objActionPlanMF.Actual_Action_Amount__c = objActionPlan.Amount__c;
+>>>>>>> .r13960
+			   				objActionPlanMF.Option__c = objActionPlan.Option__c;
+			   				objActionPlanMF.Transaction_Type__c = objActionPlan.Transaction_Type__c;
+			   				objActionPlanMF.SIP_Installments__c = objActionPlan.Installments__c;
+			   				objActionPlanMF.Scheme_Name_Policy_Name__c = objActionPlan.Product_Name__c;
+			   				
+			   				/*Below change done by Gaurav - 7/2/2013 
+			   			  	  Changes in Scheme name = Schme name policy
+			   			 	  Purpose: Execution Tracker changes 
+			   				*/
+			   				objActionPlanMF.Executed_Product_Name__c = objActionPlan.Product_Name__c;
+			   				objActionPlanMF.Agreed_Amount__c = objActionPlanMF.Suggested_Amount__c;
+		   				  	//Added on : 20/3/13 : Aditi Satpute : ET Screen Changes
+							objActionPlanMF.Agreed_Installments__c = objActionPlan.Installments__c;
+			   			}
+			   			lstETrecords.add(objActionPlanMF);
+			   		} 
+			   		//Lumpsum Funds
+			   		if(objActionPlan.isLumpsumExecTracker__c)
+			   		{
+			   			Execution_Tracker__c objActionPlanMF = new Execution_Tracker__c();
+			   			objActionPlanMF.Approve_Action_Plan__c = objActionPlan.Id;
+			   			objActionPlanMF.Entity_Name__c = 	objActionPlan.Account__c;
+			   			objActionPlanMF.Goal__c = objActionPlan.Goal__c;
+			   			objActionPlanMF.ET_Status__c = 'Assigned to MET';
+			   			objActionPlanMF.Type__c = 'Lumpsum';
+			   			objActionPlanMF.Suggested_Amount__c = objActionPlan.Amount__c;
+<<<<<<< .mine
+			   			objActionPlanMF.Actual_Action_Amount__c = objActionPlan.Amount__c;
+			   			objActionPlanMF.Agreed_Amount_Base_Amount__c =  objActionPlan.Amount__c;
+=======
+			   			objActionPlanMF.Actual_Action_Amount__c = objActionPlan.Amount__c;
+>>>>>>> .r13960
+			   			objActionPlanMF.Option__c = objActionPlan.Option__c;
+			   			objActionPlanMF.Transaction_Type__c = objActionPlan.Transaction_Type__c;
+			   			objActionPlanMF.Mobile__c = objActionPlan.Account__r.PersonMobilePhone;
+			   			objActionPlanMF.Email__c = objActionPlan.Account__r.PersonEmail;
+			   			objActionPlanMF.DOB__c = objActionPlan.Account__r.PersonBirthdate;
+			   			objActionPlanMF.PAN__c = objActionPlan.Account__r.PAN_ID__pc;
+			   			objActionPlanMF.Account_Number__c = objActionPlan.Account__r.Bank_Account_Number2__c;
+			   			objActionPlanMF.Bank_Name__c = objActionPlan.Account__r.Bank_Name__c;
+			   			objActionPlanMF.Branch_Address__c = objActionPlan.Account__r.Branch_details__c;
+			   			objActionPlanMF.Account_Type__c = objActionPlan.Account__r.Bank_Account_Type__c;
+			   			objActionPlanMF.MICR_Code__c = objActionPlan.Account__r.MICR_Number__c;
+			   			objActionPlanMF.IFSC_Code__c = objActionPlan.Account__r.IFSC_Number__c;
+			   			objActionPlanMF.Renewal_Date__c = objActionPlan.Account__r.Renewal_Date__c;
+			   			objActionPlanMF.Scheme_Name_Policy_Name__c = objActionPlan.Product_Name__c;
+			   			objActionPlanMF.Communication_Address__c = strAddress;
+			   			/*Below change done by Gaurav - 7/2/2013 
+			   			  Changes in Scheme name = Schme name policy
+			   			  Purpose: Execution Tracker changes 
+			   			*/
+			   			objActionPlanMF.Executed_Product_Name__c =  objActionPlan.Product_Name__c;
+			   			//objActionPlanMF.Executed_Product_Name__c = objActionPlanMF.Scheme_Name_Policy_Name__c;
+			   			objActionPlanMF.Agreed_Amount__c = objActionPlanMF.Suggested_Amount__c;
+			   			//Added on : 20/3/13 : Aditi Satpute : ET Screen Changes
+                        objActionPlanMF.Agreed_Amount_Per_Installment__c = objActionPlan.Amount_Per_Installment__c;
+						objActionPlanMF.Agreed_Installments__c = objActionPlan.Installments__c;
+						objActionPlanMF.Agreed_Scheme_Name_to__c = objActionPlan.Fund__c;
+						
+			   			lstETrecords.add(objActionPlanMF);
+			   		}
+			   		//Life Insurance & General Insurance
+			   		if(objActionPlan.isInsuranceExecutionTracker__c)
+			   		{
+			   			
+			   			if(objActionPlan.Item_Type__c.equals('Life Insurance') || objActionPlan.Item_Type__c.equals('General Insurance'))
+                    	{
+				   			Execution_Tracker__c objActionPlanMF = new Execution_Tracker__c();
+				   			objActionPlanMF.Approve_Action_Plan__c = objActionPlan.Id;
+				   			objActionPlanMF.Entity_Name__c = objActionPlan.Account__c;
+				   			objActionPlanMF.Goal__c = objActionPlan.Goal__c;
+				   			objActionPlanMF.ET_Status__c = 'Assigned to MET';
+				   			objActionPlanMF.Type__c = objActionPlan.Item_Type__c;
+				   			objActionPlanMF.Asset_Class_Policy_Type__c = objActionPlan.Insurance__r.Policy_Type__c;
+				   			if(objActionPlan.Item_Type__c.equals('Life Insurance'))
+				   			{
+				   				objActionPlanMF.Policy_Name__c = objActionPlan.Policy_Name__c;
+				   				objActionPlanMF.Scheme_Name_Policy_Name__c = objActionPlan.Policy_Name__c;
+			   					//Added on:18/03/2013 : Aditi Satpute : ET changes 
+				   				objActionPlanMF.Term_No_Of_Years__c = objActionPlan.Tenure_of_Insurance__c;
+				   				if(objActionPlan.Insurance__r.Entity__r.LastName == null)
+				          		{
+				          			objActionPlanMF.Insured_Name__c = objActionPlan.Insurance__r.Entity__r.FirstName;
+				          		}
+				          		else if(objActionPlan.Insurance__r.Entity__r.FirstName == null )
+				          		{
+				          			objActionPlanMF.Insured_Name__c = objActionPlan.Insurance__r.Entity__r.LastName;
+				          		}
+				          		else if(objActionPlan.Insurance__r.Entity__r.LastName != null && objActionPlan.Insurance__r.Entity__r.FirstName != null)
+				          		{
+				          			objActionPlanMF.Insured_Name__c = objActionPlan.Insurance__r.Entity__r.FirstName +' '+ objActionPlan.Insurance__r.Entity__r.LastName;
+				          		}
+				          		else 
+				          		{
+				          			objActionPlanMF.Insured_Name__c = '';
+				          		}
+				   				//objActionPlanMF.Remarks__c = objActionPlan.InsuranceRemark__c;
+				   				/*Below change done by Gaurav - 7/2/2013 
+				   				  Changes in Scheme name = Schme name policy and suggested amount = suggested cover amount
+				   				  Purpose: Execution Tracker changes 
+				   				*/
+				   				objActionPlanMF.Executed_Product_Name__c = objActionPlan.Policy_Name__c != null ? objActionPlan.Policy_Name__c : objActionPlan.Insurance__r.Policy_Type__c;
+				   				/*Changed Suggested Amount from Suggested cover to SumAssured 
+	                              Date : 18/3/13 : Aditi Satpute : ET changes : Suggested by Vinita*/
+	                            //objActionPlanMF.Suggested_Amount__c = objActionPlan.Insurance__r.Suggested_Cover_General_Insurance__c;
+	                            objActionPlanMF.Suggested_Amount__c = objActionPlan.Sum_Assured_Rs__c;
+				   				objActionPlanMF.Agreed_Amount__c = objActionPlanMF.Suggested_Amount__c;
+<<<<<<< .mine
+				   				objActionPlanMF.Actual_Action_Amount__c = objActionPlan.Sum_Assured_Rs__c;
+				   				objActionPlanMF.Agreed_Amount_Base_Amount__c =  objActionPlan.Sum_Assured_Rs__c;
+=======
+				   				objActionPlanMF.Actual_Action_Amount__c = objActionPlan.Sum_Assured_Rs__c;
+				   				
+>>>>>>> .r13960
+				   				//Added on:18/02/2013 : Aditi Satpute : AP changes 
+				   				objActionPlanMF.Sum_Assured__c = objActionPlan.Sum_Assured_Rs__c;
+				   			}
+							else
+							{
+								//Commented on:18/02/2013 : Aditi Satpute : AP changes : remove Policy Name
+								//objActionPlanMF.Policy_Name__c = objActionPlan.Insurance__r.Policy_Name__c;
+								
+								//Added on:18/02/2013 : Aditi Satpute : AP changes : remove Policy Name
+								objActionPlanMF.Policy_Name__c = objActionPlan.Product_Name__c;
+								
+								//Added on:18/02/2013 : Aditi Satpute : AP changes : remove Policy Name
+								objActionPlanMF.Scheme_Name_Policy_Name__c = objActionPlan.Product_Name__c;
+								
+								//Added on:18/02/2013 : Aditi Satpute : AP changes : remove Policy Name
+								objActionPlanMF.Executed_Product_Name__c = objActionPlan.Product_Name__c!=null ? objActionPlan.Product_Name__c:objActionPlan.Policy_Type__c;
+								
+								//Commented on:19/02/2013 : Aditi Satpute : AP changes : Added new GI records
+								//objActionPlanMF.Sum_Assured__c = objActionPlan.Insurance__r.Sum_Assured_Rs__c;
+								
+								//Added on:19/02/2013 : Aditi Satpute : AP changes : Added new GI records
+								objActionPlanMF.Sum_Assured__c = objActionPlan.Sum_Assured_Rs__c;
+								objActionPlanMF.Asset_Class_Policy_Type__c = objActionPlan.Policy_Type__c;
+								
+								//Added on:19/03/2013 : Aditi Satpute : ET changes
+								objActionPlanMF.Insured_Name__c = objActionPlan.Insured__c;
+								
+								/*Below change done by Gaurav - 7/2/2013 
+				   				  Changes in Scheme name = Schme name policy and suggested amount = suggested cover amount
+				   				  Purpose: Execution Tracker changes 
+				   				  Old :  //objActionPlanMF.Suggested_Amount__c = objActionPlan.Insurance__r.Premium_Amount_Rs__c;
+				   				*/
+								objActionPlanMF.Suggested_Amount__c =  objActionPlanMF.Sum_Assured__c;
+<<<<<<< .mine
+								objActionPlanMF.Actual_Action_Amount__c = objActionPlanMF.Sum_Assured__c;
+								objActionPlanMF.Agreed_Amount_Base_Amount__c =  objActionPlanMF.Sum_Assured__c;
+=======
+								objActionPlanMF.Actual_Action_Amount__c = objActionPlanMF.Sum_Assured__c;
+>>>>>>> .r13960
+								objActionPlanMF.Agreed_Amount__c = objActionPlanMF.Suggested_Amount__c;
+							}
+				   			objActionPlanMF.Policy_Number__c = objActionPlan.Insurance__r.Policy_Number__c;
+				   			objActionPlanMF.Mobile__c = objActionPlan.Account__r.PersonMobilePhone;
+				   			objActionPlanMF.Email__c = objActionPlan.Account__r.PersonEmail;
+				   			objActionPlanMF.DOB__c = objActionPlan.Account__r.PersonBirthdate;
+				   			objActionPlanMF.PAN__c = objActionPlan.Account__r.PAN_ID__pc;
+				   			objActionPlanMF.Account_Number__c = objActionPlan.Account__r.Bank_Account_Number2__c;
+				   			objActionPlanMF.Bank_Name__c = objActionPlan.Account__r.Bank_Name__c;
+				   			objActionPlanMF.Branch_Address__c = objActionPlan.Account__r.Branch_details__c;
+				   			objActionPlanMF.Account_Type__c = objActionPlan.Account__r.Bank_Account_Type__c;
+				   			objActionPlanMF.MICR_Code__c = objActionPlan.Account__r.MICR_Number__c;
+				   			objActionPlanMF.IFSC_Code__c = objActionPlan.Account__r.IFSC_Number__c;
+				   			objActionPlanMF.Renewal_Date__c = objActionPlan.Account__r.Renewal_Date__c;
+				   			objActionPlanMF.Communication_Address__c = strAddress;
+				   		
+				   			lstETrecords.add(objActionPlanMF);
+                    	}
+                    	else if(objActionPlan.Item_Type__c.equals('Recommended Insurance'))
+                        {
+                        	Execution_Tracker__c objActionPlanMF = new Execution_Tracker__c();
+	                        objActionPlanMF.Approve_Action_Plan__c = objActionPlan.Id;
+	                        objActionPlanMF.Entity_Name__c = objActionPlan.Account__c;
+	                        objActionPlanMF.Goal__c = objActionPlan.Goal__c;
+	                        objActionPlanMF.ET_Status__c = 'Assigned to MET';
+	                        objActionPlanMF.Type__c = objActionPlan.Item_Type__c;
+	                        if(objActionPlan.Insurance__r.Entity__r.LastName == null)
+			          		{
+			          			objActionPlanMF.Insured_Name__c = objActionPlan.Insurance__r.Entity__r.FirstName;
+			          			objActionPlanMF.Nominee__c = objActionPlan.Insurance__r.Entity__r.FirstName;
+			          			
+			          		}
+			          		else if(objActionPlan.Insurance__r.Entity__r.FirstName == null )
+			          		{
+			          			objActionPlanMF.Insured_Name__c = objActionPlan.Insurance__r.Entity__r.LastName;
+		          				objActionPlanMF.Nominee__c = objActionPlan.Insurance__r.Entity__r.LastName;
+			          		}
+			          		else if(objActionPlan.Insurance__r.Entity__r.LastName != null && objActionPlan.Insurance__r.Entity__r.FirstName != null)
+			          		{
+			          			objActionPlanMF.Insured_Name__c = objActionPlan.Insurance__r.Entity__r.FirstName +' '+ objActionPlan.Insurance__r.Entity__r.LastName;
+		          				objActionPlanMF.Nominee__c = objActionPlan.Insurance__r.Entity__r.FirstName +' '+ objActionPlan.Insurance__r.Entity__r.LastName;
+			          		}
+			          		else 
+			          		{
+			          			objActionPlanMF.Insured_Name__c = '';
+		          				objActionPlanMF.Nominee__c = '';
+			          		}
+			          		
+			          		objActionPlanMF.Executed_Product_Name__c = objActionPlan.Insurance__r.Insurance_Company__c;
+			          		objActionPlanMF.Policy_Name__c = objActionPlan.Insurance__r.Policy_Name__c;
+                            objActionPlanMF.Scheme_Name_Policy_Name__c = objActionPlan.Insurance__r.Policy_Name__c;
+                            objActionPlanMF.Asset_Class_Policy_Type__c = objActionPlan.Insurance__r.Policy_Type__c;
+                            objActionPlanMF.Premium__c  = objActionPlan.Insurance__r.Premium_Amount_Rs__c;
+                            objActionPlanMF.Insurance_Company__c = objActionPlan.Insurance__r.Insurance_Company__c;
+                            objActionPlanMF.Suggested_Amount__c = objActionPlan.Insurance__r.Surrender_Cash_Value__c;
+<<<<<<< .mine
+                            objActionPlanMF.Actual_Action_Amount__c = objActionPlan.Insurance__r.Surrender_Cash_Value__c;
+                            objActionPlanMF.Agreed_Amount_Base_Amount__c = objActionPlan.Insurance__r.Surrender_Cash_Value__c;
+=======
+                            objActionPlanMF.Actual_Action_Amount__c = objActionPlan.Insurance__r.Surrender_Cash_Value__c;
+>>>>>>> .r13960
+                            //Tracker is opened for this value : Surrender Cash Value
+                            objActionPlanMF.Agreed_Amount__c = objActionPlan.Insurance__r.Surrender_Cash_Value__c;
+                        	objActionPlanMF.Policy_Number__c = objActionPlan.Insurance__r.Policy_Number__c;
+	                        objActionPlanMF.Mobile__c = objActionPlan.Account__r.PersonMobilePhone;
+	                        objActionPlanMF.Email__c = objActionPlan.Account__r.PersonEmail;
+	                        objActionPlanMF.DOB__c = objActionPlan.Account__r.PersonBirthdate;
+	                        objActionPlanMF.PAN__c = objActionPlan.Account__r.PAN_ID__pc;
+	                        objActionPlanMF.Account_Number__c = objActionPlan.Account__r.Bank_Account_Number2__c;
+	                        objActionPlanMF.Bank_Name__c = objActionPlan.Account__r.Bank_Name__c;
+	                        objActionPlanMF.Branch_Address__c = objActionPlan.Account__r.Branch_details__c;
+	                        objActionPlanMF.Account_Type__c = objActionPlan.Account__r.Bank_Account_Type__c;
+	                        objActionPlanMF.MICR_Code__c = objActionPlan.Account__r.MICR_Number__c;
+	                        objActionPlanMF.IFSC_Code__c = objActionPlan.Account__r.IFSC_Number__c;
+	                        objActionPlanMF.Renewal_Date__c = objActionPlan.Account__r.Renewal_Date__c;
+	                        objActionPlanMF.Communication_Address__c = strAddress;
+	                        
+	                        lstETrecords.add(objActionPlanMF);
+                        }
+			   		}
+			   	}	
+	     		system.debug('********lstETrecords*************'+lstETrecords);
+				Messaging.SingleEmailMessage emailToEntity = new Messaging.SingleEmailMessage();
+				Messaging.SingleEmailMessage emailToMet = new Messaging.SingleEmailMessage();
+				
+			    List<String> lstToEntityOwnerAddresses = new List<String>();
+				List<String> lstToMetAddresses = new List<String>();
+				List<Execution_Tracker__c> lstETrecordsWithMETowner = new List<Execution_Tracker__c>();
+				Contact objContact = new Contact();
+		        Account objBPAccount = new Account();
+			    objAccount = [Select Id, Name, Related_To__c, OwnerId,owner.name from Account where Id =: strEntityId];
+			   	System.debug('-------------------------objAccount-----------'+objAccount);
+			   	Map<Id,User> mapIdToUser = new Map<Id,User>([select Id,Name,ContactId , ManagerId, Email from User]);
+			   	
+			   	if(objAccount != null)
+			    {
+			        //Send Email to Entity Owner & MET - If Entity is Business Partner Entity
+			        System.debug('-----------------objAccount.Related_To__c---------------------'+objAccount.Related_To__c);
+			        if(objAccount.Related_To__c == 'Business Partner')
+			        {
+			        	lstToMetAddresses = new List<String>();
+			        	lstToEntityOwnerAddresses = new List<String>();
+			        	lstETrecordsWithMETowner = new List<Execution_Tracker__c>();
+			        	
+			        	emailToMet = new Messaging.SingleEmailMessage();
+			        	emailToEntity = new Messaging.SingleEmailMessage();
+			        	
+			        	//Send Email to Entity Owner
+				    	if(mapIdToUser.containsKey(objAccount.OwnerId))
+				    	{
+				    		User objBPEntityOwnerUser = mapIdToUser.get(objAccount.OwnerId);
+			                if(objBPEntityOwnerUser.ContactId!=null)
+			                {
+			                    //To fetch Contact of that particular BP User
+			                    objContact=[select AccountId from Contact where id =: objBPEntityOwnerUser.ContactId];
+			                    //To fetch Account with previously fetched Contact
+			                    objBPAccount=[select Id, Email_ID__c, OwnerId, Channel_Manager__c,  Channel_Manager__r.Name,IsCreatedByPartner__c, Phone, Name from Account where id =: objContact.AccountId];    
+			                }
+				    		//User objBPAccountUser = mapIdToUser.get(objBPAccount.OwnerId);
+					    	
+					    	if(objBPEntityOwnerUser.Email != null)
+				    			lstToEntityOwnerAddresses.add(objBPEntityOwnerUser.Email);
+				    		if(!lstToEntityOwnerAddresses.isEmpty())
+					        	emailToEntity.setToAddresses( lstToEntityOwnerAddresses);
+					        
+					        emailToEntity.setSubject( 'Execution Tracker Generated for ' + objAccount.Name);		
+					      	emailToEntity.setHtmlBody('Dear '+objAccount.Owner.Name+',<br/><br/>Action Plan is being generated and Execution Tracker records of "'
+					      								+objAccount.Name+'" are being created for the Member Engagement Team.<br/><br/>'
+					      								+'Thanks<br/>'+ objBPAccount.Channel_Manager__r.Name);
+							emailToEntity.setSenderDisplayName(objBPAccount.Channel_Manager__r.Name);
+							
+					        // Sends the email Notification to Entity Owner
+					        Messaging.SendEmailResult [] arrBPEntityOwnerResult = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {emailToEntity});
+					        
+					         //Send Chatter Notification to Entity Owner
+						 /*	FeedItem entityPost = new FeedItem();
+							entityPost.ParentId = objBPAccount.Channel_Manager__r;
+							entityPost.Body = 'Action Plan is being generated and Execution Tracker records of "'
+												+objAccount.Name+'" are being created for the Member Engagement Team.';
+							insert entityPost;*/
+				    	}
+			        	
+			        	//Send Email to Bussiness Partner's MET
+			        	if(mapIdToUser.containsKey(objAccount.OwnerId))
+			    		{
+				        	User objBusinessEntityUser = mapIdToUser.get(objAccount.OwnerId);
+				        	List<Workstation__c> lstBPWorkstation = [Select Member_Engagement__c, Member_Engagement__r.Name, Financial_Planner__c 
+				        										From Workstation__c 
+				        										where Financial_Planner__c = : objBPAccount.Channel_Manager__c];
+				        	if(lstBPWorkstation.isEmpty())
+	   						{
+								ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO , 'Please add Entity Owner as Financial Planner in Workstation'));
+            					
+			   				}			
+			   				else
+			   				{							
+					        	if(mapIdToUser.containsKey(objBPAccount.Channel_Manager__c))	
+					        	{								
+						        	User objChannelManagerUser = mapIdToUser.get(objBPAccount.Channel_Manager__c);
+								   	if(lstBPWorkstation[0].Member_Engagement__c != null)
+								    {
+								    	if(mapIdToUser.containsKey(lstBPWorkstation[0].Member_Engagement__c))
+								    	{
+								    		User objBusinessPartnerMetUser = mapIdToUser.get(lstBPWorkstation[0].Member_Engagement__c);
+								    		if(objBusinessPartnerMetUser.Email != null)
+							    				lstToMetAddresses.add(objBusinessPartnerMetUser.Email);
+							    			if(!lstToMetAddresses.isEmpty())
+							    			 emailToMet.setToAddresses( lstToMetAddresses );
+								    	}
+								    }
+								    
+								   	emailToMet.setSubject( 'Execution Tracker Generated for ' + objAccount.Name);		
+							        String domain = URL.getSalesforceBaseUrl().toExternalForm();
+							     	String TargetLink = domain + '/' + objAccount.Id;
+							     	
+							      	emailToMet.setHtmlBody('Dear '+lstBPWorkstation[0].Member_Engagement__r.Name+',<br/><br/>Action Plan has been generated for "'
+							      								  +objAccount.Name+'" and executions can be done. Please go through the related Execution Trackers.<br/>Click here : <a href=\''
+							      								  +TargetLink+'\'>'+TargetLink+'</a> <br/><br/> Thanks,<br/>'+objChannelManagerUser.Name);
+									emailToMet.setSenderDisplayName(objChannelManagerUser.Name);
+									
+									for(Execution_Tracker__c objAssignMetOwner : lstETrecords)
+									{
+										objAssignMetOwner.Owner__c = lstBPWorkstation[0].Member_Engagement__c;
+										objAssignMetOwner.Send_Email__c = true;
+										objAssignMetOwner.Send_Email_Datetime__c = System.now();
+										objAssignMetOwner.Send_SMS__c = true;
+										objAssignMetOwner.Send_SMS_Datetime__c = System.now();
+										lstETrecordsWithMETowner.add(objAssignMetOwner);
+									}
+									//insert ET records  into data base with Owner as MET
+									if(!lstETrecordsWithMETowner.isEmpty())			
+										insert lstETrecordsWithMETowner;
+									system.debug('***********lstETrecordsWithMETowner***************'+lstETrecordsWithMETowner);	
+									//Sends the mail Notification to MET
+								   	Messaging.SendEmailResult [] arrBusinessPartnerMetResult = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {emailToMet});
+								   	
+								 	//Send Chatter Notification to MET
+								   	FeedItem post = new FeedItem();
+									post.ParentId = lstBPWorkstation[0].Member_Engagement__c;
+									post.Body = 'Action Plan has been generated for "' +objAccount.Name+ '" and executions can be done.'+
+									 			 'Please look into the related Execution Trackers.';
+									insert post;
+					        	}
+			    			}
+			    		}
+			        }
+			        //if Entity is Ffreedom Entity or Virtual PArtner Entity
+			        else 
+			        {
+			        	lstToMetAddresses = new List<String>();
+			        	lstToEntityOwnerAddresses = new List<String>();
+			        	emailToMet = new Messaging.SingleEmailMessage();
+			        	emailToEntity = new Messaging.SingleEmailMessage();
+			        	//Send Email to Entity Owner
+				    	/*if(mapIdToUser.containsKey(objAccount.OwnerId))
+				    	{
+				    		User objEntityOwnerUser = mapIdToUser.get(objAccount.OwnerId);
+					    	if(objEntityOwnerUser.Email != null)
+				    			lstToEntityOwnerAddresses.add(objEntityOwnerUser.Email);
+				    		if(!lstToEntityOwnerAddresses.isEmpty())
+					        	emailToEntity.setToAddresses( lstToEntityOwnerAddresses );
+					        
+					        emailToEntity.setSubject( 'Execution Tracker Generated for ' + objAccount.Name);		
+					      	emailToEntity.setHtmlBody('Dear '+objAccount.Owner.Name+',<br/><br/>Action Plan is being generated and Execution Tracker records of "'
+					      								+objAccount.Name+'" are being created for the Member Engagement Team.<br/><br/> Thanks');
+							emailToEntity.setSenderDisplayName(objAccount.Owner.Name);
+							
+					        // Sends the email Notification to Entity Owner
+					        Messaging.SendEmailResult [] arrEntityOwnerResult = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {emailToEntity});
+					        
+					        //Send Chatter Notification to Entity Owner
+						 	FeedItem entityPost = new FeedItem();
+							entityPost.ParentId = objAccount.OwnerId;
+							entityPost.Body = 'Action Plan is being generated and Execution Tracker records of "'
+												+objAccount.Name+'" are being created for the Member Engagement Team.';
+							if(!Test.isRunningTest())
+								insert entityPost;
+				    	}*/
+				    	//Send Email to Ffreedom/Virtual Partner Entity's MET 
+				        //Query to fetch MET record from workstation
+				        System.debug('----------------------------ownerId-----'+objAccount.OwnerId);
+					   	List<Workstation__c> lstWorkstation = [Select Member_Engagement__c, Member_Engagement__r.Name, Financial_Planner__c 
+					   									 From Workstation__c 
+					   									 where Financial_Planner__c = : objAccount.OwnerId];
+					   	if(lstWorkstation.isEmpty())
+			   			{
+							ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO , 'Please add Entity Owner as Financial Planner in Workstation'));
+				   		}
+				   		else
+				   		{							 
+						   	if(lstWorkstation[0].Member_Engagement__c != null)
+						    {
+						    	if(mapIdToUser.containsKey(lstWorkstation[0].Member_Engagement__c))
+								{
+							    	User objMetUser = mapIdToUser.get(lstWorkstation[0].Member_Engagement__c);
+							    	if(objMetUser.Email != null)
+						    			lstToMetAddresses.add(objMetUser.Email);
+						    		if(!lstToMetAddresses.isEmpty())
+						    			emailToMet.setToAddresses( lstToMetAddresses );
+								}
+						    }
+						   	emailToMet.setSubject( 'Execution Tracker Generated for ' + objAccount.Name);		
+					        String domain = URL.getSalesforceBaseUrl().toExternalForm();
+					     	String TargetLink = domain + '/' + objAccount.Id;
+					     	
+					      	emailToMet.setHtmlBody('Dear '+lstWorkstation[0].Member_Engagement__r.Name+',<br/><br/>Action Plan has been generated for "'
+				      								  +objAccount.Name+'" and executions can be done. Please go through the related Execution Trackers.<br/>Click here : <a href=\''
+				      								  +TargetLink+'\'>'+TargetLink+'</a> <br/><br/> Thanks,<br/>'+objAccount.Owner.Name);
+							emailToMet.setSenderDisplayName(objAccount.Owner.Name);
+						
+							for(Execution_Tracker__c objAssignMetOwner : lstETrecords)
+							{
+								objAssignMetOwner.Owner__c = lstWorkstation[0].Member_Engagement__c;
+								objAssignMetOwner.Send_Email__c = true;
+								objAssignMetOwner.Send_Email_Datetime__c = System.now();
+								objAssignMetOwner.Send_SMS__c = true;
+								objAssignMetOwner.Send_SMS_Datetime__c = System.now();
+								lstETrecordsWithMETowner.add(objAssignMetOwner);
+							}
+							//insert ET records  into data base with Owner as MET
+							if(!lstETrecordsWithMETowner.isEmpty())			
+								insert lstETrecordsWithMETowner;
+							//Sends the mail notification to MET
+						   	Messaging.SendEmailResult [] arrMetResult = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {emailToMet});
+						   	
+						   	//Send Chatter Notification to MET
+						   	FeedItem post = new FeedItem();
+							post.ParentId = lstWorkstation[0].Member_Engagement__c;
+							post.Body = 'Action Plan has been generated for "' +objAccount.Name+ '" and executions can be done. '+
+							 			'Please go through the related Execution Trackers.';
+							insert post;
+				    	}
+			        }
+			    }
+		 	}
+		 	if(!Test.isRunningTest())
+		 		initialization();
+		 	else if(objAccount.Related_To__c != 'Business Partner')
+		 		initialization();
+	 	}
+	 }
+}

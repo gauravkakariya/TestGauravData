@@ -1,0 +1,8 @@
+List< Execution_Tracker__c> lst = [Select e.Entity_Name__c From Execution_Tracker__c e where Entity_Name__c = '001W0000005xb5E' OR Entity_Name__c = '001W0000005xb5D' OR Entity_Name__c = '001W0000005xb4U'];
+delete lst;
+
+
+List<Approve_Action_Plan__c> lst = [Select e.Account__c From Approve_Action_Plan__c e where	Account__c = '001W0000005xb5E' OR Account__c = '001W0000005xb5D' OR Account__c = '001W0000005xb4U'];
+delete lst;
+
+

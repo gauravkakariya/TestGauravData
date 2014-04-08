@@ -1,0 +1,87 @@
+trigger SendDiscontinuationSMS on Account (before update) {
+
+	/*Setty : SMS Magic uninstall 19/09/2012
+	
+		List<smsmagicvc1__smsMagic__c> smsObjects = new List<smsmagicvc1__smsMagic__c>();
+		String discontinueTplText=null;
+		smsmagicvc1__smsMagic__c smsObj = new smsmagicvc1__smsMagic__c();
+		smsmagicvc1__SMS_Template__c template=  [select smsmagicvc1__Text__c from smsmagicvc1__SMS_Template__c where smsmagicvc1__Name__c = 'Discontinuation Template' and smsmagicvc1__ObjectName__c = 'Account'];
+		 //system.debug('renewaltpl '+renewaltpl);
+		if(template.smsmagicvc1__Text__c!=null){
+	        discontinueTplText = template.smsmagicvc1__Text__c;
+	    }
+	    
+		for(Account acc:Trigger.new){
+			Account beforeUpdatedAccount = Trigger.oldMap.get(acc.Id);
+			//System.debug('beforeUpdatedAccount'+beforeUpdatedAccount.Discontinuation_SMS_Sent__c);
+			//System.debug('acc.Discontinuation_SMS_Sent__c'+acc.Discontinuation_SMS_Sent__c);
+			if(beforeUpdatedAccount.Discontinuation_SMS_Sent__c==false && acc.Discontinuation_SMS_Sent__c==true){
+				try{
+					smsmagicvc1.TemplateEngine TEngine = new smsmagicvc1.TemplateEngine(discontinueTplText);
+			        TEngine.getFieldMap(acc);
+			        discontinueTplText = TEngine.getReplacedTextForObject(acc, 0);
+				}
+				catch(QueryException e){
+	                system.debug(e.getMessage());
+	            }
+	                  
+				smsObj.smsmagicvc1__PhoneNumber__c = acc.PersonMobilePhone;
+				//system.debug('phone: '+smsObj.smsmagicvc1__PhoneNumber__c);
+				
+	            smsObj.smsmagicvc1__SMSText__c = discontinueTplText;
+	            //system.debug('renewal text: '+smsObj.smsmagicvc1__SMSText__c);
+	            
+	            smsObj.smsmagicvc1__senderId__c = 'Ffreedom';
+	            
+	            smsObj.smsmagicvc1__Name__c = acc.Name;
+	            //system.debug('Name: '+smsObj.smsmagicvc1__Name__c);
+	            
+	            smsObj.Account__c = acc.Id;
+	           
+	            smsObjects.add(smsObj);
+			}
+		}
+		
+		insert smsObjects;
+		
+	End:Setty */
+	
+///*Setty:NewCode
+	List<smagicbasic__smsMagic__c> smsObjects = new List<smagicbasic__smsMagic__c>();
+		String discontinueTplText=null;
+		smagicbasic__smsMagic__c smsObj = new smagicbasic__smsMagic__c();
+		List<smagicbasic__SMS_Template__c> template=  [select smagicbasic__Text__c from smagicbasic__SMS_Template__c where smagicbasic__Name__c = 'Discontinuation Template' and smagicbasic__ObjectName__c = 'Account'];
+		if(template.size()>0)
+		{
+			system.debug('**********template*********'+template);
+			system.debug('**********smagicbasic__Text__c*********'+template[0].smagicbasic__Text__c);
+			
+			if(template[0].smagicbasic__Text__c!=null){
+	      	  discontinueTplText = template[0].smagicbasic__Text__c;
+	    	}
+		}
+	    
+		for(Account acc:Trigger.new){
+			Account beforeUpdatedAccount = Trigger.oldMap.get(acc.Id);
+			if(beforeUpdatedAccount.Discontinuation_SMS_Sent__c==false && acc.Discontinuation_SMS_Sent__c==true){
+				try{
+					smagicbasic.TemplateEngine TEngine = new smagicbasic.TemplateEngine(discontinueTplText);
+			        TEngine.getFieldMap(acc);
+			        discontinueTplText = TEngine.getReplacedTextForObject(acc, 0);
+				}
+				catch(QueryException e){
+	                system.debug(e.getMessage());
+	            }
+	                  
+				smsObj.smagicbasic__PhoneNumber__c = acc.PersonMobilePhone;
+				smsObj.smagicbasic__SMSText__c = discontinueTplText;
+	            smsObj.smagicbasic__senderId__c = 'Ffreedom';
+	            smsObj.smagicbasic__Name__c = acc.Name;
+	            smsObj.Account__c = acc.Id;
+	            smsObjects.add(smsObj);
+			}
+		}
+		
+		insert smsObjects;
+//*/	
+}

@@ -1,0 +1,51 @@
+/**
+*  Test class for Controller class EditETforLifeInsurance
+*
+*   Revision History:
+*
+*   Version        Author             Date            Description
+*   1.0            Aditi/Prajakta    02/04/2013      Initial Draft
+*/
+
+@isTest
+private class EditETforLifeInsuranceTest 
+{
+    //test Method
+	@isTest(SeeAllData=true)
+	public static  void testEditETforLifeInsurance()
+	{
+		TestData_Ffreedom testData = new TestData_Ffreedom();
+		Account objAccount = testData.initializeAccount();
+	    insert objAccount;
+	    
+	    Approve_Action_Plan__c objAAP1 = testData.init_ApproveActionPlan(objAccount.Id);
+	    insert objAAP1;
+        
+        List<Execution_Tracker__c> lstET = new List<Execution_Tracker__c>();
+        Execution_Tracker__c objET1 = testData.init_ExecutionTracker(objAccount.id,'Assigned to Operations','Opened',objAAP1.Id,'Life Insurance','');
+        lstET.add(objET1);
+        Execution_Tracker__c objET2 = testData.init_ExecutionTracker(objAccount.id,'Assigned to Operations','Closed',objAAP1.Id,'Life Insurance','');
+        lstET.add(objET2);
+        insert lstET;
+        
+        Test.startTest();
+        ApexPages.currentPage().getParameters().put('eid', objAccount.id);
+        ApexPages.currentPage().getParameters().put('etid', objET1.id);
+        Apexpages.currentPage().getParameters().put('id', objAAP1.Id);
+		Apexpages.currentPage().getParameters().put('type', 'Life Insurance');
+        EditETforLifeInsurance objEETC1 = new EditETforLifeInsurance(); 
+      	objEETC1.assignTask();
+      	objEETC1.getEntities();
+      	objEETC1.updateExecutionTracker();
+      	
+      	ApexPages.currentPage().getParameters().put('eid', objAccount.id);
+        ApexPages.currentPage().getParameters().put('etid', objET1.id);
+        Apexpages.currentPage().getParameters().put('id', objAAP1.Id);
+		Apexpages.currentPage().getParameters().put('type', 'other');
+        EditETforLifeInsurance objEETC2 = new EditETforLifeInsurance(); 
+      	objEETC2.assignTask();
+      	objEETC2.getEntities();
+      	objEETC2.updateExecutionTracker();
+        Test.stopTest();
+	}
+}

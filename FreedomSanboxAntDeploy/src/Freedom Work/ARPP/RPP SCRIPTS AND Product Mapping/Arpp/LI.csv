@@ -1,0 +1,4 @@
+Product_Name__c,Product_Manufacturer__c,ProductType__c,Is_Active__c,Upfront_Commission__c ,RecordType 
+,,,,,
+BSLI Protector Plus Plan,a1QW00000001FvKMAU,Life Insurance,TRUE,32,012W00000004QVrIAM
+HDFC Life Click 2 Protect,a1QW00000001FvLMAU,Life Insurance,TRUE,33,012W00000004QVrIAM

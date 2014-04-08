@@ -1,0 +1,74 @@
+/**
+*  Test class for Controller class EditETforSTPController
+*
+*   Revision History:
+*
+*   Version        Author             Date            Description
+*   1.0            Aditi/Prajakta    02/04/2013      Initial Draft
+*/
+ 
+public with sharing class EditETforSTPControllerTest {
+
+    //test Method
+	@isTest(SeeAllData=true)
+	public static  void testEditETforSTPController()
+	{
+		RecordType objRT = [Select Id from RecordType where Name = 'Client' and SobjectType = 'Account'];
+		Account objAccount = new Account(LastName='Test',FirstName='Test',Adjustment_Factor__c='2',
+	                       PersonTitle='TestData', PersonBirthdate= system.today(),PersonHomePhone='54623676',PersonMobilePhone='5463732345',
+	                       Alternate_Mobile__c='356475',PersonEmail='sgdh@test.com', Alternate_E_Mail_Address__c='fdgr@test.com',
+	                       Retirement_Year__c=2034, Residential_Status_del__c='own', Retirement_Age__c='58', Estimated_Life_Expectancy__c='67',
+	                       Estimated_Life_EndYear__c=2041, Relationship_to_Entity__pc='husband', RecordTypeId = objRT.Id);
+	    insert objAccount;
+	    
+	    
+	    Investment_Asset__c inv = new Investment_Asset__c(Entity__c=objAccount.id,action__c='yes',RecordTypeId=InvestmentAsset__c.getInstance('Stocks').RecordTypeId__c,
+	    												Maturity_Date__c = system.today());
+	    insert inv;		
+	    				
+	    List<Approve_Action_Plan__c> lstAP = new List<Approve_Action_Plan__c>();										
+	    Approve_Action_Plan__c objAAP1 = new Approve_Action_Plan__c(Account__c = objAccount.Id,Investment_Asset__c = inv.Id);
+	    lstAP.add(objAAP1);
+	    
+	    Approve_Action_Plan__c objAAP2 = new Approve_Action_Plan__c(Account__c = objAccount.Id);
+	    lstAP.add(objAAP2);
+        
+        insert lstAP;
+        
+        List<Execution_Tracker__c> lstET = new List<Execution_Tracker__c>();
+        Execution_Tracker__c objET1 = new Execution_Tracker__c(Entity_Name__c = objAccount.id,  ET_Status__c = 'Assigned to Operations', Is_Floating__c = false,
+        									Application_Status__c = 'Opened', Approve_Action_Plan__c = objAAP1.Id, Type__c = 'Lumpsum',Action__c = 'STP To');
+        lstET.add(objET1);
+        Execution_Tracker__c objET2 = new Execution_Tracker__c(Entity_Name__c = objAccount.id,  ET_Status__c = 'Assigned to Operations', Is_Floating__c = false,
+        									Application_Status__c = 'Closed', Approve_Action_Plan__c = objAAP2.Id, Type__c = 'Lumpsum',Action__c = 'Lumpsum');
+        lstET.add(objET2);
+        insert lstET;
+        
+        Test.startTest();
+        ApexPages.currentPage().getParameters().put('eid', objAccount.id);
+        Apexpages.currentPage().getParameters().put('id', objAAP2.Id);
+		Apexpages.currentPage().getParameters().put('type', 'Lumpsum');
+        EditETforSTPController objEETC1 = new EditETforSTPController(); 
+      	objEETC1.assignTask();
+      	objEETC1.getEntities();
+      	objEETC1.updateExecutionTracker();
+      	
+      	ApexPages.currentPage().getParameters().put('eid', objAccount.id);
+        Apexpages.currentPage().getParameters().put('etid', objET1.Id);
+        Apexpages.currentPage().getParameters().put('type', 'Lumpsum');
+		Apexpages.currentPage().getParameters().put('userType', 'opsTeam');
+        EditETforSTPController objEETC2 = new EditETforSTPController(); 
+      	objEETC2.assignTask();
+      	objEETC2.getEntities();
+      	objEETC2.updateExecutionTracker();
+      	objEETC2.getApplicationStatus();
+      	
+      	ApexPages.currentPage().getParameters().put('eid',null);
+        Apexpages.currentPage().getParameters().put('etid', objET1.Id);
+        Apexpages.currentPage().getParameters().put('type', 'Lumpsum');
+		Apexpages.currentPage().getParameters().put('userType', 'opsTeam');
+        EditETforSTPController objEETC3 = new EditETforSTPController(); 
+      	objEETC3.getEntities();
+        Test.stopTest();
+	}
+}

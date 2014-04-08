@@ -1,0 +1,24 @@
+
+List<ARPP_Detail__c> lstArppDetail = [Select Name, Id, Entity__c, Type__c, Product__c, Commission__c, Approve_Action_Plan__c,  											  Action_Plan_Amount__c, Action_Plan_Upfront_Comm_Amount__c,  	
+											 Action_Plan_Trial_Comm_Amount__c,  Action_Amount_Revenue__c, Remark__c, Execution_Tracker_Actual_Product__c,  Actual_Commission__c, Execution_Tracker__c,Execution_Tracker_Amount__c,
+											 Execution_Tracker_upfront_Comm_Amount__c, Execution_Tracker_Trial_Comm_Amount__c,
+											 Execution_Tracker_Total_Revenue__c, Actual_Product_Name__c, ET_Remark__c,
+                                      Execution_Tracker__r.Execution_Tracker_Product__c											 From ARPP_Detail__c 
+									Where Execution_Tracker_Actual_Product__c = null and Execution_Tracker__r.Execution_Tracker_Product__c !=null ];
+			
+Set<Id> setProductId = new Set<Id>();			
+for(ARPP_Detail__c objRPP : lstArppDetail)	
+{
+	setProductId.add(objRPP.Execution_Tracker__r.Execution_Tracker_Product__c);
+}							
+
+system.debug('************setProductId************'+setProductId.size());
+system.debug('************lstArppDetail************'+lstArppDetail.size());
+
+
+List<Execution_Tracker__c> lstET= [Select Type__c, Execution_Tracker_Product__c,Approve_Action_Plan__c,  		 Executed_Product_Name__c 
+								   From Execution_Tracker__c 
+									where  Execution_Tracker_Product__c = null and Approve_Action_Plan__r.Investment_Asset__c = null and
+Approve_Action_Plan__c != null and ParentExecutionTracker__c = null ];
+
+System.debug('********lstET*********'+lstET.size());

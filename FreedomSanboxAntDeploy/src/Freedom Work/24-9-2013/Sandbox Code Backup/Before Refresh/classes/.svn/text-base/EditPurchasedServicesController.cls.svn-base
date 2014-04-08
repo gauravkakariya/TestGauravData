@@ -1,0 +1,481 @@
+/* 
+*  This class used for displaying Purchase order record
+*
+*   Revision History:
+*
+*   Version         Author             Date          Description
+*   1.0             Gaurav Kakariya    02/04/2013    Initial Draft
+*/
+
+public class EditPurchasedServicesController 
+{
+    public String entityId{get;set;}
+    public String selectedTopUpGoals{get;set;}
+    public List<Purchase_Order__c> lstPurchaseOrderForBaseProduct{get;set;}
+    public List<Purchase_Order__c> lstPurchaseOrderForTopUp{get;set;}
+    public List<Purchase_Order__c> lstPurchaseOrderForValueAddedServices{get;set;}
+    
+    public List<SelectOption> baseProductOptions{get;set;}
+    public List<SelectOption> valueAddedServiceNameOptions{get;set;}
+    public List<SelectOption> topUpGoalValueOptions{get;set;}
+    
+    public List<WrapperEditPurchaseOrder>  lstWrapperPurchaseOrder{get;set;}
+    //public List<WrapperValueAddedServiceProduct> lstWrapperValueAddedService{get;set;}
+    
+    public Boolean isTopUpBlock{get;set;}
+    public String baseProductName{get;set;}
+    public String currentBaseProductName{get;set;}
+    public Integer topUpCount{get;set;}
+    public Purchase_Order__c objProductOrder{get;set;}
+    public Integer valueAddedServiceCount{get;set;}
+    
+    //Goal Section Handling Variables
+    public Double topUpGoalPrice {get;set;}
+    public Double topUpGoalDiscount {get;set;}
+    public Double topUpPayableAmount {get;set;}
+    
+    public Double topUpGoalBasePrice {get;set;}
+    public Double topUpGoalBaseDiscount{get;set;}
+    
+    private Id currentBaseProductOrderId;
+    private Set<String> setValueAddedServiceName;
+    private Product_Master__c objProductMaster;
+    private Product_Price_Book__c objPriceBook;
+    
+    private final static String TOP_UP = 'Top-Up';
+    private final static String BASE_PRODUCT = 'Base Product';
+    private final static String VALUE_ADDED_SERVICES = 'Value Added Services';
+    
+    public EditPurchasedServicesController()
+    {
+        entityId = ApexPages.currentPage().getParameters().get('entityid');
+        
+        Integer baseProudctWeightage;
+        topUpCount = 0;
+        objPriceBook = new Product_Price_Book__c(Price_value__c = 0, Discount__c = 0);
+        objProductMaster = new Product_Master__c(No_of_Goals_Allowed__c = 0);
+        objProductOrder = new Purchase_Order__c();
+        topUpGoalPrice = 0;
+        topUpGoalDiscount = 0;
+        topUpPayableAmount = 0;
+        selectedTopUpGoals = '0';
+        topUpGoalBasePrice = TopUpGoal__c.getInstance('Top Up').Goal_Price__c;
+        topUpGoalBaseDiscount = TopUpGoal__c.getInstance('Top Up').Discount__c;
+        
+        lstWrapperPurchaseOrder = new List<WrapperEditPurchaseOrder>();
+        setValueAddedServiceName = new Set<String>();   
+        
+        //Get the Base Product Record
+        lstPurchaseOrderForBaseProduct = getPurchaseOrderByEntityId(EntityId, BASE_PRODUCT);
+        
+        if(!lstPurchaseOrderForBaseProduct.IsEmpty())
+        {   
+            //objProductOrder = lstPurchaseOrderForBaseProduct[0];                                  
+            isTopUpBlock = lstPurchaseOrderForBaseProduct[0].Product_Master__r.IsTopupService__c;
+            currentBaseProductOrderId = lstPurchaseOrderForBaseProduct[0].Id;
+            currentBaseProductName = lstPurchaseOrderForBaseProduct[0].Selected_Product__c;
+            //Picklist Value for Base Service Product   
+            baseProudctWeightage = Integer.valueOf([Select Base_Product_Weightage__c from Product_Master__c 
+                                                        where Product_Name__c =: lstPurchaseOrderForBaseProduct[0].Selected_Product__c].Base_Product_Weightage__c);
+        }
+        
+        
+        //Get the Top Up Record                           
+        lstPurchaseOrderForTopUp = getPurchaseOrderByEntityId(EntityId, TOP_UP);
+        
+        if(!lstPurchaseOrderForTopUp.IsEmpty())
+        {
+            for(Purchase_Order__c objPurchaseOrder : lstPurchaseOrderForTopUp)
+                topUpCount += Integer.valueOf(objPurchaseOrder.Product_Price__c/topUpGoalBasePrice);
+        }   
+        
+        //Get the Value Added Service Record                                  
+        lstPurchaseOrderForValueAddedServices = getPurchaseOrderByEntityId(EntityId, VALUE_ADDED_SERVICES);
+        
+        if(!lstPurchaseOrderForValueAddedServices.IsEmpty())
+        {
+            //Iterating all Purcahse Order Record and Added to Wrapperclass for displaying on page
+            for(Purchase_Order__c objNewPurchaseOrder : lstPurchaseOrderForValueAddedServices)
+            {
+                WrapperEditPurchaseOrder objWrapper = new WrapperEditPurchaseOrder();
+                objWrapper.isValueAddedService = true;
+                objWrapper.objPurchaseOrder = objNewPurchaseOrder;
+                objWrapper.index = lstWrapperPurchaseOrder.size();
+                lstWrapperPurchaseOrder.add(objWrapper);
+            }
+        
+        }
+        
+        baseProductOptions = new List<SelectOption>();
+        for(Product_Master__c objProductMaster : [Select Product_Name__c, ProductType__c From Product_Master__c Where ProductType__c ='Base Product' and Is_Active__c = true
+                                                    order by Base_Product_Weightage__c])//and  Base_Product_Weightage__c >= :baseProudctWeightage
+        {
+            if(currentBaseProductName == 'Early Planning for Retirement' && objProductMaster.Product_Name__c == 'Dual Goal Planning')
+                continue;
+            else
+                 baseProductOptions.add(new SelectOption(objProductMaster.Product_Name__c,objProductMaster.Product_Name__c));
+        }   
+        
+        //Picklist Value for Servie Name in Value Added Service
+        valueAddedServiceNameOptions = new List<SelectOption>();
+        valueAddedServiceNameOptions.add(new SelectOption('None','--None--'));
+        for(Product_Master__c objProductMaster : [Select Product_Name__c, ProductType__c From Product_Master__c Where ProductType__c ='Value Added Services' 
+                                                         and Is_Active__c = true])
+        {
+            valueAddedServiceNameOptions.add(new SelectOption(objProductMaster.Product_Name__c,objProductMaster.Product_Name__c));
+        }
+        
+        //Picklist Value for Top Up Goals
+        topUpGoalValueOptions = new List<SelectOption>();
+        for(Integer counter = 0 ; counter < 5; counter ++)
+        {
+            topUpGoalValueOptions.add(new SelectOption(String.valueOf(counter),String.valueOf(counter)));
+        }
+                    
+    }
+    
+    /*
+    Method Name : getPurchaseOrderByEntityId
+    Return Type : List<Purchase_Order__c>
+    Created By  : Gaurav
+    Summary     : Pass Entity Is and get list of Purchase_Order__c  
+    */
+    private List<Purchase_Order__c> getPurchaseOrderByEntityId(String entityId, String productType)
+    {
+        return [Select Id, Name, Service_Tax__c, Product_Type__c,Description__c, Product_Price__c, Product_Master__c, Is_Cancel__c, Order_Status__c, Order__c,  
+                    Discount__c,Entity__c,Payable_Amount__c, Selected_Product__c, Product_Master__r.No_of_Goals_Allowed__c,Product_Master__r.Product_Name__c,
+                    Renewal_Grace_Days__c, Renewal_Period_In_Days__c, Subscription_Period_In_Days__c, Product_Master__r.IsTopupService__c   
+                    From Purchase_Order__c 
+                    Where Entity__c =: entityId 
+                        And Is_Cancel__c= false 
+                        And Product_Type__c =: productType];
+    }
+    
+    public void deleteService()
+    {
+        Integer indexPosition = Integer.valueOf(ApexPages.currentPage().getParameters().get('indexNumber'));
+        String strId = ApexPages.currentPage().getParameters().get('serviceId');
+        
+        lstWrapperPurchaseOrder.remove(indexPosition);
+        
+        for(Integer i = indexPosition; i < lstWrapperPurchaseOrder.size() ; i++)
+        {
+            lstWrapperPurchaseOrder[i].index -= 1; 
+        }
+        
+        System.debug('----------------strId----------------'+strId);
+        if(strId != null && strId != '')
+        {
+            Purchase_Order__c objPO = [Select Id from Purchase_Order__c where Id =: strId ];
+            delete objPO;
+        }
+    }
+    //Getting Product Price
+    public void baseProductPrice()
+    { 
+        String baseProductName = ApexPages.currentPage().getParameters().get('baseproductName'); 
+        
+        isTopUpBlock = false;   
+        objProductMaster = [Select Id, Product_Name__c, ProductType__c, No_of_Goals_Allowed__c, IsTopupService__c, Renewal_Grace_Days__c, Renewal_Period_In_Days__c,    
+                                    Subscription_Period_In_Days__c,Goals_Allowed_List__c, Data_Collection_Analysis_Control__c, Financial_Planing_Output_Report__c, 
+                                    (Select Price_value__c, Sp_Education_Cess__c, VAT__c, Education_Cess__c,Service_Tax__c, Discount__c 
+                                    From Product_Price_Books__r order by CreatedDate desc)  
+                                From Product_Master__c  
+                                Where Product_Name__c =: baseProductName order by Base_Product_Weightage__c];
+                                
+        objPriceBook = objProductMaster.Product_Price_Books__r[0];
+        isTopUpBlock = objProductMaster.IsTopupService__c;
+        
+        if(baseProductName.equals(currentBaseProductName))
+        {
+            Purchase_Order__c objBasePO = [Select Product_Price__c, Discount__c, Product_Master__r.No_of_Goals_Allowed__c, Payable_Amount__c, Product_Master__r.IsTopupService__c
+                                                        from Purchase_Order__c
+                                                        where Id =: lstPurchaseOrderForBaseProduct[0].Id];
+            lstPurchaseOrderForBaseProduct[0].Product_Price__c = objBasePO.Product_Price__c;
+            lstPurchaseOrderForBaseProduct[0].Discount__c = objBasePO.Discount__c;
+            lstPurchaseOrderForBaseProduct[0].Product_Master__r.No_of_Goals_Allowed__c = objBasePO.Product_Master__r.No_of_Goals_Allowed__c;
+            lstPurchaseOrderForBaseProduct[0].Payable_Amount__c = objBasePO.Payable_Amount__c;
+            objPriceBook.Price_value__c = objBasePO.Product_Price__c;
+            objPriceBook.Discount__c = objBasePO.Discount__c;
+            return;
+        }
+        lstPurchaseOrderForBaseProduct[0].Product_Price__c = objPriceBook.Price_value__c;
+        lstPurchaseOrderForBaseProduct[0].Discount__c = objPriceBook.Discount__c;
+        lstPurchaseOrderForBaseProduct[0].Product_Master__r.No_of_Goals_Allowed__c = objProductMaster.No_of_Goals_Allowed__c;
+        lstPurchaseOrderForBaseProduct[0].Payable_Amount__c = objPriceBook.Price_value__c - objPriceBook.Discount__c;
+        
+        if(isTopUpBlock)
+            lstPurchaseOrderForTopUp = new List<Purchase_Order__c>{ new Purchase_Order__c()};
+        
+    }
+    
+    
+    //Getting Value Added Service
+    public void valueAddedService()
+    {
+        Integer indexPosition = Integer.valueOf(ApexPages.currentPage().getParameters().get('index'));
+        String strSelectedValueAddedService = lstWrapperPurchaseOrder[indexPosition].selectedServiceName;
+        
+        //If selected Service Name is other than 'None' then get the product price // EqualIgnore Case
+        if(lstWrapperPurchaseOrder[indexPosition].selectedServiceName.equalsIgnoreCase('None') != true)
+        {
+            lstWrapperPurchaseOrder[indexPosition].productMaster = [Select Product_Name__c, ProductType__c, No_of_Goals_Allowed__c,
+                                                                              (Select Price_value__c, VAT__c, Education_Cess__c,Sp_Education_Cess__c,Discount__c,Service_Tax__c From Product_Price_Books__r order by CreatedDate desc) 
+                                                                        From Product_Master__c  
+                                                                        Where Product_Name__c =:strSelectedValueAddedService And ProductType__c ='Value Added Services'];
+                                                    
+            lstWrapperPurchaseOrder[indexPosition].productPriceBook = lstWrapperPurchaseOrder[indexPosition].productMaster.Product_Price_Books__r[0];
+            lstWrapperPurchaseOrder[indexPosition].payableAmount = lstWrapperPurchaseOrder[indexPosition].productPriceBook.Price_value__c - 
+                                                                    lstWrapperPurchaseOrder[indexPosition].productPriceBook.Discount__c;
+        }
+        else
+        {
+            lstWrapperPurchaseOrder[indexPosition].productPriceBook = new Product_Price_Book__c(Price_value__c = 0, Discount__c = 0);
+            lstWrapperPurchaseOrder[indexPosition].payableAmount = 0;
+        }
+        /*
+        for(Integer i = setValueAddedServiceName.size(); i < lstWrapperPurchaseOrder.size() ; i++)
+        {
+            lstWrapperPurchaseOrder[i].payableAmount = lstWrapperPurchaseOrder[i].productPriceBook.Price_value__c - 
+                                                                    lstWrapperPurchaseOrder[i].productPriceBook.Discount__c;
+            
+        }
+        */
+    }   
+    
+    private Order_Detail__c objOrderDetail;
+    
+    /*To save the new entered records*/
+    public PageReference saveProduct()
+    {
+        Purchase_Order__c objPurchaseOrderForStatus = [Select Order__c, Product_Type__c, Order_Status__c From Purchase_Order__c 
+                                                            Where Entity__c =: entityId  And Is_Cancel__c = false  And Product_Type__c = 'Base Product' order By CreatedDate Desc limit 1];
+        System.debug('--------------objPurchaseOrderForStatus---------'+objPurchaseOrderForStatus);
+        String strOrderNumber = objPurchaseOrderForStatus.Order__c;
+                                        
+        List<String> lstOrderNumber = strOrderNumber.split('/');
+        Integer orderNumber = Integer.valueOf(lstOrderNumber[2]);
+        
+        String strNewOrderNumber = 'FFP/' + String.valueOf(System.today().year()).substring(2, 4) + '-' + 
+                                         String.valueOf(System.today().year() + 1).substring(2, 4) + '/00' + orderNumber;
+         
+        System.debug('--------------strNewOrderNumber---------'+strNewOrderNumber);                                 
+        objOrderDetail = [select Id, CreatedDate from Order_Detail__c where Account__c =: entityId and Order_Number__c =: strNewOrderNumber order by CreatedDate desc limit 1 ];
+        
+        List<Purchase_Order__c> lstPurchaseOrder = new List<Purchase_Order__c>();
+        Purchase_Order__c objPurchaseOrder = new Purchase_Order__c();
+        
+        
+        
+        if((objProductMaster.Product_Name__c != null) && (objProductMaster.Product_Name__c != currentBaseProductName) )
+        {  
+        	Boolean isValidRetirementDiff;
+        	try
+        	{
+            	isValidRetirementDiff = FreedomUtils.hasRetirement(entityId);
+        	}
+        	catch(Exception e)
+        	{
+        		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Info, 'Please Enter Birthdate / Retirement Age on Entity Page'));
+        		return Null;
+        	}
+            if(!isValidRetirementDiff && objProductMaster.Product_Name__c =='Early Planning for Retirement')
+            {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Info, 'Retirement year should be at least 7 years away for \'Early Planning for Retirement\''));
+                return Null;
+            }
+            objPurchaseOrder = new Purchase_Order__c(Order__c = strNewOrderNumber,
+                                                        Selected_Product__c = objProductMaster.Product_Name__c,
+                                                        Product_Master__c = objProductMaster.Id, 
+                                                        Entity__c = entityId, 
+                                                        Product_Type__c = objProductMaster.ProductType__c,
+                                                        Order_status__c = 'New',
+                                                        Order_Datetime__c = DateTime.now(),
+                                                        
+                                                        Product_Price__c = objPriceBook.Price_value__c, 
+                                                        Discount__c = lstPurchaseOrderForBaseProduct[0].Discount__c,
+                                                        Payable_Amount__c = objPriceBook.Price_value__c - lstPurchaseOrderForBaseProduct[0].Discount__c,
+                                                        
+                                                        Service_Tax__c = objPriceBook.Service_Tax__c, 
+                                                        Sp_Education_Cess__c = objPriceBook.Sp_Education_Cess__c, 
+                                                        VAT__c = objPriceBook.VAT__c, 
+                                                        Education_Cess__c = objPriceBook.Education_Cess__c,
+                                                        
+                                                        Renewal_Grace_Days__c = objProductMaster.Renewal_Grace_Days__c, 
+                                                        Renewal_Period_In_Days__c = objProductMaster.Renewal_Period_In_Days__c,     
+                                                        Subscription_Period_In_Days__c = objProductMaster.Subscription_Period_In_Days__c,
+                                                        
+                                                        Is_Cancel__c = false,
+                                                        Order_Detail__c = objOrderDetail.Id);
+            lstPurchaseOrder.add(objPurchaseOrder);
+            
+        }
+        if(selectedTopUpGoals != null && selectedTopUpGoals != '0') 
+        {
+            Id ProudctId = objProductMaster.Id == null ? lstPurchaseOrderForBaseProduct[0].Product_Master__c : objProductMaster.Id;
+            objPurchaseOrder = new Purchase_Order__c(Order__c = strNewOrderNumber,
+                                                        Selected_Product__c = 'Top-Up Goals',
+                                                        Product_Master__c = ProudctId, 
+                                                        Entity__c = entityId, 
+                                                        Product_Type__c = 'Top-Up',
+                                                        Order_Datetime__c = DateTime.now(),
+                                                        Product_Price__c = (Integer.valueOf(selectedTopUpGoals) * topUpGoalBasePrice), 
+                                                        Discount__c = topUpGoalDiscount,
+                                                        Order_status__c = 'New', 
+                                                        Payable_Amount__c = (Integer.valueOf(selectedTopUpGoals) * topUpGoalBasePrice) - topUpGoalDiscount,
+                                                        Service_Tax__c = objPriceBook.Service_Tax__c, 
+                                                        Sp_Education_Cess__c = objPriceBook.Sp_Education_Cess__c, 
+                                                        VAT__c = objPriceBook.VAT__c, 
+                                                        Education_Cess__c = objPriceBook.Education_Cess__c,
+                                                        Is_Cancel__c = false,
+                                                        Order_Detail__c = objOrderDetail.Id);
+            lstPurchaseOrder.add(objPurchaseOrder);
+        }
+        
+       
+        
+        
+        Entity_Global_Assumption__c objEntityGlobalAssumption = FreedomUtils.getEntityGlobalAssumption(entityId);
+        if(objEntityGlobalAssumption != Null && (objProductMaster.Product_Name__c != null) && (objProductMaster.Product_Name__c != currentBaseProductName))
+        {
+            if(lstPurchaseOrderForBaseProduct[0].Order_Status__c == 'New'){
+                
+                objEntityGlobalAssumption.No_of_Goals__c = isTopUpBlock ? objProductMaster.No_of_Goals_Allowed__c + topUpCount + Integer.valueOf(selectedTopUpGoals) : objProductMaster.No_of_Goals_Allowed__c;
+            }   
+            else
+            {
+                objEntityGlobalAssumption.No_of_Goals__c = objProductMaster.No_of_Goals_Allowed__c + topUpCount + Integer.valueOf(selectedTopUpGoals);
+            }
+            objEntityGlobalAssumption.Goals_Allowed_List__c = objProductMaster.Goals_Allowed_List__c;
+            objEntityGlobalAssumption.Data_Collection_Analysis_Control__c = objProductMaster.Data_Collection_Analysis_Control__c;
+            objEntityGlobalAssumption.Financial_Planing_Output_Report__c = objProductMaster.Financial_Planing_Output_Report__c;
+        }
+        else
+        {  
+            objEntityGlobalAssumption.No_of_Goals__c = objEntityGlobalAssumption.No_of_Goals__c  + Integer.valueOf(selectedTopUpGoals);
+        }   
+        
+        update objEntityGlobalAssumption;
+        for(WrapperEditPurchaseOrder objWPO : lstWrapperPurchaseOrder)
+        {
+            if( objWPO.selectedServiceName != Null && objWPO.selectedServiceName.equalsIgnoreCase('None') == false)
+            {
+                objPurchaseOrder = new Purchase_Order__c(Order__c = strNewOrderNumber,
+                                                            Selected_Product__c = objWPO.selectedServiceName,
+                                                            Product_Master__c = objWPO.productMaster.Id,
+                                                            Entity__c = entityId, 
+                                                            Product_Type__c = objWPO.productMaster.ProductType__c,
+                                                            Order_Datetime__c = DateTime.now(),
+                                                            Description__c = objWPO.descriptionPurchaseOrder,
+                                                            Product_Price__c = objWPO.productPriceBook.Price_value__c, 
+                                                            Discount__c = objWPO.productPriceBook.Discount__c,
+                                                            Order_status__c = 'New', 
+                                                            Payable_Amount__c = objWPO.productPriceBook.Price_value__c - objWPO.productPriceBook.Discount__c,
+                                                            Service_Tax__c = objWPO.productPriceBook.Service_Tax__c, 
+                                                            Sp_Education_Cess__c = objWPO.productPriceBook.Sp_Education_Cess__c, 
+                                                            VAT__c = objWPO.productPriceBook.VAT__c, 
+                                                            Education_Cess__c = objWPO.productPriceBook.Education_Cess__c,
+                                                            Is_Cancel__c = false,
+                                                            Order_Detail__c = objOrderDetail.Id);
+                lstPurchaseOrder.add(objPurchaseOrder);
+            }
+        }
+        
+        if(!lstPurchaseOrder.isEmpty())
+            insert lstPurchaseOrder;   
+            
+        if((objProductMaster.Product_Name__c != null) && (objProductMaster.Product_Name__c != currentBaseProductName))
+        {
+            objPurchaseOrderForStatus.Is_Cancel__c = true;
+            update objPurchaseOrderForStatus;
+            if(objProductMaster.Product_Name__c == 'Starter Financial Planning' || objProductMaster.Product_Name__c == 'Early Planning for Retirement')
+                FreedomUtils.createRetirementGoal(entityId);
+            Account objAccount  = [Select Membership_End_Date__c from Account where Id=:entityId];
+            objAccount.Membership_End_Date__c = objOrderDetail.CreatedDate.addDays(Integer.valueOf(objProductMaster.Subscription_Period_In_Days__c)).date();
+            update objAccount;
+            
+            List<Renewal__c> lstRenewal = [Select Renewal_Date__c from Renewal__c where Entity__c =: entityId order by CreatedDate desc limit 1];
+            if(!lstRenewal.isEmpty())
+            {
+            	lstRenewal[0].Renewal_Date__c = objOrderDetail.CreatedDate.addDays(Integer.valueOf(objProductMaster.Subscription_Period_In_Days__c)).date();
+            	update lstRenewal;
+            }
+            
+        }                                 
+        if(!isTopUpBlock)
+        {
+            List<Purchase_Order__c> lstPOTopup = [Select Id, Order_Status__c    From Purchase_Order__c 
+                                                    Where Entity__c =: entityId And Is_Cancel__c= false And Product_Type__c = : TOP_UP and Order_Status__c = 'New'];
+            if(!lstPOTopup.isEmpty())
+                delete lstPOTopup;
+        }
+        
+        //FreedomUtils.updateRenewalDate(entityId, lstPurchaseOrderForBaseProduct[0].Order_Status__c);
+        FreedomUtils.updateOrderDetails(entityId);
+        
+        //Redirect to Entity Detial page.
+        PageReference pr = new PageReference('/' + entityId);
+        return pr;
+    }
+    
+    public PageReference cancelProduct()
+    {
+        //Redirect to Entity Detial page.
+        PageReference pr = new PageReference('/' + entityId);
+        return pr;
+    }
+    
+    
+    //To save Value Addded Services
+    public void addValueAddedServices()
+    {
+        Boolean isNone = false;
+        for(WrapperEditPurchaseOrder objWPO :  lstWrapperPurchaseOrder)
+        {
+            if(objWPO.selectedServiceName != Null && objWPO.selectedServiceName.equalsIgnoreCase('None'))
+            {
+                isNone = true;
+                break;
+            }
+        }
+        
+        if(isNone)
+        {
+            Error.LogSuccess(Label.Value_Added_Service_Message);
+            return; 
+        }
+        Integer index = lstWrapperPurchaseOrder.size() - 1;
+       // if(lstWrapperPurchaseOrder.size() > setValueAddedServiceName.size())
+        //    lstWrapperPurchaseOrder[index].payableAmount = lstWrapperPurchaseOrder[index].productPriceBook.Price_value__c - lstWrapperPurchaseOrder[index].productPriceBook.Discount__c;
+        lstWrapperPurchaseOrder.add(new WrapperEditPurchaseOrder(new Product_Master__c(), new Product_Price_Book__c(Price_value__c = 0, Discount__c = 0) 
+                                        ,lstWrapperPurchaseOrder.size()));
+    }   
+    
+    
+    //Wrapper Class for Purchase Order
+    public class WrapperEditPurchaseOrder
+    {
+        public Product_Master__c productMaster{get;set;}
+        public Product_Price_Book__c productPriceBook{get;set;}
+        public Purchase_Order__c objPurchaseOrder{get;set;}
+        public String descriptionPurchaseOrder{get;set;}
+        public Double payableAmount {get;set;}
+        public String selectedServiceName{get;set;}
+        public Integer index {get;set;}
+        public Boolean isValueAddedService {get;set;}
+         
+        public  WrapperEditPurchaseOrder(){}
+        
+        public WrapperEditPurchaseOrder(Product_Master__c pProductMaster, Product_Price_Book__c pProductPriceBook ,Integer pIndex)
+        {  
+            isValueAddedService = false;
+            productMaster = pProductMaster;
+            productPriceBook = pProductPriceBook;
+            productMaster = pProductMaster; 
+            objPurchaseOrder = new Purchase_Order__c();
+            payableAmount = productPriceBook.Price_value__c - productPriceBook.Discount__c;
+            this.index = pIndex;
+            
+        }
+    }//end of WrapperEditPurchaseOrder
+}//end of EditPurchasedServicesController

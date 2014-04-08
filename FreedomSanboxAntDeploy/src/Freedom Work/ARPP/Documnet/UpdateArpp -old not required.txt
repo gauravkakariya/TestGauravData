@@ -1,0 +1,82 @@
+/*Update Action Plan */
+	/*public void onAfterUpdateForARPPCalculation(Map<Id, Approve_Action_Plan__c> mapNewIdToActionPlan)
+	{
+		Set<Id> setAPId = new Set<Id>();
+		Map<Id, ARPP_Detail__c> mapAPIdToARPPDetail = new Map<Id, ARPP_Detail__c>();
+		List<ARPP_Detail__c> lstUpdateARPPDetail = new List<ARPP_Detail__c>();
+		
+      	//Create Map Approve Action Plan to ARPP Detail											
+		for(ARPP_Detail__c objAD : [Select  Product__r.Policy_Type__c, Product__r.Investment_Type__c, 
+							          			Product__r.Product_Manufacturer__c,
+										        Commission__r.Upfront_Commission__c, Commission__r.Trail_Commission__c, 
+										        Product__r.ProductType__c, 
+										        Product__r.Product_Name__c, Product__c, Name, Id, 
+										        Execution_Tracker_upfront_Comm_Amount__c, 
+										        Entity__c, Entity__r.Name, Approve_Action_Plan__c, Approve_Action_Plan__r.Item_Type__c, Action_Plan_Upfront_Comm_Amount__c, 
+										        Action_Plan_Trial_Comm_Amount__c, Action_Plan_Amount__c, Type__c,
+										        Approve_Action_Plan__r.Installments__c
+      											From ARPP_Detail__c Where Approve_Action_Plan__c IN: mapNewIdToActionPlan.keySet()])
+		{
+			mapAPIdToARPPDetail.put(objAD.Approve_Action_Plan__c , objAD);
+		} 
+		
+		for(Approve_Action_Plan__c objAP : mapNewIdToActionPlan.values())
+		{
+			//Calcualte Execution Tracker trail Commission
+			ARPP_Detail__c objARPPDetail = mapAPIdToARPPDetail.get(objAP.Id);
+			if(objARPPDetail != null)
+			{
+				if(objARPPDetail.Type__c == 'SIP')
+				{
+					objARPPDetail.Action_Plan_Upfront_Comm_Amount__c = objARPPDetail.Product__c != null && objARPPDetail.Commission__r  != null ? (objARPPDetail.Commission__r.Upfront_Commission__c * 12 * objAP.Amount__c)/100 : 0;
+					objARPPDetail.Action_Plan_Amount__c = objAP.Amount__c;
+					Double trailComm = 0;
+					Double amount = objAP.Amount__c;
+					Integer installment = objARPPDetail.Approve_Action_Plan__r.Installments__c <= 12  ? Integer.valueOf(objARPPDetail.Approve_Action_Plan__r.Installments__c) : 12;
+					
+					if(objARPPDetail.Product__c != null && objARPPDetail.Commission__r != null)
+					{
+						for(Integer i = 0; i < installment ; i++)
+						{
+							trailComm += (amount * objARPPDetail.Commission__r.Trail_Commission__c)/100;
+							amount += objAP.Amount__c;
+						}
+					}
+					
+					objARPPDetail.Action_Plan_Trial_Comm_Amount__c = trailComm;
+				}
+				else if(objARPPDetail.Type__c == 'Lumpsum')
+				{
+					objARPPDetail.Action_Plan_Amount__c = objAP.Amount__c;
+					objARPPDetail.Action_Plan_Upfront_Comm_Amount__c = objARPPDetail.Product__c != null  && objARPPDetail.Commission__r != null ? (objARPPDetail.Commission__r.Upfront_Commission__c * 12 * objAP.Amount__c)/100 : 0;
+					objARPPDetail.Action_Plan_Trial_Comm_Amount__c = objARPPDetail.Product__c != null  && objARPPDetail.Commission__r != null ? (objARPPDetail.Commission__r.Trail_Commission__c * 12 * objAP.Amount__c)/100 : 0;
+				}
+				else if(objARPPDetail.Type__c == 'Life Insurance' || objARPPDetail.Type__c == 'General Insurance')
+				{
+					objARPPDetail.Action_Plan_Amount__c = objAP.Sum_Assured_Rs__c;
+					objARPPDetail.Action_Plan_Upfront_Comm_Amount__c = objARPPDetail.Product__c != null  && objARPPDetail.Commission__r != null ? (objARPPDetail.Commission__r.Upfront_Commission__c * objAP.Sum_Assured_Rs__c)/100 : 0;
+					objARPPDetail.Action_Plan_Trial_Comm_Amount__c = 0;
+				}
+				
+				lstUpdateARPPDetail.add(objARPPDetail);
+			}
+		}
+		
+		//Update ARPP Detail Record
+		if(!lstUpdateARPPDetail.isEmpty())
+		{
+			update lstUpdateARPPDetail;
+			
+		}
+	}
+	*
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+@isTest
+private class TestCreateSubsequentRenewalsTrigger {
+
+    static testMethod void TestingCreateSubsequentRenewalsTrigger() {
+      Date todayDate = Date.today(); 
+     
+     	/* Commented statements on 05Mar 2012 : because Cheque_Received_Date__c,Amount_Received__c,Amount_2nd_Installment__c will be removed from Account object */
+       // Account acc = new Account(FirstName='Test_Fname1',LastName='Test_Renewal_Lname1',Cheque_Received_Date__c=todayDate,PersonMobilePhone='9876543210',PersonEmail='test@ffreedom.in',Entity_Status__c='Active');
+        Account acc = new Account(FirstName='Test_Fname1',LastName='Test_Renewal_Lname1',PersonMobilePhone='9876543210',PersonEmail='test@ffreedom.in',Entity_Status__c='Active');//Cheque_Received_Date__c=todayDate,
+        insert acc;
+        
+        Account account = [select Id,LastName from Account where LastName='Test_Renewal_Lname1'];
+              
+        Renewal__c objRenewal = new Renewal__c(Renewal_Date__c= Date.today(), Entity__c= account.Id,  Is_Renew__c= false);
+		insert objRenewal;
+		      
+        Cheque_Details__c objchq = new Cheque_Details__c(Account__c = account.Id, Installment__c = '1st',Cheque_Date__c = todayDate,Cheque_No__c = 'Ch0011',Amount_Received__c = 1200,Cheque_Status__c = 'Deposited');
+        insert objchq;
+                      
+       /*===========No need to insert record in Renewal__c,it gets automatically generated through trigger===*/ 
+        //Renewal__c renewal = [select Cheque_Received_Date__c,Id from Renewal__c where Entity__c=:account.Id];
+        
+        objRenewal.Cheque_Received_Date__c=todayDate.addYears(1);
+        objRenewal.Has_Opted_for_Renewal__c='Yes';
+      
+        update objRenewal;
+        //Renewal__c renewal = new Renewal__c (Entity__c=acc.Id); 
+        //insert renewal;
+    }
+}

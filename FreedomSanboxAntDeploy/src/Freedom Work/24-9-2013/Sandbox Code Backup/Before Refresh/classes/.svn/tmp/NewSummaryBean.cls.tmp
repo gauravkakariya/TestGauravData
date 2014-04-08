@@ -1,0 +1,248 @@
+public class NewSummaryBean 
+{
+	public String header {get; set;}
+	public Integer startYear { get; set;}
+	public Integer endYear { get; set;}
+	
+	public Map<String,SummaryRecordTypeBean> summaryRecordTypeBeanMap 
+	{
+		get 
+		{
+			if(summaryRecordTypeBeanMap == null) 
+			{
+				summaryRecordTypeBeanMap = new Map<String,SummaryRecordTypeBean>();
+			}
+			return summaryRecordTypeBeanMap;
+		}	
+		set;		
+	}	
+	
+	public List<SummaryRecordTypeBean> summaryRecordTypeBeanList 
+	{
+		get 
+		{
+			return summaryRecordTypeBeanMap.values();
+		}
+	}
+	
+	public SummaryRecordTypeBean getSummaryRecordTypeBean(String recordType) 
+	{
+		SummaryRecordTypeBean recordTypeBean = summaryRecordTypeBeanMap.get(recordType);
+		if(recordTypeBean == null) 
+		{
+			recordTypeBean = new NewSummaryBean.SummaryRecordTypeBean(recordType,this);
+		}
+		summaryRecordTypeBeanMap.put(recordType,recordTypeBean);
+		return recordTypeBean;	
+	}
+	
+	// Start and end year will have current year and life expectancy year
+	public NewSummaryBean(String header,Integer startYear,Integer endYear) 
+	{
+		this.header = header;	
+		this.startYear = startYear;
+		this.endYear = endYear;		
+	}
+	
+	public Map<Integer,Integer> totalValueMap 
+	{
+		get 
+		{
+			Integer index=0;
+			if(totalValueMap == null) 
+			{
+				totalValueMap = new Map<Integer,Integer>();
+				for(Integer i = startYear; i <= endyear;i++)
+				{					
+					totalValueMap.put(i,index++);
+					totalValueList.add(0);	
+					system.debug('*********totalValueList******'+totalValueList);
+				}
+			}
+			return totalValueMap;
+		}
+		set;
+	}
+
+	public List<Double> totalValueList 
+	{
+		get 
+		{
+			if(totalValueList == null) 
+			{
+				totalValueList = new List<Double>();	
+			}
+			return totalValueList;	
+		}	
+		set;	
+	}
+
+	public Double monthlySummary 
+	{
+		get 
+		{
+			System.debug('=======totalValueList=========='+totalValueList);
+       		return math.floor(totalValueList.get(0)/12);
+        }	
+	}
+			
+	public List<Double> totalValueByYear 
+	{
+		get 
+		{
+			return totalValueList;
+		}
+	}	
+	
+	public void setTotal(Integer year,Double value) 
+	{
+		Integer index = totalValueMap.get(year);
+		Double presentValue = totalValueList.get(index);
+		totalValueList.set(index,presentValue + value);
+	}
+	
+	
+	//********************************************** Child CLass code
+	
+	public class SummaryRecordTypeBean 
+	{
+		public String name { get; set; } 
+		
+		SummaryRecordTypeBean(String recordType,NewSummaryBean parent)
+		{
+			this.parent = parent;
+			this.name = recordType;
+						 	
+		}		
+				
+		public NewSummaryBean parent { get; set;}
+										
+		public List<SummaryDetailBean> summaryDetailBeanList 
+		{
+			get 
+			{
+				if(summaryDetailBeanList == null) 
+				{
+					summaryDetailBeanList = new List<SummaryDetailBean>();
+				}
+				return summaryDetailBeanList;
+			}	
+			set;
+		}
+		
+		public Double monthlySummary 
+		{
+			get 
+			{
+        		return math.floor(totalValueList.get(0)/12);
+        	}	
+        }
+		public Double summaryPercent 
+		{
+			get {                   				                    
+				Double totalValueOfRecord=0,totalValueByClass=0;
+				totalValueOfRecord = totalValueList.get(0);
+				System.debug('-----------------totalValueList-------------'+ parent.totalValueList);
+				//if(!parent.totalValueList.isEmpty())
+					totalValueByClass = parent.totalValueList.get(0);
+				if(totalValueByClass == 0) 
+					return 0;					 
+				return ( totalValueOfRecord * 100) / totalValueByClass;
+			}
+			set;            
+		}   
+		
+		
+		/*public Map<Integer,Integer> totalValueMap {
+			get {
+				Integer index = 0;
+				if(totalValueMap == null) {
+					totalValueMap = new Map<Integer,Integer>();
+					for(Integer i=parent.startYear;i<parent.endyear;i++){						
+						totalValueMap.put(i,index++);	
+						totalValueList.add(0);
+					}					
+				}
+				return totalValueMap;
+			}
+			set;
+		}*/		
+		public List<Double> totalValueList {
+			get {
+				if(totalValueList == null) {
+					totalValueList = new List<Double>();
+					for(Integer i=parent.startYear;i<=parent.endyear;i++){ 
+						totalValueList.add(0);
+					}
+				}
+				return totalValueList;	
+			}
+			set;
+		}		
+		public List<Double> totalValueByYear {
+			get {				
+				return totalValueList;
+			}
+			set;
+		} 
+		public void updateParentSum(Integer currentYear,Double currentValue) {
+			parent.setTotal(currentYear,currentValue);
+		}
+		public void populateSummaryDetailList(Integer startYear,Integer endYear,Decimal value,Decimal percent) {
+			SummaryDetailBean  summaryDetailBean  = new SummaryDetailBean(this,startYear,endYear,value,percent);
+			this.summaryDetailBeanList.add(summaryDetailBean);
+			summaryDetailBean.calculate();
+		}
+		
+	}
+	
+	public class SummaryDetailBean {
+		public Double value {get; set;}
+		public Integer startYear {get; set; }
+		public Integer endYear { get; set; }
+		public Double growthPercent { get; set;}
+		public SummaryRecordTypeBean parent {get; set;}
+		
+		public SummaryDetailBean(SummaryRecordTypeBean bean,Integer startYear,Integer endYear,Decimal value,Decimal percent) {
+			this.startYear = startYear;
+			this.endYear = endYear;
+			this.value = value;
+			this.growthPercent = percent;
+			this.parent = bean;
+		}
+		
+		public void calculate() {
+			Double totalValue,currentValue;
+			Map<Integer,Integer> parentMap = parent.parent.totalValueMap;
+			Integer index;
+			Integer endYearForCalculation;
+			
+			
+			endYearForCalculation = endYear;
+			if(parent.parent.endYear < endYear){
+				endYearForCalculation = parent.parent.endYear;
+            }            
+            if(startYear < Date.today().year()){
+            	startYear = Date.today().year();
+			}			
+			for(Integer currentYear = startYear; currentYear<=endYearForCalculation; currentYear++) {				
+			
+				if(currentYear < Date.today().year()) {
+					continue;
+				}
+				index = parentMap.get(currentYear);
+			    
+			    system.debug('parent=====>'+parent);
+			    system.debug('index=='+parent.totalValueList); 
+			    system.debug('parent.totalValueList=====>'+parent.totalValueList); 
+				totalValue =  parent.totalValueList.get(index);			
+				//error.DebugLog('*****************'+totalValue);					
+				currentValue = FinancialUtil.calculateCompound(value,(currentYear-startYear),growthPercent);				
+				totalValue = totalValue + currentValue;
+				System.debug(value + ' year ' + currentYear + ' current value is ' + totalValue  + ' growthPercent is ' + growthPercent);
+				parent.totalValueList.set(index,totalValue);
+				parent.updateParentSum(currentYear,currentValue);												
+			}
+		}			
+	}
+}

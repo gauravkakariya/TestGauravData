@@ -1,0 +1,186 @@
+/*
+    This class is controller for InvestmentAssetPage
+*/
+public class InvestmentAssetController 
+{
+    public List<Account> accountList {get; set;}
+    public String entityId {get; set;}                
+    public String objectName='Investment_Asset__c';
+    public String selRecordTypeId {get; set;}    
+    public Boolean displayPopUp {get; set;}    
+    private String selectedIndexStr,selectedAMCName;
+    public FamilyMemberInfoBean fmBean{get;set;}
+    public FamilyMemberInfoService fmInfoService{get;set;}
+    //Added on : 31/1/2013 : Aditi Satpute : Hide Save button for Business Partner Financial Plan //Sanat
+	public Boolean isDisplaySaveButton{get;set;}
+	
+    public InvestmentAssetServices investmentAssetServicesInstance 
+    {
+        get 
+        {           
+            return investmentAssetServicesInstance ;
+        } 
+        set;
+    }
+    
+    public InvestmentAssetBean investmentAssetBeanInstance 
+    {
+        get 
+        {                                                                                        
+            if(selectedIndexStr != null) 
+            {
+                InvestmentAssetBean.InvestmentWrapper wrapper = investmentAssetBeanInstance
+                                                                    .investmentAssetWrapperList.get(Integer.valueOf(selectedIndexStr));                        
+                wrapper.selectedAMCName = selectedAMCName;                
+                /*if(selectedIndexStr != null) {
+                    wrapper.schemeNameList =investmentAssetServicesInstance.getSchemeNameList(selectedAMCName);
+                    wrapper.selectedSchemeName = wrapper.schemeNameList.get(0).getValue();
+                }*/
+                selectedIndexStr = null;
+            }               
+            return investmentAssetBeanInstance ;
+        } 
+        set;
+    }                 
+    public String recordType{get; set;}
+    public final Investment_Asset__c investmentAsset {get; set;}
+    public String selRecordTypeName{get; set;}
+    public Integer listIndex{get; set;}
+    public Investment_Asset__c  investmentInstance{get; set;}
+    private List<SelectOption> amcNameList,schemeNameList;
+    
+    public List<OuterClass> summaryTableList
+    { 
+    	get 
+    	{
+            if(summaryTableList == null) 
+            {
+                summaryTableList = investmentAssetServicesInstance.getSummaryTableList(entityId, accountList);      
+            }
+            return summaryTableList;
+        }
+        set;
+    }
+    
+  	/*public List<SelectOption> getSchemeList(){
+     		return this.schemeList;
+    }*/
+  	//Boolean isAddNew = true;
+    
+    public InvestmentAssetController(ApexPages.StandardController stdController)
+    {
+    	//Code Added on : 31/1/2013 : Aditi Satpute : Hide Save button for Business Partner Financial Plan : by default true //Sanat
+   		isDisplaySaveButton = true;
+   		
+        investmentAsset = (Investment_Asset__c)stdController.getRecord();
+        investmentAssetServicesInstance = new InvestmentAssetServices();
+        investmentAssetBeanInstance = new InvestmentAssetBean();        
+        entityId = ApexPages.currentPage().getParameters().get('EntityId');
+        accountList = investmentAssetServicesInstance.getFamilyDetails(entityId);        
+        //amcNameList = investmentAssetServicesInstance.getAMCNameList();
+        //schemeNameList = investmentAssetServicesInstance.getSchemeNameList(amcNameList.get(0).getValue());
+        //system.debug('schemeNameList==###=='+schemeNameList); 
+        fmBean = new FamilyMemberInfoBean();
+        fmInfoService = new FamilyMemberInfoService();
+        fmInfoService.isCostomerProfile(fmBean);
+        recordType = 'null';   
+             
+        //Added Code on : 31/1/2013 : Aditi Satpute : Hide Save button for Business Partner Financial Plan //Sanat
+        User objUser = [Select Profile.Name, ProfileId, UserType, Name, Id From User where Id =: UserInfo.getUserId() limit 1];
+        if(objUser.UserType.equalsIgnoreCase('PowerPartner'))
+        {
+        	isDisplaySaveButton = false;
+        }
+    } 
+        
+    public void showPopUp() 
+    {
+        displayPopUp=true;
+        if(selRecordTypeId == InvestmentAsset__c.getInstance('Stocks').RecordTypeId__c)
+        {
+        	system.debug('==========Stocks===========');
+            recordType = 'Stocks';
+        }
+        if(selRecordTypeId == InvestmentAsset__c.getInstance('Mutual Fund').RecordTypeId__c)
+        {
+            recordType = 'Mutual_Fund';
+        }
+        if(selRecordTypeId == InvestmentAsset__c.getInstance('Fixed Income').RecordTypeId__c)
+        {
+            recordType = 'Fixed_Income';
+        }
+        //Prajakta - FP changes - 25-02-2013
+        if(selRecordTypeId == InvestmentAsset__c.getInstance('Gold').RecordTypeId__c)
+        {
+        	system.debug('==========Gold===========');
+            recordType = 'Gold';
+        }
+                     
+        if((investmentAssetBeanInstance.investmentAssetWrapperList.isEmpty())) 
+        {
+            investmentAssetServicesInstance.getInvestmentList(investmentAssetBeanInstance,selRecordTypeId,entityId);
+            if(investmentAssetBeanInstance.investmentAssetWrapperList.isEmpty())
+            {
+                for(Integer i=0;i < 10; i++)
+                {        
+                    investmentAssetServicesInstance.addRow(investmentAssetBeanInstance,selRecordTypeId);
+                }
+            }
+        }                   
+    }
+    
+    //To Add default rows
+    public void addNewRow() 
+    {
+        investmentAssetServicesInstance.addRow(investmentAssetBeanInstance,selRecordTypeId);//amcNameList,schemeNameList
+        investmentAssetServicesInstance.addRow(investmentAssetBeanInstance,selRecordTypeId);
+        investmentAssetServicesInstance.addRow(investmentAssetBeanInstance,selRecordTypeId); 
+    }
+
+    public void closePopUp()
+    {
+        displayPopUp = false;
+        summaryTableList = null;
+        investmentAssetBeanInstance.investmentAssetWrapperList = null;
+        accountList = investmentAssetServicesInstance.getFamilyDetails(entityId);  
+        system.debug('==========accountList========1==='+accountList);      
+    }
+    
+    //To save/update investment asset in db.
+    public void save() 
+    {
+        try 
+        {   
+        	investmentAssetServicesInstance.save(investmentAssetBeanInstance,recordType,selRecordTypeId,entityId);                   
+            summaryTableList = null;
+            investmentAssetBeanInstance.investmentAssetWrapperList = null;
+            displayPopUp = false;
+            accountList = investmentAssetServicesInstance.getFamilyDetails(entityId);
+            system.debug('==========accountList=====save======'+accountList);
+        }
+        catch(ValidationException e) 
+        {
+            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING,e.getMessage()));
+        }             
+    }
+    
+    public List<SelectOption> getOwnerItems() 
+    {
+        investmentAssetBeanInstance.options = investmentAssetServicesInstance.getOwnerItems(entityId,accountList);    
+        return investmentAssetBeanInstance.options;
+    }  
+    
+    //This function is called when user clicks remove button
+	public void remove()
+	{
+	    investmentAssetServicesInstance.removeRecords(investmentAssetBeanInstance);                   
+ 	}  
+       
+    //Place holder method to update Picklist on edit page.
+    public PageReference dummy()
+    {
+        selectedIndexStr = ApexPages.currentPage().getParameters().get('Index');            
+        selectedAMCName = ApexPages.currentPage().getParameters().get('selectedAMCName');               
+        return null;
+    }
+}

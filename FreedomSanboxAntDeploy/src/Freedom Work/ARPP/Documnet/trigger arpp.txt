@@ -1,0 +1,69 @@
+Map<Id,ARPP_Detail__c>mapAPIdToARPPDetail = new Map<Id,ARPP_Detail__c>();
+		Set<Id> setEntityId = new Set<Id>();
+		
+		for(ARPP_Detail__c objARPP : lstARPPDetail)
+		{
+			setEntityId.add(objARPP.Entity__c);
+		}
+		Map<Id,Account> mapEntityToUpdate = new Map<Id,Account>([select Recoomended_Revenue__c,Actual_Revenue__c from Account where Id IN : setEntityId]);
+		for(ARPP_Detail__c objARPP : lstARPPDetail){
+			if (mapEntityToUpdate.containsKey(objARPP.Entity__c)) {
+				Account objEntity = mapEntityToUpdate.get(objARPP.Entity__c);
+				if (objEntity.Recoomended_Revenue__c == null)
+				   objEntity.Recoomended_Revenue__c = 0.0;
+				if (objEntity.Actual_Revenue__c == null)
+				   objEntity.Actual_Revenue__c = 0.0;   
+				objEntity.Recoomended_Revenue__c += objARPP.Action_Amount_Revenue__c;
+				objEntity.Actual_Revenue__c += objARPP.Execution_Tracker_Total_Revenue__c;
+			}
+		}
+		
+		if (mapEntityToUpdate != null && !mapEntityToUpdate.isEmpty())
+		    update mapEntityToUpdate.values();
+
+
+
+
+
+
+
+
+public with sharing class ARPPHandler 
+{
+  public void onAfterInsertUpdateDeteteCalculateRevenueSum(Map<Id, ARPP_Detail__c> mapIdToARPP)
+  {
+    Set<Id> setEntityId = new Set<Id>();
+    for(ARPP_Detail__c objAD : mapIdToARPP.values())
+    {
+      setEntityId.add(objAD.Entity__c);
+    }
+    Map<Id, List<ARPP_Detail__c>> mapEntitiyIdTolstARPP = new Map<Id, List<ARPP_Detail__c>>();
+    for( ARPP_Detail__c objAD : [Select Id, Action_Amount_Revenue__c, Entity__c, Type__c, Execution_Tracker_Total_Revenue__c from ARPP_Detail__c where Entity__c IN: setEntityId])
+    {
+      if(!mapEntitiyIdTolstARPP.containsKey(objAD.Entity__c))
+        mapEntitiyIdTolstARPP.put(objAD.Entity__c, new List<ARPP_Detail__c>{objAD});
+      else
+        mapEntitiyIdTolstARPP.put(objAD.Entity__c, new List<ARPP_Detail__c>{objAD});
+    }
+    
+    Map<Id, Account>  mapIdToEntity = new Map<Id, Account>([Select Id, Actual_Revenue__c, Recommended_Revenue__c from Account  where Id IN: setEntityId]);
+    List<Account> lstUpdateEntity = new List<Account>();
+    System.debug('------------mapEntitiyIdTolstARPP---------'+mapEntitiyIdTolstARPP.size());
+    for(Id entityId : mapEntitiyIdTolstARPP.keySet())
+    {
+      Account objEntity = mapIdToEntity.get(entityId);
+      objEntity.Recommended_Revenue__c = 0;
+      objEntity.Actual_Revenue__c = 0;
+      for(ARPP_Detail__c objARPP : mapEntitiyIdTolstARPP.get(entityId))
+      {
+        System.debug('-------------objARPP.Action_Amount_Revenue__c-----------------'+objARPP.Action_Amount_Revenue__c + '-----'+objARPP.Type__c);
+        System.debug('-------------objARPP.Execution_Tracker_Total_Revenue__c-----------------'+objARPP.Execution_Tracker_Total_Revenue__c + '-----'+objARPP.Type__c);
+        objEntity.Recommended_Revenue__c += objARPP.Action_Amount_Revenue__c;
+        objEntity.Actual_Revenue__c += objARPP.Execution_Tracker_Total_Revenue__c;
+      }
+      
+      lstUpdateEntity.add(objEntity);
+    }
+    
+    if(!lstUpdateEntity.isEmpty())
+      update lstUpdateEntity;

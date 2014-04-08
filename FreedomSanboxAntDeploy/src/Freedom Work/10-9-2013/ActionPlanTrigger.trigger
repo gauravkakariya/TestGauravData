@@ -1,0 +1,28 @@
+trigger ActionPlanTrigger on Approve_Action_Plan__c (after insert, after update, before delete) 
+{
+    ARPPCalculationHandler handler = new ARPPCalculationHandler();    
+    APUpdateForETHandler APhandler = new APUpdateForETHandler();
+    
+    Handle_Update_Trigger__c objHandleUpdateCustomSetting = Handle_Update_Trigger__c.getInstance('ARPP Calculation');       
+    Boolean isExecute; 
+    if(!Test.isRunningTest()) 
+        isExecute = objHandleUpdateCustomSetting.Is_Execute__c; 
+    else
+        isExecute = true;
+    
+    if((trigger.isAfter && trigger.isInsert))
+    {
+        handler.onAfterInsertForARPPCalculation(trigger.newMap);
+        //if(!Test.isRunningTest())
+        handler.onAfterInsertForARPPWithRunningSIPandLumpsum(trigger.newMap);
+    }
+    
+   if(trigger.isAfter && trigger.isUpdate)// && ARPPCalculationHandler.isRecursive == false
+   {
+   		APhandler.onAfterUpdateForETRecordsCreation(trigger.new, trigger.old, trigger.newMap);
+   		if(isExecute) 
+        {
+     		handler.onAfterUpdateForARPPCalculation(trigger.new, trigger.old, trigger.newMap);
+        }
+   }
+}

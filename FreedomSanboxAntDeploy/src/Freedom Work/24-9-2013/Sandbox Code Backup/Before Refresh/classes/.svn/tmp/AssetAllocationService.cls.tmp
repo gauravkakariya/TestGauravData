@@ -1,0 +1,1847 @@
+/**
+*
+* Author:  Manasi Ranade 
+*
+* Revision History:
+*   Version     Version Author     Date       		Comments
+*   1.0        		 --				--		   		This class is having logic to show asset allocation on asset allocation page.
+													It retrieves asset, investment asset and insurance records from respective table and 
+													association entries.
+	2.0			Manasi Ranade	   26 May 2011		Issue Id :F0009:
+													1)Added the logic of Current value of Insurance in function fetchInsuranceRecords();
+													Created two functions.
+								  					1)GetAnnualPremiumAmount():Calcutes annualPremiumAmount depending upon frequency of Insurance.
+								 					2)GetCurrentValuePerYear():Calculates Current value for no of years between 
+								 					Insurance start date and todays date
+	2.0			Manasi Ranade	   26 May 2011		Issue Id :F0040:
+								 					1)Added GetMonthsByYear() function that will calculate no of months in two years
+													2)Changed calculation Of calculation of current value in fetchInsuranceRecords() function
+													3)Added GetInsuranceAmountForPeriod() function to calculate Insurance value
+													  This calculation's are somewhat same as Recurring calculation's logic
+													4)Added calculateNoOfInstallmentsOfInsurance() function to calculate No of installments
+													  depending upon frequency
+													5)Added RaiseToPower() function to calculate Log
+													6)Added claculatePowerForInsurance(),claculateBaseForInsurance 
+													  functions to calculate multiplying factor which depends on
+	2.0			Manasi Ranade	   17/06/2011		Issue Id :F0050:
+								 					If Surrender_Cash_Value__c is not null then assigned it to the Current value   
+													else calculate current value at run time and assign it to current value in 
+													fetchInsuranceRecords() function	
+    2.0			Manasi Ranade	   23/06/2011		Issue Id :F0040:
+	
+	2.0			Manasi Ranade	   01/07/2011		Issue Id :F0047:
+								 					1) Added new function 'CalculateNoOfInstallmentsforPremiiumPayingTerm'.
+				  									2) It will calculate no of Premium Paying terms from frequency of Insurance.
+				  									Example : 
+				  										a. If Premium_Paying_Term__c = 3 and Frequency = 'Annual' then   iPremiumPayingTerm = 3 * 1;
+				   			 							b. If Premium_Paying_Term__c = 3 and Frequency = 'Semi Annual' then   iPremiumPayingTerm = 3 * 2;										 					Calculations are changed as per the excel sheet provided by Haren 															
+													Changes in function GetInsuranceAmountForPeriod() :
+													3)Added Logic related to Premium Paying Term.
+													4)Commented the following previous code.
+													5)If Insurance has non null value for Premium_Paying_Term__c field, it will calculate amount
+					  	 							  from following if condition, else it will calculate it from else part.
+	2.0			Manasi Ranade	   23/08/2011		Issue Id :FS0117 :
+													Change in function : getActionList
+													Commented previous code. And added new text instead of 'Hold' and 'sell'.
+	2.0  		Manasi 			 5/10/2011          Issue Id: FS0177
+												    Created new function : To separate out the Fixed income related records on asset 
+							  						allocation page
+	2.0  		Manasi 			 22/11/2011         Issue Id: FS0287
+												    Change in function : fetchInsuranceRecords:
+												    Commented If condition.Because need to include 'One Time Premium' to the Asset Allocation Page
+	2.0			Manasi			 15/12/2011	        Issue ID :FS0345: As Tenure Of Insurance is not filled.
+													It is throwing an exception.So check null condition before using it
+	2.0			Manasi			 15/12/2011	        Issue ID :FS0347: Adjusted Tenure of insurance
+	2.0			Manasi			 15/12/2011	        Issue ID :Manasi_13: Adjusted Tenure of insurance
+	2.0			Manasi			 5/1/2012	        Issue ID : FS0401 : Fetch the Asset Allocation Acions from Custom Setting
+	2.0			Manasi			 18/1/2012	        Issue ID : 00001455 : Code to check whether the selected Asset is in GoalInvestmentAssetAssociation__c or not
+	2.0			Manasi			 31/1/2012	        Issue ID : 00001486 : Assigned value to the Allocation__c field of GoalInsurance Association object.
+								  					It will be usefull on EMERGENCY PLANNING Page
+	2.0			Manasi			 11/04/2012	        Issue ID : 00001586 : Added null check before using the value of strPremiumFrequency
+													Change in functions: claculatePowerForInsurance, calculateNoOfInstallmentsOfInsurance, RaiseToPower, GetInsuranceAmountForPeriod
+	
+	2.0			Mahesh Hirugade  27/04/2012	        Issue ID : 00001606 : Added new parameter to populateAssetDetailList named as 'Description'
+	2.0			Manasi Ranade    30/05/2012	        Issue ID : 00001657 : Change in function : calculateNoOfInstallmentsOfInsurance:
+													Reverted back to the original code.(As per the discussion with Haren)'
+*/
+public class AssetAllocationService 
+{
+    DatabaseDML databaseAccess = new DatabaseDML();
+    DatabaseSOQL databaseObj = new DatabaseSOQL();
+    public Account objAccount{get;set;}
+    
+    private Map<String, List<Investment_Asset__c>> mapRecordIdWithEntityIdToListOfInvestmentAsset = new Map<String, List<Investment_Asset__c>>();
+	// General method to have common place for adding apex messages
+	private void setInfoMessage(String str) {
+		ApexPages.addMessage(
+					new ApexPages.Message(ApexPages.severity.INFO,str));																			
+	}
+	/*
+		This method is to fetch Asset records from Asset Object and populate AssetAllocationBean. 		
+	*/
+    private void fetchAssetsRecords(String entityId,AssetAllocationBean assetAllocationBean,List<Goal__c> goalList) {
+        AssetAllocationBean.AssetRecordTypeBean assetRecordTypeBean;
+        AssetAllocationBean.AssetTypeBean assetTypeBean;
+        AssetAllocationBean.AssetDetailBean assetDetailBean;
+        AssetAllocationBean.GoalAssetMapping goalAssetMapping;
+                
+        List<GoalAssetAssociation__c> assetGoalAssociationInDB;
+        List<Asset__c> assetList;
+        ID recordTypeId;
+        String assetType,tempAssetType;
+        Double currentValue;
+        try {
+	        Map<ID,List<GoalAssetAssociation__c>> goalAssetMappingMap 
+	                                                    = getAssetGoalAssociationMapping(entityId);                                                 
+	        Map<String,AssetAllocationBean.GoalAssetMapping> defaultGoalAssociationMap;
+	                                                                    
+	        assetList = databaseObj.getAssets(entityId);                
+	        System.debug('-----------------assetList-----------'+assetList);        
+	        for(Goal__c goal: goalList) { // we are using same list to populate mapping as well.
+	            assetAllocationBean.headerList.add(goal.Description__c);
+	        }
+	                
+	        for(Asset__c asset : assetList) {           
+	            if(asset.recordTypeId != recordTypeId) {
+	                assetRecordTypeBean = assetAllocationBean.populateRecordTypeBeanList('Asset',asset.RecordType.Name);
+	                recordTypeId = asset.recordTypeId;              
+	                assetTypeBean = null;               
+	            }           
+	            if(AssetBean.assetTypeList[1].equals(asset.RecordType.Name) ||
+	                AssetBean.assetTypeList[2].equals(asset.RecordType.Name)||
+	                AssetBean.assetTypeList[4].equals(asset.RecordType.Name) ||
+	                AssetBean.assetTypeList[6].equals(asset.RecordType.Name)) {
+	                tempAssetType = asset.Account_Type__c;
+	                    
+	            } else {                
+	                tempAssetType = asset.Asset_Types__c;
+	            }
+	            
+	            currentValue = asset.Monthly_Asset__c;
+	            System.debug('-----------------asset.Monthly_Asset__c-----------'+asset.Monthly_Asset__c); 
+	            if((tempAssetType == null)){
+					setInfoMessage('Asset/Account type is NULL for ' + asset.RecordType.Name +' asset');
+	                continue;						            
+	            }
+	            if(currentValue == null) {
+					setInfoMessage('Current value is NULL for ' + asset.RecordType.Name +' asset');
+	                continue;
+	            }
+	            
+				System.debug( tempAssetType + ' **************** ' + assetType + ' ********************* ' + asset.RecordType.Name);
+	            if(!tempAssetType.equals(assetType)) {
+	                assetTypeBean = assetRecordTypeBean.populateAssetTypeBeanList(tempAssetType);
+	                assetType = tempAssetType;              
+	            }
+	             		/** Eternus Solutions       **/
+						/** Author  : Dipak Nikam **/
+						/** Issue Id: Issue came from Haren  **/
+						/** Date    : 3/11/2011 	**/
+						/** Purpose : Handled the null pointer exception
+						/****************************************************/
+				System.debug('-------------------assetTypeBean---------------'+assetTypeBean);		
+	            if(assetTypeBean != null)
+	            {              
+		            assetDetailBean = assetTypeBean.populateAssetDetailList(asset.Entity__r.firstNAME, '', currentValue, asset.action__c, asset.id);
+		            assetDetailBean.actionList=getActionList(asset.RecordType.Name);
+		            
+	            	/** Eternus Solutions        **/
+					/** Author  : Mahesh Hirugade**/
+					/** Issue Id: 00001606		 **/
+					/** Date    : 25/4/2012 	 **/
+					/** Purpose : Added the description of Business Asset, Investment Asset and Life Insurance
+					/****************************************************/
+					System.debug('-------------------asset.RecordType.Name--------------------------'+asset.RecordType.Name);
+		            if(asset.RecordType.Name == 'Govt. Saving Schemes' || asset.RecordType.Name == 'Retirement Accounts'|| asset.RecordType.Name == 'Deposits With Bank')
+		            {
+		            	assetDetailBean.Description = 
+		            	
+		            			(asset.RecordType.Name == 'Deposits With Bank') ? 
+		            					(
+		            						(asset.Bank_Name__c != null) ? (asset.Bank_Name__c + ' - ' + asset.Account_Number__c) : (asset.Account_Number__c)
+		            					)
+			            					
+		            					: (asset.Account_Number__c);
+		            }
+		            else
+		            	assetDetailBean.Description = (asset.Description__c);//mahesh
+		            
+		            defaultGoalAssociationMap  = getDefaultAssociation(asset.id,asset.entity__c,goalList);  
+		            assetGoalAssociationInDB  = goalAssetMappingMap.get(asset.id);
+		            String goalId;
+		            // This loop will remove default values
+		            if(assetGoalAssociationInDB != null)
+		            for(GoalAssetAssociation__c goalAssetAssociation : assetGoalAssociationInDB ) 
+		            {
+		                goalId = goalAssetAssociation.goal__c;
+							//System.debug('Goal ID is ' + goalId);
+		                goalAssetMapping = defaultGoalAssociationMap.get(goalId);
+		                	//System.debug('Goal Mapping is is ' + goalAssetMapping);
+		                goalAssetMapping.assetAllocated =''+ goalAssetAssociation.Allocated__c;
+		                goalAssetMapping.goalAssetAssociationId = goalAssetAssociation.Id;
+		                if(goalAssetAssociation.Allocated__c != null){
+		                    assetDetailBean.allocatedPercent =''+ (Decimal.valueOf(assetDetailBean.allocatedPercent) + goalAssetAssociation.Allocated__c);
+		                }
+		            }
+		            // Need to figure out some other way to avoid this for loop.
+		            for(Goal__c goal :goalList) {               
+		            	//System.debug(goal.id +  ' GoalMap ' + defaultGoalAssociationMap);
+		                assetDetailBean.populateGoalAssetMappingList(goal.id,defaultGoalAssociationMap.get(goal.id).assetAllocated);
+		            }
+	            }
+	        }
+		} catch(Exception ex) {
+ 			throw new GeneralException('AssetAllocationService: fetchAssetsRecords : Internal Error' + ex.getMessage());
+        }                            
+    } 
+    /* API to make calls to all types of asset and create AssetAllocationBean instance.
+    	One instance to have all records.   
+    */
+    public AssetAllocationBean fetchAssetAllocationRecords(String entityId) {       
+        AssetAllocationBean assetAllocationBean = new AssetAllocationBean();         
+        List<Goal__c> goalList;     
+        goalList = databaseObj.getAllGoals(entityId);
+        
+        fetchAssetsRecords(entityId,assetAllocationBean,goalList);
+        fetchInvestmentAssetsRecords(entityId,assetAllocationBean,goalList);
+        fetchInsuranceRecords(entityId,assetAllocationBean,goalList);
+         
+        return assetAllocationBean;                 
+    }
+    // ID is Asset ID to have GoalAssetAssocation map. 
+    public Map<ID,List<GoalAssetAssociation__c>> getAssetGoalAssociationMapping(String entityId) {
+        List<GoalAssetAssociation__c> goalAssetAssociationList;
+        Map<ID,List<GoalAssetAssociation__c>> goalAssetMappingMap = new Map<ID,List<GoalAssetAssociation__c>>();
+        
+    	goalAssetAssociationList = databaseObj.getGoalAssetAllocationList(entityId);
+        System.debug('---------------------size---------------------'+goalAssetAssociationList.size());
+    	for(GoalAssetAssociation__c goalAssetAssociation : goalAssetAssociationList) {
+        	goalAssetAssociationList = goalAssetMappingMap.get(goalAssetAssociation.asset__c);
+        	if(goalAssetAssociationList == null) {
+            	goalAssetAssociationList = new List<GoalAssetAssociation__c>();
+            	goalAssetMappingMap.put(goalAssetAssociation.asset__c,goalAssetAssociationList);
+        	}
+        	goalAssetAssociationList.add(goalAssetAssociation);             
+		}
+ 		
+        System.debug('-----------------goalAssetMappingMap--------------'+goalAssetMappingMap);
+        return goalAssetMappingMap; 
+    }
+    // ID is goal Id
+	private Map<String,AssetAllocationBean.GoalAssetMapping> getDefaultAssociation(ID assetId,String entityId,List<Goal__c> goalList) {        
+		Map<String,AssetAllocationBean.GoalAssetMapping> goalAssetAllocationMap  = new  Map<String,AssetAllocationBean.GoalAssetMapping>() ;        
+        AssetAllocationBean.GoalAssetMapping goalAssetMapping;
+     	try{
+	        for(Goal__c goal : goalList) {
+	            goalAssetMapping = new AssetAllocationBean.GoalAssetMapping();            
+	            goalAssetMapping.goalId = goal.Id; 
+	            goalAssetMapping.assetAllocated = '0';
+	            goalAssetMapping.goalAssetAssociationId ='0';  
+	            goalAssetAllocationMap.put(goal.ID,goalAssetMapping);             
+	        }
+     	}catch(Exception ex) {
+     		throw new GeneralException('AssetAllocationService.getDefaultAssociation : Internal Error ' + ex.getMessage());	
+     	}
+        return goalAssetAllocationMap; 
+    } 
+    /*
+    	Asset Map is holding ALL assets for any given parent and its child entities
+    	Modified By : Niket Chandane
+    	Modifed At  : 1 July 2011
+    	Summary : To optimised the code Introduced the new Method in the DatabaseSOQL 
+    				and Called from the  getAssetMap which returs the MAP.
+    */
+    private Map<ID,Asset__c> getAssetMap(String entityId) {
+        Map<ID,Asset__c> assetMap = new Map<ID,Asset__c>();
+    	
+    	try {
+    		assetMap = databaseObj.getAssetMap(entityId);
+	        /*List<Asset__c> assetList;
+	        assetList = databaseObj.getAssets(entityId);
+        
+        	for(Asset__c asset : assetList) {
+            	assetMap.put(asset.Id,asset);
+			}*/
+    	}catch(Exception ex) {
+     		throw new GeneralException('AssetAllocationService.getAssetMap : Internal Error ' + ex.getMessage());
+        }       
+        return assetMap;    
+    }
+    /*
+    	This Map is being used to set allocated assets record in the db
+    */
+    
+    //First  ID is Asset ID and Second is Goal
+    public Map<ID,Map<ID,GoalAssetAssociation__c>> getAssetGoalAssociationMaps(String entityId) {       
+        Map<ID,GoalAssetAssociation__c> goalAssetAssociationByGoal = new Map<ID,GoalAssetAssociation__c>();
+        Map<ID,Map<ID,GoalAssetAssociation__c>> goalAssetAssociationByAsset = new Map<ID,Map<ID,GoalAssetAssociation__c>>();
+        
+ 		try {
+	        List<GoalAssetAssociation__c> goalAssetAssociationList = databaseObj.getGoalAssetAllocationList(entityId);
+	        	                
+	        for(GoalAssetAssociation__c goalAssetAssociation : goalAssetAssociationList) {
+	            goalAssetAssociationByGoal = goalAssetAssociationByAsset.get(goalAssetAssociation.asset__c);
+	            if(goalAssetAssociationByGoal == null) {
+	                goalAssetAssociationByGoal = new Map<ID,GoalAssetAssociation__c>();         
+	                goalAssetAssociationByAsset.put(goalAssetAssociation.asset__c,goalAssetAssociationByGoal);
+	            }
+				goalAssetAssociationByGoal.put(goalAssetAssociation.goal__c,goalAssetAssociation);                          
+			}
+		}catch(Exception ex) {
+     		throw new GeneralException('AssetAllocationService.getAssetGoalAssociationMaps : Internal Error ' + ex.getMessage());	
+        }
+      
+        return goalAssetAssociationByAsset; 
+    }
+    // These lists are used to insert/update/delete association records.
+    List<GoalAssetAssociation__c>   insertGoalAssetAssociationList;
+    List<GoalAssetAssociation__c>   deleteGoalAssetAssociationList;
+    List<GoalInvestmentAssetAssociation__c> insertGoalInvAssetAssociationList;
+    List<GoalInvestmentAssetAssociation__c> deleteGoalInvAssetAssociationList;
+    List<GoalInsuranceAssociation__c>   insertGoalInsuranceAssociationList;
+    List<GoalInsuranceAssociation__c>   deleteGoalInsuranceAssociationList;
+    
+    
+    /*
+    	This is the method to separate insert and delete association records and update respective list. 
+    */    
+    private void populateGoalAssetAssociationLists(AssetAllocationBean.GoalAssetMapping mapping,
+                                                        AssetAllocationBean.AssetDetailBean detailedBean,
+                                                        Map<ID,Map<ID,GoalAssetAssociation__c>> goalAssetMappingMap,
+                                                        Map<ID,Asset__c> assetMap) 
+  {    
+        Decimal assetAllocated;
+        Asset__c asset;
+        GoalAssetAssociation__c goalAssetAssociation;
+        Map<ID,GoalAssetAssociation__c> goalAssetMappingMapByGoalId;
+    	try 
+    	{
+        	if(('null'.equals(mapping.assetAllocated))|| (mapping.assetAllocated.equals(''))) 
+        	{
+                return;
+        	}
+        	assetAllocated = Decimal.valueof(mapping.assetAllocated);
+        	goalAssetMappingMapByGoalId = goalAssetMappingMap.get(detailedBean.assetId);
+        	
+        	if(goalAssetMappingMapByGoalId != null) 
+        	{
+            	goalAssetAssociation = goalAssetMappingMap.get(detailedBean.assetId).get(mapping.goalId);
+        	}                       
+        	asset = assetMap.get(detailedBean.assetId);
+        	asset.Action__c = detailedBean.action;
+                        
+	        if(goalAssetAssociation == null) 
+	        {
+	            //System.debug('Create Goal Asset association.');
+	            goalAssetAssociation = new GoalAssetAssociation__c();
+	            goalAssetAssociation.Goal__c = mapping.goalId;
+	            goalAssetAssociation.Asset__c = detailedBean.assetId;                               
+	        }                                               
+                        
+	        //System.debug('New action is ' + asset.Action__c);
+	                                                                                                                
+	        if((assetAllocated > 0) && ('0'.equals(mapping.goalAssetAssociationId))) 
+	        {                          
+	            goalAssetAssociation.Allocated__c = assetAllocated;                         
+				goalAssetAssociation.Allocation__c = asset.Monthly_Asset__c *(assetAllocated / 100);  						
+	            insertGoalAssetAssociationList.add(goalAssetAssociation);       
+	                            
+	        } 
+	        else if((assetAllocated > 0)) 
+	        {
+	            goalAssetAssociation.Allocated__c = assetAllocated;                         
+				goalAssetAssociation.Allocation__c = asset.Monthly_Asset__c *(assetAllocated / 100);
+	            insertGoalAssetAssociationList.add(goalAssetAssociation);                           
+	        }
+	        else if(!('0'.equals(mapping.goalAssetAssociationId))) 
+	        {                           
+	            if(goalAssetAssociation.Id != null)
+	                deleteGoalAssetAssociationList.add(goalAssetAssociation);
+	        }// ignore rest             
+		}
+		catch(Exception ex) 
+		{
+     		throw new GeneralException('AssetAllocationService.getAssetGoalAssociationMaps : Internal Error ' + ex.getMessage());	
+     	}				    	
+    }
+    
+    /*
+    	This is the method to separate insert and delete association records and update respective list. 
+    */
+    private void populateGoalInvAssetAssociationLists(String entityId,AssetAllocationBean.AssetTypeBean assetTypeBean,
+                                                        AssetAllocationBean.AssetDetailBean detailedBean,
+                                                        AssetAllocationBean.GoalAssetMapping mapping,
+                                                        Map<String,Map<ID,List<GoalInvestmentAssetAssociation__c>>> invAssetGoalAssociationInDbMap,
+                                                        Map<ID,Investment_Asset__c> investmentAssetMap
+                                              			/** Eternus Solutions       **/
+														/** Author  : Manasi Ranade **/
+														/** Issue Id: FS0177      	**/
+														/** Date    : 5/10/2011 	**/
+														/** Purpose : To separate out the Fixed income related records on asset 
+																	  allocation page
+														/****************************************************/
+                                                        ,Map<ID,Map<ID,GoalInvestmentAssetAssociation__c>> goalInvestmentAssetAssociationByInvestmentAsset ) 
+    {
+        Decimal assetAllocated;
+        List<Investment_Asset__c> tempInvAssetList;
+        List<GoalInvestmentAssetAssociation__c> goalInvAssociationList;
+        GoalInvestmentAssetAssociation__c goalInvAssociation;
+        Boolean mappingExist = false;  
+        Map<ID,List<GoalInvestmentAssetAssociation__c>> goalInvAssociationMapByGoalId;
+         
+		try 
+		{
+		        if(('null'.equals(mapping.assetAllocated))|| (mapping.assetAllocated.equals('')))
+		        {
+		            return;
+		        }
+		        
+		        assetAllocated = Decimal.valueof(mapping.assetAllocated);
+		        goalInvAssociationMapByGoalId = invAssetGoalAssociationInDbMap.get(assetTypeBean.assetTypeName);
+		        //00001455 Added following line
+		        //tempInvAssetList = databaseObj.getInvestmentAssetByAccount(InvestmentAsset__c.getInstance(assetTypeBean.assetTypeName).RecordTypeId__c, detailedBean.entityId);
+		       	String strKey = InvestmentAsset__c.getInstance(assetTypeBean.assetTypeName).RecordTypeId__c + ':' + detailedBean.entityId;
+		        tempInvAssetList = mapRecordIdWithEntityIdToListOfInvestmentAsset.get(strKey);
+		        if(goalInvAssociationMapByGoalId != null)
+		        {
+		        	
+		            goalInvAssociationList =  goalInvAssociationMapByGoalId.get(mapping.goalId);
+		            /** Eternus Solutions       **/
+					/** Author  : Manasi Ranade **/
+					/** Issue Id: 00001455      **/
+					/** Date    : 18/1/2012 	**/
+					/** Purpose : Code to check whether the selected Asset is in GoalInvestmentAssetAssociation__c or not
+					/****************************************************/
+		            /*if(goalInvAssociationList != null)
+		                mappingExist = !( goalInvAssociationList.isEmpty());*/
+		            if(goalInvAssociationList != null)
+		            {
+		                for(GoalInvestmentAssetAssociation__c objInvAssetGoalMapping : goalInvAssociationList)
+		                {
+		                	for(Investment_Asset__c objInvAsset : tempInvAssetList)
+		                	{
+		                		if(objInvAssetGoalMapping.Investment_Asset__c == objInvAsset.Id)
+		                		{
+		                			mappingExist = true;
+		                			break;
+		                		}
+		                	}
+		                }
+		                
+		                //mappingExist = !( goalInvAssociationList.isEmpty());
+		            }
+	        	}
+	        	
+		        //Moved below code previous to condition ::if(goalInvAssociationMapByGoalId != null) 
+		        //tempInvAssetList = databaseObj.getInvestmentAssetByAccount(InvestmentAsset__c.getInstance(assetTypeBean.assetTypeName).RecordTypeId__c,detailedBean.entityId);
+		        
+	        for(Investment_Asset__c invAsset : tempInvAssetList)
+	        {
+	            invAsset.Action__c = detailedBean.action;
+	            investmentAssetMap.put(invAsset.Id,invAsset);
+	            
+	            if(!mappingExist)
+	            {
+	            	
+	            	if(invAsset.RecordTypeId != InvestmentAsset__c.getInstance ('Fixed Income').RecordTypeId__c) //Prajakta
+	            	{
+		                if(assetAllocated > 0) 
+		                {
+								//System.debug(detailedBean.entityId + ' Difference ' + invAsset.Entity__c);
+		                    if(detailedBean.entityId.equals(invAsset.Entity__c))
+		                    {
+		                    	// adding this check on safer side
+		                        goalInvAssociation = new GoalInvestmentAssetAssociation__c();
+		                    	goalInvAssociation.Goal__c = mapping.goalId;
+		                        goalInvAssociation.Investment_Asset__c = invAsset.Id;    
+		                        goalInvAssociation.Allocated__c = assetAllocated;                                 
+								goalInvAssociation.Allocation__c = (assetAllocated /100) * invAsset.TotalAsset__c;
+		                        insertGoalInvAssetAssociationList.add(goalInvAssociation);
+		                    }                                           
+		                }
+	            	} 
+	            }           
+	        }
+	               
+	        //investmentAssetList.addAll(tempInvAssetList); 
+		        if(mappingExist)
+		        {
+		            for(GoalInvestmentAssetAssociation__c association : goalInvAssociationList) {
+		                if(detailedBean.entityId.equals(association.Investment_Asset__r.Entity__c)){
+		                    /** Eternus Solutions       **/
+							/** Author  : Manasi Ranade **/
+							/** Issue Id: FS0177      	**/
+							/** Date    : 5/10/2011 	**/
+							/** Purpose : To separate out the Fixed income related records on asset 
+										  allocation page
+							/****************************************************/
+		                    if(investmentAssetMap.get(association.Investment_Asset__c).RecordTypeId != InvestmentAsset__c.getInstance ('Fixed Income').RecordTypeId__c) //Prajakta
+		                    {
+			                    if(assetAllocated > 0) 
+			                    {
+			                        association.Allocated__c = assetAllocated;
+		    						association.Allocation__c = (assetAllocated /100) * investmentAssetMap.get(association.Investment_Asset__c).TotalAsset__c;
+		                        	insertGoalInvAssetAssociationList.add(association);
+			                    } 
+			                    else 
+			                    {
+			                        deleteGoalInvAssetAssociationList.add(association);
+			                    }
+		                	}
+		                }
+		            }
+		        }
+		}
+		catch(Exception ex) 
+		{
+     		throw new GeneralException('AssetAllocationService.populateGoalInvAssetAssociationLists : Internal Error ' + ex.getMessage());	
+     	}				    							
+    } 
+    /** Eternus Solutions       **/
+	/** Author  : Manasi Ranade **/
+	/** Issue Id: FS0177      	**/
+	/** Date    : 5/10/2011 	**/
+	/** Purpose : To separate out the Fixed income related records on asset 
+				  allocation page
+	/****************************************************/
+    private void populateGoalInvAssetAssociationListsForFixedIncome(AssetAllocationBean.GoalAssetMapping mapping,
+                                                        AssetAllocationBean.AssetDetailBean detailedBean,
+                                                        Map<ID,Map<ID,GoalInvestmentAssetAssociation__c>> goalInvestmentAssetAssociationByInvestmentAsset,
+                                                        Map<ID,Investment_Asset__c> investmentAssetMap)
+    {
+    	try
+    	{
+    		//FS0177
+	        Decimal assetAllocated = 0;
+	        Investment_Asset__c objInvAssetFixedIncome;
+	        GoalInvestmentAssetAssociation__c objInvAssetAssociation;
+	        Map<ID,GoalInvestmentAssetAssociation__c> goalInvAssetMappingMapByGoalId;
+	        
+	        if(('null'.equals(mapping.assetAllocated))|| (mapping.assetAllocated.equals(''))) 
+	        {
+	            return;
+	        }
+	        assetAllocated = Decimal.valueof(mapping.assetAllocated);//invAssetGoalAssociationInDbMap
+	        
+	        goalInvAssetMappingMapByGoalId = goalInvestmentAssetAssociationByInvestmentAsset.get(detailedBean.assetId);
+	        
+	        if(goalInvAssetMappingMapByGoalId != null)
+	        {
+	            objInvAssetAssociation = goalInvAssetMappingMapByGoalId.get(mapping.goalId);
+	        }
+	        objInvAssetFixedIncome = investmentAssetMap.get(detailedBean.assetId);
+	        
+	        
+	        objInvAssetFixedIncome.Action__c = detailedBean.action;
+	        
+	        if(objInvAssetAssociation == null) 
+	        {
+	            objInvAssetAssociation = new GoalInvestmentAssetAssociation__c();
+	            objInvAssetAssociation.Goal__c = mapping.goalId;
+	            objInvAssetAssociation.Investment_Asset__c = detailedBean.assetId;                               
+	        }
+	        
+	        if((assetAllocated > 0)) 
+	        {
+	            objInvAssetAssociation.Allocated__c = assetAllocated;                         
+	            insertGoalInvAssetAssociationList.add(objInvAssetAssociation);                           
+	        }
+	        else 
+	        {                         
+	            if(objInvAssetAssociation.Id != null)
+	                this.deleteGoalInvAssetAssociationList.add(objInvAssetAssociation);
+	        }
+    	}
+    	catch(Exception ex) 
+    	{
+     		throw new GeneralException('AssetAllocationService.populateGoalInvAssetAssociationListsForFixedIncome : Internal Error ' + ex.getMessage());	
+     	}
+    }
+    
+    /*
+    	This is the method to separate insert and delete association records and update respective list. 
+    */
+    private void populateGoalInsuranceAssociationLists(AssetAllocationBean.GoalAssetMapping mapping,
+                                                        AssetAllocationBean.AssetDetailBean detailedBean,
+                                                        Map<ID,Map<ID,GoalInsuranceAssociation__c>> goalInsuranceMappingMap,
+                                                        Map<ID,Insurance__c> insuranceMap) 
+    {
+        Decimal assetAllocated;
+        Insurance__c insurance;
+        GoalInsuranceAssociation__c goalInsuranceAssociation;
+        Map<ID,GoalInsuranceAssociation__c> goalInsuranceMappingMapByGoalId;
+        
+    	try 
+    	{
+    	
+	        if(('null'.equals(mapping.assetAllocated))|| (mapping.assetAllocated.equals(''))) 
+	        {
+	                return;
+	        }
+	        assetAllocated = Decimal.valueof(mapping.assetAllocated);
+	        goalInsuranceMappingMapByGoalId = goalInsuranceMappingMap.get(detailedBean.assetId);
+	        
+	        if(goalInsuranceMappingMapByGoalId != null)
+	        {
+	            goalInsuranceAssociation = goalInsuranceMappingMapByGoalId.get(mapping.goalId);
+	        }
+	                                
+	        insurance = insuranceMap.get(detailedBean.assetId);
+	        insurance.Action__c = detailedBean.action;
+	                        
+	        if(goalInsuranceAssociation == null) 
+	        {
+	            //System.debug('Create Goal Asset association.');
+	            goalInsuranceAssociation = new GoalInsuranceAssociation__c();
+	            goalInsuranceAssociation.Goal__c = mapping.goalId;
+	            goalInsuranceAssociation.Insurance__c = detailedBean.assetId;                               
+	        }                                               
+	                                                                                                                
+	        if((assetAllocated > 0)) 
+	        {
+	            goalInsuranceAssociation.Allocated__c = assetAllocated;
+				/** Eternus Solutions       **/
+				/** Author  : Manasi Ranade **/
+				/** Issue Id: 00001486     	**/
+				/** Date    : 31/1/2012 	**/
+				/** Purpose : Issue : 00001486 :Assigned value to the Allocation__c field of GoalInsurance Association object.
+							  It will be usefull on EMERGENCY PLANNING Page
+							  Issue : 00001503 :Calculate the % Allocated amount from current value
+				/****************************************************/
+				if(detailedBean.assetCurrentValue != null)
+					goalInsuranceAssociation.Allocation__c = detailedBean.assetCurrentValue * (assetAllocated / 100);
+				else
+					goalInsuranceAssociation.Allocation__c = 0;
+				//goalInsuranceAssociation.Allocation__c = asset.Monthly_Asset__c *(assetAllocated / 100);				
+	            insertGoalInsuranceAssociationList.add(goalInsuranceAssociation);
+	        }
+	        else 
+	        {                         
+	            if(goalInsuranceAssociation.Id != null)
+	                this.deleteGoalInsuranceAssociationList.add(goalInsuranceAssociation);
+	        }// ignore rest             
+		}
+		catch(Exception ex) 
+		{
+     		throw new GeneralException('AssetAllocationService.populateGoalInsuranceAssociationLists : Internal Error ' + ex.getMessage());	
+     	}
+    }
+     /** Eternus Solutions       **/
+	/** Author  : Manasi Ranade **/
+	/** Issue Id: FS0177      	**/
+	/** Date    : 5/10/2011 	**/
+	/** Purpose : To separate out the Fixed income related records on asset 
+				  allocation page
+	/****************************************************/
+    private Map<ID,Map<ID,GoalInvestmentAssetAssociation__c>> getInvestmentAssetForFixedIncome(string entityId)
+    {
+    	 Map<ID,GoalInvestmentAssetAssociation__c> goalInvestmentAssetAssociationByGoal = new Map<ID,GoalInvestmentAssetAssociation__c>();
+       		Map<ID,Map<ID,GoalInvestmentAssetAssociation__c>> goalInvestmentAssetAssociationByInvestmentAsset = new Map<ID,Map<ID,GoalInvestmentAssetAssociation__c>>();
+	        List<GoalInvestmentAssetAssociation__c> goalInvestmentAssetAssociationByAsset = databaseObj.getGoalInvestmentAssociationListForFixedIncome(entityId);
+	                
+	        for(GoalInvestmentAssetAssociation__c goalAssetAssociation : goalInvestmentAssetAssociationByAsset)
+	        {
+	            goalInvestmentAssetAssociationByGoal = goalInvestmentAssetAssociationByInvestmentAsset.get(goalAssetAssociation.Investment_Asset__c);
+	            if(goalInvestmentAssetAssociationByGoal == null)
+	            {
+	                goalInvestmentAssetAssociationByGoal = new Map<ID,GoalInvestmentAssetAssociation__c>();         
+	                goalInvestmentAssetAssociationByInvestmentAsset.put(goalAssetAssociation.Investment_Asset__c,goalInvestmentAssetAssociationByGoal);
+	            }
+	            goalInvestmentAssetAssociationByGoal.put(goalAssetAssociation.goal__c,goalAssetAssociation);                          
+	        }
+ 		return goalInvestmentAssetAssociationByInvestmentAsset;
+    }
+    
+   
+    private void getInvestmentAssets(String entityId)
+    {
+    	Map<Id, Account> mapIdToAccount = new Map<Id, Account>([select Id , Name from Account where Parent_Entity__c =: entityId]);
+    	mapIdToAccount.put(entityId, new Account());
+    	for(Investment_Asset__c objInvestmentAsset : [SELECT Purchase_Price__c,Fund__c,Units__c,Purchase_NAV__c,Monthly_SIP_Amount__c,RecordTypeId,
+	                                                    Entity__c,Script_Name__c,Acquisition_Date__c,Quantity__c,Description__c,Face_Value__c,
+	                                                    Coupon_Rate__c,Maturity_Value__c,Asset_Type__c,Maturity_Date__c,Current_Price__c,
+	                                                    asset_class__c,TotalAsset__c,Current_NAV__c,AMC_Name__c,Scheme_Name__c,Action__c  
+		                                               FROM  Investment_Asset__c where Entity__c IN: mapIdToAccount.keySet() ] )
+         {
+         	String strKey = objInvestmentAsset.RecordTypeId + ':' + objInvestmentAsset.Entity__c;
+         	if(!mapRecordIdWithEntityIdToListOfInvestmentAsset.containsKey(strKey))
+         	{
+         		 List<Investment_Asset__c> lstInvestmentAsset = new List<Investment_Asset__c>{objInvestmentAsset};
+         		 mapRecordIdWithEntityIdToListOfInvestmentAsset.put(strKey, lstInvestmentAsset);
+         	}
+         	else
+         	{
+         		mapRecordIdWithEntityIdToListOfInvestmentAsset.get(strKey).add(objInvestmentAsset);
+         	}
+         }
+                                                
+    }
+    /*
+    	This is the entry method to initiate save call from Controller. 
+    */
+    public void saveAllocation(AssetAllocationBean allocationBean, String entityId) 
+    {        
+        getInvestmentAssets(entityId);        
+        Map<ID,Map<ID,GoalAssetAssociation__c>> goalAssetMappingMap = getAssetGoalAssociationMaps(entityId);
+        
+        Map<ID,Asset__c> assetMap = getAssetMap(entityId);
+        insertGoalAssetAssociationList = new List<GoalAssetAssociation__c>();
+        deleteGoalAssetAssociationList = new List<GoalAssetAssociation__c>();                                                                                                           
+        
+    	try 
+    	{
+	        // Investment Asset related variables
+	        // Record Name and Goal ID are key here.
+	        
+	        Map<String,Map<ID,List<GoalInvestmentAssetAssociation__c>>> invAssetGoalAssociationInDbMap = getInvAssetGoalAssociationMapsByRecordName(entityId);
+	        
+	        Map<ID,Investment_Asset__c> investmentAssetMap = new Map<ID,Investment_Asset__c>();
+	        
+	        insertGoalInvAssetAssociationList = new List<GoalInvestmentAssetAssociation__c>();
+	        deleteGoalInvAssetAssociationList = new List<GoalInvestmentAssetAssociation__c>();
+	        
+	        Map<ID,Map<ID,GoalInsuranceAssociation__c>> goalInsuranceMappingMap = getInsuranceGoalAssociationMaps(entityId);
+	        
+	        Map<ID,Insurance__c> insuranceMap = getInsuranceMap(entityId);
+	        insertGoalInsuranceAssociationList = new List<GoalInsuranceAssociation__c>();
+	        deleteGoalInsuranceAssociationList = new List<GoalInsuranceAssociation__c>();
+	         /** Eternus Solutions       **/
+			/** Author  : Manasi Ranade **/
+			/** Issue Id: FS0177      	**/
+			/** Date    : 5/10/2011 	**/
+			/** Purpose : To separate out the Fixed income related records on asset 
+						  allocation page
+			/****************************************************/
+	        Map<ID,Investment_Asset__c> investmentAssetMapForFixedIncome = getInvestmentAssetMap(entityId);
+	        
+	        
+	        Map<ID,Map<ID,GoalInvestmentAssetAssociation__c>> goalInvestmentAssetAssociationByInvestmentAsset = getInvestmentAssetForFixedIncome(entityId);
+	        
+	        
+	        for(AssetAllocationBean.AssetRecordTypeBean recordTypeBean : allocationBean.assetRecordTypeBeanList)
+	        {                   
+	            for(AssetAllocationBean.AssetTypeBean assetTypeBean : recordTypeBean.assetTypeList) 
+	            {
+	                for(AssetAllocationBean.AssetDetailBean detailedBean : assetTypeBean.assetDetailList) 
+	                {                 
+	                    for(AssetAllocationBean.GoalAssetMapping mapping :detailedBean.goalAssetMappingList) 
+	                    {
+	                        if(recordTypeBean.parentType.equals('Asset')) 
+	                        {
+	                            populateGoalAssetAssociationLists(mapping, detailedBean, goalAssetMappingMap, assetMap);
+	                        } 
+	                        else if(recordTypeBean.parentType.equals('Investment Asset')) 
+	                        {
+	                            if(!assetTypeBean.assetTypeName.equalsIgnoreCase('Fixed Income'))
+	                            	populateGoalInvAssetAssociationLists(entityId, assetTypeBean, detailedBean, mapping, invAssetGoalAssociationInDbMap,
+	                                                                                                investmentAssetMap, goalInvestmentAssetAssociationByInvestmentAsset);
+	                            
+	                            if(assetTypeBean.assetTypeName.equalsIgnoreCase('Fixed Income'))
+	                            	populateGoalInvAssetAssociationListsForFixedIncome(mapping, detailedBean, goalInvestmentAssetAssociationByInvestmentAsset, 
+	                            													   investmentAssetMapForFixedIncome);
+	                        }
+	                        else if(recordTypeBean.parentType.equals('Insurance')) 
+	                        {
+	                            populateGoalInsuranceAssociationLists(mapping, detailedBean, goalInsuranceMappingMap, insuranceMap);
+	                        }                               
+	                    }
+	                }
+	            }   
+	        }
+	       
+	        databaseAccess.upsertObject(insertGoalAssetAssociationList);
+	        databaseAccess.deleteRecords(deleteGoalAssetAssociationList);  
+	                            
+	        databaseAccess.upsertObject(assetMap.values());
+	        databaseAccess.upsertObject(insertGoalInvAssetAssociationList);
+	        databaseAccess.deleteRecords(deleteGoalInvAssetAssociationList);
+	        databaseAccess.upsertObject(investmentAssetMap.values());
+	        databaseAccess.upsertObject(investmentAssetMapForFixedIncome.values());
+	        
+	        databaseAccess.upsertObject(insertGoalInsuranceAssociationList);
+	        databaseAccess.deleteRecords(deleteGoalInsuranceAssociationList);
+	        databaseAccess.upsertObject(insuranceMap.values());     
+    	}catch(Exception ex) {
+     		throw new GeneralException('AssetAllocationService.saveAllocation : Internal Error ' + ex.getMessage());	
+     	}				    								    		    			    	
+    }   
+    
+    //************************************************** Investment Asset code ****************************
+    private void fetchInvestmentAssetsRecords(String entityId,AssetAllocationBean assetAllocationBean,List<Goal__c> goalList) 
+    {
+        AssetAllocationBean.AssetRecordTypeBean assetRecordTypeBean;
+        AssetAllocationBean.AssetTypeBean assetTypeBean;
+        AssetAllocationBean.AssetDetailBean assetDetailBean,tempAssetDetailBean;
+        AssetAllocationBean.GoalAssetMapping goalAssetMapping;
+        
+        Map<ID,GoalInvestmentAssetAssociation__c> assetGoalAssociationInDbMap;              
+        List<Investment_Asset__c> invAssetList;
+        
+        ID recordTypeId;
+        String assetType,tempAssetType;
+        Double currentValue;
+        String entityIdInMethod;        
+        String Description = null; //Prajakta
+         
+		try { 
+	        Map<ID,Map<ID,GoalInvestmentAssetAssociation__c>> goalInvestmentAssetMappingMap 
+	                                                    = getInvAssetGoalAssociationMaps(entityId);
+	        Map<String,AssetAllocationBean.GoalAssetMapping> defaultGoalAssociationMap;
+	        
+	        invAssetList = databaseObj.getInvestmentAsset(entityId, false);
+	        
+		if(!invAssetList.isEmpty())
+	        assetRecordTypeBean = assetAllocationBean.populateRecordTypeBeanList('Investment Asset','Investment Assets');
+	        for(Investment_Asset__c invAsset : invAssetList) {
+	            //if(invAsset.RecordTypeId != recordTypeId) {
+	                
+	            /* //Prajakta 20-2-13    
+	            if(Description__c != null)
+	            {
+	            	Description = invAsset.Description__c;
+	            }
+	           if(Description__c != null)
+				{
+					if(Maturity_Date__c != null)
+					{
+						Description = invAsset.Description__c + ' -- ' + invAsset.Maturity_Date__c;
+					}
+					else
+						Description = invAsset.Description__c;
+				}
+				else
+				{
+					Description = invAsset.Maturity_Date__c;
+				}*/
+	                
+	                //recordTypeId = invAsset.RecordTypeId;              
+	                tempAssetType = invAsset.RecordType.name;
+	                if(!tempAssetType.equalsIgnoreCase(assetType)) {
+	                    assetTypeBean = assetRecordTypeBean.populateAssetTypeBeanList(tempAssetType);
+	                    assetType = tempAssetType;
+	                    entityIdInMethod = null;                
+	                }
+	                 /** Eternus Solutions       **/
+					/** Author  : Manasi Ranade **/
+					/** Issue Id: FS0177      	**/
+					/** Date    : 5/10/2011 	**/
+					/** Purpose : To separate out the Fixed income related records on asset 
+								  allocation page
+					/****************************************************/
+	                if(!((String)invAsset.Entity__c).equals(entityIdInMethod) && !tempAssetType.equalsIgnoreCase('Fixed Income') ) {
+	                    assetDetailBean = assetTypeBean.populateAssetDetailList(invAsset.Entity__r.firstName,'',0,invAsset.action__c,invAsset.Id);
+	                    assetDetailBean.entityId = invAsset.Entity__c;
+	                    tempAssetDetailBean = assetDetailBean;
+	                    entityIdInMethod =  invAsset.Entity__c;
+	                }
+	                else if(tempAssetType.equalsIgnoreCase('Fixed Income'))
+	                {
+	                	/* Prajakta - FP changes - 21-02-2013 */
+	                	Datetime dtReport = invAsset.Maturity_Date__c;
+						String strDate = '';
+	                	if(dtReport != null)
+							strDate	= dtReport.day() + '-' + dtReport.month() + '-' + dtReport.year();
+	                	String FIdescription = invAsset.Description__c + ' -- ' + strDate;
+	                	
+	                	assetDetailBean = assetTypeBean.populateAssetDetailList(invAsset.Entity__r.firstName,FIdescription,0,invAsset.action__c,invAsset.Id);//Prajakta
+	                    assetDetailBean.entityId = invAsset.Entity__c;
+	                    tempAssetDetailBean = assetDetailBean;
+	                    system.debug('=======tempAssetDetailBean========='+tempAssetDetailBean);
+	                    entityIdInMethod =  invAsset.Entity__c;
+	                    system.debug('=======entityIdInMethod========='+entityIdInMethod);
+	                }     
+	                assetDetailBean.actionList=getActionList(invAsset.RecordType.Name);            
+	                assetDetailBean.assetCurrentValue = assetDetailBean.assetCurrentValue + invAsset.TotalAsset__c;
+	                if(tempAssetDetailBean != null){// This logic is to have only one asset record in GUI for any given record type
+	                    tempAssetDetailBean = null; 
+	                    
+	                    defaultGoalAssociationMap  = getDefaultAssociation(invAsset.id,invAsset.entity__c,goalList);                    
+	                    assetGoalAssociationInDbMap  = goalInvestmentAssetMappingMap.get(invAsset.id);
+	                    String goalId;
+	                    
+	                    // This loop will remove default values
+	                    if(assetGoalAssociationInDbMap != null) {
+	                        for(GoalInvestmentAssetAssociation__c goalInvAssetAssociation : assetGoalAssociationInDbMap.values()) {
+	                                                
+	                            
+	                            goalId = goalInvAssetAssociation.goal__c;                       
+	                            goalAssetMapping = defaultGoalAssociationMap.get(goalId);                       
+	                            if(goalAssetMapping != null) { // Ideally , mapping can't be NULL
+	                            goalAssetMapping.assetAllocated =''+ goalInvAssetAssociation.Allocated__c;
+	                            goalAssetMapping.goalAssetAssociationId = goalInvAssetAssociation.Id;
+	                            if(goalInvAssetAssociation.Allocated__c != null){
+	                                assetDetailBean.allocatedPercent =''+ (Decimal.valueOf(assetDetailBean.allocatedPercent) + goalInvAssetAssociation.Allocated__c);
+	                                }
+	                            }                  
+	                        }
+	                    }
+	                    // Need to figure out some other way to avoid this for loop.
+	                    for(Goal__c goal :goalList) {               
+	                        assetDetailBean.populateGoalAssetMappingList(goal.id,defaultGoalAssociationMap.get(goal.id).assetAllocated);
+	                    }
+	                    // assetDetailBean.allocatedPercent
+	                }
+	            //}             
+	        }                                                                           
+		} catch(Exception ex) {
+     		throw new GeneralException('AssetAllocationService.fetchInvestmentAssetsRecords AssetAllocationService: Internal Error ' + ex.getMessage());	
+     	}				    																							
+    }   
+        //First  ID is Asset ID and Second is Goal
+    public Map<ID,Map<ID,GoalInvestmentAssetAssociation__c>> getInvAssetGoalAssociationMaps( String entityId) {     
+        Map<ID,GoalInvestmentAssetAssociation__c> goalAssetAssociationByGoal = new Map<ID,GoalInvestmentAssetAssociation__c>();
+        Map<ID,Map<ID,GoalInvestmentAssetAssociation__c>> goalAssetAssociationByAsset = new Map<ID,Map<ID,GoalInvestmentAssetAssociation__c>>();
+        
+ 		try {
+	        List<GoalInvestmentAssetAssociation__c> goalAssetAssociationList = databaseObj.getGoalInvestmentAssociationList(entityId);
+	                
+	        for(GoalInvestmentAssetAssociation__c goalAssetAssociation : goalAssetAssociationList) {
+	            goalAssetAssociationByGoal = goalAssetAssociationByAsset.get(goalAssetAssociation.Investment_Asset__c);
+	            if(goalAssetAssociationByGoal == null) {
+	                goalAssetAssociationByGoal = new Map<ID,GoalInvestmentAssetAssociation__c>();           
+	                goalAssetAssociationByAsset.put(goalAssetAssociation.Investment_Asset__c,goalAssetAssociationByGoal);
+	            }
+	            goalAssetAssociationByGoal.put(goalAssetAssociation.goal__c,goalAssetAssociation);                          
+	        }       
+		}catch(Exception ex) {
+     		throw new GeneralException('AssetAllocationService.getInvAssetGoalAssociationMaps : Internal Error ' + ex.getMessage());	
+     	}				    																												
+        return goalAssetAssociationByAsset; 
+    }
+        //First  ID is Record Type and Second is Goal
+    public Map<String,Map<ID,List<GoalInvestmentAssetAssociation__c>>> getInvAssetGoalAssociationMapsByRecordName( String entityId) {       
+        Map<ID,List<GoalInvestmentAssetAssociation__c>> goalAssetAssociationByGoal = new Map<ID,List<GoalInvestmentAssetAssociation__c>>();
+		Map<String,Map<ID,List<GoalInvestmentAssetAssociation__c>>> goalAssetAssociationByAsset = 
+																		new Map<String,Map<ID,List<GoalInvestmentAssetAssociation__c>>>();
+ 		try {
+	        List<GoalInvestmentAssetAssociation__c> goalAssetAssociationList = databaseObj.getGoalInvestmentAssociationList(entityId);
+	        List<GoalInvestmentAssetAssociation__c> goalAssetAssociationListInMap; 
+	        for(GoalInvestmentAssetAssociation__c goalAssetAssociation : goalAssetAssociationList) {
+					
+	            goalAssetAssociationByGoal = goalAssetAssociationByAsset.get(goalAssetAssociation.investment_Asset__r.recordType.Name);
+	            System.debug('TTTTTTTT goalAssetAssociationByGoal:'+goalAssetAssociationByGoal);
+	            if(goalAssetAssociationByGoal == null) {
+	                goalAssetAssociationByGoal = new Map<ID,List<GoalInvestmentAssetAssociation__c>>();                             
+	                goalAssetAssociationByAsset.put(goalAssetAssociation.investment_Asset__r.recordType.Name,goalAssetAssociationByGoal);
+	            }           
+	            if(goalAssetAssociationByGoal.get(goalAssetAssociation.goal__c)== null){
+	                goalAssetAssociationByGoal.put(goalAssetAssociation.goal__c, new List<GoalInvestmentAssetAssociation__c>());
+	            }           
+	            goalAssetAssociationByGoal.get(goalAssetAssociation.goal__c).add(goalAssetAssociation);
+			}
+		}catch(Exception ex) {
+     		throw new GeneralException('AssetAllocationService.getInvAssetGoalAssociationMapsByRecordName : Internal Error ' + ex.getMessage());	
+        }
+        system.debug('%%%%% eeee goalAssetAssociationByAsset:'+goalAssetAssociationByAsset);
+        return goalAssetAssociationByAsset; 
+    }
+    /** Eternus Solutions       **/
+	/** Author  : Manasi Ranade **/
+	/** Issue Id: F0040      	**/
+	/** Date    : 14/06/2011 	**/
+	/** Purpose : Added GetMonthsByYear() function that will calculate no of months in two years
+	/****************************************************/ 
+    public Integer GetMonthsByYear(Integer intYearDiff, Date dtCommitedDate)
+    {
+    	Integer intMonths;
+    	//Datetime dtReport = Plan_Generation_Date__c;
+		//String strDate = dtReport.day() + '-' + dtReport.month() + '-' + dtReport.year();
+    	try
+    	{
+    		if(intYearDiff <= 0)
+	    	{
+	    		intMonths = Math.abs(System.today().month() - dtCommitedDate.month());
+	    	}
+	    	else
+	    	{
+	    		intMonths = intYearDiff * 12;
+	    	}	
+    	}
+    	catch(Exception ex) {
+     		throw new GeneralException('AssetAllocationService.GetMonthsByYear : Internal Error ' + ex.getMessage());	
+        }
+    	
+    	return intMonths;
+    }
+    
+    //*******************************************************  Insurance Code ***************************************
+    
+    private void fetchInsuranceRecords(String entityId,AssetAllocationBean assetAllocationBean,List<Goal__c> goalList) {
+        
+        AssetAllocationBean.AssetRecordTypeBean assetRecordTypeBean;
+        AssetAllocationBean.AssetTypeBean assetTypeBean;
+        AssetAllocationBean.AssetDetailBean assetDetailBean;
+        AssetAllocationBean.GoalAssetMapping goalAssetMapping;
+                
+        List<GoalInsuranceAssociation__c> insuranceGoalAssociationInDB;
+        List<Insurance__c> insuranceList;
+        ID recordTypeId;
+        String assetType,tempAssetType;
+        Double currentValue =0;
+        String Description = null;
+        
+		try {
+	        Map<ID,List<GoalInsuranceAssociation__c>> goalInsuranceMappingMap 
+	                                                    = getInsuranceGoalAssociationMapping(entityId);                                                 
+	        Map<String,AssetAllocationBean.GoalAssetMapping> defaultGoalAssociationMap;
+	                                                                    
+	        insuranceList = databaseObj.getInsuranceListByRecordType(entityId);
+	        for(Insurance__c insurance : insuranceList) {
+	            /**************** mahesh *******************/
+	            if(insurance.Insurance_Company__c != null)
+				{
+					if(insurance.Policy_Name__c != null)
+					{
+						Description = insurance.Policy_Number__c != null ? 
+																		 (insurance.Insurance_Company__c + ' -- ' + insurance.Policy_Name__c + ' -- ' + insurance.Policy_Number__c)
+																		 :
+																		 (insurance.Insurance_Company__c + ' -- ' + insurance.Policy_Name__c);
+					}
+					else
+						Description = insurance.Policy_Number__c != null ? (insurance.Insurance_Company__c + ' -- ' + insurance.Policy_Number__c) : (insurance.Insurance_Company__c);
+				}
+				else
+				{
+					if(insurance.Policy_Name__c != null)
+						Description = insurance.Policy_Number__c != null ? (insurance.Policy_Name__c + ' -- ' + insurance.Policy_Number__c) : insurance.Policy_Name__c;
+					else if(insurance.Policy_Number__c != null)
+							Description = insurance.Policy_Number__c;
+				}
+	            /**************** mahesh *******************/
+	            
+	            if(insurance.recordTypeId != recordTypeId) {
+	                assetRecordTypeBean = assetAllocationBean.populateRecordTypeBeanList('Insurance',insurance.RecordType.Name);
+	                recordTypeId = insurance.recordTypeId;              
+	                assetTypeBean = null;
+	            }
+	            	tempAssetType = insurance.Policy_Type__c;                   
+					currentValue = insurance.totalAsset__c;
+					/** Eternus Solutions       **/
+					/** Author  : Manasi Ranade **/
+					/** Issue Id: F0009      	**/
+					/** Date    : 26/05/2011 	**/
+					/** Purpose : Created two functions.
+								  1)GetAnnualPremiumAmount():Calcutes annualPremiumAmount depending upon frequency of Insurance.
+								  2)GetCurrentValuePerYear():Calculates Current value for no of years between Insurance start date and todays date **/
+					/****************************************************/ 
+					/** Eternus Solutions       **/
+					/** Author  : Manasi Ranade **/
+					/** Issue Id: F0040      	**/
+					/** Date    : 14/06/2011 	**/
+					/** Purpose : Changed calculation Of calculation of current value 
+					/****************************************************/
+					//FS0287 Commented if here and inserted below
+					//if(currentValue != 0)
+					//{
+						 //Double dblAnnualPremiumAmount = GetAnnualPremiumAmount(insurance); 
+						 //currentValue = GetCurrentValuePerYear(insurance,dblAnnualPremiumAmount);
+						 Double dblOneInstallmentPremiumAmount = 0;
+						/** Eternus Solutions       **/
+						/** Author  : Manasi Ranade **/
+						/** Issue Id: FS0287      	**/
+						/** Date    : 22/11/2011 	**/
+						/** Purpose : Commented If condition.Because need to include 'One Time Premium' to the Asset Allocation Page **/
+						/****************************************************/
+						//if(!insurance.Premium_Frequency__c.equals('One Time Premium'))
+						 	dblOneInstallmentPremiumAmount = insurance.Premium_Amount_Rs__c;
+						 //These changes are required for current value calculation : Manasi
+						 /** Eternus Solutions       **/
+						/** Author  : Manasi Ranade **/
+						/** Issue Id: FS0345        **/
+						/** Date    : 15/12/2011 	**/
+						/** Purpose : As Tenure Of Insurance is not filled.It is throwing an exception.So check null condition before using it
+						/****************************************************/
+		     			Integer iTenureOfInsurance = 0;
+						 if(insurance.Tenure_of_Insurance__c != null)
+						 {
+						 	iTenureOfInsurance = Integer.valueOf(insurance.Tenure_of_Insurance__c);
+						 }
+						 else
+						 {
+	     					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Check Tenure of Insurance of all Insurances.It should not be blank or zero.'));
+						 }
+						 Integer iMaturityYear = 0;
+						 if(insurance.Commencement_Date__c != null)
+		 				 	iMaturityYear = iTenureOfInsurance + insurance.Commencement_Date__c.year();
+		 				 
+		 				 Integer iCurrentYearForCalculation = 0;	
+		 				 /* Prajakta - FP changes - 04-03-2013 - Changed Date.Today() to Plan_Generation_Date__c*/
+				         entityId = System.currentPageReference().getParameters().get('EntityId');
+				         system.debug('-----entityId-------'+entityId);
+				         objAccount = databaseObj.getEntity(entityId);
+				         system.debug('-----objAccount-------'+objAccount);
+				         if(objAccount.Plan_Generation_Date__c != null) 
+				         {
+				         	if(objAccount.Plan_Generation_Date__c.year() > iMaturityYear)
+				           		iCurrentYearForCalculation = iMaturityYear;
+				         	else
+				           		iCurrentYearForCalculation = objAccount.Plan_Generation_Date__c.year();
+		         		 }	
+			 			 Integer totalPeriodInYears = 0 ;
+			 			 if(insurance.Commencement_Date__c != null)
+			 			 	totalPeriodInYears =  iCurrentYearForCalculation - insurance.Commencement_Date__c.year();//
+						
+						/** Eternus Solutions       **/
+						/** Author  : Manasi Ranade **/
+						/** Issue Id: F0050      	**/
+						/** Date    : 17/06/2011 	**/
+						/** Purpose : If Surrender_Cash_Value__c is not null then assigned it to the Current value   
+									  else calculate current value at run time and assign it to current value
+						/****************************************************/
+						 if(insurance.Surrender_Cash_Value__c == null)
+						 	currentValue = GetInsuranceAmountForPeriod(insurance,totalPeriodInYears, dblOneInstallmentPremiumAmount);
+						 else
+						 	currentValue = 	insurance.Surrender_Cash_Value__c;
+					//}
+					if(currentValue == 0)
+					{
+						System.debug('Insurance Asset total is zero. Ignore this record.');	
+						continue;						
+					}
+					/*FS0287 Commented the following part and inserted above
+					else{
+						System.debug('Investment Asset total is zero. Ignore this record.');	
+						continue;
+	            }*/
+					/*As per understanding general insurance need not to display in assetallocation for goal page . So commented this code*/
+					if(tempAssetType == null) {
+						ApexPages.addMessage(
+									new ApexPages.Message(ApexPages.severity.INFO,'There are some insurance records with incorrect policy type.'));													
+						continue;
+	            }
+					if(!tempAssetType.equals(assetType)) {
+	                assetTypeBean = assetRecordTypeBean.populateAssetTypeBeanList(tempAssetType);
+	                assetType = tempAssetType;
+	            }
+	            assetDetailBean = assetTypeBean.populateAssetDetailList(insurance.Entity__r.firstName,Description,currentValue,insurance.action__c,insurance.id);
+	            assetDetailBean.actionList = getActionList(insurance.RecordType.Name);
+	            defaultGoalAssociationMap  = getDefaultAssociation(insurance.id,insurance.entity__c,goalList);  
+	            insuranceGoalAssociationInDB  = goalInsuranceMappingMap.get(insurance.id);
+	            String goalId;
+	            // This loop will remove default values
+	            if(insuranceGoalAssociationInDB != null)
+	                for(GoalInsuranceAssociation__c goalInsuranceAssociation : insuranceGoalAssociationInDB ) {
+	                    goalId = goalInsuranceAssociation.goal__c;
+	                    //System.debug('Goal ID is ' + goalId);
+	                    goalAssetMapping = defaultGoalAssociationMap.get(goalId);
+	                    //System.debug('Goal Mapping is is ' + goalAssetMapping);
+	                    if(goalAssetMapping != NULL) {
+	                    goalAssetMapping.assetAllocated =''+ goalInsuranceAssociation.Allocated__c;
+	                    goalAssetMapping.goalAssetAssociationId = goalInsuranceAssociation.Id;
+	                    if(goalInsuranceAssociation.Allocated__c != null){
+	                        assetDetailBean.allocatedPercent =''+ (Decimal.valueOf(assetDetailBean.allocatedPercent) + goalInsuranceAssociation.Allocated__c);
+	                    }                  
+	                }
+	                }
+	            // Need to figure out some other way to avoid this for loop.
+	            for(Goal__c goal :goalList) {               
+	                assetDetailBean.populateGoalAssetMappingList(goal.id,defaultGoalAssociationMap.get(goal.id).assetAllocated);
+	            }
+	        }                               
+		} catch(Exception ex) {
+     		throw new GeneralException('AssetAllocationService.fetchInsuranceRecords : Internal Error ' + ex.getMessage());	
+     	}								
+    }
+    /** Eternus Solutions       **/
+	/** Author  : Manasi Ranade **/
+	/** Issue Id: F0009      	**/
+	/** Date    : 26/05/2011 	**/
+	/** Purpose :GetAnnualPremiumAmount():Calcutes annualPremiumAmount depending upon frequency
+				 of Insurance.  **/
+								  
+    public Double GetAnnualPremiumAmount(Insurance__c objInsurance )
+    {
+    	 String strPremiumFrequency = objInsurance.Premium_Frequency__c;
+		 Double annualPremiumAmount = 0;
+		 //B0002 To handle Null pointer Exception
+		 if(objInsurance.Premium_Amount_Rs__c != null)
+		 	annualPremiumAmount = objInsurance.Premium_Amount_Rs__c;
+		 else
+		 	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Label.FillInsurancePremiumAmount));
+		 if(strPremiumFrequency.equals('Annually'))
+		 	annualPremiumAmount = objInsurance.Premium_Amount_Rs__c;
+		 else if(strPremiumFrequency.equals('Semi Annual'))
+		 	annualPremiumAmount = objInsurance.Premium_Amount_Rs__c * 2;
+		 else if(strPremiumFrequency.equals('Quarterly'))
+		 	annualPremiumAmount = objInsurance.Premium_Amount_Rs__c * 4;
+		 else if(strPremiumFrequency.equals('Monthly'))
+		 	annualPremiumAmount = objInsurance.Premium_Amount_Rs__c * 12;
+		 else
+		 	annualPremiumAmount = 0;
+		 return annualPremiumAmount;
+    }
+    
+    /** Eternus Solutions       **/
+	/** Author  : Manasi Ranade **/
+	/** Issue Id: F0009      	**/
+	/** Date    : 26/05/2011 	**/
+	/** Purpose : GetCurrentValuePerYear():Calculates Current value for no of years between Insurance start date and todays date **/
+	/****************************************************/ 
+  /*  public Double GetCurrentValuePerYear(Insurance__c insurance,Double dblAnnualPremiumAmount)
+    {
+    	 Double currentValue=0;
+    	 Date dtStartDate = insurance.Commencement_Date__c;
+    	 Double iNoOfMonths = dtStartDate.monthsBetween(DateTime.now().date());
+    	 Double iNoOfYears = Datetime.now().year() - dtStartDate.year();
+    	 if(insurance.Policy_Type__c.equals('Whole Life'))
+		 	currentValue = dblAnnualPremiumAmount * (math.pow( Double.valueOf(1.06) , iNoOfYears));
+		 else if(insurance.Policy_Type__c.equals('ULIP - Debt'))
+		 	currentValue = dblAnnualPremiumAmount * (math.pow( Double.valueOf(1.06), iNoOfYears));
+	 	 else if(insurance.Policy_Type__c.equals('Money-Back'))
+	 		currentValue = dblAnnualPremiumAmount * (math.pow( Double.valueOf(1.05), iNoOfYears));
+	   	 else if(insurance.Policy_Type__c.equals('Endowment'))
+	 		currentValue = dblAnnualPremiumAmount * (math.pow( Double.valueOf(1.06), iNoOfYears));
+	 	 else if(insurance.Policy_Type__c.equals('ULIP - Equity'))
+	 		currentValue = dblAnnualPremiumAmount * (math.pow( Double.valueOf(1.10), iNoOfYears));
+	 	 else 
+	 		currentValue = 0;
+	 	 return currentValue;
+    }*/
+    
+    //Manasi F0040 GetMonthsByYear
+    /** Eternus Solutions       **/
+	/** Author  : Manasi Ranade **/
+	/** Issue Id: F0040      	**/
+	/** Date    : 14/06/2011 	**/
+	/** Purpose : Added GetInsuranceAmountForPeriod() function to calculate Insurance value
+					This calculation's are somewhat same as Recurring calculation's logic.
+					Calculations are changed as per the excel sheet provided by Haren 
+	/****************************************************/
+    public double GetInsuranceAmountForPeriod(Insurance__c insurance,Integer totalPeriodInYears,Double dblOneInstallmentPremiumAmount)
+    {
+    	Double decBase = claculateBaseForInsurance(insurance.Policy_Type__c);
+    	Decimal decPower = claculatePowerForInsurance(insurance.Premium_Frequency__c);
+    	Double TempCalc = 0;
+    	//Integer iNoMonths = (totalPeriodInYears) * 12;
+    	Integer iNoMonths = 0;
+    	if(insurance.Commencement_Date__c != null)
+    		 iNoMonths = GetMonthsByYear(totalPeriodInYears, insurance.Commencement_Date__c);
+    	
+    	//double decMonthlyContribution = dblAnnualDepositContribution/12;
+    	Double dbCalculatedRate = RaiseToPower(decBase,decPower,insurance.Premium_Frequency__c);
+    	Double intTempAmount;
+    	//Previous code
+    	/*iNoMonths = calculateNoOfInstallmentsOfInsurance(iNoMonths,insurance.Premium_Frequency__c);
+		for(Integer iIndex = 1;iIndex <= iNoMonths ;iIndex++)
+		{
+			intTempAmount = (TempCalc + dblOneInstallmentPremiumAmount) * dbCalculatedRate;
+			TempCalc = intTempAmount;
+		}*/
+		 /*  Eternus Solutions -  Manasi Ranade - 23/06/2011  
+		     Issue ID : F0040 - Calculations are changed as per the excel sheet provided by Haren */
+		Integer iTenureOfInsurance = totalPeriodInYears;//Integer.valueOf(insurance.Tenure_of_Insurance__c); 
+		Integer iNoOfInstallments =  calculateNoOfInstallmentsOfInsurance(iTenureOfInsurance,insurance.Premium_Frequency__c,insurance.Commencement_Date__c); 
+		/** Eternus Solutions       **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: F0047      	**/
+		/** Date    : 01/07/2011 	**/
+		/** Purpose : 1) Added Logic related to Premium Paying Term.
+					  2) Commented the following previous code.
+					  3) If Insurance has non null value for Premium_Paying_Term__c field, it will calculate amount
+					  	 from following if condition, else it will calculate it from else part.
+		/****************************************************/
+		//Previous Code
+		/*for(Integer iIndex = 1;iIndex <= iNoOfInstallments ;iIndex++)
+		{
+			intTempAmount = (TempCalc + dblOneInstallmentPremiumAmount) * (1 + dbCalculatedRate);
+			TempCalc = intTempAmount;
+		}*/
+		//FS0241
+		/*
+		if(insurance.Premium_Frequency__c.equals('One Time Premium'))
+					dblOneInstallmentPremiumAmount = 0;
+		*/
+		/** Eternus Solutions       **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: 00001586     	**/
+		/** Date    : 11/04/2012 	**/
+		/** Purpose : Added null check before using strPremiumFrequency
+		/****************************************************/
+		if(insurance.Premium_Frequency__c != null)
+		{
+			if((insurance.Premium_Paying_Term__c != null && insurance.Premium_Paying_Term__c != 0 ) || insurance.Premium_Frequency__c.equals('One Time Premium'))
+			{
+				system.debug('*****in if******');
+				Integer iPremiumPayingTerm = 0;
+				if(insurance.Premium_Frequency__c.equals('One Time Premium'))
+					iPremiumPayingTerm = 1;
+				else
+				{
+					/*  1) Added new function 'CalculateNoOfInstallmentsforPremiiumPayingTerm'.
+					2) It will calculate no of Premium Paying terms from frequency of Insurance.
+					   Example : a. If Premium_Paying_Term__c = 3 and Frequency = 'Annual' then   iPremiumPayingTerm = 3 * 1;
+					   			 b. If Premium_Paying_Term__c = 3 and Frequency = 'Semi Annual' then   iPremiumPayingTerm = 3 * 2;
+					3) This calculation is same as NoOfInstallments.
+						Difference is that ,in NoOfInstallments calculation we are using Tenure_of_Insurance__c and
+						in 	PremiumPayingTerm calculation we are using Premium_Paying_Term__c.
+					*/
+					iPremiumPayingTerm = Integer.valueOf(insurance.Premium_Paying_Term__c);
+					iPremiumPayingTerm = CalculateNoOfInstallmentsforPremiiumPayingTerm(iPremiumPayingTerm,insurance.Premium_Frequency__c);
+				}
+				for(Integer iIndex = 1;iIndex <= iNoOfInstallments ;iIndex++)
+				{
+					//Upto iPremiumPayingTerm value add dblOneInstallmentPremiumAmount in calculation.After that add dbCalculatedRate only
+					if(iIndex <= iPremiumPayingTerm)
+						intTempAmount = (TempCalc + dblOneInstallmentPremiumAmount) * (1 + dbCalculatedRate);
+					else
+						intTempAmount = (TempCalc ) * (1 + dbCalculatedRate);
+					TempCalc = intTempAmount;
+				}
+			}
+			else
+			{
+				for(Integer iIndex = 1;iIndex <= iNoOfInstallments ;iIndex++)
+				{
+					intTempAmount = (TempCalc + dblOneInstallmentPremiumAmount) * (1 + dbCalculatedRate);
+					TempCalc = intTempAmount;
+				}
+			}
+		}
+		return TempCalc;
+    }
+	/** Eternus Solutions       **/
+	/** Author  : Manasi Ranade **/
+	/** Issue Id: F0047      	**/
+	/** Date    : 01/07/2011 	**/
+	/** Purpose : 1) Added new function 'CalculateNoOfInstallmentsforPremiiumPayingTerm'.
+				  2) It will calculate no of Premium Paying terms from frequency of Insurance.
+				  Example : a. If Premium_Paying_Term__c = 3 and Frequency = 'Annual' then   iPremiumPayingTerm = 3 * 1;
+				   			 b. If Premium_Paying_Term__c = 3 and Frequency = 'Semi Annual' then   iPremiumPayingTerm = 3 * 2;
+	/****************************************************/				   			 
+    public Integer CalculateNoOfInstallmentsforPremiiumPayingTerm(Integer iPremiumPayingTerm,String strPremiumFrequency)
+    {
+    	Integer iNoOfInstallments = 0; 
+    	 if(strPremiumFrequency.equals('Annually'))
+	 		iNoOfInstallments = iPremiumPayingTerm;
+		 else if(strPremiumFrequency.equals('Semi Annual'))
+		 	iNoOfInstallments = iPremiumPayingTerm * 2;
+		 else if(strPremiumFrequency.equals('Quarterly'))
+		 	iNoOfInstallments = iPremiumPayingTerm * 4;
+		 else if(strPremiumFrequency.equals('Monthly'))
+		 	iNoOfInstallments = iPremiumPayingTerm * 12;
+		 else
+		 	iNoOfInstallments = 0;
+		 return iNoOfInstallments;
+    }
+ 
+    /** Eternus Solutions       **/
+	/** Author  : Manasi Ranade **/
+	/** Issue Id: F0040      	**/
+	/** Date    : 14/06/2011 	**/
+	/** Purpose : Added calculateNoOfInstallmentsOfInsurance() function to calculate No of installments
+					depending upon frequency
+	/****************************************************/
+    public Integer calculateNoOfInstallmentsOfInsurance(Integer iTenureOfInsurance,String strPremiumFrequency,Date startDate)
+    {
+    	Integer iNoOfInstallments = 0;
+    	Integer iInsuranceStartMonth = 0;
+    	if(startDate != null)
+    		iInsuranceStartMonth = startDate.month();
+    	/*If tenure of insurance is 10 then calculate Insurance value for 9 years.
+    	  Hence the value is adjusted below. 
+    	*/
+    	//FS0347: Adjusted tenure of insurance
+    	//Manasi_13 : Adjusted Tenure of Insurance again :As per the discussion with Haren
+    	/** Eternus Solutions       **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: 00001657     	**/
+		/** Date    : 30/05/2012 	**/
+		/** Purpose : Reverted back to the original code.(As per the discussion with Haren)
+		/****************************************************/
+    	iTenureOfInsurance = iTenureOfInsurance ;//- 1; // Commented the -1 related calculation //00001657
+    	/*if(iInsuranceStartMonth == 12) //Insurance is started in December 		 
+	 		iTenureOfInsurance = iTenureOfInsurance - 1;
+	 	else
+	 		iTenureOfInsurance = iTenureOfInsurance;*/
+		 /** Eternus Solutions       **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: 00001586     	**/
+		/** Date    : 11/04/2012 	**/
+		/** Purpose : Added null check before using strPremiumFrequency
+		/****************************************************/
+		if(strPremiumFrequency != null)
+		{
+			 if(strPremiumFrequency.equals('Annually'))
+			 {
+				/*if(iInsuranceStartMonth == 12) //Insurance is started in December 		 
+			 		iNoOfInstallments = iTenureOfInsurance;
+			 	else
+			 	{
+			 		iNoOfInstallments = (iTenureOfInsurance + 1);
+			 	}*/
+			 	iNoOfInstallments = iTenureOfInsurance;
+			 }
+			 else if(strPremiumFrequency.equals('Semi Annual'))
+			 	iNoOfInstallments = iTenureOfInsurance * 2;
+			 else if(strPremiumFrequency.equals('Quarterly'))
+			 	iNoOfInstallments = iTenureOfInsurance * 4;
+			 else if(strPremiumFrequency.equals('Monthly'))
+			 {
+			 	iNoOfInstallments = iTenureOfInsurance * 12;
+			 }
+			 //FS0241
+			 else if(strPremiumFrequency.equals('One Time Premium'))
+			 	{
+			 		iNoOfInstallments = (iTenureOfInsurance + 1);
+			 	}
+			 else
+			 	iNoOfInstallments = 0;
+		 }
+		 else
+		 	iNoOfInstallments = 0;
+		 return iNoOfInstallments;
+    }
+    /** Eternus Solutions       **/
+	/** Author  : Manasi Ranade **/
+	/** Issue Id: F0040      	**/
+	/** Date    : 14/06/2011 	**/
+	/** Purpose : Added RaiseToPower() function to calculate Log 
+	/****************************************************/
+    public double RaiseToPower(double a, Decimal b,String strPremiumFrequency)
+    {
+    	//FS0241
+    	Double dblFactor = 0;
+    	system.debug('A value is: '+a);
+    	system.debug('b value is: '+b);
+    	/** Eternus Solutions       **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: 00001586     	**/
+		/** Date    : 11/04/2012 	**/
+		/** Purpose : Added null check before using strPremiumFrequency
+		/****************************************************/
+    	if(strPremiumFrequency != null)
+    	{
+	    	if(strPremiumFrequency.equals('One Time Premium'))
+	    		dblFactor = 0.06;
+	    	else
+	    	{
+	    		if(a != 0)
+	    		dblFactor = Math.Exp(b * Math.Log(a)) - 1;
+	    		else
+	    		dblFactor = 0;
+	    	}
+    	}
+    	return dblFactor;
+    }
+    /** Eternus Solutions       **/
+	/** Author  : Manasi Ranade **/
+	/** Issue Id: F0040      	**/
+	/** Date    : 14/06/2011 	**/
+	/** Purpose : Added claculatePowerForInsurance(),claculateBaseForInsurance 
+				  functions to calculate multiplying factor which depends on
+				  PremiumFrequency and PolicyType
+	/****************************************************/
+     public Double claculatePowerForInsurance(String strPremiumFrequency)
+    {
+		 Double dblPower = 0;
+		/** Eternus Solutions       **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: 00001586     	**/
+		/** Date    : 11/04/2012 	**/
+		/** Purpose : Added null check before using strPremiumFrequency
+		/****************************************************/
+		 if(strPremiumFrequency != null)
+		 {
+			 if(strPremiumFrequency.equals('Annually'))
+			 	dblPower = 1;  
+			 else if(strPremiumFrequency.equals('Semi Annual'))
+			 	dblPower = 0.5; //1/2 = 0.5
+			 else if(strPremiumFrequency.equals('Quarterly'))
+			 	dblPower = 0.25; //1/4 = 0.25 
+			 else if(strPremiumFrequency.equals('Monthly'))
+			 	dblPower = 0.0833; //1/12 = 0.0833
+			 else
+			 	dblPower = 0;
+		 }
+		 return dblPower;
+    }
+    public Double claculateBaseForInsurance(String strPolicyType)
+    {
+    	Double dblBase = 0;
+    	//FS0240
+    	 if(strPolicyType.equals('Whole Life') || strPolicyType.equals('Pension Plan')
+    	  || strPolicyType.equals('Other') || strPolicyType.equals('Children\'s'))
+		 	dblBase = 1.06;
+		 else if(strPolicyType.equals('ULIP - Debt'))
+		 	dblBase = 1.06;
+	 	 else if(strPolicyType.equals('Money-Back'))
+	 		dblBase = 1.05;
+	   	 else if(strPolicyType.equals('Endowment'))
+	 		dblBase = 1.06;
+	 	 else if(strPolicyType.equals('ULIP - Equity'))
+	 		dblBase = 1.10;
+	 	 else 
+	 		dblBase = 0;
+	 		//dblBase = 1.06;
+	 		return dblBase;
+    }
+    public Double GetCurrentValuePerYear(Insurance__c insurance,Double dblAnnualPremiumAmount)
+    {
+    	/////////////////
+    	/*Decimal decPower = 0;
+    	Double TempCalc = 0;
+    	Double decBase =0; 
+		Integer iNoMonths = (totalNoOfPeriod) * 12; // number of months
+		double decMonthlyContribution = dblAnnualDepositContribution/12;
+		Double dbMaruredRate = (rate+100)/100;
+		Double dbCalculatedRate = RaiseToPower(dbMaruredRate,0.08333333333);
+		Double intTempAmount; 
+		for(Integer iIndex = 1;iIndex <= iNoMonths ;iIndex++)
+		{
+			intTempAmount = (TempCalc + decMonthlyContribution) * dbCalculatedRate;
+				TempCalc = intTempAmount;
+			if(iIndex == iNoMonths)
+				TempCalc = TempCalc + decMonthlyContribution;
+		}
+		return TempCalc;*/
+    	///////////////
+    	 Double currentValue=0;
+    	 Date dtStartDate = Date.today();
+    	 if(insurance.Commencement_Date__c != null)
+    	 	dtStartDate = insurance.Commencement_Date__c;
+    	 Double iNoOfMonths = dtStartDate.monthsBetween(DateTime.now().date());
+    	 Double iNoOfYears = Datetime.now().year() - dtStartDate.year();
+    	 //FS0240
+    	 if(insurance.Policy_Type__c.equals('Whole Life') || insurance.Policy_Type__c.equals('Pension Plan')
+    	  || insurance.Policy_Type__c.equals('Other') || insurance.Policy_Type__c.equals('Children\'s'))
+		 	currentValue = dblAnnualPremiumAmount * (math.pow( Double.valueOf(1.06) , iNoOfYears));
+		 else if(insurance.Policy_Type__c.equals('ULIP - Debt'))
+		 	currentValue = dblAnnualPremiumAmount * (math.pow( Double.valueOf(1.06), iNoOfYears));
+	 	 else if(insurance.Policy_Type__c.equals('Money-Back'))
+	 		currentValue = dblAnnualPremiumAmount * (math.pow( Double.valueOf(1.05), iNoOfYears));
+	   	 else if(insurance.Policy_Type__c.equals('Endowment'))
+	 		currentValue = dblAnnualPremiumAmount * (math.pow( Double.valueOf(1.06), iNoOfYears));
+	 	 else if(insurance.Policy_Type__c.equals('ULIP - Equity'))
+	 		currentValue = dblAnnualPremiumAmount * (math.pow( Double.valueOf(1.10), iNoOfYears));
+	 	 else 
+	 		currentValue = 0;
+	 	 return currentValue;
+    }
+    private Double GetFinalcurrentValueOfInsurance(Double currentValue,Double iNoOfMonths)
+    {
+    	Double dblFinalCurrentValue = 0;
+    	Double dblValuePerMonths;
+    	if (currentValue != null && currentValue != 0)
+    	{
+    		if(iNoOfMonths != 0)
+    		{
+    			dblValuePerMonths = (currentValue / 12);
+    			dblFinalCurrentValue = dblValuePerMonths * iNoOfMonths ;
+    		}
+    	}
+    	
+    	return dblFinalCurrentValue;
+    }
+ 	// ID is Asset ID
+    /*Commented the previous Function and created new
+    Previously It was accepting the Recordtype Name and in new function it is accepting Recordtype Id to fetch different Picklist values
+    */
+	private List<SelectOption>getActionList(String recordName){
+		List<SelectOption> options = new List<SelectOption>();
+		options.add(new SelectOption('---None----','---None----'));
+		//Manasi : Stock and Mutual Fund :As per the Haren these two asset types must have following options : 1.Hold (Align to goal) 2.Liquidate (Align to goal)  
+		//FS0401
+		//Previous Code
+		/*if(assetBean.assetTypeList[0].equalsIgnoreCase(recordName)
+			|| assetBean.assetTypeList[5].equalsIgnoreCase(recordName)
+			|| recordName.equalsIgnoreCase('Mutual Fund')
+			|| recordName.equalsIgnoreCase('Stocks')
+			){
+			//FS0117
+			
+			//Previous code :Commented previous code. And added new text instead of 'Hold' and 'sell'.
+			//options.add(new SelectOption('Hold','Hold')); 
+			//options.add(new SelectOption('Sell','Sell')); 
+			//Added the following text to Hold and Sell
+			options.add(new SelectOption('Hold','Hold (Align to goal)')); 
+			options.add(new SelectOption('Sell','Liquidate (Align to goal)')); 
+         }else{
+			RecordType rt = [SELECT Id,Name FROM RecordType WHERE SobjectType='Asset__c' and Name like '%Cash%' LIMIT 1];
+			Schema.DescribeSObjectResult d = Schema.SObjectType.Asset__c;
+			Map<Id,Schema.RecordTypeInfo> rtMapById = d.getRecordTypeInfosById();
+			Schema.RecordTypeInfo rtById =  rtMapById.get(rt.id);
+			
+			Map<String,Schema.RecordTypeInfo> rtMapByName = d.getRecordTypeInfosByName();
+			Schema.RecordTypeInfo rtByName =  rtMapByName.get(rt.name);
+			
+			
+			
+			Schema.DescribeFieldResult fieldResult = Asset__c.Action__c.getDescribe();
+			List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+			for(Schema.PicklistEntry f : ple) {
+				//FS0401
+				
+				if(!f.getValue().equalsIgnoreCase('Liquidate (sell)'))
+				options.add(new SelectOption(f.getLabel(), f.getValue()));
+			}       
+         }*/
+        /** Eternus Solutions       **/
+		/** Author  : Manasi Ranade	**/
+		/** Issue Id: FS0401      	**/
+		/** Date    : 5/1/2012    	**/
+		/** Purpose : Fetch the Asset Allocation Acions from Custom Setting **/
+         if(recordName.equalsIgnoreCase('Real Estate Assets'))
+         {
+	         Map<String,Real_Estate_Assets_del__c> RealEastateAssetAction = Real_Estate_Assets_del__c.getAll();
+	         if(RealEastateAssetAction.size() > 0)
+			 {
+				for(String strName :RealEastateAssetAction.keySet())
+				{
+					Real_Estate_Assets_del__c objAction = RealEastateAssetAction.get(strName);
+					options.add(new SelectOption(objAction.Name, objAction.Name));
+				}
+			 }
+         }
+         else if(recordName.equalsIgnoreCase('Personal Assets'))
+         {
+	         Map<String,Personal_Assets__c> PersonalAssetsAction = Personal_Assets__c.getAll();
+	         if(PersonalAssetsAction.size() > 0)
+			 {
+				for(String strName :PersonalAssetsAction.keySet())
+				{
+					Personal_Assets__c objAction = PersonalAssetsAction.get(strName);
+					options.add(new SelectOption(objAction.Name, objAction.Name));
+				}
+			 }
+         }
+         else if(recordName.equalsIgnoreCase('Business Assets'))
+         {
+	         Map<String,Business_assets__c> PersonalAssetsAction = Business_assets__c.getAll();
+	         if(PersonalAssetsAction.size() > 0)
+			 {
+				for(String strName :PersonalAssetsAction.keySet())
+				{
+					Business_assets__c objAction = PersonalAssetsAction.get(strName);
+					options.add(new SelectOption(objAction.Name, objAction.Name));
+				}
+			 }
+         }
+         else if(recordName.equalsIgnoreCase('Stocks'))
+         {
+	         Map<String,Stocks__c> actionMap = Stocks__c.getAll();
+	         if(actionMap.size() > 0)
+			 {
+				for(String strName :actionMap.keySet())
+				{
+					Stocks__c objAction = actionMap.get(strName);
+					options.add(new SelectOption(objAction.Name, objAction.Name));
+				}
+			 }
+         }
+         /* Prajakta - FP changes */
+         else if(recordName.equalsIgnoreCase('Gold'))
+         {
+	         Map<String, Gold__c> actionMap = Gold__c.getAll();
+	         if(actionMap.size() > 0)
+			 {
+				for(String strName :actionMap.keySet())
+				{
+					Gold__c objAction = actionMap.get(strName);
+					options.add(new SelectOption(objAction.Name, objAction.Name));
+				}
+			 }
+         }
+         else if(recordName.equalsIgnoreCase('Mutual Fund'))
+         {
+	         Map<String,Mutual_Fund__c> actionMap = Mutual_Fund__c.getAll();
+	         if(actionMap.size() > 0)
+			 {
+				for(String strName :actionMap.keySet())
+				{
+					Mutual_Fund__c objAction = actionMap.get(strName);
+					options.add(new SelectOption(objAction.Name, objAction.Name));
+				}
+			 }
+         }
+         else if(recordName.equalsIgnoreCase('Retirement Accounts'))
+         {
+	         Map<String,Retirement_Accounts__c> actionMap = Retirement_Accounts__c.getAll();
+	         if(actionMap.size() > 0)
+			 {
+				for(String strName :actionMap.keySet())
+				{
+					Retirement_Accounts__c objAction = actionMap.get(strName);
+					options.add(new SelectOption(objAction.Name__c, objAction.Name__c));
+				}
+			 }
+         }
+         else if(recordName.equalsIgnoreCase('Govt. Saving Schemes'))
+         {
+	         Map<String,Post_Office_Saving_Schemes__c> actionMap = Post_Office_Saving_Schemes__c.getAll();
+	         if(actionMap.size() > 0)
+			 {
+				for(String strName :actionMap.keySet())
+				{
+					Post_Office_Saving_Schemes__c objAction = actionMap.get(strName);
+					options.add(new SelectOption(objAction.Name__c, objAction.Name__c));
+				}
+			 }
+         }
+         else if(recordName.equalsIgnoreCase('Deposits With Bank'))
+         {
+	         Map<String,Deposits_With_Bank__c> actionMap = Deposits_With_Bank__c.getAll();
+	         if(actionMap.size() > 0)
+			 {
+				for(String strName :actionMap.keySet())
+				{
+					Deposits_With_Bank__c objAction = actionMap.get(strName);
+					options.add(new SelectOption(objAction.Name__c, objAction.Name__c));
+				}
+			 }
+         }
+         else if(recordName.equalsIgnoreCase('Fixed Income'))
+         {
+	         Map<String,Fixed_Income__c> actionMap = Fixed_Income__c.getAll();
+	         if(actionMap.size() > 0)
+			 {
+				for(String strName :actionMap.keySet())
+				{
+					Fixed_Income__c objAction = actionMap.get(strName);
+					options.add(new SelectOption(objAction.Name__c, objAction.Name__c));
+				}
+			 }
+         }
+         else if(recordName.equalsIgnoreCase('Insurance') || recordName.equalsIgnoreCase('Life Insurance'))
+         {
+	         Map<String,Life_Insurance__c> actionMap = Life_Insurance__c.getAll();
+	         if(actionMap.size() > 0)
+			 {
+				for(String strName :actionMap.keySet())
+				{
+					Life_Insurance__c objAction = actionMap.get(strName);
+					options.add(new SelectOption(objAction.Name__c, objAction.Name__c));
+				}
+			 }
+         }
+         else if(recordName.equalsIgnoreCase('Cash and Cash Equivalents'))
+         {
+	         Map<String,Cash_and_Cash_Equivalents__c> actionMap = Cash_and_Cash_Equivalents__c.getAll();
+	         if(actionMap.size() > 0)
+			 {
+				for(String strName :actionMap.keySet())
+				{
+					Cash_and_Cash_Equivalents__c objAction = actionMap.get(strName);
+					options.add(new SelectOption(objAction.Name__c, objAction.Name__c));
+				}
+			 }
+         }
+         else if(recordName.equalsIgnoreCase('Investment Assets'))
+         {
+	         Map<String,Investment_Assets__c> actionMap = Investment_Assets__c.getAll();
+	         if(actionMap.size() > 0)
+			 {
+				for(String strName :actionMap.keySet())
+				{
+					Investment_Assets__c objAction = actionMap.get(strName);
+					options.add(new SelectOption(objAction.Name__c, objAction.Name__c));
+				}
+			 }
+         }
+         /*List<SelectOption> options = new List<SelectOption>();
+		options.add(new SelectOption('---None----','---None----'));
+         if(recordName.equalsIgnoreCase('Business Assets'))
+         {
+	         Map<String,Sobject> PersonalAssetsAction = Business_assets__c.getAll();
+	         if(PersonalAssetsAction.size() > 0)
+			 {
+			 	options = getOptions(PersonalAssetsAction,PersonalAssetsAction.keySet());
+				for(String strName :PersonalAssetsAction.keySet())
+				{
+					Business_assets__c objAction = PersonalAssetsAction.get(strName);
+					options.add(new SelectOption(objAction.Name, objAction.Name));
+				}
+			 }
+         }*/
+		 return options; 
+    }
+    //FS0401
+   /* private List<SelectOption> getOptions(Map<String,Sobject> objMap,List<String> strList)
+    {
+		List<SelectOption> options = new List<SelectOption>();
+		options.add(new SelectOption('---None----','---None----'));
+		for(String strName :strList)
+		{
+			Sobject objAction = objMap.get(strName);
+			options.add(new SelectOption(objAction.Name, objAction.Name));
+		}
+		return options;
+    }*/
+    public Map<ID,List<GoalInsuranceAssociation__c>> getInsuranceGoalAssociationMapping(String entityId) {
+        List<GoalInsuranceAssociation__c> goalInsuranceAssociationList;
+        Map<ID,List<GoalInsuranceAssociation__c>> goalInsuranceMappingMap = new Map<ID,List<GoalInsuranceAssociation__c>>();
+        
+		try {
+	        goalInsuranceAssociationList = databaseObj.getGoalInsuranceAllocationList(entityId);
+	                
+	        for(GoalInsuranceAssociation__c goalInsuranceAssociation : goalInsuranceAssociationList) {
+	            goalInsuranceAssociationList = goalInsuranceMappingMap.get(goalInsuranceAssociation.insurance__c);
+	            if(goalInsuranceAssociationList == null) {
+	                goalInsuranceAssociationList = new List<GoalInsuranceAssociation__c>();
+	                goalInsuranceMappingMap.put(goalInsuranceAssociation.insurance__c,goalInsuranceAssociationList);
+	            }
+	            goalInsuranceAssociationList.add(goalInsuranceAssociation);             
+	        }
+		}catch(Exception ex) {
+     		throw new GeneralException('AssetAllocationService.getInsuranceGoalAssociationMapping : Internal Error ' + ex.getMessage());	
+     	}
+        return goalInsuranceMappingMap; 
+    }
+    private Map<ID,Insurance__c> getInsuranceMap(String entityId) {
+        Map<ID,Insurance__c> insuranceMap = new Map<ID,Insurance__c>();
+        List<Insurance__c> insuranceList;
+    	try {
+	        insuranceList = databaseObj.getInsuranceList(entityId);
+	        
+	        for(Insurance__c insurance : insuranceList) {
+	            insuranceMap.put(insurance.Id,insurance);
+	        }       
+		}catch(Exception ex) {
+     		throw new GeneralException('AssetAllocationService.getInsuranceMap : Internal Error ' + ex.getMessage());	
+     	}
+        return insuranceMap;    
+    }
+    /** Eternus Solutions       **/
+	/** Author  : Manasi Ranade **/
+	/** Issue Id: FS0177      	**/
+	/** Date    : 5/10/2011 	**/
+	/** Purpose : To separate out the Fixed income related records on asset 
+				  allocation page
+	/****************************************************/
+    private Map<ID,Investment_Asset__c> getInvestmentAssetMap(String entityId) {
+        Map<ID,Investment_Asset__c> InvestmentAssetMap = new Map<ID,Investment_Asset__c>();
+        List<Investment_Asset__c> InvestmentAssetList;
+    	try {
+	        InvestmentAssetList = databaseObj.getInvestmentAssetList(entityId);
+	        
+	        for(Investment_Asset__c InvestmentAsset : InvestmentAssetList) {
+	            InvestmentAssetMap.put(InvestmentAsset.Id,InvestmentAsset);
+	        }       
+		}catch(Exception ex) {
+     		throw new GeneralException('AssetAllocationService.getInvestmentAssetMap : Internal Error ' + ex.getMessage());	
+     	}			    	
+        return InvestmentAssetMap;    
+    }
+    
+    //First  ID is Asset ID and Second is Goal
+    public Map<ID,Map<ID,GoalInsuranceAssociation__c>> getInsuranceGoalAssociationMaps(String entityId) {       
+        Map<ID,GoalInsuranceAssociation__c> goalInsuranceAssociationByGoal = new Map<ID,GoalInsuranceAssociation__c>();
+        Map<ID,Map<ID,GoalInsuranceAssociation__c>> goalInsuranceAssociationByInsurance = new Map<ID,Map<ID,GoalInsuranceAssociation__c>>();
+        
+ 		try {
+	        List<GoalInsuranceAssociation__c> goalInsuranceAssociationByAsset = databaseObj.getGoalInsuranceAllocationList(entityId);
+	                
+	        for(GoalInsuranceAssociation__c goalAssetAssociation : goalInsuranceAssociationByAsset) {
+	            goalInsuranceAssociationByGoal = goalInsuranceAssociationByInsurance.get(goalAssetAssociation.insurance__c);
+	            if(goalInsuranceAssociationByGoal == null) {
+	                goalInsuranceAssociationByGoal = new Map<ID,GoalInsuranceAssociation__c>();         
+	                goalInsuranceAssociationByInsurance.put(goalAssetAssociation.insurance__c,goalInsuranceAssociationByGoal);
+	            }
+	            goalInsuranceAssociationByGoal.put(goalAssetAssociation.goal__c,goalAssetAssociation);                          
+	        }
+ 		} catch(Exception ex) {
+     		throw new GeneralException('AssetAllocationService.getInsuranceGoalAssociationMaps : Internal Error ' + ex.getMessage());	
+     	}			
+        return goalInsuranceAssociationByInsurance; 
+    }
+        
+}

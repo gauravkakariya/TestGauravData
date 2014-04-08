@@ -1,0 +1,119 @@
+/* 
+*  Test class for Controller class that acts as an extension of Standard Controller Product_Manufacturer_Master__c 
+*  Contains the logic of editing Data From a EditProductManufacturers VF Page
+*
+*   Revision History:
+*
+*   Version        Author             Date            Description
+*   1.0            Prajakta Sanap    01/01/2013      Initial Draft
+*/
+
+
+@isTest
+private class Test_EditProductManufacturersController
+{ 
+
+	/* When data is product manufacturer records are entered and the Save button is clicked the
+	 * records should be saved and the user should be navigated to the Product Manufacturer tab
+	 */
+	public static testMethod void saveProductManufacturersRecordTest()
+    {
+		//Product Manufacturer record  is not entered and save button is clicked
+	 	ApexPages.StandardController stdCtrl = new ApexPages.standardController(new Product_Manufacturer_Master__c());
+	 		
+	 	EditProductManufacturersController productMfrController = new EditProductManufacturersController(stdCtrl);
+	    // Pass the id of product object 
+		String Id = ApexPages.currentPage().getParameters().get('id');
+	    	    				
+		test.startTest();      //Begin Test
+		productMfrController.saveProductManufacturer();
+		Pagereference savePage = productMfrController.saveProductManufacturer();
+		//system.assertEquals(savePage.getUrl(), '/' + Product_Manufacturer_Master__c.SObjectType.getDescribe().getKeyPrefix() + '/o');
+		test.stopTest();      //End Test
+    }
+    
+   
+ 	/* When the Cancel button is clicked the user should be navigated back to the Product 
+  	 * Manufacturer tab 
+  	 */
+	static testMethod void test_cancelProductManufacturerRecord()
+	{
+		Pagereference newAddProductManufacturers = Page.EditProductManufacturers;
+	 	Test.setCurrentPage(newAddProductManufacturers);
+	 	
+	 	ApexPages.StandardController stdCtrl = new ApexPages.standardController(new Product_Manufacturer_Master__c());
+	 		
+	 	EditProductManufacturersController productMfrController = new EditProductManufacturersController(stdCtrl);
+	 	Pagereference cancelPage = productMfrController.cancelProductManufacturer();
+	 	
+	 	test.startTest();  //Begin Test
+	 	//system.assertEquals(cancelPage.getUrl(), 
+	 	//	'/' + Product_Manufacturer_Master__c.SObjectType.getDescribe().getKeyPrefix() + '/o');
+	 	test.stopTest();    //End Test
+	}
+    
+    
+	//Test Data Creation Methods
+    //Populates and returns a list of Product Manufacturer records which are used as test data
+    public static List<Product_Manufacturer_Master__c> createPrdMfrRecords(Integer pNoOfRecords)
+    {
+    	String productMfrName = 'Product Manufacturer';
+    	String productMfrShortCode = 'PMR';
+    	List<Product_Manufacturer_Master__c> productMfrList = 
+    		new List<Product_Manufacturer_Master__c>();
+    	
+    	//Populate a list of Product Manufacturers
+    	for(Integer index = 1; index <= pNoOfRecords; index++)
+    	{
+    		productMfrList.add(new Product_Manufacturer_Master__c(
+								    				Name = productMfrName + index, 
+								    				Short_Code__c = productMfrShortCode + 1, 
+								    				Is_Active__c=true));
+    	}//for
+    	
+    	return productMfrList;
+    }
+    
+    
+     /* When data is product manufacturer records are entered and the Save button is clicked the
+	 * records should be saved and the user should be navigated to the Product Manufacturer tab
+     */
+    public static testMethod void saveProductManufacturersRecordErrorTest()
+    {
+		Pagereference editSaveProductManufacturers = Page.EditProductManufacturers;
+	 	Test.setCurrentPage(editSaveProductManufacturers);
+		
+		// Insert Product Manufacturer record
+		List<Product_Manufacturer_Master__c> productRecord = new List<Product_Manufacturer_Master__c>();
+		
+		Product_Manufacturer_Master__c PM1 = new Product_Manufacturer_Master__c(Name='Birla', Short_Code__c='Birla', Is_Active__c=true);
+		productRecord.add(PM1);
+		Product_Manufacturer_Master__c PM2 = new Product_Manufacturer_Master__c(Name='HDFC', Short_Code__c='HDFC', Is_Active__c=false);
+		productRecord.add(PM2);
+		Product_Manufacturer_Master__c PM3 = new Product_Manufacturer_Master__c(Name='AMC', Short_Code__c='amc', Is_Active__c=false);
+		productRecord.add(PM3);
+		
+		insert productRecord;
+
+		ApexPages.currentPage().getParameters().put('id',productRecord[0].id);
+
+	 	ApexPages.StandardController stdCtrl = new ApexPages.standardController(new Product_Manufacturer_Master__c());
+	 		
+	 	EditProductManufacturersController productMfrController = new EditProductManufacturersController(stdCtrl);
+	 	Pagereference savePage = productMfrController.saveProductManufacturer();
+	 	
+	 	List<Apexpages.Message> pageMsgList = Apexpages.getMessages();
+	 	
+	 	productMfrController.lstProductManufacturer[1].Name = 'Birla';
+	 	productMfrController.saveProductManufacturer();
+
+        test.startTest();			//Begin test
+        //system.assertEquals(savePage.getUrl(), 
+	 	//	'/' + Product_Manufacturer_Master__c.SObjectType.getDescribe().getKeyPrefix() + '/o');
+        //system.assert(savePage == NULL);
+        test.stopTest();			//End test
+    }
+    
+    
+	
+}//Test_EditProductManufacturersController ends

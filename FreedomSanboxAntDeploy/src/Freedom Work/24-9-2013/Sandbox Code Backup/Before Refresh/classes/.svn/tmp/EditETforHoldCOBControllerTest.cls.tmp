@@ -1,0 +1,57 @@
+/**
+*  Test class for Controller class EditETforHoldCOBController
+*
+*   Revision History:
+*
+*   Version        Author             Date            Description
+*   1.0            Aditi/Prajakta    02/04/2013      Initial Draft
+*/
+
+public with sharing class EditETforHoldCOBControllerTest 
+{
+
+   //test Method
+	@isTest(SeeAllData=true)
+	public static  void testEditETforHoldCOBController()
+	{
+		TestData_Ffreedom testData = new TestData_Ffreedom();
+		Account objAccount = testData.initializeAccount();
+	    insert objAccount;
+	    			
+	    Approve_Action_Plan__c objAAP1 = testData.init_ApproveActionPlan(objAccount.Id);
+	    insert objAAP1;
+        
+        List<Execution_Tracker__c> lstET = new List<Execution_Tracker__c>();
+        Execution_Tracker__c objET1 = testData.init_ExecutionTracker(objAccount.id,'Assigned to Operations','Opened',objAAP1.Id,'SIP','Hold');
+        lstET.add(objET1);
+        Execution_Tracker__c objET2 = testData.init_ExecutionTracker(objAccount.id,'Assigned to Operations','Closed',objAAP1.Id,'Lumpsum','Hold - COB');
+        lstET.add(objET2);
+        insert lstET;
+        
+        Test.startTest();
+        ApexPages.currentPage().getParameters().put('eid', objAccount.id);
+        Apexpages.currentPage().getParameters().put('id', objAAP1.Id);
+		Apexpages.currentPage().getParameters().put('type', 'Lumpsum');
+        EditETforHoldCOBController objEETC1 = new EditETforHoldCOBController(); 
+      	objEETC1.assignTask();
+      	objEETC1.getEntities();
+      	objEETC1.updateExecutionTracker();
+      	
+      	ApexPages.currentPage().getParameters().put('eid', objAccount.id);
+        Apexpages.currentPage().getParameters().put('etid', objET1.Id);
+        Apexpages.currentPage().getParameters().put('type', 'GoalLumpsum');
+		Apexpages.currentPage().getParameters().put('userType', 'opsTeam');
+        EditETforHoldCOBController objEETC2 = new EditETforHoldCOBController(); 
+      	objEETC2.assignTask();
+      	objEETC2.getEntities();
+      	objEETC2.updateExecutionTracker();
+      	
+      	ApexPages.currentPage().getParameters().put('eid',null);
+        Apexpages.currentPage().getParameters().put('etid', objET1.Id);
+        Apexpages.currentPage().getParameters().put('type', 'GoalLumpsum');
+		Apexpages.currentPage().getParameters().put('userType', 'opsTeam');
+        EditETforHoldCOBController objEETC3 = new EditETforHoldCOBController(); 
+      	objEETC3.getEntities();
+        Test.stopTest();
+	}
+}

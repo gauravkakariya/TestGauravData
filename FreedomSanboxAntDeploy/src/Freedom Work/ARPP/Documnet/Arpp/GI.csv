@@ -1,0 +1,27 @@
+Product_Name__c	Product_Manufacturer__c	ProductType__c	Is_Active__c	Policy_Type__c	RecordType 	Upfront_Commission__c 
+Apollo Munich Easy Health Individual	a1QW00000001FvMMAU	General Insurance	TRUE	Medical	012W00000004QVwIAM	19
+Apollo Munich Optima Senior	a1QW00000001FvMMAU	General Insurance	TRUE	Medical	012W00000004QVwIAM	19
+Bajaj Allianz Individual Health Guard	a1QW00000001FvNMAU	General Insurance	TRUE	Medical	012W00000004QVwIAM	20
+Bajaj Allianz Critical Care j Allianz	a1QW00000001FvNMAU	General Insurance	TRUE	Critical Illness	012W00000004QVwIAM	20
+Bajaj Allianz Critical Care Policy	a1QW00000001FvNMAU	General Insurance	TRUE	Critical Illness	012W00000004QVwIAM	20
+Bajaj Allianz Critical Care Policy	a1QW00000001FvNMAU	General Insurance	TRUE	Medical	012W00000004QVwIAM	20
+Bajaj Allianz Critical Illness Cover	a1QW00000001FvNMAU	General Insurance	TRUE	Critical Illness	012W00000004QVwIAM	20
+Bajaj Allianz Critical Illness Cover	a1QW00000001FvNMAU	General Insurance	TRUE	Medical	012W00000004QVwIAM	20
+Bajaj Allianz Extra Care	a1QW00000001FvNMAU	General Insurance	TRUE	Medical	012W00000004QVwIAM	20
+Bajaj Allianz Extra Care	a1QW00000001FvNMAU	General Insurance	TRUE	Top Up	012W00000004QVwIAM	20
+Bajaj Allianz Health Guard	a1QW00000001FvNMAU	General Insurance	TRUE	Medical	012W00000004QVwIAM	20
+Bajaj Allianz Premier Personal Guard	a1QW00000001FvNMAU	General Insurance	TRUE	Personal Accident	012W00000004QVwIAM	20
+Bajaj Allianz Premier Personal Guard	a1QW00000001FvNMAU	General Insurance	TRUE	Disability	012W00000004QVwIAM	20
+Bajaj Allianz Premier Personal Guard	a1QW00000001FvNMAU	General Insurance	TRUE	Medical	012W00000004QVwIAM	20
+Health Guard	a1QW00000001FvOMAU	General Insurance	TRUE	Medical	012W00000004QVwIAM	20
+ICICI Lombard Critical Care	a1QW00000001FvPMAU	General Insurance	TRUE	Medical	012W00000004QVwIAM	18
+ICICI Lombard Critical Care Cover	a1QW00000001FvPMAU	General Insurance	TRUE	Critical Illness	012W00000004QVwIAM	18
+ICICI Lombard Health Protect Family Floater	a1QW00000001FvPMAU	General Insurance	TRUE	Medical	012W00000004QVwIAM	18
+ICICI Lombard Health Protect Plus	a1QW00000001FvPMAU	General Insurance	TRUE	Medical	012W00000004QVwIAM	18
+ICICI Lombard Persoanl Accident Cover	a1QW00000001FvPMAU	General Insurance	TRUE	Medical	012W00000004QVwIAM	18
+ICICI Lombard Personal Protect Plan	a1QW00000001FvPMAU	General Insurance	TRUE	Personal Accident	012W00000004QVwIAM	18
+ICICI Lombard Top Up Cover	a1QW00000001FvPMAU	General Insurance	TRUE	Personal Accident	012W00000004QVwIAM	18
+ICICI Personal Protect	a1QW00000001FvPMAU	General Insurance	TRUE	Medical	012W00000004QVwIAM	18
+ICICI Personal Protect Policy	a1QW00000001FvPMAU	General Insurance	TRUE	Personal Accident	012W00000004QVwIAM	18
+ICICI Pru Capital Protection	a1QW00000001FvPMAU	General Insurance	TRUE	Personal Accident	012W00000004QVwIAM	0
+Preventive Health Care	a1QW00000001FvQMAU	General Insurance	TRUE	Personal Accident	012W00000004QVwIAM	0

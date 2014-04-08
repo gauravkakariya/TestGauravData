@@ -1,0 +1,61 @@
+/*
+	
+	Revision History:
+	
+    Version     Version Author     Date        Comments
+    1.0         --           	   --	  	   GeneratePlanContoller is a class to generate pdf or word file
+    2.0 		Manasi Ranade	  28/12/2011   Issue Id : FS0384 :
+   											   While generating Execution Tracker for given entity, save his Approved plan and his PDF as an attachment.
+   											   So added test method for this new functionality 
+	3.0  		Prajakta Sanap     19/04/2013	Created TestData_Ffreedom which contains all the test data for this test class.											
+   											   
+*/
+
+@isTest
+private class generatePlanControllerTest 
+{
+	static GeneratePlanContoller generatePlanCon;
+	static Account acc;
+	
+ 	static void testData()
+ 	{
+     	TestData_Ffreedom testData = new TestData_Ffreedom();
+        acc = testData.initializeAccount(); 
+    	upsert acc;
+    	system.assertNotEquals(null,acc.id);
+     	System.currentPageReference().getParameters().put('entityId',acc.id);
+     	generatePlanCon=new GeneratePlanContoller();
+     	generatePlanCon.getOptions();
+	}
+ 
+    static testMethod void createTest() 
+    {
+       Test.startTest();
+       testData();
+       generatePlanCon.selectedOption='PDF';
+       generatePlanCon.create();
+       test.stopTest();
+    }
+    
+    static testMethod void createTest1() 
+    {
+       Test.startTest();
+       testData();
+       generatePlanCon.selectedOption='Document';
+       generatePlanCon.create();
+       test.stopTest();
+    }
+    //FS0384
+    /** Eternus Solutions      **/
+	/** Author  : Manasi Ranade*/
+	/** Issue Id: FS0384      **/
+	/** Date    : 28/12/2011  **/
+	/** Purpose : While generating Execution Tracker for given entity, save his Approved plan and his PDF as an attachment. **/
+    static testMethod void SavePDF() 
+    {
+       Test.startTest();
+       testData();
+       generatePlanCon.Save();
+       test.stopTest();
+    }
+}

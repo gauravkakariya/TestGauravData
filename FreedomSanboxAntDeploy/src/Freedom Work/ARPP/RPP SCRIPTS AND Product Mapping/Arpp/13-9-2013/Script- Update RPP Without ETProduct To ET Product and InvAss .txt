@@ -1,0 +1,141 @@
+//Get List of RPP Whose ET product is Null but In ET that product is present
+
+List<ARPP_Detail__c> lstArppDetail = [Select Name, Id, Entity__c, Type__c, Product__c, Commission__c, Approve_Action_Plan__c,  
+											  Action_Plan_Amount__c, Action_Plan_Upfront_Comm_Amount__c,  	
+											 Action_Plan_Trial_Comm_Amount__c,  Action_Amount_Revenue__c, Remark__c, Execution_Tracker_Actual_Product__c,  Actual_Commission__c,Approve_Action_Plan__r.Product__c, Execution_Tracker__c,Execution_Tracker_Amount__c, Execution_Tracker_upfront_Comm_Amount__c, Execution_Tracker_Trial_Comm_Amount__c, Execution_Tracker_Total_Revenue__c, Execution_Tracker__r.Execution_Tracker_Product__c,Actual_Product_Name__c, ET_Remark__c,
+											 Approve_Action_Plan__r.Installments__c
+									  From ARPP_Detail__c 
+									  where Execution_Tracker__c != null and
+									  Execution_Tracker__r.Execution_Tracker_Product__c != null and Execution_Tracker_Actual_Product__c = null
+	and  Execution_Tracker__r.Approve_Action_Plan__c != null and  Execution_Tracker__r.Approve_Action_Plan__r.Investment_Asset__c =null and  Entity__c IN('0012000000qODPa')
+];
+system.debug('**********lstArppDetail***************'+lstArppDetail.size());
+
+Set<Id> setAPPMFId = new Set<Id>();
+Set<Id> setAPPGIId = new Set<Id>();
+
+
+for(ARPP_Detail__c objRPP : lstArppDetail)
+{
+	if(objRPP.Approve_Action_Plan__c != null)
+		if(objRPP.Type__c == 'SIP' || objRPP.Type__c == 'Lumpsum')
+			setAPPMFId.add(objRPP.Approve_Action_Plan__c);
+		else if(objRPP.Type__c == 'General Insurance' || objRPP.Type__c == 'Life Insurance')
+			setAPPGIId.add(objRPP.Approve_Action_Plan__c);	
+}	
+
+
+List<AggregateResult>  aggr1 = [ Select sum(Executed_Amount__c), Approve_Action_Plan__c
+							   FROM Execution_Tracker__c 
+							   Where Application_Status__c ='Closed' and Approve_Action_Plan__r.Investment_Asset__c = null and Approve_Action_Plan__c IN: setAPPMFId
+							   Group By Approve_Action_Plan__c ];
+						   
+
+List<AggregateResult> aggr2 = [ Select sum(Premium__c), Approve_Action_Plan__c
+							   FROM Execution_Tracker__c 
+							   Where Application_Status__c ='Closed' and Approve_Action_Plan__r.Investment_Asset__c = null and Approve_Action_Plan__c IN: setAPPGIId
+							   Group By Approve_Action_Plan__c ];						   
+						   
+
+Map<string, Double> mapAPIdToEA = new Map<string, Double>();     
+Map<string, Double> mapAPIdToGIEA = new Map<string, Double>();       
+for (AggregateResult ar : aggr1)  
+{
+	mapAPIdToEA.put(string.valueOf(ar.get('Approve_Action_Plan__c')),Double.valueOf(ar.get('expr0'))); 
+       
+}
+for (AggregateResult ar : aggr2)  
+{
+	mapAPIdToGIEA.put(string.valueOf(ar.get('Approve_Action_Plan__c')),Double.valueOf(ar.get('expr0'))); 
+}
+
+
+//Retrieve all Products where Investment type either SIP or Lumpsum 
+map<Id, Product_Master__c> mapIdToProductMaster = new map<Id, Product_Master__c>([Select (Select Upfront_Commission__c, Trail_Commission__c 
+																							from Commissions__r where Active__c = true), 
+																						Product_Name__c, ProductType__c, Investment_Type__c 
+																				 From Product_Master__c Where (ProductType__c ='Mutual Fund' or  ProductType__c ='General Insurance' or ProductType__c = 'Life Insurance')
+																						]);
+
+													
+List<ARPP_Detail__c> lstRPPToUpdate = new List<ARPP_Detail__c>();									
+for(ARPP_Detail__c objARPP: lstArppDetail)	
+{
+	if(objARPP.Execution_Tracker__r.Execution_Tracker_Product__c != null)
+	{
+		Product_Master__c objPM = mapIdToProductMaster.get(objARPP.Execution_Tracker__r.Execution_Tracker_Product__c);
+		if(objPM != null)
+		{
+			objARPP.Execution_Tracker_Actual_Product__c = objPM.Id;
+			Commission__c objComm = objPM != null && objPM.Commissions__r.size() > 0 ? objPM.Commissions__r[0] : null ;
+			if(objComm != null)
+			{				
+				if(objARPP.Type__c == 'SIP')
+				{
+					objARPP.Execution_Tracker_Amount__c = mapAPIdToEA.containsKey(objARPP.Approve_Action_Plan__c)? 
+															mapAPIdToEA.get(objARPP.Approve_Action_Plan__c) : 0;
+					
+					objARPP.Execution_Tracker_upfront_Comm_Amount__c = (objComm.Upfront_Commission__c * 12 * 
+																		objARPP.Execution_Tracker_Amount__c)/100;
+					Double trailComm = 0;
+					Double amount = objARPP.Execution_Tracker_Amount__c;
+					Integer installment = objARPP.Approve_Action_Plan__r.Installments__c <= 12  ? Integer.valueOf(objARPP.Approve_Action_Plan__r.Installments__c) : 12;			
+					
+					for(Integer i = 0; i < installment ; i++)
+					{
+						trailComm += (amount * objComm.Trail_Commission__c)/100;
+						amount += objARPP.Execution_Tracker_Amount__c;
+					}
+					
+					objARPP.Execution_Tracker_Trial_Comm_Amount__c = trailComm;
+				}
+				else if(objARPP.Type__c == 'Lumpsum')
+				{
+					objARPP.Execution_Tracker_Amount__c = mapAPIdToEA.containsKey(objARPP.Approve_Action_Plan__c)? 
+															mapAPIdToEA.get(objARPP.Approve_Action_Plan__c) : 0;
+					
+					objARPP.Execution_Tracker_upfront_Comm_Amount__c = (objComm.Upfront_Commission__c  * 
+																		objARPP.Execution_Tracker_Amount__c)/100;
+					objARPP.Execution_Tracker_Trial_Comm_Amount__c = (objComm.Trail_Commission__c * objARPP.Execution_Tracker_Amount__c)/100;
+				}
+				if(objARPP.Type__c == 'General Insurance')
+				{
+					system.debug('**************Execution_Tracker_Amount__c'+objARPP.Execution_Tracker_Amount__c);
+					objARPP.Execution_Tracker_Amount__c = mapAPIdToGIEA.containsKey(objARPP.Approve_Action_Plan__c)? 
+															mapAPIdToGIEA.get(objARPP.Approve_Action_Plan__c) : 0;
+					
+					objARPP.Execution_Tracker_upfront_Comm_Amount__c = (objComm.Upfront_Commission__c * 
+																		objARPP.Execution_Tracker_Amount__c)/100;
+																		
+					objARPP.Execution_Tracker_Trial_Comm_Amount__c = 0;
+				}
+				
+				if(objARPP.Type__c == 'Life Insurance')
+				{
+					system.debug('**************Execution_Tracker_Amount__c'+objARPP.Execution_Tracker_Amount__c);
+					objARPP.Execution_Tracker_Amount__c = mapAPIdToGIEA.containsKey(objARPP.Approve_Action_Plan__c)? 
+															mapAPIdToGIEA.get(objARPP.Approve_Action_Plan__c) : 0;
+					
+					objARPP.Execution_Tracker_upfront_Comm_Amount__c = (objComm.Upfront_Commission__c * 
+																		objARPP.Execution_Tracker_Amount__c)/100;
+																		
+					objARPP.Execution_Tracker_Trial_Comm_Amount__c = 0;
+				}
+				
+				
+				objARPP.Actual_Commission__c = objComm.Id;
+				
+
+			}
+			else
+				objARPP.ET_Remark__c = 'Actual Product Commision not found';
+			objARPP.ET_Remark__c = '';
+			lstRPPToUpdate.add(objARPP);
+		}
+				
+	
+	}
+}	
+
+if(lstRPPToUpdate.size() > 0)	
+	update lstRPPToUpdate;	

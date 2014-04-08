@@ -1,0 +1,185 @@
+/* 
+*  This class used for Utility Purpose
+*
+*   Revision History:
+*
+*   Version         Author             Date          Description
+*   1.0             Gaurav Kakariya    08/04/2013    Initial Draft
+*/
+
+public with sharing class FreedomUtils 
+{
+    public final static String FIRST_PURCHASE = 'First';
+    public final static String UPDATE_EXECUTED_PURCHASE = 'Executed';
+    public final static String UPDATE_NEW_PURCHASE = 'New';
+    public final static String UPDATE_CONFIRMED_PURCHASE = 'Confirmed';
+    public final static String RENEW_PURCHASE = 'Renew';
+    public static Entity_Global_Assumption__c getEntityGlobalAssumption(String entityId)
+    {   
+        try{
+            return [Select No_of_Goals__c, Gold_Growth_Rate__c, Goals_Allowed_List__c, Financial_Planing_Output_Report__c, 
+                            Data_Collection_Analysis_Control__c, Account__c 
+                    From Entity_Global_Assumption__c 
+                    Where Account__c =: entityId Limit 1];                                                          
+        }
+        catch(Exception ex){
+            
+            Error.LogError(''+Ex.GetMessage());
+            return null;
+        }
+    }
+    
+    static Renewal__c objRenewal;
+    static Purchase_Order__c objPurchaseOrder;
+    
+    /*public static void updateRenewalDate(String entityId, String strPurchaseType)
+    {
+        initialize(entityId);
+        if(strPurchaseType.equals(FIRST_PURCHASE)) 
+        {
+            //objRenewal.Renewal_Date__c = Date.today().addDays(Integer.valueOf(objPurchaseOrder.Subscription_Period_In_Days__c));
+        }  
+        else if(strPurchaseType.equals(UPDATE_NEW_PURCHASE))
+        {
+            //objRenewal.Renewal_Date__c  = Date.valueOf(objPurchaseOrder.CreatedDate).addDays(Integer.valueOf(objPurchaseOrder.Subscription_Period_In_Days__c));
+        } 
+        else if(strPurchaseType.equals(UPDATE_CONFIRMED_PURCHASE))
+        {
+            //objRenewal.Renewal_Date__c = Date.today().addDays(Integer.valueOf(objPurchaseOrder.Subscription_Period_In_Days__c));
+        }
+        else if(strPurchaseType.equals(UPDATE_EXECUTED_PURCHASE))   
+        {
+           // if(objPurchaseOrder.Product_Master__r.IsRenewalDateUpdate__c)
+                //objRenewal.Renewal_Date__c = Date.today().addDays(Integer.valueOf(objPurchaseOrder.Subscription_Period_In_Days__c));
+        }
+        else if(strPurchaseType.equals(RENEW_PURCHASE))
+        {
+            //objRenewal.Renewal_Date__c  = Date.valueOf(objRenewal.Renewal_Date__c).addDays(Integer.valueOf(objPurchaseOrder.Subscription_Period_In_Days__c));
+        }
+        
+        if(objRenewal != null)
+            update objRenewal;
+    }*/
+    
+    
+   /*public static Boolean hasRenewalPeriod(String entityId)
+   
+    {
+       
+         try
+        {
+            Account objAccount = [Select Id,Name, Membership_End_Date__c, Membership_Start_Date__c, Renewal_Lapse_Date__c, Renewal_Start_Date__c From Account Where Id =: entityId];
+            return (objAccount.Renewal_Start_Date__c <= System.today() && System.today() <= objAccount.Renewal_Lapse_Date__c);
+        }
+        catch(Exception e)
+        {
+            System.debug('-------------------'+e);
+            return false;
+        }
+    }*/
+    
+    /*private static void initialize(String entityId)
+    {
+        try
+        {
+            List<Renewal__c> lstRenwal = new List<Renewal__c>();
+            List<Purchase_Order__c> lstPurchase_Order = new List<Purchase_Order__c>();
+            
+            lstRenwal = [Select Renewal_SMS_Sent__c, Renewal_Date__c, Renewal_Count__c, Name, Mobile__c, IsCompleted__c, Id, Has_Opted_for_Renewal__c, 
+                                        Expected_Amount__c, Entity__c, Entity_Name__c, Email__c, Discount__c, Discontinuation_SMS_Sent__c,  Cheque_Received_Date__c,  
+                                        Amount_Received__c, CreatedDate From Renewal__c where Entity__c=: entityId order by CreatedDate desc];
+            
+            if(!lstRenwal.IsEmpty()){
+              objRenewal = lstRenwal[0];
+             }     
+            
+            lstPurchase_Order =  [Select Id, Name, Service_Tax__c, Product_Type__c, Product_Price__c, Product_Master__c, Is_Cancel__c, Order_Status__c, Order__c,  
+                                        Discount__c,Entity__c,Payable_Amount__c, Selected_Product__c, Product_Master__r.No_of_Goals_Allowed__c,Product_Master__r.Product_Name__c,
+                                        Renewal_Grace_Days__c, Renewal_Period_In_Days__c, Subscription_Period_In_Days__c, Product_Master__r.IsTopupService__c,
+                                        Product_Master__r.IsRenewalDateUpdate__c, CreatedDate  
+                                        From Purchase_Order__c 
+                                        Where Entity__c =: entityId 
+                                            And Is_Cancel__c= false 
+                                            And Product_Type__c = 'Base Product' order by CreatedDate desc];
+            if(!lstPurchase_Order.IsEmpty())                            
+                objPurchaseOrder = lstPurchase_Order[0];
+        }
+        catch(Exception e)
+        {
+            System.debug('---------------------'+e);
+        }
+    }*/
+    
+    //
+    public static Boolean hasRetirement(String entityId)
+    {
+        Account objAccount = [select Retirement_Age__c, PersonBirthdate from Account where Id =: entityId];
+        Date retirementDate = objAccount.PersonBirthdate.addYears(Integer.valueOf(objAccount.Retirement_Age__c));
+        Double yearDiffrence = System.today().daysBetween(retirementDate) /365;
+        if(yearDiffrence >= 7)
+        {
+            return true;
+        }
+        else
+          return false;
+    }
+    
+    //Update the Order Details record 
+    public static void updateOrderDetails(String entityId)
+    {
+        Map<String, List<Purchase_Order__c>> mapOrderDetailsIdToPurchaseOrder = new Map<String, List<Purchase_Order__c>>();
+        List<Order_Detail__c> lstOrderDetails = new List<Order_Detail__c>();
+        for(Purchase_Order__c objPO : [Select Id,Payable_Amount__c,Order_Detail__c, Total_Tax__c From Purchase_Order__c Where Entity__c =: entityId and Is_Cancel__c=false])
+        {
+            if(!mapOrderDetailsIdToPurchaseOrder.containsKey(objPO.Order_Detail__c))
+                mapOrderDetailsIdToPurchaseOrder.put(objPO.Order_Detail__c, new List<Purchase_Order__c>{objPO});
+            else
+                mapOrderDetailsIdToPurchaseOrder.get(objPO.Order_Detail__c).add(objPO);
+        }
+        
+        for(String strOrderDetailId : mapOrderDetailsIdToPurchaseOrder.keySet())
+        {
+            Double totalPaybleAmount = 0;
+            for(Purchase_Order__c objPO : mapOrderDetailsIdToPurchaseOrder.get(strOrderDetailId))
+            {
+                totalPaybleAmount +=  objPO.Payable_Amount__c ;
+            }
+            Order_Detail__c objOrderDetail = New Order_Detail__c(Id = strOrderDetailId);
+            objOrderDetail.Payable_Amount__c = totalPaybleAmount;
+            lstOrderDetails.add(objOrderDetail);
+        }
+        
+         if(!lstOrderDetails.isEmpty())
+            update lstOrderDetails;
+    }
+    
+    public static void createRetirementGoal(String entityId)
+    {
+        Account objAccount = [Select Id, PersonBirthdate, Retirement_Age__c from Account where Id =: entityId];
+        //it is not bulk enable code need to change.
+        List<Goal__c> lstGoal = [Select Goal_Type__c, Description__c from Goal__c where Entity__c =: entityId and Goal_Type__c = 'Retirement'];
+        if(lstGoal.size() == 0)
+        {
+            Goal__c goal = new Goal__c();
+                
+            Schema.DescribeFieldResult fieldResult = Goal__c.Goal_Type__c.getDescribe();
+            for(Schema.PicklistEntry f : fieldResult.getPicklistValues()) 
+            {
+                if (f.getLabel().equalsIgnoreCase('Retirement')) 
+                {
+                    goal.Goal_Type__c = f.getValue();
+                    goal.Description__c = f.getLabel();
+                    break;
+                }
+            }
+            
+            goal.Entity__c = entityId;
+            Goal.Priority__c='High';
+            
+            Date retirementDate = objAccount.PersonBirthdate.addYears(Integer.valueOf(objAccount.Retirement_Age__c));
+            goal.Goal_Start_Year__c = String.valueOf(retirementDate.year());
+            
+            insert goal;
+        }
+    }
+}

@@ -1,0 +1,1015 @@
+/**
+ * @Description: GeneratePDFController is a class to generate pdf file for desired details
+ */
+/**
+Revision History:
+	
+    Version     Version Author     Date        Comments
+    1.0         --           	   --	  		Initial Draft
+    
+    2.0			Niket Chandane      31/05/2011  Update the goalMappingBeanList property for the where added the if condition for
+    											not null for the goalIdList
+    2.0			Manasi Ranade	   31/10/2011   Issue ID: FS0230: 
+												Passed the SIP values to the component : "GoalComponent"
+	2.0  		Manasi 			   28/11/2011   Issue Id: FS0309 : Code to Add Remark in the page
+	2.0  		Manasi 			   19/1/2012    Issue Id: 00001461 : Change in function : GeneratePDFController :
+												Added Check for Null before using
+	2.0  		Manasi 			   07/05/2012   Issue Id: 00001613 :  Added new property for remark
+	2.0  		Manasi 			   07/05/2012   Issue Id: 00001616 :  Calculate Continuing Income Source value from Spouse/Dependent
+	
+*/
+public class GeneratePDFController // extends FPReportControl
+{
+	public Integer pageNumber{get;set;}
+	
+	//Properties added for Partner Portal Implementation purpose By Aditi Satpute
+	//============================================================================
+	public List<HLVDetails__c> lstHLVDetails{get;set;}
+	public Boolean isFreedomUser{get;set;}
+	//public String Accname{get;set;}
+	public String email{get;set;}
+	public String CcEmail{get;set;}
+	/*commented Bcc as per client requirement By Aditi Satpute : Date : 24/12/12
+	public String BccEmail{get;set;}*/
+	public String address{get;set;}
+	public User user {get;set;}
+	public User objFfreedomUser {get;set;}
+	
+	public Account Partnerlogo{get;set;}
+	//public Account Logo_partner{get;set;}
+	//public String lstAddressInComponent;
+	
+	// Code to display buttons on GenerateHTML page, 13/Jan/2012
+  	public String DisplayButton {get;set;}
+  	public String AttachmentId {get;set;}
+  	public String strMessage {get; set;}
+  	public String emailBody {get; set;}
+  	public Boolean isSendEmail {get; set;}
+ 	 //==============================================================================
+  	//FS0309 new property to show Remark
+	
+	//Added on : 11/4/2013 : Gaurav : Hide Some field(link) of financial plan 
+	/* FPReportControl Variables*/
+    public Boolean isIntroduction{get;set;}
+    public Boolean isDisclosureStatement{get;set;}
+    public Boolean isGoalSummary{get;set;}
+    public Boolean isFinancialStatements{get;set;}
+    public Boolean isEmergencyPlanning{get;set;}
+    public Boolean isIndividualGoal{get;set;}
+    public Boolean isLifeInsuranceAnalysis{get;set;}
+    public Boolean isGeneralInsurance{get;set;}
+    public Boolean isEstatePlanning{get;set;}
+    public Boolean isSummaryActionPlan{get;set;}
+    public Boolean isAnnexure1{get;set;}
+    public Boolean isFinancialPlanReview{get;set;}
+    public Boolean isInvestmentRisk{get;set;}
+    public Boolean isDeliveryAcknowledgement{get;set;}
+    /* End FPReportControl Variables*/
+    
+    /** Start of Emergency Planning Section***/
+	public Remarks__c objRemark {get;set;}
+	public String strRemark {get;set;}
+	public Account objAccount;
+	DatabaseSOQL dbQuery;
+	//Added on : 1/2/2013 : Aditi Satpute : Hide Save button for Business Partner Financial Plan //Sanat
+	public Boolean isDisplaySaveButton{get;set;}
+	//private Id emergencyRemarkRecordTypeId {get;set;}
+	
+    public String entityId {get; set;}
+    public EmergencyPlanningBean Ebean {get; set;}
+    private EmergencyPlanningServices Eservice;
+    
+    public Remarks__c ORemark{
+       get{
+       		Remarks__c objSelectedRemark;
+       		if(entityId != null){
+    			for(Remarks__c obj : [select Remark__c from Remarks__c where entity__c =:entityId and recordtype.Name=:'EmergencyPlanning' limit 1]){
+    				objSelectedRemark = objRemark = obj;
+    				//emergencyRemarkRecordTypeId = obj.Id;
+    				strRemark = obj.Remark__c;
+    			}
+       		}
+            return objSelectedRemark;
+       }set;
+    }
+    
+    /** End of Emergency Planning Section***/
+
+	/**** Component related Variables**/
+	public GeneralInsurancePlanningController objGI {get;set;}
+	public GoalSummaryController objGoalSummaryController {get;set;}
+	public NetworthController objNetworthController {get;set;}
+	public NewPortFolioSummaryController objPortfolio {get;set;}
+	public NewCashFlowController objCashFlow {get;set;}
+	public EstatePlanningController objEstatePlanningController {get;set;}
+	
+	public List<PersonalInfo> lstPersonalInfo{get;set;}
+	//public String isWill{get;set;}
+	public GlobalAssumptions newGlobalAssumptions{get;set;}
+	
+	//public Boolean isDisplayFamilyPic;
+	public Account objAcc {get;set;}
+	//public map<id,User> mapUser {get;set;}
+	
+  	//public String goal{get;set;}
+  	private list<string> goalIdList{get;set;}
+	
+  	//public String strRemark {get;set;}
+  	/** Eternus Solutions  **/
+    /** Author  : Manasi Ranade	**/
+  	/** Issue Id: 00001613      **/
+  	/** Date    : 07/05/2012 	**/
+  	/** Purpose : Added new property for remark**/
+  	/****************************************************/
+  	//public Remarks__c objRemark {get;set;}
+  	public GeneratePDFBean bean{get;set;}
+  	public GeneratePDFServices service{get;set;}
+  	//public String planGenerationDate{get;set;}
+ 	public NewGoalService goalService {get;set;} 
+ 	public Map<String,GoalMappingBean> goalMappingBeanMap { get;set;}
+  	public List<GoalMappingBean> goalMappingBeanList 
+  	{ 
+		get {
+			if(goalMappingBeanList == null) {
+				goalMappingBeanList = new list<GoalMappingBean>();
+				if(goalIdList != null && goalIdList.size() > 0){
+					for(String goal:goalIdList) {
+						/* Change by the Niket chandane
+						 * change to removed the null pointer Ecxeption from the Generate Pdf Page.
+                           so we need to check that map is not null and it contains the key or not
+						*/
+						if(goalMappingBeanMap != null && goalMappingBeanMap.size() > 0 && goalMappingBeanMap.containsKey(goal))
+							goalMappingBeanList.add(goalMappingBeanMap.get(goal));
+					}
+				}
+				
+				/*
+				  Updated By : Kiran Patil
+				  Updated At : 29-May-2013
+				  Summary    : FP changes-part2 - issue 6 
+				*/
+				if(!goalMappingBeanList.isEmpty()) {
+			        list<GoalMappingBean> tempaddNewListView = new list<GoalMappingBean>();
+		        	list<GoalMappingBean> tempaddNewListViewRetirement = new list<GoalMappingBean>();
+		        	for (GoalMappingBean goal : goalMappingBeanList) {
+		        		system.debug('--- goal.goalObj.Goal_Type__c --->' + goal.goalObj.Goal_Type__c);
+		        		if (goal.goalObj.Goal_Type__c == 'Retirement')
+		        		    tempaddNewListViewRetirement.add(goal);
+		        		else     
+		        		    tempaddNewListView.add(goal);
+		        	}
+		        	goalMappingBeanList = new list<GoalMappingBean>();
+		        	goalMappingBeanList.addall(tempaddNewListView);
+		        	goalMappingBeanList.addall(tempaddNewListViewRetirement);
+		        }
+		        system.debug('--- goalMappingBeanList --->' + goalMappingBeanList);
+			}
+			return goalMappingBeanList;
+		}set;
+  	}
+  	
+	//Added on : 6/4/2013 : Kiran Patil : print Financial plan
+	public String isPrint {get;set;}
+	
+  	public GeneratePDFController() 
+  	{
+  		try 
+  	 	{ 
+  	 		pageNumber = 1;
+  	 		//isDisplayFamilyPic = true;
+  	 		isDisplaySaveButton = true;
+	      	String strFinancialPlanOutputReport;
+ 	 	 	double Equity,Debt,Gold;
+            Id SpouseOFParent;
+            Id SpouceOFChild;
+            Contact con;
+			Account acc;
+			DatabaseSOQL dbSOQL = new DatabaseSOQL();
+			Account FfreedomAcc = new Account();
+  	 		lstPersonalInfo = new List<PersonalInfo>();
+  	 		bean = new GeneratePDFBean();
+  	 		//error.debugLog('-------Controller ---------'+limits.getQueries());
+	      	service = new GeneratePDFServices();
+	      	goalIdList = new List<String>();
+	      	Set<id> selectedGoalProfileSet = new Set<id>(); 
+	      	Id EntityId = bean.entityID = ApexPages.currentPage().getParameters().get('EntityId');
+	      	List<Account> accountList = dbSOQL.getFamilyDetails(bean.entityID);
+  	 		 //error.debugLog('-------Controller 0---------'+limits.getQueries());
+  	 		//planGenerationDate = system.NOW().format('EEEEEE, MMMM d, yyyy');
+  	 		//DateTime objDate = system.today(); 
+  	 		//planGenerationDate =  objDate.format('dd/MM/yyyy');
+  	 		//objDate.dtReport.day()+ '-' + objDate.month() + '-' + objDate.year();
+      		service.getClientDetail(bean);
+      		 //error.debugLog('-------Controller 00---------'+limits.getQueries());
+      		lstHLVDetails = service.getHLVDetails(bean,accountList); 
+      		 //error.debugLog('-------Controller 000---------'+limits.getQueries());
+      		system.debug('**********lstHLVDetails*********'+lstHLVDetails);
+  	 		// Code to display button on GenerateHTML page
+      		DisplayButton = ApexPages.currentPage().getParameters().get('displayButtons');
+     	    if(ApexPages.currentPage().getParameters().get('attachmentId') != null)
+      		AttachmentId = ApexPages.currentPage().getParameters().get('attachmentId');
+      		if(ApexPages.currentPage().getParameters().get('isSendEmail') != null){
+	      		isSendEmail = Boolean.valueOf(ApexPages.currentPage().getParameters().get('isSendEmail'));
+	      	}
+	      	
+  	 		
+ 	 	 	objAcc = [select Id,Name,Related_To__c,Virtual_Partner__c,OwnerId, Family_Picture__c,
+ 	 	 								(Select Financial_Planing_Output_Report__c,
+ 	 	 								Expected_Return_on_Investment__c,Income_Growth_Rate__c,
+	                                  	Inflation_Rate__c,Account__c,Number_Of_Months__c ,Stock_Growth_Rate__c,
+	                                  	Gold_Growth_Rate__c,  /* Prajakta - FP changes - 01-04-2013 */
+	                                  	Default_Estimated_Life_Expectancy__c,Default_Retirement_Age__c
+	                                  	From ntity_Global_Assumptions__r) 
+	                                  from Account where Id =: EntityId];
+	        //error.debugLog('-------Controller 1---------'+limits.getQueries());
+	        
+ 	 	    try
+	        {
+	            strFinancialPlanOutputReport = objAcc.ntity_Global_Assumptions__r[0].Financial_Planing_Output_Report__c;
+	            
+	            List<String> lstFinancialPlanOutputReport = new List<String>();
+	            Set<String> setFinancialPlanOutputReport = new Set<String>();
+	            if(strFinancialPlanOutputReport != null)
+	            {
+	            	lstFinancialPlanOutputReport = strFinancialPlanOutputReport.split(';');
+	            	for(String strFinancialPlanOutput : lstFinancialPlanOutputReport)
+		            {
+		                setFinancialPlanOutputReport.add(strFinancialPlanOutput);
+		            }
+	            }
+	            
+	            isIntroduction = setFinancialPlanOutputReport.contains('Introduction') ;
+	            isDisclosureStatement = setFinancialPlanOutputReport.contains('Disclosure Statement') ;
+	            isGoalSummary = setFinancialPlanOutputReport.contains('Goal Summary') ;
+	            isFinancialStatements =  setFinancialPlanOutputReport.contains('Financial Statements') ;
+	            isEmergencyPlanning =  setFinancialPlanOutputReport.contains('Emergency Planning');
+	            isIndividualGoal =  setFinancialPlanOutputReport.contains('Individual Goal') ;
+	            isLifeInsuranceAnalysis = setFinancialPlanOutputReport.contains('Life Insurance Analysis') ;
+	            isGeneralInsurance = setFinancialPlanOutputReport.contains('General Insurance') ;
+	            isSummaryActionPlan = setFinancialPlanOutputReport.contains('Summary Action Plan') ;
+	            isEstatePlanning = setFinancialPlanOutputReport.contains('Estate Planning') ;
+	            isAnnexure1 = setFinancialPlanOutputReport.contains('Annexure 1');
+	            isFinancialPlanReview = setFinancialPlanOutputReport.contains('Financial Plan Review');
+	            isInvestmentRisk = setFinancialPlanOutputReport.contains('Investment Risk');
+	            isDeliveryAcknowledgement = setFinancialPlanOutputReport.contains('Delivery Acknowledgement');
+	        }
+	        catch(Exception e)
+	        {
+	            System.debug('---------Exception----------'+e);
+	        }
+	      	
+      		System.debug('============= 1=====>'+Limits.getQueries());
+
+      		//error.debugLog('-------Controller 2---------'+limits.getQueries());
+      		
+      		/*Change by the Niket chandane
+       		* change to removed the null pointer Ecxeption from the Generate Pdf Page.
+      		*/ 
+      		if(bean.goalList.size() > 0){
+	  			for(goal__c goal:bean.goalList){
+	       			goalIdList.add(goal.Id);
+	       		}
+       		}
+            goalService = new NewGoalService();
+            goalService.getFamilyMembers(accountList);
+            
+            //error.debugLog('-------Controller 3---------'+limits.getQueries());
+            goalMappingBeanMap  = goalService.getGoalDetailsForOutput(goalIdList,bean.entityID);
+           //error.debugLog('-------Controller 4---------'+limits.getQueries());
+            for(Id goalId : goalMappingBeanMap.keySet())
+            {
+            	GoalMappingBean objGoalMappingBean = goalMappingBeanMap.get(goalId);
+             	if(objGoalMappingBean.goalObj.SelectedGoalProfile__c != null)
+             	selectedGoalProfileSet.add(objGoalMappingBean.goalObj.SelectedGoalProfile__c);
+            }
+            //error.debugLog('-------Controller 5---------'+limits.getQueries());
+ 	 	 	/*if(objAcc.Family_Picture__c == null)
+	        {
+	        	system.debug('=======isDisplayFamilyPic======');
+	            isDisplayFamilyPic = false;
+	        }*/
+ 	 	 	user = new User();
+ 	 	 	List<User> lstUser = new List<User>();
+ 	 	 	Map<Id,User> mapIdToUser = new Map<Id,User>();
+ 	 	 	lstUser = [select Id,Name,ProfileId,ContactId,Profile.Name,Email,UserType,
+ 	 	 				Street,State,PostalCode,Phone,MobilePhone,Country,City  
+ 	 	 				from User where isActive = true and (id =: objAcc.OwnerId or Id =: UserInfo.getUserId())];
+ 	 	 	//error.debugLog('-------Controller 6--------'+limits.getQueries());	
+ 	 	 	for(User objUser : lstUser)
+ 	 	 	{
+ 	 	 		if(objUser.UserType.equalsIgnoreCase('PowerPartner'))
+				{
+	 	 	 		if(objUser.id == UserInfo.getUserId())
+	 	 	 		{
+					   	isDisplaySaveButton = false;
+	 	 	 		}
+					if(objUser.id == objAcc.OwnerId)
+					{
+					    user = objUser;
+					    CcEmail = user.Email;
+					}
+				}
+				if(!mapIdToUser.containsKey(objUser.id))
+				{
+					mapIdToUser.put(objUser.id,objUser);
+				}
+				
+ 	 	 	}
+ 	 	 	//error.debugLog('-------Controller 7---------'+limits.getQueries());
+ 	 	 	 /* To Calculate Equity, Debt,Gold - Global Assumption Related changes **/
+ 	 	 	if(objAcc.Related_To__c == 'Ffreedom')
+ 	 	 	{
+ 	 	 		FfreedomAcc = [select id,Expected_Return_on_Investment__c,Equity__c,Gold__c,Debt__c,Income_Growth_Rate__c,Inflation_Rate__c,
+ 	 	 							 Gold_Growth_Rate__c,	   /* Prajakta - FP changes - 01-04-2013 */
+ 	 	 							Default_Estimated_Life_Expectancy__c,Number_Of_Months__c,Stock_Growth_Rate__c,Default_Retirement_Age__c 
+ 	 	 					from Account 
+ 	 	 					where Related_To__c = 'Ffreedom' 
+ 	 	 					and RecordTypeId =: RecTypes__c.getInstance('General_Business').Record_Type_Value__c 
+ 	 	 					limit 1];
+ 	 	 		Equity = FfreedomAcc.Equity__c;
+ 	 	 		Debt = FfreedomAcc.Debt__c;
+ 	 	 		Gold = FfreedomAcc.Gold__c;
+ 	 	 		isFreedomUser = true;
+ 	 	 		if(mapIdToUser.containsKey(objAcc.OwnerId))
+				{
+					objFfreedomUser = mapIdToUser.get(objAcc.OwnerId);
+				}
+ 	 	 		//error.debugLog('-------Controller 8---------'+limits.getQueries());
+ 	 		}
+ 	 	  	else if(objAcc.Related_To__c == 'Business Partner')
+ 	 	 	{
+	 	 	 	map<id,Contact> mapContact = new map<id,Contact>([select id,AccountId from Contact]);
+	 	 	 	map<id,Account> BusinessAccMap = new map<id,Account>
+							([select id,Expected_Return_on_Investment__c,Equity__c,Gold__c,Debt__c,Income_Growth_Rate__c,Inflation_Rate__c,
+									 Gold_Growth_Rate__c,Alternate_Mobile__c,	   /* Prajakta - FP changes - 01-04-2013 */
+ 	 	 							Default_Estimated_Life_Expectancy__c,Number_Of_Months__c,Stock_Growth_Rate__c,Default_Retirement_Age__c,
+ 	 	 							Logo__c, Email_ID__c, Company_Address__c, Phone, Name, Channel_Manager__r.Email,Alternate_E_Mail_Address__c, Website 
+ 	 	 					from Account 
+ 	 	 					where Related_To__c = 'Business Partner' 
+ 	 	 					and RecordTypeId =: RecTypes__c.getInstance('General_Business').Record_Type_Value__c 
+ 	 	 				    ]);
+ 	 	 		map<id,User> mapUser = new map<id,User>([select Id,Name,ProfileId,ContactId,Profile.Name,Email,UserType  from User where isActive = true and ContactId != null]);
+  	 	
+	 	 	 	Account objBusinessAcc = new Account();
+	 	 	 	User objUser = new User();
+	 	 	 	Contact objContact = new Contact();
+ 	 	 		if(mapUser.containsKey(objAcc.OwnerId))
+	 	 	 	{
+	 	 	 		objUser = mapUser.get(objAcc.OwnerId);
+	 	 	 		if(objUser != Null)
+	 	 	 		{
+						if(mapContact.containsKey(objUser.ContactId))
+						{	
+							objContact = mapContact.get(objUser.ContactId);
+							if(objContact != Null)
+							{
+								if(BusinessAccMap.ContainsKey(objContact.AccountId))
+								{
+									objBusinessAcc = BusinessAccMap.get(objContact.AccountId);
+									if(objBusinessAcc != null)
+									{
+										Equity = objBusinessAcc.Equity__c;
+							 	 	 	Debt = objBusinessAcc.Debt__c;
+							 	 	 	Gold = objBusinessAcc.Gold__c; 
+							 	 	 	/***Date :31/07/12 :Aditi - Code Added for Partner Portal related changes i.e Logo,Name etc.**/
+							 	 	 	Partnerlogo = objBusinessAcc;	 	 	
+							 	 	 	address = objBusinessAcc.Company_Address__c;
+										isFreedomUser = false;	
+										/*commented Bcc as per client requirement By Aditi Satpute : Date : 24/12/12
+										BccEmail = acc.Channel_Manager__r.Email;*/
+									}
+								} 
+							}
+						}
+	 	 	 		}
+	 	 	 	}
+	 	 	 	//error.debugLog('-------Controller 8---------'+limits.getQueries());
+ 	 	 	}
+ 	 	 
+ 	 		else if(objAcc.Related_To__c == 'Virtual Partner')
+ 	 	 	{
+ 	 	 		map<Id,Account> virtualAccMap = new map<Id,Account> 
+ 	 	 					([select id,Expected_Return_on_Investment__c,Equity__c,Gold__c,Debt__c,Income_Growth_Rate__c,Inflation_Rate__c,
+ 	 	 							 Gold_Growth_Rate__c,	   /* Prajakta - FP changes - 01-04-2013 */
+ 	 	 							Default_Estimated_Life_Expectancy__c,Number_Of_Months__c,Stock_Growth_Rate__c,Default_Retirement_Age__c,
+ 	 	 							Logo__c, Email_ID__c, Company_Address__c, Phone, Name,Alternate_E_Mail_Address__c,Website,Alternate_Mobile__c    
+ 	 	 					from Account 
+ 	 	 					where Related_To__c = 'Virtual Partner' 
+ 	 	 					and RecordTypeId =: RecTypes__c.getInstance('General_Business').Record_Type_Value__c]);
+ 	 	 		Account objVirtualAcc = new Account();				
+        		if(virtualAccMap.containsKey(objAcc.Virtual_Partner__c))
+       			{
+					objVirtualAcc = virtualAccMap.get(objAcc.Virtual_Partner__c);
+					if(objVirtualAcc != null)
+					{
+						 Equity = objVirtualAcc.Equity__c;
+			 	 	 	 Debt = objVirtualAcc.Debt__c;
+			 	 	 	 Gold = objVirtualAcc.Gold__c;	
+			 	 	 	 /***Date :31/07/12 :Aditi - Code Added for Partner Portal related changes i.e Logo,Name etc.**/	
+			 	 	 	 Partnerlogo = objVirtualAcc;
+						 address = objVirtualAcc.Company_Address__c;
+					}
+       			}
+       			//error.debugLog('-------Controller 8---------'+limits.getQueries());
+ 	 	 	}
+ 	 	 	
+ 	 	 	if(objAcc.ntity_Global_Assumptions__r != null && objAcc.ntity_Global_Assumptions__r.size() > 0)	                                    
+				newGlobalAssumptions = new GlobalAssumptions(objAcc.ntity_Global_Assumptions__r[0], Equity, Debt, Gold); 
+ 	 	 	
+ 	 	 	List<Goal_Profile__c> GoalProfileList = new List<Goal_Profile__c>();
+ 	 		Map<Id,Goal_Profile__c> goalIdVsGoalProfileMap = new Map<Id,Goal_Profile__c>([select Id,Equity_Allocation__c
+ 	 	 												,Debt_Allocation__c,Gold_allocation__c
+ 	 	 												,Returns_expected__c 
+ 	 	 												from Goal_Profile__c 
+ 	 	 												where id in :selectedGoalProfileSet]);
+ 	 	 	//error.debugLog('-------Controller 9---------'+limits.getQueries());
+			for(Id goalId : goalMappingBeanMap.keySet())
+            {
+            	Goal_Profile__c objGoalProfile;
+            	Double ReturnExpected = 0;
+            	GoalMappingBean objGoalMappingBean = goalMappingBeanMap.get(goalId);
+            	if(goalIdVsGoalProfileMap != null 
+            		&& goalIdVsGoalProfileMap.ContainsKey(objGoalMappingBean.goalObj.SelectedGoalProfile__c))
+            		objGoalProfile = goalIdVsGoalProfileMap.get(objGoalMappingBean.goalObj.SelectedGoalProfile__c);
+            	if(objGoalProfile != null)
+            	ReturnExpected = ((objGoalProfile.Equity_Allocation__c * Equity) + 
+							 (objGoalProfile.Debt_Allocation__c * Debt) + 	
+							 (objGoalProfile.Gold_allocation__c * Gold)) /100;
+             	if(objGoalMappingBean.goalObj.SelectedGoalProfile__c != null)
+             	objGoalMappingBean.goalObj.SelectedGoalProfile__r.Returns_expected__c = ReturnExpected;
+            }
+            //error.debugLog('-------Controller 10---------'+limits.getQueries());
+ 			//========================================================================================================================
+	    	/** Eternus Solutions      **/
+			/** Author  : Manasi Ranade*/
+			/** Issue Id: FS0230      **/
+			/** Date    : 31/10/2011 **/
+			/** Purpose : Passed the SIP values to the component**/
+			/****************************************************/
+	    	GoalMappingBean.SIPBean objSIPBean;
+	    	if(goalMappingBeanList != null && goalMappingBeanList.size() > 0)
+	    	{
+	    		for(GoalMappingBean objGoalMappingBean : goalMappingBeanList)
+	    		{
+	    			/* objSIPBean = objGoalMappingBean.getSIPDetails.get(0);
+		    		if(objSIPBean.equityAmount != null)
+			    		objGoalMappingBean.dblEquitySIP = objSIPBean.equityAmount;
+					if(objSIPBean.gold != null)
+		    			objGoalMappingBean.dblGoldSIP = objSIPBean.gold;
+		    		if(objSIPBean.debt != null)
+		    			objGoalMappingBean.dblDebtSIP = objSIPBean.debt;
+		    		if(objSIPBean.totalValue != null)
+		    			objGoalMappingBean.dblTotalSIP = objSIPBean.totalValue;
+		    		system.debug('$$$$$$$ objGoalMappingBean.dblTotalSIP:'+objGoalMappingBean.dblTotalSIP);*/
+		    		/** Eternus Solutions       **/
+					/** Author  : Manasi Ranade **/
+					/** Issue Id: 00001461      **/
+					/** Date    : 19/1/2012 	**/
+					/** Purpose : Added Check for Null before using
+					/****************************************************/
+		    		if(objGoalMappingBean.currentSIP != null)
+		    		{
+		    			if(objGoalMappingBean.currentSIP.SIP_Equity__c != null)
+			    			objGoalMappingBean.dblEquitySIP = objGoalMappingBean.currentSIP.SIP_Equity__c;
+			    		if(objGoalMappingBean.currentSIP.SIP_Debt__c != null)
+			    			objGoalMappingBean.dblDebtSIP = objGoalMappingBean.currentSIP.SIP_Debt__c;
+			    		if(objGoalMappingBean.currentSIP.SIP_Gold__c != null)
+			    			objGoalMappingBean.dblGoldSIP = objGoalMappingBean.currentSIP.SIP_Gold__c;
+			    		if(objGoalMappingBean.currentSIP.SIP_Total__c != null)
+			    			objGoalMappingBean.dblTotalSIP = objGoalMappingBean.currentSIP.SIP_Total__c;
+		    		}
+	    		}
+	    	}
+	     	//bean.insuranceBeanList[0].income.presentValue = 1919191;
+	    	//FS0281
+            for(Account account : accountList)
+            {
+            	if(account.Parent_Entity__c == null)
+            	{
+            		SpouceOFChild = account.id;
+            	}
+            	if((account.Relationship_to_Entity__pc==Label.Wife || account.Relationship_to_Entity__pc==Label.Husband) 
+                        && account.Parent_Entity__c==bean.entityID)
+                {
+                	SpouseOFParent = account.Id;
+                }
+                
+                //Personal Information Section
+                String dependent = '';
+				String strDate; 
+				Datetime dtBirthdate = account.PersonBirthdate;
+				if(dtBirthdate != null)
+					strDate = dtBirthdate.day() + '-' + dtBirthdate.month() + '-' + dtBirthdate.year();
+				boolean isWill = false;
+				String will = '';
+				isWill = account.Will__c;
+				will = isWill ? 'Yes' : 'No';
+				PersonalInfo objPersonalInfo = new PersonalInfo(account, dependent, strDate, will);
+				lstPersonalInfo.add(objPersonalInfo);
+                
+                
+            }
+            //error.debugLog('-------Controller 11---------'+limits.getQueries());
+            if(SpouceOFChild == null)
+            	SpouceOFChild =  bean.entityID;
+            if(SpouseOFParent == null)
+            	SpouseOFParent = bean.entityID;
+            	
+	        if(bean.insuranceBeanList != null)
+        	for(LifeInsurancePlanningBean objLifeInsurancePlanningBean : bean.insuranceBeanList)
+        	{
+              /** Eternus Solutions  **/
+			  /** Author  : Manasi Ranade	**/
+			  /** Issue Id: 00001616      **/
+			  /** Date    : 07/05/2012 	**/
+			  /** Purpose : Commented Original Code**/
+			  /****************************************************/
+            	/*if((objLifeInsurancePlanningBean.entity.Relationship_to_Entity__pc==Label.Wife || objLifeInsurancePlanningBean.entity.Relationship_to_Entity__pc==Label.Husband)
+            		 && objLifeInsurancePlanningBean.entity.Parent_Entity__c==bean.entityID)
+            	{
+					objLifeInsurancePlanningBean.income.presentValue = FinancialUtil.CalculateContinuingIncomeSources(SpouceOFChild,bean.entityID);
+					// Spouse = bean.entityID;
+            	}
+             	else if(objLifeInsurancePlanningBean.entity.Parent_Entity__c == null)
+             	{
+             		objLifeInsurancePlanningBean.income.presentValue = FinancialUtil.CalculateContinuingIncomeSources(SpouseOFParent,bean.entityID);
+             	}
+             	else
+             	{
+             		objLifeInsurancePlanningBean.income.presentValue = FinancialUtil.CalculateContinuingIncomeSources(bean.entityID,bean.entityID);
+             	}*/
+             	/** Eternus Solutions  **/
+				/** Author  : Manasi Ranade	**/
+				/** Issue Id: 00001616      **/
+				/** Date    : 07/05/2012 	**/
+				/** Purpose : Calculate Continuing Income Source value from Spouse/Dependent**/
+				/****************************************************/
+             	if(objLifeInsurancePlanningBean.spouse != null)
+             		objLifeInsurancePlanningBean.income.presentValue = FinancialUtil.CalculateContinuingIncomeSources(objLifeInsurancePlanningBean.spouse.id,bean.entityID);
+             	else
+             		objLifeInsurancePlanningBean.income.presentValue = 0;
+            }
+           // error.debugLog('-------Controller 12a---------'+limits.getQueries());
+		}
+        catch(Exception ex) 
+        {
+       		ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,ex.getMessage()));
+        }
+        
+        //Error.debuglog('----------------- Limit Main controller --------'+Limits.getQueries());
+        
+        GoalSummaryController.eId = ApexPages.currentPage().getParameters().get('EntityId');
+   		objGoalSummaryController = new GoalSummaryController();
+   		
+        NewPortFolioSummaryController.eId = ApexPages.currentPage().getParameters().get('EntityId');
+   		objPortfolio = new NewPortFolioSummaryController();
+   		
+   		NetworthController.eId = ApexPages.currentPage().getParameters().get('EntityId');
+    	objNetworthController = new NetworthController();
+    	
+    	NewCashFlowController.eId = ApexPages.currentPage().getParameters().get('EntityId');
+    	objCashFlow = new NewCashFlowController();
+    	
+       	//EmergencyPlanning(mapUser);
+       	EmergencyPlanning();
+       	GeneralInsurancePlanningController.eId = ApexPages.currentPage().getParameters().get('EntityId');
+    	objGI = new GeneralInsurancePlanningController();
+    	
+    	
+    	EstatePlanningController.eId = ApexPages.currentPage().getParameters().get('EntityId');
+    	objEstatePlanningController  = new EstatePlanningController();
+    	
+    	SummaryActionPlan();
+    	 //Error.debuglog('---------End-------- Limit Main controller --------'+Limits.getQueries());
+    	 
+		/*
+		  Updated By : Kiran Patil
+		  Updated At : 4-Jun-2013
+		  Summary    : print Financial plan
+		*/
+		if((System.currentPageReference().getParameters().get('isPrint')) == 'true')
+			isPrint = 'true';
+		else
+			isPrint = 'false';
+	}
+    
+ 	public void sendAttachmentToEntity(){
+		sendEmailToEntity();
+	}
+		
+  	public void sendEmailToEntity()  	
+  	{
+		try
+		{
+			PageReference AttachmentPlan;
+			Blob pdfBody;
+			Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
+			
+			if(AttachmentId != null)
+			{
+				Attachment objAttachment = [Select Id, Body, Name from Attachment where Id =: AttachmentId];
+				efa.setFileName(objAttachment.Name);
+	         	efa.setBody(objAttachment.Body);
+			}
+			
+			Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+	        // Create the email attachment 
+	       
+	        List<String> toAddresses = new List<String>();
+	        //For toCcAddresses
+			List<String> toCcAddresses = new List<String>();
+			/*commented Bcc as per client requirement By Aditi Satpute : Date : 24/12/12
+			List<String> toBccAddresses = new List<String>();*/
+			//need to uncomment below :
+			
+	       	Account objAccount = [Select Id, Name,PersonEmail,Email_Temp__c,owner.name from Account where Id =: bean.entityID];
+	       
+	         // Sets the paramaters of the email
+	         if(objAccount.PersonEmail != null)
+	        	toAddresses.add(objAccount.PersonEmail);
+	         else
+	         	toAddresses.add(objAccount.Email_Temp__c);
+	        	system.debug('****toAddresses**********'+toAddresses);
+	       	//Aditi
+	       	system.debug('****user**********'+user);
+	        if(user.ContactId != null)
+	        {
+	        	if(CcEmail != null)
+        		toCcAddresses.add(CcEmail);
+        		email.setCcAddresses( toCcAddresses );
+        		/*commented Bcc as per client requirement By Aditi Satpute : Date : 24/12/12
+        		if(BccEmail != null)
+	        	toBccAddresses.add(BccEmail);
+	        	email.setBccAddresses ( toBccAddresses );*/
+		    }
+	        email.setSubject( 'Plan for ' + objAccount.Name);
+	        email.setToAddresses( toAddresses );
+	     
+	      
+	        if(emailBody != null && emailBody != '')
+	        	email.setHtmlBody(emailBody.replaceAll('\n','<br/>'));
+			else
+				email.setHtmlBody('Dear '+objAccount.Name+'<br/><br/>Kindly find the attached pdf.');
+			//00001598 Add Entity Owner Name as SenderDisplayName 
+			email.setSenderDisplayName(objAccount.Owner.Name);
+	        email.setFileAttachments(new Messaging.EmailFileAttachment[] {efa}); 
+	        // Sends the email 
+	        
+	        Messaging.SendEmailResult [] arrResult = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+	        if(arrResult != null)
+	        	strMessage = 'Mail has been send successfully!!';
+		}
+		catch(Exception e)
+		{
+			strMessage = e.getMessage();
+		}
+  	}
+  	
+   /* FPReportControl Variables initializations*/
+     /*  private  void displayFpReport(Entity_Global_Assumption__c objEntityGlobalAssumption)
+    {
+        try
+        {
+            String strFinancialPlanOutputReport = objEntityGlobalAssumption.Financial_Planing_Output_Report__c;
+            List<String> lstFinancialPlanOutputReport = new List<String>();
+            Set<String> setFinancialPlanOutputReport = new Set<String>();
+            if(strFinancialPlanOutputReport != null)
+            {
+            	lstFinancialPlanOutputReport = strFinancialPlanOutputReport.split(';');
+            	for(String strFinancialPlanOutput : lstFinancialPlanOutputReport)
+	            {
+	                setFinancialPlanOutputReport.add(strFinancialPlanOutput);
+	            }
+            }
+            
+         isIntroduction = setFinancialPlanOutputReport.contains('Introduction') ;
+            isDisclosureStatement = setFinancialPlanOutputReport.contains('Disclosure Statement') ;
+            isGoalSummary = setFinancialPlanOutputReport.contains('Goal Summary') ;
+            isFinancialStatements =  setFinancialPlanOutputReport.contains('Financial Statements') ;
+            isEmergencyPlanning = setFinancialPlanOutputReport.contains('Emergency Planning');
+            isIndividualGoal = setFinancialPlanOutputReport.contains('Individual Goal') ;
+            isLifeInsuranceAnalysis = setFinancialPlanOutputReport.contains('Life Insurance Analysis') ;
+            isGeneralInsurance = setFinancialPlanOutputReport.contains('General Insurance') ;
+            isSummaryActionPlan = setFinancialPlanOutputReport.contains('Summary Action Plan') ;
+            isEstatePlanning = setFinancialPlanOutputReport.contains('Estate Planning') ;
+            isAnnexure1 = setFinancialPlanOutputReport.contains('Annexure 1');
+            isFinancialPlanReview = setFinancialPlanOutputReport.contains('Financial Plan Review');
+            isInvestmentRisk = setFinancialPlanOutputReport.contains('Investment Risk');
+            isDeliveryAcknowledgement = setFinancialPlanOutputReport.contains('Delivery Acknowledgement');
+        }
+        catch(Exception e)
+        {
+            System.debug('---------Exception----------'+e);
+        }
+            
+    }
+    */
+    
+   
+   	/**Start of Emergency Planning Section**/
+   	//public void EmergencyPlanning(Map<Id,User> mapIdToUser)
+   	public void EmergencyPlanning()
+   	{
+   		entityId = ApexPages.currentPage().getParameters().get('EntityId');
+        //objAccount = dbQuery.getEntity(entityId);
+        //Code Added on : 1/2/2013 : Aditi Satpute : Hide Save button for Business Partner Financial Plan : by default true //Sanat
+   		//isDisplaySaveButton = true;
+        if(entityId!=null)
+        {
+            Ebean= new EmergencyPlanningBean();
+            Eservice=new EmergencyPlanningServices(); 
+             //Error.debugLog('=============emergency 1=====>'+Limits.getQueries());
+            getAnalysisValues();
+             //Error.debugLog('=============emergency 2=====>'+Limits.getQueries());
+            Eservice.getAssetAllocation(entityId,Ebean.apBeanList);
+            Eservice.getInvestmentAssetAllocation(entityId,Ebean.apBeanList);
+            Eservice.getInsuranceAllocation(entityId,Ebean.apBeanList);
+            system.debug('total'+Ebean.total);
+            /** Eternus Solutions       **/
+			/** Author  : Manasi Ranade **/
+			/** Issue Id: FS0395      	**/
+			/** Date    : 3/1/2012 	    **/
+			/** Purpose : Assigned entityId to strEntity
+			/****************************************************/
+            Ebean.strEntity = entityId;
+            //Added Code on : 1/2/2013 : Aditi Satpute : Hide Save button for Business Partner Financial Plan //Sanat
+          /*  if(mapIdToUser.containsKey(UserInfo.getUserId()))
+            {
+            	User objBPUser = mapIdToUser.get(UserInfo.getUserId());
+        	 	if(objBPUser.UserType.equalsIgnoreCase('PowerPartner'))
+			    {
+			    	isDisplaySaveButton = false;
+			    }	
+            }*/
+		    /*User objBPUser = [Select Profile.Name, ProfileId, UserType, Name, Id From User where Id =: UserInfo.getUserId() limit 1];
+		    if(objBPUser.UserType.equalsIgnoreCase('PowerPartner'))
+		    {
+		    	isDisplaySaveButton = false;
+		    }*/
+		   //Error.debugLog('=============emergency =====>'+Limits.getQueries());
+        }
+   	}
+   	 /**
+    * getAnalysisValues() fetches totalMonthlyExpense and noOfMonths
+    * param: None 
+    * returns:void
+    */
+    public void getAnalysisValues()
+    {
+        Ebean.totalMonthlyExpense=Eservice.getTotalExpenses(entityId);
+        if(Ebean.totalMonthlyExpense==null)
+            Ebean.totalMonthlyExpense=0;
+        Ebean.noOfMonths=(Double)Eservice.getNoOfMonths(entityId);
+        if(Ebean.noOfMonths==null)
+            Ebean.noOfMonths=0;
+        system.debug('emergencyFundAmount'+Ebean.emergencyFundAmount);
+    }
+    /**
+    * save() function saves the action to be taken
+    * param: None 
+    * returns:pageReference
+    */
+    public pageReference save()
+    {
+        system.debug('==page save=='+Ebean.apBeanList);
+        Eservice.save(entityId,Ebean.apBeanList);
+        //FS0309
+        saveRemark();
+        return null;
+    }
+	//FS0309
+	private void saveRemark()
+	{
+		if(objRemark == null)
+    	{
+    		objRemark =new Remarks__c();
+    		ID RecTypeId = [select id from RecordType where Name= 'EmergencyPlanning'][0].id;
+    		system.debug('*****RecTypeId*****'+RecTypeId);
+    		//system.debug('*****emergencyRemarkRecordTypeId*****'+emergencyRemarkRecordTypeId);
+    		objRemark.RecordTypeId = RecTypeId;
+    		objRemark.Entity__c = entityId;
+    		objRemark.Remark__c = strRemark;
+    		insert objRemark;
+    	}
+    	else
+    	{
+    		objRemark.Remark__c = strRemark;
+    		update objRemark;
+    	}
+	}
+   	/**End of Emergency Planning Section**/
+   	
+   	
+   	/** Start SumAtion Plan code **/
+	//private SummaryActionPlanServices serviceObj;
+    public SummaryActionPlanBean beanObj {get;set;}
+    //Added on:23-May-2013 : Kiran : FP changes part2 - issue 10
+    public Remarks__c remarks{get;set;}
+    public List<SummaryDetail> lstSummaryDetail {get;set;}
+    public SummaryDetail objSummaryDetail {get;set;}
+    public void SummaryActionPlan()
+    {
+    	lstSummaryDetail = new List<SummaryDetail>();
+        
+    	SummaryActionPlanServices serviceObj = new SummaryActionPlanServices();
+        beanObj = new SummaryActionPlanBean();
+        beanObj.entityId = Apexpages.currentPage().getParameters().get('entityId');
+        serviceObj.getFamilyDetails(beanObj);
+        serviceObj.getGoals(beanObj);
+        serviceObj.getAsset(beanObj);
+        beanObj.giList = serviceObj.getGenerelInsurance(beanObj.accList);
+      
+        if(beanObj.giList != null && beanObj.giList.size()>0){
+           beanObj.isGeneralInsExist = true;
+        }
+        
+        beanObj.liList = serviceObj.getLifeInsurance(beanObj.accList);
+        if(beanObj.liList != null && beanObj.liList.size()>0){
+            beanObj.isLifeInsExist = true;
+        }
+        serviceObj.prepareData(beanObj);
+        
+        for(Integer i = 0 ; i < beanObj.goalList.size() ; i++)
+        {
+       		String strDescription = beanObj.goalList[i].Description__c;
+       		Double sipDebt = beanObj.sipList[0].golListVals[i];
+       		Double sipEquity = beanObj.sipList[1].golListVals[i];
+       		Double sipGold = beanObj.sipList[2].golListVals[i];
+       		
+       		Double lumpsumDebt = beanObj.asetList[0].golListVals[i];
+       		Double lumpsumEquity = beanObj.asetList[1].golListVals[i];
+       		Double lumpsumGold = beanObj.asetList[2].golListVals[i];
+       		
+       		lstSummaryDetail.add(new SummaryDetail(strDescription, new List<Double>{sipDebt,sipEquity, sipGold}, new List<Double>{lumpsumDebt,lumpsumEquity, lumpsumGold}));
+       	}
+       	
+       	
+   		List<Double> lstTotalSip = new List<Double>();
+   		List<Double> lstTotalLumpsum = new List<Double>();
+   		for(Integer i = 0; i < 3 ; i++)
+   		{
+   			lstTotalSip.add(0);
+   			lstTotalLumpsum.add(0);
+   		}
+   		
+   		for(Integer i = 0; i < 3 ; i++)
+   		{
+   			for(Integer j = 0; j < lstSummaryDetail.size(); j++)
+   			{
+   				lstTotalSip.set(i, lstTotalSip.get(i) + Math.roundToLong(lstSummaryDetail[j].lstSipValue[i]));
+   				lstTotalLumpsum.set(i, lstTotalLumpsum.get(i) + Math.roundToLong(lstSummaryDetail[j].lstLumpsumValue[i]));	
+   			}
+   		}
+   		
+   		objSummaryDetail = new SummaryDetail('Total', lstTotalSip, lstTotalLumpsum);
+   		
+   		
+   		//Kiran
+   		Map<String, Schema.RecordTypeInfo> remarksRecordTypeInfo = Schema.SObjectType.Remarks__c.getRecordTypeInfosByName();
+        String remarksRecordTypeId = remarksRecordTypeInfo.get('SummaryActionPlan').getRecordTypeId();
+        
+        list<Remarks__c> remarksList = [
+                                 Select Remark__c
+                                      , RecordTypeId
+                                      , Name
+                                      , Id
+                                      , Entity__c
+                                   From Remarks__c
+                                  where Entity__c =: System.currentPageReference().getParameters().get('entityId')
+                                    and RecordTypeId =: remarksRecordTypeId
+        ];
+        if (remarksList.isEmpty())
+   			remarks = new Remarks__c(RecordTypeId = remarksRecordTypeId);
+   		else
+   			remarks = remarksList[0];
+   		//error.debugLog('********SummaryActionPlan**********'+Limits.getQueries());
+   	
+    }
+    
+    /*
+	  Updated By : Kiran Patil
+	  Updated At : 23-May-2013
+	  Summary    : FP changes-part2 - issue 10 
+	*/
+    public void saveUnallocatedAssetsRemark()
+    {
+        try {
+        	if (remarks.Entity__c == null)
+        		remarks.Entity__c = Apexpages.currentPage().getParameters().get('entityId');
+        	upsert remarks;
+        }
+        catch(System.Exception ex)
+        {
+            error.DebugLog('--- Error --->' + ex.getMessage());
+        }
+    }
+    
+    
+  /*	  public pageReference saveInsurence(){
+        serviceObj.saveInsurence(beanObj);
+        return null;
+    }
+    */
+    
+    /**
+ 	* @Description:approvedPlan()is function used for navigating to ApprovedPlan page
+ 	* ReturnType:pageReference 
+ 	*/
+  /*  public pageReference approvedPlan()
+    {
+        pageReference pageRef = new pageReference('/apex/ApprovedPlan?entityId='+beanObj.entityId+'&tabname=Financial Planning');
+        return pageRef ;
+    }
+    */
+    public class SummaryDetail
+    {
+    	public String description {get;set;}
+    	public List<Double> lstSipValue {get;set;}
+    	public List<Double> lstLumpsumValue {get;set;}
+    	
+    	public SummaryDetail(String description, List<Double> lstSipValue, List<Double> lstLumpsumValue)
+    	{
+    		this.description = description;
+    		this.lstSipValue = lstSipValue;
+    		this.lstLumpsumValue = lstLumpsumValue;
+    	}
+    }
+    /** End SumAtion Plan code **/
+    
+    
+    
+    /*** Start Personal Information Section ***/
+    //Inner class
+	public class PersonalInfo
+	{
+		public Account objAccount{get;set;}
+		transient String dependent{get;set;}
+		public String strDate{get;set;}
+		transient String will{get;set;}
+		
+		public PersonalInfo(Account objAccount, String dependent, String strDate, String will)
+		{
+			this.objAccount = objAccount;
+			this.dependent = dependent;
+			this.strDate = strDate;
+			this.will = will;
+		}
+	}
+	
+	/*Prajakta - 28-03-2013*/
+	public class GlobalAssumptions
+	{
+		public Entity_Global_Assumption__c objGlobalAssumptions{get;set;}
+		public Double Equity{get;set;}
+		public Double Debt{get;set;}
+		public Double Gold{get;set;}
+
+		public GlobalAssumptions(Entity_Global_Assumption__c objGlobalAssumptions, Double Equity, Double Debt, Double Gold)
+		{
+			this.objGlobalAssumptions = objGlobalAssumptions;
+			this.Equity = Equity;
+			this.Debt = Debt;
+			this.Gold = Gold;
+		}
+	}
+    /***End Personal Information Section  **/
+    /***Start Cover Component Section  **/
+    public List<String> lstAddwithComma 
+	{
+		get
+		{
+			if(address != null && address != '')
+			{
+				double counter=0;
+				lstAddwithComma = new List<String>();
+				List<String> lstAdd = new List<String>();
+				system.debug('********address*********'+address);
+				lstAdd = address.split(',');
+				system.debug('********lstAdd*********'+lstAdd);
+				double lengthAdd=lstAdd.size();
+				system.debug('********lengthAdd*********'+lengthAdd);
+					
+				for(String str:lstAdd)
+				{
+					if(counter<lengthAdd-1)
+					{
+						counter++;
+						lstAddwithComma.add(str+',');
+					}
+					else
+					{
+						lstAddwithComma.add(str);
+					}
+				}
+				//error.debugLog('*******lstAddwithComma*********'+lstAddwithComma);
+				return lstAddwithComma;
+			}
+			else
+				return null;
+			//return lstAdd;
+		}
+		set;
+	}
+	/***Start End Component Section  **/
+    
+}

@@ -1,0 +1,73 @@
+Product_Name__c	Product_Manufacturer__c	ProductType__c	Is_Active__c	Investment_Type__c	RecordType 	Upfront_Commission__c 	Trail_Commission__c 
+Axis Equity Fund	a1QW00000001FvAMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	1.25	0.5
+Axis Gold ETF Growth	a1QW00000001FvAMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.05	0
+Axis Money Manager Fund	a1QW00000001FvAMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.1
+Axis Treasury Advantage Fund	a1QW00000001FvAMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.9
+Axis Triple Advanateg Fund	a1QW00000001FvAMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	1.25	0.5
+Birla Sun Life Dividend Yield Plus - Growth	a1QW00000001FuOMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	1	0.5
+Birla Sun Life Dynamic Bond Fund	a1QW00000001FuOMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0
+Birla Sun Life Medium Term Plan	a1QW00000001FuOMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	1.25	0
+Birla Sun Life Frontline Equity Fund	a1QW00000001FuOMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	1	0.5
+Birla Sun Life Gold Fund	a1QW00000001FuOMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.4	0
+Birla Sun Life Medium Term Plan	a1QW00000001FuOMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	1.25	0
+Birla Sun Life MidCap Fund	a1QW00000001FuOMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	1	0.5
+Birla Sun Life Savings Fund	a1QW00000001FuOMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.05
+DSP BlackRock Equity Fund - Regular Plan	a1QW00000001FvBMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.85
+DSP BlackRock Tax Saver Fund 	a1QW00000001FvBMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	4.5	0
+DSP BlackRock Micro Cap Fund	a1QW00000001FvBMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.85
+DSP BlackRock Opportunities Fund	a1QW00000001FvBMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.85
+DSP BlackRock Equity Fund 	a1QW00000001FvBMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.85
+DSP BlackRock Income Opportunities Fund 	a1QW00000001FvBMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	1.25	0
+DSP BlackRock Short Term Fund	a1QW00000001FvBMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.7	0.85
+DSP BlackRock Small and Mid Cap Fund	a1QW00000001FvBMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.85
+DSP BlackRock Top 100 Equity Fund	a1QW00000001FvBMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.85
+DSP BlackRock Money Manager Fund	a1QW00000001FvBMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.7
+Franklin India Bluechip Fund	a1QW00000001FvCMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.9
+Franklin India Flexi Cap Fund	a1QW00000001FvCMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.9
+Franklin India Prima Fund	a1QW00000001FvCMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.9
+Franklin India Tax Shield	a1QW00000001FvCMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	1.4
+HDFC Balanced Fund	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.75
+HDFC Cash Management Treasury Advantage Fund	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.75
+HDFC Equity Fund	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.75
+HDFC Growth Fund	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.85	0.4
+HDFC High Interest Fund - Short Term Plan	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.3
+HDFC Index Fund - Sensex Plus Plan	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.7
+HDFC Liquid Fund	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.1
+HDFC Long Term Advantage Fund	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.85	0.4
+HDFC Mid-Cap Opportunities Fund 	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.75
+HDFC Monthly Income Plan - Long Term Plan	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.75	0.4
+HDFC Multiple Yield Fund	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	1	0
+HDFC Prudence Fund	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.75
+HDFC Tax Saver	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0
+HDFC Top 200 Fund	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.75	0.75
+ICICI Blue Chip Fund Growth	a1QW00000001FvPMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.75	0.75
+ICICI Discovery	a1QW00000001FvPMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.75	0.75
+ICICI Flexi Income Fund	a1QW00000001FvPMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.05	0.05
+ICICI Prudential Capital Protection Oriented Fund	a1QW00000001FvPMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0
+IDFC Dynamic Bond Fund	a1QW00000001FvDMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.75
+IDFC Money Manager Fund - Treasury Plan A	a1QW00000001FvDMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.75
+IDFC Premier Equity Fund - Plan A	a1QW00000001FvDMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.75
+IDFC Sterling Equity Fund	a1QW00000001FvDMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.75
+Pramerica Equity Fund	a1QW00000001FvEMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	1.5
+Pramerica Short Term Income Fund	a1QW00000001FvEMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.15	0
+Pramerica Ultra Short Term Bond Fund	a1QW00000001FvEMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.25
+Premium persoanl Guard	a1QW00000001FvFMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	20	0
+Reliance Equity Opportunities Fund - Retail Plan (G)	a1QW00000001FuTMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.9	0.5
+Reliance Dynamic Bond Fund	a1QW00000001FuTMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.4
+Reliance Gold Savings Fund	a1QW00000001FuTMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.7	0
+Reliance Growth Fund - Retail Plan	a1QW00000001FuTMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.9	0.5
+Reliance Money Manager Fund - Retail Plan	a1QW00000001FuTMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.35
+Reliance Monthly Income Plan	a1QW00000001FuTMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	1.05	0.3
+Reliance Regular Savings Fund - Debt Option - Retail Plan	a1QW00000001FuTMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.75	0.4
+Reliance Tax Saver (ELSS) Fund	a1QW00000001FuTMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	3.8	0
+SBI Dynamic Bond Fund	a1QW00000001FvGMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.5
+SBI Emerging Businesses Fund - Regular Plan - G	a1QW00000001FvGMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0.5
+Sundaram Select Focus	a1QW00000001FvHMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.75	0.5
+Sundaram Select Mid Cap	a1QW00000001FvHMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.75	0.5
+Templeton India Growth Fund	a1QW00000001FvIMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.9
+Templeton India Equity Income Fund	a1QW00000001FvIMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.9
+Templeton India Short Term Income Plan	a1QW00000001FvIMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.5	0
+Templeton India Treasury Management Account - Regular Plan	a1QW00000001FvIMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0.05
+Top Up Policy with Rs.4,00,000 deductible	a1QW00000001FvJMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0	0
+SBI Magnum Tax Gain Scheme	a1QW00000001FvGMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	3	0
+HDFC Gold Fund	a1QW00000001FvLMAU	Mutual Fund	TRUE	Lumpsum	012W00000004QVmIAM	0.75	0

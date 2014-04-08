@@ -1,0 +1,161 @@
+/*
+	
+	Revision History:
+	
+    Version     Version Author     Date         Comments
+    1.0			Manasi			   15/06/2011	Issue ID :F0029 :BeforeInsertBeforeUpdateAccount trigger is created to assign value to 
+    											Current_Age__c field. 
+    											1)It will calculate age from birthdate if birthdate is not null
+    											2)Else it will assign Age__c if Age__c is not null
+    											3)Else it will assign value from label
+									 
+*/
+trigger BeforeInsertBeforeUpdateAccount on Account (before insert, before update) 
+{
+	 
+	 for(Integer j = 0; trigger.new.size()>j; j++)
+	 {
+	 	if(trigger.new[j].PersonBirthdate != null)
+	 		trigger.new[j].Current_Age__c = system.today().year() - trigger.new[j].PersonBirthdate.year() + 1;
+		else if(trigger.new[j].Age__c != null )
+			trigger.new[j].Current_Age__c = trigger.new[j].Age__c;	 	
+		else
+			trigger.new[j].Current_Age__c = Decimal.valueOf(Label.Current_Age);
+	 }
+	 
+	/*For setting checkbox as true for all the partner entities.
+   	//Date : 2/8/12 , Code Added By : Aditi*/
+   	List<Account> lstAcc = trigger.new;
+   	
+    /* Id clientRecId=RecTypes__c.getInstance('AccountClient').Record_Type_Value__c;
+	Id familyRecId=RecTypes__c.getInstance('AccountFamily').Record_Type_Value__c;
+		       
+	Account act = new Account(FirstName='ABC',LastName='XYZ',RecordTypeId=clientRecId);
+	insert act;
+		     
+	Account family=new Account(FirstName='PQR',LastName='LMN',Parent_Entity__c=act.id,RecordTypeId=familyRecId);
+	insert family;*/
+		      
+	Boolean isParentEntity=false;
+	set<Id> parentIdSet = new set<Id>(); 
+	List<Account> lstAccount = new List<Account>();
+	for(Account objAcc : lstAcc)
+	{
+		if(objAcc.Parent_Entity__c != null)
+		{
+			parentIdSet.add(objAcc.Parent_Entity__c);
+		 	isParentEntity = true;
+		}
+	}
+	
+	if(isParentEntity)
+	{
+		lstAccount = [select id,Related_To__c,Virtual_Partner__c from Account where Id in: parentIdSet ];
+	}
+	
+ 	Map<Id,Account> MapClientsIdToAccount = new  Map<Id,Account>();
+	if(lstAccount.size() > 0 && lstAccount != null)
+ 	{
+ 		for(Account acc : lstAccount)
+ 		{
+ 			MapClientsIdToAccount.put(acc.id,acc);
+ 		}
+ 	}
+ 																	
+    User user = [select Id,Name,ProfileId,ContactId,Profile.Name from User where Id=:lstAcc[0].OwnerId];
+    system.debug('-------------------------------user:'+user);
+ 	Account objAcc;
+	for(account a:lstAcc)
+	{
+        if(a.Parent_Entity__c == null && a.IsCreatedByPartner__c == false)
+        {
+        	// Uncomment for Virtual Partner if( a.Related_To__c == 'Ffreedom';)
+        	if(user.ContactId!=null)
+			{
+			 	system.debug('------------------------------IF');
+		 		//need to comment below statement
+		 		a.Related_To__c = 'Business Partner';
+				a.IsCreatedByPartner__c =true;
+			}
+			 	//need to comment below else block
+			else if(a.Virtual_Partner__c != null)
+			{
+			 	a.Related_To__c = 'Virtual Partner';
+			}
+			else if(a.RecordTypeId != RecTypes__c.getInstance('General_Business').Record_Type_Value__c)
+			{
+			 	system.debug('-----------------Else');
+			 	//need to comment below statement
+			 	 a.IsCreatedByPartner__c =false;
+			 	 a.Related_To__c = 'Ffreedom';
+			}
+        }
+        else
+        {
+        	if(MapClientsIdToAccount.containsKey(a.Parent_Entity__c))
+        	{
+        		
+			 	objAcc = MapClientsIdToAccount.get(a.Parent_Entity__c);
+        		a.Virtual_Partner__c =  objAcc.Virtual_Partner__c;
+        		a.Related_To__c = objAcc.Related_To__c;
+        	}
+        }
+	}	
+
+	//Code Written By Aditi For Platform User related changes
+	//Date : 28/08/12
+	//=======================================================================================
+	/*List<Lead> lstLead = [select Id,Status,Platform_User_Lead__c from Lead where Platform_User_Lead__c != null];
+	system.debug('AAAAAAAAAAAAAAAAA lstLead===============> '+lstLead);
+	Lead objLead = new Lead();
+	Map<Id,Lead> MapStandardLead = new Map<Id,Lead>();
+	
+	
+	List<Lead_Platform_User__c> lstCustLead = [select Id from Lead_Platform_User__c];
+	Lead_Platform_User__c objCustLead = new Lead_Platform_User__c();
+
+	Map<Id,Lead> MapStdIdToStdObj = new Map<Id,Lead>();
+	
+	for(Lead objStandardLead : lstLead)					//For Custom to Standard
+	{
+		if(!(MapStandardLead.containsKey(objStandardLead.Platform_User_Lead__c)))
+	    {
+	       		MapStandardLead.put(objStandardLead.Platform_User_Lead__c,objStandardLead);	
+	       		MapStdIdToStdObj.put(objStandardLead.Id,objStandardLead);	
+	    }
+	}
+	for(Account acc:lstAcc)
+	{
+		//==========================For Custom to Standard===============================================================
+		if(acc.Referred_by_CustomLead__c != null)
+		{
+	
+			if(MapStandardLead.containsKey(acc.Referred_by_CustomLead__c))
+			{
+				objLead = MapStandardLead.get(acc.Referred_by_CustomLead__c);
+				if(objLead != null)
+				{
+					acc.Referred_by_Lead__c = objLead.Id;
+				}
+			}
+		}
+		else 
+		{
+			if (acc.Referred_by_Lead__c != null)
+			{
+				//==========================For Standard to Custom===============================================================
+				if(MapStdIdToStdObj.containsKey(acc.Referred_by_Lead__c))
+				{
+					objLead = MapStdIdToStdObj.get(acc.Referred_by_Lead__c);
+					if(objLead != null)
+					{
+						acc.Referred_by_CustomLead__c = objLead.Platform_User_Lead__c;
+					}
+				}
+			}	
+		}
+	}
+	//=========================================================================================
+	*/
+	
+}

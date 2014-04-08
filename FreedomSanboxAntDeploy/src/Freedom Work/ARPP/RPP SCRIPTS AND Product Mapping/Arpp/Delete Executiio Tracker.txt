@@ -1,0 +1,62 @@
+List< Execution_Tracker__c> updateET = NEW List< Execution_Tracker__c>();
+List< Execution_Tracker__c> elst = [Select e.Entity_Name__c From Execution_Tracker__c e where Entity_Name__c = '001W000000E3Thz' OR Entity_Name__c = 001W000000E3Thz'OR Entity_Name__c = 001W000000E3Thz'];
+
+for(Execution_Tracker__c objET : elst )
+{
+	objET.Executed_Product_Name__c = 'ICICI Lombard Health Protect Plus1';
+	updateET.Add(objET);
+}
+
+Update updateET ;
+
+
+List< ARPP_Detail__c> pnewlst = new List< ARPP_Detail__c>();
+List< ARPP_Detail__c> plst = [Select entity__c ,Remark__c, Product__c From ARPP_Detail__c e where entity__c = '001W000000E3Thz'];
+for(ARPP_Detail__c objArpp  : plst){
+objArpp.ET_Remark__c = 'Actual Product Commision not found';
+objArpp.
+pnewlst.add(objArpp);
+}
+update pnewlst;
+
+
+List< Execution_Tracker__c> elst = [Select e.Entity_Name__c From Execution_Tracker__c e where Entity_Name__c = '001W0000005xb5E' OR Entity_Name__c = '001W0000005xb5D' OR Entity_Name__c = '001W0000005xb4U'];
+delete elst;
+
+
+List< Approve_Action_Plan__c> alst = [Select e.Account__c From Approve_Action_Plan__c e where Account__c = '001W0000005xb5E' OR Account__c = '001W0000005xb5D' OR Account__c = '001W0000005xb4U'];
+delete alst;
+
+
+List< ARPP_Detail__c> plst = [Select entity__c From ARPP_Detail__c e where entity__c = '001W0000005xb5E' OR entity__c = '001W0000005xb5D' OR entity__c = '001W0000005xb4U'];
+delete plst;
+
+
+
+Select r.SystemModstamp, r.SobjectType, r.NamespacePrefix, r.Name, r.LastModifiedDate, r.LastModifiedById, r.IsPersonType, r.IsActive, r.Id, r.DeveloperName, r.Description, r.CreatedDate, r.CreatedById, r.BusinessProcessId From RecordType r order by name
+
+
+result = '&chbh=a,'+barWidth + ','+barWidth+'&chdl=Equity|Gold|Debt&chd=t:' + chd +'&chm=N,FF0000,0,0:7,15|N,FF0000,1,1:7,15|N,FF0000,2,0:7,15'+ '&chl=' + chl+'&chtt='+'SIP Outflow and Portfolio Allocation'+'&chf'+ 'b0,lg,0,FFE7C6,0,76A4FB,1' + '&chdlp=' + 't';
+
+
+
+Select a.Product__c, a.Product_Name__c, a.Policy_Type__c, a.Policy_Name__c, a.Insurance__r.Policy_Name__c, a.Insurance__r.Policy_Type__c, a.Insurance__c, a.Goal__r.Goal_Type__c, a.Goal__r.Name, a.Goal__c, a.Amount__c, a.Action_Amount__c From Approve_Action_Plan__c a  where Account__c = '001W0000005xb5E' OR Account__c = '001W0000005xb5D' OR Account__c = '001W0000005xb4U'
+
+ 090070979954032
+
+List<RecordType> lst = [Select Id, Name from RecordType where sobjectType='Product_Master__c'];
+System.debug('--------------------------------'+lst);
+
+
+-------------------------------------------------------------------------------------
+
+/**************Script to Create ARPP Detail records******************/
+Id rtId = [Select Id from RecordType where sobjectType ='Account' and Name='Client'].Id;
+List<Account> lstAccount = [Select id from Account where Entity_Status__c = 'Active' and RecordTypeId=:rtId];
+
+List<Account> lstEntity = [SELECT Id,Name FROM Account WHERE Id IN: lstAccount OR Parent_Entity__c IN: lstAccount];
+System.debug('---------------------lstEntity----'+lstEntity);
+
+Map<Id, Approve_Action_Plan__c> mapNewIdToActionPlan = new Map<Id, Approve_Action_Plan__c>([Select isWill__c, isWillExecTracker__c, isSIPexecutionTracker__c, isNewMutualFund__c, isNewLI__c, isMFsipETCreated__c, isLumpsumExecTracker__c, isInsuranceExecutionTracker__c, isExecutionTracker__c, isETcreated__c, Transaction_Type__c, Tenure_of_Insurance__c, SystemModstamp, Sum_Assured_Rs__c, Suggested_LumpSum_Action__c, Suggested_Cover__c, Scheme_Name__c, SIP_Action__c, SIP_Action_Amount__c, Remarks__c, Product_Name__c, Premium_Amount_Rs__c, Policy_Type__c, Policy_Name__c, Option__c, Name, MF_SIPRemark__c, MF_LumpsumRemark__c, Lumpsum_Gold__c, Lumpsum_Equity__c, Lumpsum_Debt__c, Lumpsum_Action__c, LastModifiedDate, LastModifiedById, LastActivityDate, Item_Type__c, IsDeleted, Investment_Asset__c, Insured__c, Insurance__c, InsuranceRemark__c, Installments__c, Id, Goal__c, Fund__c, Current_SIP__c, CurrencyIsoCode, CreatedDate, CreatedById, Category__c, Asset_Class__c, Amount__c, Amount_Per_Installment__c, Action_Amount__c, Account__c, AP_Status__c From Approve_Action_Plan__c where Account__c IN: lstEntity And (isSIPexecutionTracker__c= true or isLumpsumExecTracker__c = true or isInsuranceExecutionTracker__c = true)]);
+
+system.debug('********mapNewIdToActionPlan*************'+mapNewIdToActionPlan.size());

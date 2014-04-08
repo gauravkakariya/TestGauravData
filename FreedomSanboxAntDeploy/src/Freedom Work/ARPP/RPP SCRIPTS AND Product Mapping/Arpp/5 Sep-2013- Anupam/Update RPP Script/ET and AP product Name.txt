@@ -1,0 +1,44 @@
+Set<Id> setEntityId = new Set<Id>();
+		List<String> lstPname = new List<String>();
+		Map<Id, List<String>>	mapEntityIdTolstProductName = new Map<Id, List<String>>();
+		List<Execution_Tracker__c> lstETRecord = new List<Execution_Tracker__c>([Select Id,Executed_Product_Name__c,
+															 Entity_Name__c,
+															 Entity__c,
+															 Type__c
+													  From Execution_Tracker__c 
+													  Where (Executed_Product__c = null or Execution_Tracker_Product__c = null) and Executed_Product_Name__c ='UTI Dividend Yield Fund (G) (13)' ]);
+													  
+													  
+		for(Execution_Tracker__c objET : lstETRecord)		
+		{
+		    setEntityId.add(objET.Entity_Name__c);
+			lstPname.add(objET.Type__c);
+			
+			mapEntityIdTolstProductName.put(objET.Entity_Name__c, new List<String>{objET.Executed_Product_Name__c});
+			
+		}
+		system.debug('********lstPname**********'+lstPname);		
+		system.debug('********mapEntityIdTolstProductName**********'+mapEntityIdTolstProductName);		
+
+		
+		Set<Id> setEntityId = new Set<Id>();
+		List<String> lstPname = new List<String>();
+		Map<Id, List<String>>	mapEntityIdTolstProductName = new Map<Id, List<String>>();
+		List<Approve_Action_Plan__c> lstAP = [Select Id, policy_Name__c, Account__c,
+									Item_Type__c,Installments__c,  
+									Tenure_of_Insurance__c,
+									Product_Name__c, Product__c, 
+									Sum_Assured_Rs__c 
+								From Approve_Action_Plan__c 
+								Where Product__c = null and (policy_Name__c ='' or Product_Name__c ='' )];
+								
+		for(Approve_Action_Plan__c objAP : lstAP)		
+		{
+		    setEntityId.add(objAP.Account__c);
+			lstPname.add(objAP.Item_Type__c);
+			
+			mapEntityIdTolstProductName.put(objAP.Account__c, new List<String>{objAP.Product_Name__c != null : objAP.Product_Name__c : objAP.policy_Name__c != null: objAP.policy_Name__c : ''});
+			
+		}		
+		system.debug('********lstPname**********'+lstPname);		
+		system.debug('********mapEntityIdTolstProductName**********'+mapEntityIdTolstProductName);		

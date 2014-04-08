@@ -1,0 +1,461 @@
+/**
+Revision History:
+ 
+    Version     Version Author     Date           Comments
+    1.0         Aditi Satpute     27/09/2012     New Action Plan Creation
+ * @Description:SumActionPlanServices is class to prepare the data as per the business logic. 
+ * This is act as service class for the SumActionPlanController
+ */
+ 
+public with sharing class SumActionPlanServices 
+{
+	private DatabaseSOQL dbSOQLObj {get; set;}
+    private DatabaseDML dbDMLObj {get; set;}
+    
+    public SumActionPlanServices()
+    {
+        dbSOQLObj = new DatabaseSOQL();
+        dbDMLObj = new DatabaseDML();
+    }
+    
+    /**
+    * @Description: Get family details for particular entity
+    * param: None 
+    * return type: void
+    */  
+    
+    public void getFamilyDetails(SummaryActionPlanBean beanObj)
+    {
+        beanObj.accList = dbSOQLObj.getFamilyDetails(beanObj.entityId);
+    }
+   
+    /**
+    * @Description: getAsset details for particular entity
+    * 
+    * return type: void
+    */  
+    
+    public void getAsset(SummaryActionPlanBean beanObj)
+    {
+        List<GoalInvestmentAssetAssociation__c> giaList = dbSOQLObj.getGoalInvestmentAssociationList(beanObj.entityId);
+        List<GoalAssetAssociation__c> gaaList = dbSOQLObj.getGoalAssetAllocationList(beanObj.entityId);
+        List<GoalInsuranceAssociation__c> ginaList = dbSOQLObj.getGoalInsuranceAllocationList(beanObj.entityId);
+        
+        Set<Id> recIds = new Set<Id>();
+        Set<String> processId = new set<String>();
+        
+        for(GoalInsuranceAssociation__c ginaObj: ginaList){
+            recIds.add(ginaObj.Insurance__r.RecordTypeId);
+        }
+        List<RecordType> recList = dbSOQLObj.getRecordTypeNames(recIds);
+        Map<Id,String> recMap = new Map<Id,String>();
+        for(RecordType recObj: recList){
+            recMap.put(recObj.Id, recObj.Name);
+        }
+        
+        for(GoalAssetAssociation__c gaaObj: gaaList)
+        {
+            if(gaaObj.Asset__r.Action__c != '---None----')
+            {
+                //if(!processId.contains(gaaObj.Asset__c))
+                {
+                    processId.add(gaaObj.Asset__c);
+                    SummaryActionPlanBean.SAssetAllocationBean tmpObj = new SummaryActionPlanBean.SAssetAllocationBean();
+                    tmpObj.entityName = gaaObj.Asset__r.Entity__r.FirstName + ' ' + gaaObj.Asset__r.Entity__r.LastName;
+                    tmpObj.action = gaaObj.Asset__r.Action__c;
+                     System.debug('-------------------Allocation__c-----------'+ gaaObj.Allocation__c);
+                    tmpObj.allocatedAmount = Math.Round(gaaObj.Allocation__c != null ? gaaObj.Allocation__c: 0);
+                    tmpObj.allocatedPercent = Math.Round(gaaObj.Allocated__c != null ? gaaObj.Allocated__c: 0);  /* Prajakta - FP changes - 21-03-2013 */
+                    tmpObj.goalName = gaaObj.Goal__r.Description__c;
+                    if(gaaObj.Asset__r.Asset_Types__c!=null && gaaObj.Asset__r.Asset_Types__c!='')
+                    {
+                        tmpObj.Assets = gaaObj.Asset__r.Asset_Types__c;
+                    }
+                    else
+                    {
+                        tmpObj.Assets = gaaObj.Asset__r.Account_Type__c;
+                    }
+                    beanObj.aaBeanList.add(tmpObj);
+                }
+            }
+        }
+        
+        for(GoalInvestmentAssetAssociation__c giaObj: giaList)
+        {
+        	System.debug('-------------------Insurance__r.Action__c-----------'+ giaObj.Investment_Asset__r.Action__c);
+        	System.debug('-------------------Goal Name----------'+ giaObj.Goal__r.Description__c);
+            if(giaObj.Investment_Asset__r.Action__c != '---None----')
+            {
+                //if(!processId.contains('' + giaObj.Investment_Asset__r.Entity__c + giaObj.Investment_Asset__r.RecordTypeId))
+                {
+                    processId.add('' + giaObj.Investment_Asset__r.Entity__c + giaObj.Investment_Asset__r.RecordTypeId);
+                    
+                    SummaryActionPlanBean.SAssetAllocationBean tmpObj = new SummaryActionPlanBean.SAssetAllocationBean();
+                    tmpObj.entityName = giaObj.Investment_Asset__r.Entity__r.FirstName + ' ' +giaObj.Investment_Asset__r.Entity__r.LastName;
+                    tmpObj.action = giaObj.Investment_Asset__r.Action__c;
+                    tmpObj.Assets = giaObj.Investment_Asset__r.RecordType.Name;
+                    System.debug('-------------------Allocation__c-----------'+ giaObj.Allocation__c);
+                    if(giaObj.investment_Asset__r.recordType.Name == 'Fixed Income')
+			        	tmpObj.allocatedAmount = (giaObj.Investment_asset__r.TotalAsset__c *  giaObj.Allocated__c)/100;
+                    else
+                    	tmpObj.allocatedAmount = Math.Round(giaObj.Allocation__c != null ? giaObj.Allocation__c: 0);
+                    
+                    tmpObj.allocatedPercent = Math.Round(giaObj.Allocated__c != null ? giaObj.Allocated__c: 0);		/* Prajakta - FP changes - 21-03-2013 */
+                    tmpObj.goalName = giaObj.Goal__r.Description__c;
+                    beanObj.aaBeanList.add(tmpObj);
+                }
+            }
+        }
+        
+        for(GoalInsuranceAssociation__c ginaObj: ginaList)
+        {
+        	
+            if(ginaObj.Insurance__r.Action__c != '---None----')
+            {
+                //if(!processId.contains(ginaObj.Insurance__c))
+                {
+                    processId.add(ginaObj.Insurance__c);
+                    SummaryActionPlanBean.SAssetAllocationBean tmpObj = new SummaryActionPlanBean.SAssetAllocationBean();
+                    tmpObj.entityName = ginaObj.Insurance__r.Entity__r.FirstName + ' ' + ginaObj.Insurance__r.Entity__r.LastName;
+                    tmpObj.action = ginaObj.Insurance__r.Action__c;
+                    if(recMap.get(ginaObj.Insurance__r.RecordTypeId)!=null){
+                        tmpObj.Assets = recMap.get(ginaObj.Insurance__r.RecordTypeId);
+                    }
+                    if(ginaObj.Insurance__r.Insurance_Company__c != null){
+                        tmpObj.Assets = tmpObj.Assets + ' / ' + ginaObj.Insurance__r.Insurance_Company__c;
+                    }
+                    if(ginaObj.Insurance__r.Policy_Type__c != null){
+                        tmpObj.Assets = tmpObj.Assets + ' / ' + ginaObj.Insurance__r.Policy_Type__c;
+                    }
+                    if(ginaObj.Insurance__r.Policy_Name__c != null){
+                        tmpObj.Assets = tmpObj.Assets + ' / ' + ginaObj.Insurance__r.Policy_Name__c;
+                    }
+                    if(ginaObj.Insurance__r.Policy_Number__c != null){
+                        tmpObj.Assets = tmpObj.Assets + ' / ' + ginaObj.Insurance__r.Policy_Number__c;
+                    }
+                    System.debug('-------------------Allocation__c-----------'+ ginaObj.Allocation__c);
+                    tmpObj.allocatedAmount = Math.round(ginaObj.Allocation__c != null ? ginaObj.Allocation__c: 0);
+                    tmpObj.allocatedPercent = Math.round(ginaObj.Allocated__c != null ? ginaObj.Allocated__c: 0);	/* Prajakta - FP changes - 21-03-2013 */
+                    tmpObj.goalName = ginaObj.Goal__r.Description__c;
+                    beanObj.aaBeanList.add(tmpObj);
+                }
+            }
+        }
+    }
+     
+     
+    /**
+    * @Description: getGenerelInsurance details 
+    * 
+    * return type: List<Insurance__c>
+    */  
+        
+    public List<Insurance__c> getGenerelInsurance(List<Account> accList){
+        return dbSOQLObj.getAnalysisInsurances(InsuranceRecTypes__c.getInstance('General Insurance').RecordTypeId__c, accList);
+    }
+    
+    
+    /**
+    * @Description: getLifeInsurance details 
+    * 
+    * return type: List<Insurance__c>
+    */  
+    
+    public List<Insurance__c> getLifeInsurance(List<Account> accList){
+        return dbSOQLObj.getAnalysisInsurances(InsuranceRecTypes__c.getInstance('Life Insurance').RecordTypeId__c, accList);
+    }
+    
+  /*  public void saveInsurence(SummaryActionPlanBean beanObj){
+        dbDMLObj.upsertObject(beanObj.giList);
+        dbDMLObj.upsertObject(beanObj.liList);
+    }*/
+   
+    /**
+    * @Description: getGoals details 
+    * 
+    * return type: void
+    */
+   
+    
+    public void getGoals(SummaryActionPlanBean beanObj){
+         beanObj.goalList = dbSOQLObj.getAllGoals(beanObj.entityId);
+    	system.debug('****beanObj.goalList**in SumActionPlanServices***'+beanObj.goalList);
+    }
+    
+    /**
+    * @Description: prepareData to display goal-profile wise insurance, asset details 
+    * 
+    * return type: void
+    */
+    
+    public void prepareData(SummaryActionPlanBean beanObj){
+        List<AggregateResult> goalInassetList = dbSOQLObj.getInvestAssociationSum(beanObj.accList);
+        List<AggregateResult> goalAssetList = dbSOQLObj.getInsuranceAssociationSum(beanObj.accList);
+        List<AggregateResult> goalInsurList = dbSOQLObj.getAssetAssociationSum(beanObj.accList);
+        
+        Set<Id> profileSet = new set<id>();
+        Map<Id,Id> golProfileMap = new Map<Id,Id>();
+        Map<Id,double> golAmountMap = new Map<Id,double>();
+        for(AggregateResult agObj: goalInassetList)
+        {
+             if((Double)agObj.get('expr0')!=null)
+             {
+                 golAmountMap.put((Id)agObj.get('Goal__c'),(Double)agObj.get('expr0'));  
+             }
+        }
+        for(AggregateResult agObj: goalAssetList)
+        {
+           if((Double)agObj.get('expr0')!=null){  
+                 if(golAmountMap.get((Id)agObj.get('Goal__c'))!=null){
+                     golAmountMap.put((Id)agObj.get('Goal__c'),golAmountMap.get((Id)agObj.get('Goal__c'))+(Double)agObj.get('expr0'));  
+                 }else{
+                     golAmountMap.put((Id)agObj.get('Goal__c'),(Double)agObj.get('expr0'));  
+                 }
+           }
+        }
+        for(AggregateResult agObj: goalInsurList)
+        {
+             if((Double)agObj.get('expr0')!=null){
+                 if(golAmountMap.get((Id)agObj.get('Goal__c'))!=null){
+                     golAmountMap.put((Id)agObj.get('Goal__c'),golAmountMap.get((Id)agObj.get('Goal__c'))+(Double)agObj.get('expr0'));  
+                 }else{
+                     golAmountMap.put((Id)agObj.get('Goal__c'),(Double)agObj.get('expr0'));  
+                 }
+             }
+        }
+        for(Goal__c golObj: beanObj.goalList)
+        {
+            profileSet.add(golObj.SelectedGoalProfile__c);
+            golProfileMap.put(golObj.Id,golObj.SelectedGoalProfile__c); 
+        }
+        
+        List<goal_Profile__c> lstProfile = dbSOQLObj.getProfileList(profileSet);
+                                                 
+        
+        //beanObj.asetList 'expr0'
+        Map<Id,Double> golProfileDebtMap = new Map<Id,Double>();
+        Map<Id,Double> golProfileGoldMap = new Map<Id,Double>();
+        Map<Id,Double> golProfileEquityMap = new Map<Id,Double>();
+        
+        for(goal_Profile__c prObj: lstProfile){
+            golProfileDebtMap.put(prObj.Id, prObj.debt_Allocation__c);
+            golProfileGoldMap.put(prObj.Id, prObj.Gold_allocation__c);
+            golProfileEquityMap.put(prObj.Id, prObj.Equity_Allocation__c);
+            
+        }
+        Map<Id, List<double>> classWiseGoal = new Map<Id, List<double>>();
+        //beanObj.asetList
+        //SummaryActionPlanBean.AssetClass asetDebt = new SummaryActionPlanBean.AssetClass();
+        Datetime cDT = System.now();  /*Praj*/
+        Integer currentYear = Integer.valueOf(cDT.format('yyyy'));
+       
+        List<Id> golIds = new List<Id>();
+        for(Goal__c golObj: beanObj.goalList)
+        {
+            golIds.add(golObj.Id);
+        }
+        /** Eternus Solutions       **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: 00001470     	**/
+		/** Date    : 1/2/2012  	**/
+		/** Purpose : Code to use SIP's Equity,Debt,Gold % for Lumpsum
+		/****************************************************/
+        Map<Id, double> debtValMap = new  Map<Id, double>();
+        Map<Id, double> equityValMap = new  Map<Id, double>();
+        Map<Id, double> goldValMap = new  Map<Id, double>();
+        Map<Id, double> totValMap = new  Map<Id, double>();
+        double dblTotalPerc = 0,dblDebtPerc = 0,dblEquityPerc = 0,dblGoldPerc = 0;
+        List<GoalSIPAmount__c> goalSips = dbSOQLObj.getGoalSIP(currentYear, golIds);
+        Double dblTotalSIP = 0; 
+        /*if(goalSips != null && goalSips.size() > 0)
+        {
+        	GoalSIPAmount__c objSIPAmt = new GoalSIPAmount__c();
+        	objSIPAmt = goalSips[0];
+        	dblTotalSIP = objSIPAmt.EquityCurrentYear__c + objSIPAmt.DebtCurrentYear__c + objSIPAmt.GoldCurrentYear__c;
+        }*/
+        double tempDebt = 0,tempEquity = 0,tempGold = 0;
+        for(GoalSIPAmount__c sipObj: goalSips)
+        {
+        	tempEquity = (sipObj.EquityCurrentYear__c == null ? 0 : sipObj.EquityCurrentYear__c);
+        	tempDebt = (sipObj.DebtCurrentYear__c == null ? 0 : sipObj.DebtCurrentYear__c);
+        	tempGold = (sipObj.GoldCurrentYear__c == null ? 0 : sipObj.GoldCurrentYear__c);
+        	
+        	dblTotalSIP = tempEquity + tempDebt + tempGold;
+			if(dblTotalSIP > 0)
+			{
+				
+				dblDebtPerc = tempDebt / dblTotalSIP * 100;
+				dblEquityPerc = tempEquity / dblTotalSIP * 100;
+				dblGoldPerc = tempGold / dblTotalSIP * 100;
+			}
+			else
+			{
+				dblDebtPerc = 0;
+				dblEquityPerc = 0;
+				dblGoldPerc = 0;
+			}
+			
+            debtValMap.put(sipObj.Goal__c, dblDebtPerc);
+            equityValMap.put(sipObj.Goal__c, dblEquityPerc);
+            goldValMap.put(sipObj.Goal__c, dblGoldPerc);
+            //totValMap.put(sipObj.Goal__c, sipObj.SIP_Total__c);
+        }
+        /** Eternus Solutions       **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: 00001470     	**/
+		/** Date    : 1/2/2012  	**/
+		/** Purpose : Added debtValMap,equityValMap,goldValMap in following function
+		/****************************************************/
+        List<double> debtVals = prepareProfileWiseData(beanObj.goalList,golProfileMap,golProfileDebtMap, golAmountMap,beanObj,debtValMap);
+        List<double> equityVals = prepareProfileWiseData(beanObj.goalList,golProfileMap,golProfileEquityMap, golAmountMap,beanObj,equityValMap);
+        List<double> goldVals = prepareProfileWiseData(beanObj.goalList,golProfileMap,golProfileGoldMap, golAmountMap,beanObj,goldValMap);
+
+        SummaryActionPlanBean.AssetClass asetDebt = new SummaryActionPlanBean.AssetClass('Debt', debtVals);
+        SummaryActionPlanBean.AssetClass asetEquity = new SummaryActionPlanBean.AssetClass('Equity', equityVals);
+        SummaryActionPlanBean.AssetClass asetGold = new SummaryActionPlanBean.AssetClass('Gold', goldVals);
+        beanObj.asetList.add(asetDebt);
+        beanObj.asetList.add(asetEquity);
+        beanObj.asetList.add(asetGold);
+        calculateTotal(beanObj);
+        prepareSIPData(beanObj);
+    }
+    /** Eternus Solutions       **/
+	/** Author  : Manasi Ranade **/
+	/** Issue Id: 00001470     	**/
+	/** Date    : 1/2/2012  	**/
+	/** Purpose : Added percentageAllocationMap in prepareProfileWiseData function
+	/****************************************************/
+    private List<double> prepareProfileWiseData(List<Goal__c> goalListP, Map<Id, Id>golProfileMapP, Map<Id, double>golProfileClassMapP
+    												, Map<Id, double>golAmountMapP,SummaryActionPlanBean beanObj, Map<Id, double> percentageAllocationMap){
+    	//Original Code
+        /*List<double> classVals = new List<double>();
+        for(Goal__c golObj: goalListP){
+            Id goalId = golObj.Id;
+            double sumMF = golAmountMapP.get(goalId);
+            double Perc = 0;
+            double amount = 0;
+            if(golProfileMapP.get(goalId)!=null && golProfileClassMapP.get(golProfileMapP.get(goalId))!=null){
+                Perc = golProfileClassMapP.get(golProfileMapP.get(goalId));
+                if(sumMF !=null && sumMF!=0){
+                    amount = (sumMF * Perc)/100;
+                }
+            }
+            classVals.add(amount);
+            
+         }
+         return classVals; */
+        List<double> classVals = new List<double>();
+        for(Goal__c golObj: goalListP)
+        {
+            Id goalId = golObj.Id;
+            double sumMF = golAmountMapP.get(goalId);
+            double Perc = 0;
+            double amount = 0;
+            /** Eternus Solutions       **/
+			/** Author  : Manasi Ranade **/
+			/** Issue Id: 00001470     	**/
+			/** Date    : 1/2/2012  	**/
+			/** Purpose : Commented original Code
+			/****************************************************/
+            /*if(golProfileMapP.get(goalId)!=null && golProfileClassMapP.get(golProfileMapP.get(goalId))!=null){
+                Perc = golProfileClassMapP.get(golProfileMapP.get(goalId));
+                if(sumMF !=null && sumMF!=0){
+                    amount = (sumMF * Perc)/100;
+                }
+            }*/
+            if(percentageAllocationMap != null & percentageAllocationMap.get(goalId) != null){
+                Perc = percentageAllocationMap.get(goalId);
+                if(sumMF !=null && sumMF!=0){
+                    amount = (sumMF * Perc)/100;
+                }
+            }
+            classVals.add(amount);
+            
+         }
+         return classVals;
+    }
+    
+    private void calculateTotal(SummaryActionPlanBean beanObj){
+        for(Integer i =0; i<beanObj.goalList.size();i++){
+            double Total = 0;
+            for(Integer j =0; j< beanObj.asetList.size(); j++){
+                Total  = Total + beanObj.asetList[j].golListVals[i];
+            }
+            beanObj.totLumpSumList.add(Total);
+        }
+    }
+ 
+ 
+  
+    /**
+    * @Description:  to prepare SIPData
+    * 
+    * return type: void
+    */
+       
+<<<<<<< .mine
+    public void prepareSIPData(SummaryActionPlanBean beanObj)
+    {
+        Datetime cDT = System.now(); /*Praj*/
+=======
+    public void prepareSIPData(SummaryActionPlanBean beanObj)
+    {
+         Datetime cDT = System.now(); /*Praj*/
+>>>>>>> .r13960
+        Integer currentYear = Integer.valueOf(cDT.format('yyyy'));
+       
+        List<Id> golIds = new List<Id>();
+        for(Goal__c golObj: beanObj.goalList)
+        {
+            golIds.add(golObj.Id);
+        }
+        Map<Id, double> debtValMap = new  Map<Id, double>();
+        Map<Id, double> equityValMap = new  Map<Id, double>();
+        Map<Id, double> goldValMap = new  Map<Id, double>();
+        Map<Id, double> totValMap = new  Map<Id, double>();
+        
+        List<GoalSIPAmount__c> goalSips = dbSOQLObj.getGoalSIP(currentYear, golIds);
+        for(GoalSIPAmount__c sipObj: goalSips)
+        {
+            debtValMap.put(sipObj.Goal__c, sipObj.SIP_Debt__c);
+            equityValMap.put(sipObj.Goal__c, sipObj.SIP_Equity__c); 
+            goldValMap.put(sipObj.Goal__c, sipObj.SIP_Gold__c);
+            totValMap.put(sipObj.Goal__c, sipObj.SIP_Total__c);
+        }
+        List<double> debtVal = new List<double>();
+        List<double> equityVal = new List<double>();
+        List<double> goldVal = new List<double>();
+        
+        for(Goal__c golObj: beanObj.goalList)
+        {
+            if(debtValMap.get(golObj.Id)!=null){
+                debtVal.add(debtValMap.get(golObj.Id));
+            }else{
+                debtVal.add(0);
+            }
+            if(equityValMap.get(golObj.Id)!=null){
+                equityVal.add(equityValMap.get(golObj.Id));
+            }else{
+                equityVal.add(0);
+            }
+            if(goldValMap.get(golObj.Id)!=null){
+                goldVal.add(goldValMap.get(golObj.Id));
+            }else{
+                goldVal.add(0);
+            }
+            if(totValMap.get(golObj.Id)!=null){
+                beanObj.totSIPList.add(totValMap.get(golObj.Id));
+            }else{
+                beanObj.totSIPList.add(0);
+            }
+        } 
+        
+        SummaryActionPlanBean.SIPClass debtObj = new  SummaryActionPlanBean.SIPClass('Debt', debtVal);
+        beanObj.sipList.add(debtObj);
+        SummaryActionPlanBean.SIPClass equityObj = new  SummaryActionPlanBean.SIPClass('Equity', equityVal);
+        beanObj.sipList.add(equityObj);
+        SummaryActionPlanBean.SIPClass goldObj = new  SummaryActionPlanBean.SIPClass('Gold', goldVal);
+        beanObj.sipList.add(goldObj);
+    }    
+
+}

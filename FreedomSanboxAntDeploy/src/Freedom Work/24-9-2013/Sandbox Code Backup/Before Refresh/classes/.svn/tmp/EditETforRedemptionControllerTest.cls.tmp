@@ -1,0 +1,69 @@
+/**
+*  Test class for Controller class EditETforRedemptionController
+*
+*   Revision History:
+*
+*   Version        Author             Date            Description
+*   1.0            Aditi/Prajakta    02/04/2013      Initial Draft
+*/
+
+public with sharing class EditETforRedemptionControllerTest 
+{
+
+    //test Method
+	@isTest(SeeAllData=true)
+	public static  void testEditETforRedemptionController()
+	{
+		TestData_Ffreedom testData = new TestData_Ffreedom();
+		Account objAccount = testData.initializeAccount();
+	    insert objAccount;
+	    
+	    Investment_Asset__c inv = new Investment_Asset__c(Entity__c=objAccount.id,action__c='yes',RecordTypeId=InvestmentAsset__c.getInstance('Stocks').RecordTypeId__c,
+	    												Maturity_Date__c = system.today());
+	    insert inv;		
+	    				
+	    List<Approve_Action_Plan__c> lstAP = new List<Approve_Action_Plan__c>();										
+	    Approve_Action_Plan__c objAAP1 = new Approve_Action_Plan__c(Account__c = objAccount.Id,Investment_Asset__c = inv.Id);
+	    lstAP.add(objAAP1);
+	    
+	    Approve_Action_Plan__c objAAP2 = new Approve_Action_Plan__c(Account__c = objAccount.Id);
+	    lstAP.add(objAAP2);
+        
+        insert lstAP;
+        
+        List<Execution_Tracker__c> lstET = new List<Execution_Tracker__c>();
+        Execution_Tracker__c objET1 = new Execution_Tracker__c(Entity_Name__c = objAccount.id,  ET_Status__c = 'Assigned to Operations', Is_Floating__c = false,
+        									Application_Status__c = 'Opened', Approve_Action_Plan__c = objAAP1.Id, Type__c = 'Lumpsum',Action__c = 'Redeem');
+        lstET.add(objET1);
+        Execution_Tracker__c objET2 = new Execution_Tracker__c(Entity_Name__c = objAccount.id,  ET_Status__c = 'Assigned to Operations', Is_Floating__c = false,
+        									Application_Status__c = 'Closed', Approve_Action_Plan__c = objAAP2.Id, Type__c = 'Lumpsum',Action__c = 'Hold - COB');
+        lstET.add(objET2);
+        insert lstET;
+        
+        Test.startTest();
+        ApexPages.currentPage().getParameters().put('eid', objAccount.id);
+        Apexpages.currentPage().getParameters().put('id', objAAP2.Id);
+		Apexpages.currentPage().getParameters().put('type', 'Lumpsum');
+        EditETforRedemptionController objEETC1 = new EditETforRedemptionController(); 
+      	objEETC1.assignTask();
+      	objEETC1.getEntities();
+      	objEETC1.updateExecutionTracker();
+      	
+      	ApexPages.currentPage().getParameters().put('eid', objAccount.id);
+        Apexpages.currentPage().getParameters().put('etid', objET1.Id);
+        Apexpages.currentPage().getParameters().put('type', 'Lumpsum');
+		Apexpages.currentPage().getParameters().put('userType', 'opsTeam');
+        EditETforRedemptionController objEETC2 = new EditETforRedemptionController(); 
+      	objEETC2.assignTask();
+      	objEETC2.getEntities();
+      	objEETC2.updateExecutionTracker();
+      	
+      	ApexPages.currentPage().getParameters().put('eid',null);
+        Apexpages.currentPage().getParameters().put('etid', objET1.Id);
+        Apexpages.currentPage().getParameters().put('type', 'Lumpsum');
+		Apexpages.currentPage().getParameters().put('userType', 'opsTeam');
+        EditETforRedemptionController objEETC3 = new EditETforRedemptionController(); 
+      	objEETC3.getEntities();
+        Test.stopTest();
+	}
+}

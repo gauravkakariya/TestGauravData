@@ -1,0 +1,87 @@
+public without sharing class RenewalTrackerHandler extends RenewalTrackerTrigger 
+{
+	public RenewalTrackerHandler(Renewal_Tracker__c[] Renewal_TrackerOldList, Renewal_Tracker__c[] Renewal_TrackerList)
+	{
+		super(Renewal_TrackerOldList,Renewal_TrackerList);
+	}
+	
+	public override void execute()
+	{
+		//Renewal_TrackerOldList : trigger.Old value will be stored 
+		//Renewal_TrackerNewList : trigger.New value will be stored
+		List<Renewal_Tracker__c> lstUpdateChildRenewalTracker = new List<Renewal_Tracker__c>();
+		Map<Id,Execution_Tracker__c> mapIdToExecutionTracker = new Map<Id,Execution_Tracker__c>([select Id,Mode__c from Execution_Tracker__c]);
+		
+		//system.debug('***Renewal_TrackerOldListMap******'+Renewal_TrackerOldListMap);
+		//system.debug('***Renewal_TrackerNewListMap******'+Renewal_TrackerNewListMap);
+		 
+						
+		for(Renewal_Tracker__c objNewRenewalTracker : Renewal_TrackerNewList)
+		{
+			Renewal_Tracker__c objOldRenewalTracker = new Renewal_Tracker__c();
+			if(Renewal_TrackerOldListMap.containsKey(objNewRenewalTracker.Id))
+			{
+				objOldRenewalTracker = Renewal_TrackerOldListMap.get(objNewRenewalTracker.Id);
+				system.debug('******objOldRenewalTracker******'+objOldRenewalTracker);
+				if(objOldRenewalTracker.Cheque_Submission_date__c == null && objNewRenewalTracker.Cheque_Submission_date__c != null)
+				{
+					if(objNewRenewalTracker.Tenure_of_Insurance__c > 1)
+					{
+						Renewal_Tracker__c objChildRenewal = new Renewal_Tracker__c();
+						Execution_Tracker__c objET = new Execution_Tracker__c();
+						objChildRenewal.Entity__c = objNewRenewalTracker.Entity__c;
+						objChildRenewal.Execution_Tracker__c = objNewRenewalTracker.Execution_Tracker__c;
+						if(objNewRenewalTracker.ParentId__c == null)
+							objChildRenewal.ParentId__c = objNewRenewalTracker.Id;
+						else
+							objChildRenewal.ParentId__c = objNewRenewalTracker.ParentId__c;
+						objChildRenewal.Renewal_Tracker_Name__c = objNewRenewalTracker.Renewal_Tracker_Name__c;
+						if(objNewRenewalTracker.Tenure_of_Insurance__c != null)
+								objChildRenewal.Tenure_of_Insurance__c = objNewRenewalTracker.Tenure_of_Insurance__c - 1;
+						if(objNewRenewalTracker.Insurance_Type__c != null && objNewRenewalTracker.Insurance_Type__c.equalsIgnoreCase('Life Insurance'))
+						{
+							objChildRenewal.Insurance_Type__c = 'Life Insurance';
+						}
+						else if(objNewRenewalTracker.Insurance_Type__c != null && objNewRenewalTracker.Insurance_Type__c.equalsIgnoreCase('General Insurance'))
+						{
+							objChildRenewal.Insurance_Type__c = 'General Insurance';
+						}
+						
+						system.debug('(objNewRenewalTracker.Execution_Tracker__r.Mode__c****'+objNewRenewalTracker.Execution_Tracker__r.Mode__c);
+						if(mapIdToExecutionTracker.containsKey(objNewRenewalTracker.Execution_Tracker__c))
+						{
+							objET = mapIdToExecutionTracker.get(objNewRenewalTracker.Execution_Tracker__c);
+						    system.debug('******objET.Mode__c******'+objET.Mode__c);
+							if(objET.Mode__c != null)
+			       			{
+				       			if(objET.Mode__c.equalsIgnoreCase('Monthly'))
+				       			{
+				       				if(objNewRenewalTracker.Next_renewal_date__c != null)
+				       				objChildRenewal.Next_renewal_date__c = objNewRenewalTracker.Next_renewal_date__c.addDays(30);
+				       			}
+				       			else if(objET.Mode__c.equalsIgnoreCase('Quaterly'))
+				       			{
+				       				if(objNewRenewalTracker.Next_renewal_date__c != null)
+				       				objChildRenewal.Next_renewal_date__c = objNewRenewalTracker.Next_renewal_date__c.addDays(90);
+				       			}
+				       			else if(objET.Mode__c.equalsIgnoreCase('Semi-Annual'))
+				       			{
+				       				if(objNewRenewalTracker.Next_renewal_date__c != null)
+				       				objChildRenewal.Next_renewal_date__c = objNewRenewalTracker.Next_renewal_date__c.addDays(180);
+				       			}
+				       			else
+				       			{
+				       				if(objNewRenewalTracker.Next_renewal_date__c != null)
+				       				objChildRenewal.Next_renewal_date__c = objNewRenewalTracker.Next_renewal_date__c.addDays(365);
+				       			}	
+				       		}
+						}
+						lstUpdateChildRenewalTracker.add(objChildRenewal);
+					}
+				}
+			}
+		}
+		if(!lstUpdateChildRenewalTracker.isEmpty())
+			insert lstUpdateChildRenewalTracker;
+	}
+}

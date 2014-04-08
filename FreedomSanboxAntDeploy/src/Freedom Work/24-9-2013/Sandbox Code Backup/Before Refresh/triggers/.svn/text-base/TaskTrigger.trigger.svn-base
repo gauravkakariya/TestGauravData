@@ -1,0 +1,4 @@
+trigger TaskTrigger on Task (after update) 
+{
+	
+}

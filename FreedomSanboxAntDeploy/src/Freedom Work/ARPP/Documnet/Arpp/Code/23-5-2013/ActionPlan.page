@@ -1,0 +1,2185 @@
+<!--/*
+    Revision History:
+    
+    Version     Version Author     Date           Comments
+    1.0         Prajakta Sanap     27/09/2012     Initial Draft - New Modified Action Plan
+    
+*/ -->
+
+<apex:page controller="ActionPlanController" showHeader="false" standardStylesheets="true" title="Action Plan" id="actionPageId">
+	
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+	
+	<style>
+		.inputMedical{
+            	padding: 0px;
+         }
+         .inputIllness{
+            	padding: 0px;
+         }
+         .inputTopUp{
+            	padding: 0px;
+         }
+         .inputDisability{
+            	padding: 0px;
+         }
+         .inputAccident{
+            	padding: 0px;
+         }
+         
+         .inputVehicle{
+            	padding: 0px;
+         }
+         .inputHouseHold{
+            	padding: 0px;
+         }
+         .inputlumpsumFunds{
+         		padding: 0px;
+         }
+         .inputSIPFunds{
+         		padding: 0px;
+         }
+         
+         
+	</style>
+	
+	
+    <apex:composition template="TabPage">
+        <apex:define name="contents">
+<!--             <c:ActionPlanComp /> -->
+			 <apex:form id="formid">
+    
+    <apex:stylesheet value="{!$Resource.FFStyle}"/>
+    <!-- Added By Gaurav : To Display autocomplete for PolicyType   -->
+    
+	
+<!-- 	<apex:includescript value="//code.jquery.com/jquery-1.9.1.js"/> -->
+<!-- 	<apex:includescript value="//code.jquery.com/ui/1.10.2/jquery-ui.js"/> -->
+	
+    <style type="text/css">
+            .DataTableEven  { background-color:#FFFFFF; }
+            .DataTableOdd    { background-color:#E4FBC5; }
+            .actionPlan
+            {
+            	width:10%;
+            	margin-left:20px; 
+				background-image:none;
+				background-color:#F5D0A9!important;
+				font-size:11px !important; 
+				padding-top:4px;
+				padding-bottom:4px;
+            }
+            
+            .saveActionPlan
+            {
+            	margin-left:20px;
+            	background-image:none;
+            	background-color:#A9C5EB !important;
+            }
+            
+            
+    </style>
+
+     <script>
+    	var actionPlanId;
+    	var saveActionPlanId;
+    	
+    	function changeCssActionPlan(val)
+    	{
+    		//alert(val);
+    		if(val == 'Action Plan')
+    		{
+				document.getElementById(actionPlanId).style.backgroundColor = '#F5D0A9';
+				document.getElementById(saveActionPlanId).style.backgroundColor = '#A9C5EB';
+			}
+			else
+			{
+				document.getElementById(actionPlanId).style.backgroundColor = '#A9C5EB';
+				document.getElementById(saveActionPlanId).style.backgroundColor = '#F5D0A9';
+			}
+			    	
+    	}
+    	
+    	function confirmDelete() 
+        {
+        	var doDelete = confirm('Generating the Execution Tracker would lock the Action Plan \n and will not allow you to edit it. Do you want to continue?');
+   			return doDelete; 
+    	}
+    	
+    	function generateNewAP() 
+        {
+        	var doDisplay = confirm('New Action Plan will be generated for this Entity and all Open \n Execution Tracker records will be deleted. Do you want to continue?');
+   			return doDisplay; 
+    	}
+    	function cloneActionPlan() 
+        {
+        	var doDisplay = confirm('Current Action Plan will be Cloned for this Entity and all \n Open Execution Tracker records will be deleted. Do you want to continue?');
+   			return doDisplay; 
+    	}
+    	
+    	
+        
+    	
+    </script>
+    
+    <apex:stylesheet value="{!$Resource.FFStyle}"/>
+        <apex:pageBlock tabStyle="account" >
+        <div style="margin:bottom:20px; width:100%;margin-left:10px;">
+            <apex:outputLabel value="Analysis" styleclass="button" style=" width:10%;  background-image:none;background-color:#A9C5EB !important; font-size:11px !important;padding-top:4px; padding-bottom:4px;" />
+            <apex:image id="theImage" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+            <apex:outputLabel value="Generate Action Plan" styleclass="button" style=" width:10%;margin-left:20px;  background-image:none;background-color:#A9C5EB !important;font-size:11px !important; padding-top:4px; padding-bottom:4px;" />
+            <apex:image id="theImage2" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+            <apex:commandButton id="theCommandLink2" styleclass="button" value="Summary Action Plan" action="{!SummaryActionPlanPage}" style="margin-left:20px; background-image:none;background-color:#A9C5EB !important;"  />
+            <apex:image id="theImage3" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+            <apex:commandButton id="theCommandLink1" styleclass="button" value="Action Plan" action="{!showActionPlan}" status="topStatus" 
+            					onClick="changeCssActionPlan('Action Plan');" rerender="mutualFundPanelId,Pagemsg,saveActionPlan"  
+            					style="margin-left:20px; background-image:none;background-color:#A9C5EB !important;" />
+			<script>
+				actionPlanId = '{!$Component.theCommandLink1}';
+				//alert('---actionPlanId---'+actionPlanId);
+			</script>
+			 <apex:image id="theImage4" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+			<apex:commandButton id="theCommandLink4" styleclass="button" value="Save Action Plan" action="{!showPreview}" status="topStatus" 
+								onClick="changeCssActionPlan('Save Action Plan');" rerender="mutualFundPanelId,Pagemsg,saveActionPlan" 
+								style="margin-left:20px; background-image:none;background-color:#A9C5EB !important;"/> <!-- onClick="colourGreen()" -->
+			<script>
+				saveActionPlanId = '{!$Component.theCommandLink4}';
+			</script> 
+			
+			<!--   	Date : 11-02-2013  Action Plan  : Prajakta Sanap -->    		               
+			<apex:outputPanel rendered="{!isDisplaySaveButton}">			
+				<!-- 	Added By : Aditi Satpute : Execution Tracker -->
+				<apex:image id="theImage5" value="{!URLFOR($Resource.Ffimage)}" style="margin-left:20px; vertical-align:bottom;"/>
+	<!-- 			Exe : {!isExecutionTrackerOpened} -->
+	            <apex:commandButton id="theCommandLink3" styleclass="button" value="Execution Tracker" action="{!showExecutionTracker}" status="topStatus"
+	            					onclick="return confirmDelete();" rendered="true" style="margin-left:20px; background-image:none;background-color:#A9C5EB !important;" /> 
+            </apex:outputPanel>					
+			<apex:actionStatus stopText="" id="topStatus">
+                <apex:facet name="start">
+               		<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                    	<img src="/img/loading.gif" width="16" height="16"/>
+					</apex:outputPanel>
+                </apex:facet>
+           </apex:actionStatus>  
+        </div>
+        <br/>
+        </apex:pageBlock>
+
+<!--   					Date : 11-02-2013  Action Plan  : Prajakta Sanap -->                   
+<!--         <apex:outputPanel rendered="{!isDisplaySaveButton}"> -->
+		<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+			<apex:outputPanel rendered="{!isNewAP}">
+		 		<apex:commandButton id="theCommandLink4" styleclass="button" value="Generate New Action Plan" action="{!generateNewAP}" status="topStatus"
+            					onclick="return generateNewAP();" style="margin-left:20px; background-image:none;background-color:#A9C5EB !important;" /> 
+		 		<apex:commandButton id="theCommandLink5" styleclass="button" value="Clone Action Plan" action="{!cloneActionPlan}" status="topStatus"
+            					onclick="return cloneActionPlan();" style="margin-left:20px; background-image:none;background-color:#A9C5EB !important;" /> 
+            	<br/>
+        	</apex:outputPanel>
+        	
+        </apex:outputPanel>
+       
+<!-- ================================================================================================================================================================= -->
+
+        	<apex:outputPanel id="saveActionPlan" >    	
+             <apex:outputPanel rendered="{!isPreview}"><br/>
+                <apex:pageBlock id="panDisplayET"> 
+                    <apex:panelGrid columns="2" width="60%">
+                        <apex:outputText value="Do you want to preview the plan?"/>
+						<apex:commandLink id="theCommandLinkpre" styleClass="btn" value="Preview" target="_blank" action="{!actionPlanPDF}" style="text-decoration:none;" /> 
+            			            			
+                    <!--  /* Purpose : While generating Execution Tracker for given entity, save his Approved plan and his html as an attachment. */ -->
+                        <apex:outputLabel value="{!$Label.DoYouWantToSaveThisPlan}" rendered="{!isFPLimitedAccess}"/>
+                        <apex:outputPanel rendered="{!isFPLimitedAccess}">
+	                        <apex:commandButton id="theCommandLinksave"  value="Save" action="{!saveActionPlanPDF}" status="counterStatusData" />
+	                        <apex:actionStatus stopText="" id="counterStatusData">
+	                            <apex:facet name="start">
+	                                <apex:image value="{!$Resource.loading_image}" width="25px" height="25px"/>
+	                            </apex:facet>
+	                            <apex:facet name="stop">         
+	                            </apex:facet>
+	                        </apex:actionStatus>
+						</apex:outputPanel>
+                    </apex:panelGrid>
+					<hr/>
+                    <apex:panelGrid columns="1" width="40%">
+                    	<apex:outputLabel value="Do you want to send this plan to client?" />
+                    </apex:panelGrid>
+                	<apex:panelGrid columns="3" width="40%">
+                		<apex:outputLabel value="Email Body" />
+                		<apex:inputTextarea id="bodytext" value="{!emailBody}" />
+                		<apex:commandButton id="theCommandLinksend" value="Send" action="{!sendEmail}"/>
+                	</apex:panelGrid>
+<!--                 	<apex:panelGrid columns="2" width="70%"> -->
+<!--                 		<apex:outputlabel /> -->
+					<div align="center"> 
+                		<apex:outputLabel value="Action Plan has been mailed successfully to '{!IF(strEntityName != null,strEntityName,'')}'" rendered="{!isMailSent}" style="width:8%; FONT-FAMILY: Calibri; FONT-SIZE: 15px; FONT-WEIGHT: bold; COLOR: #329902;"/>
+                	</div>
+<!--                 	</apex:panelGrid> -->
+                </apex:pageBlock> 
+               </apex:outputPanel>
+			</apex:outputPanel>
+
+<!-- ================================================================================================================================================================= -->
+
+        <br/>
+        <apex:pageMessages id="Pagemsg"/>
+        <apex:outputPanel rendered="{!isSidebar}">
+        <apex:outputPanel id="mutualFundPanelId" >
+        <apex:outputPanel rendered="{!!isPreview}">
+        <apex:pageBlock id="block1">
+        
+        <apex:outputPanel id="pageBlockSection1">
+			<apex:pageBlockSection title="ADVICE ON EXISTIING MUTUAL FUND SCHEMES" collapsible="true" columns="1" id="section1">
+            	
+<!-- =============================================================CURRENT MUTUAL FUNDS - LUMPSUM=====================================================        	 -->
+<!-- 				<div class="subHeader" style="width:85%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">CURRENT MUTUAL FUNDS - LUMPSUM</div> -->
+				<apex:pageBlockSection title="CURRENT MUTUAL FUNDS - LUMPSUM" columns="1" collapsible="true" id="section9">
+				<div style="margin-left:50px;">
+				<apex:repeat value="{!beanObj.mapIdToCurrentFunds}" var="curLumpMap"> 
+	                
+<!-- 	               Mutual Fund : {!curLumpMap} -->
+	                <apex:pageBlockTable value="{!beanObj.mapIdToCurrentFunds[curLumpMap]}" var="curLumpObj" styleClass="required" style="margin-left:48px;width:900px;">
+                		
+		               <apex:column width="2%">
+<!--   					Date : 11-02-2013  Action Plan  : Prajakta Sanap -->    		               
+			                <apex:outputPanel rendered="{!isDisplaySaveButton}">     
+			                    <apex:commandButton Action="{!addCurrentMutualFundRow}" value="+" rerender="pageBlockSection1,Pagemsg" rendered="{!!curLumpObj.isNewMutualFund}">
+		                           <apex:param name="addNew" value="{!curLumpObj.investmentId}"  assignTo="{!addNewInvestId}" />
+		                        </apex:commandButton>
+		                        
+		                        <apex:commandButton Action="{!removeCurrentMutualFundRow}" value="-" rerender="pageBlockSection1,Pagemsg" rendered="{!curLumpObj.isNewMutualFund}">
+		                           <apex:param name="recId" value="{!curLumpObj.investmentId}"  assignTo="{!removeInvestmentId}" />
+		                           <apex:param name="removeNumber" value="{!curLumpObj.newCount}"  assignTo="{!recordNumber}" />
+		                        </apex:commandButton> 
+	                    	</apex:outputPanel>
+	                    </apex:column>
+		                
+	                    <apex:column headerValue="Scheme Name" width="15%">
+	                        <apex:outputText value="{!curLumpObj.schemeName}" style="width:100px;"/>
+	                    </apex:column>
+	                    <apex:column headerValue="Asset Class" width="15%">
+	                        <apex:outputText value="{!curLumpObj.assetClass}" style="width:180px;"/>
+	                    </apex:column>
+	                    <apex:column headerValue="Amount" style="text-align:right; padding-right: 15px;" width="12%">
+	                    	<apex:outputText value="{0, number, ,##,##0}" >
+                                 <apex:param value="{!curLumpObj.amount}"/>
+                             </apex:outputText>
+	                    </apex:column>
+	                    <apex:column headerValue="Owner" width="12%">
+	                        <apex:outputText value="{!curLumpObj.owner}" style="width:190px;"/>
+	                    </apex:column>
+	                    <apex:column headerValue="Action" style="text-align:center;" width="12%">
+	                        <apex:selectList value="{!curLumpObj.lumpsumAction}" size="1" styleClass="textStyle" style="width:100px;">
+                                <apex:selectOptions value="{!lumpActions}"/>
+                            </apex:selectList>
+	                    </apex:column>
+	                    <apex:column headerValue="Action Amount" style="text-align:center;width:12%">
+	                        <apex:inputText value="{!curLumpObj.actionAmount}" styleClass="textStyle" style="width:70px; text-align:right;"/>
+	                    </apex:column>
+	                    <apex:column headerValue="Execution Tracker to be opened" style="text-align:center;width:10%;">
+	                      	<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+	                      	<apex:outputPanel rendered="{!IF(((curLumpObj.lumpsumAction == '') || (curLumpObj.lumpsumAction == '--None--') || (curLumpObj.lumpsumAction == null)),false,true)}">
+		                       	<apex:outputPanel rendered="{!!curLumpObj.isETCreated}">
+			                        <apex:selectList value="{!curLumpObj.executionTracker}" size="1" styleClass="textStyle" style="width:100px;" >
+		                                 <apex:selectOptions value="{!ExecutionTracker}"/>
+		                            </apex:selectList>
+		                        </apex:outputPanel>
+		                        <apex:outputPanel rendered="{!curLumpObj.isETCreated}" style="font-color:#ED1B24;">
+	                                <apex:outputLabel value="Already Created" style="width:80px;font-size:11px;font-weight:bold;font-color:#ED1B24;text-align:center;"/>  
+	                            </apex:outputPanel>
+	                        </apex:outputPanel>
+	                    </apex:column>
+<!-- 	                     <apex:column headerValue="Remark" style="text-align:center;"> -->
+<!-- 	                        <apex:inputText value="{!curLumpObj.mfLumpsumRemark}" styleClass="textStyle" style="width:70px; text-align:right;"/> -->
+<!-- 	                    </apex:column> -->
+	                </apex:pageBlockTable>
+	                
+	            </apex:repeat>
+           		<apex:pageBlockSectionItem >
+           			<apex:outputText value="Remarks: " style="text-align:left;"/>
+           			<apex:inputTextArea value="{!mfLumpsumRemark}" style="width:300px;height:55px;"/>
+           		</apex:pageBlockSectionItem>
+           		</div>
+            </apex:pageBlockSection>
+	            
+	            
+<!-- =============================================================CURRENT MUTUAL FUNDS - RUNNING SIPs=============================================        	 -->
+        	
+        		<apex:pageBlockSection title="CURRENT MUTUAL FUNDS - RUNNING SIPs" columns="1" id="section8">
+	                
+	                <div style="margin-left:50px;">
+		                <apex:pageBlockTable value="{!beanObj.lstSIPCurrentFunds}" var="curSIPObj" styleClass="required" style="margin-left:48px;width:900px;">
+		                    <apex:column headerValue="Scheme Name" width="15%">
+		                        <apex:outputText value="{!curSIPObj.schemeName}" style="width:100px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Asset Class" width="15%">
+		                        <apex:outputText value="{!curSIPObj.assetClass}" style="width:180px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Current SIP" style="text-align:right; padding-right: 15px;" width="10%">
+		                    	<apex:outputText value="{!curSIPObj.currentSIP}"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Owner" width="17%">
+		                        <apex:outputText value="{!curSIPObj.owner}" style="width:190px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="SIP Action" style="text-align:center;" width="15%">
+		                        <apex:selectList value="{!curSIPObj.SIPaction}" size="1" styleClass="textStyle" style="width:100px;">
+		                              <apex:selectOptions value="{!sipActions}"/>
+		                        </apex:selectList>
+		                    </apex:column>
+		                    <apex:column headerValue="Action Amount" >
+		                        <apex:inputText value="{!curSIPObj.SIPactionAmount}" style="text-align:right;width:70px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Execution Tracker to be opened" style="text-align:center;">
+	                         	<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+		                       	<apex:outputPanel rendered="{!!curSIPObj.isMFsipETCreated}">
+			                        <apex:selectList value="{!curSIPObj.SIPexecutionTracker}" size="1" styleClass="textStyle" style="width:100px;">
+		                                <apex:selectOptions value="{!ExecutionTracker}"/>
+		                            </apex:selectList>
+		                        </apex:outputPanel>
+		                        <apex:outputPanel rendered="{!curSIPObj.isMFsipETCreated}" style="font-color:#ED1B24;">
+	                                <apex:outputLabel value="Already Created" style="width:80px;font-size:11px;font-weight:bold;font-color:#ED1B24;text-align:center;"/>  
+	                            </apex:outputPanel>
+		                    </apex:column>
+		                </apex:pageBlockTable>
+		                <apex:pageBlockSectionItem >
+		           			<apex:outputText value="Remarks: " style="text-align:left;"/>
+		           			<apex:inputTextArea value="{!mfSIPRemark}" style="width:300px;height:55px;"/>
+		           		</apex:pageBlockSectionItem>
+		            </div>
+	            </apex:pageBlockSection>
+             
+	            <!--   					Date : 11-02-2013  Action Plan  : Prajakta Sanap -->                   
+<!--                 <apex:outputPanel rendered="{!isDisplaySaveButton}"> 	 -->
+	             <apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+	             	<apex:outputPanel rendered="{!isSave}" id="displaySave">
+	            		<apex:commandButton value="Save" Action="{!saveActionPlan}"  style="margin-top:15px;margin-left:450px;font-weight:bold; font-size:11px;" 
+	                               onclick="if(!confirm('Do you want to continue?')){return false;}" rendered="{!Not(blnIsETAlreadyGenerated)}" rerender="pageBlockSection1,Pagemsg" status="statusId"/>
+	            	</apex:outputPanel>
+            	</apex:outputPanel>
+            	
+            	<apex:actionStatus stopText="" id="statusId">
+                	<apex:facet name="start">
+               			<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                    		<img src="/img/loading.gif" width="16" height="16"/>
+						</apex:outputPanel>
+                	</apex:facet>
+           		</apex:actionStatus>  
+            
+            </apex:pageBlockSection>
+         </apex:outputPanel>   
+            
+            
+		<!-- 	 ===================================================================================================== -->
+
+		<apex:outputPanel id="GoalDetailsPannel">
+		    <apex:pageBlockSection title="GOALWISE ADVICE" collapsible="true" columns="1" id="section7">
+		    
+			<!-- 	 =========================Emergency Funds============================== -->	    
+		    
+		    <apex:pageBlockSection title="{!beanObj.objEmergencyFundGoalDetails.description}" columns="1" collapsible="true" id="section11">
+					
+				<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Goal Details</div>
+					<apex:pageBlockSection collapsible="false" columns="6">
+			        	
+			        	<apex:pageBlockTable value="{!beanObj.objEmergencyFundGoalDetails}" var="goal" width="120%" 
+			        						id="MyTable_001" styleClass="style,required" style="margin-left:48px;width:800px;">
+			        	
+			        		<apex:column headerValue="Start Year" width="15%">
+		                        <apex:outputText value="{!goal.startYear}" style="text-align:center;width:100px;"/>
+		                    </apex:column>
+		                    <apex:column headerValue="End Year" width="15%">
+		                        <apex:outputText value="{!goal.endYear}"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Annual Cost of Goal" width="15%">
+		                        <apex:outputText value="{!TEXT(goal.annualGoalCost)}"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Risk Profile" width="20%">
+		                        <apex:outputText value="{!goal.goalProfile}"/>
+		                    </apex:column>
+		                    <apex:column headerValue="Remarks" width="30%">
+		                        <apex:outputText value="{!goal.remark}"/>
+		                    </apex:column>
+	                    </apex:pageBlockTable> 
+                   	</apex:pageBlockSection>
+		    
+		    
+		    <!-- 	========================================================Emergency=========Assets Allocated====================================================         -->
+
+<!-- 					<apex:outputPanel rendered="{!IF(beanObj.objEmergencyFundGoalDetails.lstAssests.size>0,true,false)}" > -->
+					<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Assets Allocated</div>
+			        	<apex:pageBlockSection collapsible="false" columns="12">
+			        	
+				        	<apex:pageBlockTable value="{!beanObj.objEmergencyFundGoalDetails.lstAssests}" width="80%" var="allocatedAssets" 
+				        							styleClass="required" style="margin-left:48px; width:800px;">
+				        	
+				        		<apex:column headerValue="Type" width="15%">
+			                        <apex:outputText value="{!allocatedAssets.Type}"/>
+			                        <apex:facet name="footer"><apex:outputText value="Total" /></apex:facet>
+			                    </apex:column>
+			                    <apex:column headerValue="Description" width="15%">
+			                        <apex:outputText value="{!allocatedAssets.Description}" style="width:200px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Owner" style="width:80px;">
+			                        <apex:outputText value="{!allocatedAssets.owner}"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Allocated Amount" style="text-align:right;">
+	                    			<apex:outputText value="{0, number, ,##,##0}" style="text-align:right;">
+	                                     <apex:param value="{!allocatedAssets.allocatedAmount}"/>
+	                                </apex:outputText>
+	                                <apex:facet name="footer">
+                                    	<apex:outputText value="{0, number, ,##,##0}" style="float:right;padding-right:" styleClass="required">
+                                             <apex:param value="{!beanObj.objEmergencyFundGoalDetails.AssetsTotal}"/>
+                                    	</apex:outputText>
+                                    </apex:facet>
+			                    </apex:column>
+			                    <apex:column headerValue="Expected Growth rate" style="text-align:center;" width="15%">
+									  <apex:outputText value="{0, number, ##,##0.00}%" rendered="{!((if(allocatedAssets.Type=='Mutual Fund' || allocatedAssets.action=='Liquidate (Align to goal)',false,true)))}">
+                                         <apex:param value="{!allocatedAssets.expectedGrowthRate}"/>
+                                      </apex:outputText>
+                                      <apex:outputText value="{0, number, ##,##0.00}%" rendered="{!((if(allocatedAssets.Type=='Mutual Fund' ||allocatedAssets.action=='Liquidate (Align to goal)',true,false)))}">
+                                         <apex:param value="{!beanObj.objEmergencyFundGoalDetails.IRR}"/>
+                                      </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Goal Year Value" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+	                                     <apex:param value="{!allocatedAssets.goalYearValue}"/>
+	                                </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Action to be taken" width="20%">
+			                        <apex:outputText value="{!allocatedAssets.action}"/>
+			                    </apex:column>
+		                     </apex:pageBlockTable> 
+		                     
+	                    </apex:pageBlockSection>
+<!--                     </apex:outputPanel> -->
+	        
+  <!-- =====================================================================SIP================================================================== -->                       
+                    
+			        	<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">SIP</div>
+			        	<apex:pageBlockSection collapsible="false" columns="6">
+				        	<apex:pageBlockTable value="{!beanObj.objEmergencyFundGoalDetails}" var="goal" styleClass="required" style="margin-left:48px;width:800px;">
+				        	
+				        		<apex:column headerValue="SIP" style="text-align:right; padding-right:15px;" width="20%">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                         <apex:param value="{!beanObj.objEmergencyFundGoalDetails.SIP}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Equity Amount">
+			                        <apex:inputText value="{!beanObj.objEmergencyFundGoalDetails.equityAmt}" style="width:70px;text-align:right; padding-right:15px;;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Equity(%)" style="text-align:right; padding-right:15px;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                             <apex:param value="{!beanObj.objEmergencyFundGoalDetails.equityPerc}"/>
+                                      </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Debt Amount" >
+			                        <apex:inputText value="{!beanObj.objEmergencyFundGoalDetails.debtAmt}" style="width:70px;text-align:right; padding-right:15px;;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Debt(%)" style="text-align:right; padding-right:15px;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                             <apex:param value="{!beanObj.objEmergencyFundGoalDetails.debtPerc}"/>
+                                      </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Gold Amount">
+			                        <apex:inputText value="{!beanObj.objEmergencyFundGoalDetails.goldAmt}" style="width:70px;text-align:right; padding-right:15px;;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Gold(%)" style="text-align:right; padding-right:15px;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                             <apex:param value="{!beanObj.objEmergencyFundGoalDetails.goldPerc}"/>
+                                      </apex:outputText>
+			                    </apex:column>
+		                     </apex:pageBlockTable>   
+	                    </apex:pageBlockSection>
+	        
+	        <!-- =====================================================================SIP Funds================================================================== -->                         
+                 
+                 <apex:outputPanel id="pageBlockSection2">   
+			        <div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">SIP Funds</div>
+			        <apex:outputPanel id="SipFundOutputPannel" >
+			        	<apex:pageBlockSection collapsible="false" columns="6">
+				        	<apex:pageBlockTable value="{!beanObj.objEmergencyFundGoalDetails.lstSIPFunds}" var="lstSIPFunds" 
+				        				styleClass="required" style="margin-left:48px;width:800px;">
+				        	
+				        		<apex:column headerValue="Remove" style="text-align:center;">
+			                        <apex:inputCheckbox value="{!lstSIPFunds.isRemove}" id="checkedone"/>
+			                        <apex:facet name="footer"><apex:outputText value="Total"/></apex:facet>
+			                    </apex:column>
+			                    <apex:column headerValue="SIP Funds" style="text-align:center;" width="20%">
+
+			                        <apex:inputText value="{!lstSIPFunds.productName}" style="text-align:left;" styleClass="inputSIPFunds"/>
+			                        <script>
+										$(document).ready(function()
+								        {
+								        	var availableProductName =[{!strProductSIP}];
+								        	
+								            $(".inputSIPFunds").autocomplete({
+								        		source: availableProductName,
+											  	select: function(event, ui) 
+											  	{
+												  	var strVal = ui.item.value;	  
+											  	} 
+											});		
+								        
+								        });
+									</script>
+			                    </apex:column>
+			                    
+			                    <apex:column headerValue="Transaction Type" style="text-align:center;">
+			                        <apex:selectList value="{!lstSIPFunds.transactionType}" size="1" style="width:80px;" styleClass="requiredField">
+                                        <apex:selectOptions value="{!SIPtransactionType}" ></apex:selectOptions>
+                                    </apex:selectList>
+			                    </apex:column>
+			                    <apex:column headerValue="Amount" >
+			                        <apex:inputText value="{!lstSIPFunds.amount}" style="width:95%;text-align:right;" styleClass="requiredField"/>
+			                        <apex:facet name="footer">
+                                    	<apex:outputText value="{0, number, ,##,##0}" style="float:right;" styleClass="textStyle">
+                                             <apex:param value="{!beanObj.objEmergencyFundGoalDetails.SIPTotal}"/>
+                                    	</apex:outputText>
+                                    </apex:facet> 
+			                    </apex:column>
+			                    <apex:column headerValue="Installments">
+			                        <apex:inputText value="{!lstSIPFunds.installments}" style="width:80%;text-align:right;padding-right:15px;" styleClass="requiredField">
+                                      </apex:inputText> 
+			                    </apex:column>
+			                    <apex:column headerValue="Category" style="text-align:center;">
+			                        <apex:selectList value="{!lstSIPFunds.category}" size="1" style="width:70px;" styleClass="requiredField">
+                                        <apex:selectOptions value="{!assetClass}" ></apex:selectOptions>
+                                    </apex:selectList>
+			                    </apex:column>
+			                    <apex:column headerValue="Options" style="text-align:center;">
+			                        <apex:selectList value="{!lstSIPFunds.option}" size="1" style="width:95%;" styleClass="requiredField">
+                                        <apex:selectOptions value="{!options}" ></apex:selectOptions>
+                                    </apex:selectList>
+			                    </apex:column>
+			                    <apex:column headerValue="Remark" style="text-align:center;">
+			                    	<apex:inputText value="{!lstSIPFunds.remarks}" style="width:95%;text-align:left;" styleClass="textStyle">
+                                    </apex:inputText>
+                                </apex:column>
+			                    <apex:column style="text-align:center;">
+			                    	<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+			                    	<apex:outputPanel rendered="{!!lstSIPFunds.isETCreated}">
+			                        	<apex:selectList value="{!lstSIPFunds.executionTracker}" size="1" styleClass="textStyle" style="width:70px;">
+                                            <apex:selectOptions value="{!ExecutionTracker}"></apex:selectOptions>
+                                    	</apex:selectList>
+                                   	</apex:outputPanel>  		
+                                    <apex:outputPanel rendered="{!lstSIPFunds.isETCreated}" style="font-color:#ED1B24;">
+                                    	<apex:outputLabel value="Already Created" style="width:80px;font-size:11px;font-weight:bold;font-color:#ED1B24;text-align:center;"/>  
+                                    </apex:outputPanel>
+			                    </apex:column>
+		                     </apex:pageBlockTable>  
+	                    </apex:pageBlockSection></apex:outputPanel>
+	            <!--   					Date : 11-02-2013  Action Plan  : Prajakta Sanap -->                   
+<!-- 	                <apex:outputPanel rendered="{!isDisplaySaveButton}">     -->
+	               <apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+	                	<apex:outputPanel rendered="{!isSave}">
+				            <apex:pageBlockSectionItem >
+		                        <apex:commandButton value="Add New SIP Funds"  action="{!addNewSIPFund}" 
+		                        					reRender="pageBlockSection2,SipFundOutputPannel,Pagemsg,pageBlockSectionSummary" style="margin-left:400px;" status="statusNewSIPId">
+			                                    <apex:param name="addNewGoalId" value="{!beanObj.objEmergencyFundGoalDetails.goalId}"/></apex:commandButton>
+			                	<apex:commandButton value="Remove" Action="{!RemoveRecordSIP}" rerender="SipFundOutputPannel,Pagemsg,pageBlockSectionSummary"  
+			                					rendered="{!Not(blnIsETAlreadyGenerated)}" status="statusNewSIPId"/>
+							</apex:pageBlockSectionItem>
+							
+							<apex:actionStatus stopText="" id="statusNewSIPId">
+		                    		<apex:facet name="start"> 
+				                        <apex:outputPanel style="padding-left:50%;">
+				                             <img src="/img/loading.gif" width="16" height="16"/>
+				                        </apex:outputPanel>
+				                    </apex:facet>
+		                   </apex:actionStatus>  
+						</apex:outputPanel>
+					</apex:outputPanel>
+                </apex:outputPanel>		    
+		    
+		 <!-- ========================================= Lumpsum ====================================== -->                       
+			        	
+			        	<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Lumpsum</div>
+			        	<apex:pageBlockSection collapsible="false" columns="6">
+				        	<apex:pageBlockTable value="{!beanObj.objEmergencyFundLumpsum}" var="goalList"  styleClass="required" style="margin-left:48px;width:800px;">
+				        	
+				        		<apex:column headerValue="Lumpsum" style="text-align:right; padding-right:15px;;" width="20%">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                             <apex:param value="{!beanObj.objEmergencyFundLumpsum.lumpsum}"/>
+                                      </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Equity Amount" >
+			                        <apex:inputText value="{!beanObj.objEmergencyFundLumpsum.lumpsumEquityAmt}" style="width:70px;text-align:right; padding-right:15px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Equity(%)" style="text-align:right; padding-right:15px;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                             <apex:param value="{!beanObj.objEmergencyFundLumpsum.lumpsumEquityPerc}"/>
+                                      </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Debt Amount" >
+			                        <apex:inputText value="{!beanObj.objEmergencyFundLumpsum.lumpsumDebtAmt}" style="width:70px;text-align:right; padding-right:15px;" />
+			                    </apex:column>
+			                    <apex:column headerValue="Debt(%)" style="text-align:right; padding-right:15px;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                             <apex:param value="{!beanObj.objEmergencyFundLumpsum.lumpsumDebtPerc}"/>
+                                      </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Gold Amount" >
+			                        <apex:inputText value="{!beanObj.objEmergencyFundLumpsum.lumpsumGoldAmt}" style="width:70px;text-align:right; padding-right:15px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Gold(%)" style="text-align:right; padding-right:15px;">
+			                         <apex:outputText value="{0, number,0.000}" >
+                                             <apex:param value="{!beanObj.objEmergencyFundLumpsum.lumpsumGoldPerc}"/>
+                                      </apex:outputText>
+			                    </apex:column>
+		                     </apex:pageBlockTable>   
+	                    </apex:pageBlockSection>
+	                    
+<!-- =====================================================================Lumpsum Funds================================================================== -->        
+               
+               <apex:outputPanel id="pageBlockSection3">    
+                   <apex:actionfunction name="makeRequired" action="{!makeRequiredOnSTPFrom}" rerender="pageBlockSection,Pagemsg"/>
+                   <div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Lumpsum Funds</div>
+                   <apex:outputPanel id="LumpsumFundOutputPannel" style="margin-left:100px;">
+			        	
+			        	<apex:pageBlockSection collapsible="false" columns="6">
+				        	<apex:pageBlockTable value="{!beanObj.objEmergencyFundGoalDetails.lstLumpsumFunds}" var="lstLumpsumFunds" 
+				        							styleClass="required" style="margin-left:48px;">
+				        	
+				        		<apex:column headerValue="Remove" style="text-align:center;">
+			                        <apex:inputCheckbox value="{!lstLumpsumFunds.isRemove}"/>
+			                        <apex:facet name="footer"><apex:outputText value="Total"/></apex:facet>
+			                    </apex:column>
+			                    <apex:column headerValue="Lumpsum Funds" width="20%">
+
+			                    
+<!-- 			                <apex:inputText value="{!lstLumpsumFunds.lumpsumProductName}" style="width:90%;text-align:left;"  -->
+<!--                                       							styleClass="{!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}"/> -->
+									<apex:inputText value="{!lstLumpsumFunds.lumpsumProductName}" style="width:90%;text-align:left;" styleClass="inputProductLumpsum" />
+									
+									<script>
+										$(document).ready(function()
+								        {
+								        	var availableProductName =[{!strProductLumpsum}];
+								        	
+								            $(".inputProductLumpsum").autocomplete({
+								        		source: availableProductName,
+											  	select: function(event, ui) 
+											  	{
+												  	var strVal = ui.item.value;	  
+											  	} 
+											});		
+								        
+								        });
+									</script>
+			                    </apex:column>
+			                    
+			                    <apex:column headerValue="Transaction Type" style="text-align:center;">
+			                        <apex:selectList value="{!lstLumpsumFunds.lumpsumTransactionType}" size="1" style="width:100%;"  onChange="makeRequired();">
+                                        <apex:selectOptions value="{!lumpsumTransactionType}" ></apex:selectOptions>
+                                    </apex:selectList>
+			                    </apex:column>
+			                    <apex:column headerValue="Fund" style="text-align:right;">
+			                        <apex:inputText value="{!lstLumpsumFunds.lumpsumFund}" style="width:95%;text-align:left;" 
+																styleClass="{!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}">
+                                      </apex:inputText>  
+			                    </apex:column>
+			                    
+			                    <apex:column headerValue="Amount" style="text-align:right;" >
+			                        <apex:inputText value="{!lstLumpsumFunds.lumpsumAmount}" style="width:80%;text-align:right;" 	
+                                      							styleClass="{!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}"/>
+                                    <apex:facet name="footer">
+                                    	<apex:outputText value="{0, number, ,##,##0}" style="float:right;" styleClass="text-align:right;">
+                                             <apex:param value="{!beanObj.objEmergencyFundGoalDetails.LumpsumTotal}"/>
+                                    	</apex:outputText>
+                                    </apex:facet>
+			                    </apex:column>
+			                    <apex:column headerValue="Installments">
+			                        <apex:inputText value="{!lstLumpsumFunds.lumpsumInstallments}" style="width:80%;text-align:right;" 
+                                      							styleClass="{!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}">
+                                      </apex:inputText>
+			                    </apex:column>
+			                    <apex:column >
+			                    	<apex:facet name="header">Amount Per <br/> Installments</apex:facet>
+			                        <apex:inputText value="{!lstLumpsumFunds.lumpsumAmountPerInstall}" style="width:80%;text-align:right;padding-right:15px;" 
+                                      							styleClass="{!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}">
+                                      </apex:inputText> 
+			                    </apex:column>
+			                    <apex:column headerValue="Category" style="text-align:center;">
+			                        <apex:selectList value="{!lstLumpsumFunds.lumpsumCategory}" size="1" style="width:100%;"
+                                    						styleClass="{!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}">
+                                        <apex:selectOptions value="{!assetClass}" ></apex:selectOptions>
+                                    </apex:selectList>
+			                    </apex:column>
+			                    <apex:column headerValue="Option" style="text-align:center;">
+			                        <apex:selectList value="{!lstLumpsumFunds.lumpsumOption}" size="1" style="width:95%;" 
+                                    					styleClass="{!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}">
+                                        <apex:selectOptions value="{!options}" ></apex:selectOptions>
+                                    </apex:selectList>
+			                    </apex:column>
+			                    <apex:column headerValue="Remarks" style="text-align:center;">
+			                        <apex:inputText value="{!lstLumpsumFunds.lumpsumRemarks}" style="width:95%;text-align:left;" styleClass="textStyle">
+                                    </apex:inputText>
+			                    </apex:column>
+			                    <apex:column style="text-align:center;">
+			                    	<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+		                     		<apex:outputPanel rendered="{!!lstLumpsumFunds.isETCreated}">
+				                        <apex:selectList value="{!lstLumpsumFunds.lumpsumExecutionTracker}" size="1" styleClass="textStyle" style="width:100px;">
+	                                            <apex:selectOptions value="{!ExecutionTracker}"></apex:selectOptions>
+	                                    </apex:selectList>
+	                               	</apex:outputPanel>
+	                               	<apex:outputPanel rendered="{!lstLumpsumFunds.isETCreated}" style="font-color:#ED1B24;">
+                                    	<apex:outputLabel value="Already Created" style="width:80px;font-size:11px;font-weight:bold;font-color:#ED1B24;text-align:center;"/>  
+                                    </apex:outputPanel>
+			                    </apex:column>
+		                     </apex:pageBlockTable>  
+		                     
+	                    </apex:pageBlockSection>
+	                  <!--   					Date : 11-02-2013  Action Plan  : Prajakta Sanap -->                   
+<!--                 		<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+                		<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+                			<apex:outputPanel rendered="{!isSave}">
+			                  	<apex:pageBlockSectionItem >
+					                <apex:commandButton value="Add New Lumpsum Funds" style="margin-left:400px;" 
+					                                    rendered="{!Not(blnIsETAlreadyGenerated)}"  action="{!addNewLumpsumFund}" 
+					                                    reRender="Pagemsg,LumpsumFundOutputPannel,pageBlockSectionSummary" status="statusId1">
+					                                    <apex:param name="addNewLumpsumGoalId" value="{!beanObj.objEmergencyFundGoalDetails.goalId}"/></apex:commandButton>
+					                <apex:commandButton value="Remove" Action="{!RemoveRecordSIP}" rerender="pageBlockSection3,Pagemsg,pageBlockSectionSummary" 
+				                                       rendered="{!Not(blnIsETAlreadyGenerated)}" status="statusId1"/>
+				                 </apex:pageBlockSectionItem>
+				                  <apex:actionStatus stopText="" id="statusId1">
+		                    		<apex:facet name="start"> 
+				                        <apex:outputPanel style="padding-left:50%;">
+				                             <img src="/img/loading.gif" width="16" height="16"/>
+				                        </apex:outputPanel>
+				                    </apex:facet>
+		                		  </apex:actionStatus>  
+				            </apex:outputPanel>
+		                </apex:outputPanel>
+		                 <br/>
+	<!--   					Date : 11-02-2013  Action Plan  : Prajakta Sanap -->                   
+<!--                 	<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+	              <apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+	                   <apex:outputPanel rendered="{!isSave}" id="displaySave1">
+		               		<apex:commandButton value="Save" Action="{!saveActionPlan}"  style="margin-top:15px;margin-left:450px;font-weight:bold; font-size:11px;" 
+		                                     onclick="if(!confirm('Do you want to continue?')){return false;}" rendered="{!Not(blnIsETAlreadyGenerated)}" 
+		                                     rerender="pageBlockSection3,Pagemsg,LumpsumFundOutputPannel,SipFundOutputPannel,pageBlockSectionSummary" status="statusIdEF"/>
+		                </apex:outputPanel>
+		                <apex:actionStatus stopText="" id="statusIdEF">
+		                    <apex:facet name="start"> 
+		                        <apex:outputPanel style="padding-left:50%;">
+		                             <img src="/img/loading.gif" width="16" height="16"/>
+		                        </apex:outputPanel>
+		                    </apex:facet>
+		                </apex:actionStatus>  
+		            </apex:outputPanel>
+	               </apex:outputPanel>  
+	           </apex:outputPanel>
+	           </apex:pageBlockSection>
+	<!-- =====================================================================End of Lumpsum Funds================================================================== -->                    
+	                                   
+		    
+		    
+		    
+<!-- 	=================================================================Goal details==================================================         -->
+		    
+		    	<apex:repeat value="{!beanObj.lstGoalDetails}" var="goalList">
+		    
+		        	<apex:pageBlockSection title="{!goalList.description}" columns="1" collapsible="true" id="section11">
+					
+						<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Goal Details</div>
+						<div style="margin-left:50px;">
+							<apex:pageBlockSection collapsible="false" columns="6">
+					        	
+					        	<apex:pageBlockTable value="{!goalList}" var="goal" width="120%" styleClass="required" style="margin-left:48px;width:800px;">
+					        	
+					        		<apex:column headerValue="Start Year" width="15%">
+				                        <apex:outputText value="{!goal.startYear}" style="text-align:center;width:100px;"/>
+				                    </apex:column>
+				                    <apex:column headerValue="End Year" width="15%">
+				                        <apex:outputText value="{!goal.endYear}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Annual Cost of Goal" width="15%">
+				                        <apex:outputText value="{!TEXT(goal.annualGoalCost)}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Risk Profile" width="20%">
+				                        <apex:outputText value="{!goal.goalProfile}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Remarks" width="30%">
+				                        <apex:outputText value="{!goal.remark}"/>
+				                    </apex:column>
+			                    </apex:pageBlockTable> 
+	                    	</apex:pageBlockSection>
+	        			</div>
+	        			
+<!-- 	=================================================================Assets Allocated====================================================         -->
+
+					<apex:outputPanel rendered="{!IF(goalList.lstAssests.size>0,true,false)}" >
+					<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Assets Allocated</div>
+			        	<apex:pageBlockSection collapsible="false" columns="12">
+			        	
+				        	<apex:pageBlockTable value="{!goalList.lstAssests}" width="80%" var="allocatedAssets" styleClass="required" style="margin-left:48px;width:800px;">
+				        	
+				        		<apex:column headerValue="Type" width="15%">
+			                        <apex:outputText value="{!allocatedAssets.Type}"/>
+			                        <apex:facet name="footer"><apex:outputText value="Total"/></apex:facet>
+			                    </apex:column>
+			                    <apex:column headerValue="Description" width="15%">
+			                        <apex:outputText value="{!allocatedAssets.Description}" style="width:200px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Owner" style="width:80px;">
+			                        <apex:outputText value="{!allocatedAssets.owner}"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Allocated Amount" style="text-align:right;">
+	                    			<apex:outputText value="{0, number, ,##,##0}" style="text-align:right;">
+	                                     <apex:param value="{!allocatedAssets.allocatedAmount}"/>
+	                                </apex:outputText>
+	                                <apex:facet name="footer">
+                                    	<apex:outputText value="{0, number, ,##,##0}" style="float:right;" styleClass="textStyle">
+                                             <apex:param value="{!goalList.AssetsTotal}"/>
+                                    	</apex:outputText>
+                                    </apex:facet>
+			                    </apex:column>
+			                    <apex:column headerValue="Expected Growth rate" style="text-align:center;">
+								 	 <apex:outputText value="{0, number, ##,##0.00}%" rendered="{!((if(allocatedAssets.Type=='Mutual Fund' || allocatedAssets.action=='Liquidate (Align to goal)',false,true)))}">
+                                        <apex:param value="{!allocatedAssets.expectedGrowthRate}"/>
+                                     </apex:outputText>
+                                     <apex:outputText value="{0, number, ##,##0.00}%" rendered="{!((if(allocatedAssets.Type=='Mutual Fund' ||allocatedAssets.action=='Liquidate (Align to goal)',true,false)))}">
+                                        <apex:param value="{!goalList.IRR}"/>
+                                     </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Goal Year Value" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+	                                     <apex:param value="{!allocatedAssets.goalYearValue}"/>
+	                                </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Action to be taken" width="20%">
+			                        <apex:outputText value="{!allocatedAssets.action}"/>
+			                    </apex:column>
+		                     </apex:pageBlockTable> 
+		                     
+	                    </apex:pageBlockSection>
+                    </apex:outputPanel>
+	        
+	        <!-- =====================================================================SIP================================================================== -->                       
+                    
+			        	<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">SIP</div>
+			        	<apex:pageBlockSection collapsible="false" columns="6">
+				        	<apex:pageBlockTable value="{!goalList}" var="goalList" styleClass="required" style="margin-left:48px;width:800px;">
+				        	
+				        		<apex:column headerValue="SIP" style="text-align:center;" width="20%">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                    	<apex:param value="{!goalList.SIP}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Equity Amount" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                    	<apex:param value="{!goalList.equityAmt}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Equity(%)" style="text-align:center;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                        <apex:param value="{!goalList.equityPerc}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Debt Amount" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                        <apex:param value="{!goalList.debtAmt}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Debt(%)" style="text-align:center;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                    	<apex:param value="{!goalList.debtPerc}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Gold Amount" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                    	<apex:param value="{!goalList.goldAmt}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Gold(%)" style="text-align:center;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                    	<apex:param value="{!goalList.goldPerc}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+		                     </apex:pageBlockTable>   
+	                    </apex:pageBlockSection>
+	        
+	        <!-- =====================================================================SIP Funds================================================================== -->                         
+                 <apex:outputPanel id="pageBlockSection4">   
+			        <div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">SIP Funds</div>
+			        <apex:outputPanel id="SipFundOutputPannel">
+			        	<apex:pageBlockSection collapsible="false" columns="6">
+				        	<apex:pageBlockTable value="{!goalList.lstSIPFunds}" var="lstSIPFunds" styleClass="required" style="margin-left:48px;width:800px;">
+				        	
+				        		<apex:column headerValue="Remove" style="text-align:center;">
+			                        <apex:inputCheckbox value="{!lstSIPFunds.isRemove}" id="checkedone"/>
+			                        <apex:facet name="footer"><apex:outputText value="Total"/></apex:facet>
+			                    </apex:column>
+			                    <apex:column headerValue="SIP Funds" style="text-align:center;" width="20%">
+
+			                        <apex:inputText value="{!lstSIPFunds.productName}" style="text-align:left;" styleClass="inputSIPFunds"/>
+		                        	<script>
+										$(document).ready(function()
+								        {
+								        	var availableProductName =[{!strProductSIP}];
+								        	
+								            $(".inputSIPFunds").autocomplete({
+								        		source: availableProductName,
+											  	select: function(event, ui) 
+											  	{
+												  	var strVal = ui.item.value;	  
+											  	} 
+											});		
+								        
+								        });
+									</script>
+			                    </apex:column>
+			                    <apex:column headerValue="Transaction Type" style="text-align:center;">
+			                        <apex:selectList value="{!lstSIPFunds.transactionType}" size="1" style="width:80px" styleClass="requiredField">
+                                        <apex:selectOptions value="{!SIPtransactionType}" ></apex:selectOptions>
+                                    </apex:selectList>
+			                    </apex:column>
+			                    <apex:column headerValue="Amount">
+			                        <apex:inputText value="{!lstSIPFunds.amount}" style="width:95%;text-align:right;" styleClass="requiredField"/>
+                                    <apex:facet name="footer">
+                                    	<apex:outputText value="{0, number, ,##,##0}" style="float:right;" styleClass="textStyle">
+                                             <apex:param value="{!goalList.SIPTotal}"/>
+                                    	</apex:outputText>
+                                    </apex:facet> 
+			                    </apex:column>
+			                    <apex:column headerValue="Installments">
+			                        <apex:inputText value="{!lstSIPFunds.installments}" style="width:80%;text-align:right;padding-right:15px;" styleClass="requiredField">
+                                      </apex:inputText> 
+			                    </apex:column>
+			                    <apex:column headerValue="Category" style="text-align:center;">
+			                        <apex:selectList value="{!lstSIPFunds.category}" size="1" style="width:70px;" styleClass="requiredField">
+                                        <apex:selectOptions value="{!assetClass}" ></apex:selectOptions>
+                                    </apex:selectList>
+			                    </apex:column>
+			                    <apex:column headerValue="Options" style="text-align:center;">
+			                        <apex:selectList value="{!lstSIPFunds.option}" size="1" style="width:95%;" styleClass="requiredField">
+                                        <apex:selectOptions value="{!options}" ></apex:selectOptions>
+                                    </apex:selectList>
+			                    </apex:column>
+			                    <apex:column headerValue="Remark" style="text-align:center;">
+			                    	<apex:inputText value="{!lstSIPFunds.remarks}" style="width:95%;text-align:left;" styleClass="textStyle">
+                                    </apex:inputText>
+                                </apex:column>
+			                    <apex:column style="text-align:center;">
+			                    	<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+			                    	<apex:outputPanel rendered="{!!lstSIPFunds.isETCreated}">
+				                        <apex:selectList value="{!lstSIPFunds.executionTracker}" size="1" styleClass="textStyle" style="width:100px;">
+	                                            <apex:selectOptions value="{!ExecutionTracker}"></apex:selectOptions>
+	                                    </apex:selectList>
+	                                </apex:outputPanel>
+                                   	<apex:outputPanel rendered="{!lstSIPFunds.isETCreated}" style="font-color:#ED1B24;">
+                                    	<apex:outputLabel value="Already Created" style="width:80px;font-size:11px;font-weight:bold;font-color:#ED1B24;text-align:center;"/>  
+                                    </apex:outputPanel>
+			                    </apex:column>
+		                     </apex:pageBlockTable>  
+	                    </apex:pageBlockSection>
+	                    </apex:outputPanel>
+	                    
+<!--   					Date : 11-02-2013  Action Plan  : Prajakta Sanap -->                   
+<!--                 		<apex:outputPanel rendered="{!isDisplaySaveButton}"> -->
+						<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+                			<apex:outputPanel rendered="{!isSave}"> 
+			                    <apex:pageBlockSectionItem >
+					                <apex:commandButton value="Add New SIP Funds" style="margin-left:400px;" 
+					                                    rendered="{!Not(blnIsETAlreadyGenerated)}"  action="{!addNewSIPFund}" 
+					                                    reRender="Pagemsg,SipFundOutputPannel" status="statusSIPId">
+					                                    <apex:param name="addNewGoalId" value="{!goalList.goalId}"/></apex:commandButton>
+					                <apex:commandButton value="Remove" Action="{!RemoveRecordSIP}" rerender="pageBlockSection4,pageBlockSectionSummary,Pagemsg" 
+					                                       rendered="{!Not(blnIsETAlreadyGenerated)}" status="statusSIPId"/>
+				                </apex:pageBlockSectionItem>
+				                <apex:actionStatus stopText="" id="statusSIPId">
+							            <apex:facet name="start">                
+							            	<apex:outputPanel style="padding-left:1%;">
+							                	<img src="/img/loading.gif" width="16" height="16"/>
+							                </apex:outputPanel>
+							            </apex:facet>
+						        </apex:actionStatus>    
+				            </apex:outputPanel>
+			            </apex:outputPanel>
+	                </apex:outputPanel>    
+	                    
+	               
+            
+<!-- =====================================================================Lumpsum================================================================== -->                       
+			        	
+			        	<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Lumpsum</div>
+			        	<apex:pageBlockSection collapsible="false" columns="6">
+				        	<apex:pageBlockTable value="{!goalList}" var="goalList"  styleClass="required" style="margin-left:48px;width:800px;">
+				        	
+				        		<apex:column headerValue="Lumpsum" style="text-align:center;" width="20%">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                         <apex:param value="{!goalList.lumpsum}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Equity Amount" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                    	<apex:param value="{!goalList.lumpsumEquityAmt}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Equity(%)" style="text-align:center;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                    	<apex:param value="{!goalList.lumpsumEquityPerc}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Debt Amount" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                    	<apex:param value="{!goalList.lumpsumDebtAmt}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Debt(%)" style="text-align:center;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                        <apex:param value="{!goalList.lumpsumDebtPerc}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Gold Amount" style="text-align:center;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                    	<apex:param value="{!goalList.lumpsumGoldAmt}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Gold(%)" style="text-align:center;">
+			                        <apex:outputText value="{0, number,0.000}" >
+                                    	<apex:param value="{!goalList.lumpsumGoldPerc}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+		                     </apex:pageBlockTable>   
+	                    </apex:pageBlockSection>
+	                    
+<!-- =====================================================================Lumpsum Funds================================================================== -->                         
+                <apex:outputPanel id="pageBlockSection5">   
+                   <div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">Lumpsum Funds</div>
+                   <apex:outputPanel id="LumpsumFundOutputPannel" style="margin-left:100px;">
+			        	
+			        	<apex:pageBlockSection collapsible="false" columns="6">
+				        	<apex:pageBlockTable value="{!goalList.lstLumpsumFunds}" var="lstLumpsumFunds" styleClass="required" style="margin-left:48px;">
+				        	
+				        		<apex:column headerValue="Remove" style="text-align:center;">
+			                        <apex:inputCheckbox value="{!lstLumpsumFunds.isRemove}"/>
+			                        <apex:facet name="footer"><apex:outputText value="Total"/></apex:facet>
+			                    </apex:column>
+			                    <apex:column headerValue="Lumpsum Funds" width="20%">
+
+			                        <apex:inputText value="{!lstLumpsumFunds.lumpsumProductName}" style="width:90%;text-align:left;" 
+                                      							styleClass="inputlumpsumFunds" />
+                                      
+                                    <script>
+										$(document).ready(function()
+								        {
+								        	var availableProductName =[{!strProductLumpsum}];
+								        	
+								            $(".inputlumpsumFunds").autocomplete({
+								        		source: availableProductName,
+											  	select: function(event, ui) 
+											  	{
+												  	var strVal = ui.item.value;	  
+											  	} 
+											});		
+								        
+								        });
+									</script>  
+			                    </apex:column>
+			                    
+			                    <apex:column headerValue="Transaction Type" style="text-align:center;">
+			                        <apex:selectList value="{!lstLumpsumFunds.lumpsumTransactionType}" size="1" style="width:100%;"  onChange="makeRequired();">
+                                        <apex:selectOptions value="{!lumpsumTransactionType}" ></apex:selectOptions>
+                                    </apex:selectList>
+			                    </apex:column>
+			                    <apex:column headerValue="Fund">
+			                        <apex:inputText value="{!lstLumpsumFunds.lumpsumFund}" style="width:95%;text-align:right;" 
+																styleClass="{!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}">
+                                    </apex:inputText>  
+			                    </apex:column>
+			                    <apex:column headerValue="Amount">
+			                        <apex:inputText value="{!lstLumpsumFunds.lumpsumAmount}" style="width:80%;text-align:right;" 	
+                                      							styleClass="{!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}">
+                                    </apex:inputText>
+                                    <apex:facet name="footer">
+                                    	<apex:outputText value="{0, number, ,##,##0}" style="float:right;" styleClass="textStyle">
+                                             <apex:param value="{!goalList.LumpsumTotal}"/>
+                                    	</apex:outputText>
+                                    </apex:facet>
+			                    </apex:column>
+			                    <apex:column headerValue="Installments">
+			                        <apex:inputText value="{!lstLumpsumFunds.lumpsumInstallments}" style="width:80%;text-align:right;padding-right:15px;" 
+                                      							styleClass="{!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}">
+                                      </apex:inputText>
+			                    </apex:column>
+			                    <apex:column >
+			                    	<apex:facet name="header">Amount Per <br/> Installments</apex:facet>
+			                        <apex:inputText value="{!lstLumpsumFunds.lumpsumAmountPerInstall}" style="width:80%;text-align:right; padding-right:15px;" 
+                                      							styleClass="{!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}">
+                                      </apex:inputText> 
+			                    </apex:column>
+			                    <apex:column headerValue="Category" style="text-align:center;">
+			                        <apex:selectList value="{!lstLumpsumFunds.lumpsumCategory}" size="1" style="width:100%;"
+                                    						styleClass="{!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}">
+                                        <apex:selectOptions value="{!assetClass}" ></apex:selectOptions>
+                                    </apex:selectList>
+			                    </apex:column>
+			                    <apex:column headerValue="Option" style="text-align:center;">
+			                        <apex:selectList value="{!lstLumpsumFunds.lumpsumOption}" size="1" style="width:95%;" 
+                                    					styleClass="{!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}">
+                                        <apex:selectOptions value="{!options}" />
+                                    </apex:selectList>
+			                    </apex:column>
+			                    <apex:column headerValue="Remarks" style="text-align:center;">
+			                        <apex:inputText value="{!lstLumpsumFunds.lumpsumRemarks}" style="width:95%;text-align:left;" styleClass="textStyle">
+                                    </apex:inputText>
+			                    </apex:column>
+			                    <apex:column style="text-align:center;">
+			                    	<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+			                    	<apex:outputPanel rendered="{!!lstLumpsumFunds.isETCreated}">
+				                        <apex:selectList value="{!lstLumpsumFunds.lumpsumExecutionTracker}" size="1" styleClass="textStyle" style="width:100px;">
+	                                            <apex:selectOptions value="{!ExecutionTracker}"></apex:selectOptions>
+	                                    </apex:selectList>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!lstLumpsumFunds.isETCreated}" style="font-color:#ED1B24;">
+	                                    	<apex:outputLabel value="Already Created" style="width:80px;font-size:11px;font-weight:bold;font-color:#ED1B24;text-align:center;"/>  
+                                    </apex:outputPanel>
+			                    </apex:column>
+		                     </apex:pageBlockTable>   
+	                    </apex:pageBlockSection>
+	                </apex:outputPanel>
+	               		<!--   					Date : 11-02-2013  Action Plan  : Prajakta Sanap -->                   
+<!--                 		<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+						<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+                			<apex:outputPanel rendered="{!isSave}">
+				                <apex:pageBlockSectionItem >
+					               	<apex:commandButton value="Add New Lumpsum Funds" style="margin-left:400px;" 
+					                                    rendered="{!Not(blnIsETAlreadyGenerated)}"  action="{!addNewLumpsumFund}" reRender="Pagemsg,LumpsumFundOutputPannel" status="statusLumpsumId">
+					                                    <apex:param name="addNewLumpsumGoalId" value="{!goalList.goalId}" /></apex:commandButton>
+					                                    
+	<!-- 				                <apex:commandButton value="Add New Lumpsum Funds"  style="margin-top:15px;margin-left:350px;font-weight:bold; font-size:11px;FONT-FAMILY: Calibri;"  -->
+	<!--                                     rendered="{!Not(blnIsETAlreadyGenerated)}"  action="{!addNewLumpsumFund}"  -->
+	<!--                                     reRender="Pagemsg,LumpsumFundOutputPannel"> -->
+	<!--                                     <apex:param name="addNewLumpsumGoalId" value="{!goalList.goalId}"/></apex:commandButton> -->
+	                                    
+					                <apex:commandButton value="Remove" Action="{!RemoveRecordSIP}" rerender="LumpsumFundOutputPannel,Pagemsg" 
+					                                       rendered="{!Not(blnIsETAlreadyGenerated)}" status="statusLumpsumId"/>
+					                                       
+					            </apex:pageBlockSectionItem>
+					            <apex:actionStatus stopText="" id="statusLumpsumId">
+							            <apex:facet name="start">                
+							            	<apex:outputPanel style="padding-left:1%;">
+							                	<img src="/img/loading.gif" width="16" height="16"/>
+							                </apex:outputPanel>
+							            </apex:facet>
+						        </apex:actionStatus>      
+					        </apex:outputPanel>
+		                </apex:outputPanel>
+		                <br/>
+		            <!--   					Date : 11-02-2013  Action Plan  : Prajakta Sanap -->                   
+<!--                 	<apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+                	<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+		                <apex:outputPanel rendered="{!isSave}" id="displaySave1">
+			            	<apex:commandButton value="Save" Action="{!saveActionPlan}"  style="margin-top:15px;margin-left:450px;font-weight:bold; font-size:11px;" 
+			                                     onclick="if(!confirm('Do you want to continue?')){return false;}" 
+			                                     rendered="{!Not(blnIsETAlreadyGenerated)}" 
+			                                     rerender="LumpsumFundOutputPannel,Pagemsg,pageBlockSectionSummary,SipFundOutputPannel" status="statusIdEF"/>
+			            </apex:outputPanel>
+		            </apex:outputPanel>    
+		                <apex:actionStatus stopText="" id="statusIdEF">
+		                    <apex:facet name="start"> 
+		                        <apex:outputPanel style="padding-left:1%;">
+		                             <img src="/img/loading.gif" width="16" height="16"/>
+		                        </apex:outputPanel>
+		                    </apex:facet>
+		                </apex:actionStatus>  
+		           </apex:outputPanel>  
+	<!-- =====================================================================End of Lumpsum Funds================================================================== -->                    
+        		</apex:pageBlockSection>
+        	</apex:repeat>
+        </apex:pageBlockSection>
+        
+<!-- ================================================SUMMARY OF RECOMMENDED INVESTMENTS (MUTUAL FUNDS)================================================================================ -->              
+
+<!--        =========================================================SIP Summary ========================================================        -->
+        	<apex:outputPanel id="pageBlockSectionSummary">
+              	<apex:pageBlockSection title="SUMMARY OF RECOMMENDED INVESTMENTS (MUTUAL FUNDS)" collapsible="true" columns="1" id="section6">
+              		<div class="subHeader" style="width:80%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">SIP SUMMARY</div>
+              			<apex:pageBlockSection collapsible="true" columns="1" >
+              				<apex:repeat value="{!mapSIPFundsAlreadyExists}" var="sipFundsMap"> 
+		                		<apex:variable var="total" value="{!0}"/>
+		                		<apex:repeat value="{!mapSIPFundsAlreadyExists[sipFundsMap]}" var="varSipFundsMap">
+										<apex:variable var="total" value="{!total + ROUND(varSipFundsMap.amount,0)}"/>		                			
+		                		</apex:repeat>
+	                			<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">{!sipFundsMap}</div>
+		               			<apex:pageBlockTable value="{!mapSIPFundsAlreadyExists[sipFundsMap]}" var="sipFundsObj" styleClass="required" style="margin-left:48px;width:900px;">
+<!-- 				        	<apex:pageBlockTable value="{!lstSummarySIPFunds}" var="lstSIPFunds" styleClass="required" style="margin-left:48px;width:800px;"> -->
+					        		<apex:column headerValue="SIP Summary" style="text-align:left;">
+				                        <apex:outputText value="{!sipFundsObj.productName}"/>
+				                        <apex:facet name="footer"><apex:outputText value="Total"/></apex:facet>
+				                    </apex:column>
+				                    <apex:column headerValue="Transaction Type" width="15%" style="text-align:left;">
+				                        <apex:outputText value="{!sipFundsObj.transactionType}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Amount" style="text-align:right; padding-right:10px;">
+				                        <apex:outputText value="{0, number, ,##,##0}" style="width:95%;text-align:right;" styleClass="textStyle">
+	                                             <apex:param value="{!sipFundsObj.amount}"/>
+	                                    </apex:outputText>
+	                                    <apex:facet name="footer">
+	                                      	<apex:outputText value="{0, number, ,##,##0}" style="float:right;padding-right:15px;" styleClass="textStyle">
+	                                             <apex:param value="{!total}"/>
+	                                     	</apex:outputText>
+	                                    </apex:facet>
+				                    </apex:column>
+				                    <apex:column headerValue="Installments" style="text-align:right; padding-right:25px;">
+				                        <apex:outputText value="{!sipFundsObj.installments}"/>  
+				                    </apex:column>
+				                    <apex:column headerValue="Category" style="text-align:center;">
+				                        <apex:outputText value="{!sipFundsObj.category}"/>  
+				                    </apex:column>
+				                    <apex:column headerValue="Option" style="text-align:left;">
+				                        <apex:outputText value="{!sipFundsObj.option}"/>  
+				                    </apex:column>
+				                    <apex:column headerValue="Remarks" style="text-align:left;padding-right:10px;">
+				                        <apex:outputText value="{!sipFundsObj.remarks}"/>  
+				                    </apex:column>
+								</apex:pageBlockTable>
+							</apex:repeat>
+						</apex:pageBlockSection>
+					
+<!--        =========================================================Lumpsum Summary ========================================================        -->					
+					
+						<div class="subHeader" style="width:80%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">LUMPSUM SUMMARY</div>
+				    	<apex:pageBlockSection collapsible="true" columns="1" >
+					    	<apex:repeat value="{!mapLumpsumFundsAlreadyExists}" var="lumpsumFundsMap"> 
+					    		<apex:variable var="total" value="{!0}"/>
+			                		<apex:repeat value="{!mapLumpsumFundsAlreadyExists[lumpsumFundsMap]}" var="varLumpsumFundsMap">
+											<apex:variable var="total" value="{!total + ROUND(varLumpsumFundsMap.Amount__c,0)}"/>		                			
+			                		</apex:repeat>
+	                			<div class="subHeader" style="width:15%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">{!lumpsumFundsMap}</div>
+					        	<apex:pageBlockTable value="{!mapLumpsumFundsAlreadyExists[lumpsumFundsMap]}" var="lumpsumFundsObj" styleClass="required" style="margin-left:48px;width:800px;">
+					        		<apex:column headerValue="Lumpsum Summary" style="text-align:left;">
+				                        <apex:outputText value="{!lumpsumFundsObj.Product_Name__c}"/>
+				                        <apex:facet name="footer"><apex:outputText value="Total"/></apex:facet>
+				                    </apex:column>
+				                    <apex:column headerValue="Transaction Type" width="15%">
+				                        <apex:outputText value="{!lumpsumFundsObj.Transaction_Type__c}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Fund" style="text-align:center;">
+				                        <apex:outputText value="{!lumpsumFundsObj.Fund__c}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Amount" style="text-align:right; padding-right:15px;">
+				                        <apex:outputText value="{0, number, ,##,##0}" style="width:95%;text-align:left;" styleClass="textStyle">
+	                                             <apex:param value="{!lumpsumFundsObj.Amount__c}"/>
+	                                      </apex:outputText>
+	                                      <apex:facet name="footer">
+	                                      <apex:outputText value="{0, number, ,##,##0}" style="float:right;padding-right:15px;" styleClass="textStyle">
+	                                             <apex:param value="{!total}"/>
+	                                      </apex:outputText></apex:facet>
+				                    </apex:column>
+				                    <apex:column headerValue="Installments" style="text-align:right;padding-right:25px;">
+				                        <apex:outputText value="{!lumpsumFundsObj.Installments__c}"/>  
+				                    </apex:column>
+	<!-- 			                    <apex:column headerValue="Amount per Installments" style="text-align:right; padding-right:15px;"> -->
+	<!-- 			                        <apex:outputText value="{!lstLumpsumFunds.Amount_Per_Installment__c}"/>   -->
+	<!-- 			                    </apex:column> -->
+				                    <apex:column headerValue="Category" style="text-align:center;">
+				                        <apex:outputText value="{!lumpsumFundsObj.Category__c}"/>  
+				                    </apex:column>
+				                    <apex:column headerValue="Option" style="text-align:left;">
+				                        <apex:outputText value="{!lumpsumFundsObj.Option__c}"/>  
+				                    </apex:column>
+				                    <apex:column headerValue="Remarks" style="text-align:left;padding-right:10px;">
+				                        <apex:outputText value="{!lumpsumFundsObj.Remarks__c}"/>  
+				                    </apex:column>
+								</apex:pageBlockTable>
+							</apex:repeat>
+						</apex:pageBlockSection>
+<!-- 					<apex:outputPanel rendered="{!isSave}" id="displaySave3"> -->
+<!--                     	<apex:commandButton value="Save" Action="{!saveActionPlan}"  style="margin-top:15px;margin-left:450px;font-weight:bold; font-size:11px;"  -->
+<!--                                     onclick="if(!confirm('Do you want to continue?')){return false;}" rendered="{!Not(blnIsETAlreadyGenerated)}" rerender="mutualFundPanelId,Pagemsg" status="statusId2"/> -->
+<!--                     </apex:outputPanel> -->
+				</apex:pageBlockSection>
+				
+			</apex:outputPanel>
+			
+<!-- ================================================RECOMMNEDATION ON EXISTING INSURANCE================================================================ -->       
+        
+        
+       	<apex:pageBlockSection title="RECOMMENDATION ON EXISTING INSURANCE" collapsible="true" columns="1" id="section2">
+           	<div class="space">
+                <apex:outputPanel id="RecPageblocksection">
+                <div style="overflow:auto;height:100%;width:900px; margin-left:50px;"> 
+                    <table  width="100%" border="1" cellpadding="2" cellspacing="0" id="dataTable7">
+                    <tr >
+                        <td class="tableHeaderLight"  style="font-size:14px;font-weight:bold;text-align:left;width:20%;background-color:#A9C5EB;">Policy Number</td>
+                        <apex:repeat id="hdpolicyNumber" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.policyNumber}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Insured</td>
+                        <apex:repeat id="hdinsured" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.insured}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Nominee</td>
+                        <apex:repeat id="hdnominee" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.nominee}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Insurance Company</td>
+                        <apex:repeat id="hdinsuranceCompany" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.insuranceCompany}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Policy Type</td>
+                        <apex:repeat id="hdpolicyType" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.policyType}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Policy Name</td>
+                        <apex:repeat id="hdpolicyName" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.policyName}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Commencement Date</td>
+                        <apex:repeat id="hdcommencementDate" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" style="text-align:right;" styleClass="textStyle">
+                                    <apex:param value="{!recommendedInsurance.commencementDate}" /> 
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Next Premium Due Date</td>
+                        <apex:repeat id="hdnextPremiumDueDate" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" style="text-align:right;" styleClass="textStyle">
+                                    <apex:param value="{!recommendedInsurance.nextPremiumDueDate}" /> 
+                                </apex:outputText>
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Death Benefit (Rs.)</td>
+                        <apex:repeat id="hddeathBenefitRs" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.deathBenefitRs}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Premium Amount (Rs.)</td>
+                        <apex:repeat id="hdpremiumAmountRs" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.premiumAmountRs}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Premium Payment Frequency</td>
+                        <apex:repeat id="hdpremiumPaymentFrequency" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.premiumPaymentFrequency}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Tenure of Insurance</td>
+                        <apex:repeat id="hdtenureofInsurance" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.tenureofInsurance}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Premium Paying Term</td>
+                        <apex:repeat id="hdpremiumPayingTerm" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.premiumPayingTerm}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Surrender Cash Value</td>
+                        <apex:repeat id="hdsurrenderCashValue" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.surrenderCashValue}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Current Amount</td>
+                        <apex:repeat id="hdcurrentAmount" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{0, number, ,##,##0}" styleClass="textStyle" >
+                                      <apex:param value="{!recommendedInsurance.currentAmount}"/>
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Maturity Amount</td>
+                        <apex:repeat id="hdmaturityAmount" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                 <apex:outputText value="{0, number, ,##,##0}" styleClass="textStyle" >
+                                         <apex:param value="{!recommendedInsurance.maturityAmount}"/>
+                                  </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Action to be taken</td>
+                        <apex:repeat id="hdaction" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                                <apex:outputText value="{!recommendedInsurance.action}"  styleClass="textStyle">
+                                </apex:outputText> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                     <tr>
+                        <td class="tableHeaderLight" style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Execution tracker<br/>to be opened</td>
+                        <apex:repeat id="hdexecutiontracker" value="{!beanObj.lstRecommendedInsurance}" var="recommendedInsurance">
+                            <td style="text-align:right;">
+                            	<apex:outputPanel rendered="{!recommendedInsurance.isETCreated}" style="font-color:#ED1B24;">
+	                                <apex:outputLabel value="Already Created" style="width:80px;font-size:11px;font-weight:bold;font-color:#ED1B24;text-align:center;"/>  
+	                            </apex:outputPanel>
+	                            <apex:outputPanel rendered="{!!recommendedInsurance.isETCreated}">
+	                                <apex:outputPanel rendered="{!IF(((recommendedInsurance.action == 'To be grown till maturity but stop saving more')|| (recommendedInsurance.action == 'Liquidate (Align to goal)')),true,false)}">
+	                                	<apex:selectList value="{!recommendedInsurance.recInsuranceExecutionTracker}" size="1" styleClass="textStyle" style="width:100px;">
+	                                         <apex:selectOptions value="{!ExecutionTracker}"></apex:selectOptions>
+	                                    </apex:selectList>
+	                                </apex:outputPanel> 
+                               	</apex:outputPanel>
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    </table>
+                </div>
+            </apex:outputPanel>
+         </div>
+<!--          <apex:outputPanel rendered="{!isDisplaySaveButton}"> 	 -->
+		<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+			<apex:outputPanel rendered="{!isSave}" id="displaySave4">
+	        	<apex:commandButton value="Save" Action="{!saveActionPlan}"  
+	        						style="margin-top:15px;margin-left:450px;font-weight:bold; font-size:11px;" 
+	                                onclick="if(!confirm('Do you want to continue?')){return false;}" 
+	                                rendered="{!Not(blnIsETAlreadyGenerated)}" rerender="RecPageblocksection,Pagemsg" status="statusId5"/>
+	        </apex:outputPanel>
+    	 </apex:outputPanel>
+       	 <apex:actionStatus stopText="" id="statusId5">
+            <apex:facet name="start">                
+            	<apex:outputPanel style="padding-left:1%;">
+                	<img src="/img/loading.gif" width="16" height="16"/>
+                </apex:outputPanel>
+            </apex:facet>
+         </apex:actionStatus>  
+         
+         </apex:pageBlockSection>
+                     				
+				
+<!-- ===================================================================RECOMMENDED INSURANCE=================================================================== --> 
+
+<!--        =========================================================LIFE INSURANCE========================================================= -->
+		<apex:outputPanel id="pageBlockSection6" rendered="{!(isLifeInsurancePlanning || isGeneralInsurancePlanning)}"> 	
+        	<apex:pageBlockSection title=" RECOMMENDED INSURANCE" collapsible="true" columns="1" id="section3">
+        	 	<apex:pageMessages id="Pagemsg1"/> 
+        	    <apex:outputPanel rendered="{!isLifeInsurancePlanning}">
+	            	<div class="subHeader" style="width:90%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">LIFE INSURANCE</div>
+		                <apex:outputPanel rendered="{!NOT(beanObj.isLifeInsExist)}">
+		                    {!$Label.ActionPlanInsurenceMsg}
+		                </apex:outputPanel> 
+	                 	
+	                	<apex:outputPanel rendered="{!beanObj.isLifeInsExist}">
+                		<apex:pageBlockSection collapsible="true" columns="1" >
+<!-- 				        <apex:pageBlockTable value="{!beanObj.lstLifeInsurance}" var="liObj" styleClass="required" style="margin-left:48px; width:800px;"> -->
+		        		 	<apex:repeat value="{!beanObj.mapIdToLifeInsuranceInnerClass}" var="lifeInsuranceMap"> 
+		        		 		<apex:pageBlockTable value="{!beanObj.mapIdToLifeInsuranceInnerClass[lifeInsuranceMap]}" var="liObj" styleClass="required" style="margin-left:48px;width:900px;">
+					               <apex:column width="3%">
+			<!--   					Date : 11-02-2013  Action Plan  : Prajakta Sanap -->    		               
+						                <apex:outputPanel rendered="{!isDisplaySaveButton}">     
+						                    <apex:commandButton Action="{!addNewLifeInsuranceRow}" value="+" rerender="pageBlockSection6,Pagemsg1" rendered="{!!liObj.isNewLI}">
+					                           <apex:param name="addNew" value="{!liObj.insuranceId}"  assignTo="{!addNewLifeInsuranceId}" />
+					                        </apex:commandButton>
+					                        <apex:commandButton Action="{!removeLifeInsuracneRow}" value="-" rerender="pageBlockSection6,Pagemsg1" rendered="{!liObj.isNewLI}">
+					                           <apex:param name="recId" value="{!liObj.insuranceId}"  assignTo="{!removeInsuranceId}" />
+					                           <apex:param name="removeNumber" value="{!liObj.newCount}"  assignTo="{!insuranceRecordNumber}" />
+					                        </apex:commandButton> 
+			                    		</apex:outputPanel>
+				                    </apex:column>
+				                    <apex:column headerValue="Insured" width="20%"  style="text-align:left;">
+				                        <apex:outputText value="{!liObj.insured}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Suggested Cover" width="20%" style="text-align:right;">
+<!-- 					                 <apex:outputText value="{!TEXT(liObj.suggestedCover)}"/> -->
+				                         <apex:outputText value="{!liObj.strSuggestedCover}"/>
+				                    </apex:column>
+				                    <apex:column headerValue="Sum Assured (Rs.)" width="20%">
+				                        <apex:inputText value="{!liObj.sumAssured}" style="width:80px;text-align:right;" />
+				                    </apex:column>
+				                    <apex:column headerValue="Policy Name" width="20%">
+				                    	<apex:inputText value="{!liObj.policyName}" style="width:80px;" rendered="{!liObj.policyType != 'Term Life'}"/>
+				                        <apex:inputText value="{!liObj.policyName}" style="width:80px;"  styleClass="inputTermLife" rendered="{!liObj.policyType == 'Term Life'}"/>
+				                        <script>
+											$(document).ready(function()
+									        {
+									        	var availableProductName =[{!strProductTermLife}];
+									        	
+									            $(".inputTermLife").autocomplete({
+									        		source: availableProductName,
+												  	select: function(event, ui) 
+												  	{
+													  	var strVal = ui.item.value;	  
+												  	} 
+												});		
+									        
+									        });
+										</script>
+				                    </apex:column>
+				                    <apex:column headerValue="Premium Amount" width="20%">
+		                                    <apex:inputText value="{!liObj.premiumAmount}" style="width:80px;text-align:right;"/>      
+				                    </apex:column>
+				                    <apex:column headerValue="Policy Type" style="text-align:center;">
+				                        <apex:outputText value="{!liObj.policyType}"/>  
+				                    </apex:column>
+				                    <apex:column headerValue="Tenure of insurance" width="20%">
+				                        <apex:inputText value="{!liObj.tenureOfInsurance}" style="width:80px;text-align:right;"/>  
+				                    </apex:column>
+				                    <apex:column style="text-align:center;">
+				                    	<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+				                       	<apex:outputPanel rendered="{!!liObj.isETCreated}">
+					                        <apex:selectList value="{!liObj.executionTracker}" size="1" styleClass="textStyle" style="width:100px;">
+			                                           <apex:selectOptions value="{!ExecutionTracker}"></apex:selectOptions>
+			                                       </apex:selectList>
+                                       	</apex:outputPanel>
+                                       	<apex:outputPanel rendered="{!liObj.isETCreated}" style="font-color:#ED1B24;">
+                                       		 <apex:outputLabel value="Already Created" style="width:80px;font-size:11px;font-weight:bold;font-color:#ED1B24;text-align:center;"/>  
+                                       	</apex:outputPanel>
+				                    </apex:column>
+								</apex:pageBlockTable>
+							</apex:repeat>
+							<br/>
+						</apex:pageBlockSection>
+						<apex:pageBlockSection collapsible="true" columns="1" >
+							<apex:pageBlockTable value="{!beanObj.lstLifeInsuranceRemark}" var="liObj" styleClass="required" style="margin-left:48px; width:900px;"> 
+<!-- 								<apex:outputPanel rendered="{!IF(liObj.isNewLI == true,false,true)}"> -->
+								 	<apex:column headerValue="Insured" width="20%"  style="text-align:left;">
+				                        <apex:outputText value="{!liObj.insured}"/>
+				                    </apex:column>
+									<apex:column headerValue="Remarks" width="677px">
+				                        <apex:inputTextArea value="{!liObj.insuranceRemark}" style="width:677px;height:65px"/>  
+				                    </apex:column>
+<!-- 			                   	</apex:outputPanel> -->
+			             </apex:pageBlockTable>
+			             </apex:pageBlockSection>
+<!-- 							<apex:repeat value="{!beanObj.lstLifeInsurance}" var="liObj">  -->
+<!-- 								<apex:outputPanel rendered="{!IF(liObj.isNewLI == true,false,true)}"> -->
+<!-- 									<apex:pageBlockSectionItem > -->
+<!-- 										<apex:outputText value="Insured " style="text-align:left;"/> -->
+<!-- 					           			<apex:outputText value="Remarks " style="text-align:left;"/> -->
+<!-- 				           			</apex:pageBlockSectionItem> -->
+<!-- 				           			<apex:pageBlockSectionItem > -->
+<!-- 										<apex:outputText value="{!liObj.insured}"/> -->
+<!-- 					           			<apex:inputTextArea value="{!liObj.insuranceRemark}" style="width:677px;height:65px"/>   -->
+<!-- 				           			</apex:pageBlockSectionItem> -->
+<!-- 				           		</apex:outputPanel> -->
+<!-- 							</apex:pageBlockTable> -->
+<!-- 							</apex:repeat> -->
+<!-- 						</apex:pageBlockSection> -->
+
+<!-- 					 <div style="overflow:auto;height:100%;width:900px; margin-left:50px;">  -->
+<!-- 					 <table  width="800px" border="1" cellpadding="2" cellspacing="0" id="dataTable7"> -->
+<!-- 	                   	 <tr > -->
+<!-- 	                        <td class="tableHeaderLight"  style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Insured</td> -->
+<!-- 	                        <td class="tableHeaderLight"  style="font-size:14px;font-weight:bold;text-align:left;background-color:#A9C5EB;">Remarks</td> -->
+<!-- 	                     </tr> -->
+<!-- 	                     <apex:repeat value="{!beanObj.lstLifeInsurance}" var="liObj"> -->
+<!-- 	                     	<apex:outputPanel rendered="{!IF(liObj.isNewLI == true,false,true)}">  -->
+<!-- 			                     <tr> -->
+<!-- 			                     	<td><apex:outputText value="{!liObj.insured}"/></td> -->
+<!-- 			                     	<td><apex:inputTextArea value="{!liObj.insuranceRemark}" style="width:677px;height:65px"/></td> -->
+<!-- 			                     </tr> -->
+<!-- 		                     </apex:outputPanel> -->
+<!-- 	                     </apex:repeat> -->
+<!-- 	                 </table> -->
+<!-- 	                </div> -->
+					</apex:outputPanel>
+				</apex:outputPanel>	
+<!--        =========================================================GENERAL INSURANCE========================================================= -->
+			<apex:outputPanel rendered="{!isGeneralInsurancePlanning}">
+				<div class="subHeader" style="width:90%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">GENERAL INSURANCE</div>
+	                <apex:outputPanel rendered="{!NOT(beanObj.isGeneralInsExist)}">
+		                {!$Label.ActionPlanInsurenceMsg}
+		            </apex:outputPanel>
+		            
+            		<apex:outputPanel rendered="{!beanObj.isGeneralInsExist}">
+<!--             		 <apex:pageMessages id="Pagemsg1"/> -->
+                		<apex:pageBlockSection collapsible="true" columns="1" >
+				        	<apex:pageBlockTable value="{!beanObj.lstGeneralInsurance}" var="giObj" styleClass="required" style="margin-left:48px;width:800px;">
+				        		<apex:column headerValue="Insured" style="text-align:left;" width="20%">
+			                        <apex:outputText value="{!giObj.insured}" style="width:80px;"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Policy Type" style="text-align:center;" width="20%">
+			                        <apex:outputText value="{!giObj.policyType}" style="width:80px;"/>
+			                    </apex:column>
+<!-- 			                    <apex:column headerValue="Policy Name" width="20%"> -->
+<!-- 			                        <apex:outputText value="{!giObj.policyName}"/> -->
+<!-- 			                    </apex:column> -->
+			                    <apex:column headerValue="Product Name" style="text-align:center;" >
+			                    			<apex:inputText value="{!giObj.productName}" rendered="{!giObj.policyType =='Other'}" />
+<!-- 				                        <apex:inputText value="{!giObj.productName}" style="width:80px;" rendered="{!lstMedicalOptions.size == 0}" id="medicalOptionId"/> -->
+											<apex:inputText id="medicalOptionId" styleClass="inputMedical" value="{!giObj.productName}" 
+																rendered="{!giObj.policyType =='Medical' || giObj.policyType ==''}" />
+											<script>
+												$(document).ready(function()
+										        {
+										        	var availableProductName =[{!strProductMedical}];
+										        	
+										            $(".inputMedical").autocomplete({
+										        		source: availableProductName,
+													  	select: function(event, ui) 
+													  	{
+														  	var strVal = ui.item.value;	  
+													  	} 
+													});		
+										        
+										        });
+									        </script>
+ 					                         
+				                      		<apex:inputText styleClass="inputIllness" value="{!giObj.productName}" 
+				                      		  					  rendered="{!giObj.policyType =='Critical Illness'}" id="illnessId"/>   
+						                    <script>
+												$(document).ready(function()
+										        {
+										        	var availableProductName =[{!strProductIllness}];
+										            $(".inputIllness").autocomplete({
+										        		source: availableProductName,
+													  	select: function(event, ui) 
+													  	{
+														  	var strVal = ui.item.value;	  
+													  	} 
+													});		
+										        
+										        });
+									         </script>
+				                          
+					                          <apex:inputText value="{!giObj.productName}"  styleClass="inputTopUp" rendered="{!giObj.policyType =='Top Up'}"  
+					                          				  id="TopUpId"/>
+					                          <script>
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductTopUp}];
+											            $(".inputTopUp").autocomplete({
+											        		source: availableProductName,
+														  	select: function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										      </script>
+										      
+					                          <apex:inputText value="{!giObj.productName}"  styleClass="inputDisability" rendered="{!giObj.policyType =='Disability'}" id="DisabilityId"/>
+					                          <script>
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductDisabilty}];
+											            $(".inputDisability").autocomplete({
+											        		source: availableProductName,
+														  	select: function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										       </script>
+				                          
+					                          <apex:inputText value="{!giObj.productName}"  styleClass="inputAccident" 
+					                          				  rendered="{!giObj.policyType =='Personal Accident'}" id="AccidentId"/>
+					                          <script>
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductAccident}];
+											        	
+											            $(".inputAccident").autocomplete({
+											        		source: availableProductName,
+														  	select: function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										       </script>
+					                      
+					                          <apex:inputText value="{!giObj.productName}" rendered="{!giObj.policyType =='Vehicle'}" styleClass="inputVehicle"/>
+					                          <script>
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductVehicle}];
+											            $(".inputVehicle").autocomplete({
+											        		source: availableProductName,
+														  	select: function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										      </script>
+				                         
+					                          <apex:inputText value="{!giObj.productName}" rendered="{!giObj.policyType =='Householders'}" styleClass="inputHouseHold"/>
+					                          <script>
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductHouseHold}];
+											            $(".inputHouseHold").autocomplete({
+											        		source: availableProductName,
+														  	select: function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										      </script>
+				                          
+<!-- 			                    	 <apex:inputText value="{!giObj.productName}" style="width:80px;" /> -->
+<!-- 			                    	 <apex:selectList value="{!giObj.productName}" size="1" styleClass="textStyle" style="width:100px;" rendered="{!giObj.policyType =='Medical'}"> -->
+<!-- 			                          	<apex:selectOptions value="{!lstMedicalOptions}"></apex:selectOptions> -->
+<!-- 			                          </apex:selectList>	 -->
+			                          
+<!-- 			                          <apex:selectList value="{!giObj.productName}" size="1" styleClass="textStyle" style="width:100px;" rendered="{!giObj.policyType =='Critical Illness'}"> -->
+<!-- 			                          	<apex:selectOptions value="{!lstCriticalIllnessOptions}"></apex:selectOptions> -->
+<!-- 			                          </apex:selectList> -->
+			                          
+<!-- 			                          <apex:selectList value="{!giObj.productName}" size="1" styleClass="textStyle" style="width:100px;" rendered="{!giObj.policyType =='Top Up'}"> -->
+<!-- 			                           	<apex:selectOptions value="{!lstTopUpOptions}"></apex:selectOptions> -->
+<!-- 			                          </apex:selectList> -->
+			                          
+<!-- 			                          <apex:selectList value="{!giObj.productName}" size="1" styleClass="textStyle" style="width:100px;" rendered="{!giObj.policyType =='Disability'}"> -->
+<!-- 			                          	<apex:selectOptions value="{!lstDisabilityOptions}"></apex:selectOptions> -->
+<!-- 			                          </apex:selectList> -->
+			                          
+<!-- 			                          <apex:selectList value="{!giObj.productName}" size="1" styleClass="textStyle" style="width:100px;" rendered="{!giObj.policyType =='Personal Accident'}"> -->
+<!-- 			                          	<apex:selectOptions value="{!lstPersonalAccidentOptions}"></apex:selectOptions> -->
+<!-- 			                          </apex:selectList> -->
+			                          
+<!-- 			                         <apex:outputPanel rendered="{!giObj.policyType =='Vehicle'}">  -->
+<!-- 					                          <apex:selectList value="{!giObj.productName}" size="1" styleClass="textStyle" style="width:100px;" rendered="{!lstVehicleOptions.size > 0}" > -->
+<!-- 					                          	 <apex:selectOptions value="{!lstVehicleOptions}"></apex:selectOptions> -->
+<!-- 					                          </apex:selectList> -->
+					                          
+<!-- 					                          <apex:inputText value="{!giObj.productName}" style="width:80px;" rendered="{!lstVehicleOptions.size == 0}"/> -->
+<!-- 				                     </apex:outputPanel> -->
+				                     
+<!-- 				                      <apex:selectList value="{!giObj.productName}" size="1" styleClass="textStyle" style="width:100px;" rendered="{!giObj.policyType =='Householder\'s'}"> -->
+<!-- 			                          	<apex:selectOptions value="{!lstHouseHoldOptions}"></apex:selectOptions> -->
+<!-- 			                          </apex:selectList> -->
+				                     
+<!-- 			                        <apex:inputText value="{!giObj.productName}"/>   -->
+			                    </apex:column>
+			                    <apex:column headerValue="Sum Assured (Rs.)" style="text-align:center;" width="20%">
+			                        <apex:outputText value="{!giObj.sumAssured}" style="width:80px;"/>  
+			                    </apex:column>
+<!-- 			                    <apex:column headerValue="Premium Amount" style="text-align:right;padding-right:25px;"> -->
+<!-- 			                        <apex:outputText value="{0, number, ,##,##0}" style="width:80px;height:16px;" styleclass="standardFontStyle"> -->
+<!-- 		                                <apex:param value="{!giObj.premiumAmount}"/> -->
+<!-- 		                            </apex:outputText> -->
+<!-- 			                    </apex:column>  -->
+								<apex:column headerValue="Premium Amount" style="text-align:right;padding-right:25px;" width="20%">
+				                     	<apex:inputText value="{!giObj.premiumAmount}" style="width:80px;text-align:right;"/>  
+				                </apex:column>
+			                    <apex:column style="text-align:center;">
+			                   		<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+		                   			<apex:outputPanel rendered="{!!giObj.isETCreated}">
+				                        <apex:selectList value="{!giObj.executionTracker}" size="1" styleClass="textStyle" style="width:100px;">
+			                                <apex:selectOptions value="{!ExecutionTracker}"></apex:selectOptions>
+			                            </apex:selectList>
+			                        </apex:outputPanel>
+                              		<apex:outputPanel rendered="{!giObj.isETCreated}">
+                                 		<apex:outputLabel value="Already Created" style="width:80px;font-size:11px;font-weight:bold;font-color:#ED1B24;text-align:center;"/>  
+                                   	</apex:outputPanel>
+			                    </apex:column> 
+							</apex:pageBlockTable>
+							
+							
+							     
+							
+<!-- 						Added on : 19/02/2013 : Aditi satpute : AP Changes : Add new rows for General Insurance -->
+							<apex:outputPanel rendered="{!IF(beanObj.lstNewGeneralInsurance.size>0,true,false)}">
+							
+				        		<apex:pageBlockTable value="{!beanObj.lstNewGeneralInsurance}" var="giObj" styleClass="required" style="margin-left:48px;width:800px;" id="pbNewGeneralInsurance">
+					        		<apex:column headerValue="Remove" style="text-align:center;">
+				                        <apex:inputCheckbox value="{!giObj.isRemove}" id="checkedone"/>
+<!-- 				                        <apex:facet name="footer"><apex:outputText value="Total"/></apex:facet> -->
+				                    </apex:column>
+					        		<apex:column headerValue="Insured" style="text-align:left;" width="20%">
+<!-- 				                        <apex:inputText value="{!giObj.insured}" style="width:80px;" styleClass="requiredField"/> -->
+ 										<apex:selectList value="{!giObj.insured}" size="1" styleClass="textStyle" style="width:100px;">
+			                                <apex:selectOptions value="{!Entities}"></apex:selectOptions>
+			                            </apex:selectList>
+				                    </apex:column>
+				                    
+				                    <apex:column headerValue="Policy Type" style="text-align:center;" width="20%" id="policyTypeId">
+				                    	  <apex:outputPanel rendered="{!isSave}">
+					                    	  <apex:selectList value="{!giObj.policyType}" size="1" styleClass="textStyle" style="width:100px;" onchange="changePolicyName(this.value, '{!giObj.index}');">
+				                              	 <apex:selectOptions value="{!lstPolicyType}"></apex:selectOptions>
+				                          	  </apex:selectList>	
+			                          	  </apex:outputPanel>
+			                          	  <apex:outputPanel rendered="{!!isSave}">
+				                        		<apex:inputText value="{!giObj.policyType}" style="width:80px;" styleClass="requiredField"/>
+										</apex:outputPanel>
+				                    </apex:column>
+				                    
+	<!-- 			                    <apex:column headerValue="Policy Name" width="20%"> -->
+	<!-- 			                        <apex:outputText value="{!giObj.policyName}"/> -->
+	<!-- 			                    </apex:column> -->
+									<apex:column headerValue="Product Name" style="text-align:center;" id="policyNameId" >
+									
+										 <apex:inputText id="medicalOptionId" styleClass="inputMedical" value="{!giObj.productName}" 
+																rendered="{!giObj.policyType =='Medical' || giObj.policyType ==''}"  />
+											<script>
+												$(document).ready(function()
+										        {
+										        	var availableProductName =[{!strProductMedical}];
+										        	
+										            $(".inputMedical").autocomplete({
+										        		source: availableProductName,
+													  	select: function(event, ui) 
+													  	{
+														  	var strVal = ui.item.value;	  
+													  	} 
+													});		
+										        
+										        });
+									        </script>
+ 					                         
+				                      		<apex:inputText styleClass="inputIllness" value="{!giObj.productName}" 
+				                      		  					  rendered="{!giObj.policyType =='Critical Illness'}" id="illnessId"/>   
+						                    <script>
+												$(document).ready(function()
+										        {
+										        	var availableProductName =[{!strProductIllness}];
+										            $(".inputIllness").autocomplete({
+										        		source: availableProductName,
+													  	select: function(event, ui) 
+													  	{
+														  	var strVal = ui.item.value;	  
+													  	} 
+													});		
+										        
+										        });
+									         </script>
+				                          
+					                          <apex:inputText value="{!giObj.productName}"  styleClass="inputTopUp" rendered="{!giObj.policyType =='Top Up'}"  id="TopUpId"/>
+					                          <script>
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductTopUp}];
+											            $(".inputTopUp").autocomplete({
+											        		source: availableProductName,
+														  	select: function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										      </script>
+										      
+					                          <apex:inputText value="{!giObj.productName}"  styleClass="inputDisability" rendered="{!giObj.policyType =='Disability'}" id="DisabilityId"/>
+					                          <script>
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductDisabilty}];
+											            $(".inputDisability").autocomplete({
+											        		source: availableProductName,
+														  	select: function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										       </script>
+				                          
+					                          <apex:inputText value="{!giObj.productName}"  styleClass="inputAccident" rendered="{!giObj.policyType =='Personal Accident'}" id="AccidentId"/>
+					                           <script>
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductAccident}];
+											        	
+											            $(".inputAccident").autocomplete({
+											        		source: availableProductName,
+														  	select: function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										        </script>
+					                      
+					                          <apex:inputText value="{!giObj.productName}" rendered="{!giObj.policyType =='Vehicle'}" styleClass="inputVehicle"/>
+					                          <script>
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductVehicle}];
+											            $(".inputVehicle").autocomplete({
+											        		source: availableProductName,
+														  	select: function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										      </script>
+				                         
+					                          <apex:inputText value="{!giObj.productName}" rendered="{!giObj.policyType =='Householders'}" styleClass="inputHouseHold"/>
+					                          <script>
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductHouseHold}];
+											            $(".inputHouseHold").autocomplete({
+											        		source: availableProductName,
+														  	select: function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										      </script>
+										      
+										      <apex:inputText value="{!giObj.productName}" rendered="{!giObj.policyType =='Other'}" />
+			                        </apex:column>
+										
+				                    <apex:column headerValue="Sum Assured (Rs.)" style="text-align:center;" width="20%">
+				                        <apex:inputText value="{!giObj.sumAssured}" style="width:80px;text-align:right;" styleClass="requiredField"/>  
+				                    </apex:column>
+				                    
+				                    <apex:column headerValue="Premium Amount" style="text-align:right;padding-right:25px;" width="20%">
+				                     	<apex:inputText value="{!giObj.premiumAmount}" style="width:80px;text-align:right;" styleClass="requiredField"/>  
+<!-- 				                        <apex:outputText value="{0, number, ,##,##0}" style="width:80px;height:16px;" styleclass="standardFontStyle"> -->
+<!-- 			                                <apex:param value="{!giObj.premiumAmount}"/> -->
+<!-- 			                            </apex:outputText> -->
+				                    </apex:column> 
+				                    
+				                   	<apex:column style="text-align:center;">
+			                   			<apex:facet name="header">Execution Tracker <br/> To Be Opened</apex:facet>
+			                   			<apex:outputPanel rendered="{!!giObj.isETCreated}">
+					                        <apex:selectList value="{!giObj.executionTracker}" size="1" styleClass="textStyle" style="width:100px;">
+				                                <apex:selectOptions value="{!ExecutionTracker}"></apex:selectOptions>
+				                            </apex:selectList>
+				                       	</apex:outputPanel>
+			                       		<apex:outputPanel rendered="{!giObj.isETCreated}">
+                                       		 <apex:outputLabel value="Already Created" style="width:80px;font-size:11px;font-weight:bold;font-color:#ED1B24;text-align:center;"/>  
+                                       	</apex:outputPanel>
+				                   	</apex:column> 
+				                   	
+								</apex:pageBlockTable>
+								
+									 <apex:actionFunction name="changePolicyName" action="{!getInsurance}" reRender="pbNewGeneralInsurance,policyNameId,policyTypeId" status="bottomStatus" >
+										   		<apex:param name="strPolicyType" value=""/>
+										   		<apex:param name="index" value=""/>
+								     </apex:actionFunction> 
+								     
+							</apex:outputPanel>
+							
+						</apex:pageBlockSection>
+<!-- 					 	<apex:outputPanel rendered="{!isDisplaySaveButton}"> 	 -->
+						<apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">	
+							<apex:outputPanel rendered="{!isSave}">
+								<apex:commandButton value="Add New" Action="{!addNewGeneralInsurance}"  reRender="pageBlockSection6,Pagemsg"
+		        						style="margin-top:15px;margin-left:450px;font-weight:bold; font-size:11px;" status="statusId4"/>
+		        				<apex:outputPanel rendered="{!IF(beanObj.lstNewGeneralInsurance.size>0,true,false)}">
+					        		<apex:commandButton value="Remove" Action="{!removeNewGIrecords}" rerender="pageBlockSection6,Pagemsg" />
+							    </apex:outputPanel>
+							    <apex:actionStatus stopText="" id="bottomStatus">
+					                <apex:facet name="start">
+					               		<apex:outputPanel style="padding-left:2%;padding-top:5px;">
+					                    	<img src="/img/loading.gif" width="16" height="16"/>
+										</apex:outputPanel>
+					                </apex:facet>
+		 						</apex:actionStatus>  
+							</apex:outputPanel>
+						</apex:outputPanel>
+						<br/>
+						<br/>
+						<apex:pageBlockSection columns="2">
+							<apex:pageBlockSectionItem >
+			           			<apex:outputText value="Remarks: " style="text-align:left;font-weight:bold;"/>
+			           			<apex:inputTextArea value="{!generalInsuranceRemark}" style="width:300px;height:55px;"/>
+           					</apex:pageBlockSectionItem>
+           					<apex:pageBlockSectionItem >
+           					</apex:pageBlockSectionItem>
+						</apex:pageBlockSection>
+					</apex:outputPanel> 
+				</apex:outputPanel>	
+<!-- 					<apex:pageBlockSectionItem > -->
+<!-- 		           			<apex:outputText value="Remarks: " style="text-align:left;"/> -->
+<!-- 		           			<apex:inputTextArea value="{!generalInsuranceRemark}" style="width:300px;height:55px;"/> -->
+<!--            			</apex:pageBlockSectionItem> -->
+					
+					
+				<!--   					Date : 11-02-2013  Action Plan  : Prajakta Sanap -->                   
+<!--                 <apex:outputPanel rendered="{!isDisplaySaveButton}">  -->
+               <apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+					<apex:outputPanel rendered="{!isSave}" id="displaySave4">
+			        	<apex:commandButton value="Save" Action="{!saveActionPlan}"  
+			        						style="margin-top:15px;margin-left:450px;font-weight:bold; font-size:11px;" 
+			                                onclick="if(!confirm('Do you want to continue?')){return false;}" 
+			                                rendered="{!Not(blnIsETAlreadyGenerated)}" rerender="pageBlockSection6,Pagemsg1" status="statusId4"/>
+			        </apex:outputPanel>
+			    </apex:outputPanel>
+			        <apex:actionStatus stopText="" id="statusId4">
+			            <apex:facet name="start">                
+			            	<apex:outputPanel style="padding-left:1%;">
+			                	<img src="/img/loading.gif" width="16" height="16"/>
+			                </apex:outputPanel>
+			            </apex:facet>
+			        </apex:actionStatus>  
+					 
+                </apex:pageBlockSection>
+			</apex:outputPanel>
+						
+<!-- ===============================================================SUCCESSION PLANNING================================================================================================== -->
+          
+         <apex:outputPanel id="pageBlockSection" rendered="{!isSuccessionPlanning}">
+          	<apex:pageBlockSection title="SUCCESSION PLANNING" collapsible="true" columns="1" id="section4">
+                <div class="subHeader" style="width:85%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">WILL</div>
+                
+                <apex:outputPanel rendered="{!NOT(bean.entity.Will__c)}"> 
+                    <ul class="TickList">
+                        <li> <apex:outputText value=" {!$Label.WillAbsent}"/> 
+                        </li>
+                        <li> <apex:outputText value=" {!$Label.WhatIsWill}" escape="false"/> 
+                        </li>
+                        <li> <apex:outputPanel rendered="{!IF(bean.spouse.Name!=null,true,false)}"> 
+                                 <apex:outputText value="{!bean.entity.Name} and {!bean.spouse.Name} should make a Will as per their wish."/> 
+                             </apex:outputPanel> 
+                             <apex:outputPanel rendered="{!IF(bean.spouse.Name==null,true,false)}"> 
+                                 <apex:outputText value=" {!bean.entity.Name} should make a Will as per their wish."/> 
+                             </apex:outputPanel> 
+                        </li>
+                        <li> <apex:outputText value=" {!$Label.WillChanges}" escape="false"/> 
+                        </li>
+                    </ul>
+                </apex:outputPanel>
+                
+                 <apex:outputPanel rendered="{!bean.entity.Will__c}"> 
+                    <ul class="TickList">
+                        <li> 
+                             <apex:outputText value=" {!$Label.WillPresent}" escape="false"/> 
+                        </li>
+                        <li>
+                             <apex:outputText value=" {!$Label.WillChanges}" escape="false"/> 
+                        </li>
+                        <li>
+                        	<apex:outputText value="Execution Tracker to be opened? " escape="false"/> 
+		                    <apex:selectList value="{!beanObj.isWillExecutionTracker}" size="1" style="width:100px;">
+		                          <apex:selectOptions value="{!ExecutionTracker}"></apex:selectOptions>
+		                    </apex:selectList>
+                 		</li>
+                    </ul>
+                 <!--   					Date : 11-02-2013  Action Plan  : Prajakta Sanap -->                   
+<!--                 <apex:outputPanel rendered="{!isDisplaySaveButton}">    -->
+	           <apex:outputPanel rendered="{!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15)) || isDisplaySaveButton == false),False,True)}">
+	                <apex:outputPanel rendered="{!isSave}" id="displaySave5">
+		 				<apex:commandButton value="Save" Action="{!saveActionPlan}"  style="margin-top:15px;margin-left:350px;font-weight:bold; font-size:11px;" 
+		                                    onclick="if(!confirm('Do you want to continue?')){return false;}" rendered="{!Not(blnIsETAlreadyGenerated)}" 
+		                                    rerender="pageBlockSection,Pagemsg" status="statusWill"/>
+		        	</apex:outputPanel>
+		        </apex:outputPanel>
+                </apex:outputPanel>
+           
+	        	<apex:actionStatus stopText="" id="statusWill">
+	                <apex:facet name="start">                
+	                    <apex:outputPanel style="padding-left:1%;">
+	                          <img src="/img/loading.gif" width="16" height="16"/>
+	                    </apex:outputPanel>
+	                </apex:facet>
+	        	</apex:actionStatus>  
+			</apex:pageBlockSection>
+		</apex:outputPanel>
+<!-- 			 =========================================================UNALLOCATED ASSETS====================================================	 -->
+
+				<apex:pageBlockSection title="UNALLOCATED ASSETS" collapsible="true" columns="1" id="section5">
+            		<div class="subHeader" style="width:85%;padding-left:10px;margin-left:50px;background-color:#A9C5EB;">ASSETS NOT ALLOCATED</div>
+                		<apex:pageBlockSection collapsible="true" columns="11" >
+				        	<apex:pageBlockTable value="{!beanObj.lstUnAllocatedAssets}" var="unallocated" styleClass="required" style="margin-left:48px;width:800px;">
+				        	
+				        		<apex:column headerValue="Assets" width="20%">
+			                        <apex:outputText value="{!unallocated.Type}"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Description" width="20%">
+			                        <apex:outputText value="{!unallocated.description}"/>
+			                    </apex:column>
+			                    <apex:column headerValue="Current Value" width="15%" style="text-align:right; padding-right:25px;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+		                                 <apex:param value="{!unallocated.currentValue}"/>
+		                            </apex:outputText>
+			                    </apex:column>
+			                    <apex:column headerValue="Balance Remaining" width="15%" style="text-align:right; padding-right:25px;">
+			                        <apex:outputText value="{0, number, ,##,##0}" >
+                                         <apex:param value="{!unallocated.balanceRemaining}"/>
+                                    </apex:outputText>
+			                    </apex:column>
+							</apex:pageBlockTable>
+						</apex:pageBlockSection>
+				</apex:pageBlockSection>
+<!--  ================================================================================================================== -->
+			</apex:outputPanel>	 
+			
+			<script>
+		        twistSection(document.getElementById('{!$Component.block1.section1}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section2}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section3}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section4}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section5}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section6}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section7}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section8}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section9}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section11}').getElementsByTagName('img')[0])
+		        
+				
+										
+		    </script>       		
+        </apex:pageBlock>
+        
+        <br/></apex:outputPanel>
+        </apex:outputPanel>
+        </apex:outputPanel>
+        </apex:form>
+        </apex:define>
+    </apex:composition>
+</apex:page>

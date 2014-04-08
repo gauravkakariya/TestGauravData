@@ -1,0 +1,32 @@
+/*
+	Revision History:
+	
+    Version     Version Author     Date           Comments
+    1.0			Anupam/Aditi	   28/12/12		 Executon Tracker Trigger.
+*/
+
+trigger ExecutionTrackerTrigger on Execution_Tracker__c (after insert, before update, after update) 
+{
+	ExecutionTrackerHandler handler = new ExecutionTrackerHandler();
+	//Commented on : 11/02/2013 : As per Jigar Sir and Samir Sir's discussion with client : no need to send task,
+	//Email and chatter notification is enough
+	/*if(trigger.isInsert)
+	{
+		handler.onAfterInsert(trigger.new);
+	}
+	if((trigger.isAfter && trigger.isUpdate) || Test.isRunningTest()) 
+	{
+		if(!Test.isRunningTest())
+			handler.onAfterUpdate(trigger.new, trigger.old);
+	}*/
+
+	 if((trigger.isBefore && trigger.isUpdate) || Test.isRunningTest()) 
+	{
+		if(!Test.isRunningTest())
+			handler.onBeforeUpdate(Trigger.new, trigger.old);
+	}
+	
+	if (trigger.isAfter && trigger.isInsert || trigger.isAfter && trigger.isUpdate) {
+		new CreateRenewal_OnExecutionTrackerInsUp (trigger.old,trigger.new).execute();
+	}
+}

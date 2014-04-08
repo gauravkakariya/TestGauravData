@@ -1,0 +1,44 @@
+List<ARPP_Detail__c> lstArppDetail = [Select Name, Id, Entity__c, Type__c, Product__c, Commission__c, 
+										Approve_Action_Plan__c, 	
+										Action_Plan_Amount__c, Action_Plan_Upfront_Comm_Amount__c, 
+										Action_Plan_Trial_Comm_Amount__c,  
+										Action_Amount_Revenue__c, Remark__c, Execution_Tracker_Actual_Product__c,  
+										Actual_Commission__c, Execution_Tracker__c, 
+										Execution_Tracker_Amount__c, 
+										Execution_Tracker_upfront_Comm_Amount__c, Execution_Tracker_Trial_Comm_Amount__c,
+										Execution_Tracker_Total_Revenue__c, 
+										Execution_Tracker__r.Premium__c,
+										Actual_Product_Name__c, ET_Remark__c  
+									  From ARPP_Detail__c 
+									  Where Approve_Action_Plan__c != null and Execution_Tracker__c != null
+											and (Type__c = 'General Insurance' or Type__c = 'Life Insurance') ];
+
+Set<Id> setEntityId = new Set<Id>();
+
+for(Arpp_Detail__c objRPP : lstArppDetail)
+{
+	setEntityId.add(objRPP.Entity__c);
+}
+
+system.debug('**************lstArppDetail****************'+lstArppDetail.size());	
+system.debug('**************setEntityId Size****************'+setEntityId.size());													
+system.debug('**************setEntityId****************'+setEntityId);
+
+							
+
+
+							
+List<Arpp_Detail__c> lstRppDetail = new List<Arpp_Detail__c>();	
+								
+for(Arpp_Detail__c objRPP : lstArppDetail)
+{
+	Commission__c comm = objRPP.Actual_Commission__r.size() > 0 ?   objRPP.Actual_Commission__r[0] : null;
+	
+	if(objRPP.Actual_Commission__c != null && comm != null )
+	{
+		
+		objRPP.Execution_Tracker_upfront_Comm_Amount__c = (comm.Upfront_Commission__c * )/100;
+		lstRppDetail.add(objRPP);
+	}
+		
+}

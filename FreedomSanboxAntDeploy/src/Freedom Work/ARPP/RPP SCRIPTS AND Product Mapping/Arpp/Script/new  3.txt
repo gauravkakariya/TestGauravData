@@ -1,0 +1,62 @@
+List<ARPP_Detail__c> lstArppDetail = [Select Name, Id, Entity__c, Approve_Action_Plan__r.policy_Name__c, Approve_Action_Plan__r.Product_Name__c, Type__c, Product__c, Commission__c, Approve_Action_Plan__c, 
+													Action_Plan_Amount__c, Action_Plan_Upfront_Comm_Amount__c, Action_Plan_Trial_Comm_Amount__c,  Action_Amount_Revenue__c, Remark__c, 
+													Execution_Tracker_Actual_Product__c,  Actual_Commission__c, Execution_Tracker__c, Execution_Tracker_Amount__c, Execution_Tracker_upfront_Comm_Amount__c, Execution_Tracker_Trial_Comm_Amount__c, Execution_Tracker_Total_Revenue__c, Actual_Product_Name__c, ET_Remark__c  
+													From ARPP_Detail__c 
+										  	  Where Remark__c = 'Product Detail is not Found' and 
+												  	Approve_Action_Plan__r.Investment_Asset__c != null ];
+												  
+												
+	
+		
+system.debug('********lstArppDetail********'+lstArppDetail.size());	
+
+	
+	
+						
+
+Id rtId = [Select Id from RecordType where sobjectType ='Account' and Name='Client'].Id;
+											
+List<Account> lstNewAccount  = [Select Id,(Select Account__c, Item_Type__c From Approve_Action_Plans__r )From Account a Where
+								Entity_Status__c = 'Active' and RecordTypeId=:rtId ];	 	
+
+List<Account> lstUpdateNewAccount	= new List<Account> ();							
+for(Account objAccount: lstNewAccount)	
+{	
+	if (objAccount.Approve_Action_Plans__r.size() == 0)
+	{
+		lstUpdateNewAccount.add(objAccount);
+	}
+}		
+
+set<String> setProductName = new set<String>();
+												  	
+system.debug('********lstArppDetail********'+lstUpdateNewAccount.size());	
+List<Product_Master__c> lstMutualFundPM = [Select Product_Name__c, ProductType__c, Investment_Type__c 
+											From Product_Master__c 
+											where ProductType__c = 'Mutual Fund' and Is_Active__c = true]; 
+											
+														
+for(Product_Master__c objProductMaster: lstMutualFundPM)	
+{
+	setProductName.add(objProductMaster.Product_Name__c);
+}		
+
+List<Investment_Asset__c> lstInvestment =  [Select Scheme_Name_Text__c, Entity__c From Investment_Asset__c where Entity__c IN: lstUpdateNewAccount and Scheme_Name_Text__c Not IN: setProductName ];
+system.debug('********lstInvestment********'+lstInvestment.size());
+																			
+			
+
+			TARTED|[EXTERNAL]|execute_anonymous_apex
+13:07:50.084 (84395000)|SOQL_EXECUTE_BEGIN|[1]|Aggregations:0|select Id from RecordType where (sobjectType = 'Account' and Name = 'Client')
+13:07:50.101 (101400000)|SOQL_EXECUTE_END|[1]|Rows:1
+13:07:50.102 (102177000)|SOQL_EXECUTE_BEGIN|[3]|Aggregations:1|select Id, (select Account__c, Item_Type__c from Approve_Action_Plans__r) from Account a where (Entity_Status__c = 'Active' and RecordTypeId = :tmpVar1)
+13:07:50.611 (611085000)|SOQL_EXECUTE_END|[3]|Rows:1622
+13:07:50.653 (653441000)|SYSTEM_CONSTRUCTOR_ENTRY|[6]|<init>()
+OR_EXIT|[15]|<init>(Integer)
+13:07:50.765 (765406000)|USER_DEBUG|[17]|DEBUG|********lstArppDetail********1339
+13:07:50.765 (765712000)|SOQL_EXECUTE_BEGIN|[18]|Aggregations:0|select Product_Name__c, ProductType__c, Investment_Type__c from Product_Master__c where (ProductType__c = 'Mutual Fund' and Is_Active__c = true)
+13:07:50.789 (789593000)|SOQL_EXECUTE_END|[18]|Rows:189
+13:07:50.800 (800938000)|SOQL_EXECUTE_BEGIN|[28]|Aggregations:0|select Scheme_Name_Text__c, Entity__c from Investment_Asset__c where (Entity__c IN :tmpVar1 and Scheme_Name_Text__c != :tmpVar2)
+13:07:51.083 (1083742000)|SOQL_EXECUTE_END|[28]|Rows:4895
+13:07:51.093 (1093569000)|USER_DEBUG|[29]|DEBUG|********lstInvestment********4895			
+													

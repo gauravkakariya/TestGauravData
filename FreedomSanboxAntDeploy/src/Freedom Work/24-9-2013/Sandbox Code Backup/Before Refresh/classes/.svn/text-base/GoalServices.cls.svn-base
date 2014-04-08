@@ -1,0 +1,205 @@
+/**
+ * @Description: GoalServices class is used to design business logic to add new goals in the particular Entity
+ */
+ 
+public class GoalServices
+{
+    public DatabaseSOQL DatabaseSOQLObj {get; set;}
+    private DatabaseDML DatabaseDMLObj {get; set;}
+    public GoalBean goalBeanInstance{get; set;} 
+    
+    public goalServices()
+    {
+        DatabaseSOQLObj = new DatabaseSOQL();
+        DatabaseDMLObj = new DatabaseDML();
+    }
+    
+   /* public List<goal__c> getGoalRecords(String goaltype,list<string>acctList)    
+    {
+        List<goal__c> goalList1 = DatabaseSOQLObj.getGoals(goaltype,acctList); 
+        return goalList1 ;
+    }*/
+
+  /**
+   *@Description:  addRow() adds a row 
+   *Input Parameters:list of goal,selected goal type
+   * Returns: List of goals
+   */
+           
+    public List<goal__c> addRow(List<goal__c> goal,String selectedGoal, String entityP)
+    {
+        goal__c goalTempObj = new goal__c();
+        goalTempObj.Goal_Type__c = selectedGoal;
+        goalTempObj.Entity__c = entityP;
+        goal.add(goalTempObj);
+        return goal;
+    }
+    
+    // getOwnerItems() gets values of related Entities to be displayed in Owner picklist 
+    // Input Parameters: EntityId
+    // Returns: List of SelectOptions
+    
+
+ /*    public List<SelectOption> getOwnerItems(String entityId) 
+    {
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('','--None--')); 
+        
+        List<Account> EntityList = DatabaseSOQLObj.getFamilyDetails(entityId);
+        for(Account TempAccount : EntityList )
+        {
+            options.add(new SelectOption(tempAccount.Id,tempAccount.Name));        
+        }
+        return options;
+    }*/
+     // saveGoals() saves records in goal
+    // Input Parameters: List of goal
+    // Returns: none
+   
+   /* public void saveGoals(List<goal__c> goal)
+    {
+         list<goal__c> tempGoalList=new list<goal__c>();
+        
+     if(goal !=null)
+     {
+       for(goal__c goalobj:goal){
+           
+           try {
+                goalBeanInstance.validate(goalobj);
+                goalobj.RemoveCheckbox__c=false;
+                tempGoalList.add(goalobj);
+            }catch(ValidationException e)
+            {
+               ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING,e.getmessage()) );
+               
+            }
+               
+       } 
+    }
+   
+    DatabaseDMLObj.upsertObject(tempGoalList);
+   
+   
+   } */
+
+    /**
+     * @Description: getAccountNames() gets related Entities 
+     * Input Parameters: EntityId
+     * Returns: List of Account Names
+     */
+     
+    public List<String> getAccountNames(String EntityId)
+    {
+        DatabaseSOQL DatabaseSOQLObj = new DatabaseSOQL();
+        List<String> AccountNameList = new List<String>();
+        List<Account> AccountList = DatabaseSOQLObj.getFamilyDetails(EntityId);
+        for(Account acc : Accountlist)
+        {
+           AccountNameList.add(acc.Name);
+        }
+        system.debug('*************'+AccountNameList);
+        return AccountNameList;
+    }
+    
+    /**
+     * @Description: to get goal type picklist values 
+     */
+     
+    public List<string> getGoalType()
+    {
+        List<string> options = new List<string>();
+        Schema.DescribeFieldResult field = Schema.sObjectType.goal__c.fields.Goal_Type__c;
+        List<Schema.PicklistEntry> picklist = field.getPicklistValues();
+        for(Schema.PicklistEntry p : picklist) 
+        {
+            options.add(p.getLabel());
+        }
+        return options;
+    }
+    
+    /**
+     * @Description: To remove records
+     */
+     
+    public void removeRecords(list<Goal__c> goalList)
+    {
+        list<Integer> removeIndexList = new list<Integer>();
+        list<Goal__c> deleteList=new list<Goal__c>();
+        
+        integer index = 0;
+        for(Goal__c goal : goalList)
+        {
+            if(goal.RemoveCheckbox__c && goal.id != null)
+            {
+                removeIndexList.add(index);
+                deleteList.add(goal);
+            }
+            else if(goal.RemoveCheckbox__c==true)
+            {
+                removeIndexList.add(index);
+            }
+            index++;
+        }
+        for(Integer i = removeIndexList.size() ; i > 0 ; i--)
+        {
+           goalList.remove(removeIndexList.get(i-1));
+        }
+        DatabaseDMLObj.deleteRecords(deleteList);
+      }
+    // getDBValues() gets records from database for goal__c 
+   
+    // Returns: List of AggregateResult
+    
+
+   /* public List<AggregateResult> getDBValues(List<String> AccountNameList)
+    {
+        List<AggregateResult> AggQueryResult = [ Select Sum(Cost_of_Goal_Annual__c) AmtSum,Goal_Type__c,Entity__r.name entity from goal__c WHERE Entity__r.name IN: AccountNameList group by Goal_Type__c,Entity__r.name ];         
+        system.debug(AggQueryResult );
+        return AggQueryResult ;
+    }
+    
+     public List<goalBean.goalTypeClass> initSummaryTableList( List<String> AccountNameList,list<string> goalTypeList)
+    {
+        List<goalBean.goalTypeClass> SummaryTableList= new List<goalBean.goalTypeClass>();
+        for(string eType : goalTypeList)
+        {
+             goalBean.goalTypeClass goalTypeClassobj = new goalBean.goalTypeClass();
+             goalTypeClassobj.goalType= eType;
+            // GeneralExpensesClassObj.RecordTypeIdStr = type.Id;
+             
+             //Populating AccountNames with AccountNames and AmountValue to zero
+             for(String str : AccountNameList)
+             {
+                Double amt = 0;
+                goalBean.InnerClass InnerClassObj = new goalBean.InnerClass(str,amt);
+                goalTypeClassobj.InnerClassList.add(InnerClassObj);
+             }
+             SummaryTableList.add(goalTypeClassobj );
+        } 
+        return SummaryTableList;
+    }
+     public List<goalBean.goalTypeClass> populateSummaryTableList(List<AggregateResult> AggQueryResult, List<goalBean.goalTypeClass> SummaryTableList )
+    {
+        for( AggregateResult ar : AggQueryResult)
+        {
+             String expenseType=(String)ar.get('Goal_Type__c');
+             for( goalBean.goalTypeClass oObj : SummaryTableList )
+             {
+                 if( oObj.goalType== expenseType)
+                 {
+                     Integer lstcntr=0;
+                       for(goalBean.InnerClass iobj : oObj.InnerClassList )
+                       {
+                             System.Debug('====iObj==='+iObj+'===(String)AR.get(entity)==='+(String)ar.get('entity'));
+                             if(iObj.AccountName==((String)ar.get('entity')))
+                              {
+                               oObj.InnerClassList.get(lstcntr).AmountValue=(Double)AR.get('AmtSum');
+                              }
+                             lstcntr++;
+                       }
+                  } 
+             } 
+        }     
+        return SummaryTableList;
+    }*/
+}

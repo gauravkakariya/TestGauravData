@@ -1,0 +1,123 @@
+<apex:page controller="ARPPDetailController" sidebar="false" tabStyle="Account" readonly="true">
+	<apex:pageMessages />
+	<apex:sectionHeader title="ARPP Details" />
+	
+	<apex:form rendered="{!isRender}">	
+		<apex:outputPanel rendered="{!lstARPPDetails.size = 0}">
+			<span style="color: red;padding-left: 40px; padding-right:3px;" >ARPP Details not found </span> 
+			<a href="/{!entityId}" style="text-decoration: underline;">back</a>
+		</apex:outputPanel>	
+		<apex:pageBlock rendered="{!lstARPPDetails.size > 0}">
+			<apex:outputLabel value="Entity Name: " style="font-weight:bold;"/> 
+			<apex:outputText value="{!strEntityName}" />
+			<a href="/apex/exporttoexcelarppdetail?entityid={!entityId}" style="margin-left:20px">ARPP Export to Excel</a>
+			
+	        <apex:commandButton value="Recalculate ARPP" action="{!recalculateARPP}" status="recalculateButtonStatusId" 
+	                					reRender="pbARPPDetails" style="margin-left:300px" />
+	                					
+	        <apex:actionStatus stopText="" id="recalculateButtonStatusId" >
+	             <apex:facet name="start">
+	            		<apex:outputPanel style="padding-left:2%;padding-top:5px;">
+	                 		<img src="/img/loading.gif" width="16" height="16"/>
+	                 	</apex:outputPanel>
+	             </apex:facet>
+			</apex:actionStatus>
+			 						  
+			<apex:pageBlockSection columns="1" >
+				<apex:pageBlockTable value="{!lstARPPDetails}" var="arppDetails"  id="pbARPPDetails" >
+				
+					<apex:column headerValue="Action Plan" >
+						<a href="/{!arppDetails.Approve_Action_Plan__c}">
+						<apex:outputText value="{!arppDetails.Approve_Action_Plan__r.Name}" /> 
+						</a>
+					</apex:column>
+					
+					<apex:column headerValue="Product Name">
+						<a href="/{!arppDetails.Product__c}"> 
+							<apex:outputField value="{!arppDetails.Product__r.Product_Name__c}" />
+						</a>
+	<!-- 					<apex:facet name="footer"><apex:outputText value="Total" /></apex:facet>  -->
+					</apex:column>
+	
+					<apex:column headerValue="Product Type" style="text-align:center;">
+						<apex:outputText value="{!Case(arppDetails.Type__c, 
+												     'Life Insurance', 'LI', 'General Insurance', 'GI', 'SIP','SIP', 
+												     'Lumpsum','Lumpsum', '')}" /> 
+					</apex:column>
+					
+					<apex:column headerValue="Action Amount" style="text-align:center;">
+						<apex:outputField value="{!arppDetails.Action_Plan_Amount__c}" /> 
+					</apex:column>
+					
+					<apex:column style="text-align:right;">
+						<apex:facet name="header">
+							<apex:outputText value="Action Amount <br/>Upfront Commission" escape="false"/>
+						</apex:facet>
+						<apex:outputField value="{!arppDetails.Action_Plan_Upfront_Comm_Amount__c}" /> 
+					</apex:column>
+					
+					<apex:column style="text-align:right;">
+						<apex:facet name="header">
+							<apex:outputText value="Action Amount <br/>Trail Commission " escape="false"/>
+						</apex:facet>
+						<apex:outputField value="{!arppDetails.Action_Plan_Trial_Comm_Amount__c}" /> 
+					</apex:column>
+					
+					<apex:column style="text-align:right;">
+						<apex:facet name="header">
+							<apex:outputText value="Action Amount <br/>Revenue" escape="false"/>
+						</apex:facet>
+						<apex:outputField value="{!arppDetails.Action_Amount_Revenue__c}" /> 
+					</apex:column>
+					
+					
+					<apex:column headerValue="Execution Tracker" style="text-align:center;">
+						<a href="/{!arppDetails.Execution_Tracker__c}">
+							<apex:outputText value="{!arppDetails.Execution_Tracker__r.Name}" /> 
+						</a>	
+					</apex:column>
+					
+					<apex:column headerValue="Executed Amount" style="text-align:right;">
+						<apex:outputField value="{!arppDetails.Execution_Tracker_Amount__c}" /> 
+					</apex:column>
+					
+					<apex:column style="text-align:right;">
+						<apex:facet name="header">
+							<apex:outputText value="Executed Amount <br/>Upfront Commission" escape="false"/>
+						</apex:facet>
+						<apex:outputField value="{!arppDetails.Execution_Tracker_upfront_Comm_Amount__c}" /> 
+					</apex:column>
+					
+					<apex:column style="text-align:right;">
+						<apex:facet name="header">
+							<apex:outputText value="Executed Amount <br/>Trail Commission" escape="false"/>
+						</apex:facet>
+						<apex:outputField value="{!arppDetails.Execution_Tracker_Trial_Comm_Amount__c}" /> 
+					</apex:column>
+					
+					<apex:column style="text-align:right;">
+						<apex:facet name="header">
+							<apex:outputText value="Executed Amount<br/> Revenue" escape="false"/>
+						</apex:facet>
+						<apex:outputField value="{!arppDetails.Execution_Tracker_Total_Revenue__c}" /> 
+					</apex:column>
+					
+					<apex:column style="text-align:right;">
+						<apex:facet name="header">
+							<apex:outputText value="Revenue<br/>Difference" escape="false"/>
+						</apex:facet>
+						<apex:outputField value="{!arppDetails.Revenue_Difference__c}" /> 
+					</apex:column>
+					
+					<apex:column style="text-align:left;">
+						<apex:facet name="header">
+							<apex:outputText value="Remark" escape="false"/>
+						</apex:facet>
+						<apex:outputField value="{!arppDetails.Remark__c}" /> 
+					</apex:column>
+					
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

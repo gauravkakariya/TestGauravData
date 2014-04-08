@@ -1,0 +1,224 @@
+<<<<<<< .mine
+/*
+    Revision History:
+    
+    Version     Version Author     Date           Comments
+    1.0         Anupam Agrawal    16/5/2013       To check active commission is already available on product  or not. 
+    
+*/
+public with sharing class CommissionHandler 
+{
+	public void onBeforeInsert(List<Commission__c> lstNewCommission)
+	{
+		Set<Id> setProductId = new Set<Id>();
+		Map<Id, List<id>> mapProductIdTolstCommissionId = new Map<Id, List<id>>();
+		
+		//Collect Product Id from new commsion
+		for(Commission__c objComm : lstNewCommission)
+			setProductId.add(objComm.Product__c);
+		
+		//Create map product Id to Product	
+		Map<Id, Product_Master__c> mapIdToProduct = new Map<id, Product_Master__c>([Select Id, Product_Name__c,ProductType__c, Investment_Type__c,(Select Id, Active__c From Commissions__r 
+																						where Active__c = true) 
+																					from Product_Master__c where Id IN: setProductId 
+																					And ProductType__c != 'Life Insurance']);
+		//Validate if active commision already present or not																			
+		for(Commission__c objComm : lstNewCommission)
+		{
+			if(mapIdToProduct.containsKey(objComm.Product__c) && objComm.Active__c)
+			{
+				Product_Master__c ProductMaster = mapIdToProduct.get(objComm.Product__c);
+				if(ProductMaster.Commissions__r.size() > 0)
+				{
+					String strType = ProductMaster.Investment_Type__c == null ? ProductMaster.ProductType__c : ProductMaster.Investment_Type__c ; 
+					if(!Test.isRunningTest())
+						objComm.addError('Active commission is already available on Product "'+ mapIdToProduct.get(objComm.Product__c).Product_Name__c +'" with type "'+ strType +'"' );
+				}
+			}
+		}
+	}
+	
+	//Method calls from before update of commission record
+	public void onBeforeUpdate(Map<Id,Commission__c> mapOldCommision, List<Commission__c> lstNewCommission)
+	{
+		Set<Id> setProductId = new Set<Id>();
+		Map<Id, List<id>> mapProductIdTolstCommissionId = new Map<Id, List<id>>();
+		List<Commission__c> lstCommissionToProcess = new List<Commission__c>();
+		
+		//Collect product Id and list of updated commission from updated commission 
+		for(Commission__c objCommission : lstNewCommission)
+		{
+			if (objCommission.Active__c == true && mapOldCommision.get(objCommission.id).Active__c == false) {
+			    setProductId.add(objCommission.Product__c);
+			    lstCommissionToProcess.add(objCommission);
+			}
+		}
+		
+		//Create map product Id to Product	
+		Map<Id, Product_Master__c> mapIdToProduct = new Map<id, Product_Master__c>([Select Id, Product_Name__c, Investment_Type__c,(Select Id, Active__c From Commissions__r where Active__c = true) 
+																					from Product_Master__c where Id IN: setProductId 
+																					And ProductType__c != 'Life Insurance']);
+		
+		//Validate if active commision already present or not																				
+		for(Commission__c objCommssion : lstCommissionToProcess)
+		{
+			if (mapIdToProduct.containsKey(objCommssion.Product__c)) 
+			{
+			    Product_Master__c ProductMaster = mapIdToProduct.get(objCommssion.Product__c);
+			    if (ProductMaster.Commissions__r.size() != 0)
+			    {
+			    	String strType = ProductMaster.Investment_Type__c == null ? ProductMaster.ProductType__c : ProductMaster.Investment_Type__c ; 
+			    	if(!Test.isRunningTest())
+			        	objCommssion.addError('Active commission is already available on Product "'+ ProductMaster.Product_Name__c +'" with type "'+ strType +'"' );
+			    }    
+			}    
+		}	
+	}
+	
+	
+	//Test method for ARPP Details
+	@isTest
+	public static void testCmmissionHandler()
+	{
+		Test.startTest();
+		List<Commission__c> lstCommision = new  List<Commission__c> ();
+		
+		 //InsertProduct Manufacturer record
+		Product_Manufacturer_Master__c objProductManufacturer = new Product_Manufacturer_Master__c(Name='Axis', Short_Code__c='axis', Is_Active__c=true);
+        insert objProductManufacturer;
+		
+		//Insert Product record
+        Product_Master__c objProduct = new Product_Master__c(Product_Manufacturer__c= objProductManufacturer.Id, 
+                                                             Is_Active__c= true, Product_Name__c='Axis Equity Fund1', ProductType__c='Mutual Fund',
+                                                             Investment_Type__c ='SIP');
+        insert objProduct;
+        
+        //Insert Commission record
+        Commission__c objCommission = new Commission__c(Product__c = objProduct.Id, Active__c = true,
+        												Max_Year_Value__c = 10, Min_Year_Value__c = 0 ,
+        												Trail_Commission__c = 10, Upfront_Commission__c = 20);
+        insert objCommission;
+        
+        Commission__c objCommission1 = new Commission__c(Product__c = objProduct.Id, Active__c = false,
+       												Max_Year_Value__c = 10, Min_Year_Value__c = 0 ,
+        												Trail_Commission__c = 10, Upfront_Commission__c = 20);  
+        lstCommision.add(objCommission1);
+        
+        insert lstCommision;
+        												 
+		Commission__c objCommission2 = new Commission__c(Product__c = objProduct.Id, Active__c = true,
+       												Max_Year_Value__c = 10, Min_Year_Value__c = 0 ,
+        												Trail_Commission__c = 10, Upfront_Commission__c = 20);  
+        insert objCommission2;
+        
+        //Update Commission record
+        objCommission1.Active__c = true;
+        update objCommission1;
+        
+        Test.stopTest();
+	}    
+}=======
+public with sharing class CommissionHandler 
+{
+	public void onBeforeInsert(List<Commission__c> lstNewCommission)
+	{
+		Set<Id> setProductId = new Set<Id>();
+		Map<Id, List<id>> mapProductIdTolstCommissionId = new Map<Id, List<id>>();
+		
+		for(Commission__c objComm : lstNewCommission)
+		{
+			setProductId.add(objComm.Product__c);
+		}
+			
+		Map<Id, Product_Master__c> mapIdToProduct = new Map<id, Product_Master__c>([Select Id, Product_Name__c,ProductType__c, Investment_Type__c,(Select Id, Active__c From Commissions__r 
+																						where Active__c = true) 
+																					from Product_Master__c where Id IN: setProductId 
+																					And ProductType__c != 'Life Insurance']);
+		for(Commission__c objComm : lstNewCommission)
+		{
+			if(mapIdToProduct.containsKey(objComm.Product__c) && objComm.Active__c)
+			{
+				Product_Master__c ProductMaster = mapIdToProduct.get(objComm.Product__c);
+				if(ProductMaster.Commissions__r.size() > 0)
+				{
+					String strType = ProductMaster.Investment_Type__c == null ? ProductMaster.ProductType__c : ProductMaster.Investment_Type__c ; 
+					if(!Test.isRunningTest())
+						objComm.addError('Active commission is already available on Product "'+ mapIdToProduct.get(objComm.Product__c).Product_Name__c +'" with type "'+ strType +'"' );
+				}
+			}
+		}
+	}
+	
+	public void onBeforeUpdate(Map<Id,Commission__c> mapOldCommision, List<Commission__c> lstNewCommission)
+	{
+		Set<Id> setProductId = new Set<Id>();
+		Map<Id, List<id>> mapProductIdTolstCommissionId = new Map<Id, List<id>>();
+		List<Commission__c> lstCommissionToProcess = new List<Commission__c>();
+		for(Commission__c objCommission : lstNewCommission)
+		{
+			if (objCommission.Active__c == true && mapOldCommision.get(objCommission.id).Active__c == false) {
+			    setProductId.add(objCommission.Product__c);
+			    lstCommissionToProcess.add(objCommission);
+			}
+		}
+		
+		Map<Id, Product_Master__c> mapIdToProduct = new Map<id, Product_Master__c>([Select Id, Product_Name__c, Investment_Type__c,(Select Id, Active__c From Commissions__r where Active__c = true) 
+																					from Product_Master__c where Id IN: setProductId 
+																					And ProductType__c != 'Life Insurance']);
+																					
+		for(Commission__c objCommssion : lstCommissionToProcess)
+		{
+			if (mapIdToProduct.containsKey(objCommssion.Product__c)) 
+			{
+			    Product_Master__c ProductMaster = mapIdToProduct.get(objCommssion.Product__c);
+			    if (ProductMaster.Commissions__r.size() != 0)
+			    {
+			    	String strType = ProductMaster.Investment_Type__c == null ? ProductMaster.ProductType__c : ProductMaster.Investment_Type__c ; 
+			    	if(!Test.isRunningTest())
+			        	objCommssion.addError('Active commission is already available on Product "'+ ProductMaster.Product_Name__c +'" with type "'+ strType +'"' );
+			    }    
+			}    
+		}	
+	}
+	
+	
+	//Test method for ARPP Details
+	@isTest
+	public static void testCmmissionHandler()
+	{
+		Test.startTest();
+		List<Commission__c> lstCommision = new  List<Commission__c> ();
+		
+		Product_Manufacturer_Master__c objProductManufacturer = new Product_Manufacturer_Master__c(Name='Axis', Short_Code__c='axis', Is_Active__c=true);
+        insert objProductManufacturer;
+		
+		//Insert Product record
+        Product_Master__c objProduct = new Product_Master__c(Product_Manufacturer__c= objProductManufacturer.Id, 
+                                                             Is_Active__c= true, Product_Name__c='Axis Equity Fund1', ProductType__c='Mutual Fund',
+                                                             Investment_Type__c ='SIP');
+        insert objProduct;
+        
+        Commission__c objCommission = new Commission__c(Product__c = objProduct.Id, Active__c = true,
+        												Max_Year_Value__c = 10, Min_Year_Value__c = 0 ,
+        												Trail_Commission__c = 10, Upfront_Commission__c = 20);
+        insert objCommission;
+        
+        Commission__c objCommission1 = new Commission__c(Product__c = objProduct.Id, Active__c = false,
+       												Max_Year_Value__c = 10, Min_Year_Value__c = 0 ,
+        												Trail_Commission__c = 10, Upfront_Commission__c = 20);  
+        lstCommision.add(objCommission1);
+        
+        insert lstCommision;
+        												 
+		Commission__c objCommission2 = new Commission__c(Product__c = objProduct.Id, Active__c = true,
+       												Max_Year_Value__c = 10, Min_Year_Value__c = 0 ,
+        												Trail_Commission__c = 10, Upfront_Commission__c = 20);  
+        insert objCommission2;
+        
+        
+        objCommission1.Active__c = true;
+        update objCommission1;
+        
+        Test.stopTest();
+	}    
+}>>>>>>> .r15043

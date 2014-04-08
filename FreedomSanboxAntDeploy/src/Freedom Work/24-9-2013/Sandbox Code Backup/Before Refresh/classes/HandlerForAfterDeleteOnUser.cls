@@ -1,0 +1,53 @@
+public with sharing class HandlerForAfterDeleteOnUser 
+{
+    public void afterDeleteUser(list<User> lstUser)
+    {
+        
+        SyncDeletedRecords__c objSDR = null;
+         list<SyncDeletedRecords__c> lstSDR = new List<SyncDeletedRecords__c>();
+         
+        for(User objUser : lstUser)
+        {
+        	objSDR = new SyncDeletedRecords__c();
+            objSDR.Sobject_ID__c = objUser.ID;
+            objSDR.Sync_DataTime__c  = objUser.Synched_Date_Time__c;
+            objSDR.SObjectType__c = 'User';
+            
+            lstSDR.add(objSDR);
+        }   
+        insert lstSDR;
+    
+    }
+    
+     @IsTest(seealldata = true) 
+      public static void testCoverage() 
+      {
+         TestData_Ffreedom testData = new TestData_Ffreedom();
+         Account parent = new Account();
+          parent = testData.initializeAccount();
+          insert parent;
+          Account child = new Account(); 
+          child = testData.init_FamilyMember(parent);
+          child.Portal_Id__c = '1';
+          insert child;
+          User obUser = [select Id from User limit 1];
+          /*User objuser = new User();
+          
+          objuser.LastName = 'test user';
+          objuser.IsActive=true; 
+          objuser.Email='a@gmail.com'; 
+          objuser.Alias='a'; 
+          objuser.CommunityNickname='sdsad';
+          objuser.TimeZoneSidKey='GMT';
+          objuser.LocaleSidKey ='en_GB';   
+          objuser.EmailEncodingKey='ISO-8859-1';   
+          objuser.ProfileId=objProfile.Id;
+          objuser.LanguageLocaleKey='en_US';
+          insert objuser;*/
+             
+             
+                    test.startTest();
+             // delete obUser ;
+          test.stopTest();
+      }
+}

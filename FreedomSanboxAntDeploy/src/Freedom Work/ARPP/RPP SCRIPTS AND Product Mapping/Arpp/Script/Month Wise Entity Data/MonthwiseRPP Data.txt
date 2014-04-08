@@ -1,0 +1,201 @@
+Test Entity on Production:
+
+GAURAV Test : https://ffreedom.my.salesforce.com/0012000000rJIzI
+Mahesh Test :https://ffreedom.my.salesforce.com/0012000000qODPa
+Priyanka Test : https://ffreedom.my.salesforce.com/0012000000zFWKd
+
+
+
+List<ARPP_Detail__c> lst = [Select Id, Entity__c, Entity__r.CreatedDate from ARPP_Detail__c where CALENDAR_MONTH(Entity__r.CreatedDate) = 2 and CALENDAR_YEAR(Entity__r.CreatedDate) = 2011];
+Set<Id> setEntityId = new Set<Id>();
+for(ARPP_Detail__c obj : lst)
+   setEntityId.add(obj.Entity__c);
+System.debug('----------entityId size-----------'+ setEntityId.size());
+System.debug('----------entityId-----------'+ setEntityId);
+
+2010
+1:
+--------entityId size-----------1
+-----entityId-----------{0012000000SENJjAAP}
+
+8:
+----entityId size-----------1
+--------entityId-----------{0012000000ZtS3yAAF}
+
+9:
+-------entityId size-----------2
+------entityId-----------{0012000000ZmRKNAA3, 0012000000ZmaHYAAZ}
+
+12
+-----entityId size-----------2
+-----entityId-----------{0012000000eYRXVAA4, 0012000000eYy34AAC}
+
+
+------------------
+
+
+2011 ---------------Total Count ====>35
+
+1:
+-----entityId size-----------3
+-----entityId-----------{0012000000fpyfLAAQ, 0012000000fq8aZAAQ, 0012000000fqOufAAE}
+
+2:
+------entityId size-----------0
+
+
+3:
+--entityId size-----------1
+----entityId-----------{0012000000iC7HtAAK}
+
+4:
+
+----entityId size-----------4
+------entityId-----------{0012000000iWWWoAAO, 0012000000inS9NAAU, 0012000000iocelAAA, 0012000000j9g4GAAQ}
+
+5:
+---entityId size-----------3
+--entityId-----------{0012000000jbV0dAAE, 0012000000jbf5VAAQ, 0012000000jq0GBAAY}
+
+6:
+----entityId size-----------1
+----entityId-----------{0012000000js6ucAAA}
+
+7:
+------entityId size-----------4
+-----entityId-----------{0012000000kmlYkAAI, 0012000000kmlllAAA, 0012000000kn1MTAAY, 0012000000kn2sgAAA}
+
+8:
+--entityId size-----------2
+-----entityId-----------{0012000000knBS4AAM, 0012000000knWjaAAE}
+
+9:
+-----entityId size-----------4
+-----entityId-----------{0012000000mgN2kAAE, 0012000000mgkfjAAA, 0012000000mhPBVAA2, 0012000000mhqEbAAI}
+
+10:
+-----entityId size-----------3
+------entityId-----------{0012000000na1EjAAI, 0012000000na2XdAAI, 0012000000oDJ2YAAW}
+
+11:
+-------entityId size-----------4
+-------entityId-----------{0012000000oEztTAAS, 0012000000oH0sZAAS, 0012000000op6K8AAI, 0012000000opBEOAA2}
+
+12:
+----entityId size-----------6
+---------entityId-----------{0012000000osMmJAAU, 0012000000pQZRwAAO, 0012000000pQly9AAC, 0012000000pcDtLAAU, 0012000000pr3jXAAQ, 0012000000prQzeAAE}
+
+
+--------Total Count ====>35-----------------------------------------------
+
+
+
+
+2012 -------------Total count --->93--------------------
+
+1:
+---entityId size-----------1
+------entityId-----------{0012000000ptgvWAAQ}
+
+2:
+-------entityId size-----------3
+--------entityId-----------{0012000000qAhk3AAC, 0012000000qODPaAAO, 0012000000qXNzMAAW}
+
+3:
+-------entityId size-----------5
+-----entityId-----------{0012000000rG4TaAAK, 0012000000rGf5UAAS, 0012000000rJEo2AAG, 0012000000rJIzIAAW, 0012000000rJcp2AAC}
+
+4:
+-----entityId size-----------6
+------entityId-----------{0012000000s0BDdAAM, 0012000000s0xKmAAI, 0012000000s0xNGAAY, 0012000000s2NbVAAU, 0012000000s2UymAAE, 0012000000s2aaiAAA}
+
+5:
+----entityId size-----------1
+--------entityId-----------{0012000000sVULEAA4}
+
+6:
+-----entityId size-----------3
+------entityId-----------{0012000000tD1NhAAK, 0012000000tD1VRAA0, 0012000000tMLYOAA4}
+
+7:
+-------entityId size-----------5
+-------entityId-----------{0012000000tNNLmAAO, 0012000000tNvEgAAK, 0012000000tPUMLAA4, 0012000000u23M1AAI, 0012000000u25AqAAI}
+
+8:
+------entityId size-----------1
+----entityId-----------{0012000000u4RLTAA2}
+
+9:
+-------entityId size-----------11
+--------entityId-----------{0012000000ukbNzAAI, 0012000000ukhwHAAQ, 0012000000ukysOAAQ, 0012000000ulQtWAAU, 0012000000ulfMZAAY, 0012000000ulftyAAA, 
+							0012000000vSnraAAC, 0012000000vTkB0AAK, 0012000000vUKWWAA4, 0012000000vUdxaAAC, ...}
+
+10:
+-----entityId size-----------9
+-------entityId-----------{0012000000vVqrLAAS, 0012000000wCla0AAC, 0012000000wELLaAAO, 0012000000wEwoMAAS, 0012000000wFflyAAC, 0012000000wG6NAAA0, 0012000000wG97IAAS, 0012000000wk45TAAQ, 0012000000wkP0PAAU}
+
+11:
+-----entityId size-----------26
+----entityId-----------{0012000000wb8WPAAY, 0012000000wknOMAAY, 0012000000wknRaAAI, 0012000000wknVUAAY, 0012000000wl9w4AAA, 0012000000wlQ3FAAU, 0012000000wlzx7AAA, 0012000000wm0CqAAI, 0012000000wmSUuAAM, 0012000000wnE8oAAE, ...}
+
+
+12:
+
+-------entityId size-----------22
+-------entityId-----------{0012000000xGPzpAAG, 0012000000xGmkKAAS, 0012000000xp57MAAQ, 0012000000xp8KsAAI, 0012000000xpdwtAAA, 0012000000xqEVDAA2, 0012000000xqTDCAA2, 0012000000xqTE0AAM, 0012000000xqaanAAA, 0012000000xryZEAAY, ...}
+
+Count ==>93
+
+
+
+
+
+
+2013 ---Total COunt ===>164-----------
+
+1:
+----entityId size-----------23
+-----entityId-----------{0012000000yF411AAC, 0012000000yF4HiAAK, 0012000000yF5ZOAA0, 0012000000yIEmOAAW, 0012000000yIlXdAAK, 
+						 0012000000yJZNrAAO, 0012000000yJfq3AAC, 0012000000yJnhcAAC, 
+						   0012000000yJpu9AAC, 0012000000yJz0oAAC, ...}
+						   
+2:
+
+-----entityId size-----------31
+
+------entityId-----------{0012000000yLa7xAAC, 0012000000yLs4LAAS, 0012000000yMHpHAAW, 0012000000yMIsLAAW, 0012000000zEzVpAAK, 
+						 0012000000zF16KAAS, 0012000000zF181AAC, 0012000000zF19JAAS, 0012000000zF7pqAAC, 0012000000zF7rrAAC, ...}		
+
+3:
+---------entityId size-----------27
+-------entityId-----------{0012000000zH0wTAAS, 0012000000zH5xHAAS, 0012000000zH5xhAAC, 0012000000zH622AAC, 0012000000zHGl8AAG, 
+							0012000000zI47GAAS, 0012000000zI4BIAA0, 0012000000zI90FAAS, 0012000000zISziAAG, 0012000000zIbd2AAC, ...}	
+
+4:
+--------entityId size-----------33
+------entityId-----------{00120000010PHEaAAO, 00120000010PJrHAAW, 00120000010PO2ZAAW, 00120000010PO38AAG, 00120000010PO4BAAW, 
+								00120000010PfsRAAS, 00120000010PtCHAA0, 00120000010PtRlAAK, 00120000010PtwRAAS, 00120000010PuN6AAK, ...}
+								
+								
+5:
+---------entityId size-----------25
+------entityId-----------{00120000011DbfnAAC, 00120000011DblLAAS, 00120000011DrVzAAK, 00120000011ELGrAAO, 00120000011EPi0AAG, 
+							00120000011EdnUAAS, 00120000011EyOkAAK, 00120000011F3lgAAC, 00120000011Fl6LAAS, 00120000011G6TRAA0, ...}
+							
+6:
+-------entityId size-----------18				
+------entityId-----------{001200000129ZcfAAE, 001200000129bWSAAY, 001200000129c7lAAA, 001200000129cwCAAQ, 00120000012AHtuAAG, 
+							00120000012AJ5GAAW, 00120000012AZAPAA4, 00120000012B4dTAAS, 00120000012BJrDAAW, 00120000012BJw3AAG, ...}		
+
+
+7:
+-------entityId size-----------7
+---------entityId-----------{00120000012CesAAAS, 00120000012CrsLAAS, 001200000137UTrAAM, 001200000137zRYAAY, 001w00000138gYAAAY, 
+							 001w00000139M2BAAU, 001w00000139OSsAAM}
+							 
+8:
+------entityId size-----------0							 
+
+							
+
+							

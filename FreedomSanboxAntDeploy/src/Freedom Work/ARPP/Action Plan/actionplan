@@ -1,0 +1,2002 @@
+!--
+    Revision History
+    
+    Version     Version Author     Date           Comments
+    1.0         Prajakta Sanap     27092012     Initial Draft - New Modified Action Plan
+    
+ --
+
+apexpage controller=ActionPlanController showHeader=false standardStylesheets=true title=Action Plan id=actionPageId
+	
+	link rel=stylesheet href=httpcode.jquery.comui1.10.2themessmoothnessjquery-ui.css 
+	script src=httpcode.jquery.comjquery-1.9.1.jsscript
+	script src=httpcode.jquery.comui1.10.2jquery-ui.jsscript
+	
+	style
+		.inputMedical1{
+            	padding 0px;
+         }
+         .inputMedical2{
+            	padding 0px;
+         }
+         .inputMedical3{
+            	padding 0px;
+         }
+         .inputMedical4{
+            	padding 0px;
+         }
+         .inputMedical5{
+            	padding 0px;
+            	
+         }
+         
+         .inputMedical6{
+            	padding 0px;
+            	
+         }
+         .inputMedical7{
+            	padding 0px;
+            	
+         }
+         
+	style
+	
+	
+    apexcomposition template=TabPage
+        apexdefine name=contents
+!--             cActionPlanComp  --
+			 apexform id=formid
+    
+    apexstylesheet value={!$Resource.FFStyle}
+    !-- Added By Gaurav  To Display autocomplete for PolicyType   --
+    
+	
+!-- 	apexincludescript value=code.jquery.comjquery-1.9.1.js --
+!-- 	apexincludescript value=code.jquery.comui1.10.2jquery-ui.js --
+	
+    style type=textcss
+            .DataTableEven  { background-color#FFFFFF; }
+            .DataTableOdd    { background-color#E4FBC5; }
+            .actionPlan
+            {
+            	width10%;
+            	margin-left20px; 
+				background-imagenone;
+				background-color#F5D0A9!important;
+				font-size11px !important; 
+				padding-top4px;
+				padding-bottom4px;
+            }
+            
+            .saveActionPlan
+            {
+            	margin-left20px;
+            	background-imagenone;
+            	background-color#A9C5EB !important;
+            }
+            
+            
+    style
+
+     script
+    	var actionPlanId;
+    	var saveActionPlanId;
+    	
+    	function changeCssActionPlan(val)
+    	{
+    		alert(val);
+    		if(val == 'Action Plan')
+    		{
+				document.getElementById(actionPlanId).style.backgroundColor = '#F5D0A9';
+				document.getElementById(saveActionPlanId).style.backgroundColor = '#A9C5EB';
+			}
+			else
+			{
+				document.getElementById(actionPlanId).style.backgroundColor = '#A9C5EB';
+				document.getElementById(saveActionPlanId).style.backgroundColor = '#F5D0A9';
+			}
+			    	
+    	}
+    	
+    	function confirmDelete() 
+        {
+        	var doDelete = confirm('Generating the Execution Tracker would lock the Action Plan n and will not allow you to edit it. Do you want to continue');
+   			return doDelete; 
+    	}
+    	
+    	function generateNewAP() 
+        {
+        	var doDisplay = confirm('New Action Plan will be generated for this Entity and all Open n Execution Tracker records will be deleted. Do you want to continue');
+   			return doDisplay; 
+    	}
+    	function cloneActionPlan() 
+        {
+        	var doDisplay = confirm('Current Action Plan will be Cloned for this Entity and all n Open Execution Tracker records will be deleted. Do you want to continue');
+   			return doDisplay; 
+    	}
+    	
+    	
+        
+    	
+    script
+    
+    apexstylesheet value={!$Resource.FFStyle}
+        apexpageBlock tabStyle=account 
+        div style=marginbottom20px; width100%;margin-left10px;
+            apexoutputLabel value=Analysis styleclass=button style= width10%;  background-imagenone;background-color#A9C5EB !important; font-size11px !important;padding-top4px; padding-bottom4px; 
+            apeximage id=theImage value={!URLFOR($Resource.Ffimage)} style=margin-left20px; vertical-alignbottom;
+            apexoutputLabel value=Generate Action Plan styleclass=button style= width10%;margin-left20px;  background-imagenone;background-color#A9C5EB !important;font-size11px !important; padding-top4px; padding-bottom4px; 
+            apeximage id=theImage2 value={!URLFOR($Resource.Ffimage)} style=margin-left20px; vertical-alignbottom;
+            apexcommandButton id=theCommandLink2 styleclass=button value=Summary Action Plan action={!SummaryActionPlanPage} style=margin-left20px; background-imagenone;background-color#A9C5EB !important;  
+            apeximage id=theImage3 value={!URLFOR($Resource.Ffimage)} style=margin-left20px; vertical-alignbottom;
+            apexcommandButton id=theCommandLink1 styleclass=button value=Action Plan action={!showActionPlan} status=topStatus 
+            					onClick=changeCssActionPlan('Action Plan'); rerender=mutualFundPanelId,Pagemsg,saveActionPlan  
+            					style=margin-left20px; background-imagenone;background-color#A9C5EB !important; 
+			script
+				actionPlanId = '{!$Component.theCommandLink1}';
+				alert('---actionPlanId---'+actionPlanId);
+			script
+			 apeximage id=theImage4 value={!URLFOR($Resource.Ffimage)} style=margin-left20px; vertical-alignbottom;
+			apexcommandButton id=theCommandLink4 styleclass=button value=Save Action Plan action={!showPreview} status=topStatus 
+								onClick=changeCssActionPlan('Save Action Plan'); rerender=mutualFundPanelId,Pagemsg,saveActionPlan 
+								style=margin-left20px; background-imagenone;background-color#A9C5EB !important; !-- onClick=colourGreen() --
+			script
+				saveActionPlanId = '{!$Component.theCommandLink4}';
+			script 
+			
+			!--   	Date  11-02-2013  Action Plan   Prajakta Sanap --    		               
+			apexoutputPanel rendered={!isDisplaySaveButton}			
+				!-- 	Added By  Aditi Satpute  Execution Tracker --
+				apeximage id=theImage5 value={!URLFOR($Resource.Ffimage)} style=margin-left20px; vertical-alignbottom;
+	!-- 			Exe  {!isExecutionTrackerOpened} --
+	            apexcommandButton id=theCommandLink3 styleclass=button value=Execution Tracker action={!showExecutionTracker} status=topStatus
+	            					onclick=return confirmDelete(); rendered=true style=margin-left20px; background-imagenone;background-color#A9C5EB !important;  
+            apexoutputPanel					
+			apexactionStatus stopText= id=topStatus
+                apexfacet name=start
+               		apexoutputPanel style=padding-left1%;padding-top2px;
+                    	img src=imgloading.gif width=16 height=16
+					apexoutputPanel
+                apexfacet
+           apexactionStatus  
+        div
+        br
+        apexpageBlock
+
+!--   					Date  11-02-2013  Action Plan   Prajakta Sanap --                   
+!--         apexoutputPanel rendered={!isDisplaySaveButton} --
+		apexoutputPanel rendered={!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15))  isDisplaySaveButton == false),False,True)}
+			apexoutputPanel rendered={!isNewAP}
+		 		apexcommandButton id=theCommandLink4 styleclass=button value=Generate New Action Plan action={!generateNewAP} status=topStatus
+            					onclick=return generateNewAP(); style=margin-left20px; background-imagenone;background-color#A9C5EB !important;  
+		 		apexcommandButton id=theCommandLink5 styleclass=button value=Clone Action Plan action={!cloneActionPlan} status=topStatus
+            					onclick=return cloneActionPlan(); style=margin-left20px; background-imagenone;background-color#A9C5EB !important;  
+            	br
+        	apexoutputPanel
+        	
+        apexoutputPanel
+       
+!-- ================================================================================================================================================================= --
+
+        	apexoutputPanel id=saveActionPlan     	
+             apexoutputPanel rendered={!isPreview}br
+                apexpageBlock id=panDisplayET 
+                    apexpanelGrid columns=2 width=60%
+                        apexoutputText value=Do you want to preview the plan
+						apexcommandLink id=theCommandLinkpre styleClass=btn value=Preview target=_blank action={!actionPlanPDF} style=text-decorationnone;  
+            			            			
+                    !--   Purpose  While generating Execution Tracker for given entity, save his Approved plan and his html as an attachment.  --
+                        apexoutputLabel value={!$Label.DoYouWantToSaveThisPlan} rendered={!isFPLimitedAccess}
+                        apexoutputPanel rendered={!isFPLimitedAccess}
+	                        apexcommandButton id=theCommandLinksave  value=Save action={!saveActionPlanPDF} status=counterStatusData 
+	                        apexactionStatus stopText= id=counterStatusData
+	                            apexfacet name=start
+	                                apeximage value={!$Resource.loading_image} width=25px height=25px
+	                            apexfacet
+	                            apexfacet name=stop         
+	                            apexfacet
+	                        apexactionStatus
+						apexoutputPanel
+                    apexpanelGrid
+					hr
+                    apexpanelGrid columns=1 width=40%
+                    	apexoutputLabel value=Do you want to send this plan to client 
+                    apexpanelGrid
+                	apexpanelGrid columns=3 width=40%
+                		apexoutputLabel value=Email Body 
+                		apexinputTextarea id=bodytext value={!emailBody} 
+                		apexcommandButton id=theCommandLinksend value=Send action={!sendEmail}
+                	apexpanelGrid
+!--                 	apexpanelGrid columns=2 width=70% --
+!--                 		apexoutputlabel  --
+					div align=center 
+                		apexoutputLabel value=Action Plan has been mailed successfully to '{!IF(strEntityName != null,strEntityName,'')}' rendered={!isMailSent} style=width8%; FONT-FAMILY Calibri; FONT-SIZE 15px; FONT-WEIGHT bold; COLOR #329902;
+                	div
+!--                 	apexpanelGrid --
+                apexpageBlock 
+               apexoutputPanel
+			apexoutputPanel
+
+!-- ================================================================================================================================================================= --
+
+        br
+        apexpageMessages id=Pagemsg
+        apexoutputPanel rendered={!isSidebar}
+        apexoutputPanel id=mutualFundPanelId 
+        apexoutputPanel rendered={!!isPreview}
+        apexpageBlock id=block1
+        
+        apexoutputPanel id=pageBlockSection1
+			apexpageBlockSection title=ADVICE ON EXISTIING MUTUAL FUND SCHEMES collapsible=true columns=1 id=section1
+            	
+!-- =============================================================CURRENT MUTUAL FUNDS - LUMPSUM=====================================================        	 --
+!-- 				div class=subHeader style=width85%;padding-left10px;margin-left50px;background-color#A9C5EB;CURRENT MUTUAL FUNDS - LUMPSUMdiv --
+				apexpageBlockSection title=CURRENT MUTUAL FUNDS - LUMPSUM columns=1 collapsible=true id=section9
+				div style=margin-left50px;
+				apexrepeat value={!beanObj.mapIdToCurrentFunds} var=curLumpMap 
+	                
+!-- 	               Mutual Fund  {!curLumpMap} --
+	                apexpageBlockTable value={!beanObj.mapIdToCurrentFunds[curLumpMap]} var=curLumpObj styleClass=required style=margin-left48px;width900px;
+                		
+		               apexcolumn width=2%
+!--   					Date  11-02-2013  Action Plan   Prajakta Sanap --    		               
+			                apexoutputPanel rendered={!isDisplaySaveButton}     
+			                    apexcommandButton Action={!addCurrentMutualFundRow} value=+ rerender=pageBlockSection1,Pagemsg rendered={!!curLumpObj.isNewMutualFund}
+		                           apexparam name=addNew value={!curLumpObj.investmentId}  assignTo={!addNewInvestId} 
+		                        apexcommandButton
+		                        
+		                        apexcommandButton Action={!removeCurrentMutualFundRow} value=- rerender=pageBlockSection1,Pagemsg rendered={!curLumpObj.isNewMutualFund}
+		                           apexparam name=recId value={!curLumpObj.investmentId}  assignTo={!removeInvestmentId} 
+		                           apexparam name=removeNumber value={!curLumpObj.newCount}  assignTo={!recordNumber} 
+		                        apexcommandButton 
+	                    	apexoutputPanel
+	                    apexcolumn
+		                
+	                    apexcolumn headerValue=Scheme Name width=15%
+	                        apexoutputText value={!curLumpObj.schemeName} style=width100px;
+	                    apexcolumn
+	                    apexcolumn headerValue=Asset Class width=15%
+	                        apexoutputText value={!curLumpObj.assetClass} style=width180px;
+	                    apexcolumn
+	                    apexcolumn headerValue=Amount style=text-alignright; padding-right 15px; width=12%
+	                    	apexoutputText value={0, number, ,##,##0} 
+                                 apexparam value={!curLumpObj.amount}
+                             apexoutputText
+	                    apexcolumn
+	                    apexcolumn headerValue=Owner width=12%
+	                        apexoutputText value={!curLumpObj.owner} style=width190px;
+	                    apexcolumn
+	                    apexcolumn headerValue=Action style=text-aligncenter; width=12%
+	                        apexselectList value={!curLumpObj.lumpsumAction} size=1 styleClass=textStyle style=width100px;
+                                apexselectOptions value={!lumpActions}
+                            apexselectList
+	                    apexcolumn
+	                    apexcolumn headerValue=Action Amount style=text-aligncenter;width12%
+	                        apexinputText value={!curLumpObj.actionAmount} styleClass=textStyle style=width70px; text-alignright;
+	                    apexcolumn
+	                    apexcolumn headerValue=Execution Tracker to be opened style=text-aligncenter;width10%;
+	                      	apexfacet name=headerExecution Tracker br To Be Openedapexfacet
+	                      	apexoutputPanel rendered={!IF(((curLumpObj.lumpsumAction == '')  (curLumpObj.lumpsumAction == '--None--')  (curLumpObj.lumpsumAction == null)),false,true)}
+		                       	apexoutputPanel rendered={!!curLumpObj.isETCreated}
+			                        apexselectList value={!curLumpObj.executionTracker} size=1 styleClass=textStyle style=width100px; 
+		                                 apexselectOptions value={!ExecutionTracker}
+		                            apexselectList
+		                        apexoutputPanel
+		                        apexoutputPanel rendered={!curLumpObj.isETCreated} style=font-color#ED1B24;
+	                                apexoutputLabel value=Already Created style=width80px;font-size11px;font-weightbold;font-color#ED1B24;text-aligncenter;  
+	                            apexoutputPanel
+	                        apexoutputPanel
+	                    apexcolumn
+!-- 	                     apexcolumn headerValue=Remark style=text-aligncenter; --
+!-- 	                        apexinputText value={!curLumpObj.mfLumpsumRemark} styleClass=textStyle style=width70px; text-alignright; --
+!-- 	                    apexcolumn --
+	                apexpageBlockTable
+	                
+	            apexrepeat
+           		apexpageBlockSectionItem 
+           			apexoutputText value=Remarks  style=text-alignleft;
+           			apexinputTextArea value={!mfLumpsumRemark} style=width300px;height55px;
+           		apexpageBlockSectionItem
+           		div
+            apexpageBlockSection
+	            
+	            
+!-- =============================================================CURRENT MUTUAL FUNDS - RUNNING SIPs=============================================        	 --
+        	
+        		apexpageBlockSection title=CURRENT MUTUAL FUNDS - RUNNING SIPs columns=1 id=section8
+	                
+	                div style=margin-left50px;
+		                apexpageBlockTable value={!beanObj.lstSIPCurrentFunds} var=curSIPObj styleClass=required style=margin-left48px;width900px;
+		                    apexcolumn headerValue=Scheme Name width=15%
+		                        apexoutputText value={!curSIPObj.schemeName} style=width100px;
+		                    apexcolumn
+		                    apexcolumn headerValue=Asset Class width=15%
+		                        apexoutputText value={!curSIPObj.assetClass} style=width180px;
+		                    apexcolumn
+		                    apexcolumn headerValue=Current SIP style=text-alignright; padding-right 15px; width=10%
+		                    	apexoutputText value={!curSIPObj.currentSIP}
+		                    apexcolumn
+		                    apexcolumn headerValue=Owner width=17%
+		                        apexoutputText value={!curSIPObj.owner} style=width190px;
+		                    apexcolumn
+		                    apexcolumn headerValue=SIP Action style=text-aligncenter; width=15%
+		                        apexselectList value={!curSIPObj.SIPaction} size=1 styleClass=textStyle style=width100px;
+		                              apexselectOptions value={!sipActions}
+		                        apexselectList
+		                    apexcolumn
+		                    apexcolumn headerValue=Action Amount 
+		                        apexinputText value={!curSIPObj.SIPactionAmount} style=text-alignright;width70px;
+		                    apexcolumn
+		                    apexcolumn headerValue=Execution Tracker to be opened style=text-aligncenter;
+	                         	apexfacet name=headerExecution Tracker br To Be Openedapexfacet
+		                       	apexoutputPanel rendered={!!curSIPObj.isMFsipETCreated}
+			                        apexselectList value={!curSIPObj.SIPexecutionTracker} size=1 styleClass=textStyle style=width100px;
+		                                apexselectOptions value={!ExecutionTracker}
+		                            apexselectList
+		                        apexoutputPanel
+		                        apexoutputPanel rendered={!curSIPObj.isMFsipETCreated} style=font-color#ED1B24;
+	                                apexoutputLabel value=Already Created style=width80px;font-size11px;font-weightbold;font-color#ED1B24;text-aligncenter;  
+	                            apexoutputPanel
+		                    apexcolumn
+		                apexpageBlockTable
+		                apexpageBlockSectionItem 
+		           			apexoutputText value=Remarks  style=text-alignleft;
+		           			apexinputTextArea value={!mfSIPRemark} style=width300px;height55px;
+		           		apexpageBlockSectionItem
+		            div
+	            apexpageBlockSection
+             
+	            !--   					Date  11-02-2013  Action Plan   Prajakta Sanap --                   
+!--                 apexoutputPanel rendered={!isDisplaySaveButton} 	 --
+	             apexoutputPanel rendered={!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15))  isDisplaySaveButton == false),False,True)}
+	             	apexoutputPanel rendered={!isSave} id=displaySave
+	            		apexcommandButton value=Save Action={!saveActionPlan}  style=margin-top15px;margin-left450px;font-weightbold; font-size11px; 
+	                               onclick=if(!confirm('Do you want to continue')){return false;} rendered={!Not(blnIsETAlreadyGenerated)} rerender=pageBlockSection1,Pagemsg status=statusId
+	            	apexoutputPanel
+            	apexoutputPanel
+            	
+            	apexactionStatus stopText= id=statusId
+                	apexfacet name=start
+               			apexoutputPanel style=padding-left1%;padding-top2px;
+                    		img src=imgloading.gif width=16 height=16
+						apexoutputPanel
+                	apexfacet
+           		apexactionStatus  
+            
+            apexpageBlockSection
+         apexoutputPanel   
+            
+            
+		!-- 	 ===================================================================================================== --
+
+		apexoutputPanel id=GoalDetailsPannel
+		    apexpageBlockSection title=GOALWISE ADVICE collapsible=true columns=1 id=section7
+		    
+			!-- 	 =========================Emergency Funds============================== --	    
+		    
+		    apexpageBlockSection title={!beanObj.objEmergencyFundGoalDetails.description} columns=1 collapsible=true id=section11
+					
+				div class=subHeader style=width15%;padding-left10px;margin-left50px;background-color#A9C5EB;Goal Detailsdiv
+					apexpageBlockSection collapsible=false columns=6
+			        	
+			        	apexpageBlockTable value={!beanObj.objEmergencyFundGoalDetails} var=goal width=120% 
+			        						id=MyTable_001 styleClass=style,required style=margin-left48px;width800px;
+			        	
+			        		apexcolumn headerValue=Start Year width=15%
+		                        apexoutputText value={!goal.startYear} style=text-aligncenter;width100px;
+		                    apexcolumn
+		                    apexcolumn headerValue=End Year width=15%
+		                        apexoutputText value={!goal.endYear}
+		                    apexcolumn
+		                    apexcolumn headerValue=Annual Cost of Goal width=15%
+		                        apexoutputText value={!TEXT(goal.annualGoalCost)}
+		                    apexcolumn
+		                    apexcolumn headerValue=Risk Profile width=20%
+		                        apexoutputText value={!goal.goalProfile}
+		                    apexcolumn
+		                    apexcolumn headerValue=Remarks width=30%
+		                        apexoutputText value={!goal.remark}
+		                    apexcolumn
+	                    apexpageBlockTable 
+                   	apexpageBlockSection
+		    
+		    
+		    !-- 	========================================================Emergency=========Assets Allocated====================================================         --
+
+!-- 					apexoutputPanel rendered={!IF(beanObj.objEmergencyFundGoalDetails.lstAssests.size0,true,false)}  --
+					div class=subHeader style=width15%;padding-left10px;margin-left50px;background-color#A9C5EB;Assets Allocateddiv
+			        	apexpageBlockSection collapsible=false columns=12
+			        	
+				        	apexpageBlockTable value={!beanObj.objEmergencyFundGoalDetails.lstAssests} width=80% var=allocatedAssets 
+				        							styleClass=required style=margin-left48px; width800px;
+				        	
+				        		apexcolumn headerValue=Type width=15%
+			                        apexoutputText value={!allocatedAssets.Type}
+			                        apexfacet name=footerapexoutputText value=Total apexfacet
+			                    apexcolumn
+			                    apexcolumn headerValue=Description width=15%
+			                        apexoutputText value={!allocatedAssets.Description} style=width200px;
+			                    apexcolumn
+			                    apexcolumn headerValue=Owner style=width80px;
+			                        apexoutputText value={!allocatedAssets.owner}
+			                    apexcolumn
+			                    apexcolumn headerValue=Allocated Amount style=text-alignright;
+	                    			apexoutputText value={0, number, ,##,##0} style=text-alignright;
+	                                     apexparam value={!allocatedAssets.allocatedAmount}
+	                                apexoutputText
+	                                apexfacet name=footer
+                                    	apexoutputText value={0, number, ,##,##0} style=floatright;padding-right styleClass=required
+                                             apexparam value={!beanObj.objEmergencyFundGoalDetails.AssetsTotal}
+                                    	apexoutputText
+                                    apexfacet
+			                    apexcolumn
+			                    apexcolumn headerValue=Expected Growth rate style=text-aligncenter; width=15%
+									  apexoutputText value={0, number, ##,##0.00}% rendered={!((if(allocatedAssets.Type=='Mutual Fund'  allocatedAssets.action=='Liquidate (Align to goal)',false,true)))}
+                                         apexparam value={!allocatedAssets.expectedGrowthRate}
+                                      apexoutputText
+                                      apexoutputText value={0, number, ##,##0.00}% rendered={!((if(allocatedAssets.Type=='Mutual Fund' allocatedAssets.action=='Liquidate (Align to goal)',true,false)))}
+                                         apexparam value={!beanObj.objEmergencyFundGoalDetails.IRR}
+                                      apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Goal Year Value style=text-aligncenter;
+			                        apexoutputText value={0, number, ,##,##0} 
+	                                     apexparam value={!allocatedAssets.goalYearValue}
+	                                apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Action to be taken width=20%
+			                        apexoutputText value={!allocatedAssets.action}
+			                    apexcolumn
+		                     apexpageBlockTable 
+		                     
+	                    apexpageBlockSection
+!--                     apexoutputPanel --
+	        
+  !-- =====================================================================SIP================================================================== --                       
+                    
+			        	div class=subHeader style=width15%;padding-left10px;margin-left50px;background-color#A9C5EB;SIPdiv
+			        	apexpageBlockSection collapsible=false columns=6
+				        	apexpageBlockTable value={!beanObj.objEmergencyFundGoalDetails} var=goal styleClass=required style=margin-left48px;width800px;
+				        	
+				        		apexcolumn headerValue=SIP style=text-alignright; padding-right15px; width=20%
+			                        apexoutputText value={0, number, ,##,##0} 
+                                         apexparam value={!beanObj.objEmergencyFundGoalDetails.SIP}
+                                    apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Equity Amount
+			                        apexinputText value={!beanObj.objEmergencyFundGoalDetails.equityAmt} style=width70px;text-alignright; padding-right15px;;
+			                    apexcolumn
+			                    apexcolumn headerValue=Equity(%) style=text-alignright; padding-right15px;
+			                        apexoutputText value={0, number,0.000} 
+                                             apexparam value={!beanObj.objEmergencyFundGoalDetails.equityPerc}
+                                      apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Debt Amount 
+			                        apexinputText value={!beanObj.objEmergencyFundGoalDetails.debtAmt} style=width70px;text-alignright; padding-right15px;;
+			                    apexcolumn
+			                    apexcolumn headerValue=Debt(%) style=text-alignright; padding-right15px;
+			                        apexoutputText value={0, number,0.000} 
+                                             apexparam value={!beanObj.objEmergencyFundGoalDetails.debtPerc}
+                                      apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Gold Amount
+			                        apexinputText value={!beanObj.objEmergencyFundGoalDetails.goldAmt} style=width70px;text-alignright; padding-right15px;;
+			                    apexcolumn
+			                    apexcolumn headerValue=Gold(%) style=text-alignright; padding-right15px;
+			                        apexoutputText value={0, number,0.000} 
+                                             apexparam value={!beanObj.objEmergencyFundGoalDetails.goldPerc}
+                                      apexoutputText
+			                    apexcolumn
+		                     apexpageBlockTable   
+	                    apexpageBlockSection
+	        
+	        !-- =====================================================================SIP Funds================================================================== --                         
+                 
+                 apexoutputPanel id=pageBlockSection2   
+			        div class=subHeader style=width15%;padding-left10px;margin-left50px;background-color#A9C5EB;SIP Fundsdiv
+			        apexoutputPanel id=SipFundOutputPannel 
+			        	apexpageBlockSection collapsible=false columns=6
+				        	apexpageBlockTable value={!beanObj.objEmergencyFundGoalDetails.lstSIPFunds} var=lstSIPFunds 
+				        				styleClass=required style=margin-left48px;width800px;
+				        	
+				        		apexcolumn headerValue=Remove style=text-aligncenter;
+			                        apexinputCheckbox value={!lstSIPFunds.isRemove} id=checkedone
+			                        apexfacet name=footerapexoutputText value=Totalapexfacet
+			                    apexcolumn
+			                    apexcolumn headerValue=SIP Funds style=text-aligncenter; width=20%
+			                     	 apexselectList value={!lstSIPFunds.productName} size=1 style=width80px; styleClass=requiredField
+                                        apexselectOptions value={!lstSIPOptions} apexselectOptions
+                                    apexselectList
+!-- 			                        apexinputText value={!lstSIPFunds.productName} style=text-alignleft; styleClass=requiredField --
+			                    apexcolumn
+			                    apexcolumn headerValue=Transaction Type style=text-aligncenter;
+			                        apexselectList value={!lstSIPFunds.transactionType} size=1 style=width80px; styleClass=requiredField
+                                        apexselectOptions value={!SIPtransactionType} apexselectOptions
+                                    apexselectList
+			                    apexcolumn
+			                    apexcolumn headerValue=Amount 
+			                        apexinputText value={!lstSIPFunds.amount} style=width95%;text-alignright; styleClass=requiredField
+			                        apexfacet name=footer
+                                    	apexoutputText value={0, number, ,##,##0} style=floatright; styleClass=textStyle
+                                             apexparam value={!beanObj.objEmergencyFundGoalDetails.SIPTotal}
+                                    	apexoutputText
+                                    apexfacet 
+			                    apexcolumn
+			                    apexcolumn headerValue=Installments
+			                        apexinputText value={!lstSIPFunds.installments} style=width80%;text-alignright;padding-right15px; styleClass=requiredField
+                                      apexinputText 
+			                    apexcolumn
+			                    apexcolumn headerValue=Category style=text-aligncenter;
+			                        apexselectList value={!lstSIPFunds.category} size=1 style=width70px; styleClass=requiredField
+                                        apexselectOptions value={!assetClass} apexselectOptions
+                                    apexselectList
+			                    apexcolumn
+			                    apexcolumn headerValue=Options style=text-aligncenter;
+			                        apexselectList value={!lstSIPFunds.option} size=1 style=width95%; styleClass=requiredField
+                                        apexselectOptions value={!options} apexselectOptions
+                                    apexselectList
+			                    apexcolumn
+			                    apexcolumn headerValue=Remark style=text-aligncenter;
+			                    	apexinputText value={!lstSIPFunds.remarks} style=width95%;text-alignleft; styleClass=textStyle
+                                    apexinputText
+                                apexcolumn
+			                    apexcolumn style=text-aligncenter;
+			                    	apexfacet name=headerExecution Tracker br To Be Openedapexfacet
+			                    	apexoutputPanel rendered={!!lstSIPFunds.isETCreated}
+			                        	apexselectList value={!lstSIPFunds.executionTracker} size=1 styleClass=textStyle style=width70px;
+                                            apexselectOptions value={!ExecutionTracker}apexselectOptions
+                                    	apexselectList
+                                   	apexoutputPanel  		
+                                    apexoutputPanel rendered={!lstSIPFunds.isETCreated} style=font-color#ED1B24;
+                                    	apexoutputLabel value=Already Created style=width80px;font-size11px;font-weightbold;font-color#ED1B24;text-aligncenter;  
+                                    apexoutputPanel
+			                    apexcolumn
+		                     apexpageBlockTable  
+	                    apexpageBlockSectionapexoutputPanel
+	            !--   					Date  11-02-2013  Action Plan   Prajakta Sanap --                   
+!-- 	                apexoutputPanel rendered={!isDisplaySaveButton}     --
+	               apexoutputPanel rendered={!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15))  isDisplaySaveButton == false),False,True)}
+	                	apexoutputPanel rendered={!isSave}
+				            apexpageBlockSectionItem 
+		                        apexcommandButton value=Add New SIP Funds  action={!addNewSIPFund} 
+		                        					reRender=pageBlockSection2,SipFundOutputPannel,Pagemsg,pageBlockSectionSummary style=margin-left400px; 
+			                                    apexparam name=addNewGoalId value={!beanObj.objEmergencyFundGoalDetails.goalId}apexcommandButton
+			                	apexcommandButton value=Remove Action={!RemoveRecordSIP} rerender=SipFundOutputPannel,Pagemsg,pageBlockSectionSummary  
+			                					rendered={!Not(blnIsETAlreadyGenerated)}
+							apexpageBlockSectionItem
+						apexoutputPanel
+					apexoutputPanel
+                apexoutputPanel		    
+		    
+		 !-- =====================================================================Lumpsum================================================================== --                       
+			        	
+			        	div class=subHeader style=width15%;padding-left10px;margin-left50px;background-color#A9C5EB;Lumpsumdiv
+			        	apexpageBlockSection collapsible=false columns=6
+				        	apexpageBlockTable value={!beanObj.objEmergencyFundLumpsum} var=goalList  styleClass=required style=margin-left48px;width800px;
+				        	
+				        		apexcolumn headerValue=Lumpsum style=text-alignright; padding-right15px;; width=20%
+			                        apexoutputText value={0, number, ,##,##0} 
+                                             apexparam value={!beanObj.objEmergencyFundLumpsum.lumpsum}
+                                      apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Equity Amount 
+			                        apexinputText value={!beanObj.objEmergencyFundLumpsum.lumpsumEquityAmt} style=width70px;text-alignright; padding-right15px;
+			                    apexcolumn
+			                    apexcolumn headerValue=Equity(%) style=text-alignright; padding-right15px;
+			                        apexoutputText value={0, number,0.000} 
+                                             apexparam value={!beanObj.objEmergencyFundLumpsum.lumpsumEquityPerc}
+                                      apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Debt Amount 
+			                        apexinputText value={!beanObj.objEmergencyFundLumpsum.lumpsumDebtAmt} style=width70px;text-alignright; padding-right15px; 
+			                    apexcolumn
+			                    apexcolumn headerValue=Debt(%) style=text-alignright; padding-right15px;
+			                        apexoutputText value={0, number,0.000} 
+                                             apexparam value={!beanObj.objEmergencyFundLumpsum.lumpsumDebtPerc}
+                                      apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Gold Amount 
+			                        apexinputText value={!beanObj.objEmergencyFundLumpsum.lumpsumGoldAmt} style=width70px;text-alignright; padding-right15px;
+			                    apexcolumn
+			                    apexcolumn headerValue=Gold(%) style=text-alignright; padding-right15px;
+			                         apexoutputText value={0, number,0.000} 
+                                             apexparam value={!beanObj.objEmergencyFundLumpsum.lumpsumGoldPerc}
+                                      apexoutputText
+			                    apexcolumn
+		                     apexpageBlockTable   
+	                    apexpageBlockSection
+	                    
+!-- =====================================================================Lumpsum Funds================================================================== --        
+               
+               apexoutputPanel id=pageBlockSection3    
+                   apexactionfunction name=makeRequired action={!makeRequiredOnSTPFrom} rerender=pageBlockSection,Pagemsg
+                   div class=subHeader style=width15%;padding-left10px;margin-left50px;background-color#A9C5EB;Lumpsum Fundsdiv
+                   apexoutputPanel id=LumpsumFundOutputPannel style=margin-left100px;
+			        	
+			        	apexpageBlockSection collapsible=false columns=6
+				        	apexpageBlockTable value={!beanObj.objEmergencyFundGoalDetails.lstLumpsumFunds} var=lstLumpsumFunds 
+				        							styleClass=required style=margin-left48px;
+				        	
+				        		apexcolumn headerValue=Remove style=text-aligncenter;
+			                        apexinputCheckbox value={!lstLumpsumFunds.isRemove}
+			                        apexfacet name=footerapexoutputText value=Totalapexfacet
+			                    apexcolumn
+			                    apexcolumn headerValue=Lumpsum Funds width=20%
+			                    	apexselectList value={!lstLumpsumFunds.lumpsumProductName} size=1 style=width100%;  onChange=makeRequired();
+                                        apexselectOptions value={!lstLumpsumOptions} apexselectOptions
+                                    apexselectList
+			                    
+!-- 			                        apexinputText value={!lstLumpsumFunds.lumpsumProductName} style=width90%;text-alignleft;  --
+!--                                       							styleClass={!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')} --
+									
+			                    apexcolumn
+			                    
+			                    apexcolumn headerValue=Transaction Type style=text-aligncenter;
+			                        apexselectList value={!lstLumpsumFunds.lumpsumTransactionType} size=1 style=width100%;  onChange=makeRequired();
+                                        apexselectOptions value={!lumpsumTransactionType} apexselectOptions
+                                    apexselectList
+			                    apexcolumn
+			                    apexcolumn headerValue=Fund style=text-alignright;
+			                        apexinputText value={!lstLumpsumFunds.lumpsumFund} style=width95%;text-alignleft; 
+																styleClass={!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}
+                                      apexinputText  
+			                    apexcolumn
+			                    
+			                    apexcolumn headerValue=Amount style=text-alignright; 
+			                        apexinputText value={!lstLumpsumFunds.lumpsumAmount} style=width80%;text-alignright; 	
+                                      							styleClass={!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}
+                                    apexfacet name=footer
+                                    	apexoutputText value={0, number, ,##,##0} style=floatright; styleClass=text-alignright;
+                                             apexparam value={!beanObj.objEmergencyFundGoalDetails.LumpsumTotal}
+                                    	apexoutputText
+                                    apexfacet
+			                    apexcolumn
+			                    apexcolumn headerValue=Installments
+			                        apexinputText value={!lstLumpsumFunds.lumpsumInstallments} style=width80%;text-alignright; 
+                                      							styleClass={!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}
+                                      apexinputText
+			                    apexcolumn
+			                    apexcolumn 
+			                    	apexfacet name=headerAmount Per br Installmentsapexfacet
+			                        apexinputText value={!lstLumpsumFunds.lumpsumAmountPerInstall} style=width80%;text-alignright;padding-right15px; 
+                                      							styleClass={!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}
+                                      apexinputText 
+			                    apexcolumn
+			                    apexcolumn headerValue=Category style=text-aligncenter;
+			                        apexselectList value={!lstLumpsumFunds.lumpsumCategory} size=1 style=width100%;
+                                    						styleClass={!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}
+                                        apexselectOptions value={!assetClass} apexselectOptions
+                                    apexselectList
+			                    apexcolumn
+			                    apexcolumn headerValue=Option style=text-aligncenter;
+			                        apexselectList value={!lstLumpsumFunds.lumpsumOption} size=1 style=width95%; 
+                                    					styleClass={!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}
+                                        apexselectOptions value={!options} apexselectOptions
+                                    apexselectList
+			                    apexcolumn
+			                    apexcolumn headerValue=Remarks style=text-aligncenter;
+			                        apexinputText value={!lstLumpsumFunds.lumpsumRemarks} style=width95%;text-alignleft; styleClass=textStyle
+                                    apexinputText
+			                    apexcolumn
+			                    apexcolumn style=text-aligncenter;
+			                    	apexfacet name=headerExecution Tracker br To Be Openedapexfacet
+		                     		apexoutputPanel rendered={!!lstLumpsumFunds.isETCreated}
+				                        apexselectList value={!lstLumpsumFunds.lumpsumExecutionTracker} size=1 styleClass=textStyle style=width100px;
+	                                            apexselectOptions value={!ExecutionTracker}apexselectOptions
+	                                    apexselectList
+	                               	apexoutputPanel
+	                               	apexoutputPanel rendered={!lstLumpsumFunds.isETCreated} style=font-color#ED1B24;
+                                    	apexoutputLabel value=Already Created style=width80px;font-size11px;font-weightbold;font-color#ED1B24;text-aligncenter;  
+                                    apexoutputPanel
+			                    apexcolumn
+		                     apexpageBlockTable  
+		                     
+	                    apexpageBlockSection
+	                  !--   					Date  11-02-2013  Action Plan   Prajakta Sanap --                   
+!--                 		apexoutputPanel rendered={!isDisplaySaveButton}  --
+                		apexoutputPanel rendered={!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15))  isDisplaySaveButton == false),False,True)}
+                			apexoutputPanel rendered={!isSave}
+			                  	apexpageBlockSectionItem 
+					                apexcommandButton value=Add New Lumpsum Funds style=margin-left400px; 
+					                                    rendered={!Not(blnIsETAlreadyGenerated)}  action={!addNewLumpsumFund} 
+					                                    reRender=Pagemsg,LumpsumFundOutputPannel,pageBlockSectionSummary
+					                                    apexparam name=addNewLumpsumGoalId value={!beanObj.objEmergencyFundGoalDetails.goalId}apexcommandButton
+					                apexcommandButton value=Remove Action={!RemoveRecordSIP} rerender=pageBlockSection3,Pagemsg,pageBlockSectionSummary 
+				                                       rendered={!Not(blnIsETAlreadyGenerated)}
+				                 apexpageBlockSectionItem
+				            apexoutputPanel
+		                apexoutputPanel
+		                 br
+	!--   					Date  11-02-2013  Action Plan   Prajakta Sanap --                   
+!--                 	apexoutputPanel rendered={!isDisplaySaveButton}  --
+	              apexoutputPanel rendered={!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15))  isDisplaySaveButton == false),False,True)}
+	                   apexoutputPanel rendered={!isSave} id=displaySave1
+		               		apexcommandButton value=Save Action={!saveActionPlan}  style=margin-top15px;margin-left450px;font-weightbold; font-size11px; 
+		                                     onclick=if(!confirm('Do you want to continue')){return false;} rendered={!Not(blnIsETAlreadyGenerated)} 
+		                                     rerender=pageBlockSection3,Pagemsg,LumpsumFundOutputPannel,SipFundOutputPannel,pageBlockSectionSummary status=statusIdEF
+		                apexoutputPanel
+		            apexoutputPanel
+		                apexactionStatus stopText= id=statusIdEF
+		                    apexfacet name=start 
+		                        apexoutputPanel style=padding-left50%;
+		                             img src=imgloading.gif width=16 height=16
+		                        apexoutputPanel
+		                    apexfacet
+		                apexactionStatus  
+	               apexoutputPanel  
+	           apexoutputPanel
+	           apexpageBlockSection
+	!-- =====================================================================End of Lumpsum Funds================================================================== --                    
+	                                   
+		    
+		    
+		    
+!-- 	=================================================================Goal details==================================================         --
+		    
+		    	apexrepeat value={!beanObj.lstGoalDetails} var=goalList
+		    
+		        	apexpageBlockSection title={!goalList.description} columns=1 collapsible=true id=section11
+					
+						div class=subHeader style=width15%;padding-left10px;margin-left50px;background-color#A9C5EB;Goal Detailsdiv
+						div style=margin-left50px;
+							apexpageBlockSection collapsible=false columns=6
+					        	
+					        	apexpageBlockTable value={!goalList} var=goal width=120% styleClass=required style=margin-left48px;width800px;
+					        	
+					        		apexcolumn headerValue=Start Year width=15%
+				                        apexoutputText value={!goal.startYear} style=text-aligncenter;width100px;
+				                    apexcolumn
+				                    apexcolumn headerValue=End Year width=15%
+				                        apexoutputText value={!goal.endYear}
+				                    apexcolumn
+				                    apexcolumn headerValue=Annual Cost of Goal width=15%
+				                        apexoutputText value={!TEXT(goal.annualGoalCost)}
+				                    apexcolumn
+				                    apexcolumn headerValue=Risk Profile width=20%
+				                        apexoutputText value={!goal.goalProfile}
+				                    apexcolumn
+				                    apexcolumn headerValue=Remarks width=30%
+				                        apexoutputText value={!goal.remark}
+				                    apexcolumn
+			                    apexpageBlockTable 
+	                    	apexpageBlockSection
+	        			div
+	        			
+!-- 	=================================================================Assets Allocated====================================================         --
+
+					apexoutputPanel rendered={!IF(goalList.lstAssests.size0,true,false)} 
+					div class=subHeader style=width15%;padding-left10px;margin-left50px;background-color#A9C5EB;Assets Allocateddiv
+			        	apexpageBlockSection collapsible=false columns=12
+			        	
+				        	apexpageBlockTable value={!goalList.lstAssests} width=80% var=allocatedAssets styleClass=required style=margin-left48px;width800px;
+				        	
+				        		apexcolumn headerValue=Type width=15%
+			                        apexoutputText value={!allocatedAssets.Type}
+			                        apexfacet name=footerapexoutputText value=Totalapexfacet
+			                    apexcolumn
+			                    apexcolumn headerValue=Description width=15%
+			                        apexoutputText value={!allocatedAssets.Description} style=width200px;
+			                    apexcolumn
+			                    apexcolumn headerValue=Owner style=width80px;
+			                        apexoutputText value={!allocatedAssets.owner}
+			                    apexcolumn
+			                    apexcolumn headerValue=Allocated Amount style=text-alignright;
+	                    			apexoutputText value={0, number, ,##,##0} style=text-alignright;
+	                                     apexparam value={!allocatedAssets.allocatedAmount}
+	                                apexoutputText
+	                                apexfacet name=footer
+                                    	apexoutputText value={0, number, ,##,##0} style=floatright; styleClass=textStyle
+                                             apexparam value={!goalList.AssetsTotal}
+                                    	apexoutputText
+                                    apexfacet
+			                    apexcolumn
+			                    apexcolumn headerValue=Expected Growth rate style=text-aligncenter;
+								 	 apexoutputText value={0, number, ##,##0.00}% rendered={!((if(allocatedAssets.Type=='Mutual Fund'  allocatedAssets.action=='Liquidate (Align to goal)',false,true)))}
+                                        apexparam value={!allocatedAssets.expectedGrowthRate}
+                                     apexoutputText
+                                     apexoutputText value={0, number, ##,##0.00}% rendered={!((if(allocatedAssets.Type=='Mutual Fund' allocatedAssets.action=='Liquidate (Align to goal)',true,false)))}
+                                        apexparam value={!goalList.IRR}
+                                     apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Goal Year Value style=text-aligncenter;
+			                        apexoutputText value={0, number, ,##,##0} 
+	                                     apexparam value={!allocatedAssets.goalYearValue}
+	                                apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Action to be taken width=20%
+			                        apexoutputText value={!allocatedAssets.action}
+			                    apexcolumn
+		                     apexpageBlockTable 
+		                     
+	                    apexpageBlockSection
+                    apexoutputPanel
+	        
+	        !-- =====================================================================SIP================================================================== --                       
+                    
+			        	div class=subHeader style=width15%;padding-left10px;margin-left50px;background-color#A9C5EB;SIPdiv
+			        	apexpageBlockSection collapsible=false columns=6
+				        	apexpageBlockTable value={!goalList} var=goalList styleClass=required style=margin-left48px;width800px;
+				        	
+				        		apexcolumn headerValue=SIP style=text-aligncenter; width=20%
+			                        apexoutputText value={0, number, ,##,##0} 
+                                    	apexparam value={!goalList.SIP}
+                                    apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Equity Amount style=text-aligncenter;
+			                        apexoutputText value={0, number, ,##,##0} 
+                                    	apexparam value={!goalList.equityAmt}
+                                    apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Equity(%) style=text-aligncenter;
+			                        apexoutputText value={0, number,0.000} 
+                                        apexparam value={!goalList.equityPerc}
+                                    apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Debt Amount style=text-aligncenter;
+			                        apexoutputText value={0, number, ,##,##0} 
+                                        apexparam value={!goalList.debtAmt}
+                                    apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Debt(%) style=text-aligncenter;
+			                        apexoutputText value={0, number,0.000} 
+                                    	apexparam value={!goalList.debtPerc}
+                                    apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Gold Amount style=text-aligncenter;
+			                        apexoutputText value={0, number, ,##,##0} 
+                                    	apexparam value={!goalList.goldAmt}
+                                    apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Gold(%) style=text-aligncenter;
+			                        apexoutputText value={0, number,0.000} 
+                                    	apexparam value={!goalList.goldPerc}
+                                    apexoutputText
+			                    apexcolumn
+		                     apexpageBlockTable   
+	                    apexpageBlockSection
+	        
+	        !-- =====================================================================SIP Funds================================================================== --                         
+                 apexoutputPanel id=pageBlockSection4   
+			        div class=subHeader style=width15%;padding-left10px;margin-left50px;background-color#A9C5EB;SIP Fundsdiv
+			        apexoutputPanel id=SipFundOutputPannel
+			        	apexpageBlockSection collapsible=false columns=6
+				        	apexpageBlockTable value={!goalList.lstSIPFunds} var=lstSIPFunds styleClass=required style=margin-left48px;width800px;
+				        	
+				        		apexcolumn headerValue=Remove style=text-aligncenter;
+			                        apexinputCheckbox value={!lstSIPFunds.isRemove} id=checkedone
+			                        apexfacet name=footerapexoutputText value=Totalapexfacet
+			                    apexcolumn
+			                    apexcolumn headerValue=SIP Funds style=text-aligncenter; width=20%
+			                    	apexselectList value={!lstSIPFunds.productName} size=1 style=width80px; styleClass=requiredField
+                                        apexselectOptions value={!lstSIPOptions} apexselectOptions
+                                    apexselectList
+			                    
+!-- 			                        apexinputText value={!lstSIPFunds.productName} style=text-alignleft; styleClass=requiredField --
+			                    apexcolumn
+			                    apexcolumn headerValue=Transaction Type style=text-aligncenter;
+			                        apexselectList value={!lstSIPFunds.transactionType} size=1 style=width80px styleClass=requiredField
+                                        apexselectOptions value={!SIPtransactionType} apexselectOptions
+                                    apexselectList
+			                    apexcolumn
+			                    apexcolumn headerValue=Amount
+			                        apexinputText value={!lstSIPFunds.amount} style=width95%;text-alignright; styleClass=requiredField
+                                    apexfacet name=footer
+                                    	apexoutputText value={0, number, ,##,##0} style=floatright; styleClass=textStyle
+                                             apexparam value={!goalList.SIPTotal}
+                                    	apexoutputText
+                                    apexfacet 
+			                    apexcolumn
+			                    apexcolumn headerValue=Installments
+			                        apexinputText value={!lstSIPFunds.installments} style=width80%;text-alignright;padding-right15px; styleClass=requiredField
+                                      apexinputText 
+			                    apexcolumn
+			                    apexcolumn headerValue=Category style=text-aligncenter;
+			                        apexselectList value={!lstSIPFunds.category} size=1 style=width70px; styleClass=requiredField
+                                        apexselectOptions value={!assetClass} apexselectOptions
+                                    apexselectList
+			                    apexcolumn
+			                    apexcolumn headerValue=Options style=text-aligncenter;
+			                        apexselectList value={!lstSIPFunds.option} size=1 style=width95%; styleClass=requiredField
+                                        apexselectOptions value={!options} apexselectOptions
+                                    apexselectList
+			                    apexcolumn
+			                    apexcolumn headerValue=Remark style=text-aligncenter;
+			                    	apexinputText value={!lstSIPFunds.remarks} style=width95%;text-alignleft; styleClass=textStyle
+                                    apexinputText
+                                apexcolumn
+			                    apexcolumn style=text-aligncenter;
+			                    	apexfacet name=headerExecution Tracker br To Be Openedapexfacet
+			                    	apexoutputPanel rendered={!!lstSIPFunds.isETCreated}
+				                        apexselectList value={!lstSIPFunds.executionTracker} size=1 styleClass=textStyle style=width100px;
+	                                            apexselectOptions value={!ExecutionTracker}apexselectOptions
+	                                    apexselectList
+	                                apexoutputPanel
+                                   	apexoutputPanel rendered={!lstSIPFunds.isETCreated} style=font-color#ED1B24;
+                                    	apexoutputLabel value=Already Created style=width80px;font-size11px;font-weightbold;font-color#ED1B24;text-aligncenter;  
+                                    apexoutputPanel
+			                    apexcolumn
+		                     apexpageBlockTable  
+	                    apexpageBlockSection
+	                    apexoutputPanel
+	                    
+!--   					Date  11-02-2013  Action Plan   Prajakta Sanap --                   
+!--                 		apexoutputPanel rendered={!isDisplaySaveButton} --
+						apexoutputPanel rendered={!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15))  isDisplaySaveButton == false),False,True)}
+                			apexoutputPanel rendered={!isSave} 
+			                    apexpageBlockSectionItem 
+					                apexcommandButton value=Add New SIP Funds style=margin-left400px; 
+					                                    rendered={!Not(blnIsETAlreadyGenerated)}  action={!addNewSIPFund} 
+					                                    reRender=Pagemsg,SipFundOutputPannel
+					                                    apexparam name=addNewGoalId value={!goalList.goalId}apexcommandButton
+					                apexcommandButton value=Remove Action={!RemoveRecordSIP} rerender=pageBlockSection4,pageBlockSectionSummary,Pagemsg 
+					                                       rendered={!Not(blnIsETAlreadyGenerated)}
+				                apexpageBlockSectionItem
+				            apexoutputPanel
+			            apexoutputPanel
+	                apexoutputPanel    
+	                    
+	               
+            
+!-- =====================================================================Lumpsum================================================================== --                       
+			        	
+			        	div class=subHeader style=width15%;padding-left10px;margin-left50px;background-color#A9C5EB;Lumpsumdiv
+			        	apexpageBlockSection collapsible=false columns=6
+				        	apexpageBlockTable value={!goalList} var=goalList  styleClass=required style=margin-left48px;width800px;
+				        	
+				        		apexcolumn headerValue=Lumpsum style=text-aligncenter; width=20%
+			                        apexoutputText value={0, number, ,##,##0} 
+                                         apexparam value={!goalList.lumpsum}
+                                    apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Equity Amount style=text-aligncenter;
+			                        apexoutputText value={0, number, ,##,##0} 
+                                    	apexparam value={!goalList.lumpsumEquityAmt}
+                                    apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Equity(%) style=text-aligncenter;
+			                        apexoutputText value={0, number,0.000} 
+                                    	apexparam value={!goalList.lumpsumEquityPerc}
+                                    apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Debt Amount style=text-aligncenter;
+			                        apexoutputText value={0, number, ,##,##0} 
+                                    	apexparam value={!goalList.lumpsumDebtAmt}
+                                    apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Debt(%) style=text-aligncenter;
+			                        apexoutputText value={0, number,0.000} 
+                                        apexparam value={!goalList.lumpsumDebtPerc}
+                                    apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Gold Amount style=text-aligncenter;
+			                        apexoutputText value={0, number, ,##,##0} 
+                                    	apexparam value={!goalList.lumpsumGoldAmt}
+                                    apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Gold(%) style=text-aligncenter;
+			                        apexoutputText value={0, number,0.000} 
+                                    	apexparam value={!goalList.lumpsumGoldPerc}
+                                    apexoutputText
+			                    apexcolumn
+		                     apexpageBlockTable   
+	                    apexpageBlockSection
+	                    
+!-- =====================================================================Lumpsum Funds================================================================== --                         
+                apexoutputPanel id=pageBlockSection5   
+                   div class=subHeader style=width15%;padding-left10px;margin-left50px;background-color#A9C5EB;Lumpsum Fundsdiv
+                   apexoutputPanel id=LumpsumFundOutputPannel style=margin-left100px;
+			        	
+			        	apexpageBlockSection collapsible=false columns=6
+				        	apexpageBlockTable value={!goalList.lstLumpsumFunds} var=lstLumpsumFunds styleClass=required style=margin-left48px;
+				        	
+				        		apexcolumn headerValue=Remove style=text-aligncenter;
+			                        apexinputCheckbox value={!lstLumpsumFunds.isRemove}
+			                        apexfacet name=footerapexoutputText value=Totalapexfacet
+			                    apexcolumn
+			                    apexcolumn headerValue=Lumpsum Funds width=20%
+			                    	apexselectList value={!lstLumpsumFunds.lumpsumProductName} size=1 style=width100%;  onChange=makeRequired();
+                                        apexselectOptions value={!lstLumpsumOptions} apexselectOptions
+                                    apexselectList
+!-- 			                        apexinputText value={!lstLumpsumFunds.lumpsumProductName} style=width90%;text-alignleft;  --
+!--                                       							styleClass={!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')} --
+!--                                       apexinputText --
+			                    apexcolumn
+			                    
+			                    apexcolumn headerValue=Transaction Type style=text-aligncenter;
+			                        apexselectList value={!lstLumpsumFunds.lumpsumTransactionType} size=1 style=width100%;  onChange=makeRequired();
+                                        apexselectOptions value={!lumpsumTransactionType} apexselectOptions
+                                    apexselectList
+			                    apexcolumn
+			                    apexcolumn headerValue=Fund
+			                        apexinputText value={!lstLumpsumFunds.lumpsumFund} style=width95%;text-alignright; 
+																styleClass={!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}
+                                    apexinputText  
+			                    apexcolumn
+			                    apexcolumn headerValue=Amount
+			                        apexinputText value={!lstLumpsumFunds.lumpsumAmount} style=width80%;text-alignright; 	
+                                      							styleClass={!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}
+                                    apexinputText
+                                    apexfacet name=footer
+                                    	apexoutputText value={0, number, ,##,##0} style=floatright; styleClass=textStyle
+                                             apexparam value={!goalList.LumpsumTotal}
+                                    	apexoutputText
+                                    apexfacet
+			                    apexcolumn
+			                    apexcolumn headerValue=Installments
+			                        apexinputText value={!lstLumpsumFunds.lumpsumInstallments} style=width80%;text-alignright;padding-right15px; 
+                                      							styleClass={!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}
+                                      apexinputText
+			                    apexcolumn
+			                    apexcolumn 
+			                    	apexfacet name=headerAmount Per br Installmentsapexfacet
+			                        apexinputText value={!lstLumpsumFunds.lumpsumAmountPerInstall} style=width80%;text-alignright; padding-right15px; 
+                                      							styleClass={!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}
+                                      apexinputText 
+			                    apexcolumn
+			                    apexcolumn headerValue=Category style=text-aligncenter;
+			                        apexselectList value={!lstLumpsumFunds.lumpsumCategory} size=1 style=width100%;
+                                    						styleClass={!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}
+                                        apexselectOptions value={!assetClass} apexselectOptions
+                                    apexselectList
+			                    apexcolumn
+			                    apexcolumn headerValue=Option style=text-aligncenter;
+			                        apexselectList value={!lstLumpsumFunds.lumpsumOption} size=1 style=width95%; 
+                                    					styleClass={!IF(lstLumpsumFunds.lumpsumTransactionType == 'STP From','requiredField', '')}
+                                        apexselectOptions value={!options} 
+                                    apexselectList
+			                    apexcolumn
+			                    apexcolumn headerValue=Remarks style=text-aligncenter;
+			                        apexinputText value={!lstLumpsumFunds.lumpsumRemarks} style=width95%;text-alignleft; styleClass=textStyle
+                                    apexinputText
+			                    apexcolumn
+			                    apexcolumn style=text-aligncenter;
+			                    	apexfacet name=headerExecution Tracker br To Be Openedapexfacet
+			                    	apexoutputPanel rendered={!!lstLumpsumFunds.isETCreated}
+				                        apexselectList value={!lstLumpsumFunds.lumpsumExecutionTracker} size=1 styleClass=textStyle style=width100px;
+	                                            apexselectOptions value={!ExecutionTracker}apexselectOptions
+	                                    apexselectList
+                                    apexoutputPanel
+                                    apexoutputPanel rendered={!lstLumpsumFunds.isETCreated} style=font-color#ED1B24;
+	                                    	apexoutputLabel value=Already Created style=width80px;font-size11px;font-weightbold;font-color#ED1B24;text-aligncenter;  
+                                    apexoutputPanel
+			                    apexcolumn
+		                     apexpageBlockTable   
+	                    apexpageBlockSection
+	                apexoutputPanel
+	               		!--   					Date  11-02-2013  Action Plan   Prajakta Sanap --                   
+!--                 		apexoutputPanel rendered={!isDisplaySaveButton}  --
+						apexoutputPanel rendered={!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15))  isDisplaySaveButton == false),False,True)}
+                			apexoutputPanel rendered={!isSave}
+				                apexpageBlockSectionItem 
+					               	apexcommandButton value=Add New Lumpsum Funds style=margin-left400px; 
+					                                    rendered={!Not(blnIsETAlreadyGenerated)}  action={!addNewLumpsumFund} reRender=Pagemsg,LumpsumFundOutputPannel
+					                                    apexparam name=addNewLumpsumGoalId value={!goalList.goalId}apexcommandButton
+					                                    
+	!-- 				                apexcommandButton value=Add New Lumpsum Funds  style=margin-top15px;margin-left350px;font-weightbold; font-size11px;FONT-FAMILY Calibri;  --
+	!--                                     rendered={!Not(blnIsETAlreadyGenerated)}  action={!addNewLumpsumFund}  --
+	!--                                     reRender=Pagemsg,LumpsumFundOutputPannel --
+	!--                                     apexparam name=addNewLumpsumGoalId value={!goalList.goalId}apexcommandButton --
+	                                    
+					                apexcommandButton value=Remove Action={!RemoveRecordSIP} rerender=LumpsumFundOutputPannel,Pagemsg 
+					                                       rendered={!Not(blnIsETAlreadyGenerated)}
+					            apexpageBlockSectionItem
+					        apexoutputPanel
+		                apexoutputPanel
+		                br
+		            !--   					Date  11-02-2013  Action Plan   Prajakta Sanap --                   
+!--                 	apexoutputPanel rendered={!isDisplaySaveButton}  --
+                	apexoutputPanel rendered={!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15))  isDisplaySaveButton == false),False,True)}
+		                apexoutputPanel rendered={!isSave} id=displaySave1
+			            	apexcommandButton value=Save Action={!saveActionPlan}  style=margin-top15px;margin-left450px;font-weightbold; font-size11px; 
+			                                     onclick=if(!confirm('Do you want to continue')){return false;} 
+			                                     rendered={!Not(blnIsETAlreadyGenerated)} 
+			                                     rerender=LumpsumFundOutputPannel,Pagemsg,pageBlockSectionSummary,SipFundOutputPannel status=statusIdEF
+			            apexoutputPanel
+		            apexoutputPanel    
+		                apexactionStatus stopText= id=statusIdEF
+		                    apexfacet name=start 
+		                        apexoutputPanel style=padding-left1%;
+		                             img src=imgloading.gif width=16 height=16
+		                        apexoutputPanel
+		                    apexfacet
+		                apexactionStatus  
+		           apexoutputPanel  
+	!-- =====================================================================End of Lumpsum Funds================================================================== --                    
+	                    
+	        		apexpageBlockSection
+	        	apexrepeat
+	        apexpageBlockSection
+	        
+!-- ================================================SUMMARY OF RECOMMENDED INVESTMENTS (MUTUAL FUNDS)================================================================================ --              
+
+!--        =========================================================SIP Summary ========================================================        --
+        	apexoutputPanel id=pageBlockSectionSummary
+              	apexpageBlockSection title=SUMMARY OF RECOMMENDED INVESTMENTS (MUTUAL FUNDS) collapsible=true columns=1 id=section6
+              		div class=subHeader style=width80%;padding-left10px;margin-left50px;background-color#A9C5EB;SIP SUMMARYdiv
+              			apexpageBlockSection collapsible=true columns=1 
+              				apexrepeat value={!mapSIPFundsAlreadyExists} var=sipFundsMap 
+		                		apexvariable var=total value={!0}
+		                		apexrepeat value={!mapSIPFundsAlreadyExists[sipFundsMap]} var=varSipFundsMap
+										apexvariable var=total value={!total + ROUND(varSipFundsMap.amount,0)}		                			
+		                		apexrepeat
+	                			div class=subHeader style=width15%;padding-left10px;margin-left50px;background-color#A9C5EB;{!sipFundsMap}div
+		               			apexpageBlockTable value={!mapSIPFundsAlreadyExists[sipFundsMap]} var=sipFundsObj styleClass=required style=margin-left48px;width900px;
+!-- 				        	apexpageBlockTable value={!lstSummarySIPFunds} var=lstSIPFunds styleClass=required style=margin-left48px;width800px; --
+					        		apexcolumn headerValue=SIP Summary style=text-alignleft;
+				                        apexoutputText value={!sipFundsObj.productName}
+				                        apexfacet name=footerapexoutputText value=Totalapexfacet
+				                    apexcolumn
+				                    apexcolumn headerValue=Transaction Type width=15% style=text-alignleft;
+				                        apexoutputText value={!sipFundsObj.transactionType}
+				                    apexcolumn
+				                    apexcolumn headerValue=Amount style=text-alignright; padding-right10px;
+				                        apexoutputText value={0, number, ,##,##0} style=width95%;text-alignright; styleClass=textStyle
+	                                             apexparam value={!sipFundsObj.amount}
+	                                    apexoutputText
+	                                    apexfacet name=footer
+	                                      	apexoutputText value={0, number, ,##,##0} style=floatright;padding-right15px; styleClass=textStyle
+	                                             apexparam value={!total}
+	                                     	apexoutputText
+	                                    apexfacet
+				                    apexcolumn
+				                    apexcolumn headerValue=Installments style=text-alignright; padding-right25px;
+				                        apexoutputText value={!sipFundsObj.installments}  
+				                    apexcolumn
+				                    apexcolumn headerValue=Category style=text-aligncenter;
+				                        apexoutputText value={!sipFundsObj.category}  
+				                    apexcolumn
+				                    apexcolumn headerValue=Option style=text-alignleft;
+				                        apexoutputText value={!sipFundsObj.option}  
+				                    apexcolumn
+				                    apexcolumn headerValue=Remarks style=text-alignleft;padding-right10px;
+				                        apexoutputText value={!sipFundsObj.remarks}  
+				                    apexcolumn
+								apexpageBlockTable
+							apexrepeat
+						apexpageBlockSection
+					
+!--        =========================================================Lumpsum Summary ========================================================        --					
+					
+						div class=subHeader style=width80%;padding-left10px;margin-left50px;background-color#A9C5EB;LUMPSUM SUMMARYdiv
+				    	apexpageBlockSection collapsible=true columns=1 
+					    	apexrepeat value={!mapLumpsumFundsAlreadyExists} var=lumpsumFundsMap 
+					    		apexvariable var=total value={!0}
+			                		apexrepeat value={!mapLumpsumFundsAlreadyExists[lumpsumFundsMap]} var=varLumpsumFundsMap
+											apexvariable var=total value={!total + ROUND(varLumpsumFundsMap.Amount__c,0)}		                			
+			                		apexrepeat
+	                			div class=subHeader style=width15%;padding-left10px;margin-left50px;background-color#A9C5EB;{!lumpsumFundsMap}div
+					        	apexpageBlockTable value={!mapLumpsumFundsAlreadyExists[lumpsumFundsMap]} var=lumpsumFundsObj styleClass=required style=margin-left48px;width800px;
+					        		apexcolumn headerValue=Lumpsum Summary style=text-alignleft;
+				                        apexoutputText value={!lumpsumFundsObj.Product_Name__c}
+				                        apexfacet name=footerapexoutputText value=Totalapexfacet
+				                    apexcolumn
+				                    apexcolumn headerValue=Transaction Type width=15%
+				                        apexoutputText value={!lumpsumFundsObj.Transaction_Type__c}
+				                    apexcolumn
+				                    apexcolumn headerValue=Fund style=text-aligncenter;
+				                        apexoutputText value={!lumpsumFundsObj.Fund__c}
+				                    apexcolumn
+				                    apexcolumn headerValue=Amount style=text-alignright; padding-right15px;
+				                        apexoutputText value={0, number, ,##,##0} style=width95%;text-alignleft; styleClass=textStyle
+	                                             apexparam value={!lumpsumFundsObj.Amount__c}
+	                                      apexoutputText
+	                                      apexfacet name=footer
+	                                      apexoutputText value={0, number, ,##,##0} style=floatright;padding-right15px; styleClass=textStyle
+	                                             apexparam value={!total}
+	                                      apexoutputTextapexfacet
+				                    apexcolumn
+				                    apexcolumn headerValue=Installments style=text-alignright;padding-right25px;
+				                        apexoutputText value={!lumpsumFundsObj.Installments__c}  
+				                    apexcolumn
+	!-- 			                    apexcolumn headerValue=Amount per Installments style=text-alignright; padding-right15px; --
+	!-- 			                        apexoutputText value={!lstLumpsumFunds.Amount_Per_Installment__c}   --
+	!-- 			                    apexcolumn --
+				                    apexcolumn headerValue=Category style=text-aligncenter;
+				                        apexoutputText value={!lumpsumFundsObj.Category__c}  
+				                    apexcolumn
+				                    apexcolumn headerValue=Option style=text-alignleft;
+				                        apexoutputText value={!lumpsumFundsObj.Option__c}  
+				                    apexcolumn
+				                    apexcolumn headerValue=Remarks style=text-alignleft;padding-right10px;
+				                        apexoutputText value={!lumpsumFundsObj.Remarks__c}  
+				                    apexcolumn
+								apexpageBlockTable
+							apexrepeat
+						apexpageBlockSection
+!-- 					apexoutputPanel rendered={!isSave} id=displaySave3 --
+!--                     	apexcommandButton value=Save Action={!saveActionPlan}  style=margin-top15px;margin-left450px;font-weightbold; font-size11px;  --
+!--                                     onclick=if(!confirm('Do you want to continue')){return false;} rendered={!Not(blnIsETAlreadyGenerated)} rerender=mutualFundPanelId,Pagemsg status=statusId2 --
+!--                     apexoutputPanel --
+				apexpageBlockSection
+				
+			apexoutputPanel
+			
+!-- ================================================RECOMMNEDATION ON EXISTING INSURANCE================================================================ --       
+        
+        
+       	apexpageBlockSection title=RECOMMENDATION ON EXISTING INSURANCE collapsible=true columns=1 id=section2
+           	div class=space
+                apexoutputPanel id=RecPageblocksection
+                div style=overflowauto;height100%;width900px; margin-left50px; 
+                    table  width=100% border=1 cellpadding=2 cellspacing=0 id=dataTable7
+                    tr 
+                        td class=tableHeaderLight  style=font-size14px;font-weightbold;text-alignleft;width20%;background-color#A9C5EB;Policy Numbertd
+                        apexrepeat id=hdpolicyNumber value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={!recommendedInsurance.policyNumber}  styleClass=textStyle
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Insuredtd
+                        apexrepeat id=hdinsured value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={!recommendedInsurance.insured}  styleClass=textStyle
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Nomineetd
+                        apexrepeat id=hdnominee value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={!recommendedInsurance.nominee}  styleClass=textStyle
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Insurance Companytd
+                        apexrepeat id=hdinsuranceCompany value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={!recommendedInsurance.insuranceCompany}  styleClass=textStyle
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Policy Typetd
+                        apexrepeat id=hdpolicyType value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={!recommendedInsurance.policyType}  styleClass=textStyle
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Policy Nametd
+                        apexrepeat id=hdpolicyName value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={!recommendedInsurance.policyName}  styleClass=textStyle
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Commencement Datetd
+                        apexrepeat id=hdcommencementDate value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={0,date,MM''dd''yyyy} style=text-alignright; styleClass=textStyle
+                                    apexparam value={!recommendedInsurance.commencementDate}  
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Next Premium Due Datetd
+                        apexrepeat id=hdnextPremiumDueDate value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={0,date,MM''dd''yyyy} style=text-alignright; styleClass=textStyle
+                                    apexparam value={!recommendedInsurance.nextPremiumDueDate}  
+                                apexoutputText
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Death Benefit (Rs.)td
+                        apexrepeat id=hddeathBenefitRs value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={!recommendedInsurance.deathBenefitRs}  styleClass=textStyle
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Premium Amount (Rs.)td
+                        apexrepeat id=hdpremiumAmountRs value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={!recommendedInsurance.premiumAmountRs}  styleClass=textStyle
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Premium Payment Frequencytd
+                        apexrepeat id=hdpremiumPaymentFrequency value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={!recommendedInsurance.premiumPaymentFrequency}  styleClass=textStyle
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Tenure of Insurancetd
+                        apexrepeat id=hdtenureofInsurance value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={!recommendedInsurance.tenureofInsurance}  styleClass=textStyle
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Premium Paying Termtd
+                        apexrepeat id=hdpremiumPayingTerm value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={!recommendedInsurance.premiumPayingTerm}  styleClass=textStyle
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Surrender Cash Valuetd
+                        apexrepeat id=hdsurrenderCashValue value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={!recommendedInsurance.surrenderCashValue}  styleClass=textStyle
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Current Amounttd
+                        apexrepeat id=hdcurrentAmount value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={0, number, ,##,##0} styleClass=textStyle 
+                                      apexparam value={!recommendedInsurance.currentAmount}
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Maturity Amounttd
+                        apexrepeat id=hdmaturityAmount value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                 apexoutputText value={0, number, ,##,##0} styleClass=textStyle 
+                                         apexparam value={!recommendedInsurance.maturityAmount}
+                                  apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                    tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Action to be takentd
+                        apexrepeat id=hdaction value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                                apexoutputText value={!recommendedInsurance.action}  styleClass=textStyle
+                                apexoutputText 
+                            td
+                        apexrepeat
+                    tr
+                     tr
+                        td class=tableHeaderLight style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Execution trackerbrto be openedtd
+                        apexrepeat id=hdexecutiontracker value={!beanObj.lstRecommendedInsurance} var=recommendedInsurance
+                            td style=text-alignright;
+                            	apexoutputPanel rendered={!recommendedInsurance.isETCreated} style=font-color#ED1B24;
+	                                apexoutputLabel value=Already Created style=width80px;font-size11px;font-weightbold;font-color#ED1B24;text-aligncenter;  
+	                            apexoutputPanel
+	                            apexoutputPanel rendered={!!recommendedInsurance.isETCreated}
+	                                apexoutputPanel rendered={!IF(((recommendedInsurance.action == 'To be grown till maturity but stop saving more') (recommendedInsurance.action == 'Liquidate (Align to goal)')),true,false)}
+	                                	apexselectList value={!recommendedInsurance.recInsuranceExecutionTracker} size=1 styleClass=textStyle style=width100px;
+	                                         apexselectOptions value={!ExecutionTracker}apexselectOptions
+	                                    apexselectList
+	                                apexoutputPanel 
+                               	apexoutputPanel
+                            td
+                        apexrepeat
+                    tr
+                    table
+                div
+            apexoutputPanel
+         div
+!--          apexoutputPanel rendered={!isDisplaySaveButton} 	 --
+		apexoutputPanel rendered={!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15))  isDisplaySaveButton == false),False,True)}
+			apexoutputPanel rendered={!isSave} id=displaySave4
+	        	apexcommandButton value=Save Action={!saveActionPlan}  
+	        						style=margin-top15px;margin-left450px;font-weightbold; font-size11px; 
+	                                onclick=if(!confirm('Do you want to continue')){return false;} 
+	                                rendered={!Not(blnIsETAlreadyGenerated)} rerender=RecPageblocksection,Pagemsg status=statusId5
+	        apexoutputPanel
+    	 apexoutputPanel
+       	 apexactionStatus stopText= id=statusId5
+            apexfacet name=start                
+            	apexoutputPanel style=padding-left1%;
+                	img src=imgloading.gif width=16 height=16
+                apexoutputPanel
+            apexfacet
+         apexactionStatus  
+         
+         apexpageBlockSection
+                     				
+				
+!-- ===================================================================RECOMMENDED INSURANCE=================================================================== -- 
+
+!--        =========================================================LIFE INSURANCE========================================================= --
+		apexoutputPanel id=pageBlockSection6 rendered={!(isLifeInsurancePlanning  isGeneralInsurancePlanning)} 	
+        	apexpageBlockSection title= RECOMMENDED INSURANCE collapsible=true columns=1 id=section3
+        	 	apexpageMessages id=Pagemsg1 
+        	    apexoutputPanel rendered={!isLifeInsurancePlanning}
+	            	div class=subHeader style=width90%;padding-left10px;margin-left50px;background-color#A9C5EB;LIFE INSURANCEdiv
+		                apexoutputPanel rendered={!NOT(beanObj.isLifeInsExist)}
+		                    {!$Label.ActionPlanInsurenceMsg}
+		                apexoutputPanel 
+	                 	
+	                	apexoutputPanel rendered={!beanObj.isLifeInsExist}
+                		apexpageBlockSection collapsible=true columns=1 
+!-- 				        apexpageBlockTable value={!beanObj.lstLifeInsurance} var=liObj styleClass=required style=margin-left48px; width800px; --
+		        		 	apexrepeat value={!beanObj.mapIdToLifeInsuranceInnerClass} var=lifeInsuranceMap 
+		        		 		apexpageBlockTable value={!beanObj.mapIdToLifeInsuranceInnerClass[lifeInsuranceMap]} var=liObj styleClass=required style=margin-left48px;width900px;
+					               apexcolumn width=3%
+			!--   					Date  11-02-2013  Action Plan   Prajakta Sanap --    		               
+						                apexoutputPanel rendered={!isDisplaySaveButton}     
+						                    apexcommandButton Action={!addNewLifeInsuranceRow} value=+ rerender=pageBlockSection6,Pagemsg1 rendered={!!liObj.isNewLI}
+					                           apexparam name=addNew value={!liObj.insuranceId}  assignTo={!addNewLifeInsuranceId} 
+					                        apexcommandButton
+					                        apexcommandButton Action={!removeLifeInsuracneRow} value=- rerender=pageBlockSection6,Pagemsg1 rendered={!liObj.isNewLI}
+					                           apexparam name=recId value={!liObj.insuranceId}  assignTo={!removeInsuranceId} 
+					                           apexparam name=removeNumber value={!liObj.newCount}  assignTo={!insuranceRecordNumber} 
+					                        apexcommandButton 
+			                    		apexoutputPanel
+				                    apexcolumn
+				                    apexcolumn headerValue=Insured width=20%  style=text-alignleft;
+				                        apexoutputText value={!liObj.insured}
+				                    apexcolumn
+				                    apexcolumn headerValue=Suggested Cover width=20% style=text-alignright;
+!-- 					                 apexoutputText value={!TEXT(liObj.suggestedCover)} --
+				                         apexoutputText value={!liObj.strSuggestedCover}
+				                    apexcolumn
+				                    apexcolumn headerValue=Sum Assured (Rs.) width=20%
+				                        apexinputText value={!liObj.sumAssured} style=width80px;text-alignright; 
+				                    apexcolumn
+				                    apexcolumn headerValue=Policy Name width=20%
+				                    	 apexselectList value={!liObj.policyName} size=1 styleClass=textStyle style=width100px; rendered={!liObj.policyType == 'Term Life'}
+			                                           apexselectOptions value={!lstTermLifeOptions}apexselectOptions
+			                             apexselectList
+			                             
+				                        apexinputText value={!liObj.policyName} style=width80px; rendered={!liObj.policyType != 'Term Life'}
+				                    apexcolumn
+				                    apexcolumn headerValue=Premium Amount width=20%
+		                                    apexinputText value={!liObj.premiumAmount} style=width80px;text-alignright;      
+				                    apexcolumn
+				                    apexcolumn headerValue=Policy Type style=text-aligncenter;
+				                        apexoutputText value={!liObj.policyType}  
+				                    apexcolumn
+				                    apexcolumn headerValue=Tenure of insurance width=20%
+				                        apexinputText value={!liObj.tenureOfInsurance} style=width80px;text-alignright;  
+				                    apexcolumn
+				                    apexcolumn style=text-aligncenter;
+				                    	apexfacet name=headerExecution Tracker br To Be Openedapexfacet
+				                       	apexoutputPanel rendered={!!liObj.isETCreated}
+					                        apexselectList value={!liObj.executionTracker} size=1 styleClass=textStyle style=width100px;
+			                                           apexselectOptions value={!ExecutionTracker}apexselectOptions
+			                                       apexselectList
+                                       	apexoutputPanel
+                                       	apexoutputPanel rendered={!liObj.isETCreated} style=font-color#ED1B24;
+                                       		 apexoutputLabel value=Already Created style=width80px;font-size11px;font-weightbold;font-color#ED1B24;text-aligncenter;  
+                                       	apexoutputPanel
+				                    apexcolumn
+								apexpageBlockTable
+							apexrepeat
+							br
+						apexpageBlockSection
+						apexpageBlockSection collapsible=true columns=1 
+							apexpageBlockTable value={!beanObj.lstLifeInsuranceRemark} var=liObj styleClass=required style=margin-left48px; width900px; 
+!-- 								apexoutputPanel rendered={!IF(liObj.isNewLI == true,false,true)} --
+								 	apexcolumn headerValue=Insured width=20%  style=text-alignleft;
+				                        apexoutputText value={!liObj.insured}
+				                    apexcolumn
+									apexcolumn headerValue=Remarks width=677px
+				                        apexinputTextArea value={!liObj.insuranceRemark} style=width677px;height65px  
+				                    apexcolumn
+!-- 			                   	apexoutputPanel --
+			             apexpageBlockTable
+			             apexpageBlockSection
+!-- 							apexrepeat value={!beanObj.lstLifeInsurance} var=liObj  --
+!-- 								apexoutputPanel rendered={!IF(liObj.isNewLI == true,false,true)} --
+!-- 									apexpageBlockSectionItem  --
+!-- 										apexoutputText value=Insured  style=text-alignleft; --
+!-- 					           			apexoutputText value=Remarks  style=text-alignleft; --
+!-- 				           			apexpageBlockSectionItem --
+!-- 				           			apexpageBlockSectionItem  --
+!-- 										apexoutputText value={!liObj.insured} --
+!-- 					           			apexinputTextArea value={!liObj.insuranceRemark} style=width677px;height65px   --
+!-- 				           			apexpageBlockSectionItem --
+!-- 				           		apexoutputPanel --
+!-- 							apexpageBlockTable --
+!-- 							apexrepeat --
+!-- 						apexpageBlockSection --
+
+!-- 					 div style=overflowauto;height100%;width900px; margin-left50px;  --
+!-- 					 table  width=800px border=1 cellpadding=2 cellspacing=0 id=dataTable7 --
+!-- 	                   	 tr  --
+!-- 	                        td class=tableHeaderLight  style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Insuredtd --
+!-- 	                        td class=tableHeaderLight  style=font-size14px;font-weightbold;text-alignleft;background-color#A9C5EB;Remarkstd --
+!-- 	                     tr --
+!-- 	                     apexrepeat value={!beanObj.lstLifeInsurance} var=liObj --
+!-- 	                     	apexoutputPanel rendered={!IF(liObj.isNewLI == true,false,true)}  --
+!-- 			                     tr --
+!-- 			                     	tdapexoutputText value={!liObj.insured}td --
+!-- 			                     	tdapexinputTextArea value={!liObj.insuranceRemark} style=width677px;height65pxtd --
+!-- 			                     tr --
+!-- 		                     apexoutputPanel --
+!-- 	                     apexrepeat --
+!-- 	                 table --
+!-- 	                div --
+					apexoutputPanel
+				apexoutputPanel	
+!--        =========================================================GENERAL INSURANCE========================================================= --
+			apexoutputPanel rendered={!isGeneralInsurancePlanning}
+				div class=subHeader style=width90%;padding-left10px;margin-left50px;background-color#A9C5EB;GENERAL INSURANCEdiv
+	                apexoutputPanel rendered={!NOT(beanObj.isGeneralInsExist)}
+		                {!$Label.ActionPlanInsurenceMsg}
+		            apexoutputPanel
+		            
+            		apexoutputPanel rendered={!beanObj.isGeneralInsExist}
+!--             		 apexpageMessages id=Pagemsg1 --
+                		apexpageBlockSection collapsible=true columns=1 
+				        	apexpageBlockTable value={!beanObj.lstGeneralInsurance} var=giObj styleClass=required style=margin-left48px;width800px;
+				        		apexcolumn headerValue=Insured style=text-alignleft; width=20%
+			                        apexoutputText value={!giObj.insured} style=width80px;
+			                    apexcolumn
+			                    apexcolumn headerValue=Policy Type style=text-aligncenter; width=20%
+			                        apexoutputText value={!giObj.policyType} style=width80px;
+			                    apexcolumn
+!-- 			                    apexcolumn headerValue=Policy Name width=20% --
+!-- 			                        apexoutputText value={!giObj.policyName} --
+!-- 			                    apexcolumn --
+			                    apexcolumn headerValue=Product Name style=text-aligncenter; 
+			                    	 apexselectList value={!giObj.productName} size=1 styleClass=textStyle style=width100px; rendered={!giObj.policyType =='Medical'}
+			                          	apexselectOptions value={!lstMedicalOptions}apexselectOptions
+			                          apexselectList	
+			                          
+			                          apexselectList value={!giObj.productName} size=1 styleClass=textStyle style=width100px; rendered={!giObj.policyType =='Critical Illness'}
+			                          	apexselectOptions value={!lstCriticalIllnessOptions}apexselectOptions
+			                          apexselectList
+			                          
+			                          apexselectList value={!giObj.productName} size=1 styleClass=textStyle style=width100px; rendered={!giObj.policyType =='Top Up'}
+			                           	apexselectOptions value={!lstTopUpOptions}apexselectOptions
+			                          apexselectList
+			                          
+			                          apexselectList value={!giObj.productName} size=1 styleClass=textStyle style=width100px; rendered={!giObj.policyType =='Disability'}
+			                          	apexselectOptions value={!lstDisabilityOptions}apexselectOptions
+			                          apexselectList
+			                          
+			                          apexselectList value={!giObj.productName} size=1 styleClass=textStyle style=width100px; rendered={!giObj.policyType =='Personal Accident'}
+			                          	apexselectOptions value={!lstPersonalAccidentOptions}apexselectOptions
+			                          apexselectList
+			                          
+			                         apexoutputPanel rendered={!giObj.policyType =='Vehicle'} 
+					                          apexselectList value={!giObj.productName} size=1 styleClass=textStyle style=width100px; rendered={!lstVehicleOptions.size  0} 
+					                          	 apexselectOptions value={!lstVehicleOptions}apexselectOptions
+					                          apexselectList
+					                          
+					                          apexinputText value={!giObj.productName} style=width80px; rendered={!lstVehicleOptions.size == 0}
+				                     apexoutputPanel
+			                          
+!-- 			                        apexinputText value={!giObj.productName}   --
+			                    apexcolumn
+			                    apexcolumn headerValue=Sum Assured (Rs.) style=text-aligncenter; width=20%
+			                        apexoutputText value={!giObj.sumAssured} style=width80px;  
+			                    apexcolumn
+!-- 			                    apexcolumn headerValue=Premium Amount style=text-alignright;padding-right25px; --
+!-- 			                        apexoutputText value={0, number, ,##,##0} style=width80px;height16px; styleclass=standardFontStyle --
+!-- 		                                apexparam value={!giObj.premiumAmount} --
+!-- 		                            apexoutputText --
+!-- 			                    apexcolumn  --
+								apexcolumn headerValue=Premium Amount style=text-alignright;padding-right25px; width=20%
+				                     	apexinputText value={!giObj.premiumAmount} style=width80px;text-alignright;  
+				                apexcolumn
+			                    apexcolumn style=text-aligncenter;
+			                   		apexfacet name=headerExecution Tracker br To Be Openedapexfacet
+		                   			apexoutputPanel rendered={!!giObj.isETCreated}
+				                        apexselectList value={!giObj.executionTracker} size=1 styleClass=textStyle style=width100px;
+			                                apexselectOptions value={!ExecutionTracker}apexselectOptions
+			                            apexselectList
+			                        apexoutputPanel
+                              		apexoutputPanel rendered={!giObj.isETCreated}
+                                 		apexoutputLabel value=Already Created style=width80px;font-size11px;font-weightbold;font-color#ED1B24;text-aligncenter;  
+                                   	apexoutputPanel
+			                    apexcolumn 
+							apexpageBlockTable
+							
+							
+							     
+							
+!-- 						Added on  19022013  Aditi satpute  AP Changes  Add new rows for General Insurance --
+							apexoutputPanel rendered={!IF(beanObj.lstNewGeneralInsurance.size0,true,false)}
+							
+				        		apexpageBlockTable value={!beanObj.lstNewGeneralInsurance} var=giObj styleClass=required style=margin-left48px;width800px; id=pbNewGeneralInsurance
+					        		apexcolumn headerValue=Remove style=text-aligncenter;
+				                        apexinputCheckbox value={!giObj.isRemove} id=checkedone
+!-- 				                        apexfacet name=footerapexoutputText value=Totalapexfacet --
+				                    apexcolumn
+					        		apexcolumn headerValue=Insured style=text-alignleft; width=20%
+!-- 				                        apexinputText value={!giObj.insured} style=width80px; styleClass=requiredField --
+ 										apexselectList value={!giObj.insured} size=1 styleClass=textStyle style=width100px;
+			                                apexselectOptions value={!Entities}apexselectOptions
+			                            apexselectList
+				                    apexcolumn
+				                    
+				                    apexcolumn headerValue=Policy Type style=text-aligncenter; width=20% id=policyTypeId
+				                    	  apexoutputPanel rendered={!isSave}
+					                    	  apexselectList value={!giObj.policyType} size=1 styleClass=textStyle style=width100px; onchange=changePolicyName(this.value, '{!giObj.index}');
+				                              	 apexselectOptions value={!lstPolicyType}apexselectOptions
+				                          	  apexselectList	
+			                          	  apexoutputPanel
+			                          	  apexoutputPanel rendered={!!isSave}
+				                        apexinputText value={!giObj.policyType} style=width80px; styleClass=requiredField
+										apexoutputPanel
+				                    apexcolumn
+				                    
+	!-- 			                    apexcolumn headerValue=Policy Name width=20% --
+	!-- 			                        apexoutputText value={!giObj.policyName} --
+	!-- 			                    apexcolumn --
+									apexcolumn headerValue=Product Name style=text-aligncenter; id=policyNameId 
+									
+										 apexoutputPanel rendered={!giObj.policyType =='Medical'  giObj.policyType ==''} 
+!-- 											apexselectList value={!giObj.productName} size=1 styleClass=textStyle style=width100px;  --
+!-- 																			rendered={!lstMedicalOptions.size  0} --
+!-- 					                          	apexselectOptions value={!lstMedicalOptions}apexselectOptions --
+!-- 					                        apexselectList	 --
+					                        
+!-- 				                        	apexinputText value={!giObj.productName} style=width80px; rendered={!lstMedicalOptions.size == 0} id=medicalOptionId --
+												apexinputText id=medicalOptionId styleClass=inputMedical1 value={!giObj.productName} 
+																	rendered={!giObj.policyType =='Medical'  giObj.policyType ==''} 
+												script
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductMedical}];
+											        	
+											            $(.inputMedical1).autocomplete({
+											        		source availableProductName,
+														  	select function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										        script
+				                         apexoutputPanel
+				                         
+				                          apexoutputPanel rendered={!giObj.policyType =='Critical Illness'} 
+!-- 					                          apexselectList value={!giObj.productName} size=1 styleClass=textStyle style=width100px;  --
+!-- 					                          								rendered={!lstCriticalIllnessOptions.size == 0} --
+!-- 					                          apexselectOptions value={!lstCriticalIllnessOptions}apexselectOptions --
+!-- 					                          apexselectList --
+					                      		  apexinputText styleClass=inputMedical2 value={!giObj.productName} 
+					                      		  					  rendered={!giObj.policyType =='Critical Illness'} id=illnessId   
+					                       
+!-- 					                          apexinputText value={!giObj.productName}  rendered={!lstCriticalIllnessOptions.size  0} id=illnessId --
+							                      script
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductIllness}];
+											            $(.inputMedical2).autocomplete({
+											        		source availableProductName,
+														  	select function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										        script
+				                          apexoutputPanel
+				                          
+				                          apexoutputPanel rendered={!giObj.policyType =='Top Up'} 
+!-- 					                          apexselectList value={!giObj.productName} size=1 styleClass=textStyle style=width100px;  --
+!-- 					                          								rendered={!lstTopUpOptions.size ==0} --
+!-- 					                              apexselectOptions value={!lstTopUpOptions}apexselectOptions --
+!-- 					                          apexselectList --
+					                          
+					                          apexinputText value={!giObj.productName}  styleClass=inputMedical3 rendered={!lstTopUpOptions.size  0} id=TopUpId
+					                          script
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductTopUp}];
+											            $(.inputMedical3).autocomplete({
+											        		source availableProductName,
+														  	select function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										        script
+				                          apexoutputPanel
+				                          
+				                          apexoutputPanel rendered={!giObj.policyType =='Disability'} 
+!-- 					                          apexselectList value={!giObj.productName} size=1 styleClass=textStyle style=width100px;  --
+!-- 					                          								rendered={!lstDisabilityOptions.size == 0} --
+!-- 					                              apexselectOptions value={!lstDisabilityOptions}apexselectOptions --
+!-- 					                          apexselectList --
+					                          
+					                          apexinputText value={!giObj.productName}  styleClass=inputMedical4 rendered={!lstDisabilityOptions.size  0} id=DisabilityId
+					                           script
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductDisabilty}];
+											            $(.inputMedical4).autocomplete({
+											        		source availableProductName,
+														  	select function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										        script
+				                          apexoutputPanel
+				                          
+				                          apexoutputPanel rendered={!giObj.policyType =='Personal Accident'}
+!-- 					                          apexselectList value={!giObj.productName} size=1 styleClass=textStyle style=width100px;  --
+!-- 					                          								rendered={!lstPersonalAccidentOptions.size == 0} --
+!-- 					                              apexselectOptions value={!lstPersonalAccidentOptions}apexselectOptions --
+!-- 					                          apexselectList --
+					                          
+					                          apexinputText value={!giObj.productName}  styleClass=inputMedical5 rendered={!lstPersonalAccidentOptions.size  0} id=AccidentId
+					                           script
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductAccident}];
+											        	
+											            $(.inputMedical5).autocomplete({
+											        		source availableProductName,
+														  	select function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										        script
+				                          apexoutputPanel
+				                          
+				                          apexoutputPanel rendered={!giObj.policyType =='Vehicle'} 
+!-- 					                      apexselectList value={!giObj.productName} size=1 styleClass=textStyle style=width100px; rendered={!lstVehicleOptions.size  0}  --
+!-- 					                              apexselectOptions value={!lstVehicleOptions}apexselectOptions --
+!-- 					                      apexselectList --
+					               !--           
+					                          apexinputText value={!giObj.productName} styleClass=inputMedical6
+					                          script
+													$(document).ready(function()
+											        {
+											        	var availableProductName =[{!strProductVehicle}];
+											            $(.inputMedical6).autocomplete({
+											        		source availableProductName,
+														  	select function(event, ui) 
+														  	{
+															  	var strVal = ui.item.value;	  
+														  	} 
+														});		
+											        
+											        });
+										        script
+									--	        
+				                          apexoutputPanel
+				                           				
+			                        apexcolumn
+			                          
+										
+				                    apexcolumn headerValue=Sum Assured (Rs.) style=text-aligncenter; width=20%
+				                        apexinputText value={!giObj.sumAssured} style=width80px;text-alignright; styleClass=requiredField  
+				                    apexcolumn
+				                    
+				                    apexcolumn headerValue=Premium Amount style=text-alignright;padding-right25px; width=20%
+				                     	apexinputText value={!giObj.premiumAmount} style=width80px;text-alignright; styleClass=requiredField  
+!-- 				                        apexoutputText value={0, number, ,##,##0} style=width80px;height16px; styleclass=standardFontStyle --
+!-- 			                                apexparam value={!giObj.premiumAmount} --
+!-- 			                            apexoutputText --
+				                    apexcolumn 
+				                    
+				                   	apexcolumn style=text-aligncenter;
+			                   			apexfacet name=headerExecution Tracker br To Be Openedapexfacet
+			                   			apexoutputPanel rendered={!!giObj.isETCreated}
+					                        apexselectList value={!giObj.executionTracker} size=1 styleClass=textStyle style=width100px;
+				                                apexselectOptions value={!ExecutionTracker}apexselectOptions
+				                            apexselectList
+				                       	apexoutputPanel
+			                       		apexoutputPanel rendered={!giObj.isETCreated}
+                                       		 apexoutputLabel value=Already Created style=width80px;font-size11px;font-weightbold;font-color#ED1B24;text-aligncenter;  
+                                       	apexoutputPanel
+				                   	apexcolumn 
+				                   	
+								apexpageBlockTable
+								
+									 apexactionFunction name=changePolicyName action={!getInsurance} reRender=pbNewGeneralInsurance,policyNameId,policyTypeId status=bottomStatus 
+										   		apexparam name=strPolicyType value=
+										   		apexparam name=index value=
+								     apexactionFunction 
+								     
+								     
+!-- 								     div id=medicalOptionDivId style=displaynone --
+!-- 										    apexpageblock id=pageBlock --
+!-- 										    	reRender=,policyTypeId,policyNameId, medicalOptionId, illnessId --
+!-- 												apexpageBlockTable value={!lstMedicalOptions} var=medicalRecord  --
+!-- 													apexcolumn  --
+!-- 														apexoutputLabel value={!medicalRecord}  --
+!-- 													apexcolumn --
+!-- 												apexpageBlockTable --
+!-- 											apexpageblock  --
+!-- 								     div --
+									 
+							apexoutputPanel
+							
+						apexpageBlockSection
+!-- 					 	apexoutputPanel rendered={!isDisplaySaveButton} 	 --
+						apexoutputPanel rendered={!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15))  isDisplaySaveButton == false),False,True)}	
+							apexoutputPanel rendered={!isSave}
+								apexcommandButton value=Add New Action={!addNewGeneralInsurance}  reRender=pageBlockSection6,Pagemsg
+		        						style=margin-top15px;margin-left450px;font-weightbold; font-size11px; status=statusId4
+		        				apexoutputPanel rendered={!IF(beanObj.lstNewGeneralInsurance.size0,true,false)}
+					        		apexcommandButton value=Remove Action={!removeNewGIrecords} rerender=pageBlockSection6,Pagemsg 
+							    apexoutputPanel
+							    apexactionStatus stopText= id=bottomStatus
+					                apexfacet name=start
+					               		apexoutputPanel style=padding-left2%;padding-top5px;
+					                    	img src=imgloading.gif width=16 height=16
+										apexoutputPanel
+					                apexfacet
+		 						apexactionStatus  
+							apexoutputPanel
+						apexoutputPanel
+						br
+						br
+						apexpageBlockSection columns=2
+							apexpageBlockSectionItem 
+			           			apexoutputText value=Remarks  style=text-alignleft;font-weightbold;
+			           			apexinputTextArea value={!generalInsuranceRemark} style=width300px;height55px;
+           					apexpageBlockSectionItem
+           					apexpageBlockSectionItem 
+           					apexpageBlockSectionItem
+						apexpageBlockSection
+					apexoutputPanel 
+				apexoutputPanel	
+!-- 					apexpageBlockSectionItem  --
+!-- 		           			apexoutputText value=Remarks  style=text-alignleft; --
+!-- 		           			apexinputTextArea value={!generalInsuranceRemark} style=width300px;height55px; --
+!--            			apexpageBlockSectionItem --
+					
+					
+				!--   					Date  11-02-2013  Action Plan   Prajakta Sanap --                   
+!--                 apexoutputPanel rendered={!isDisplaySaveButton}  --
+               apexoutputPanel rendered={!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15))  isDisplaySaveButton == false),False,True)}
+					apexoutputPanel rendered={!isSave} id=displaySave4
+			        	apexcommandButton value=Save Action={!saveActionPlan}  
+			        						style=margin-top15px;margin-left450px;font-weightbold; font-size11px; 
+			                                onclick=if(!confirm('Do you want to continue')){return false;} 
+			                                rendered={!Not(blnIsETAlreadyGenerated)} rerender=pageBlockSection6,Pagemsg1 status=statusId4
+			        apexoutputPanel
+			    apexoutputPanel
+			        apexactionStatus stopText= id=statusId4
+			            apexfacet name=start                
+			            	apexoutputPanel style=padding-left1%;
+			                	img src=imgloading.gif width=16 height=16
+			                apexoutputPanel
+			            apexfacet
+			        apexactionStatus  
+					 
+                apexpageBlockSection
+			apexoutputPanel
+						
+!-- ===============================================================SUCCESSION PLANNING================================================================================================== --
+          
+         apexoutputPanel id=pageBlockSection rendered={!isSuccessionPlanning}
+          	apexpageBlockSection title=SUCCESSION PLANNING collapsible=true columns=1 id=section4
+                div class=subHeader style=width85%;padding-left10px;margin-left50px;background-color#A9C5EB;WILLdiv
+                
+                apexoutputPanel rendered={!NOT(bean.entity.Will__c)} 
+                    ul class=TickList
+                        li apexoutputText value= {!$Label.WillAbsent} 
+                        li
+                        li apexoutputText value= {!$Label.WhatIsWill} escape=false 
+                        li
+                        li apexoutputPanel rendered={!IF(bean.spouse.Name!=null,true,false)} 
+                                 apexoutputText value={!bean.entity.Name} and {!bean.spouse.Name} should make a Will as per their wish. 
+                             apexoutputPanel 
+                             apexoutputPanel rendered={!IF(bean.spouse.Name==null,true,false)} 
+                                 apexoutputText value= {!bean.entity.Name} should make a Will as per their wish. 
+                             apexoutputPanel 
+                        li
+                        li apexoutputText value= {!$Label.WillChanges} escape=false 
+                        li
+                    ul
+                apexoutputPanel
+                
+                 apexoutputPanel rendered={!bean.entity.Will__c} 
+                    ul class=TickList
+                        li 
+                             apexoutputText value= {!$Label.WillPresent} escape=false 
+                        li
+                        li
+                             apexoutputText value= {!$Label.WillChanges} escape=false 
+                        li
+                        li
+                        	apexoutputText value=Execution Tracker to be opened  escape=false 
+		                    apexselectList value={!beanObj.isWillExecutionTracker} size=1 style=width100px;
+		                          apexselectOptions value={!ExecutionTracker}apexselectOptions
+		                    apexselectList
+                 		li
+                    ul
+                 !--   					Date  11-02-2013  Action Plan   Prajakta Sanap --                   
+!--                 apexoutputPanel rendered={!isDisplaySaveButton}    --
+	           apexoutputPanel rendered={!IF((CONTAINS(LEFT($User.ProfileId,15), LEFT($Label.ProfileId,15))  isDisplaySaveButton == false),False,True)}
+	                apexoutputPanel rendered={!isSave} id=displaySave5
+		 				apexcommandButton value=Save Action={!saveActionPlan}  style=margin-top15px;margin-left350px;font-weightbold; font-size11px; 
+		                                    onclick=if(!confirm('Do you want to continue')){return false;} rendered={!Not(blnIsETAlreadyGenerated)} 
+		                                    rerender=pageBlockSection,Pagemsg status=statusWill
+		        	apexoutputPanel
+		        apexoutputPanel
+                apexoutputPanel
+           
+	        	apexactionStatus stopText= id=statusWill
+	                apexfacet name=start                
+	                    apexoutputPanel style=padding-left1%;
+	                          img src=imgloading.gif width=16 height=16
+	                    apexoutputPanel
+	                apexfacet
+	        	apexactionStatus  
+			apexpageBlockSection
+		apexoutputPanel
+!-- 			 =========================================================UNALLOCATED ASSETS====================================================	 --
+
+				apexpageBlockSection title=UNALLOCATED ASSETS collapsible=true columns=1 id=section5
+            		div class=subHeader style=width85%;padding-left10px;margin-left50px;background-color#A9C5EB;ASSETS NOT ALLOCATEDdiv
+                		apexpageBlockSection collapsible=true columns=11 
+				        	apexpageBlockTable value={!beanObj.lstUnAllocatedAssets} var=unallocated styleClass=required style=margin-left48px;width800px;
+				        	
+				        		apexcolumn headerValue=Assets width=20%
+			                        apexoutputText value={!unallocated.Type}
+			                    apexcolumn
+			                    apexcolumn headerValue=Description width=20%
+			                        apexoutputText value={!unallocated.description}
+			                    apexcolumn
+			                    apexcolumn headerValue=Current Value width=15% style=text-alignright; padding-right25px;
+			                        apexoutputText value={0, number, ,##,##0} 
+		                                 apexparam value={!unallocated.currentValue}
+		                            apexoutputText
+			                    apexcolumn
+			                    apexcolumn headerValue=Balance Remaining width=15% style=text-alignright; padding-right25px;
+			                        apexoutputText value={0, number, ,##,##0} 
+                                         apexparam value={!unallocated.balanceRemaining}
+                                    apexoutputText
+			                    apexcolumn
+							apexpageBlockTable
+						apexpageBlockSection
+				apexpageBlockSection
+!--  ================================================================================================================== --
+			apexoutputPanel	 
+			
+			script
+		        twistSection(document.getElementById('{!$Component.block1.section1}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section2}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section3}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section4}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section5}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section6}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section7}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section8}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section9}').getElementsByTagName('img')[0])
+		        twistSection(document.getElementById('{!$Component.block1.section11}').getElementsByTagName('img')[0])
+		        
+				
+										
+		    script       		
+        apexpageBlock
+        
+        brapexoutputPanel
+        apexoutputPanel
+        apexoutputPanel
+        apexform
+        apexdefine
+    apexcomposition
+apexpage

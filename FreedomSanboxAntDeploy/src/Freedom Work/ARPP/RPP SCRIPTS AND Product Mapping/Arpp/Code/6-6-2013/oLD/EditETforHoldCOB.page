@@ -1,0 +1,359 @@
+<!-- 
+    Version     Version Author     Date           Comments
+    1.0         Aditi         01/04/2013      Display ET for Mutual Fund Hold -COB, Existing SIP COB,Continue Action
+-->
+
+<apex:page controller="EditETforHoldCOBController" showHeader="false" sidebar="false" tabStyle="Execution_Tracker__c">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+	<script language="javascript" type="text/javascript">
+       $(document).ready(function () {
+          //alert("hi");
+       });
+       
+       function checkAgreedAmountFilled()
+	    {
+	    	if($(".agreedAmount").val() == null || $(".agreedAmount").val() == 0.0){
+	    		alert('{!$Label.Agreed_Amount}');
+	    		$(".AssigntoOps").prop('checked', false);
+	    		return false;
+	    	}
+	    }
+       
+     </script> 
+	<script>
+		function populateParent(value)
+	    {
+	       var isError = value;
+	       
+	    	if('{!$CurrentPage.parameters.userType}' == 'opsTeam')
+	    	{
+	    		window.close();
+	    	}
+	    	else
+	    	{
+	    		if (isError == 'false')
+	               return false; 
+	    		return top.window.opener.closeETWindow();
+	    	}
+	        return false;
+	    }
+	</script>
+	<apex:form id="frm">
+		<apex:pageBlock title="Execution Tracker" rendered="{!!isReadOnly}" id="pb">
+			<apex:pageMessages id="Pagemsg"/>
+			 <apex:pageBlockButtons >
+            	<apex:commandButton value="Save" action="{!updateExecutionTracker}" reRender="Pagemsg" oncomplete="return populateParent('{!isError}');" status="statusId"/>
+               	<input type="button" class="btn" value="Cancel"  onClick="return window.close();"/>
+            </apex:pageBlockButtons>
+            <apex:actionStatus stopText="" id="statusId">
+                	<apex:facet name="start">
+               			<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                    		<img src="/img/loading.gif" width="16" height="16"/>
+						</apex:outputPanel>
+                	</apex:facet>
+        	</apex:actionStatus>  
+            <apex:outputPanel rendered="{!isSipOrLumpsum}"> 
+            <apex:sectionHeader title="Edit Execution Tracker for MET Team"/>
+				<apex:pageBlockSection title="Hold-COB, Hold-Change of broker, Hold, Existing SIP-COB, Existing SIP, Continue" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Lumpsum_Action__c}" rendered="{!strType == 'Lumpsum'}" label="Transaction Type"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'Lumpsum'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" rendered="{!strType == 'Lumpsum'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'Lumpsum'}" label="Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Action_Amount__c}" rendered="{!strType == 'Lumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Asset_Type__c}" rendered="{!strType == 'Lumpsum'}"/>
+					
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.SIP_Action__c}" rendered="{!strType == 'SIP'}" label="Transaction Type"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'SIP'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" rendered="{!strType == 'SIP'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Monthly_SIP_Amount__c}" label="Current SIP" rendered="{!strType == 'SIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.SIP_Action_Amount__c}" rendered="{!strType == 'SIP'}" label="Action Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Asset_Type__c}" rendered="{!strType == 'SIP'}"/>
+					
+					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" rendered="{!strType == 'GoalSIP'}" label="Goal Name "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Transaction_Type__c}" rendered="{!strType == 'GoalSIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'GoalSIP'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" rendered="{!strType == 'GoalSIP'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'GoalSIP'}" label="Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" rendered="{!strType == 'GoalSIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" rendered="{!strType == 'GoalSIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" rendered="{!strType == 'GoalSIP'}"/>
+				
+					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" rendered="{!strType == 'GoalLumpsum'}" label="Goal Name " />
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Transaction_Type__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'GoalLumpsum'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" rendered="{!strType == 'GoalLumpsum'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'GoalLumpsum'}" label="Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount_Per_Installment__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Fund__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+<!-- 					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" label="Goal Name"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" label="Scheme Name"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Action_Amount__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Fund__c}" label="Scheme To"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'Lumpsum'}"/> -->
+				</apex:pageBlockSection>
+				
+				<apex:pageBlockSection title="Investment Details" columns="2" id="pbs">
+                	<apex:inputField value="{!objExecutionTracker.Executed_Product_Name__c}" label="Schemes To be COB" required="true"/>
+                	<apex:inputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Agreed Amount" required="true" id="agreedAmount" styleclass="agreedAmount"/>
+                	<apex:inputField value="{!objExecutionTracker.Folio_No__c}" required="true"/>
+                    <apex:inputField value="{!objExecutionTracker.Mode_of_holding__c}" />
+                    <apex:inputField value="{!objExecutionTracker.Units__c}" label="No. of Units to be transferred"/>
+                    <apex:pageBlockSectionItem >
+					 	<apex:outputLabel value="1st Holder Name "/> 
+						<apex:selectList value="{!objExecutionTracker.Holder_Name__c}" size="1"  >
+                             <apex:selectOptions value="{!Entities}"></apex:selectOptions>
+                   		</apex:selectList>
+					 </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+					 	<apex:outputLabel value="2nd Holder Name "/> 
+						<apex:selectList value="{!objExecutionTracker.Name_of_Second_holder__c}" size="1"  >
+                             <apex:selectOptions value="{!Entities}"></apex:selectOptions>
+                   		</apex:selectList>
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem rendered="{!IF(objExecutionTracker.Application_Status__c == $Label.Forms_Provided || objExecutionTracker.Application_Status__c == $Label.Forms_Handed,true,false)}">
+					 	<apex:outputLabel value="Application Status"/> 
+						<apex:selectList value="{!objExecutionTracker.Application_Status__c}" size="1"  >
+                             <apex:selectOptions value="{!applicationStatus}"></apex:selectOptions>
+                   		</apex:selectList>
+				 	</apex:pageBlockSectionItem>
+					<apex:inputField value="{!objExecutionTracker.Target_Revenue__c}"/>
+					<apex:inputField onClick="checkAgreedAmountFilled();" value="{!objExecutionTracker.AssignToOps__c}" label="Assign to Ops" rendered="{!IF(objExecutionTracker.AssignToOps__c == false, true,false)}" id="AssigntoOps" StyleClass="AssigntoOps"/>
+                    <apex:outputField value="{!objExecutionTracker.AssignToOps__c}" label="Assign to Ops" rendered="{!IF(objExecutionTracker.AssignToOps__c == true, true,false)}"/>
+                  
+                    <apex:inputField value="{!objExecutionTracker.Remarks__c}" />
+                    <apex:pageBlockSectionItem >
+						<apex:outputLabel value="Assign Task"/>
+						<apex:commandLink action="{!assignTask}" value="Click here" id="theCommandLink"/>
+					</apex:pageBlockSectionItem>
+	            </apex:pageBlockSection> 
+			</apex:outputPanel>
+			
+			  	 <!-- End of Pop Up for MET Team -->
+          	 
+			 <!-- Pop Up for Operations Team -->
+          	<apex:outputPanel rendered="{!isSipOrLumpsumforOps}">
+          	<apex:sectionHeader title="Edit Execution Tracker for Operations Team"/>
+          		<apex:pageBlockSection title="Hold-COB, Hold-Change of broker, Hold, Existing SIP-COB, Existing SIP, Continue" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Lumpsum_Action__c}" rendered="{!strType == 'Lumpsum'}" label="Transaction Type"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'Lumpsum'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" rendered="{!strType == 'Lumpsum'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'Lumpsum'}" label="Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Action_Amount__c}" rendered="{!strType == 'Lumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Asset_Type__c}" rendered="{!strType == 'Lumpsum'}"/>
+					
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.SIP_Action__c}" rendered="{!strType == 'SIP'}" label="Transaction Type"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'SIP'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" rendered="{!strType == 'SIP'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Monthly_SIP_Amount__c}"  label="Current SIP" rendered="{!strType == 'SIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.SIP_Action_Amount__c}" rendered="{!strType == 'SIP'}" label="Action Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Asset_Type__c}" rendered="{!strType == 'SIP'}"/>
+					
+					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" rendered="{!strType == 'GoalSIP'}" label="Goal Name "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Transaction_Type__c}" rendered="{!strType == 'GoalSIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'GoalSIP'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" rendered="{!strType == 'GoalSIP'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'GoalSIP'}" label="Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" rendered="{!strType == 'GoalSIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" rendered="{!strType == 'GoalSIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" rendered="{!strType == 'GoalSIP'}"/>
+				
+					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" rendered="{!strType == 'GoalLumpsum'}" label="Goal Name " />
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Transaction_Type__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'GoalLumpsum'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" rendered="{!strType == 'GoalLumpsum'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'GoalLumpsum'}" label="Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount_Per_Installment__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Fund__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+<!-- 					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" label="Goal Name"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" label="Scheme Name"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Action_Amount__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Fund__c}" label="Scheme To"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'Lumpsum'}"/> -->
+				</apex:pageBlockSection>
+				
+				<apex:pageBlockSection title="Execution Tracker Details" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Executed_Product_Name__c}" label="Scheme To be Transferred"/>
+					<apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Agreed Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Folio_No__c}" />
+                    <apex:inputField value="{!objExecutionTracker.Mode_of_holding__c}" />
+                    <apex:inputField value="{!objExecutionTracker.Units__c}" label="No. of Units to be transferred"/>
+                    <apex:outputField value="{!objExecutionTracker.Holder_Name__c}" label="1st Holder Name "/>
+                    <apex:outputField value="{!objExecutionTracker.Name_of_Second_holder__c}" label="2nd Holder Name "/>
+                    <apex:inputField value="{!objExecutionTracker.Target_Revenue__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Booked_Revenue__c}" label="Booked Revenue "/>
+					<apex:inputField value="{!objExecutionTracker.Transaction_date__c}"/>
+                    <apex:outputField value="{!objExecutionTracker.Application_Status__c}" label="Status of Application "/>
+	           		<apex:inputField value="{!objExecutionTracker.Remark_OpsTeam__c}" label="Remark"/>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Assign Task"/>
+						<apex:commandLink action="{!assignTask}" value="Click here" id="theCommandLink"/>
+					</apex:pageBlockSectionItem>
+	            </apex:pageBlockSection> 
+          	
+          	</apex:outputPanel>
+			
+		</apex:pageBlock>
+		
+		
+		<apex:pageBlock title="Execution Tracker" rendered="{!isReadOnly}">	
+			<apex:pageBlockButtons >
+				<apex:commandButton value="Save" rendered="{!isSipOrLumpsumforOps}" action="{!updateExecutionTracker}" rerender="Pagemsg1"  oncomplete="return populateParent('{!isError}');" status="statusId1"/>
+               	<input type="button" class="btn" value="Cancel"  onClick="return window.close();" />
+               	<apex:actionStatus stopText="" id="statusId1">
+                	<apex:facet name="start">
+               			<apex:outputPanel style="padding-left:1%;padding-top:2px;">
+                    		<img src="/img/loading.gif" width="16" height="16"/>
+						</apex:outputPanel>
+                	</apex:facet>
+        		</apex:actionStatus> 
+            </apex:pageBlockButtons>
+			<apex:outputPanel rendered="{!isSipOrLumpsum}"> 
+		  	<apex:sectionHeader title="Edit Execution Tracker for MET Team"/>
+				<apex:pageBlockSection title="Hold-COB, Hold-Chnage of broker, Hold, Existing SIP-COB, Existing SIP, Continue" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Lumpsum_Action__c}" rendered="{!strType == 'Lumpsum'}" label="Transaction Type"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'Lumpsum'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" rendered="{!strType == 'Lumpsum'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'Lumpsum'}" label="Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Action_Amount__c}" rendered="{!strType == 'Lumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Asset_Type__c}" rendered="{!strType == 'Lumpsum'}"/>
+					
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.SIP_Action__c}" rendered="{!strType == 'SIP'}" label="Transaction Type"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'SIP'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" rendered="{!strType == 'SIP'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Monthly_SIP_Amount__c}"  label="Current SIP" rendered="{!strType == 'SIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.SIP_Action_Amount__c}" rendered="{!strType == 'SIP'}" label="Action Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Asset_Type__c}" rendered="{!strType == 'SIP'}"/>
+					
+					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" rendered="{!strType == 'GoalSIP'}" label="Goal Name "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Transaction_Type__c}" rendered="{!strType == 'GoalSIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'GoalSIP'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" rendered="{!strType == 'GoalSIP'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'GoalSIP'}" label="Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" rendered="{!strType == 'GoalSIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" rendered="{!strType == 'GoalSIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" rendered="{!strType == 'GoalSIP'}"/>
+				
+					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" rendered="{!strType == 'GoalLumpsum'}" label="Goal Name " />
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Transaction_Type__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'GoalLumpsum'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" rendered="{!strType == 'GoalLumpsum'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'GoalLumpsum'}" label="Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount_Per_Installment__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Fund__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+<!-- 					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" label="Goal Name"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" label="Scheme Name"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Action_Amount__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Fund__c}" label="Scheme To"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'Lumpsum'}"/> -->
+				</apex:pageBlockSection>
+				
+				<apex:pageBlockSection title="Investment Details" columns="2">
+               		<apex:outputField value="{!objExecutionTracker.Executed_Product_Name__c}" label="Schemes To be COB"/>
+               		<apex:outputField value="{!objExecutionTracker.Application_Status__c}" />
+               		<apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Agreed Amount"/>
+                	<apex:outputField value="{!objExecutionTracker.Folio_No__c}" />
+                    <apex:outputField value="{!objExecutionTracker.Mode_of_holding__c}" />
+                    <apex:outputField value="{!objExecutionTracker.Units__c}" label="No. of Units to be transferred"/>
+                    <apex:outputField value="{!objExecutionTracker.Holder_Name__c}" label="1st Holder"/>
+                    <apex:outputField value="{!objExecutionTracker.Name_of_Second_holder__c}" label="2nd Holder"/>
+                    <apex:outputField value="{!objExecutionTracker.Target_Revenue__c}"/>
+                    <apex:outputField value="{!objExecutionTracker.AssignToOps__c}" label="Assign to Ops"/>
+                    <apex:outputField value="{!objExecutionTracker.Remarks__c}" />
+                    <apex:pageBlockSectionItem >
+						<apex:outputLabel value="Assign Task"/>
+						<apex:commandLink action="{!assignTask}" value="Click here" id="theCommandLink"/>
+					</apex:pageBlockSectionItem>
+					
+					
+	            </apex:pageBlockSection> 
+			</apex:outputPanel>
+			
+			 <!-- Pop Up for Operations Team -->
+          	<apex:outputPanel rendered="{!isSipOrLumpsumforOps}">
+          	<apex:sectionHeader title="Edit Execution Tracker for Operations Team"/>
+          		<apex:pageBlockSection title="Hold-COB, Hold-Chnage of broker, Hold, Existing SIP-COB, Existing SIP, Continue" columns="2">
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Lumpsum_Action__c}" rendered="{!strType == 'Lumpsum'}" label="Transaction Type"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'Lumpsum'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" rendered="{!strType == 'Lumpsum'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'Lumpsum'}" label="Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Action_Amount__c}" rendered="{!strType == 'Lumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Asset_Type__c}" rendered="{!strType == 'Lumpsum'}"/>
+					
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.SIP_Action__c}" rendered="{!strType == 'SIP'}" label="Transaction Type"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'SIP'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" rendered="{!strType == 'SIP'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Monthly_SIP_Amount__c}"  label="Current SIP" rendered="{!strType == 'SIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.SIP_Action_Amount__c}" rendered="{!strType == 'SIP'}" label="Action Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Asset_Type__c}" rendered="{!strType == 'SIP'}"/>
+					
+					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" rendered="{!strType == 'GoalSIP'}" label="Goal Name "/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Transaction_Type__c}" rendered="{!strType == 'GoalSIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'GoalSIP'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" rendered="{!strType == 'GoalSIP'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'GoalSIP'}" label="Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" rendered="{!strType == 'GoalSIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" rendered="{!strType == 'GoalSIP'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" rendered="{!strType == 'GoalSIP'}"/>
+				
+					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" rendered="{!strType == 'GoalLumpsum'}" label="Goal Name " />
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Transaction_Type__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'GoalLumpsum'}" label="Entity Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Product_Name__c}" rendered="{!strType == 'GoalLumpsum'}" label="Scheme Name"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount__c}" rendered="{!strType == 'GoalLumpsum'}" label="Amount"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Amount_Per_Installment__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Fund__c}" rendered="{!strType == 'GoalLumpsum'}"/>
+<!-- 					<apex:outputField value="{!objExecutionTracker.Goal__r.Description__c}" label="Goal Name"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Investment_Asset__r.Scheme_Name_Text__c}" label="Scheme Name"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Installments__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Category__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Option__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Action_Amount__c}" /> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Fund__c}" label="Scheme To"/> -->
+<!-- 					<apex:outputField value="{!objExecutionTracker.Approve_Action_Plan__r.Account__r.Name}" rendered="{!strType == 'Lumpsum'}"/> -->
+				</apex:pageBlockSection>
+				
+				<apex:pageBlockSection title="Execution Tracker Details" columns="2">
+                    <apex:outputField value="{!objExecutionTracker.Executed_Product_Name__c}" label="Scheme To be Transferred"/>
+                    <apex:outputField value="{!objExecutionTracker.Agreed_Amount__c}" label="Agreed Amount"/>
+					<apex:inputField value="{!objExecutionTracker.Folio_No__c}" />
+                    <apex:outputField value="{!objExecutionTracker.Mode_of_holding__c}" />
+                    <apex:inputField value="{!objExecutionTracker.Units__c}" label="No. of Units to be transferred"/>
+                    <apex:outputField value="{!objExecutionTracker.Holder_Name__c}" label="1st Holder Name "/>
+                    <apex:outputField value="{!objExecutionTracker.Name_of_Second_holder__c}" label="2nd Holder Name "/>
+                    <apex:inputField value="{!objExecutionTracker.Target_Revenue__c}"/>
+					<apex:inputField value="{!objExecutionTracker.Booked_Revenue__c}" label="Booked Revenue "/>
+					<apex:inputField value="{!objExecutionTracker.Transaction_date__c}"/>
+                    <apex:outputField value="{!objExecutionTracker.Application_Status__c}" label="Status of Application "/>
+	           		<apex:inputField value="{!objExecutionTracker.Remark_OpsTeam__c}" label="Remark"/>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Assign Task"/>
+						<apex:commandLink action="{!assignTask}" value="Click here" id="theCommandLink"/>
+					</apex:pageBlockSectionItem>
+	            </apex:pageBlockSection> 
+          	
+          	</apex:outputPanel>	
+          	
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

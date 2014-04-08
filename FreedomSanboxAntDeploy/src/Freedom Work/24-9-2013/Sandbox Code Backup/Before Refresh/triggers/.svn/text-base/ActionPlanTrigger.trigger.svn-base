@@ -1,0 +1,14 @@
+trigger ActionPlanTrigger on Approve_Action_Plan__c (after insert, after update, before delete) 
+{
+    ActionPlanHandler handler = new ActionPlanHandler();    
+    if(trigger.isAfter && trigger.isInsert)
+    {
+        System.debug('-----------trigger.newMap---------'+trigger.newMap.size());
+        handler.onAfterInsertForARPPCalculation(trigger.newMap);
+    }
+    
+    if(trigger.isBefore && trigger.isDelete)
+    {
+        handler.onBeforeDelete(trigger.oldMap);
+    }
+}

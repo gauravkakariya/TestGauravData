@@ -1,0 +1,386 @@
+/*
+    Revision History:
+    
+    Version     Version Author     Date           Comments
+    1.0         Anupam Agrawal    16/5/2013       To check active commission is already available on product  or not. 
+    
+*/
+public with sharing class CommissionHandler 
+{
+	//Prevent Insertion of Commission if Active commission is already available for Product.
+	public void onBeforeInsert(List<Commission__c> lstNewCommission)
+	{
+		Set<Id> setProductId = new Set<Id>();
+		Map<Id, List<id>> mapProductIdTolstCommissionId = new Map<Id, List<id>>();
+		
+		//Collect Product Id from new commsion
+		for(Commission__c objComm : lstNewCommission)
+			setProductId.add(objComm.Product__c);
+		
+		//Create map product Id to Product	
+		Map<Id, Product_Master__c> mapIdToProduct = new Map<id, Product_Master__c>([Select Id, Product_Name__c,ProductType__c, Investment_Type__c,(Select Id, Active__c From Commissions__r 
+																						where Active__c = true) 
+																					from Product_Master__c where Id IN: setProductId 
+																					And ProductType__c != 'Life Insurance']);
+		//Validate if active commision already present or not																			
+		for(Commission__c objComm : lstNewCommission)
+		{
+			if(mapIdToProduct.containsKey(objComm.Product__c) && objComm.Active__c)
+			{
+				Product_Master__c ProductMaster = mapIdToProduct.get(objComm.Product__c);
+				if(ProductMaster.Commissions__r.size() > 0)
+				{
+					String strType = ProductMaster.Investment_Type__c == null ? ProductMaster.ProductType__c : ProductMaster.Investment_Type__c ; 
+					if(!Test.isRunningTest())
+						objComm.addError(' Active commission is already available on Product "'+ mapIdToProduct.get(objComm.Product__c).Product_Name__c +'" with type "'+ strType +'"' );
+				}
+			}
+		}
+	}
+	
+	//Update ARPP record with commission.
+	public void onAfterInsert(List<Commission__c> lstNewCommission)
+	{
+		Set<Id> setProductId = new Set<Id>();
+		Map<Id, List<ARPP_Detail__c>> mapProductIdTolstARPPDetails = new Map<Id, List<ARPP_Detail__c>>();	
+		List<ARPP_Detail__c> lstARPPDetailNew = new List<ARPP_Detail__c>();
+		List<ARPP_Detail__c> lstARPPDetailNewForExecutionTracker = new List<ARPP_Detail__c>();
+		
+		//Collect Product Id from new commsion
+		for(Commission__c objComm : lstNewCommission)
+			if(objComm.Active__c)
+				setProductId.add(objComm.Product__c);
+		
+		List<ARPP_Detail__c> lstARPPDetails = [Select Product__r.Policy_Type__c, Product__r.Investment_Type__c, 
+									          			Product__r.Product_Manufacturer__c,Commission__c,
+												        Commission__r.Upfront_Commission__c, Commission__r.Trail_Commission__c, 
+												        Product__r.ProductType__c, 
+												        Product__r.Product_Name__c, Product__c, Name, Id, 
+												        Execution_Tracker_upfront_Comm_Amount__c, Execution_Tracker_Amount__c,
+												        Entity__c, Entity__r.Name, Approve_Action_Plan__c, 
+												        Approve_Action_Plan__r.Item_Type__c, Action_Plan_Upfront_Comm_Amount__c, 
+												        Action_Plan_Trial_Comm_Amount__c, Action_Plan_Amount__c, Type__c,
+												        Approve_Action_Plan__r.Installments__c,
+												        Approve_Action_Plan__r.Investment_Asset__c,
+												        Approve_Action_Plan__r.Lumpsum_Action__c,
+												        Approve_Action_Plan__r.SIP_Action__c,
+												        Remark__c, ET_Remark__c
+      										   From ARPP_Detail__c Where Product__c IN: setProductId 
+      										   and Commission__c = null	];
+      												
+      	//Create map product Id to Product	
+		Map<Id, Product_Master__c> mapIdToProduct = new Map<Id, Product_Master__c>([Select Id, Product_Name__c,ProductType__c, Investment_Type__c,
+																						(Select Id, Upfront_Commission__c,Trail_Commission__c,Product__c,Active__c From Commissions__r 
+																					where Active__c = true) 
+																					from Product_Master__c where Id IN: setProductId 
+																					]);
+		for(ARPP_Detail__c  objARPPDetails: lstARPPDetails)
+		{
+			if(!mapProductIdTolstARPPDetails.containsKey(objARPPDetails.Product__c))
+				mapProductIdTolstARPPDetails.put(objARPPDetails.Product__c, new List<ARPP_Detail__c>{objARPPDetails});
+			else
+				mapProductIdTolstARPPDetails.get(objARPPDetails.Product__c).add(objARPPDetails);
+		}	
+		
+		for(Id productId: mapIdToProduct.keySet())
+		{
+			Product_Master__c objProductMaster = mapIdToProduct.get(productId);
+			
+			if(objProductMaster.Commissions__r.size() == 1)
+			{
+				Commission__c objCommssion = objProductMaster.Commissions__r[0];
+				
+				for(ARPP_Detail__c  objARPPDetail : mapProductIdTolstARPPDetails.get(productId))
+				{
+					if(objARPPDetail.Type__c == 'SIP')
+					{
+						objARPPDetail.Action_Plan_Upfront_Comm_Amount__c = objCommssion.Upfront_Commission__c != null ?
+														(objCommssion.Upfront_Commission__c * 12 * objARPPDetail.Action_Plan_Amount__c)/100 : 0;
+						Double trailComm = 0;
+						Double amount = objARPPDetail.Action_Plan_Amount__c;
+						Integer installment = objARPPDetail.Approve_Action_Plan__r.Installments__c <= 12  ? Integer.valueOf(objARPPDetail.Approve_Action_Plan__r.Installments__c) : 12;
+						
+						if(objCommssion.Trail_Commission__c != null)
+						{
+							for(Integer i = 0; i < installment ; i++)
+							{
+								trailComm += (amount * objCommssion.Trail_Commission__c)/100;
+								amount += objARPPDetail.Action_Plan_Amount__c;
+							}
+						}
+						objARPPDetail.Action_Plan_Trial_Comm_Amount__c = trailComm;
+						
+					}
+					else if(objARPPDetail.Type__c == 'Lumpsum')
+					{
+						if(objARPPDetail.Approve_Action_Plan__r.Investment_Asset__c != null)
+						{
+							if(objARPPDetail.Approve_Action_Plan__r.Lumpsum_Action__c == 'STP From')
+							{
+								objARPPDetail.Action_Plan_Upfront_Comm_Amount__c = objCommssion.Upfront_Commission__c != null ? (objCommssion.Upfront_Commission__c * 12 * objARPPDetail.Action_Plan_Amount__c)/100 :0 ;
+								objARPPDetail.Action_Plan_Trial_Comm_Amount__c = 0;
+							}
+							else if(objARPPDetail.Approve_Action_Plan__r.Lumpsum_Action__c == 'STP To' || objARPPDetail.Approve_Action_Plan__r.Lumpsum_Action__c ==  'Switch In')
+							{
+								objARPPDetail.Action_Plan_Upfront_Comm_Amount__c = objCommssion.Upfront_Commission__c != null 
+																						 ? (objCommssion.Upfront_Commission__c * 12 * objARPPDetail.Action_Plan_Amount__c)/100 
+																						 : 0;
+								objARPPDetail.Action_Plan_Trial_Comm_Amount__c = objCommssion.Trail_Commission__c != null 
+																					? (objCommssion.Trail_Commission__c * 12 * objARPPDetail.Action_Plan_Amount__c)/100 
+																					: 0;
+							}
+							else if(objARPPDetail.Approve_Action_Plan__r.Lumpsum_Action__c == 'Hold')
+							{
+								objARPPDetail.Action_Plan_Upfront_Comm_Amount__c = 0;
+								objARPPDetail.Action_Plan_Trial_Comm_Amount__c = objCommssion.Trail_Commission__c != null 
+																					? (objCommssion.Trail_Commission__c * 12 * objARPPDetail.Action_Plan_Amount__c)/100 
+																					: 0;
+							}
+						}
+						else
+						{
+							objARPPDetail.Action_Plan_Upfront_Comm_Amount__c = objCommssion.Upfront_Commission__c != null ?(objCommssion.Upfront_Commission__c * 12 * objARPPDetail.Action_Plan_Amount__c)/100 :0 ;
+							objARPPDetail.Action_Plan_Trial_Comm_Amount__c = objCommssion.Trail_Commission__c != null ? 
+																			(objCommssion.Trail_Commission__c * 12 * objARPPDetail.Action_Plan_Amount__c)/100 : 0;
+						}
+					}
+					else if(objARPPDetail.Type__c == 'General Insurance')
+					{
+						objARPPDetail.Action_Plan_Upfront_Comm_Amount__c = objCommssion.Upfront_Commission__c != null ? 
+																		(objCommssion.Upfront_Commission__c * objARPPDetail.Action_Plan_Amount__c)/100 : 0;
+						objARPPDetail.Action_Plan_Trial_Comm_Amount__c = 0;
+					}
+					else if(objARPPDetail.Type__c == 'Life Insurance')
+					{
+						if(objCommssion.Min_Year_Value__c <= objARPPDetail.Approve_Action_Plan__r.Tenure_of_Insurance__c && 
+							objARPPDetail.Approve_Action_Plan__r.Tenure_of_Insurance__c < objCommssion.Max_Year_Value__c)
+						{
+							objARPPDetail.Action_Plan_Upfront_Comm_Amount__c = objCommssion.Upfront_Commission__c != null ?
+																		(objCommssion.Upfront_Commission__c * objARPPDetail.Action_Plan_Amount__c)/100 :0;
+							objARPPDetail.Action_Plan_Trial_Comm_Amount__c = 0;
+						}
+						
+					}
+					objARPPDetail.Commission__c = objCommssion.Id;
+					objARPPDetail.Remark__c= '';
+					lstARPPDetailNew.add(objARPPDetail);
+				}
+				
+			}
+		}
+		
+		if(!lstARPPDetailNew.isEmpty())
+			update lstARPPDetailNew;
+										
+		
+		List<ARPP_Detail__c> lstARPPDetailsForET = [Select Product__r.Policy_Type__c,
+													    Product__r.Investment_Type__c, 
+									          			Product__r.Product_Manufacturer__c,
+									          			Commission__c,
+												        Product__r.ProductType__c, 
+												        Product__r.Product_Name__c,
+												        Product__c, Id,
+												        Execution_Tracker_upfront_Comm_Amount__c, 
+												        Execution_Tracker_Amount__c,
+												        Entity__c, 
+												        Entity__r.Name, 
+												        Approve_Action_Plan__c, 
+												        Approve_Action_Plan__r.Item_Type__c, 
+												        Action_Plan_Upfront_Comm_Amount__c, 
+												        Action_Plan_Trial_Comm_Amount__c,
+												        Action_Plan_Amount__c, Type__c,
+												        Approve_Action_Plan__r.Installments__c,
+												        Approve_Action_Plan__r.Investment_Asset__c,
+												        Approve_Action_Plan__r.Lumpsum_Action__c,
+												        Approve_Action_Plan__r.SIP_Action__c,
+												        Remark__c, ET_Remark__c
+      										   From ARPP_Detail__c Where Execution_Tracker_Actual_Product__c IN: setProductId 
+      										   and Commission__c = null	];
+      												
+      													
+      	//Create map product Id to Product	
+		Map<Id, Product_Master__c> mapIdToProductNew = new Map<Id, Product_Master__c>([Select Id, Product_Name__c,ProductType__c, Investment_Type__c,
+																						(Select Id, Upfront_Commission__c,Trail_Commission__c,Product__c,Active__c From Commissions__r 
+																					where Active__c = true) 
+																					from Product_Master__c where Id IN: setProductId 
+																					]);
+		for(ARPP_Detail__c  objARPPDetails: lstARPPDetailsForET)
+		{
+			if(!mapProductIdTolstARPPDetails.containsKey(objARPPDetails.Product__c))
+				mapProductIdTolstARPPDetails.put(objARPPDetails.Product__c, new List<ARPP_Detail__c>{objARPPDetails});
+			else
+				mapProductIdTolstARPPDetails.get(objARPPDetails.Product__c).add(objARPPDetails);
+		}	
+		
+		for(Id productId: mapIdToProductNew.keySet())
+		{
+			Product_Master__c objProductMaster = mapIdToProductNew.get(productId);
+			
+			if(objProductMaster.Commissions__r.size() == 1)
+			{
+				Commission__c objCommssion = objProductMaster.Commissions__r[0];
+				
+				for(ARPP_Detail__c  objARPPDetail : mapProductIdTolstARPPDetails.get(productId))
+				{
+					if(objARPPDetail.Type__c == 'SIP')
+					{
+						objARPPDetail.Execution_Tracker_upfront_Comm_Amount__c = objCommssion.Upfront_Commission__c != null ?
+																				(objCommssion.Upfront_Commission__c * 12 * objARPPDetail.Execution_Tracker_Amount__c)/100:0;
+						Double trailComm = 0;
+						Double amount = objARPPDetail.Execution_Tracker_Amount__c;
+						Integer installment = objARPPDetail.Approve_Action_Plan__r.Installments__c <= 12  ? Integer.valueOf(objARPPDetail.Approve_Action_Plan__r.Installments__c) : 12;
+						
+						if(objARPPDetail.Product__c != null && objCommssion.Trail_Commission__c != null)
+						{
+							for(Integer i = 0; i < installment ; i++)
+							{
+								trailComm += (amount * objCommssion.Trail_Commission__c)/100;
+								amount += objARPPDetail.Execution_Tracker_Amount__c;
+							}
+						}
+						objARPPDetail.Execution_Tracker_Trial_Comm_Amount__c = trailComm;
+						
+					}
+					else if(objARPPDetail.Type__c == 'Lumpsum')
+					{
+						if(objARPPDetail.Approve_Action_Plan__r.Investment_Asset__c != null)
+						{
+							if(objARPPDetail.Approve_Action_Plan__r.Lumpsum_Action__c == 'STP From')
+							{
+								objARPPDetail.Execution_Tracker_upfront_Comm_Amount__c = objARPPDetail.Execution_Tracker_Actual_Product__c != null  && objARPPDetail.Actual_Commission__c != null 
+																						 ? (objARPPDetail.Actual_Commission__r.Upfront_Commission__c * 12 * objARPPDetail.Execution_Tracker_Amount__c)/100 
+																						 : 0;
+								objARPPDetail.Execution_Tracker_Trial_Comm_Amount__c = 0;
+							}
+							else if(objARPPDetail.Approve_Action_Plan__r.Lumpsum_Action__c == 'STP To' || objARPPDetail.Approve_Action_Plan__r.Lumpsum_Action__c ==  'Switch In')
+							{
+								objARPPDetail.Execution_Tracker_upfront_Comm_Amount__c = objARPPDetail.Execution_Tracker_Actual_Product__c != null  && objARPPDetail.Actual_Commission__c != null 
+																						 ? (objARPPDetail.Actual_Commission__r.Upfront_Commission__c * 12 * objARPPDetail.Execution_Tracker_Amount__c)/100 
+																						 : 0;
+								objARPPDetail.Execution_Tracker_Trial_Comm_Amount__c = objARPPDetail.Execution_Tracker_Actual_Product__c != null  && objARPPDetail.Actual_Commission__c != null 
+																					? (objARPPDetail.Actual_Commission__r.Trail_Commission__c * 12 * objARPPDetail.Execution_Tracker_Amount__c)/100 
+																					: 0;
+							}
+							else if(objARPPDetail.Approve_Action_Plan__r.Lumpsum_Action__c == 'Hold')
+							{
+								objARPPDetail.Execution_Tracker_upfront_Comm_Amount__c = objARPPDetail.Execution_Tracker_Actual_Product__c != null  && objARPPDetail.Actual_Commission__c != null 
+																						 ? (objARPPDetail.Actual_Commission__r.Upfront_Commission__c * 12 * objARPPDetail.Execution_Tracker_Amount__c)/100 
+																						 : 0;
+								objARPPDetail.Execution_Tracker_Trial_Comm_Amount__c = objARPPDetail.Execution_Tracker_Actual_Product__c != null  && objARPPDetail.Actual_Commission__c != null 
+																					? (objARPPDetail.Actual_Commission__r.Trail_Commission__c * 12 * objARPPDetail.Execution_Tracker_Amount__c)/100 
+																					: 0;
+							}
+						}
+						else
+						{
+							objARPPDetail.Execution_Tracker_upfront_Comm_Amount__c = (objCommssion.Upfront_Commission__c * 12 * objARPPDetail.Execution_Tracker_Amount__c)/100 ;
+							objARPPDetail.Execution_Tracker_Trial_Comm_Amount__c = (objCommssion.Trail_Commission__c * 12 * objARPPDetail.Execution_Tracker_Amount__c)/100;
+						}
+					}
+					else if(objARPPDetail.Type__c == 'General Insurance')
+					{
+						objARPPDetail.Execution_Tracker_upfront_Comm_Amount__c = (objCommssion.Upfront_Commission__c * objARPPDetail.Execution_Tracker_Amount__c)/100;
+						objARPPDetail.Execution_Tracker_Trial_Comm_Amount__c = 0;
+					}
+					else if(objARPPDetail.Type__c == 'Life Insurance')
+					{
+						if(objCommssion.Min_Year_Value__c <= objARPPDetail.Approve_Action_Plan__r.Tenure_of_Insurance__c && 
+							objARPPDetail.Approve_Action_Plan__r.Tenure_of_Insurance__c < objCommssion.Max_Year_Value__c)
+						{
+							objARPPDetail.Execution_Tracker_upfront_Comm_Amount__c = (objCommssion.Upfront_Commission__c * objARPPDetail.Execution_Tracker_Amount__c)/100;
+							objARPPDetail.Execution_Tracker_Trial_Comm_Amount__c = 0;
+						}
+						
+					}
+					objARPPDetail.Actual_Commission__c = objCommssion.Id;
+					objARPPDetail.ET_Remark__c= '';
+					lstARPPDetailNewForExecutionTracker.add(objARPPDetail);
+				}	
+			}
+			
+		}																		
+		
+		if(!lstARPPDetailNewForExecutionTracker.isEmpty())
+			update lstARPPDetailNewForExecutionTracker;
+	}
+	
+	
+	//Method calls from before update of commission record and avoid updation if active commission is already for Product
+	public void onBeforeUpdate(Map<Id,Commission__c> mapOldCommision, List<Commission__c> lstNewCommission)
+	{
+		Set<Id> setProductId = new Set<Id>();
+		Map<Id, List<id>> mapProductIdTolstCommissionId = new Map<Id, List<id>>();
+		List<Commission__c> lstCommissionToProcess = new List<Commission__c>();
+		
+		//Collect product Id and list of updated commission from updated commission 
+		for(Commission__c objCommission : lstNewCommission)
+		{
+			if (objCommission.Active__c == true && mapOldCommision.get(objCommission.id).Active__c == false) {
+			    setProductId.add(objCommission.Product__c);
+			    lstCommissionToProcess.add(objCommission);
+			}
+		}
+		
+		//Create map product Id to Product	
+		Map<Id, Product_Master__c> mapIdToProduct = new Map<id, Product_Master__c>([Select Id, Product_Name__c, ProductType__c, Investment_Type__c,(Select Id, Active__c From Commissions__r where Active__c = true) 
+																					from Product_Master__c where Id IN: setProductId 
+																					And ProductType__c != 'Life Insurance']);
+		
+		//Validate if active commision already present or not																				
+		for(Commission__c objCommssion : lstCommissionToProcess)
+		{
+			if (mapIdToProduct.containsKey(objCommssion.Product__c)) 
+			{
+			    Product_Master__c ProductMaster = mapIdToProduct.get(objCommssion.Product__c);
+			    if (ProductMaster.Commissions__r.size() != 0)
+			    {
+			    	String strType = ProductMaster.Investment_Type__c == null ? ProductMaster.ProductType__c : ProductMaster.Investment_Type__c ; 
+			    	if(!Test.isRunningTest())
+			        	objCommssion.addError(' Active commission is already available on Product "'+ ProductMaster.Product_Name__c +'" with type "'+ strType +'"' );
+			    }    
+			}    
+		}	
+	}
+	
+	//Test method for ARPP Details
+	@isTest
+	public static void testCmmissionHandler()
+	{
+		Test.startTest();
+		List<Commission__c> lstCommision = new  List<Commission__c> ();
+		
+		 //InsertProduct Manufacturer record
+		Product_Manufacturer_Master__c objProductManufacturer = new Product_Manufacturer_Master__c(Name='Axis', Short_Code__c='axis', Is_Active__c=true);
+        insert objProductManufacturer;
+		
+		//Insert Product record
+        Product_Master__c objProduct = new Product_Master__c(Product_Manufacturer__c= objProductManufacturer.Id, 
+                                                             Is_Active__c= true, Product_Name__c='Axis Equity Fund1', ProductType__c='Mutual Fund',
+                                                             Investment_Type__c ='SIP');
+        insert objProduct;
+        
+        //Insert Commission record
+        Commission__c objCommission = new Commission__c(Product__c = objProduct.Id, Active__c = true,
+        												Max_Year_Value__c = 10, Min_Year_Value__c = 0 ,
+        												Trail_Commission__c = 10, Upfront_Commission__c = 20);
+        insert objCommission;
+        
+        Commission__c objCommission1 = new Commission__c(Product__c = objProduct.Id, Active__c = false,
+       												Max_Year_Value__c = 10, Min_Year_Value__c = 0 ,
+        												Trail_Commission__c = 10, Upfront_Commission__c = 20);  
+        lstCommision.add(objCommission1);
+        
+        insert lstCommision;
+        												 
+		Commission__c objCommission2 = new Commission__c(Product__c = objProduct.Id, Active__c = true,
+       												Max_Year_Value__c = 10, Min_Year_Value__c = 0 ,
+        												Trail_Commission__c = 10, Upfront_Commission__c = 20);  
+        insert objCommission2;
+        
+        //Update Commission record
+        objCommission1.Active__c = true;
+        update objCommission1;
+        
+        Test.stopTest();
+	}    
+}

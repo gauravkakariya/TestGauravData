@@ -1,0 +1,48 @@
+To Create and Update RPP record on exsiting and new entity we have to write a script.
+The Script details are below:
+
+	1) First Script is for Updating Action plan record with Product.
+		
+		- Collect entity and their child record.
+		- Collect the Action Plan record without Current Running SIP and LUMPSUM
+		- MAP Action Plan Proudct with Actual Product Name
+		- create map of Item type to Action Plan .
+		- Retrieve all Products where Proudct type = Mutual Fund
+		- Update Action Plan where Item type is SIP/Lumpsum and General Insurance, Life Insurance
+			
+     2) Second Script To Create RPP for Existing Entity
+		
+		- Collect entity and their child record.
+		- Collect the Action Plan record without Current Running SIP and LUMPSUM
+		- MAP Action Plan Proudct with Actual Product Name
+		- create map of Item type to Action Plan .
+		- Retrieve all Products where Proudct type = Mutual Fund
+		- Create Rpp Record as per Item Type like SIP, Lumpsum,GI and LI
+		
+	3) Third Script To Update Execution Tracker With Product
+		- Collect entity and their child record.
+		- Collect the Execution Tracker record which does not have parent Execution Tracker
+		- MAP Action Plan Proudct with Actual Product Name
+		- Create map of Item type to ETs .
+		- Retrieve all Products where product type = Mutual fund
+		- Update ET for with SIP proudct and Lumpsum or Life Insurnace and General Insurance
+
+    4) 	Fourth Script To Update RPP record with ET Product
+		- Collect entity and their child record.
+		- Collect the Action Plan record without Current Running SIP and LUMPSUM
+		- Collect the RPP record from Action plan record 
+		- Collect the Execution Tracker record from Action plan record
+		- Collect the Rpp Record as per ET Type record like SIP/Lumpsum,General Insurance, Life Insurance
+		- Update that RPP record
+		
+	5) Fifth Script is To Update RPP Calcution
+		- Collect entity and their child record.
+		- collect Approve Action plan record from Execution Tracker Record
+		- Collect the Rpp record from Action Plan record
+		- Create Map Approve Action Plan to ARPP Detail			
+		- Collect the Aggregae of Sum of Exection Amount whose status is closed in ET
+		- Collect the Rpp Record as per Type like SIP,Lumpsum , GI and LI 
+		- Calculte Trail and Upfront Commssion for Rpp using ET Produtct and Commssion Record 
+		-Update RPP Record.
+		
+	

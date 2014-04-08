@@ -1,0 +1,34 @@
+Select Id, Entity__c, Actual_Commission__c, Actual_Product_Name__c, ET_Remark__c, Execution_Tracker_Actual_Product__c, Execution_Tracker__c FROM ARPP_Detail__c  Where  Execution_Tracker__c  != null and (Actual_Commission__c = null or  Execution_Tracker_Actual_Product__c = null)
+
+
+
+
+Select Id, Entity__c, Approve_Action_Plan__c, Commission__c, Product__c, Remark__c FROM ARPP_Detail__c Where Approve_Action_Plan__c !=null and (Product__c = null  or Commission__c = null)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+List<ARPP_Detail__c> lstRPP = [Select Id, Entity__c, Actual_Commission__c, Actual_Product_Name__c, ET_Remark__c, Execution_Tracker_Actual_Product__c, Execution_Tracker__c FROM ARPP_Detail__c  Where  Execution_Tracker__c  != null and (Actual_Commission__c = null or  Execution_Tracker_Actual_Product__c = null)];
+
+Set<Id> setEntityId = new Set<Id>();
+for(ARPP_Detail__c obj :lstRPP)
+   setEntityId.add(obj.Entity__c);
+System.debug('----------entityId size-----------'+ setEntityId.size()); -- >  54
+
+
+
+List<ARPP_Detail__c> lst = [Select Id, Entity__c, Entity__r.CreatedDate from ARPP_Detail__c where CALENDAR_MONTH(Entity__r.CreatedDate) = 2 and CALENDAR_YEAR(Entity__r.CreatedDate) = 2011];
+Set<Id> setEntityId = new Set<Id>();
+for(ARPP_Detail__c obj : lst)
+   setEntityId.add(obj.Entity__c);
+System.debug('----------entityId size-----------'+ setEntityId.size()); -- >304
+System.debug('----------entityId-----------'+ setEntityId);
+
+List<ARPP_Detail__c> lstRPP = [Select Id, Entity__c, Approve_Action_Plan__c, Commission__c, Product__c, Remark__c FROM ARPP_Detail__c Where Approve_Action_Plan__c !=null and (Product__c = null  or Commission__c = null)];
+
+Set<Id> setEntityId = new Set<Id>();
+for(ARPP_Detail__c obj :lstRPP)
+   setEntityId.add(obj.Entity__c);
+System.debug('----------entityId size-----------'+ setEntityId.size());  -->196
+ 

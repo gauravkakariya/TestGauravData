@@ -1,0 +1,39 @@
+Map<String, Schema.SObjectField> mapAAPFieldNameToFieldDescribe = Account.sObjectType.getDescribe().fields.getMap();
+		
+		//Create Dynamic query
+		for(String strField : mapAAPFieldNameToFieldDescribe.keySet())
+		{
+			strQuery += strField +',';
+		}
+		strQuery = strQuery.substring(0, strQuery.length() - 1);
+		
+		strQuery += ' from Account where Id =  ';
+		
+		
+		
+		 /*					 
+       Map<String, Schema.SObjectField> fldObjMap = schema.SObjectType.Account.fields.getMap();
+	   List<Schema.SObjectField> fldObjMapValues = fldObjMap.values();	
+	   String theQuery = 'Select ';
+		for(Schema.SObjectField s : fldObjMapValues)
+		{
+		   String theName = s.getDescribe().getName();
+		   // Continue building your dynamic query string
+		   theQuery += theName + ',';
+		}
+		
+		// Trim last comma
+		theQuery = theQuery.subString(0, theQuery.length() - 1);
+		
+		system.debug('************theQuery'+theQuery);
+		
+	
+		// Finalize query string
+		//if(objAccount.RecordType.Name == 'Client' || objAccount.RecordType.Name == 'Family Member'|| objAccount.RecordType.Name == 'Influencers')
+			theQuery += ' FROM Account WHERE IsPersonAccount = true and Id=: accountId';
+	    //else
+	    //	theQuery += ' FROM Account WHERE Id=:'+ accountId;
+	    
+	   system.debug('************theQuery'+theQuery);
+	   	
+	   	*/

@@ -1,0 +1,30 @@
+ - get task Ids for which Due date has been passed.
+ - make changes in data for Event Master Escalaltion look up.
+ - Get related Entity WF Tracker details records.
+ - Create map<TaskId, EFTrackerDetails>
+ - iterate over Escalated Task records
+ - Create Notification Queue records 
+	+ populate Entity Id From task What Id
+	+ Populate Dapeartment From WFTDetails
+	+Populate Event Master Escalated Event Id
+	+ Channel Type - Email
+	+ Proirity - High
+	+
+ 
+ 
+ /*
+	    Map<String, Workflows_Tracker_Details__c> mapSubjectToFlowTracker = new Map<String, Workflows_Tracker_Details__c>(
+	  													 					[Select Task_Sequence__c, 
+														    					Task_Id__c, Subject__c, Status__c, 
+														    					Related_Workflow_Details_Date__c, Priority__c,
+														    					Event_Master__r.Escalation_Event_Master__c,Workflows_Tracker_Master__c,
+														    					Workflows_Tracker_Master__r.Name,
+																				Parent_Workflows_Tracker_Details__c, Name, Id, Event_Master__c, 
+																				Due_Date__c, Department__c, Department__r.Business_Unit__c,Days_After__c, Comments__c, 
+																				Channel_Type__c ,Workflows_Tracker_Master__r.Parent_Account__c
+																		 From Workflows_Tracker_Details__c 
+	                                                  				     Where Task_Id__c IN: mapTaskIdToAccountId.keySet()]);
+	                                                  				     
+	       && mapSubjectToFlowTracker.containsKey(objTask.subject)                                           				     
+	                                                  				     
+	     */    

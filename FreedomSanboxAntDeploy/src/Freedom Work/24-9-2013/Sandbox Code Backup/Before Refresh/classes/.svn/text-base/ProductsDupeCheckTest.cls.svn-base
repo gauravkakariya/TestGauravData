@@ -1,0 +1,230 @@
+/*	
+*   Test class for Helper code that is invoked for an ProductMasterHandler classes. 
+*
+*   Revision History:
+*
+*	Version		Author				Date			Description
+*	1.0			Prajakta Sanap		17/01/2013		Initial Draft
+*
+*/
+
+
+@isTest
+private class ProductsDupeCheckTest 
+{
+
+    /* Test Method to check whether Product Master record is inserted properly
+	 */
+    static testMethod void isValidateInsertPositiveTest() 
+    {
+		// Insert Product manufacturer record 
+		Product_Manufacturer_Master__c objProductManufacturer = createProductManufacturerRecord();
+		insert objProductManufacturer;
+		
+		Product_Master__c objProdRec = new Product_Master__c
+										   (SIP_Allowed__c = 'Yes', 
+										   Product_Manufacturer__c = objProductManufacturer.Id, 
+										   Is_Active__c = false, 
+										   ProductType__c = 'Life Insurance', 
+										   Product_Name__c = 'Birla sun life insurance', 
+										   Currently_Recommended__c = 'No',
+										   Fees_in_Advance_or_On_Service_Delivery__c = true);
+			
+		test.startTest();      //Begin Test
+		insert objProdRec;
+		
+		system.assertEquals(objProdRec.Product_Name__c,'Birla sun life insurance');
+		test.stopTest();      //End Test    	
+    	
+    }
+    
+    /* Test Method to check whether Product Recommendation record is inserted is already present
+     * and if yes then shows error message
+	 */
+    static testMethod void isValidateInsertErrorTest() 
+    {
+		// Insert Product manufacturer record 
+		Product_Manufacturer_Master__c objProductManufacturer = createProductManufacturerRecord();
+		insert objProductManufacturer;
+		
+		Product_Master__c objProdRec = new Product_Master__c
+										   (SIP_Allowed__c = 'Yes', 
+										   Product_Manufacturer__c = objProductManufacturer.Id, 
+										   Is_Active__c = false, 
+										   ProductType__c = 'Life Insurance', 
+										   Product_Name__c = 'Birla sun life insurance', 
+										   Currently_Recommended__c = 'No',
+										   Fees_in_Advance_or_On_Service_Delivery__c = true);
+		
+		test.startTest();      //Begin Test
+		
+		try{
+			insert objProdRec;
+			Product_Master__c objProdRec1 = new Product_Master__c
+										   (SIP_Allowed__c = 'Yes', 
+										   Product_Manufacturer__c = objProductManufacturer.Id, 
+										   Is_Active__c = false, 
+										   ProductType__c = 'Life Insurance', 
+										   Product_Name__c = 'Birla sun life insurance', 
+										   Currently_Recommended__c = 'No',
+										   Fees_in_Advance_or_On_Service_Delivery__c = true);
+			insert objProdRec1;
+		}
+		catch(Exception e)
+		{
+			System.Assert(e.getMessage().contains('DUPLICATE_VALUE'));
+		}
+		test.stopTest();      //End Test    	
+    	
+    }
+    
+    /* Test Method to check whether Product Master record is updated properly
+	 */
+    static testMethod void isValidateUpdatePositiveTest() 
+    {
+		// Insert Product manufacturer record 
+		Product_Manufacturer_Master__c objProductManufacturer = createProductManufacturerRecord();
+		insert objProductManufacturer;
+		
+		Product_Master__c objProdRec = new Product_Master__c
+										   (SIP_Allowed__c = 'Yes', 
+										   Product_Manufacturer__c = objProductManufacturer.Id, 
+										   Is_Active__c = false, 
+										   ProductType__c = 'Life Insurance', 
+										   Product_Name__c = 'Birla sun life insurance', 
+										   Currently_Recommended__c = 'No',
+										   Fees_in_Advance_or_On_Service_Delivery__c = true);
+			
+		test.startTest();      //Begin Test
+		insert objProdRec;
+		objProdRec.Product_Name__c = 'HDFC TOP 200';
+		system.assertEquals(objProdRec.Product_Name__c,'HDFC TOP 200');
+		test.stopTest();      //End Test    	
+    	
+    }
+    
+    /* Test Method to check whether record if updated record is already present
+	*/ 
+    static testMethod void isValidateUpdateErrorTest()
+    {
+		// Insert Product manufacturer record 
+		Product_Manufacturer_Master__c objProductManufacturer = createProductManufacturerRecord();
+		insert objProductManufacturer;
+		
+		List<Product_Master__c> lstProduct = new List<Product_Master__c>();
+		
+		Product_Master__c objProdRec = new Product_Master__c
+										   (SIP_Allowed__c = 'Yes', 
+										   Product_Manufacturer__c = objProductManufacturer.Id, 
+										   Is_Active__c = false, 
+										   ProductType__c = 'Life Insurance', 
+										   Product_Name__c = 'Birla sun life insurance', 
+										   Currently_Recommended__c = 'No',
+										   Fees_in_Advance_or_On_Service_Delivery__c = true);
+		lstProduct.add(objProdRec);
+		
+		Product_Master__c objProdRec2 = new Product_Master__c
+										   (SIP_Allowed__c = 'Yes', 
+										   Product_Manufacturer__c = objProductManufacturer.Id, 
+										   Is_Active__c = false, 
+										   ProductType__c = 'General Insurance', 
+										   Product_Name__c = 'Birla sun life insurance', 
+										   Currently_Recommended__c = 'No',
+										   Fees_in_Advance_or_On_Service_Delivery__c = true);
+		lstProduct.add(objProdRec2);
+		
+		Product_Master__c objProdRec3 = new Product_Master__c
+										   (SIP_Allowed__c = 'Yes', 
+										   Product_Manufacturer__c = objProductManufacturer.Id, 
+										   Is_Active__c = false, 
+										   ProductType__c = 'Life Insurance', 
+										   Product_Name__c = 'Birla sun life insurance', 
+										   Currently_Recommended__c = 'No',
+										   Fees_in_Advance_or_On_Service_Delivery__c = true);
+		lstProduct.add(objProdRec3);
+		
+		test.startTest();      //Begin Test
+		
+		try
+		{
+			insert lstProduct;
+			Product_Master__c objProd = [Select Id,ProductType__c,
+			                                       Is_Active__c,
+			                                       Product_Name__c,
+			                                       Currently_Recommended__c,
+			                                       Fees_in_Advance_or_On_Service_Delivery__c,
+			                                       SIP_Allowed__c
+										  from Product_Master__c
+										  where Id =: objProdRec3.Id];
+			objProd.ProductType__c = 'General Insurance';
+			update objProd;
+		}
+		catch(Exception e)
+		{
+			System.Assert(e.getMessage().contains('DUPLICATE_VALUE'));
+		}
+		
+		test.stopTest();      //End Test    	
+    	
+    }
+    
+    //Public Methods
+	//Populate and return a new instance of Product_Manufacturer_Master record 
+	public static Product_Manufacturer_Master__c createProductManufacturerRecord()
+	{
+    	// Insert Product Manufacturer record 
+		Product_Manufacturer_Master__c productManfacturerRecord = new Product_Manufacturer_Master__c
+												(Name = 'Birla', 
+												 Short_Code__c = 'Birla', 
+												 Is_Active__c = true);
+		return productManfacturerRecord;
+	}
+	
+	
+	/* Test Method to check whether record is inserted properly in bulk
+	 */
+    static testMethod void isValidateInsertBulkTest() 
+    {
+		List<Product_Master__c> prodManufacturerList = createProdManRecord(5);
+		system.debug('prodManufacturerList..................'+prodManufacturerList)	;	
+			
+		test.startTest();      //Begin Test
+		try
+		{
+			insert prodManufacturerList;
+		}
+		catch(Exception e)
+		{
+			system.assertEquals(prodManufacturerList[0].ProductType__c,'Life Insurance');
+			System.Assert(e.getMessage().contains('DUPLICATE_VALUE'));
+		}
+		test.stopTest();      //End Test    	
+    	
+    }
+	
+	//Populate and return a new instance of Product_Recommendation_Master record 
+	public static List<Product_Master__c> createProdManRecord(Integer pNoOfRecords)
+	{
+		// Insert Product record 
+		Product_Manufacturer_Master__c objProduct = createProductManufacturerRecord();
+		insert objProduct;
+		
+    	List<Product_Master__c> productList = new List<Product_Master__c>();
+    	
+    	//Populate a list of Product Manufacturers
+    	for(Integer index = 1; index <= pNoOfRecords; index++)
+    	{
+    		productList.add(new Product_Master__c
+								 (SIP_Allowed__c = 'Yes', 
+								   Product_Manufacturer__c = objProduct.Id, 
+								   Is_Active__c = false, 
+								   ProductType__c = 'Life Insurance', 
+								   Product_Name__c = 'Birla sun life insurance', 
+								   Currently_Recommended__c = 'No',
+								   Fees_in_Advance_or_On_Service_Delivery__c = true));
+    			
+    	}//for
+    	return productList;
+	}
+	
+}

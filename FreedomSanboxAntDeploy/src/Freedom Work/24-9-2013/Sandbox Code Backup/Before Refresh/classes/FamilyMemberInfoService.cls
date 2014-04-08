@@ -1,0 +1,361 @@
+/*
+ * @Author :Anju G
+ * @since:24th Jan 2011
+ * @Description: This class is act as service class for the FamilyInfoPage.It cotains all business logic
+ 
+ Revision History:
+	
+    Version     Version Author     Date        Comments
+    1.0         Persistent         NA  		  	Initial Draft
+    
+	2.0 		Mahesh Hirugade	   02/05/2012   Issue id: 00001616 : Added method named as getFamilyMembers() to show drop down named as Dependent to show list of family members 
+
+ */
+public class FamilyMemberInfoService{
+	
+	public static final Schema.DescribeSObjectResult DESCRIBE_RESULT = Financial_Account__c.SobjectType.getDescribe();
+    public static final Map<String, Schema.RecordTypeInfo> RECORD_TYPE_INFO_MAP = DESCRIBE_RESULT.getRecordTypeInfosByName();
+    
+     DatabaseDML databaseAccess = new DatabaseDML();
+     DatabaseSOQL databaseObj = new DatabaseSOQL();
+     
+     public List<Account> accountList{get;set;}	/* Prajakta - FP changes II - 4-6-2013 */
+     
+  /*
+   * save() Method is used to save the values enterd in the FamilyInfoPage. This stores values in Account
+   *  and Financial_account__c object.
+   * params:familyinfoBean class object instance and id of the account
+   */
+     public void save(FamilyMemberInfoBean fmBean,String accountId){
+      	try{
+            List<Financial_Account__c> lstBank = new List<Financial_Account__c>();
+            List<Financial_Account__c> lstdemat = new List<Financial_Account__c>();
+            
+            accountList = databaseObj.getFamilyDetails(fmbean.acc.Id);   /*Prajakta - 4-6-2013*/
+            
+            fmBean.validate(fmBean.acc);
+            fmbean.acc.Gender__pc = fmbean.con.Gender__c;
+            fmbean.acc.Marital_Status__pc = fmbean.con.Marital_Status__c;
+            fmbean.acc.Middle_Name__pc = fmbean.con.Middle_Name__c;
+            fmbean.acc.PAN_ID__pc = fmbean.con.PAN_ID__c;
+            fmbean.acc.Passport__pc = fmbean.con.Passport__c;
+            /* Prajakta - FP Changes II - Commented Code - Changed it to self selection */
+            fmbean.acc.Relationship_to_Entity__pc = fmbean.con.Relationship_to_Entity__c;
+            fmbean.acc.Relationship_to_Entity__pc = fmbean.acc.Relationship_to_Entity__pc;
+            fmbean.acc.Office_Phone1__pc = fmbean.con.Office_Phone1__c;
+            if(fmbean.acc.Dependent__c != null && fmbean.acc.Dependent__c.equalsIgnorecase('---None---'))
+            	fmbean.acc.Dependent__c = '';
+            
+            /* Prajakta - FP changes - 10-04-2013 - Removed System.Today() */
+			Integer yearofToday = fmBean.acc.Plan_Generation_Date__c != null ? fmBean.acc.Plan_Generation_Date__c.year() : System.today().year();
+            //Integer yearofToday = System.Today().year();/*Praj*/
+            
+            /* Prajakta - FP changes II - 3-6-2013 - Set default value for retirement entity */ 
+            Map<Id,Account> mapIdToAcc = new Map<Id,Account>();
+			for(Account objAcc : accountList)
+			{
+		    	if(!mapIdToAcc.containsKey(objAcc.Id))
+			        mapIdToAcc.put(objAcc.Id,objAcc);
+		    }
+		    Account retirementEntity;
+		    if(fmbean.acc.Retirement_Planning_Entity__c != null)
+		    {
+			    if(mapIdToAcc.containsKey(fmbean.acc.Retirement_Planning_Entity__c))
+			    	retirementEntity = mapIdToAcc.get(fmbean.acc.Retirement_Planning_Entity__c);
+			    //error.DebugLog('===fff====retirementEntity====in if==='+retirementEntity);
+		    }
+		    else
+		    {
+		    	retirementEntity = fmbean.acc;
+		    	//error.DebugLog('===fff===retirementEntity====in else==='+retirementEntity);
+		    }
+            /*--------------------------------------------------------------------*/
+            integer birthYear = fmBean.acc.PersonBirthdate.year();
+            fmBean.acc.Retirement_Year__c = 0;
+            fmBean.acc.Estimated_Life_EndYear__c = 0;
+            /*--------------------------------------------------------------------*/
+            if(fmBean.acc.Retirement_Planning_Entity__c != null && fmBean.acc.Retirement_Planning_Entity__c != '')
+            {
+            	if(retirementEntity.Retirement_Age__c != null && retirementEntity.Retirement_Age__c != '')
+            	{
+            		fmBean.acc.Retirement_Year__c = yearofToday + integer.valueOf(retirementEntity.Retirement_Age__c)
+            													 - (yearofToday - retirementEntity.PersonBirthdate.year());
+            	}
+				if(retirementEntity.Estimated_Life_Expectancy__c != null && retirementEntity.Estimated_Life_Expectancy__c != '')
+				{
+                	fmBean.acc.Estimated_Life_EndYear__c = yearofToday + integer.valueOf(retirementEntity.Estimated_Life_Expectancy__c)
+                															 - (yearofToday - retirementEntity.PersonBirthdate.year());
+                //error.debugLog('--if---yearofToday'+yearofToday+'--integer.valueOf(fmbean.acc.Estimated_Life_Expectancy__c)--'+integer.valueOf(fmbean.acc.Estimated_Life_Expectancy__c)+'---retirementEntity.PersonBirthdate.year()'+retirementEntity.PersonBirthdate.year());															 
+            	//error.debugLog('------fmBean.acc.Estimated_Life_EndYear__c-----'+fmBean.acc.Estimated_Life_EndYear__c);
+            	}
+            	//error.DebugLog('===in if ==='+fmBean.acc.Retirement_Year__c+' - '+fmBean.acc.Estimated_Life_EndYear__c);          													 
+            }
+            else
+            { 
+	            if(fmBean.acc.Retirement_Age__c != null && fmBean.acc.Retirement_Age__c != ''){
+	                fmBean.acc.Retirement_Year__c = yearofToday + integer.valueOf(fmBean.acc.Retirement_Age__c) - (yearofToday-birthYear);
+	            }
+	            
+	            if(fmbean.acc.Estimated_Life_Expectancy__c != null && fmbean.acc.Estimated_Life_Expectancy__c != ''){
+	                fmBean.acc.Estimated_Life_EndYear__c = yearofToday+integer.valueOf(fmbean.acc.Estimated_Life_Expectancy__c) - (yearofToday-birthYear);
+	                error.debugLog('--else---yearofToday'+yearofToday+'--integer.valueOf(fmbean.acc.Estimated_Life_Expectancy__c)--'+integer.valueOf(fmbean.acc.Estimated_Life_Expectancy__c)+'---birthYear'+birthYear);
+	            }
+	            //error.DebugLog('===in else ==='+fmBean.acc.Retirement_Year__c+' - '+fmBean.acc.Estimated_Life_EndYear__c);
+            }
+            
+            
+            for(Financial_Account__c fAcc : fmBean.bankList)
+            {
+            	fAcc.recordTypeId = RECORD_TYPE_INFO_MAP.get('Bank Account').getRecordTypeId();
+            	if (!fmBean.isEmpty(fAcc, fmBean.bankRec.name)) {
+                    lstBank.add(fAcc);
+                    //fmBean.bankList.remove(index);
+                }
+                
+                /*else{
+                    if(fAcc.recordTypeId == null) {
+                        //fAcc.recordTypeId = RECORD_TYPE_INFO_MAP.get('Bank Account').getRecordTypeId();
+                        //fmBean.bankRec.RecordTypeId__c;
+                        System.debug('======================>'+fmBean.bankRec.RecordTypeId__c);
+                    }
+                }*/
+            }
+            
+            // Update bankList
+            fmBean.bankList.clear();
+            fmBean.bankList = lstBank;
+            
+            for(Financial_Account__c fAcc : fmBean.dematList)
+            {
+            	fAcc.recordTypeId = RECORD_TYPE_INFO_MAP.get('Demat Account').getRecordTypeId();
+            	if(!fmBean.isEmpty(fAcc, fmBean.dematRec.name))
+                    lstdemat.add(fAcc);
+               /* else if (fAcc.recordTypeId == null)
+                     //fAcc.recordTypeId = RECORD_TYPE_INFO_MAP.get('Demat Account').getRecordTypeId();
+                     //fmBean.dematRec.RecordTypeId__c;
+                     System.debug('======================>'+fmBean.dematRec.RecordTypeId__c);*/
+            }
+            
+            fmBean.dematList.clear();
+            fmBean.dematList = lstdemat;
+            
+            if (accountId == null || accountId == '') {
+                databaseAccess.insertObject(fmBean.acc);
+                fmBean.acc = null;
+            }
+            else {
+             databaseAccess.upsertObject(fmBean.acc);
+            }
+            
+            fmBean.bankList = assignAccountIds(fmBean.acc.id,fmBean.bankList);
+            fmBean.dematList = assignAccountIds(fmBean.acc.id,fmBean.dematList);
+            
+            databaseAccess.upsertObject(fmBean.bankList);
+            databaseAccess.upsertObject(fmBean.dematList);
+      	}
+        catch(ValidationException e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, e.getMessage()));
+        }    
+        catch(Exception ex){
+             ApexPages.addMessages(ex);
+        }
+        return;
+    }
+    
+  /*  private Boolean isValidAccount(Financial_Account__c objFinancialAccount)
+    {
+    	if(objFinancialAccount.Account_Number__c == null  
+    		&& objFinancialAccount.Account_type__c == null
+    		&& objFinancialAccount.Bank_Name__c == null
+    		&& objFinancialAccount.Branch_detail__c == null
+    		&& objFinancialAccount.MICR_No__c == null
+    		&& objFinancialAccount.IFSC_No__c == null)
+    		return false;
+    	else 
+    		return true;
+    }*/
+    
+    public List<Financial_Account__c> assignAccountIds(Id accId, List<Financial_Account__c> accountsList) {
+        for (integer i=0;i<accountsList.size();i++) {
+            if (accountsList.get(i).Account__c == null) {
+                accountsList.get(i).Account__c = accId;
+            }
+        }
+        return accountsList;
+    }
+    
+    /*
+     * getEntity() function returns the details of entities
+     * params:id of particular account(Entity)
+     * Return Type:Account object instance for that particular entity
+     */  
+    public Account getEntity(String entityId) {
+        //00001556 Commented Original Code
+        return databaseObj.getEntity(entityId);
+		//StaticMethodClass.entityId = entityId;
+		//Account acc = StaticMethodClass.getEntity;
+		//return acc;
+    }
+    
+    /*
+     * getContact() function used to get the contact details of particular entity
+     * params:id of particular contact Record
+     * Return Type:Contact object instance 
+     */      
+    public Contact getContact(String conId) {
+        return databaseObj.getContact(conId);
+    }
+    
+    /*
+     * getFamilyDetails() method used to get the details of family member associated with particular entity
+     * params:id of particular Entity
+     * Return Type:List of Account
+     */          
+    public List<Account> getFamilyDetails(String entityId) {
+        return databaseObj.getFamilyDetails(entityId);
+     }
+     
+     /*
+     * addNewMembers() method used insert/update the new/existing family members of particular entity
+     * params:List of family members
+     * Return Type:void
+     */   
+    public void addNewMembers(List<Account> entityLst){
+        databaseAccess.upsertObject(entityLst);
+     }
+     
+    /*
+     * getFinancialRec() method used to get FinancialRecTypes__c object instance  for bank/demat account
+     * params:recordtype Name
+     * Return Type:FinancialRecTypes__c
+     */  
+    public  FinancialRecTypes__c getFinancialRec (String recordName){
+        return  databaseObj.getFinancialRec(recordName);
+     }
+     
+    /*
+     * getBankDetails() method used to get bank/demat account details of particular client
+     * params:recordtype Name
+     * Return Type:FinancialRecTypes__c
+     */  
+    public List<Financial_Account__c> getBankDetails(String entityId,String recId) {
+        return databaseObj.getBankDetails(entityId, recId);
+    }
+    
+    /*
+     * isCostomerProfile() method used check the logged in user is a valid customer portal User
+     * params:familyMemberInfoBean object instance
+     * Return Type:Boolean
+    */     
+    public boolean isCostomerProfile(FamilyMemberInfoBean fmBean){
+        List<ProfileRecTypes__c> profileList=databaseObj.getCustomerProfile();
+        for (ProfileRecTypes__c pid:profileList) {
+            if (pid.ProfileId__c.equalsIgnoreCase(Userinfo.getProfileId())) {
+                fmBean.isCustomer=true;
+                break;
+            }
+        }
+        return fmBean.isCustomer;
+    }
+    
+    /*
+     * saveNext() method used to save the details of client/family members and move to next family member details
+     * params:id of client and particular family member
+     * Return Type:pageReference
+     */  
+     public Pagereference saveNext(String parentId,String childId){
+        List<Account> accList = new List<account>();
+        Pagereference pageRef;
+        String newPageId;
+        integer i;
+        if (parentId != null && parentId != '') {
+            accList=databaseObj.getFamilyDetails(parentId);
+            if (accList.size() > 0) {
+                if (childId != null && childId != '') {
+                    for (i = 0 ; i < accList.size() ; i++) {
+                        String accId = acclist.get(i).Id;
+                        if (accId.equalsIgnoreCase(childId)) {
+                            if ((i + 1) != accList.size()) {
+                                newPageId = accList.get(i+1).Id;
+                                pageRef = new pageReference ('/apex/familyInfoPage?fentityId='+newPageId+'&entityId='
+                                                             +parentId+'&RecType=family&tabname=Financial Planning');
+                            }
+                            else {
+                                pageRef = new pageReference ('/apex/IncomeSummaryPage?entityId='+parentId+
+                                                             '&tabname=Financial Planning');
+                            }
+                            break;
+                        }  
+                    }
+                }
+                else{
+                     if(accList.size() > 1){
+                            if(accList.get(1) != null){
+                                newPageId = accList.get(1).id;
+                                pageRef = new pageReference ('/apex/familyInfoPage?fentityId='+newPageId+'&entityId='+parentId+
+                                                             '&RecType=family&tabname=Financial Planning');
+                            }
+                     }
+                     else{
+                             pageRef = new pageReference ('/apex/IncomeSummaryPage?entityId='+parentId+
+                                                     '&tabname=Financial Planning');
+                    }
+                }
+            }
+        }
+        return pageRef;
+     } 
+     
+    /*
+     * addNewRow() method used to add new rows for entering aditional bank/demat account Details
+     * params:id familyMemberInfoBean object instance and account recordtype(bank/demat)
+     * Return Type:void
+     */  
+      public void addNewRow(FamilyMemberInfoBean fmBean, String financialRecType)
+      {
+	      if(financialRecType.equalsIgnoreCase(Label.DematAccount))
+	         fmbean.dematList.add(new Financial_Account__c());
+	      if(financialRecType.equalsIgnoreCase(Label.BankAccount))
+	      	fmbean.bankList.add(new Financial_Account__c());
+      }
+      
+    /*
+     * getPersonRecordType() method used to get recordtype of particular entity
+     * params:name of the Record
+     * Return Type:RecTypes__c
+     */ 
+      public RecTypes__c getPersonRecordType(String accountName)
+      {
+        return databaseObj.getPersonRecordType(accountName);
+      }
+      
+		/** Eternus Solutions       	**/
+		/** Issue Id : 00001616			**/ 
+		/** Author  :Mahesh Hirugade	**/
+		/** Date    : 02/05/2012 		**/
+		/** Purpose : To show list of family member to select Dependent of an entity
+					  getFamilyMembers returns select options with names of Family Members without parent entity
+		/****************************************************/
+    public List<SelectOption> getFamilyMembers(String entityId)
+    {
+      	List<SelectOption> options = new List<SelectOption>();
+      	options.add(new SelectOption('---None---','---None---'));
+      	for(Account acc : databaseObj.getFamilyMembers(entityId))
+      	{
+      		options.add(new SelectOption(acc.Id,acc.Name));
+      	}
+        return options;
+    }
+    
+    public List<SelectOption> getRetirementEntities(String entityId)
+    {
+      	List<SelectOption> options = new List<SelectOption>();
+      	
+      	//options.add(new SelectOption('---None---','---None---'));
+      	for(Account acc : databaseObj.getFamilyMembers(entityId))
+      	{
+      		options.add(new SelectOption(acc.Id,acc.Name));
+      	}
+        return options;
+    }
+}

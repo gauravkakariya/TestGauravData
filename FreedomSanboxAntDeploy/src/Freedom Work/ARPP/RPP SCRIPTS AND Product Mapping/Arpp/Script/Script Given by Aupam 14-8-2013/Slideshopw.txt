@@ -1,0 +1,48 @@
+<apex:repeat var="imageUrl" value="{!mapImageUrlToLink}" id="idRepeat">
+    		<a target="{IF(!mapImageUrlToNewWindow[imageUrl] == true, _self, _self)}" href="{!mapImageUrlToLink[imageUrl]}"><img src="{!imageUrl}"  /></a>
+    		<a target="{IF(!mapImageUrlToNewWindow[imageUrl] == true, _self, _self)}" href="{!mapImageUrlToLink[imageUrl]}"><img src="{!imageUrl}"  /></a>
+    	</apex:repeat>
+		
+		
+		
+	public with sharing class SlideShowController 
+{
+	 //Declartion
+	 public String myimageurl {get; set;} 
+	// public List<String> lstImageUrl{get;set;}
+	 public List<Banner_Image_Setting__c> lstImageUrl{get;set;}
+	 public Map<String, String> mapImageUrlToLink{ get; set; }
+	 public Map<String, Boolean> mapImageUrlToNewWindow{ get; set; }
+	
+ 
+ 	//Constructor
+	 public SlideShowController()
+	 {
+	 	
+		lstImageUrl = new List<Banner_Image_Setting__c>();
+						   
+	  	mapImageUrlToLink = new Map<String, String>();
+	  	mapImageUrlToNewWindow = new Map<String, Boolean>(); 	   
+	  	List<Banner_Image_Setting__c> imageCustomValues = Banner_Image_Setting__c.getAll().Values();
+		
+	 	for(Banner_Image_Setting__c objUploadImage :imageCustomValues)
+	 	{
+	 		system.debug('*****objUploadImage****'+objUploadImage.Is_New_Window__c);
+	 		lstImageUrl.add(objUploadImage);
+	 		mapImageUrlToLink.put(objUploadImage.Image_URL__c,objUploadImage.Link__c ); 
+	 		mapImageUrlToNewWindow.put(objUploadImage.Image_URL__c,objUploadImage.Is_New_Window__c);	
+	 		
+	 	}			
+	 	
+	 	//Show Error if No image found
+	 	if(lstImageUrl.size() == 0)
+	 	{
+	 		 ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'<font color="red">Please Upload Image</font>'));
+   			 return;
+	 	}
+	 		
+	 }//end Constructor
+
+}//End SlideShowController Class	
+		
+		

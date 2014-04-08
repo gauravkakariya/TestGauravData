@@ -1,0 +1,131 @@
+Map<Id,ARPP_Detail__c> mapEtIdToARPP = new Map<Id,ARPP_Detail__c>();
+		List<ARPP_Detail__c> lstArppDetail = [Select Name, Id, Entity__c, Type__c, Product__c, Commission__c, Approve_Action_Plan__c, 
+													Action_Plan_Amount__c, Action_Plan_Upfront_Comm_Amount__c, Action_Plan_Trial_Comm_Amount__c,  Action_Amount_Revenue__c, Remark__c, 
+													Execution_Tracker_Actual_Product__c,  Actual_Commission__c, Execution_Tracker__c, Execution_Tracker_Amount__c, Execution_Tracker_upfront_Comm_Amount__c, Execution_Tracker_Trial_Comm_Amount__c, Execution_Tracker_Total_Revenue__c, Actual_Product_Name__c, ET_Remark__c  From ARPP_Detail__c 
+										  	  Where (Execution_Tracker_Actual_Product__c = null) and 
+												    Execution_Tracker__c != null] ; 
+												   
+												  
+		for(ARPP_Detail__c objARPP : lstArppDetail)
+		{
+			mapEtIdToARPP.put(objARPP.Execution_Tracker__c, objARPP);
+		}										    
+			
+		
+        Set<Id> setEntityId = new Set<Id>();
+		List<String> lstPname = new List<String>();
+		Map<Id, List<String>>	mapEntityIdTolstProductName = new Map<Id, List<String>>();
+		List<Execution_Tracker__c> lstETRecord = new List<Execution_Tracker__c>([Select Id,Executed_Product_Name__c,
+															 Entity_Name__c,
+															 Entity__c,
+															 Type__c
+													  From Execution_Tracker__c 
+													  Where (Executed_Product__c = null or Execution_Tracker_Product__c = null) and Executed_Product_Name__c = 'Bajaj Allianz  Health Guard' ]);
+														 
+													  
+													  
+		for(Execution_Tracker__c objET : lstETRecord)		
+		{
+		    setEntityId.add(objET.Entity_Name__c);
+			lstPname.add(objET.Executed_Product_Name__c);
+			
+			mapEntityIdTolstProductName.put(objET.Entity_Name__c, new List<String>{objET.Executed_Product_Name__c});
+			
+		}
+		system.debug('********lstPname**********'+lstPname);		
+		system.debug('********mapEntityIdTolstProductName**********'+mapEntityIdTolstProductName);		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+List<Approve_Action_Plan__c> lst = [Select Id, policy_Name__c, Account__c,
+										Item_Type__c,Installments__c,  
+										Tenure_of_Insurance__c,
+										Product_Name__c, Product__c, 
+										Sum_Assured_Rs__c 
+										From Approve_Action_Plan__c 
+										Where (Product_Name__c ='Bajaj Allianz Health Guard Bajaj Allianz Premium Personal Guard
+' or policy_Name__c = 'Bajaj Allianz Health Guard Bajaj Allianz Premium Personal Guard')];
+Set<Id> setEntityId = new Set<Id>();		
+
+Map<Id, List<String>>	mapEntityIdTolstProductName = new Map<Id, List<String>>();
+												
+for(Approve_Action_Plan__c objAP : lst)
+{
+	setEntityId.add(objAP.Account__c);
+	mapEntityIdTolstProductName.put(objAP.Account__c,  new List<String> {objAP.Product_Name__c != null ? objAP.Product_Name__c : (objAP.policy_Name__c != null ? objAP.policy_Name__c : '') });
+}
+	
+system.debug('********setEntityId**********'+setEntityId);	
+	
+system.debug('********mapEntityIdTolstProductName**********'+mapEntityIdTolstProductName);	
+			-----------------------------------------------------------------------									 
+//Update Mf type ARPP with Action Plan 
+
+        						  
+													  
+												 
+												 
+
+
+
+
+
+
+
+
+
+
+
+
+
+List<Execution_Tracker__c> lstET = [Select Id, Entity_Name__c, Approve_Action_Plan__c From Execution_Tracker__c where  Approve_Action_Plan__c = null and Entity_Name__r.Entity_Status__c = 'Active' and  Entity_Name__r.Parent_Entity__c= null ];
+
+Set<Id> setEntityId = new Set<Id>();
+
+for(Execution_Tracker__c obj :lstET)
+   setEntityId.add(obj.Entity_Name__c);
+system.debug('********lstET**********'+lstET.size());
+system.debug('********setEntityId**********'+setEntityId.size());
+
+Set<Id> setEntityId = new Set<Id>();
+
+for(Execution_Tracker__c obj :lstET)
+   setEntityId.add(obj.Entity_Name__c);
+system.debug('********lstET**********'+lstET.size());
+system.debug('********setEntityId**********'+setEntityId.size());
+
+11:08:28.398 (398999000)|USER_DEBUG|[7]|DEBUG|********lstET**********3347
+11:08:28.399 (399079000)|USER_DEBUG|[8]|DEBUG|********setEntityId**********513
+11:08:28.992 (399150000)|CUMULATIVE_LIMIT_USAGE
+
+
+List<ARPP_Detail__c> lstArppDetail = [Select Name, Id, Entity__c, Type__c, Product__c, Commission__c, Approve_Action_Plan__c, 
+													Action_Plan_Amount__c, Action_Plan_Upfront_Comm_Amount__c, Action_Plan_Trial_Comm_Amount__c,  Action_Amount_Revenue__c, Remark__c, 
+													Execution_Tracker_Actual_Product__c,  Actual_Commission__c, Execution_Tracker__c, Execution_Tracker_Amount__c, Execution_Tracker_upfront_Comm_Amount__c, Execution_Tracker_Trial_Comm_Amount__c, Execution_Tracker_Total_Revenue__c, Actual_Product_Name__c, ET_Remark__c  From ARPP_Detail__c 
+										  	  Where Remark__c = 'Product Detail is not Found' and 
+												  	 (policy_Name__c = 'Apollo Minich' or Product_Name__c ='Apollo Minich' ]; 
+													 
+
+
+Apollo Munich

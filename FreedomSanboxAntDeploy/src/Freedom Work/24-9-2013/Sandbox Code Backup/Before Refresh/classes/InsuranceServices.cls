@@ -1,0 +1,295 @@
+/**
+@description This is service class for InsuranceSummaryPage
+*/
+public class InsuranceServices
+{
+    public DatabaseSOQL databaseSOQLObj {get; set;}
+    public InsuranceBean insuranceBeanInstance{get; set;} 
+    private DatabaseDML databaseDMLObj {get; set;}
+    /**
+    @description constructor
+    */        
+    public InsuranceServices()
+    {
+        DatabaseSOQLObj = new DatabaseSOQL();
+        DatabaseDMLObj = new DatabaseDML();
+    }
+         
+    //===============Insurance Popup Page Methods==============
+    
+    /** getInsuranceRecords() gets Insurance records of given Accounts of particular RecordType
+        Input Parameters: RecordTypeId, List of Accounts
+        Returns: List of Insurances
+    */
+    public List<Insurance__c> getInsuranceRecords(String RecordTypeId,List<Account> AccountList)    
+    {
+        List<Insurance__c> InsuranceList = DatabaseSOQLObj.getInsurances(RecordTypeId,AccountList); 
+        return InsuranceList;
+    }
+
+    /**
+     getRelatedEntities() gets related Entities 
+     Input Parameters: entityId
+     Returns: List of account
+    */
+    public List<Account> getRelatedEntities(String EntityId)    
+    {
+        List<Account> AccountList = DatabaseSOQLObj.getFamilyDetails(EntityId); 
+        return AccountList ;
+    }
+
+    /** addRow() adds a row to list of Insurances 
+       Input Parameters: RecordTypeId, List of Insurances
+       Returns: List of Insurances
+    */       
+    public List<Insurance__c> addRow(List<Insurance__c> Insurances,String RecordTypeIdString)
+    {
+        if(RecordTypeIdString == InsuranceRecTypes__c.getInstance('Life Insurance').RecordTypeId__c) 
+        { 
+              for(Integer count = 0 ; count < 3 ; count++)
+              {
+                Insurance__c InsuranceTempObj = new Insurance__c();
+                InsuranceTempObj.RecordTypeId = RecordTypeIdString;    //Create new record of given RecordType
+                System.Debug('===In InsuranceServices addRow()==='+InsuranceTempObj);
+                Insurances.add(InsuranceTempObj);
+              }  
+        }
+        else if(RecordTypeIdString== InsuranceRecTypes__c.getInstance('General Insurance').RecordTypeId__c) 
+        {
+            Insurance__c InsuranceTempObj = new Insurance__c();
+            InsuranceTempObj.RecordTypeId = RecordTypeIdString;  
+            Insurances.add(InsuranceTempObj );
+        }
+        return Insurances;
+    }
+    
+    /**
+     getOwnerItems() gets values of related Entities to be displayed in Owner picklist 
+     Input Parameters: EntityId
+     Returns: List of SelectOptions
+    */
+    public List<SelectOption> getOwnerItems(List<Account> EntityList)
+    {
+        List<SelectOption> options = new List<SelectOption>();
+        for (Account TempAccount : EntityList )
+        {
+            options.add(new SelectOption(tempAccount.Id, tempAccount.Name));        
+        }
+        return options;
+    }
+    
+    /** 
+     saveInsurances() saves records in InsuranceList
+     Input Parameters: List of Insurances
+     Returns: none
+    */  
+    public void saveInsurances(List<Insurance__c> Insurances)
+    {
+        List <Insurance__c> insuranceSaveList = new  List <Insurance__c>();
+        for(Insurance__c insurance : Insurances) 
+        {
+            try
+            {
+                insuranceBeanInstance.validate(insurance);
+                insuranceSaveList.add(insurance);
+            }    
+            catch(ValidationException e)
+            {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, e.getMessage()));
+            }    
+        }  
+        DatabaseDMLObj.upsertObject(insuranceSaveList);  
+    }   
+
+    /** resetRtypeFlags() resets displayRecordTypeField flags in InsuranceBeanObj to false
+        Input Parameters: InsuranceBeanObject
+        Returns: InsuranceBeanObject
+    */
+    public InsuranceBean resetRtypeFlags(InsuranceBean InsuranceBeanObj)
+    {
+        InsuranceBeanObj.displayLifeFields = false;
+        InsuranceBeanObj.displayGeneralFields = false;
+        return InsuranceBeanObj; 
+    }
+
+    /**
+     setRtypeFlags() sets particular displayRecordTypeField flag to true according to selected Recordtype
+     Input Parameters: InsuranceBeanObject
+     Returns: InsuranceBeanObject
+    */
+    public InsuranceBean setRtypeFlags(InsuranceBean InsuranceBeanObj)
+    {
+        if(InsuranceBeanObj.selRecordTypeId == InsuranceRecTypes__c.getInstance('Life Insurance').RecordTypeId__c) 
+        { 
+            InsuranceBeanObj.displayLifeFields=true;
+        }
+        else if(InsuranceBeanObj.selRecordTypeId == InsuranceRecTypes__c.getInstance('General Insurance').RecordTypeId__c) 
+        {
+            InsuranceBeanObj.displayGeneralFields=true;
+        }    
+        return InsuranceBeanObj; 
+    } 
+       
+    /**
+       getAccountNames() gets names of related Entities 
+       Input Parameters:account list
+       Returns: List of string 
+     */
+    public List<String> getAccountNames(List<Account> AccountList)
+    {
+        List<String> AccountNameList = new List<String>();
+        for(Account acc:Accountlist)
+        {
+           AccountNameList.add(acc.Name);
+        }
+        return AccountNameList;
+    }
+   
+    /** 
+       getInsuranceRecordTypes() gets recordtypes for Insurance__c 
+       Input Parameters: ObjectName
+       Returns: List of RecordTypes    
+    */
+    public List<RecordType> getInsuranceRecordTypes(String ObjectName)
+    {
+        List<RecordType> RecordTypeList = DatabaseSOQLObj.getObjectRecordTypes(ObjectName);
+        return RecordTypeList ;
+    }
+    
+    /**
+       getDBValues() gets records from database for Insurance__c 
+       Input Parameters: List of Accounts
+       Returns: List of AggregateResult
+    */
+    public List<AggregateResult> getDBValues(List<Account> AccountList)
+    {
+        List<AggregateResult> AggQueryResult = DatabaseSOQLObj.getInsuranceDBValues(AccountList);
+        return AggQueryResult ;
+    }
+  
+    /** 
+       initSummaryTableList() initialises SummaryTableListwith RecordTypes and AccountNames
+       Input Parameters: List of AccountNames, List of RecordTypes
+       Returns: initialised SummaryTableList
+     */   
+    public List<InsuranceBean.OuterClass> initSummaryTableList(List<RecordType> RTList, List<String> AccountNameList)
+    {
+        List<InsuranceBean.OuterClass> SummaryTableList= new List<InsuranceBean.OuterClass>();
+        for(RecordType rType : RTList)
+        {
+             InsuranceBean.OuterClass OuterClassobj = new InsuranceBean.OuterClass();
+             OuterClassObj.RecordType = rType.Name;
+             OuterClassObj.RecordTypeIdStr = rType.Id;
+             
+             //Populating AccountNames with AccountNames and AmountValue to zero
+             for(String str : AccountNameList)
+             {
+                Double amt = 0;
+                InsuranceBean.InnerClass InnerClassObj = new InsuranceBean.InnerClass(str,amt);
+                OuterClassobj.InnerClassList.add(InnerClassObj);
+             }
+             SummaryTableList.add(outerClassObj);
+        } 
+        return SummaryTableList;
+    }
+    
+    /**
+       populateSummaryTableList() populates SummaryTableList with AmountValues from Database
+       Input Parameters: List of AggregateResult from Database, initialised SummaryTableList
+       Returns: SummaryTableList populated with DB amount values
+    */   
+    public List<InsuranceBean.OuterClass> populateSummaryTableList(List<AggregateResult> AggQueryResult, List<InsuranceBean.OuterClass> SummaryTableList )
+    {
+        for( AggregateResult ar : AggQueryResult)
+        {
+             String RecordType=(String)ar.get('RTName');
+             for( InsuranceBean.OuterClass oObj : SummaryTableList )
+             {
+                 if( oObj.RecordType == RecordType)
+                 {
+                       Integer lstcntr=0;
+                       for(InsuranceBean.InnerClass iobj : oObj.InnerClassList )
+                       {
+                              if(iObj.AccountName == ( (String)ar.get('Entity') ) )
+                              {
+                                  if(oObj.RecordType=='Life Insurance')
+                                      oObj.InnerClassList.get(lstcntr).AmountValue = (Double)ar.get('deathBenefitSum');
+                                  else if(oObj.RecordType=='General Insurance')
+                                       oObj.InnerClassList.get(lstcntr).AmountValue = (Double)ar.get('sumAssured');
+                              }
+                              lstcntr++;
+                       }
+                  } 
+             } 
+        }   
+        return SummaryTableList;
+    }
+    
+    /**
+       getTotal() function is used to get total insurances for particular entity
+       Input Parameters: entity Id and related entities
+       Returns: instance of InsuranceBean.OuterClass
+    */ 
+    public InsuranceBean.OuterClass getTotal(String EntityId, List<String> AccountNameList)
+    {
+          list<AggregateResult> totalInsuranceList = DatabaseSOQLObj.getInsuranceTotal(EntityId);
+          InsuranceBean.OuterClass tempTotalInsurance = new InsuranceBean.OuterClass();
+          tempTotalInsurance.RecordType ='Total';
+          for(String str : AccountNameList)
+          {
+                Double amt = 0;
+                InsuranceBean.InnerClass InnerClassObj = new InsuranceBean.InnerClass(str,amt);
+                tempTotalInsurance.InnerClassList.add(InnerClassObj);
+          }
+          for(AggregateResult ar : totalInsuranceList )
+          {
+              for(InsuranceBean.InnerClass iobj : tempTotalInsurance.InnerClassList){
+                  if(ar.get('entity') == iobj.AccountName )
+                  {
+                      iobj.AmountValue =(Double)ar.get('total');
+                  }
+              }
+          }
+          return tempTotalInsurance ;
+     }
+     
+     /**
+       removeRecords() function is used to remove the record from list or database
+       Input Parameters: insurance list
+       Returns: void 
+    */
+     public void removeRecords(list<insurance__c> insuranceList)
+     {
+     	
+     	system.debug('----in remove----insuranceList---------'+insuranceList);
+        list<Integer> removeIndexList = new list<Integer>();
+        list<insurance__c> deleteList = new list<insurance__c>();
+        
+        integer index = 0;
+        for(insurance__c instance : insuranceList)
+        {
+            if(instance.RemoveCheckbox__c && instance.id != null)
+            {
+                removeIndexList.add(index);
+                deleteList.add(instance);
+            }
+            else if(instance.RemoveCheckbox__c)
+                removeIndexList.add(index);
+            index++;
+        }
+        for(Integer i = removeIndexList.size();i>0;i--) 
+           insuranceList.remove(removeIndexList.get(i-1));
+       system.debug('----after remove----insuranceList---------'+insuranceList);
+        DatabaseDMLObj.deleteRecords(deleteList);
+     }
+      
+     /**
+       removeOwnerChangeList() function is used to remove the record from database if owner is changed
+       Input Parameters: insurance list
+       Returns: void 
+    */
+     public void removeOwnerChangeList(list<insurance__c> insuranceList){
+         DatabaseDMLObj.deleteRecords(insuranceList);
+     }
+    
+}

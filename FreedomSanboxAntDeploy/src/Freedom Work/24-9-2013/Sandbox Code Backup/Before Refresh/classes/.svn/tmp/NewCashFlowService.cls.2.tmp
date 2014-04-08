@@ -1,0 +1,824 @@
+/*
+	This class is keeping all logic to get data for Cash Flow Page.
+	It fetches information from Income,Expense,Asset,Insurance and Investment Asset.
+	Support is availaible for One year and multi year projection.
+	
+	Revision History:
+	
+    Version     Version Author     Date        Comments
+    1.0         Persistent         NA  		  	Initial Draft
+    2.0			Eternus			   17/05/2011	Modified the calculation for defaultEndYear in 
+    											from the harcoded value defaultEndYear = defaultStartYear + 50, to
+									        	defaultEndYear = defaultStartYear + intPendingLifeExpectancyYears for Income and
+									        	defaultEndYear = defaultStartYear + intPendingYearsForRetirement for Expense
+	2.0			Eternus			   17/05/2011	Updated setExpensesSummaryDetails() method to update the 
+												default Expense Growth Rate to GlobalAssumption.InflationRate else it is set to 6%.
+	2.0			Manasi			   24/05/2011   While converting decimal to integer it was throwing an error in function 'setLoanSummaryDetails'.
+												So resolved it by creating intermediate variable to store an int value
+ 	
+ 	2.0			Manasi			   03/06/2011   In function getCashFlowProjection() added throw statement to add error message 
+ 												to tell user to add birthdate of current entity.
+	
+	2.0			Manasi			   09/06/2011   Added 'Deposits With Bank - Recurring Deposits' in Saving under Expenses section of cash flow.
+												Change is in function getCashFlowSnapshot() and  getCashFlowProjection() 					
+	2.0			Manasi 			   10/06/2011 	If Record Type of Income is 'Salary Income' then on 'Cash Flow - Projection' page 
+				  								display Salary Income upto (End Year - 1) years.
+				  								Example :If End year is 2045 then display Salary income for year upto : 2044 	
+												Changes : 1. Added function to calculated updated end Year of Salary Income 
+															 getUpdatedEndYearForSalaryIncome()
+														  2. getUpdatedEndYearForSalaryIncome() function is called from getCashFlowSnapshot() 
+														     and getCashFlowProjection() function
+	2.0			Manasi			   15/06/2011   Instead of calculating Age from birthdate field,Added new field Current_Age__c in
+							  					Account object.So selecting Current age for further calculations in getCashFlowProjection() function 											     
+ 															     
+   	2.0			Manasi			   20/06/2011   Issue ID:F0054: Instead of calculating Age from birthdate field,Added new field Current_Age__c in
+							  					Account object.So selecting Current age for further calculations in getCashFlowProjection() function
+   												
+   	2.0			Manasi			   27/06/2011   Issue ID : F0042 : 
+   												1) Added 2nd for loop that will assign end year of parent entity to 
+				  									all other 'Salary Income' related records  
+					  							2)Also added one parameter to this function.This Id refers to parent entity's Id
+   
+   2.0			Manasi			   30/06/2011   Issue ID : F0057 : 
+   												Change in function setInsuranceSummaryDetails :
+   												Changed the logic of calculation of end year.Previously it was calculating end year from 
+						 						Next_Premium_Due_Date__c ,but it should consider Commencement_Date__c 
+						 						for end year calculation.
+	2.0			Manasi			   3/8/2011     Issue ID : FS0092 : Class: NewCashFlowService
+   												Change in functions: setExpensesSummaryDetails,setAssetSummaryDetails,setInsuranceSummaryDetails 
+   												1. For any income if end year is mentioned as 2020 then in cash flow projection income should stop in 2019. Same for all expenses
+					  							2. So added code to chnage the end year of selected expense
+	2.0			Manasi			   4/8/2011     Issue ID : FS0093 : Class: NewCashFlowService
+   												Change in function : setInvestmentAssetSummaryDetails 
+   												3rd parameter for populateSummaryDetailList function is supposed to be Annual Contribution of selected record.
+						  						So multiplied by 12 to the Monthly_SIP_Amount__c to get its annual amount 					  							
+	2.0			Manasi			   4/8/2011     Issue ID : FS0091 : Class: NewCashFlowService
+   												Change in functions : getCashFlowSnapshot,getCashFlowProjection,getUpdatedEndYearForSalaryIncome 
+   												 1. Commented the above 2 for loops for the following case :
+												    "Income of spouse is upto 2017. The effect in the cashflow shuld be till 2016.
+												    But in projection, its showing till 2026 ( where the husband's income is stopping)"
+												 2. 2nd parameter is not used in the function .So removed that parameter.
+												 3. Added following code to adjust the end year.
+												    Example : if End year for salary income is 2045,
+												    then on cash flow page we should display income upto 2044 (i.e. End Year - 1)
+	
+	2.0			Manasi			   1/11/2011    Issue ID : FS0234 : Class: NewCashFlowService
+   												Change in functions : getCashFlowSnapshot,getCashFlowProjection 
+   												Need to Exclude 'Retirement Accounts' from Savings section of Cash Flow
+    2.0  		Manasi 			   19/11/2011   Issue Id: FS0293
+											    Created new overloaded function : getInsurances in DatabaseSOQL
+											    and callded it from function : getCashFlowSnapshot and getCashFlowProjection
+											    It will select the Insurances of selected Entity and with flag ='Data Entry'
+	2.0  		Manasi 			   29/12/2011   Issue Id: FS0389
+											    On cashflow page, in the calculation of the Insurance, 
+						  						If Premium paying term is inserted then it should consider that instead of Tenure of Insurance
+											    			  									 			
+TODO: Given statement is thowing an exception as oAccount.Estimated_Life_EndYear__c is NULL
+	  Statement : oAccount.Estimated_Life_EndYear__c.intValue()
+	  Function  : getCashFlowProjection()
+	  Estimated_Life_EndYear__c is not a compulsory field.So if it is not filled then it will return NULL.
+	  So need to ask the logic if it is returning null value.			
+	  
+	  Same in the case of oAccount.Retirement_Year__c value in the same function.
+	  									
+For the above issue Changes are:
+					  Added two fields Default_Retirement_Age__c and Default_Estimated_Life_Expectancy__c
+					  in Entity_Global_Assumption__c object.So if Estimated_Life_EndYear__c or Retirement_Year__c fields are null then ,
+					  fetch Default_Estimated_Life_Expectancy__c and Default_Retirement_Age__c from Entity_Global_Assumption__c to calculate those values	  									
+									 
+*/
+public  class NewCashFlowService 
+{
+    public DatabaseSOQL dbQuery;
+    public Integer currentYear;    
+    private List<String> yearList = new List<String>();
+    private Entity_Global_Assumption__c globalAssumptions;
+    public Account objAccount{get;set;}
+    public String entityId {get;set;}
+    
+    public NewCashFlowService() 
+    {
+        dbQuery = new DatabaseSOQL();
+        
+        /* Prajakta - FP changes - 02-05-2013 */
+        entityId = System.currentPageReference().getParameters().get('entityId');
+        objAccount = dbQuery.getEntity(entityId);
+        if(objAccount.Plan_Generation_Date__c != null) 
+        	currentYear = objAccount.Plan_Generation_Date__c.year();
+        else
+        	currentYear = system.today().year();
+        //error.debugLog('=========currentYear============='+currentYear); 
+        //currentYear = system.today().year();/*Praj*/
+    }
+    /*
+    	Validate Income records and populate bean object to do further calculations. 
+    */
+    private void setIncomesSummaryDetails(List<Income__c> incomeList,Integer defaultStartYear, Integer defaultEndYear,
+                                                                                            NewSummaryBean summaryBean) 
+    {
+        NewSummaryBean.SummaryRecordTypeBean summaryRecordTypeBean;
+        Integer startYear,endYear;
+        Decimal defaultGrowthRate = 6,growthRate;
+       
+		if(globalAssumptions != null) 
+		{
+			defaultGrowthRate = Decimal.valueOf(String.valueOf(globalAssumptions.Income_Growth_Rate__c).trim());
+		}
+		
+        for(Income__c result : incomeList) 
+        {
+            summaryRecordTypeBean  = summaryBean.getSummaryRecordTypeBean(result.recordType.Name);   
+            if(result.Start_Year__c != null) { 
+                startYear = Integer.valueof(result.start_year__c);
+            } else {
+                startYear = defaultStartYear;
+            }
+            System.debug('******** startYear:' + startYear);
+            if(result.end_Year__c != null) {
+                endYear = Integer.valueof(result.end_year__c);
+            } else {
+                endYear = defaultEndYear;
+            }
+            System.debug('******** endYear:' + endYear);
+            if(result.Income_Growth_Rate__c != null){
+                growthRate = result.Income_Growth_Rate__c;  
+            }else {
+                growthRate = defaultGrowthRate;
+            }
+            if(endYear>=currentYear){
+           		 summaryRecordTypeBean.populateSummaryDetailList(startYear,endYear,(result.Monthly_Income__c * 12),growthRate, currentYear);         
+            }
+        }   
+    }
+    
+    /*
+    	Validate Expense records and populate bean object to do further calculations. 
+    */    
+    public void setExpensesSummaryDetails(List<Expense__c> expenseList,Integer defaultStartYear, Integer defaultEndYear,
+                                                                                            NewSummaryBean summaryBean) 
+    {
+        NewSummaryBean.SummaryRecordTypeBean summaryRecordTypeBean;
+        Integer startYear,endYear;
+        /** Eternus Solutions       **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: FS0092      	**/
+		/** Date    : 3/8/2011 	    **/
+		/** Purpose : 1. For any income if end year is mentioned as 2020 then in cash flow projection income should stop in 2019. Same for all expenses
+					  2. So added code to change the end year of selected expense 	 		
+		/****************************************************/
+        for(Expense__c objExpense : expenseList)
+        {
+        	if(objExpense.End_Year__c <> NULL)
+        	{
+	        	Integer iTempEndYear = Integer.valueOf(objExpense.End_Year__c) - 1;
+	        	objExpense.End_Year__c = String.valueOf(iTempEndYear);
+        	}
+        }
+        /*for(Expense__c objExpense : expenseList)
+        {
+        	system.debug('**********After'+objExpense.End_Year__c);
+        }*/
+       	/** Eternus Solutions       **/
+		/** Author  : Jigar			**/
+		/** Issue Id: F0007      	**/
+		/** Date    : 16/05/2011 	**/
+		/** Purpose : Updated the default Expense Growth Rate to GlobalAssumption.InflationRate else 6.**/
+			/****************************************************/  
+		//Decimal defaultGrowthRate = 0,growthRate;
+        Decimal defaultGrowthRate,growthRate;
+        if(globalAssumptions <> NULL)
+        	defaultGrowthRate = globalAssumptions.Inflation_Rate__c;
+        else
+        	defaultGrowthRate = 6;
+        
+        for(Expense__c result : expenseList) 
+        {            
+            if(result.Start_Year__c != null) { 
+                startYear = Integer.valueof(result.start_year__c);
+            } else {
+                startYear = defaultStartYear;
+            }
+            if(result.end_Year__c != null) {
+                endYear = Integer.valueof(result.end_year__c);
+            } else {
+                endYear = defaultEndYear;
+            }
+            if(result.Expense_Growth_Rate__c != null){
+                growthRate = result.Expense_Growth_Rate__c; 
+            }else {
+                growthRate = defaultGrowthRate;
+            }   
+            if(endYear>=currentYear){
+            	//error.debugLog('********result.MonthlyExpense__c*******'+result.MonthlyExpense__c);
+            	summaryRecordTypeBean  = summaryBean.getSummaryRecordTypeBean(result.General_Expenses__c); 
+            	//error.debugLog('*****summaryRecordTypeBean*******'+summaryRecordTypeBean);  
+            	summaryRecordTypeBean.populateSummaryDetailList(startYear,endYear,(result.MonthlyExpense__c * 12),growthRate,currentYear);                                            
+            }
+        }
+                       
+    }
+    
+    /*
+    	Validate Loan records and populate bean object to do further calculations. 
+    */        
+    public void setLoanSummaryDetails(List<Loan__c> loanList,Integer defaultStartYear,Integer defaultEndYear,NewSummaryBean summaryBean) 
+    {
+        NewSummaryBean.SummaryRecordTypeBean summaryRecordTypeBean;
+        Integer startYear,endYear;
+        Decimal balanceYears;
+                
+        for(Loan__c result : loanList) 
+        {
+            if(result.Balance_No_of_Years__c != null) 
+            {
+                balanceYears = result.Balance_No_of_Years__c;   
+                endYear = defaultStartYear + Integer.valueof(String.valueOf(balanceYears).trim()); 
+            } 
+            else 
+            {
+                endYear = defaultEndYear;
+            }
+            startYear = defaultStartYear;
+           	if(endYear>=currentYear)
+           	{
+            	summaryRecordTypeBean  = summaryBean.getSummaryRecordTypeBean('Loan Repayments (EMI)');         
+            	summaryRecordTypeBean.populateSummaryDetailList(startYear,endYear,(result.EMI__c * 12),0,currentYear);  
+            }
+        }       
+    }
+    
+    /*
+    	Validate Asset records and populate bean object to do further calculations. 
+    */        
+    public void setAssetSummaryDetails(List<Asset__c> assetList,Integer defaultStartYear,Integer defaultEndYear,NewSummaryBean summaryBean) {
+        NewSummaryBean.SummaryRecordTypeBean summaryRecordTypeBean;
+        Integer startYear,endYear;
+		Decimal defaultGrowthRate = 0,growthRate;
+        for(Asset__c result : assetList) {
+            if(result.Start_Year__c != null) { 
+                startYear = Integer.valueof(result.start_year__c);
+            } else {
+                startYear = defaultStartYear;
+            }
+            if(result.end_Year__c != null) {
+                endYear = Integer.valueof(result.end_year__c);
+                
+            /** Eternus Solutions       **/
+			/** Author  : Manasi Ranade **/
+			/** Issue Id: FS0092      	**/
+			/** Date    : 3/8/2011 	    **/
+			/** Purpose : 1. For any income if end year is mentioned as 2020 then in cash flow projection income should stop in 2019. Same for all expenses
+						  2. So added code to change the end year of selected expense 	 		
+			/****************************************************/
+                endYear = endYear - 1;
+            } else {
+                endYear = defaultEndYear;
+            }
+            if(result.Expected_Growth_Rate__c != null){
+                growthRate = result.Expected_Growth_Rate__c;    
+            }else {
+                growthRate = defaultGrowthRate;
+            }      
+             if(endYear>=currentYear){
+            	summaryRecordTypeBean  = summaryBean.getSummaryRecordTypeBean('Saving');   
+            	summaryRecordTypeBean.populateSummaryDetailList(startYear,endYear,result.Annual_Contribution__c,growthRate,currentYear);
+             }
+        }
+    }
+	/*
+    	Validate Invesmtnet Asset records and populate bean object to do further calculations. 
+    */            
+    public void setInvestmentAssetSummaryDetails(List<Investment_Asset__c> assetList,Integer defaultStartYear,Integer defaultEndYear,NewSummaryBean summaryBean) {
+        NewSummaryBean.SummaryRecordTypeBean summaryRecordTypeBean;     
+        
+        for(Investment_Asset__c result : assetList) {        	
+            summaryRecordTypeBean  = summaryBean.getSummaryRecordTypeBean('Saving');   
+            /** Eternus Solutions   **/
+			/** Author  : Manasi Ranade **/
+			/** Issue Id: FS0093      	**/
+			/** Date    : 04/08/2011 	**/
+			/** Purpose : 3rd parameter for populateSummaryDetailList function is supposed to be Annual Contribution of selected record.
+						  So multiplied by 12 to the Monthly_SIP_Amount__c to get its annual amount 
+			/****************************************************/ 
+            summaryRecordTypeBean.populateSummaryDetailList(defaultStartYear,defaultEndYear,(result.Monthly_SIP_Amount__c * 12),0,currentYear);
+        }
+    }
+	/*
+    	Validate Insurance Asset records and populate bean object to do further calculations. 
+    */                   
+    public void setInsuranceSummaryDetails(List<Insurance__c> insuranceList,Integer defaultStartYear,Integer defaultEndYear,NewSummaryBean summaryBean) {
+        NewSummaryBean.SummaryRecordTypeBean summaryRecordTypeBean;
+        Integer startYear,endYear;
+        Date tempDate;
+                
+        for(Insurance__c result : insuranceList) {
+            //Commented previous code
+            /* tempDate  = (result.Next_Premium_Due_Date__c);
+            
+            if(result.Next_Premium_Due_Date__c != null) {
+                startYear = tempDate.year(); 
+            } else {
+                startYear = defaultStartYear;
+            }*/
+            /** Eternus Solutions       **/
+			/** Author  : Manasi Ranade **/
+			/** Issue Id: F0057      	**/
+			/** Date    : 30/06/2011 	**/
+			/** Purpose : Changed the logic of calculation of end year.Previously it was calculating end year from 
+						  Next_Premium_Due_Date__c ,but it should consider Commencement_Date__c for end year calculation.
+			/****************************************************/ 
+            tempDate  = (result.Commencement_Date__c);
+            
+            if(result.Commencement_Date__c != null) {
+                startYear = tempDate.year(); 
+            } else {
+                startYear = defaultStartYear;
+            }
+            /** Eternus Solutions       **/
+			/** Author  : Manasi Ranade **/
+			/** Issue Id: FS0389      	**/
+			/** Date    : 29/12/2011 	**/
+			/** Purpose : On cashflow page, in the calculation of the Insurance, 
+						  If Premium paying term is inserted then it should consider that instead of Tenure of Insurance
+			/****************************************************/
+            Integer iInsuranceEndYear = 0;
+            if(result.Premium_Paying_Term__c != null)
+            {
+            	iInsuranceEndYear = Integer.valueof(String.valueOf(result.Premium_Paying_Term__c).trim());
+            }
+            else if(result.Tenure_of_Insurance__c != null)
+            {
+            	iInsuranceEndYear = Integer.valueof(String.valueOf(result.Tenure_of_Insurance__c).trim());
+            }
+            if(result.Premium_Paying_Term__c != null || result.Tenure_of_Insurance__c != null)
+            {
+				endYear = startYear + iInsuranceEndYear;
+            //Original Code
+			/*if(result.Tenure_of_Insurance__c != null) {				
+				endYear = startYear + Integer.valueof(String.valueOf(result.Tenure_of_Insurance__c).trim());*/
+			/** Eternus Solutions       **/
+			/** Author  : Manasi Ranade **/
+			/** Issue Id: FS0092      	**/
+			/** Date    : 3/8/2011 	    **/
+			/** Purpose : 1. For any income if end year is mentioned as 2020 then in cash flow projection income should stop in 2019. Same for all expenses
+						  2. So added code to change the end year of selected expense 	 		
+			/****************************************************/
+				endYear = endYear - 1;
+            } else {
+                endYear = defaultEndYear; 
+            }
+            if(endYear>=currentYear){
+            	summaryRecordTypeBean  = summaryBean.getSummaryRecordTypeBean('Insurance');
+            	System.debug('Annualized premium ' + result.Annual_Premium_amount__c);
+            	summaryRecordTypeBean.populateSummaryDetailList(startYear,endYear,result.Annual_Premium_amount__c,0,currentYear); 
+            }
+        }       
+    }
+    /*
+    	This method is holding calls to get one year snapshot data from all respective objects.
+    */    
+    public NewCashFlowBean getCashFlowSnapshot(String entityId) 
+    {
+        List<Income__c> incomeList;   
+        List<Expense__c> expenseList; 
+        List<Loan__c> loanList;
+        List<Insurance__c> insuranceList;
+        List<Asset__c> assetList;
+        List<Investment_Asset__c> invAssetList;
+        
+        /*Prajakta - FP changes - 3-5-13*/
+        Integer planYear;
+        if(objAccount.Plan_Generation_Date__c != null) 
+        	planYear = objAccount.Plan_Generation_Date__c.year();
+        else
+        	planYear = system.today().year();
+        error.DebugLog('--------planYear----------'+planYear);
+        
+        List<NewSummaryBean> summaryList = new List<NewSummaryBean>();                                                  
+        NewSummaryBean summaryBean;                
+        Integer currentYear = planYear; //Date.today().year();
+        Integer defaultStartYear = currentYear;
+        Integer defaultEndYear = defaultStartYear;
+        
+        globalAssumptions = dbQuery.getEntityGlobalAssumption(entityId);
+        System.debug('---------------------------ScurrentYear-----------'+currentYear);
+        
+        summaryBean = new NewSummaryBean('Incomes',currentYear, currentYear);
+        summaryList.add(summaryBean);
+        
+        incomeList = dbQuery.getIncomesForCashFlow(entityId);
+        /** Eternus Solutions       **/
+		/** Author  : Manasi		**/
+		/** Issue Id: F0042      	**/
+		/** Date    : 10/06/2011 	**/
+		/** Purpose : Added function to calculate End year of Salary Income 	**/
+		/****************************************************/  
+		/** Eternus Solutions       **/
+		/** Author  : Manasi		**/
+		/** Issue Id: FS0091      	**/
+		/** Date    : 4/8/2011	 	**/
+		/** Purpose : 2nd parameter is not used in the function .So removed that parameter.**/
+		/****************************************************/   
+        getUpdatedEndYearForSalaryIncome(incomeList);
+        setIncomesSummaryDetails(incomeList,defaultStartYear,defaultEndYear,summaryBean);
+        
+        summaryBean = new NewSummaryBean('Expenses', currentYear, currentYear);
+        summaryList.add(summaryBean);
+        
+        expenseList = dbQuery.getMonthlyExpenseForCashFlow(entityId);
+        setExpensesSummaryDetails(expenseList,defaultStartYear,defaultEndYear,summaryBean);
+        
+        loanList = dbQuery.getLoanList(entityId);
+        setLoanSummaryDetails(loanList,defaultStartYear,defaultEndYear,summaryBean);
+        /** Eternus Solutions       **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: FS0293      	**/
+		/** Date    : 19/11/2011 	**/
+		/** Purpose : Added Overloaded Function to select the Insurances of selected Entity and Flag = Data Entry**/
+        insuranceList = dbQuery.getInsurances(entityId,'Data Entry');
+        setInsuranceSummaryDetails(insuranceList,defaultStartYear,defaultEndYear,summaryBean);
+         /** Eternus Solutions       **/
+		/** Author  : Manasi Ranade	**/
+		/** Issue Id: FS0234      	**/
+		/** Date    : 1/11/2011 	**/
+		/** Purpose : Need to Exclude 'Retirement Accounts' from Savings section of Cash Flow	**/
+		/****************************************************/
+        /*
+        assetList = dbQuery.getAssetListByClass(entityId, AssetRecTypes__c.getInstance('Retirement Accounts').RecordTypeId__c);
+        setAssetSummaryDetails(assetList,defaultStartYear,defaultEndYear,summaryBean);
+        */
+        assetList = dbQuery.getAssetListByClass(entityId, AssetRecTypes__c.getInstance('Govt. Saving Schemes').RecordTypeId__c);
+        setAssetSummaryDetails(assetList,defaultStartYear,defaultEndYear,summaryBean);
+        /** Eternus Solutions       **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: F0014      	**/
+		/** Date    : 09/06/2011 	**/
+		/** Purpose : Added 'Deposits With Bank - Recurring Deposits' in Saving under Expenses section of cash flow 
+		/*************************************************************************************/
+        assetList = dbQuery.getAssetListByClass(entityId, AssetRecTypes__c.getInstance('Deposits With Bank').RecordTypeId__c,'Recurring Deposits');
+        setAssetSummaryDetails(assetList,defaultStartYear,defaultEndYear,summaryBean);
+        invAssetList = dbQuery.getInvestmentAssetListByClass(entityId, InvestmentAsset__c.getInstance('Mutual Fund').RecordTypeId__c);
+        /* Prajakta - FP changes - 21-03-2013 */
+        invAssetList.addAll(dbQuery.getInvestmentAssetListByClass(entityId, InvestmentAsset__c.getInstance('Gold').RecordTypeId__c));
+        setInvestmentAssetSummaryDetails(invAssetList,defaultStartYear,defaultEndYear,summaryBean);
+           
+        setyearList(1);
+        return new NewCashFlowBean(summaryList,1);           
+    }
+    public List<String> getYearList() {
+        return yearList;
+    }
+    public void setYearList (Integer endIndex) 
+    {
+    	/* Prajakta - FP changes - 04-03-2013
+        entityId = System.currentPageReference().getParameters().get('entityId');
+        objAccount = dbQuery.getEntity(entityId); 
+        Date todayDate1 = objAccount.Plan_Generation_Date__c;
+        //error.debugLog('--------todayDate1--------'+todayDate1);
+        system.debug('--------todayDate1--------'+todayDate1); */
+        
+        /*Prajakta - FP changes - 3-5-13*/
+        Date todayDate;
+        if(objAccount.Plan_Generation_Date__c != null) 
+        	todayDate = objAccount.Plan_Generation_Date__c;
+        else
+        	todayDate = system.today();
+        
+        yearList = new List<String>();
+        for(Integer i=0;i <=endIndex ;i++) {
+            yearList.add(''+todayDate.addYears(i).year());  
+        }       
+    }    
+    /*
+    	This method is holding calls to get cash flow projection from all respective objects.
+    */        
+    public NewCashFlowBean getCashFlowProjection(String entityId) {
+    	
+        List<Income__c> incomeList;   
+        List<Expense__c> expenseList;
+        List<Loan__c> loanList;
+        List<Insurance__c> insuranceList;
+        List<Asset__c> assetList;
+        List<Investment_Asset__c> invAssetList;
+		
+		
+		/** Eternus Solutions       **/
+		/** Author  : Jigar			**/
+		/** Issue Id: F0001      	**/
+		/** Date    : 17/05/2011 	**/
+		/** Purpose : Added variables to calculate the LifeExpectencyEndYear**/
+			/****************************************************/  
+		Account oAccount = dbQuery.getEntity(entityId);
+		Integer intPendingLifeExpectancyYears;
+		Integer intPendingYearsForRetirement;
+        
+        //Integer planYear = objAccount.Plan_Generation_Date__c.year();
+            
+        List<NewSummaryBean> summaryList = new List<NewSummaryBean>();                                                  
+        NewSummaryBean summaryBean;                
+        
+        /*Prajakta - FP changes - 3-5-13*/
+        Integer planYear;
+        if(oAccount.Plan_Generation_Date__c != null) 
+        	planYear = oAccount.Plan_Generation_Date__c.year();
+        else
+        	planYear = system.today().year();
+        	
+		/** Eternus Solutions       **/
+		/** Author  : Jigar			**/
+		/** Issue Id: F0001      	**/
+		/** Date    : 17/05/2011 	**/
+		/** Purpose : Modified the calculation for defaultEndYear from the harcoded value, defaultEndYear = defaultStartYear + 50 to 
+        	defaultEndYear = defaultStartYear + intPendingLifeExpectancyYears for Income and
+        	defaultEndYear = defaultStartYear + intPendingYearsForRetirement for Expense **/
+			/****************************************************/  
+        Integer currentYear = planYear; // Date.today().year();/*Praj*/
+        Integer defaultStartYear = currentYear; 
+        //,defaultEndYear = defaultStartYear + 50;
+        //////////////////////////// Previous Code
+        /*System.debug('****************oAccount.Estimated_Life_EndYear__c:'+oAccount.Estimated_Life_EndYear__c);
+        intPendingLifeExpectancyYears = (oAccount.Estimated_Life_EndYear__c.intValue() - currentYear) + 1;
+        
+ 	    Integer defaultEndYear = defaultStartYear + intPendingLifeExpectancyYears;
+ 	     System.debug('****************oAccount.Retirement_Year__c:'+oAccount.Retirement_Year__c);
+ 	    intPendingYearsForRetirement = (oAccount.Retirement_Year__c.intValue() - currentYear) + 1;*/
+ 	    //////////////////////    
+ 	    /** Eternus Solutions       **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: F0018      	**/
+		/** Date    : 25/05/2011 	**/
+		/** Purpose : Added two fields Default_Retirement_Age__c and Default_Estimated_Life_Expectancy__c
+					  in Entity_Global_Assumption__c object.So if Estimated_Life_EndYear__c or Retirement_Year__c fields are null then ,
+					  fetch Default_Estimated_Life_Expectancy__c and Default_Retirement_Age__c from Entity_Global_Assumption__c to calculate those values**/
+			/****************************************************/  
+			system.debug('********oAccount.Estimated_Life_EndYear__c*****'+oAccount.Estimated_Life_EndYear__c);
+ 	    if(oAccount.Estimated_Life_EndYear__c == NULL)
+ 	    {
+ 	    	
+	 	    	Entity_Global_Assumption__c objEntity_Global_Assumption = dbQuery.getEntityGlobalAssumption(entityId);
+	 	    	system.debug('*****************entityId:'+entityId);	
+	 	    	system.debug('*****************objEntity_Global_Assumption.Default_Estimated_Life_Expectancy__c:'+objEntity_Global_Assumption.Default_Estimated_Life_Expectancy__c);	
+	 	    	String strDefaultEstimatedLifeExpectancy = '0';
+	 	    	system.debug('*************oAccount.Estimated_Life_Expectancy__c :'+oAccount.Estimated_Life_Expectancy__c );	
+			 	/** Eternus Solutions       **/
+				/** Author  : Manasi Ranade **/
+				/** Issue Id: F0018      	**/
+				/** Date    : 03/06/2011 	**/
+				/** Purpose : If oAccount.Estimated_Life_Expectancy__c is not null then consider that,else fetch its value from Global Assumption**/
+				/****************************************************/  
+	 	    	if(oAccount.Estimated_Life_Expectancy__c != null)
+	 	    		strDefaultEstimatedLifeExpectancy = oAccount.Estimated_Life_Expectancy__c;
+	 	    	else
+	 	    		strDefaultEstimatedLifeExpectancy = objEntity_Global_Assumption.Default_Estimated_Life_Expectancy__c;
+	 	    	/** Eternus Solutions       **/
+				/** Author  : Manasi Ranade **/
+				/** Issue Id: F0029      	**/
+				/** Date    : 15/06/2011 	**/
+				/** Purpose : Instead of calculating Age from birthdate field,Added new field Current_Age__c in
+							  Account object.So selecting Current age for further calculations   **/
+					/****************************************************/ 
+	 	    	//Date birthDate=[select PersonBirthdate from Account where id =: entityId][0].PersonBirthdate;
+	 	    	Integer iAge = Integer.valueOf([select Current_Age__c from Account where id =: entityId][0].Current_Age__c);	
+	 	    	/** Eternus Solutions       **/
+				/** Author  : Manasi Ranade **/
+				/** Issue Id: F0029      	**/
+				/** Date    : 03/06/2011 	**/
+				/** Purpose : It throws an exception if Age field is null **/
+					/****************************************************/ 
+	 	    	if(iAge == null){
+	 	    		//throw new GeneralException('Please fill the Age of Person');
+	 	    		System.debug('Please fill the Age of Person');
+	 	    	}
+				else
+				{
+					//Previous code
+		 	    	/*Integer birthYear = birthDate.year();	
+		 	    	Integer todaysYear = datetime.now().year();	
+		 	    	Integer age = todaysYear - birthYear;
+		 	    	system.debug('*****************strDefaultEstimatedLifeExpectancy:'+strDefaultEstimatedLifeExpectancy);	
+		 	    	intPendingLifeExpectancyYears =	integer.valueOf(strDefaultEstimatedLifeExpectancy) - age + 1;	
+					system.debug('*****************intPendingLifeExpectancyYears for Null:'+intPendingLifeExpectancyYears);*/
+		 	    	intPendingLifeExpectancyYears =	integer.valueOf(strDefaultEstimatedLifeExpectancy) - iAge;	
+		 	    	System.debug('----------------------strDefaultEstimatedLifeExpectancy else----------'+strDefaultEstimatedLifeExpectancy);
+		 	    	System.debug('----------------------intPendingLifeExpectancyYears else----------'+intPendingLifeExpectancyYears);
+				}
+ 	    	  			
+ 	    }
+ 	    else
+ 	    {
+ 	    	intPendingLifeExpectancyYears = (oAccount.Estimated_Life_EndYear__c.intValue() - currentYear) + 1;
+ 	    	system.debug('*****************intPendingLifeExpectancyYears:'+intPendingLifeExpectancyYears);
+ 	    }			
+ 	    
+ 	    Integer defaultEndYear = defaultStartYear + intPendingLifeExpectancyYears;
+        
+        if(oAccount.Retirement_Year__c == NULL)
+        {
+ 	    	Entity_Global_Assumption__c objEntity_Global_Assumption = dbQuery.getEntityGlobalAssumption(entityId);
+ 	    	String strDefaultRetirementAge = '0';
+ 	    	system.debug('*************oAccount.Retirement_Age__c :'+oAccount.Retirement_Age__c );
+ 	    	/** Eternus Solutions       **/
+			/** Author  : Manasi Ranade **/
+			/** Issue Id: F0018      	**/
+			/** Date    : 03/06/2011 	**/
+			/** Purpose : If oAccount.Retirement_Age__c is not null then consider that,else fetch its value from Global Assumption**/
+			/****************************************************/  
+ 	    	if(oAccount.Retirement_Age__c != null)
+ 	    		strDefaultRetirementAge = oAccount.Retirement_Age__c;
+			else 	    		
+ 	    		strDefaultRetirementAge = objEntity_Global_Assumption.Default_Retirement_Age__c;
+ 	    	/** Eternus Solutions       **/
+			/** Author  : Manasi Ranade **/
+			/** Issue Id: F0054      	**/
+			/** Date    : 20/06/2011 	**/
+			/** Purpose : Instead of calculating Age from birthdate field,Added new field Current_Age__c in
+					      Account object.So selecting Current age for further calculations.And previous code is commented**/
+			/****************************************************/  
+ 	    	//Previous code
+ 	    	/*Date birthDate=[select PersonBirthdate from Account where id=:entityId][0].PersonBirthdate;
+ 	    	Integer birthYear=birthDate.year();			
+ 	    	Integer todaysYear = datetime.now().year();	
+ 	    	Integer age = todaysYear - birthYear;
+ 	    	system.debug('************strDefaultRetirementAge:'+strDefaultRetirementAge);
+ 	    	intPendingYearsForRetirement =   integer.valueOf(strDefaultRetirementAge) - age + 1;	
+ 	    	system.debug('*****************intPendingYearsForRetirement  for Null:'+intPendingYearsForRetirement);*/
+ 	    	Integer age = Integer.valueOf([select Current_Age__c from Account where id =: entityId][0].Current_Age__c);
+ 	    	intPendingYearsForRetirement =   integer.valueOf(strDefaultRetirementAge) - age;
+ 	    					
+        }
+        else
+        {
+        	 intPendingYearsForRetirement = (oAccount.Retirement_Year__c.intValue() - currentYear) + 1;
+        	 system.debug('*****************intPendingYearsForRetirement:'+intPendingYearsForRetirement);
+        }		
+        
+        globalAssumptions = dbQuery.getEntityGlobalAssumption(entityId);
+        
+        /** Eternus Solutions       **/
+		/** Author  : Jigar			**/
+		/** Issue Id: F0001      	**/
+		/** Date    : 17/05/2011 	**/
+		/** Purpose : 				**/
+			/****************************************************/  
+		System.debug('----------------------projection currentYear-------------'+currentYear);
+		System.debug('----------------------intPendingLifeExpectancyYears currentYear-------------'+currentYear + intPendingLifeExpectancyYears);
+        summaryBean = new NewSummaryBean('Incomes',currentYear, currentYear + intPendingLifeExpectancyYears);
+        //summaryBean = new NewSummaryBean('Incomes',currentYear,currentYear + intPendingYearsForRetirement);
+        //summaryBean = new NewSummaryBean('Incomes',currentYear,defaultEndYear);
+        summaryList.add(summaryBean);
+        
+        incomeList = dbQuery.getIncomesForCashFlow(entityId);  
+          
+        /** Eternus Solutions       **/
+		/** Author  : Manasi		**/
+		/** Issue Id: F0042      	**/
+		/** Date    : 10/06/2011 	**/
+		/** Purpose : Added function to calculate End year of Salary Income 	**/
+			/****************************************************/  
+		/** Eternus Solutions       **/
+		/** Author  : Manasi		**/
+		/** Issue Id: FS0091      	**/
+		/** Date    : 4/8/2011	 	**/
+		/** Purpose : 2nd parameter is not used in the function .So removed that parameter.**/
+		/****************************************************/   
+        getUpdatedEndYearForSalaryIncome(incomeList);
+        setIncomesSummaryDetails(incomeList,defaultStartYear,defaultEndYear,summaryBean);
+        
+        /** Eternus Solutions       **/
+		/** Author  : Jigar			**/
+		/** Issue Id: F0001      	**/
+		/** Date    : 17/05/2011 	**/
+		/** Purpose :				**/
+			/****************************************************/                      
+        summaryBean = new NewSummaryBean('Expenses',currentYear,currentYear + intPendingLifeExpectancyYears);
+        //summaryBean = new NewSummaryBean('Expenses',currentYear,defaultEndYear);
+        summaryList.add(summaryBean);
+        
+        expenseList = dbQuery.getMonthlyExpenseForCashFlow(entityId);
+        setExpensesSummaryDetails(expenseList,defaultStartYear,defaultEndYear,summaryBean);
+        
+        loanList = dbQuery.getLoanList(entityId);
+        setLoanSummaryDetails(loanList,defaultStartYear,defaultEndYear,summaryBean);
+         /** Eternus Solutions       **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: FS0293      	**/
+		/** Date    : 19/11/2011 	**/
+		/** Purpose : Added Overloaded Function to select the Insurances of selected Entity and Flag = Data Entry**/
+        insuranceList = dbQuery.getInsurances(entityId,'Data Entry');
+        setInsuranceSummaryDetails(insuranceList,defaultStartYear,defaultEndYear,summaryBean);
+        
+        /** Eternus Solutions       **/
+		/** Author  : Manasi Ranade	**/
+		/** Issue Id: FS0234      	**/
+		/** Date    : 1/11/2011 	**/
+		/** Purpose : Need to Exclude 'Retirement Accounts' from Savings section of Cash Flow	**/
+		/****************************************************/
+        /*
+        assetList = dbQuery.getAssetListByClass(entityId, AssetRecTypes__c.getInstance('Retirement Accounts').RecordTypeId__c);
+        setAssetSummaryDetails(assetList,defaultStartYear,defaultEndYear,summaryBean);
+        */
+        assetList = dbQuery.getAssetListByClass(entityId, AssetRecTypes__c.getInstance('Govt. Saving Schemes').RecordTypeId__c);
+        setAssetSummaryDetails(assetList,defaultStartYear,defaultEndYear,summaryBean);
+        /** Eternus Solutions       **/
+		/** Author  : Manasi Ranade **/
+		/** Issue Id: F0014      	**/
+		/** Date    : 09/06/2011 	**/
+		/** Purpose : Added 'Deposits With Bank - Recurring Deposits' in Saving under Expenses section of cash flow 
+		/****************************************************/ 
+        assetList = dbQuery.getAssetListByClass(entityId, AssetRecTypes__c.getInstance('Deposits With Bank').RecordTypeId__c,'Recurring Deposits');
+        setAssetSummaryDetails(assetList,defaultStartYear,defaultEndYear,summaryBean);
+        invAssetList = dbQuery.getInvestmentAssetListByClass(entityId, InvestmentAsset__c.getInstance('Mutual Fund').RecordTypeId__c);
+        /* Prajakta - FP changes - 21-03-2013 */
+        invAssetList.addAll(dbQuery.getInvestmentAssetListByClass(entityId, InvestmentAsset__c.getInstance('Gold').RecordTypeId__c));
+        setInvestmentAssetSummaryDetails(invAssetList,defaultStartYear,defaultEndYear,summaryBean);
+        
+        //setyearList(50);
+        setyearList(intPendingLifeExpectancyYears);
+        
+        //return new NewCashFlowBean(summaryList,50);               
+        return new NewCashFlowBean(summaryList,intPendingLifeExpectancyYears);
+
+    }
+    //
+     /** Eternus Solutions       **/
+	/** Author  : Manasi		**/
+	/** Issue Id: F0042      	**/
+	/** Date    : 10/06/2011 	**/
+	/** Purpose : If Record Type of	Income is 'Salary Income' then on 'Cash Flow - Projection' page 
+				  display Salary Income upto (End Year - 1) years.
+				  Example :If End year is 2045 then display Salary income for year upto : 2044  	**/
+	/****************************************************/
+	/** Eternus Solutions       **/
+	/** Author  : Manasi		**/
+	/** Issue Id: F0042      	**/
+	/** Date    : 27/06/2011 	**/
+	/** Purpose : Added 2nd for loop that will assign end year of parent entity to 
+				  all other 'Salary Income' related records .Also added one parameter to this function.
+				  This Id refers to parent entity's Id  **/
+	/****************************************************/   
+      public void getUpdatedEndYearForSalaryIncome(List<Income__c> incomeList)
+     {
+     	Integer iEndYear = 0;
+	    //This for loop will calculate the End_Year__c of the parent entity and assign it to iEndYear
+	    /*for(Income__c objIncome : incomeList)
+        {
+        	if(objIncome.recordType.Name.equals('Salary Income') && objIncome.Entity__c == entityId )
+        	{
+        		if(objIncome.End_Year__c != null && objIncome.End_Year__c != '')
+        		{
+        			iEndYear = Integer.valueOf(objIncome.End_Year__c);
+        			iEndYear = iEndYear - 1;
+        			if(iEndYear > 0)
+        			objIncome.End_Year__c =  String.valueOf(iEndYear);
+        			break;
+        		}
+        	}
+        }*/
+        //This for loop will assign the end date od parent entity to  all other 'Salary Income' related records 
+        /*iEndYear = iEndYear - 1;
+        if(iEndYear > 0)
+        for(Income__c objIncome : incomeList)
+        {
+        	if(objIncome.recordType.Name.equals('Salary Income'))
+        	{
+    			objIncome.End_Year__c = String.valueOf(iEndYear);
+    			system.debug('****************objIncome.End_Year__c :'+objIncome.End_Year__c );
+        	}
+        }*/
+        //
+        /** Eternus Solutions       **/
+		/** Author  : Manasi		**/
+		/** Issue Id: FS0091      	**/
+		/** Date    : 4/8/2011	 	**/
+		/** Purpose : 1. Commented the above 2 for loops for the following case :
+					  "Income of spouse is upto 2017. The effect in the cashflow shuld be till 2016.
+					  But in projection, its showing till 2026 ( where the husband's income is stopping)"
+					  2. 2nd parameter is not used in the function .So removed that parameter.
+					  3. Added following code to adjust the end year.
+					     Example : if End year for salary income is 2045,
+					     then on cash flow page we should display income upto 2044 (i.e. End Year - 1)**/
+		/****************************************************/   
+        for(Income__c objIncome : incomeList)
+        {
+        	/** Eternus Solutions       **/
+			/** Author  : Manasi		**/
+			/** Issue Id: FS0111      	**/
+			/** Date    : 16/8/2011	 	**/
+			/** Purpose : 1. Commented "objIncome.recordType.Name.equals('Salary Income')" if codition. 
+							As irrespective of income type, we should display all incomes upto (End Year - 1) on cash flow page.
+						  2. Hence now it will adjust the end year of any income**/
+			/****************************************************/
+        	//if(objIncome.recordType.Name.equals('Salary Income'))
+        	//{
+        		if(objIncome.End_Year__c != null && objIncome.End_Year__c != '')
+        		{
+        			iEndYear = Integer.valueOf(objIncome.End_Year__c);
+        			iEndYear = iEndYear - 1;
+        			if(iEndYear > 0)
+        			objIncome.End_Year__c =  String.valueOf(iEndYear);
+        		}
+        	//}
+        }
+     }
+
+}
