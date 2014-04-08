@@ -12,7 +12,7 @@
 	<script type="text/javascript" src="{!URLFOR($Resource.AutoComplete, 'jqueryFiles/jquery-ui.js')}"></script>
 	<style>
 		.inputMedical{
-            	padding: 0px;
+            	padding: 1px;
          }
          .inputIllness{
             	padding: 0px;
